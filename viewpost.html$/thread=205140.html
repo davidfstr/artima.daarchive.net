@@ -1,0 +1,853 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2007, #2: Making Web Apps Easy</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=205140.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2007, #2: Making Web Apps Easy&amp;body= %0AArtima Weblogs %0AJavaOne 2007, #2: Making Web Apps Easy %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=205140">Email</a> | 
+<a href="../viewpostP.html$/thread=205140.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=204977.html" title="JavaOne 2007, #1: Java Client Apps the Easy Way">Previous</a> | 
+<a class="sl" href="thread=205160.html" title="JavaOne 2007, #3: Mashup a Web App with Little or No Code">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2007, #2: Making Web Apps Easy</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 10, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Today, JavaOne 2007 showcased a complete open source 
+technology stack that lets you develop and 
+deploy web applications quickly and easily,
+including JRuby, Rails, NetBeans, and Glassfish.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>While JavaFX Script aims to simplify things for
+web designers, a collection of technologies
+including JRuby, Rails, NetBeans, and Glassfish
+combine for an unparalleled application development
+experience. This post focuses on those development
+technologies.</p>
+<p>I've heard a lot about how easy it is to develop
+web applications using Rails, but now I've
+actually <em>seen</em> it. At one of their several talks
+on JRuby and Rails at JavaOne, Charlie Nutter and
+Tom Enebo stepped through the process and took
+the audience on a short tour of the application
+structure.</p>
+<p>At each talk, Charlie asked the mostly-Java audience,
+"By a show of hands how many people really love their
+development process for web apps?" There were
+staggeringly few. But Rails developers, it seems,
+are rabid about it. They love doing it. So let's
+see how the other half lives.</p>
+<blockquote>
+<strong>Note:</strong> It's still an open question as to how
+much they love maintaining an app they built
+a while ago--or someone else's app. That's where
+Java's readability really shines. I'd love to see
+a straw pole on that topic, one day.</blockquote>
+<p><strong>Contents</strong></p>
+<blockquote>
+<ul class="simple">
+<li>Why Rails?</li>
+<li>Create and Test a Rails App</li>
+<li>Architectural Overview</li>
+<li>Develop Faster with NetBeans 6</li>
+<li>Manage the Project with Mingle</li>
+<li>Deploy on a Java Application Server like GlassFish</li>
+<li>Why JRuby on Rails?</li>
+<li>JRuby Futures</li>
+<li>Resources</li>
+</ul>
+</blockquote>
+<div class="section">
+<h1><a id="why-rails" name="why-rails">Why Rails?</a></h1>
+<p>There are a number of reasons to like the Rails
+framework for web development:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>The "Convention over Configuration" mantra</strong> keeps
+things simple. You follow some basic naming conventions
+and the framework figures things out for you--so if you're
+looking for Person with ID=Fred, Rails will go to
+the database, access the People table, find the
+row with right ID, wrap it's contents in a Person
+object, and deliver it back to you.</li>
+<li><strong>The database specs are agnostic</strong>, so you
+can easily migrate to a different database later.
+That makes it easy to develop your app with a test database
+and later deploy with a production version.</li>
+<li><strong>You can define database migration scripts</strong> that
+make it possible to rollback to a previous version
+of the schema for testing and bug fixing.</li>
+<li><strong>There are libraries</strong> for login, authentication, and
+other common web application tasks.</li>
+</ul>
+</blockquote>
+<p>Rails also gives you an agile development environment:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>You have a fully functional app</strong> right from the
+start that you can incrementally extend to add the
+behaviors you need.</li>
+<li><strong>You can iterate quickly.</strong> Ruby is interpreted,
+so there is no need to recompile the app, redeploy it,
+or restart the server. You just make the changes you need
+to make, then run your tests or try it out interactively.
+That's all there is to it.</li>
+<li><strong>The testing harness is built into the framework.</strong> You
+have a place for your tests right from the start, and
+many of the code generating functions create an initial
+set of tests--so you're encouraged to test as you develop--and
+that is the <em>key</em> to keeping it fun.</li>
+</ul>
+</blockquote>
+<p>Rails also gives you the benefits of Ruby. It takes a lot
+less code to get things done in Ruby and Rails--to the
+point that development time can be measured in days, rather
+than weeks. Ruby has many features that conspire to
+make you more productive. Even if no one feature
+is compelling by itself, those features make Ruby great for
+writing the "glue" that ties libraries and components into
+an application:</p>
+<blockquote>
+<ul>
+<li><p class="first"><strong>Fully OO:</strong> Everything is an object, so there is no
+need to remember different ways of doing things
+for primitives.</p>
+</li>
+<li><p class="first"><strong>Dynamic, but strongly typed:</strong> Once assigned,
+a variable stays true to type.</p>
+</li>
+<li><p class="first"><strong>Literals</strong> for regular expressions, lists, and hash maps.</p>
+</li>
+<li><p class="first"><strong>Powerful string processing,</strong> including multi-line
+strings and string interpolation (put #{x} in a
+string, and the value of x is inserted inline).</p>
+</li>
+<li><p class="first"><strong>Blocks:</strong> Snippets of code you pass around and invoke.</p>
+</li>
+<li><p class="first"><strong>Closures:</strong> Snippets that know their context, so this
+code knows about the File object, and knows to close it
+when the block has finished executing:</p>
+<pre class="literal-block">
+File.open(someFile) { |f| ... }
+</pre>
+</li>
+<li><p class="first"><strong>"Duck" typing:</strong> If it quacks like a duck, then for
+all intents and purposes, it <em>is</em> a duck. If it has the
+methods you need, it works. You don't have to declare them
+in advance. (But since there is no interface to remind you
+to implement them, you have to do more testing--which is a
+good idea in any case.)</p>
+</li>
+</ul>
+</blockquote>
+<p>Ruby is also a better language for metaprogramming
+and building domain-specific languages (DSLs):</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Open classes:</strong> You can literally "extend" a class
+by adding behaviors you need to that class.</li>
+<li><strong>Module mix-ins:</strong> You add stuff to your class by
+"requiring" a module.</li>
+<li><strong>Hooks</strong> like method_missing and method_defined that
+let you implement dynamically adaptive behavior.</li>
+<li><strong>Reflection behaviors,</strong> so x.send(:y args) is
+equivalent to x.y(args)</li>
+</ul>
+</blockquote>
+<p>Ruby has a terrific ecosystem, as well. You not only
+get Rails, you get a variety of other utilities that
+take advantage of Ruby's ability to define a higher
+level language that is tailored for a specific domain:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Rake:</strong> A powerful build utility.</li>
+<li><strong>Raven:</strong> Ruby's implementation of Maven.</li>
+<li><strong>Rspec:</strong> A testing utility in which each test
+is literally a functional specification.</li>
+</ul>
+</blockquote>
+<p>There certainly is a lot to like. (For more on the features
+that make Ruby great, see the articles in the Resources.)</p>
+</div>
+<div class="section">
+<h1><a id="create-and-test-a-rails-app" name="create-and-test-a-rails-app">Create and Test a Rails App</a></h1>
+<p>All of those features are terrific, and they got me
+into Ruby. But knowing about them didn't help me get
+started building a Rails app. After two Ruby
+conventions, I <em>still</em> didn't know how to create
+one. (Ok. So I  could have read a book. I'm lazy. Shoot me.)</p>
+<p>But JavaOne is a different kind of convention. I
+don't know how the organizers do it, but they manage
+to set things up so that most every presentation
+explains the basics and demonstrates how things are done.
+That makes JavaOne pretty much the best
+educational opportunity in town. And
+this year, a lot of time was devoted to other
+languages that run on the Java platform, including
+JRuby, Groovy, Tapestry, and JavaFX Script.</p>
+<p>So this year, I got to see how a Rails app is constructed.
+Here's an overview of the process:</p>
+<pre class="literal-block">
+(j)rails myapp -- setup the project directory
+(j)ruby script/server -- start server and see basic page
+(j)ruby script/generate -- create parts of the app skeleton
+ ...do a little editing...
+ ...repeat for other parts of the app...
+(j)rake -- build the app
+ ...try it out...
+</pre>
+<p>What follows is a mashup of a couple of demos I saw.
+Some of the details are bound to be wrong, but the
+notes should serve to outline the process.</p>
+<p>The first step was to setup the application:</p>
+<pre class="literal-block">
+rails myapp
+</pre>
+<p>There must have been a configuration step to make
+that step work with jruby, but we didn't see it.
+The next step was to start the server:</p>
+<pre class="literal-block">
+jruby script/server
+</pre>
+<p>The default server, Webrick, is built-in, so that's
+all you needed to do. Even with no code added, it was
+now possible to view <a class="reference" href="../_/http/localhost:8080/index.html">http://localhost:8080</a> and see an
+initial start page.</p>
+<p>Next, they generated the username/password action for
+logging in, along with the unit tests for that behavior:</p>
+<pre class="literal-block">
+jruby script/generate controller test hello
+</pre>
+<p>The next two steps were single line edits in
+very small generated files. The first added
+the variable @hello="..." to the action script:</p>
+<pre class="literal-block">
+vi app/controller/tests/(target file)
+</pre>
+<p>The second displayed the contents of that variable
+in the view file (an rhtml file that looks a lot
+like a JSP page):</p>
+<pre class="literal-block">
+vi app/views/hello.rhtml
+</pre>
+<p>The call looked something like this:</p>
+<pre class="literal-block">
+&lt;% someDisplayFunction @hello %&gt;
+</pre>
+<p>To configure database access (an optional, but typical
+part of a Rails app), they copied a small configuration
+file, to save a bit of time:</p>
+<pre class="literal-block">
+cp ../database.yml config/
+</pre>
+<p>Then, just for fun, they took a look at the place
+where the Rails conventions are defined:</p>
+<pre class="literal-block">
+vi config/environment.rb
+</pre>
+<p>Next, they set up for database migration, to show
+how that works:</p>
+<pre class="literal-block">
+jruby script/generate migration person
+vi db/migrate/001_person.rb
+</pre>
+<p>As you make changes to the database, such scripts let
+you migrate the schema and rollback to a previous
+version to fix the bug with a command like this:</p>
+<pre class="literal-block">
+rake db:migrate
+</pre>
+<p>The next step generated the scaffolding for CRUD operations
+(create, read, update, delete):</p>
+<pre class="literal-block">
+jruby script/generate scaffold person
+</pre>
+<p>It was now possible to take a look at some of the
+generated scripts:</p>
+<pre class="literal-block">
+app/models/person.rb
+app/controllers/people_controller.rb
+</pre>
+<p>It was then necessary to restart the server (something
+which, in general, is only needed after adding or
+removing a database):</p>
+<pre class="literal-block">
+jruby script/server
+</pre>
+<p>Visiting the localhost URL then showed the modified page.</p>
+</div>
+<div class="section">
+<h1><a id="architectural-overview" name="architectural-overview">Architectural Overview</a></h1>
+<p>Here are the major components of Rails:</p>
+<blockquote>
+<ul class="simple">
+<li>ActiveSupport -- base framework</li>
+<li>ActiveRecord -- DB support</li>
+<li>ActionPack -- views &amp; controllers</li>
+<li>ActionWebService -- web service framework</li>
+<li>ActionMailer -- email framework</li>
+<li>Railties -- ties it all together</li>
+</ul>
+</blockquote>
+<p>And here is the directory structure of a Rails application:</p>
+<pre class="literal-block">
+app
+  controllers
+  helpers
+  models
+  views
+config
+db
+lib
+public
+test
+</pre>
+</div>
+<div class="section">
+<h1><a id="develop-faster-with-netbeans-6" name="develop-faster-with-netbeans-6">Develop Faster with NetBeans 6</a></h1>
+<p>Once you have the application skeleton created, you'll
+need to add some code. NetBeans 6 will make that process
+a heck of a lot easier.</p>
+<p>Charlie Nutter's comment underscores that point:</p>
+<blockquote>
+There is a lot of corporate interest in Ruby IDEs, these
+days and a lot of work going into tools support.
+NetBeans is the furthest ahead. Some people are even
+leaving emacs, to get those features in NetBeans.</blockquote>
+<p>Actually, NetBeans is supporting more than just Ruby.
+They've been putting in generalized support for dynamic
+languages and letting users customize the pretty
+printing behaviors (among other things) by making
+choices in a dialog--a lot better solution than having
+to write a plugin that uses the NetBeans APIs.</p>
+<p>With respect to Ruby, Tor Norbye from Sun Microsystems
+demonstrated the many capabilities that make life easier
+for (J)Ruby developers:</p>
+<blockquote>
+<ul class="simple">
+<li>Project types for Ruby &amp; Rails</li>
+<li>Integrated gem management</li>
+<li>Integrated rake builds</li>
+<li>Code completion</li>
+<li>Go to definition</li>
+<li>Syntax coloring</li>
+<li>Background error detection with red underlining</li>
+<li>Gray for unused variables</li>
+<li>Bold for a method</li>
+<li>Cursor on an variable highlights it everywhere it exists</li>
+<li>Cursor on method call highlights all exits</li>
+<li>Ctrl+shift+F to reformat code</li>
+</ul>
+</blockquote>
+<p>As a long time IDE user in Java-land, I have to say
+that I desperately missed those capabilities when I
+began coding Ruby. I loved Ruby anyway, but I felt
+handicapped. With NetBeans, they're back in my arsenal.
+Life is going to be <em>good</em>.</p>
+<p>To switch between Ruby and JRuby, you change a path
+in a configuration file. That turns out to be
+important in the early releases, because debugging
+works better with native Ruby, for now. But in most
+other respects, you'll probably want JRuby. (More
+on that subject in a moment.)</p>
+<p>For debugging, you get all of NetBeans' normal
+capabilities:</p>
+<blockquote>
+<ul class="simple">
+<li>Call stack</li>
+<li>Local variables view</li>
+<li>Evaluate an expression</li>
+<li>See threads and switch between them</li>
+</ul>
+</blockquote>
+<p>To make all of that work in the early releases,
+there are several things you to need to do:</p>
+<blockquote>
+<ul class="simple">
+<li>Switch from classic debugger to fast debugger</li>
+<li>Install the rubydebug-ide gem</li>
+<li>Use the native Ruby interpreter</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="manage-the-project-with-mingle" name="manage-the-project-with-mingle">Manage the Project with Mingle</a></h1>
+<p>Mingle is a web-based application designed for
+software projects. It includes functions for
+project management, issue tracking, source code
+versioning, and requirements analysis.</p>
+<p>It's targeted at agile IT projects, and built by
+agile developers. So it's worth a look. But it
+holds a special place in the heart of the JRuby
+developers because, when it came time to create
+reliable, scalable deployments, they turned to
+JRuby. Their reasoning is given at:
+<a class="reference" href="../_/http/studios.thoughtworks.com/2007/5/7/mingle-to-run-on-jruby/index.html">http://studios.thoughtworks.com/2007/5/7/mingle-to-run-on-jruby</a></p>
+</div>
+<div class="section">
+<h1><a id="deploy-on-a-java-application-server-like-glassfish" name="deploy-on-a-java-application-server-like-glassfish">Deploy on a Java Application Server like GlassFish</a></h1>
+<p>Once you have your application built and tested,
+you need to deploy it to a production server. But
+even though it's easy to develop a Rails application,
+it can require a lot of work to make it perform well.</p>
+<p>For serious scalability, you'll probably want to deploy
+on a Java Application Server--for example, the open
+source standard in that category, GlassFish. (That
+will be especially true when JRuby achieves its goal
+of support for database pools and other enterprise
+features.)</p>
+<p>You may still need to do some performance tuning
+eventually, but a fast server can delay the day it
+becomes necessary, and make the tuning pay off that
+much more when you do it.</p>
+<p>As noted by the JRuby speakers, deploying on a Java
+Application Server also gives you a major advantage
+when you're sneaking Ruby into the enterprise:</p>
+<blockquote>
+You can deliver a WAR file to the IT department,
+and they can deploy it the same way they deploy
+any other Java app. They don't have to implement
+or support some new infrastructure.</blockquote>
+<p>JRuby is just Java byte codes under the covers, after
+all. And when you're delivering a WAR, that's what
+you're delivering--Java byte codes.</p>
+<p>To make that work, you use "GoldSpike"--the tie that
+binds the rails from east and west, or in this case,
+Ruby and Java. The process is pretty simple:</p>
+<blockquote>
+<ul>
+<li><p class="first">Install the GoldSpike gem from the jruby-extra site.
+(See the Resources).</p>
+</li>
+<li><p class="first">Set up a config file with something like the following:</p>
+<pre class="literal-block">
+maven_library, "rome', "rome'. '0.8'
+</pre>
+</li>
+</ul>
+<blockquote>
+<strong>Note:</strong> Maven is the Apache Build manager and ROME
+is a set of Java utilities for Atom/RSS feeds. It's not
+clear from my notes what this step is doing, but I'm
+leaving it in with the expectation that I'll be able to
+clarify later.</blockquote>
+</blockquote>
+<p>You then need to set an environment variable:</p>
+<pre class="literal-block">
+RAILS_ENV=production rake db:migrate
+</pre>
+<p>Next, you issue the Rake command to create the war file:</p>
+<pre class="literal-block">
+rake war:standalone:create
+</pre>
+<p>That command pulls in the Rails app, along with any gems
+and java libraries it uses, and puts everything into a
+single, standalone WAR file that is ready to deploy on
+your favorite Java application server.</p>
+<p>To deploy the WAR yourself, you can issue a command like this one:</p>
+<pre class="literal-block">
+~/glassfish/bin/asadmin deploy myapp.war
+</pre>
+</div>
+<div class="section">
+<h1><a id="why-jruby-on-rails" name="why-jruby-on-rails">Why JRuby on Rails?</a></h1>
+<p>So, Rails is good framework for web applications. But
+why run it on JRuby, rather than native ruby?</p>
+<p>Possibly the most important reason is so you can deploy your
+Rails application on a Java Application Server, as noted above.
+But there are several other reasons for using JRuby, as well:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Installation:</strong> Windows installations work fine for
+native Ruby, and Unix installations work well when they
+go to the expected location.
+But when I installed Ruby in a non-standard
+directory on a Solaris system, several build files had
+to be modified--and additional modifications were needed
+to enable gems. I got it working, with the help of
+the many friendly people on the mailing list, but I
+can't say I fully understand what I did, or could
+easily replicate the process. Installing JRuby, on the
+other hand, is a study in simplicity: Download it. Run it.
+That's all there is to it, as long you have a Java runtime
+installed somewhere on your system.</li>
+<li><strong>Localization:</strong> JRuby takes advantage of Java's
+unicode framework for fully localizable applications.</li>
+<li><strong>Capability:</strong> Java has a huge volume of well-documented,
+tested libraries, and you can access them all from JRuby.</li>
+<li><strong>Scalability &amp; Reliability:</strong> The Java platform's native
+threads trump Ruby's green threads. And the HotSpot
+compiler/interpreter gives JRuby a speed advantage that
+JRuby's developers have taken advantage of. (Those speed
+advantages apply to all JRuby scripts, in addition to
+web apps.) JRuby is
+basically on a par with native Ruby today, but performance
+has mostly been secondary to compatibility, until now.
+That is next major focus for the project. And in the future, byte
+code changes are under development with JSR 292 that will
+allow for even more significant code optimization.</li>
+<li><strong>Startup speed for Java programs:</strong> When a JRuby script
+is launching Java apps, there is no start-up overhead,
+because the virtual machine is already running. That makes
+JRuby the ideal way to launch and manage Java platform
+processes--for example, in a Rake build file.</li>
+</ul>
+</blockquote>
+<p>The one item in that list that needs more elaboration is the
+way you access the Java libraries from JRuby. Here is a quick
+snapshot of the process, using the example the JRuby developers
+presented:</p>
+<pre class="literal-block">
+jirb&gt;
+include Java -- now have access to java libs
+import javax.swing.JFrame
+import javax.swing.JButton
+import java.awt.event.ActionListener
+frame = JFrame.new("Quick App")
+frame.set_size(300,300)
+frame.show
+button = JButton.new("Press Me")
+frame.add button
+class MyListener
+include ActionListener
+  def actionPerformed(even)
+    event.source.text = "Don't press me again."
+  end
+end
+button.add_action_listener MyListener.new
+frame.show
+</pre>
+<p>Voila! You now have a little GUI app in a few lines of code.</p>
+<blockquote>
+<p><strong>Notes:</strong></p>
+<blockquote>
+<ul class="simple">
+<li>jirb is the JRuby version of the interactive
+Ruby interpreter, irb.</li>
+<li>You can use Java's CamelCase method names,
+or the Ruby-standard underscore-versions,
+like button.add_action_listener.</li>
+</ul>
+</blockquote>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="jruby-futures" name="jruby-futures">JRuby Futures</a></h1>
+<p>JRuby has shown remarkable progress in the last year
+or so. It has pretty well achieved it's first goal:
+Full compatibility with the native Ruby implementation.
+(No mean feat, considering that the only "spec" is
+embedded in the C-language sources.)</p>
+<p>The developers are now closing in on their second
+major goal: exceptional performance. (On many measures,
+it is already faster. So now they're zeroing in on the
+remaining areas that need improvement.)</p>
+<p>Their next major targets are to resolve the only
+remaining areas of incompatibility: Those modules
+that use native C extensions. Since they're not
+written in Ruby, the Ruby compiler doesn't help.
+They have to be rewritten in Java.</p>
+<p>One area in which that impact is keenly felt is in
+database support. MySQL works great, and Derby
+works ok, along with some other databases, but
+there are some that do not work at all. Hopefully,
+the open source community will be able to help with
+that endeavor.</p>
+<p>Beyond that, JRuby's developers intend to focus
+on the enterprise-edition capabilities that are
+needed for massively high-performance, high-reliability
+apps. For example:</p>
+<blockquote>
+<ul class="simple">
+<li>Database pools</li>
+<li>Stronger WAR deployment</li>
+</ul>
+</blockquote>
+<p>Finally, they look forward to integrating with more of
+the native ruby libraries like the Mongrel web server,
+Hpricot, and Rmagick.</p>
+<p>All told, it's a very strong story that figures to get
+even stronger, with time.</p>
+</div>
+<div class="section">
+<h1><a id="resources" name="resources">Resources</a></h1>
+<p>Articles</p>
+<blockquote>
+<ul class="simple">
+<li>Ruby Rocks: <a class="reference" href="../_/http/www.treelight.com/software/ruby/RubyRocks.html">http://www.treelight.com/software/ruby/RubyRocks.html</a></li>
+<li>Rails Rocks: <a class="reference" href="../_/http/www.treelight.com/software/ruby/RakeRocks.html">http://www.treelight.com/software/ruby/RakeRocks.html</a></li>
+</ul>
+</blockquote>
+<p>Technologies</p>
+<blockquote>
+<ul class="simple">
+<li>GoldSpike WAR file builder and other goodies:
+<a class="reference" href="../_/http/www.rubyforge.org/projects/jruby-extras/index.html">http://www.rubyforge.org/projects/jruby-extras</a> (GoldSpike)</li>
+<li>JRuby project: <a class="reference" href="../_/http/www.jruby.org/index.html">http://www.jruby.org</a></li>
+<li>Maven project builder: <a class="reference" href="../_/http/maven.apache.org/index.html">http://maven.apache.org/</a></li>
+<li>Mingle project management: <a class="reference" href="../_/http/studios.thoughtworks.com/index.html">http://studios.thoughtworks.com/</a></li>
+<li>Mingle chooses JRuby:
+<a class="reference" href="../_/http/studios.thoughtworks.com/2007/5/7/mingle-to-run-on-jruby/index.html">http://studios.thoughtworks.com/2007/5/7/mingle-to-run-on-jruby</a></li>
+<li>Mongrel web server and http library: <a class="reference" href="../_/http/mongrel.rubyforge.org/index.html">http://mongrel.rubyforge.org/</a></li>
+<li>NetBeans development environment: <a class="reference" href="../_/http/www.netbeans.org/index.html">http://www.netbeans.org/</a></li>
+<li>Rails web application framework: <a class="reference" href="../_/http/www.rubyonrails.org/index.html">http://www.rubyonrails.org</a></li>
+<li>Rome RSS/Atom for Java:
+<a class="reference" href="../_/http/www.mvnrepository.com/artifact/rome/rome/index.html">http://www.mvnrepository.com/artifact/rome/rome</a></li>
+</ul>
+</blockquote>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=205140.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=205140&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205140&amp;title=JavaOne+2007%2C+%232%3A+Making+Web+Apps+Easy&amp;bodytext=Today%2C+JavaOne+2007+showcased+a+complete+open+source+%0D%0Atechnology+stack+that+lets+you+develop+and+%0D%0Adeploy+web+applications+quickly+and+easily%2C%0D%0Aincluding+JRuby%2C+Rails%2C+NetBeans%2C+and+Glassfish.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205140&amp;title=JavaOne+2007%2C+%232%3A+Making+Web+Apps+Easy">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205140&amp;title=JavaOne+2007%2C+%232%3A+Making+Web+Apps+Easy">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

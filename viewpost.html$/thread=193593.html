@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Hybridizing Java</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=193593.html">Discuss</a> | 
+<a href="mailto:?subject=Hybridizing Java&amp;body= %0AArtima Weblogs %0AHybridizing Java %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=193593">Email</a> | 
+<a href="../viewpostP.html$/thread=193593.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=193479.html" title="TurboGears Jam">Previous</a> | 
+<a class="sl" href="thread=194449.html" title="Windows Vista">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Hybridizing Java</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">January 31, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The Java backlash has been building up steam, and we’re
+starting to see some fundamental shifts because of it.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Several of Bruce Tate’s books focused on the flaws in Java
+and the need to let go of some of the ideas that haven’t worked out. And blogs
+like <a href="../_/http/mooseyard.com/Jens/2007/01/in-which-i-think-about-java-again-but-only-for-a-moment/index.html">this</a>
+and <a href="../_/http/jroller.com/page/scolebourne$/entry=are_you_scared_of_java/index.html">this</a>
+have been appearing more frequently. And of course there’s Steve Jobs
+now-famous quote (referring to the iPhone): “Java’s not worth building in.
+Nobody uses Java anymore. It’s this big heavyweight ball and chain.”</p>
+<p>This backlash has only been necessary because of Sun’s death
+grip on the idea of ubiquitous, omniscient Java. It was admirable once, but a language
+only evolves if its designers and advocates can acknowledge problems.
+Pretending that a language is successful in places where it’s not is just
+denial.</p>
+<p>Some adaptations have occurred. Finally admitting that EJBs
+have cost the world enormously, the EJB3 team took lessons from Hibernate and
+Spring, but not enough to really fix the problem. Most people seem to find that
+Hibernate and Spring are still simpler and more straightforward than EJB3, so
+the lack of a rush back to a technology that had such a heavy cost in the past
+shouldn’t be a surprise.</p>
+<p>Java 5 was a tacit admission that Microsoft was doing some
+very interesting things with C#, and proposed features in Java 7 support the
+idea that Java is now playing catch-up with C# 3.0. Competition is good, and
+Java is not dead. It continues to evolve, and the appearance of new languages
+built on the JVM, like JRuby, Scala and Groovy, is a sign of vitality in the
+world of Java.</p>
+<h2>The Web is a Mess</h2>
+<p>Seeing possibilities is great, but the downside is that it
+can be hard to acknowledge when something isn’t working. The concept of the web
+was visionary, but much of the web is a failure. Yes, we’ve been able to force
+it to work. But it could hardly be said to “work well.” In particular,
+applications of any complexity using HTML, CSS and JavaScript are difficult and
+expensive to develop, and it seems virtually impossible to get identical
+appearances across browsers. Even simple pages look different because of font
+issues.</p>
+<p>If you use Firefox, how many sites do you visit that are at
+least partially unreadable because they’ve been created only for Internet
+Explorer (IE)? It seems to me that things are getting worse; I’m seeing more,
+not less sites that don’t work right with Firefox…to the point that I’m seriously
+considering going back to IE.</p>
+<p>The noble promise of CSS has not panned out. After years, it’s
+still implemented inconsistently across browsers. As long as you’re using HTML
+and CSS, you’ll always wonder if what you’ve created is going to produce an unpleasant
+effect on different browsers. Browsers other than IE or Firefox can often get
+it even worse.</p>
+<p>JavaScript has been around since, effectively, the beginning
+of the Web, but the browser wars made JavaScript inconsistent and thus painful
+to use. A key part of Ajax is that someone has gone to the trouble of figuring
+out cross-platform JavaScript issues so you can ignore the often radical
+inconsistencies between different browsers.</p>
+<p>There are two problems with this approach. The first is that
+JavaScript is limited in what it can do. Although Ajax is an excellent hack
+that gets the last bit of mileage from JavaScript, it is nonetheless a hack,
+and the end is in sight. The second problem is that you are relying on Ajax
+libraries to handle cross-browser issues. If you want to write your own code,
+you must become an expert on those issues, and at that point much of the
+leverage of Ajax goes away. Ajax improves the experience a lot, but it has
+limits and I suspect we’ve already seen most of the tricks that Ajax is going
+to offer.</p>
+<p>Even more impressive is the Google Web Toolkit (GWT) which
+translates type-checked Java into cross-platform JavaScript in order to speed
+the development process. You write code in Java, and GWT compiles it into
+cross-browser JavaScript. JavaScript, then, becomes the intermediate code that
+will run on all platforms. But it took Google’s brain trust to solve the
+problems that shouldn’t have happened in the first place. And if the library
+you need isn’t there, you must, again, be a cross-platform JavaScript expert in
+order to write new code. As brilliant as GWT is, I think it will still run out
+of gas due to the inherent limitations of JavaScript and browsers.</p>
+<p>We do see relatively amazing Ajax-based tools like GMail and
+the other Google tools which are slowly seducing me (but I repeat: it took
+Google to create those, not Joe garage-programmer). Very nice, but is this the
+best you ever want to see on the web? You’re seeing, if not the limit, then very
+close to it in those applications, and even then they don’t work consistently
+(yes, I know Google tools are “still in beta”). In GMail, for example, you’re
+supposed to be able to press keys like ‘r’ to reply to a message. Sometimes
+this works, often it doesn’t, to the point where it’s maddening. And more and
+more often, when I use web applications like GMail, my “control-c” copy
+operation stops working. It could be Windows, Firefox, JavaScript or something
+else but it seems to be associated with web apps and it’s been happening for at
+least a year. And frankly I don’t <i>care</i> why it’s happening, and neither
+does any other consumer. When things this simple are broken, the outlook is not
+promising.</p>
+<p>How much effort must we expend to compensate for the long
+sequence of misguided decisions that has produced today’s web?</p>
+<h2>Rich Internet Applications</h2>
+<p>At some point we must ask why Java applets haven’t become
+ubiquitous on the internet as the client-side standard for RIAs (Rich Internet
+Applications).</p>
+<p>This is an especially poignant question because Gosling and
+team justified rushing Java out the door (thus casting in stone many
+poorly-considered decisions) so that it could enable the internet revolution. That’s
+why the AWT and Applets were thrown in at the last second, reportedly taking a
+month from conception to completion. <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=173229.html">Bill Venners
+quotes Patrick Naughton</a> as saying: “It was a timing issue, there was only
+about a three-month window in which the whole Java phenomenon could have
+happened. We barely made it.” I’ve heard that argument before,<a href="#_ftn1" name="_ftnref1" title=""><super>[1]</super></a>
+and this attitude always seems to be a mistake when building programming
+languages. You’re creating the fundamental architecture that you hope people
+will adopt and use for many years. This is the place that requires careful
+thought, not rushing.</p>
+<p>I can see why the Green Team took this attitude: it’s the Microsoft
+  Way. Throw a product out there in order to get your foot in the window. The
+product doesn’t have to be perfect; it just has to hold the market space. Over
+time, you can fix up any flaws that occurred from rushing the thing out. It’s
+the marketing version of agile methods.</p>
+<p>This approach is workable for dynamic languages. One of the
+most popular languages ever, Visual Basic, has evolved over the years. Python
+has fixed some things that would even break old code, in order to clean up the
+language. Reportedly Ruby is planning to do the same thing.</p>
+<p>But for static languages with a large code base (verbose
+languages in particular), fixing things up doesn’t seem to work so well. All
+the code must be recompiled and possibly changed—although I would argue that
+Java could have taken the Python approach: just don’t upgrade if you don’t want
+to change. There are lots of companies that don’t upgrade to newer Java
+versions, anyway.</p>
+<h2>The Installation Problem</h2>
+<p>So Java has been around for 10 years and applets are not the
+primary way that we interact with the web. I think the main reason for this is the
+installation problem, another area of Java that wasn’t well thought-out. In
+fact, why do we like Ajax?</p>
+<p>It’s clearly not because JavaScript is so easy to work with—JavaScript
+cross-platform problems are the reason people have avoided it in the past. Ajax
+is popular because we know that the necessary software for the client side is <i>already
+installed</i>. Someone had to figure out how to deal with the cross-platform
+issues for JavaScript first, but if JRE installation was trivial, everyone
+might have just created Java applets. But they didn’t, applets are not
+ubiquitous, and everyone got excited about Ajax instead. So Ajax became the
+favored technology for RIAs.</p>
+<p>Although it’s gotten significantly better with ECMAScript
+standardization, I would still rather program with Java than JavaScript, the
+main reason being inconsistency. Maybe in eight years the current version of
+ECMAScript will be standard across almost all browsers. But the current version
+of JavaScript, despite the random implementations, is already available, and
+there are zero installation issues. I think that’s a fairly good proof that the
+reason Java hasn’t taken over as the RIA language of choice is the installation
+problem.</p>
+<p>Various fixes have been attempted for Java over the years,
+but I think the basic issue is that whoever is trying to solve the installation
+problem is someone who has a more inward technical focus rather than what’s
+really needed: an outward user-experience focus.</p>
+<p>For example, I was stymied by early Linux distributions
+because of the challenge of installation. About once a year, I would try to
+install Linux, and it would immediately start asking me questions. Only a
+hard-core Linux geek would know the answers to these questions. I couldn’t even
+fake my way through, so I would give up and try again the next year. Then Red Hat
+came along (at least, I think they were the first to focus on the installation
+experience) and set it up to install Linux without asking questions, or at
+least to give me reasonable defaults. That’s when Linux started becoming
+popular (more recently, Ubuntu seems to have taken the lead in solving the
+Linux friendliness problem).</p>
+<p>Installing the JRE requires the end user to answer
+questions. To a techie, the answer to these questions is easy or obvious, but
+to the rest of the web users, questions frighten them during installation. <a href="../_/http/www.gripe2ed.com/scoop/story/2006/11/6/11317/4292/index.html">Here’s an
+article</a>, and comments, that illustrates the problem with Java
+installations. Although this article is primarily complaining about updates,
+there is also a lot of confusion about keeping old versions of Java around. <a href="../_/http/naeblis.cx/articles/2006/11/20/java-in-the-land-of-make-believe/index.html">Here’s
+another “installation matters” blog</a>. </p>
+<p>JNLP, a.k.a. Java WebStart, was supposed to solve some of
+these problems to create easy-install desktop applications. I think the reason
+that JNLP hasn’t become commonly used can be summed up by looking at <a href="../_/https/aerith.dev.java.net/index.html">https://aerith.dev.java.net/</a>, a page
+for one of the flagship “Cool JavaOne Demos.” If you click on the <u><span style="color:blue;"><a href="../_/http/aerith.keybe.com/jnlp/index.jnlp">JNLP
+version link</a></span></u> on that page, it will appear to start up,
+downloading a bunch of stuff and asking you questions. And then it does nothing.
+No error messages or any information to tell you what happened. Repeated attempts
+yield the same results, only faster because the requisite files have already
+been downloaded. At least, that was my experience. If it worked for you, I’d
+say that’s even worse—it randomly works on some platforms and not others. How
+do you debug such a thing?</p>
+<p>It’s not impossible to build GUI applications with Java, but
+it’s been 10 years and there are still installation hiccups with applets, Java
+WebStart, and regular applications. After 10 years, people don’t trust it
+anymore. If it’s not there after 10 years, then I’m going to go out on a limb
+and say that someone doesn’t consider this problem important enough to fix. And
+even if they did, there have been so many bad experiences among consumers that
+it would take years to get the trust back.</p>
+<h2>Experience with Java Applets and Applications</h2>
+<p>The initial user experience with AWT did a lot to dampen the
+enthusiasm about Sun’s Java fanfare, and I don’t think applets ever recovered.
+As a result, Java never became mainstream for RIAs.</p>
+<p>Even now, I’ve had bad experiences trying to run Java
+applets from a web site. They just fail, with no clue as to what’s gone wrong.
+Worse, they can sometimes leave cruft behind that has even prevented Firefox
+from opening new windows, until I reboot the machine.</p>
+<p>A common response to the “applets are dead” statement is “No
+they’re not. I still use them.” Applets aren’t useless; people still create
+very impressive things with them. The <a href="../_/http/www.javaposse.com/index.html">Java
+Posse</a> highlights one or more applets each week. The statement should
+instead read, “Applets are dead for Web RIAs.” The installation process for the
+JRE and for any particular applet is not reliable enough for anyone to depend
+on them for a general-purpose website.</p>
+<p>Desktop applications have also suffered, and left bad marks
+on Java in general, further sullying applets by association. I had an
+experience with a Java product called Memorex exPressit. The UI was terrible
+and buggy. I had a contrasting experience with the Logitech IO pen support
+software (written in .NET), which worked cleanly and looked nice. You could
+argue that the Memorex programmer(s) were just inexperienced, but the Logitech
+software was just a small application that worked well without, it seems, any
+Herculean efforts on the part of the programmer(s), whereas it’s hard to think
+of any application that I use on a regular basis that’s written in Java.
+Eclipse is a brilliant piece of software, but I think “Herculean effort”
+applies.</p>
+<p>Consider Corel’s attempt to create a word processor using
+Java (I don’t remember whether they were trying to port WordPerfect or write
+something from scratch). It was obviously too early to try it, since all they
+had was the AWT. But only obvious in hindsight—if you were listening to Sun’s
+marketing hype at the time, it was the right choice. Shrugging it off as no big
+deal doesn’t work, because this kind of failure scares people away from doing
+things in Java.</p>
+<p>OpenOffice is not written in Java, but in C++. I don’t
+believe it was because the programmers wanted to struggle with the
+cross-platform issues presented by C++. It was speed, and perhaps the need to
+more directly control the underlying platform. Despite the party line that has
+always come out of Sun (Many years ago, I attended a press conference where
+Gosling stated that “Java has always been as fast or faster than C++,”
+something that puzzles me to this day), Java is not the right solution for all
+problems.</p>
+<h2>Not Cross-Platform Enough</h2>
+<p>I struggled for years to deal with cross-platform problems for
+products like the <i>Hands-On Java CD</i>. It’s effectively the same as the RIA
+problem, because I want installation to be as easy as possible, I want
+everything to work seamlessly the first time, and I don’t want to be forced to deal
+with platform issues. Often my solutions would work, but sometimes customers
+would email saying that it wasn’t working on their machine, and I had no idea
+what the problem was. The best I could do is say “try it on a different
+machine,” and often that solved the problem…whatever the problem was. I never
+want to hear things like this; I just want everything to work.</p>
+<p>My primary goal has been to create a slide-and-audio content
+delivery system, like you see in the <a href="../_/http/mindview.net/CDs/Hoj2/#demo/index.html">Hands-On Java CD ROM</a> or <a href="../_/http/mindview.net/CDs/ThinkingInC/index.html">Thinking in C</a>.</p>
+<p>Java, with its promise of write-once, run everywhere, was an
+attractive contender. Unfortunately there were, at least at the time,
+significant delays in Linux support (and to a lesser degree, Mac support).
+Linux and Mac users may be in the minority, but they are vocal.</p>
+<p>The show-stopper was Java’s lack of support for MP3s and
+multimedia in general. As Dick Wall of the <a href="../_/http/www.javaposse.com/index.html">Java
+Posse</a> has pointed out numerous times, the Java Media Framework (JMF) has
+been virtually ignored for many years. At the time I made my initial decisions,
+there was no support for any kind of compressed sound format (I would have been
+willing to use something other than MP3). Even now the only support for MP3s is
+through open-source software, which is great in concept, but I don’t want to
+test it and discover platform issues—again, I just want it to work; the only
+thing I want to hear from customers is “great!”</p>
+<p>It seemed like the only thing that might work was the RealPlayer,
+so I used that for the <a href="../_/http/mindview.net/CDs/Hoj2/#demo/index.html">HOJ CD, 2<sup>nd</sup>
+edition</a>. But the RealPlayer installation process is always trying to trick
+you into buying the paid version; I must tell people how to find the free
+version. And it’s intrusive—it takes over MP3s even though you tell it not to. </p>
+<p>And for all that, the RealPlayer is unreliable. The
+installation occasionally causes problems, and I get emails from people. I
+generally have no idea what’s causing the problem—which is frustrating—and the
+customer is usually convinced that there’s something wrong with the CD. The
+Daily Show, for years, used RealPlayer and it was not only painful because it
+was always starting and stopping (you couldn’t download everything beforehand;
+it forced you to stream), but it always had these streaks on the left side of
+the picture. Now Comedy Central has changed to a new system but that only works
+intermittently. So I end up just waiting for them to be posted on YouTube.</p>
+<h2>The Flash Solution</h2>
+<p>So here’s my question. Allow for a moment the possibility
+that, after 10 years, Java is not going to take over the world of RIAs. Further
+allow that Ajax is just “how JavaScript was supposed to work in the first
+place,” but that the limitations imposed by browsers, HTML and CSS committees
+seem unlikely to let it expand beyond its current bounds. What are we going to
+use to build RIAs?</p>
+<p>In my own search, I’d really like such a system to solve not
+just some, but <i>all</i> of my UI problems. If I’m going to go to the trouble
+of learning it, I don’t want to run into a wall just when I start to develop
+some speed. That’s happened plenty of times already.</p>
+<p>The only obvious solution is Flash. Flash has always been all
+about cross-platform multimedia experiences and user interfaces. People are
+very familiar and comfortable with Flash, and it is installed on almost all
+machines in the world. It’s trusted, stable and reliable.</p>
+<p>Installation is a no-brainer for everyone. You don’t have to
+answer questions or do anything special; it just works. That’s why it’s already
+ubiquitous. Current and future versions of Flash are now released concurrently
+for the three main platforms (yes, except for 64-bit Linux, but they’re working
+on it and that user base typically has more than one computer, and so has
+alternatives in the meantime). The standard Flash installation plays MP3s and
+various types of video, so you’re not stuck with “write-once, run
+everywhere…except for multimedia.”</p>
+<p>And you can’t deny that Flash produces very pleasing user
+interfaces. What did Flickr and Picasa both use? Not Java, not Ajax, but Flash.
+Google videos, written with Ajax, must not have been going anywhere because they
+bought YouTube, which uses Flash. Even the most die-hard Swing fan secretly
+wishes their UI could look this good, especially without all the extra work
+Swing would require.</p>
+<p>There’s a very impressive Flash web app called <a href="../_/http/www.gliffy.com/index.html">Gliffy</a> that imitates Visio (this was created
+with OpenLaszlo, which I’ll mention later). No one could even think of creating
+something like that with Ajax, although someone <a href="../_/http/canvaspaint.org/index.html">did an imitation</a> of the much simpler Microsoft
+Paint using HTML, CSS and JavaScript. Very impressive, but you get the sense
+that this is close to the limit of what those technologies can do, whereas
+Flash would just be getting started. Plus the Paint clone is a bit slow and
+clunky and the UI is inconsistent across browsers.</p>
+<p>While amazing things have been accomplished within the
+confines of JavaScript with technologies like Ajax, JSON, GWT etc., these are
+nonetheless confines. We bump up against their limits every day, and those
+limits are not going away. </p>
+<h2>Solving the UI problem</h2>
+<p>One of the difficulties of GUI programming is choosing a GUI
+library. Sometimes there’s a standard library, but that can change. In Java, we
+started with AWT, which turned out to be a mistake so we had to be patient as Swing
+was developed, until IBM and Eclipse came along and offered us the additional
+choice of SWT. In Python, there are many GUI libraries, including the built-in
+Tkinter (which reduces the installation problem), WxPython, Qt, and more.
+Windows-specific libraries have similar choices, but if you want to create
+cross-platform applications, those libraries aren’t available.</p>
+<p>If you explore these GUI libraries, as I have, you run the
+risk of getting broad knowledge that is not particularly deep. Each library requires
+significant effort to learn, and each seems to have its own philosophy
+regarding the activities that should be easy, and those that should only be possible.
+Each one looks at the world of GUI programming in a different way.</p>
+<p>I’d like to be able to learn one solution and use it for all
+my applications. That way I could stop learning <i>about</i> GUI solutions and
+start acquiring some depth. Ideally, this will be a real programming language with
+consistent results across all platforms.</p>
+<p>I believe that to solve the user interface problem, we need
+the equivalent of a domain-specific language dedicated to the user experience.
+For me, Flash-based technologies like Flex are the best solution to this
+problem. (Full disclosure: I’m in the process of working out a consulting
+contract with Adobe, to help them teach people about Flex. But long before
+this, I became convinced that Flash, and Flex in particular, was the best
+solution for the user-interface problem, and I began writing this article long
+before Adobe expressed interest in my assistance).</p>
+<h2>What is Flex?</h2>
+<p>Traditionally, Flash content and applications have been created with the 
+Flash authoring tool, currently called Flash 8 Professional (it’s confusing, but 
+the decision to give the name of the tool the same name as the runtime was made 
+ten years ago). There was also a tool called Macromedia Director, a multimedia 
+production tool for CD-ROMs, which predates Flash and outputs a format called 
+Shockwave that runs in a Plug-In/ActiveX control much like Flash content, but  
+is an entirely different control.  Shockwave had its heyday, and it is still 
+widely used, especially for games, but Flash is much lighter weight and achieved 
+mainstream adoption far beyond Director.</p>
+<p>Flex is a way to develop Flash applications by programming.
+It includes a declarative XML language called MXML for laying out user
+interfaces, and a programming language called ActionScript, which is a superset
+of ECMAScript (that is, standardized JavaScript), with extra features like
+optional static type checking. ActionScript is a single language that works
+across all platforms, so you don’t have to worry about differences. Because it
+is based on ECMAScript, your JavaScript knowledge is not lost. All MXML
+components are actually written in ActionScript, which is what you use if you
+want to write your own components. Flex applications compile directly into SWFs
+(Flash binaries), which are then Just-In-Time (JIT) compiled by the Flash
+runtime, for extra speed.</p>
+<p>Cost was one of the main things that originally held me back
+from using Flex, primarily because of readers who were unwilling or unable to
+pay it. In the initial versions of Flex, you had to buy the server edition just
+to create static SWFs. The server edition is designed for dynamic content, and
+is certainly worth the money for larger organizations that are creating dynamic
+SWFs from databases and the like. But there was no reasonable entry point for
+people who just wanted to experiment with it. It was hard for me to recommend
+it if the average person didn’t have a reasonable experimentation path, including
+creating static SWFs to deliver from their own server.</p>
+<p>Now, however, you can download the free command-line Flex compiler
+to create static SWFs, and you can deliver these from your web site without
+paying any fees. The compiler, framework, and debugger are all free, so there’s
+no reason to avoid using Flex.</p>
+<p>You can buy the Flex Builder IDE to help you create Flex
+apps. This is built on top of the Eclipse platform (instead of creating a new
+GUI development system from scratch—a wise approach). It has the usual sorts of
+things we’ve come to expect, like auto completion, context help, debugging, and
+even a GUI layout tool. The layout tool can give you a quick start when you’re
+beginning a design, although I found it more valuable to hand-tune the code
+once the rough draft of the design was in place.</p>
+<p>Here’s something else that caused me trouble in the past:
+although the Flash player for Windows and the Mac have always been on the same
+release schedule, Flash for Linux has formerly been released quite a bit later.
+I didn’t know this until I put out the first beta of the <a href="../_/http/mindview.net/CDs/ThinkingInC/index.html">Thinking in C</a> eSeminar, and got
+complaints from Linux and Mac people about it. After some investigation, I
+decided to back-port the application (which isn’t that fancy, and doesn’t make
+use of any features that don’t exist in Flash 7). This seemed to be the best
+solution for me, because I didn’t have to wait for a final release of the newer
+version of Flash, and in particular I didn’t have to worry about Linux. One of
+my main goals for using Flash in the first place was to make the use of this
+application transparent across platforms, and to reduce any installation issues
+to a minimum.</p>
+<p>However, with Flash 9 and beyond, all the players will be released
+within weeks of each other, and this policy should hold for future versions of
+Flash. So now you don’t have to worry about complaints from anyone. Build your
+UI with Flex, and it will “just work.”</p>
+<h2>Flex as a DSL for Graphics</h2>
+<p><a name="a"></a>One of the most appealing things about Flex is
+that Flash was created with the idea of UI first. In a very real sense, it’s a
+domain-specific language (DSL) for graphics, multimedia, and UIs, whereas most other
+solutions have been languages with UI libraries tacked on afterwards.</p>
+<p>Because of this design goal, Flex and Flash provide a complete,
+unlimited, flexible tool to build user experiences. From the standpoint of a
+programmer’s time investment, you can learn a single language for building UIs without
+worrying about running into problems or limitations later—issues like:</p>
+<ul style="margin-top:0in;" type="disc">
+<li>Installation problems</li>
+<li>Constraints on what you can create</li>
+<li>Sudden steep climbs in the learning curve</li>
+</ul>
+<p>There are plenty of fancy components that you can just drop
+in and use—the Flex Framework (part of the free download) comes with over 100
+components. There’s an active marketplace for component creators, both
+open-source and payware. One such library comes from Adobe: the Flex Charting
+Components (in the few hundred dollar range), but there are also competing
+charting components.</p>
+<p>One of the more interesting aspects of Ajax, of course, is
+the “A” for “asynchronous.” This allows information to flow between client and
+server without doing a whole page refresh. For Flash, a much more sophisticated
+version of this is provided by <i>Flex Data Services</i>, a publish/subscribe
+API for data management. Flex Data Services automatically performs caching and
+updating between client and server, to produce an optimal experience without
+forcing you to write extra code. This allows you to work with real-time data,
+build collaborative applications, and perform enterprise messaging integration.
+You can use Flex Data Services on a single CPU for free; if your application
+requires multiple CPUs you’re considered an enterprise and the licensing fee
+kicks in. You can learn more about Flex Data Services <a href="../_/http/www.adobe.com/go/flextestdrive/index.html">here</a>.</p>
+<p>Earlier I mentioned Gliffy, which was built using OpenLaszlo.
+OpenLaszlo was especially attractive before the Flex compiler and framework
+became free. However, the OpenLaszlo group has decided that they will
+accommodate the lowest common denominator technologies by targeting DHTML
+combined with Flash, and this incorporates the limitations of DHTML. The reason
+Flex is compelling to me is that it allows me to take advantage of things I can’t
+do in the normal browser and those things produce the same results, everywhere.
+On top of this, Flex is magnitudes faster than OpenLaszlo because it takes
+advantage of the JIT compiler in Flash 9. Since Flex is now free, there’s no
+reason not to go to the source.</p>
+<h2>Flex on the Desktop</h2>
+<p>Of course, if my dream is to be able to learn a single GUI
+system in depth, is Flex the right tool, since it was originally designed for web
+RIAs?</p>
+<p>A Flex UI can initiate communication with its server, or any
+other server it chooses. A server cannot initiate communication with a Flex UI,
+which makes sense because of security (it would be effectively the same as
+having an open port on your machine).</p>
+<p>However, a Flex UI is not limited to communicating with a
+server. It can also communicate with a local application. Thus, you can create
+an application in any language you prefer, even a dynamic language like Python
+or Ruby, and use Flex to build a beautiful UI.</p>
+<p>Adobe is developing a new tool called <a href="../_/http/labs.adobe.com/wiki/index.php/Apollo/index.html">Apollo</a>, a cross-OS
+runtime that allows you to use Flex to create desktop RIAs. This means that your
+Flex skills can be further employed for creating smooth desktop applications,
+but it also means that you can more easily build applications that will work on
+<i>both</i> web and desktop (I’ve seen expensive and difficult-to-use tools that
+allow other languages to do this).</p>
+<h2>Hybridizing Java</h2>
+<p>It’s clear that we can’t wait for Sun to fix all of Java’s
+problems. Open-sourcing Java might, eventually, have a huge impact on repairing
+Java’s deficiencies. For example, work on the JMF might get resurrected. Maybe
+installation issues will even be fixed someday. The possibilities might be
+limitless, but if you need to solve problems <i>now</i>, then the solution is
+to hybridize parts of the language.</p>
+<p>We do this already. You don’t insist on using a Java
+database for an application; you use a specialized system like MySQL or Oracle.
+Sun is directly supporting the development of JRuby for hybrid Java/JRuby
+programming. We are seeing other special-purpose languages arise to solve
+specialized problems. Why insist on using a Java library for UI if a
+specialized system solves the problem better?</p>
+<p>As shown in the <a href="../_/http/www.adobe.com/devnet/flex/articles/eckel_video.html">TurboGears-Flex
+demo I created with James Ward</a>, it’s possible to use a language like Python
+(or Java, Ruby, C#, etc.) as a back-end and build your user interface using
+Flex. This can even be achieved for desktop applications (even more so with the
+upcoming <a href="../_/http/labs.adobe.com/wiki/index.php/Apollo/index.html">Apollo</a> tool).</p>
+<p>You can learn all about Flex, and download it, at <a href="../_/http/www.flex.org/index.html">http://www.flex.org/</a>. This is an incredibly
+comprehensive site with lots of examples, tutorials and screencasts. They even
+have an <a href="../_/http/try.flex.org/index.html">online Flex compiler</a> for instant
+experimentation.  There’s an <a href="../_/http/www.jamesward.org/wordpress/2007/01/11/screencast-the-web-sig/index.html">in-depth
+presentation that James Ward gave about developing with Flex</a>. And
+<a href="../_/http/www.adobe.com/devnet/flex/articles/flexjava.html">here is a
+screencast that I did with James Ward, that shows how to use Flex as a front-end for
+Java server applications</a>. You can now
+create a low-cost, powerful combination of Java on the server (which can of
+course be running Linux on commodity hardware) and an interactive Flash
+interface on the client.</p>
+<hr align="left" size="1" width="33%"/>
+<p><a href="#_ftnref1" name="_ftn1" title=""><span style='font-size:10.0pt;font-family:"Times New Roman";'>[1]</span></a>
+In particular, when I took the necessary time to write <i>Thinking in Java</i>,
+many, many people said “there are hundreds of Java books out already, you’ve
+missed the window, it’s not worth it.”</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=193593.html">129
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=193593&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D193593&amp;title=Hybridizing+Java&amp;bodytext=The+Java+backlash+has+been+building+up+steam%2C+and+we%E2%80%99re%0D%0Astarting+to+see+some+fundamental+shifts+because+of+it.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D193593&amp;title=Hybridizing+Java">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D193593&amp;title=Hybridizing+Java">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

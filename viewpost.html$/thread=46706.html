@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Why is Distributed so Hard?</title>
+<meta charset="utf-8"/>
+<meta content="Dale Asberry" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCEECC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bozomind.html">Dale Asberry's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=46706.html">Discuss</a> | 
+<a href="mailto:?subject=Why is Distributed so Hard?&amp;body= %0AArtima Weblogs %0AWhy is Distributed so Hard? %0Aby Dale Asberry %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=46706">Email</a> | 
+<a href="../viewpostP.html$/thread=46706.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=45621.html" title="Re: Opinion: Martin Fowler's First Law of Distribution">Previous</a> | 
+<a class="sl" href="thread=47052.html" title="RE Slashdot: Diamond Age Approaching">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Indeterminate Heuristics</span><br>
+<span class="ts">Why is Distributed so Hard?</span><br/>
+<span class="as">by Dale Asberry</span><br/>
+<span class="pd">May 3, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+If developers don't "get it", then it makes great sense to find out why.  One issue in particular jumps to the forefront.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section" id="overview">
+<h1><a name="overview">Overview</a></h1>
+<p>In one sentence, here's why:  humans are notoriously bad at keeping "self" distinct from "other".  <a class="reference" href="#egomania">Egomania</a>, <a class="reference" href="#projection">projection</a> (transference), and <a class="reference" href="#enmeshment">enmeshment</a> are well-known symptoms of this problem.  OK, so I hear you saying, "yeah, but what does this have to do with programming?"  It certainly seems absurd to suggest that if we are bad at something we know the most about (our "selves"), how could we possibly say that we have a good approach for the programming analogues - objects, modules, etc.</p>
+<p>A recent offline conversation with <a class="reference" href="../_/http/paulhammant.com/blog/index.html">Paul Hammant</a>, co-lead of <a class="reference" href="../_/http/docs.codehaus.org/display/PICO/Home/index.html">PicoContainer</a>, (Inversion of Control/Dependency Injection) was a primary motivator for this blog entry.  IoC is a simple, elegant way to encapsulate dependencies, yet according to Paul, it's taken years for the developer community to see the value in using it.  So, programmers have serious issues with not seeing and removing dependencies.  In light of distributed solutions, which by their very nature require considerable thought and effort in removing dependencies, and that human tendencies interfere with eliminating them, then it should be no surprise that <strong>distribution is hard</strong>.</p>
+</div>
+<div class="section" id="the-problems">
+<h1><a name="the-problems">The Problems</a></h1>
+<p>Not only are we bad at it as humans, several other factors feed back and further discourage decoupling: it's a hard problem to solve even when it can be seen; the less it is practiced - the harder it gets to undo; and, the original team is usually gone by the time the problems become insurmountable.</p>
+<p>What in particular makes decoupling a hard problem to solve?  For one, it takes a lot of experience and a bit of natural ability to perceive software at different levels of abstraction.  Without that combination of (learned) skill and (natural) ability, it is hard to see that a dependency exists AND then to remove that dependency.  For another, it's human nature to take the easy/lazy route first.  I get a kick out of the demotivational poster <a class="reference" href="../_/http/www.despair.com/proc24x30pri.html">Procrastination</a> : "Hard work often pays off after time, but laziness always pays off now."</p>
+<p>In addition, when programmers fail to implement decoupling early, the coupling/cohesion problems start to snowball.  Coupling problems tend to manifest themselves indirectly through unexpected side-effects.  The first response is usually to add more code to either limit or expand functionality.  Over time, this sort of coding crud piles up.  Sure refactoring will help in cleaning <em>some</em> of these problems, however, this approach often misses "big picture" interactions.  On the topic of agile, refactoring and YAGNI are great general principles.  But to clarify, they in no way suggest that programmers should skip designing in loose-coupling.  In fact, the first <a class="reference" href="../_/http/c2.com/cgi/wiki$/CouplingAndCohesion/index.html">CouplingAndCohesion</a> c2.com wiki entry by Wyatt Matthews says that loose coupling and YAGNI need to go hand-in-hand:</p>
+<ul class="simple">
+<li>This dictates against PrematureGeneralization. After all, PrematureGeneralization increases an object's dependencies needlessly.</li>
+<li>This supports DontRepeatYourself. If I am too interdependent, I've probably repeated myself needlessly and should RefactorMercilessly.</li>
+<li>This supports OnceAndOnlyOnce. DontRepeatYourself recommends OAOO whenever possible.</li>
+<li>This wants to support YAGNI. After all, if YouArentGonnaNeedIt, why head toward more instability?</li>
+</ul>
+<p>The last form of negative selection also becomes significant over time: the original team is gone.  This problem is two-fold -- first, no one is around to take responsibility for the problems, and second, a great deal of the application knowledge base left with the original team members.  The first problem is particularly compounded by consulting.  Most consultants are in-and-out in less than a year.  My experience suggests that the most serious problems start cropping up around the one year mark.  Since consultants are under heavy pressure to "deliver", why should they invest their time in the difficult and time consuming task of eliminating dependencies?  Because the problems are subtle, widespread and not usually associated with high coupling, the consulting company rarely takes heat for their role in the problems.  Considering that coupling issues become apparent much more quickly in a distributed system, it should come as no surprise that consultants recommend avoiding it.</p>
+</div>
+<div class="section" id="some-solutions">
+<h1><a name="some-solutions">Some Solutions</a></h1>
+<p>The first step in finding a solution is in recognizing the source of the problems.  Let's first look at the human analogues.</p>
+<p><a class="reference" href="#enmeshment">Enmeshment</a> can be slowly eliminated by unweaving the co-dependencies.  Listing and communicating previously unspoken expectations is a great start.  Difficulties encountered when this process starts are due to being overwhelmed by the sheer number of unspoken expectations, and being surprised by the fact that they were obliviously unaware of most of those expectations.</p>
+<p>In some ways, marriage vows do a disservice to the richer subtleties in intimate human interaction.  Namely, two people don't come together to become one, they come together to become three!  There will always be the self and the other.  The third ingredient is the relationship itself.  Unless the relationship is tended to by <em>both</em> people, it won't work.  The most successful couples:</p>
+<ul class="simple">
+<li>address expectations through rituals (protocols) and communication</li>
+<li>adjust to the situation</li>
+<li>are forgiving of transgressions</li>
+<li><a class="reference" href="#interdependent">interdependent</a>, neither independent nor dependent</li>
+</ul>
+<p>The second step in solving problems is to discover and leverage the lessons others have learned.  The following excerpts only touch the tip of the iceberg.  Read, study, and internalize these references - make them your own.</p>
+<p>Carlos Perez' wrote recently in his Manageability blog about <a class="reference" href="../_/http/www.manageability.org/blog/stuff/six-operators-of-modularity/index.html">six operators of modularity</a> that are essential for modular systems:</p>
+<ul class="simple">
+<li>Splitting - Modules can be made independent.</li>
+<li>Substituting - Modules can be substituted and interchanged.</li>
+<li>Excluding - Existing Modules can be removed to build a usable solution.</li>
+<li>Augmenting - New Modules can be added to create new solutions.</li>
+<li>Inverting - The hierarchical dependencies between Modules can be rearranged.</li>
+<li>Porting - Modules can be applied to different contexts.</li>
+</ul>
+<p>from c2.com <a class="reference" href="../_/http/c2.com/cgi/wiki$/AbstractInteractions/index.html">AbstractInteractions</a>:</p>
+<blockquote>
+<p><strong>Context</strong></p>
+<p>The context in which one uses a component includes the other components with which it communicates. If a component makes assumptions about how those components are implemented, it becomes hard to reuse in combination with different components.</p>
+<p><strong>Problem</strong></p>
+<p>How can you reduce a component's dependence on other components in its context?</p>
+<p><strong>Solution</strong></p>
+<ul class="simple">
+<li>Define protocols by which components interact separately from the components themselves.</li>
+<li>Codify these protocols as abstract interfaces</li>
+<li>Implement components that rely only on abstract interfaces. That is, components should refer only to abstract interfaces not to concrete classes that conform to the interfaces.</li>
+</ul>
+</blockquote>
+<p>Bill DeHora's Weblog Entry <a class="reference" href="../_/http/www.dehora.net/journal/2003/06/foundations_for_component_and_service_models.html">Foundations for component and service models</a> also contains a wealth of ideas.  In bullet form,</p>
+<ul class="simple">
+<li>Java best practices won't help</li>
+<li>Avoid changing or extending the interface methods</li>
+<li>Control change by using a dictionary interface</li>
+<li>Calls should return documents not objects</li>
+<li>Avoid binary compatability</li>
+<li>Don't confuse an API with a contract</li>
+<li>Version the contract</li>
+<li>Don't build an API for data transfer</li>
+</ul>
+<p>While researching backlinks to Bill's article, I found that Carlos had <a class="reference" href="../_/http/www.manageability.org/blog/archive/20030628%23principles_of_loosely_coupled_api/index.html">summarized several properties of loose coupling</a>:</p>
+<table border="" class="table">
+<colgroup>
+<col width="30%"/>
+<col width="34%"/>
+<col width="36%"/>
+</colgroup>
+<thead valign="bottom">
+<tr><th>Dimension</th>
+<th>Tight Coupling</th>
+<th>Loose Coupling</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Interface</td>
+<td>Class and Methods</td>
+<td>REST like (i.e. fixed verbs)</td>
+</tr>
+<tr><td>Messaging</td>
+<td>Procedure Call</td>
+<td>Document Passing</td>
+</tr>
+<tr><td>Typing</td>
+<td>Static</td>
+<td>Dynamic</td>
+</tr>
+<tr><td>Synchronization</td>
+<td>Synchronous</td>
+<td>Asynchronous</td>
+</tr>
+<tr><td>References</td>
+<td>Named</td>
+<td>Queried</td>
+</tr>
+<tr><td>Ontology (Interpretation)</td>
+<td>By Prior Agreement</td>
+<td>Self Describing (On The Fly)</td>
+</tr>
+<tr><td>Schema</td>
+<td>Grammar Based</td>
+<td>Pattern Based</td>
+</tr>
+<tr><td>Communication</td>
+<td>Point to Point</td>
+<td>Multicast</td>
+</tr>
+<tr><td>Interaction</td>
+<td>Direct</td>
+<td>Brokered</td>
+</tr>
+<tr><td>Evaluation (Sequencing)</td>
+<td>Eager</td>
+<td>Lazy</td>
+</tr>
+<tr><td>Motivation</td>
+<td>Correctness, Efficiency</td>
+<td>Adaptability, Interoperability</td>
+</tr>
+<tr><td>Behavior</td>
+<td>Planned</td>
+<td>Reactive</td>
+</tr>
+<tr><td>Coordination</td>
+<td>Centrally Managed</td>
+<td>Distributed</td>
+</tr>
+<tr><td>Contracts</td>
+<td>By Prior Agreements, Implicit</td>
+<td>Self Describing, Explicit</td>
+</tr>
+<tr><td>Transactions</td>
+<td>Pessimistic</td>
+<td>Optimistic</td>
+</tr>
+<tr><td>Classification</td>
+<td>Classes</td>
+<td>Prototype</td>
+</tr>
+</tbody>
+</table>
+<p>(2004-05-04 Updated: from <a class="reference" href="../_/http/www.manageability.org/blog/stuff/loosely-coupled-dimensions/view/index.html">Loosely Coupled Dimensions [Updated]</a>)</p>
+<p>For the final reference, all I can say is "Wow".  This paper contains so much good stuff that it should be included in every developer's library.  Read <a class="reference" href="../_/http/c2.com/ppr/catsfate.html">Caterpillar's Fate</a> on the c2.com Wiki to see what I mean.</p>
+</div>
+<div class="section" id="conclusions">
+<h1><a name="conclusions">Conclusions</a></h1>
+<p>Hopefully it isn't too difficult to see that people are bad at recognizing differences between self and others.  It should also not be too hard to see that these difficulties would spill over into programming.</p>
+<p>We should also recognize that other factors aggravate the problem and further discourage decoupling.  One, it's a hard problem to see, let alone, to solve.  Two, if developers don't keep on top of, and continually remove, dependencies, the harder it gets to remove them.  Third, these problems are exacerbated by the fact that the original team (and especially consultants) leave the project taking hard-learned domain expertise with them sometimes to avoid the negative consequences of blame.</p>
+<p>Distributed applications are particularly hard-hit by these things.  Distributed applications are inherently more difficult than "standard" applications because they simply cannot be built without making them very decoupled.  (See Carlos' coupling table above).</p>
+<p>On the positive side, many very bright people have seen solutions to overcoming these dependency problems.  The solutions are subtle and complex which means that they can't be applied in cookie-cutter fashion.  If developers assimilate these solutions into their personal knowledge base then all types of applications can be taken to the next level of complexity.</p>
+<p><img alt="../images/ik.gif" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/></p>
+</div>
+<div class="section" id="resources">
+<h1><a name="resources">Resources</a></h1>
+<div class="section" id="definitions">
+<h2><a name="definitions">Definitions</a></h2>
+<a class="target" id="egomania" name="egomania"></a><dl>
+<dt>Egomania</dt>
+<dd>An intense and irresistible love for yourself and concern for your own needs</dd>
+</dl>
+<p><a class="reference" href="../_/http/www.cogsci.princeton.edu/cgi-bin/webwn$/stage=1&amp;word=egomania/index.html">http://www.cogsci.princeton.edu/cgi-bin/webwn?stage=1&amp;word=egomania</a></p>
+<a class="target" id="projection" name="projection"></a><dl>
+<dt>Projection</dt>
+<dd>A type of defence mechanism. A person experiences an emotion or thought that they can't deal with exactly for whatever reason. The unacceptable feeling or thought is experienced as though someone else had been thinking or feeling it.</dd>
+</dl>
+<p><a class="reference" href="../_/http/www.mentalhealth.org.uk/wordbank.cfm$/wordid=551&amp;wbletter=P.cfm">http://www.mentalhealth.org.uk/wordbank.cfm?wordid=551&amp;wbletter=P</a></p>
+<a class="target" id="enmeshment" name="enmeshment"></a><dl>
+<dt>Enmeshment</dt>
+<dd>The term "Enmeshment" comes from the family systems theory tradition. Enmeshment refers to a condition where two or more people weave their lives and identities around one another so tightly that it is difficult for any one of them to function independently. The opposite extreme way of relating, Detachment, refers to a condition where the people are so independent in their functioning that it is difficult to figure out how they are related to one another. Healthy relationships are thought to be described by the space between enmeshment and detachment.</dd>
+</dl>
+<p><a class="reference" href="../_/http/mentalhelp.net/poc/view_index.html$/idx=37&amp;id=156.html">http://mentalhelp.net/poc/view_index.php?idx=37&amp;id=156</a></p>
+<a class="target" id="interdependent" name="interdependent"></a><dl>
+<dt>Interdependent</dt>
+<dd>Mutualist, mutually beneficial -- (mutually dependent)</dd>
+</dl>
+<p><a class="reference" href="../_/http/www.cogsci.princeton.edu/cgi-bin/webwn$/stage=1&amp;word=interdependent/index.html">http://www.cogsci.princeton.edu/cgi-bin/webwn?stage=1&amp;word=interdependent</a></p>
+</div>
+<div class="section" id="links">
+<h2><a name="links">Links</a></h2>
+<p>Paul Hammant: 
+<a class="reference" href="../_/http/paulhammant.com/blog/index.html">http://paulhammant.com/blog/</a></p>
+<p>PicoContainer: 
+<a class="reference" href="../_/http/docs.codehaus.org/display/PICO/Home;jsessionid=ALBMGNOILLFE/index.html">http://docs.codehaus.org/display/PICO/Home;jsessionid=ALBMGNOILLFE</a></p>
+<p>Procrastination: 
+<a class="reference" href="../_/http/www.despair.com/proc24x30pri.html">http://www.despair.com/proc24x30pri.html</a></p>
+<p>Coupling and Cohesion Wiki: 
+<a class="reference" href="../_/http/c2.com/cgi/wiki$/CouplingAndCohesion/index.html">http://c2.com/cgi/wiki?CouplingAndCohesion</a></p>
+<p>Carlos Perez' Manageability Blog - "Six Operators of Modularity": 
+<a class="reference" href="../_/http/www.manageability.org/blog/stuff/six-operators-of-modularity/index.html">http://www.manageability.org/blog/stuff/six-operators-of-modularity</a></p>
+<p>Abstract Interactions Wiki: 
+<a class="reference" href="../_/http/c2.com/cgi/wiki$/AbstractInteractions/index.html">http://c2.com/cgi/wiki?AbstractInteractions</a></p>
+<p>Bill DeHora's Weblog Entry "Foundations for component and service models"
+<a class="reference" href="../_/http/www.dehora.net/journal/2003/06/foundations_for_component_and_service_models.html">http://www.dehora.net/journal/2003/06/foundations_for_component_and_service_models.html</a></p>
+<p>Carlos Perez' Manageability Blog - "Principles of Loosely Coupled APIs": 
+<a class="reference" href="../_/http/www.manageability.org/blog/archive/20030628%23principles_of_loosely_coupled_api/index.html">http://www.manageability.org/blog/archive/20030628%23principles_of_loosely_coupled_api</a></p>
+<p>Caterpillar's Fate: 
+<a class="reference" href="../_/http/c2.com/ppr/catsfate.html">http://c2.com/ppr/catsfate.html</a></p>
+</div>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=46706.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=46706&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Dale Asberry adds a new entry to <a href="../index.html$/blogger=bozomind.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bozomind.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D46706&amp;title=Why+is+Distributed+so+Hard%3F&amp;bodytext=If+developers+don%27t+%26quot%3Bget+it%26quot%3B%2C+then+it+makes+great+sense+to+find+out+why.++One+issue+in+particular+jumps+to+the+forefront.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D46706&amp;title=Why+is+Distributed+so+Hard%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D46706&amp;title=Why+is+Distributed+so+Hard%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/daleasberry.jpg"/></td><td>R. Dale Asberry been hacking since 1978, professionally since 1990. He's certified in Java 1.1 and has a four digit MCP number. He discovered Jini at the 2000 JavaOne and has been building incredibly cool, dynamic, distributed architectures ever since! Over time, he's discovered several principles that have contributed to his success - they are the Princples of: Enabling Others, Simplicity, No Complaining, Least Work, Least Surprise, Least Damage, and "It Just Works".</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Dale Asberry. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

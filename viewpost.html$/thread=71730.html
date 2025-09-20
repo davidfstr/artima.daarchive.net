@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Why Your Code Sucks</title>
+<meta charset="utf-8"/>
+<meta content="Dave Astels" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D2B48C" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=dastels.html">Dave Astels' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=71730.html">Discuss</a> | 
+<a href="mailto:?subject=Why Your Code Sucks&amp;body= %0AArtima Weblogs %0AWhy Your Code Sucks %0Aby Dave Astels %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=71730">Email</a> | 
+<a href="../viewpostP.html$/thread=71730.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=39822.html" title="TDD Jolted the Industry!">Previous</a> | 
+<a class="sl" href="thread=132358.html" title="Encapsulation Violation">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Shift Your Paradigm!</span><br>
+<span class="ts">Why Your Code Sucks</span><br/>
+<span class="as">by Dave Astels</span><br/>
+<span class="pd">September 27, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+If you are like most, and possibly even all, programmers (this
+author humblely included) then your code sucks.  Maybe not all of it, and maybe not all the time, but certainly some of it, some of the time.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h3>Your code sucks if it doesn't work.</h3>
+<p>Does your code work? How do you know?  Can you prove it?</p>
+<p>If you don't have tests for your code, it sucks.  And I mean
+comprehensive, fine grained, programmer tests (aka something like unit
+tests), as well as higher level functional and integration tests.
+Tests that are automated.  Tests that are run routinely.  With the
+programmer tests run after any change to the code.  </p>
+<p>Without adequate tests (in terms of both quantity and quality) you
+simply can't have confidence that your codes works as required.  And
+even if you are confident with your work... why should anyone else be?
+What about people who work on the code later?  How do they know it
+still works after they make their changes?</p>
+<!-- section -->
+<h3>Your code sucks if it isn't testable.</h3>
+<p>OK, so you decide to add tests to your code.  That typically isn't
+so easy.  The odds are that your code wasn't designed and/or
+implemented to be easily testable.  That means you will have to make
+changes to it to make it testable... without breaking any of it (this
+is usually called <i>refactoring</i> these days).  But how can you
+quickly and easily tell if you've broken anything without that
+comprehensive set of fine grained tests?  Tricky.  </p>
+<p>It's even trickier than that.  If you take the approach that you'll
+write tests for all your code <i>after</i> you write the code, you
+have to go to extra effort to try and design/write the code to be
+testable.
+</p>
+<p>Maintaining an adequate level of testing when writing tests after
+the code being tested takes time and planning.  And if you have to do
+additional work to make your code testable... well... that sucks.</p>
+<p>Writing tests before you write the code means that the code is
+testable by definition.  If you work one test at a time, you reap even
+more benefit, as each test only requires incremental changes to code
+that you know is solid.
+
+<!-- section -->
+<h3>Your code sucks if it's hard to read.</h3>
+<p>Code should be easy to read.  Steve McConnell made the
+statement at his SD West '04 keynote that code should be convienent to
+read, not convienent to write.</p>
+<p>There are several things involved here.  Choosing good names that
+are self-explainatory is a good place to start.  Strive for simple
+solutions, even if they are more verbose or inefficient.  Whether
+inefficiency is a problem won't be known until profiling is done later
+in the project, in a real production situation.</p>
+<p>Choose style and formating conventions early in the project, and
+conform to them.  Require that everyone conform to them.  This will be
+easier to do if everyone has a hand in deciding on the conventions and
+buys into them.  This will make the code uniform and thus easier to
+read.</p>
+<p>And get rid of any and all duplication.  More on this later.</p>
+<!-- section -->
+<h3>Your code sucks if it's not understandable.</h3>
+<p>This is closely related to the previous point.  Code can be
+readable, but still not easily understood.  Maybe it reads well but is
+misleading.  Maybe you took the time to pick a good name for that
+variable, but the way it's used and what it means has changed, but the
+name hasn't.  That's worse than using a cryptic name... at least in
+the latter case, the reader knows the name is meaningless.  If the
+name is missleading, the reader can make ungrounded assumptions about
+what's happening in the code, leading to misunderstanding, and
+eventually bugs.</p>
+<!-- section -->
+<h3>Your code sucks if it dogmatically conforms to a trendy framework
+at the cost of following good design/implimentation practices.</h3>
+<p>For example, Bob Martin recently raised the issue of dogmatically
+using private fields and getters/setters for a simple data structure
+(e.g. a DTO).  If a field is transparently readable and writable why
+not simply make the field public?  In most languages you can do that.
+Granted, in some you can't.  For example, traditionally in Smalltalk
+all fields are private and all methods are public.</p>
+<p>In general it's a good thing whenever you can throw out, or avoid
+writing, some code.  Using a heavy framework generally requires that
+you must write a significant amount of code that has no business
+value.</p>
+<p>There are a variety of lightweight frameworks for Java that are a
+response to the heavyweight frameworks (e.g. EJB) that have
+become matters of dogma lately.  O'Reilly has a new book out on this
+topic, coauthored by Bruce Tate.</p>
+<p>When making framework decisions, consider if a lighter framework will
+do the required job.  Using something like Hibernate, Prevayler,
+Spring, PicoContainer, NakedObjects, etc. can be a real win in many
+situations.  Never blindly adopt a heavy framework just because it's
+the current bandwagon.  Likewise, don't blindly adopt a lightweight
+framework in defiance.  Always give due consideration to your
+choices.</p>
+<!-- section -->
+<h3>Your code sucks if it has duplication.</h3>
+<p>Duplication is probably the single, most important thing to banish
+from your code.</p>
+<p>Duplication can take several forms:</p>
+<dl>
+<dt><b>textual</b></dt> <dd>This is the simplest and often the easiest
+to find.  This is when you have sections of code that are identical or
+nearly so.  This is often a result of copy &amp; paste programming.
+Several techniques can be used to eliminate it, including: extracting
+methods and reusing them, making a method into a template method,
+pulling it up into a superclass, and providing the variations in
+subclasses, and other basic refactorings.  See Fowler's "Refactoring"
+for more detail.  </dd>
+<dt><b>functional</b></dt> <dd>This is a special case of textual
+
+duplication and is present when you have multiple functions/methods
+that serve the same purspose.  This is often seen in projects that are
+split up between groups that don't communicate enough.  This could be
+a result of copy &amp; paste, or it could be the result of ignorance
+of existing code or libraries.  Practices and policies that encourage
+and promote knowledge of the entire codebase and all libraries and
+frameworks being used can help avoid functional duplication.</dd>
+<dt><b>temporal</b></dt> <dd>This is a bit odder, more obscure, and not as
+easy to find.  You have temporal duplication when the same work is
+done repeatedly when it doesn't have to be.  This isn't a problem in
+the same way as the previous two forms of duplication since it doesn't
+involve having <i>extra</i> code laying about.  It can become a
+problem as the system scales and the repeated work starts taking too
+much time.  Various caching techques can be used to address this
+problem.</dd>
+</dl>
+<p>Of the three types I've identified above, textual duplication is the
+worst.  It is the quickest to bite you as the system grows.  It has a
+nasty habit of being viral:  when you see code duplicated in the
+system, it can be tempted to think "Oh, well then, it's not a problem
+if I just nic this code and put a copy of it over here and fiddle it a
+bit.  Hey, everyone else is doing it!"  It's a lot like the Broken
+Window that Dave Thomas &amp; Andy Hunt talk about.  If you don't keep on
+top of the <i>little things</i> as they appear, the whole thing will
+soon go down the toilet.</p>
+<h3>Summary</h3>
+<p>So, chances are pretty good that some of your code sucks.</p>
+<p>What are you going to do about it?  Well, first you have to
+recognise the fact (and hopefully this article has helped with that)
+and admit that there's a problem.</p>
+<p>Then you have a choice.  You can choose to do something about it.
+You can learn new ways to work... ways that help you write better
+code.  That's great.  If only one programmer out there does this, I'll
+be happy.</p><p>Your other option is to do nothing about it, and continue writing
+code the way you always have.</p>
+<p>It's your choice.  Choose wisely.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=71730.html">21
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=71730&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Dave Astels adds a new entry to <a href="../index.html$/blogger=dastels.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/dastels.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D71730&amp;title=Why+Your+Code+Sucks&amp;bodytext=If+you+are+like+most%2C+and+possibly+even+all%2C+programmers+%28this%0D%0Aauthor+humblely+included%29+then+your+code+sucks.++Maybe+not+all+of+it%2C+and+maybe+not+all+the+time%2C+but+certainly+some+of+it%2C+some+of+the+time.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D71730&amp;title=Why+Your+Code+Sucks">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D71730&amp;title=Why+Your+Code+Sucks">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/daveAstels.jpg"/></td><td>Dave Astels has been developing hardware and software solutions for more than 20 years in domains ranging from environment control systems to electrical energy trading systems to mass market products. Since the late 1980s he has been working exclusively with object technologies: a mix of C++, Smalltalk, Java, and some more obscure OOPLs.  Since the late 1990s, he has been studying, using, evangelizing, and teaching Agile Development processes and practices.  He has coauthored/authored two books for Prentice Hall: "A Practical Guide to eXtreme Programming" and "Test-Driven Development: A Practical Guide". He also edits the TDD edition of The Coad Letter, which is part of the Borland Development Network.  He co-founded and runs Adaption Software, Inc. (www.adaptionsoft.com).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Dave Astels. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

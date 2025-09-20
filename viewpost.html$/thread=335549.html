@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Web App with jQuery, CoffeeScript, Ajax, Web.py &amp; Heroku</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=335549.html">Discuss</a> | 
+<a href="mailto:?subject=Web App with jQuery, CoffeeScript, Ajax, Web.py &amp; Heroku&amp;body= %0AArtima Weblogs %0AWeb App with jQuery, CoffeeScript, Ajax, Web.py &amp; Heroku %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=335549">Email</a> | 
+<a href="../viewpostP.html$/thread=335549.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=334450.html" title="Speaking in Grenoble, France and Stockholm">Previous</a> | 
+<a class="sl" href="thread=336595.html" title="Some Insights From Europe">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Web App with jQuery, CoffeeScript, Ajax, Web.py &amp; Heroku</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">September 30, 2011</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Following up on my previous article, I create a super-simple example where a web page communicates with the server (written in Web.py) sending a JSON request object and receiving a JSON object as a response, which it uses to dynamically update the page. Afterwards, James Ward quickly loads the example into Heroku using their new Python support.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=335011.html">Here is the previous article, showing how to use CoffeeScript and jQuery</a>.</p>
+<p>I chose <a class="reference" href="../_/http/webpy.org/index.html">Web.py</a> because it's the simplest and most straightforward web framework I've found for Python. Despite that, you can do quite a bit with it. If you want to get fancy, you'd probably choose <a class="reference" href="../_/https/www.djangoproject.com/index.html">Django</a> since it seems to have become the leading web-framework contender for Python. But for quick-and-simple, which is what I wanted for this example, it's hard to beat Web.py.</p>
+<p>The intent of this example is to utilize high-level tools to create a very simple web app. The app will live on a single page that the Web.py server will hand you when you go to the URL. Every two seconds, this page will create a JSON object consisting of data from a text field on the page, and a randomly-generated number. The JSON object will be sent to the server as a POST request, and the server will respond by modifying the data and returning it to the page as a new JSON object. The page will take the data and update itself. Thus it makes the web page a reasonably-complete user interface for the application (this app will even automatically start up the web page, so it could be used as a desktop application).</p>
+<p>The web page is very minimal, with a text field for input and an H1 field to be manipulated by jQuery to display the output. The page lives in the <strong>templates</strong> subdirectory and is named <strong>displaydata.html</strong> which you'll shortly see is important:</p>
+<pre class="literal-block">
+&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;title&gt;Webpy, CoffeeScript and jQuery Ajax&lt;/title&gt;
+    &lt;link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"&gt;
+    &lt;script type="text/javascript" src="/static/jquery.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="/static/getdata.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;center&gt;
+      &lt;input class="text" id="mod" size="10" style="font-size:2em"/&gt;
+      &lt;h1 id="data"&gt;&lt;/h1&gt;
+      &lt;/center&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>Note that we include <strong>getdata.js</strong> here, which will be produced later via CoffeeScript.</p>
+<p>(Also, this is the first time I've -- finally! -- figured out how to set up the icon, thanks to help from someone on the Web.py newsgroup. I don't know why that one is so obscure).</p>
+<p>I'll describe the Web.py application in pieces, and then give you the whole file at the end. After the imports (note that Web.py just requires a single file), the <strong>urls</strong> describes a mapping between URLs and classes to handle those URLs. Here, we just have one:</p>
+<pre class="literal-block">
+import web, json, webbrowser, multiprocessing
+
+urls = ( # URLs mapped to handler classes
+    '/', 'home',
+)
+</pre>
+<p>Next, we tell Web.py where the templates live in the file system. In this example, I am not doing any actual rendering, but Web.py has a nice templating system for substituting when you call a template, and you can insert Python code that gets executed as the template is rendered. This can be quite powerful, and it's nice because it's just Python so you don't have to learn yet another language for templating:</p>
+<pre class="literal-block">
+render = web.template.render('templates/')
+</pre>
+<p>Here's the class that handles requests to the root URL as mapped in <strong>urls</strong>. As you might expect, the GET method handles HTTP GET requests at that address, and the POST method handles the POST requests:</p>
+<pre class="literal-block">
+class home:
+    def GET(self): # Show displaydata.html
+        return render.displaydata()
+
+    def POST(self):
+        input = web.input()
+        web.header('Content-Type', 'application/json')
+        return json.dumps({ # Do trivial operations:
+            'txt' : input.mod.lower(),
+            'dat' : "%.3f" % float(input.num)
+            })
+</pre>
+<p>The call to <strong>render.displaydata()</strong> goes to the <strong>templates</strong> subdirectory and finds <strong>displaydata.html</strong>, then passes it through the rendering engine (if we had given arguments, those arguments would be evaluated during rendering). In our case, we have nothing but plain HTML so no replacement occurs during rendering. Thus, all it does is return the previously-shown HTML to the browser.</p>
+<p>The <strong>POST</strong> method is called by the page, as you'll see later. The first thing it does is unpack the data from the query by calling <strong>web.input()</strong>, and this produces the <strong>input</strong> object which contains the fields created by the web page when it makes its Ajax call. These fields are <strong>mod</strong> and <strong>lower</strong> so they can be easily accessed by saying <strong>input.mod</strong> and <strong>input.lower</strong>.</p>
+<p>In order to return a JSON object, we must set the header on the web page to indicate this. To format the JSON object, we use Python's <strong>json.dumps()</strong> function, and hand it a structure: the <strong>txt</strong> field takes <strong>input.mod</strong> and lowercases the string, while the <strong>dat</strong> field shortens <strong>input.num</strong> to be three places beyond the decimal point. The goal here is just to do something simple to show that the server is doing a little work and returning the result.</p>
+<p>Here's the <strong>main</strong> to start everything up:</p>
+<pre class="literal-block">
+if __name__ == '__main__':
+    app = web.application(urls, globals())
+    multiprocessing.Process(target=app.run).start()
+    webbrowser.open_new_tab("http://0.0.0.0:8080/")
+</pre>
+<p>The first line is the standard way to start a Web.py application. In the second line, I use Python's <strong>multiprocessing</strong> library to run the server in the background, which then allows me to automatically open a browser window pointing at the URL via Python's <strong>webbrowser</strong> library. This way, you can create an application that the user can start up by double-clicking an icon, and the UI will appear as a page in the user's browser.</p>
+<p>(As an alternative, some browsers allow invocation from the OS specifically to act as UIs for local apps. For example, you can launch Google chrome in app mode by invoking it with a switch at command line specifying the address of the said app, e.g.:</p>
+<pre class="literal-block">
+chrome --app=http://localhost:7842
+</pre>
+<p>This produces a chrome instance without an address bar displaying your app, living in a different space than the default chrome browser).</p>
+<p>Here's the whole Python file, which I called <strong>server.py</strong>:</p>
+<pre class="literal-block">
+import web, json, webbrowser, multiprocessing
+
+urls = ( # URLs mapped to handler classes
+    '/', 'home',
+)
+
+# Where the templates live:
+render = web.template.render('templates/')
+
+class home:
+    def GET(self): # Show displaydata.html
+        return render.displaydata()
+
+    def POST(self):
+        input = web.input()
+        web.header('Content-Type', 'application/json')
+        return json.dumps({ # Do trivial operations:
+            'txt' : input.mod.lower(),
+            'dat' : "%.3f" % float(input.num)
+            })
+
+if __name__ == '__main__':
+    app = web.application(urls, globals())
+    multiprocessing.Process(target=app.run).start()
+    webbrowser.open_new_tab("http://0.0.0.0:8080/")
+</pre>
+<p>There's one more piece, which is the CoffeeScript that produces the <strong>getdata.js</strong> JavaScript file included in the HTML:</p>
+<pre class="literal-block">
+getData = -&gt;
+  $.post "/",
+    { mod: $(".text").val(), num: Math.random() * Math.PI * 2 },
+    (result) -&gt;
+      $("#data").html(result.dat + " " + result.txt).hide().fadeIn(500)
+  setTimeout getData, 2000 # Repeat every 2 seconds
+
+$ -&gt;
+  getData()
+</pre>
+<p>The <strong>getData</strong> function calls jQuery's Ajax <strong>post</strong> function. The first argument is the URL to post to (it assumes the base of this URL is the same one that the page originated from, which is required). The second is the JSON object that will be sent as the POST data; you'll remember that the keys for this object (used within <strong>home.POST</strong> in the Python app) are <strong>mod</strong> and <strong>num</strong>. <strong>mod</strong> gets the value from the component with a class of <strong>text</strong>, while <strong>num</strong> is generated with JavaScript's random number generator (note that CoffeeScript can transparently call JavaScript code).</p>
+<p>The third argument is a callback function which is called when the Ajax request returns. The <strong>result</strong> argument is the JSON object that is returned by the Python <strong>home.POST</strong> method, and note that the <strong>dat</strong> and <strong>txt</strong> fields are accessed with simple dot notation. The field with id <strong>data</strong> is modified by inserting our result data formatted as HTML. The <strong>hide()</strong> and <strong>fadeIn()</strong> are jQuery calls to fancy it up a little.</p>
+<p>Finally, <strong>setTimeout</strong> is a JavaScript function that calls another function after a number of milliseconds. This way, the page keeps refreshing itself every two seconds.</p>
+<p>The last two lines are the equivalent of a <strong>main()</strong> method: after the page is loaded and ready, the <strong>$ -&gt;</strong> block will be executed and that will get everything started.</p>
+<p>Skip to the end of the article to see the application running in your browser.</p>
+<div class="section">
+<h1><a id="server-side-events-in-html5" name="server-side-events-in-html5">Server-Side Events in HTML5</a></h1>
+<p>The above approach works in many situations; periodically polling the server is often all you need to do. Sometimes, however, it's a little too primitive and what you'd like is for the application on the server to be able to drive the UI by pushing data to it whenever it needs to.</p>
+<p>To address this issue, HTML5 is standardizing <a class="reference" href="../_/http/today.java.net/article/2010/03/31/html5-server-push-technologies-part-1/index.html">Server-Sent Events</a>. This technology is <a class="reference" href="../_/http/en.wikipedia.org/wiki/Server-sent_events/index.html">supported now in most browsers</a>, however not IE9 (it may appear in IE10, but you never know with IE). I've posted a question to the Web.py newsgroup asking whether there is support for Server-Sent Events.</p>
+<p>Server-Sent Events completes the package and makes HTML5 a full UI; I look forward to experimenting with it.</p>
+</div>
+<div class="section">
+<h1><a id="heroku-python-support" name="heroku-python-support">Heroku Python Support</a></h1>
+<p><a class="reference" href="../_/http/www.heroku.com/index.html">Heroku</a> is a cloud application platform. They seem to have the goal of making cloud deployment of your app as easy as possible, and they also seem to be trying to adapt to whatever technology you happen to be using.</p>
+<p>Just today they announced support for Python. You can find a <a class="reference" href="../_/http/devcenter.heroku.com/articles/python/index.html">walkthrough here</a> and there's specific information about using it with <a class="reference" href="../_/http/blog.heroku.com/archives/2011/9/28/python_and_django/index.html">Django here</a>.</p>
+<p>Because I've been preparing for <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=334450.html">this speaking trip to Europe</a>, I have yet to delve into the details of Heroku. My friend James Ward (who now works there) asked to see the code for this article, and upon receiving it had it set up in less than 30 minutes (even though he is a Python novice and hasn't used Web.py). Here are the steps he used (with the basic Heroku stuff already set up):</p>
+<p>Create a new file in your src dir named "Procfile" containing:</p>
+<pre class="literal-block">
+web: python server.py ${PORT}
+</pre>
+<p>Create a new file in your src dir named "requirements.txt" containing:</p>
+<pre class="literal-block">
+web.py
+</pre>
+<p>Create the git repo, add the files to it, and commit them:</p>
+<pre class="literal-block">
+git init
+git add .
+git commit -m init
+</pre>
+<p>Create the app on Heroku:</p>
+<pre class="literal-block">
+heroku create -s cedar
+</pre>
+<p>Deploy the app:</p>
+<pre class="literal-block">
+git push heroku master
+</pre>
+<p>It's kind of clever the way they use git as the deployment mechanism. I have to say I'm pretty impressed by how quickly this could be deployed on Heroku. I think it's a tribute to the simplicity of Web.py that there weren't any snags.</p>
+</div>
+<div class="section">
+<h1><a id="id1" name="id1"><a class="reference" href="../_/http/blazing-rain-3960.herokuapp.com/index.html">Here is the app running under Heroku</a></a></h1>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=335549.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=335549&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335549&amp;title=Web+App+with+jQuery%2C+CoffeeScript%2C+Ajax%2C+Web.py+%26%2338%3B+Heroku&amp;bodytext=Following+up+on+my+previous+article%2C+I+create+a+super-simple+example+where+a+web+page+communicates+with+the+server+%28written+in+Web.py%29+sending+a+JSON+request+object+and+receiving+a+JSON+object+as+a+response%2C+which+it+uses+to+dynamically+update+the+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335549&amp;title=Web+App+with+jQuery%2C+CoffeeScript%2C+Ajax%2C+Web.py+%26%2338%3B+Heroku">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335549&amp;title=Web+App+with+jQuery%2C+CoffeeScript%2C+Ajax%2C+Web.py+%26%2338%3B+Heroku">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2011 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

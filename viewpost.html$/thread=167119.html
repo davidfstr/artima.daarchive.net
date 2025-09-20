@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Signs of the Next Paradigm Shift: Part I</title>
+<meta charset="utf-8"/>
+<meta content="James O. Coplien" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cope.html">James O. Coplien's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=167119.html">Discuss</a> | 
+<a href="mailto:?subject=Signs of the Next Paradigm Shift: Part I&amp;body= %0AArtima Weblogs %0ASigns of the Next Paradigm Shift: Part I %0Aby James O. Coplien %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=167119">Email</a> | 
+<a href="../viewpostP.html$/thread=167119.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=72425.html" title="East of West and West of East: Engaging Other Academic Cultures">Previous</a> | 
+<a class="sl" href="thread=167729.html" title="Signs of the Next Paradigm Shift: Part II">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software: The Next Generation</span><br>
+<span class="ts">Signs of the Next Paradigm Shift: Part I</span><br/>
+<span class="as">by James O. Coplien</span><br/>
+<span class="pd">July 31, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Design techniques good and bad come and go in the industry, often more quickly than educators can foresee.
+This 'blog looks whimsically at a possible resurgence in Multi-paradigm Design, and Part II reflects on how educators can prepare students for industry design whims.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+Hello, everyone,
+
+<p>
+It's good to be back from a long hiatus,
+during which time I made a foray
+into the surreal world of startup software development.
+Having one's heart, soul and mind in the throes of everyday development makes it difficult
+to dedicate time to the kind of reflection good writing requires.
+It's good to be back.
+
+<p>
+Today's topic is an old one: multi-paradigm design.
+My book
+<a href="../_/http/www.amazon.com/gp/product/0201824671/index.html"><i>Multi-paradigm
+Design for C++</i></a> first appeared in October 1998.
+It was a distillation of ideas that emerged from the Software Production Research department
+at Bell Labs where I had been working on C++ and object-oriented programming,
+when a new boss named Dave Weiss brought a domain analysis agenda to the
+department.
+As a software design researcher, I took an interest in
+Dave's ideas.
+My interest became a project when Dave's boss, the well-known Bell Labs manager
+Sandy Fraser, challenged me to find a way to combine Dave's work with mine.
+Multi-paradigm design was the answer.
+
+<p>
+Multi-paradigm Design was a refinement and broad elaboration of notions
+that go back to the earliest days of the C++ programming language.
+One-time Dane Bjarne Stroustrup has never called C++ an "object-oriented programming
+language," and has noted on occasion that if you want to use Smalltalk,
+then you should use Smalltalk: Smalltalk is the best Smalltalk
+there is.
+That good design takes taste, insight, experience, and a rich toolset
+was one of his more closely held sentiments.
+He would occasionally use the phrase "multiple paradigms."
+And when I organized a panel several years ago with panelists including
+fellow Dane Ole Lehrman Madsen, he noted that
+<a href="../_/http/www.daimi.au.dk/~beta/#papers/index.html">Beta</a>
+is a language that "transcends paradigms."
+Hmmm, maybe it's a Danish thing.
+Anyhow, these ideas begged exploration and expression, and
+a good part of my career took up this endeavor.
+
+<p>
+The work took shape, honed by workshops and lectures.
+One of the earliest lectures was given at a conference in Boston in 1993,
+and the work already constituted a well-rehashed set of concepts at that time.
+Since then I have published a handful of papers on the topic, and the book
+(which was an outgrowth of the original 1993 lectures) eventually appeared
+in English in late 1998.
+Since then the book has also appeared in Japanese
+(<a href="../_/http/users.rcn.com/jcoplien/Nippon/MPD/index.html">マルチパラダイムデザ
+インと
+C++における実装</a>),
+Chinese
+(<a href="../_/http/www.china-pub.com/computers/common/info.asp$/id=16698.asp">译者：鄢爱兰周辉</a>),
+and Russian
+(<a href="../_/http/www.piter.com/book/978594723895/index.html">МУЛЬТИПАРАДИГМЕННОЕ 
+ПРОЕКТИРОВАНИЕ ДЛЯ C++</a>).
+
+<p>
+Briefly, multi-paradigm design (MPD) is this:
+
+<ol>
+<li>
+Let your intuition guide the formation of groupings,
+called <i>families</i>,
+in the problem domain.
+<li>
+Find out what is common among family members;
+for example, they may all share the same
+structure and behaviour.
+<li>
+Parameterize how the family members vary;
+for example, they may all vary in the
+algorithms they use to implement certain
+behaviours.
+<li>
+See if some available implementation technique
+nicely expresses the commonality/variability association
+you found for each of the given domains.
+For example, the object paradigm is very good at
+expressing commonality in behaviour and variation
+in each behaviour's algorithms (inheritance and
+virtual functions), while templates are great to
+express commonality in code that must be parameterized
+with some value or type.
+<li>
+Frame out the structure, and code it up.
+</li></li></li></li></li></ol>
+<p>
+This is different than using "object-oriented analysis" -- whatever
+that is -- that might prejudice the analysis with premature design
+partitioning.
+It allows one to come to object-oriented design honestly and offers
+strong cues about where templates, overloading, and other C++ goodies
+apply.
+And it's not only for C++.
+It's just that having a richly expressive language makes the transition
+from domain analysis to coding easier, and C++ was one of the few languages
+back in the early 1990s that offered such expressiveness;
+Ada was potentially another.
+Java as we know it today supports most such expressiveness, as does
+the C# programming language that has since come onto the scene.
+
+<p>
+In this 'blog I'll ask you to puzzle with me over why there seems
+to be renewed interest in multi-paradigm ideas these days after
+more than a decade of disinterest and, sometimes, outright criticism
+or even dismissal of such notions.
+
+
+<h1>Mixed Reviews</h1>
+
+Every author's dream is that his or her work receive stellar reviews in a large
+number of visible publications.
+While my earlier books had enjoyed good reviews, the reviews for
+the MPD book were mixed.
+Francis Glassborow (C-Vu)
+<a href="../_/http/www.accu.org/bookreviews/public/reviews/m/m001789.htm">almost
+gave it the honor of the top C/C++ book for 1998</a>,
+edged out by the excellent
+<a href="../_/http/www.amazon.com/gp/product/0201309564/index.html"><i>Generic
+Programming and the STL</i></a> by Matt Austern.
+Angelika Langer and Klaus Kreft poured high praise on the book in their review,
+"a great book filled with elaborate and compelling ideas".
+There were favourable reviews by Brad Appleton in Computer Literacy,
+Steve Berczuk and others on Amazon,
+and even one in German by Ulrich Eisenecker -- who would later recount the book's role
+as one of the foundations of Generative Programming.
+David R. Miller wrote a studious and
+<a href="../_/http/www.inkdrop.net/docs/multiParadigm.pdf">insightful
+review of the book</a> in 1991.
+But Robert Glass's review was mixed, saying that though it may be
+"the definitive book on domain analysis and engineering,"
+that it was a difficult and unrewarding read.
+The Amazon ranking is a lackluster three and a half stars,
+and many readers' reviews were unflattering.
+
+<p>
+The bottom line is that the book sales were flat,
+it was hard to find industrial application of its ideas,
+and educators didn't touch it with a ten-foot pointer.
+
+<h1>Back to the Future</h1>
+
+There has been a coincidence of good little signs of recognition
+for the now 8-year-old book in recent weeks.
+The first was in a mail I received from Lise Hvatum at Schlumberger,
+in which she said that Scott Meyers had been advocating the book
+in his lectures on C++ for Embedded Systems.
+Scott in fact has been a long-time advocate of multi-paradigm
+approaches, and has publications in the area.
+
+<p>
+The second and most elaborated review came in a
+<a href="../_/http/www1.sungard.com/sungard/blog/post/darren/23/Commonality-and-Variation-key-CSA-principles/index.html">'blog
+from Darren Wesemann</a> at Sungard.
+<a href="../_/http/sungard.com/index.html">SunGard</a> is a $4 billion software house that extensively employs what they call a <a href="../_/http/www.sungard.com/csa/index.html">Common Services Architecture</a>,
+which is a method and architecture based extensively on reusable components.
+The 'blog describes how MPD is a central underpinning of their
+overall development framework.
+
+<p>
+This post was particularly important for me.
+While I had seen MPD work in the small many times
+over the years, and while I still think it's a good model
+for how great programmers actually think about programming
+in C++ without being conscious of it, I had uncovered few
+enterprise-scale applications of MPD techniques.
+Neil Harrison and I had often discussed the relative
+failure of domain engineering techniques; the ideas look
+good on paper,
+but they seemed always to fall victim to unevenness
+in the scope and scale of parameters of variation within
+a given domain.
+People want to enumerate all variabilities in the same
+basket without pausing to think about scoping them, or
+about how to ascribe the right variabilities to the right abstractions.
+Most analysts mix parameters of variation from several domains
+into a single pot, failing to build on even the degree of
+domain knowledge they possess.
+
+<p>
+I sent Darren's 'blog to my colleague
+<a href="../_/http/prog.vub.ac.be/~tjdhondt/index.html">Theo D'Hondt</a>.
+I was Theo's Ph.D. student from 1997 to 2000, during which time
+I both expanded and significantly refined the MPD concepts.
+I whimsically pointed out that Darren's post provided evidence
+that University research indeed had industrial benefits.
+Theo responded by saying that VUB was considering starting a "largish"
+program centered on variability in software development.
+So yet a third advance on the MPD front.
+
+<p>
+The fourth and final sign of encouragement came from my friend
+Trygve Reenskaug.
+Trygve is best known for his early work on object-oriented programming
+and in particular for having raised the importance of roles as an organizing
+design principle.
+Out of this work on roles came the famous Model-View-Controller architecture,
+as well as his OORAM method as described in his great book
+<a href="../_/http/www.amazon.com/gp/product/1884777104/index.html">Working with Objects:
+the OORAM Software Engineering Method</a> that discusses <i>object</i>-oriented
+programming instead of this class-oriented programming about which one
+hears so much (see my
+<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=6771.html">'blog</a>
+on this topic and Trygve's follow-up comments).
+I hold him in awe, and what he says means much to me.
+I just got a short mail from Trygve on June 30 that said nothing more than:
+
+<blockquote>
+<pre><font size="+1">
+Hi,
+Been reading "Multi-Paradigm Design for C++". A truly impressive and
+scholarly work!
+
+Cheers
+--Trygve</font>
+</pre>
+</blockquote>
+
+Trygve came from a culture close to the work of Kristen Nygaard,
+one of the fathers of Simula and object-oriented programming.
+I had given a copy of the book to Kristin
+while at ROOTS in mid-May 2001, about a year before
+his death.
+Coincidentally, I had just visited Trygve at his company in Oslo one week earlier
+(though the main topic there was patterns rather than multi-paradigm design).
+
+<p>
+So after thirteen years of skepticism and marginalization,
+MPD is suddenly coming into some limelight.
+Does this mean that MPD is maybe not a niche idea after all?
+And if that's so, what is going on in the world <i>now</i> that
+such notoriety should start to blossom?
+
+<h1>Whither Thirteen Years?</h1>
+<p>
+It was thirteen years ago that I made that first MPD presentation
+at the OBJEX conference in Boston.
+Thirteen years is an eternity in Internet years.
+What explains the potential newfound interest in MPD
+and the long gestation period?
+
+<p>
+I'd be interested in 'blog readers' thoughts on this.
+Please add your comments below.
+In the mean time I'd like to explore three possibilities:
+that it didn't market itself as a miracle cure,
+that it hit an optimally bad point in the world economy curve,
+and that there just might be a necessarily fixed gestation period for new ideas.
+
+
+<h2>Sex Sells</h2>
+<p>
+Multi-paradigm design followed no real bandwagon of the time;
+it was a loner.
+And it was a loner not pretending to offer miracle cures.
+Object orientation had promised productivity and reuse;
+component-oriented programming had later offered the same;
+CORBA was to offer the miracle of transparent distribution.
+Promising to do the impossible (none of these technologies
+ever delivered on their claim -- read
+<a href="../_/http/www.zeroc.com/documents/riseAndFallOfCorba.pdf">here</a> about the failure
+of CORBA) gained mindshare.
+It is not necessary to have a great product for it to sell;
+only that people <i>believe</i> it could be a great product.
+Sex sells, and it has become increasingly important to be
+sexy in software.
+
+<p>
+If MPD fit any emerging design category, it would be domain
+engineering -- which at the time was relegated largely to large
+military projects that lived in the shadows of object-oriented stuff.
+It was old hat, dating back to the 1970s.
+No sane opportunist would trace the roots of their key ideas
+back to that era -- one would be perceived as way behind the
+curve or as a fool.
+Ever trying to avoid being the opportunist, I really didn't care,
+and I could see the value of the techniques.
+In the book's preface I say:
+"I never considered titles containing the words
+<i>pattern</i>, <i>object</i>, <i>CORBA</i>, <i>component</i>,
+or <i>Java</i>."
+
+<p>
+The <a href="../_/http/www.amazon.com/gp/product/0201309777/index.html"><i>Generative
+Programming</i></a> book by Ulrich Eisenecker and Krzysztof Czarnecki
+was one of the few popular books whose roots go back to an MPD seminar
+I gave in Germany in the early 1990s, that Ulrich attended, and that
+moved him to broaden beyond object orientation to deepen the
+foundations of what we know as Generative Programming today;
+much of the work was taken up by his student Krzysztof.
+A whole generative movement and <a href="../_/http/www.amazon.com/gp/product/3540411720/index.html">conference
+series</a> ensued, but it never took on the same proportions as objects,
+patterns, or components had ever achieved.
+It wasn't sex, and a lot of people didn't find it pretty.
+
+<p>
+One of the first things you learn in marketing is that sex sells,
+and in this era of object-oriented sexiness Domain Engineering looked
+like a wrinkled 80-year old.
+Indeed the entire software industry is driven by novelty.
+In MPD, the ties to C++ were novel, but C++ itself had already
+been around for a decade.
+The design technique was powerful and the translation from design
+to implementation was novel, but there was simply no way to make
+it fit Rose or Software Through Pictures, the big draws of the time.
+As such, it sat alone, unheralded by other works because of their
+ideological remoteness.
+
+<p>
+Instead, MPD is a technique of first principles.
+It is not the <i>only</i> set of consistent, broad
+principles of design that one can imagine, and indeed
+other systems of design are equally tractable as foundations
+for learning.
+But it is a fairly simple and straightforward way of thinking
+about design that, while eschewing the buzzwords, easily can
+be reconciled with the deepest principles of OOA, OOD, the
+GoF "patterns," and of course domain engineering.
+Even better, MPD provided an integrative framework that
+showed the relationship <i>between</i> these perspectives.
+That's systems thinking: thinking about relationships between
+basic concepts from diverse viewpoints.
+It is difficult to appreciate MPD without having lived
+through a few life cycles of a large system, during which
+time one comes to learn MPD principles the hard way.
+
+<p>
+One reason that sex sells is its universality:
+everyone feels they know what it is.
+(There is the old joke that OOP is like teenage sex:
+everything thinks they discovered it, and that they do it
+well, but the reality is otherwise.)
+If something is outside the comfort zone of the buzzwords
+of the day, it means that not many people are doing it.
+That makes it appear risky.
+Managers want not only low risk but would also be happy with
+a miracle or two.
+That's why people who say
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=276&amp;thread=167476.html">"Analysis
+and Implementation Cannot be Unified"</a>
+will never be listened to.
+(By the way, what the title says is wrong,
+but everything in the article is right.)
+
+<p>
+Last, MPD is open-ended. It is not a methodology or a religion,
+and is designed to be "universal" in a way so it can accommodate
+a large spectrum of programming languages and lower-level design
+techniques (such as object orientation).
+Open-ended techniques make people suspicious because they
+are easily led to believe that generality and leverage are mutually
+exclusive.
+The cool thing about MPD is that it powerfully spans the entire
+spectrum of analysis, design, and programming -- programming at
+the very lowest level.
+Yet it is suggestive rather than prescriptive.
+It is, to my mind, everything that a software guideline should be.
+I think that part of the problem is that people -- or their
+managers -- want something more prescriptive.
+If you look at the ideas that have gained mindshare in our
+industry in the past years (which is <i>not</i> the same
+as the ideas that were successful) they have a high control
+component.
+Extreme Programming -- one of the highest ceremony methods
+in existence -- is more popular than SCRUM for this reason.
+C++ (with its compile-time type system) was more popular than Smalltalk
+(which put more of the power of the type system in the hands
+of the programmer) for this reason.
+And object-oriented design (which stubbornly insisted on reducing
+all design constructs to objects) overshadowed MPD (which was
+viewed as being more laissez-faire).
+
+
+<h2>Design Method and Economics</h2>
+<p>
+I was discussing the renewed interest in MPD with Gertrud Bjørnvig, asking: why now?
+She asked what year the work first appeared, and I told her.
+She conjectures that work that appears during an economic downturn
+will always be investigated for conformity to the status quo:
+people are risk-averse in economically hard times.
+The first presentation of MPD was in 1993 at the lowest point
+of European GDP volume in many years (see
+Figure 2 in this
+<a href="../_/http/www.cpb.nl/nl/research/sector6/data/outlook_world_economy.pdf">diagram</a>).
+The book hit the bookshelves in 1998,
+right in the middle of a slowdown in the world economy.
+There was an upturn in 2000, but all eyes probably turned
+to the software ideas that were emerging concurrent with that
+upturn: it was in 2001 that Stan Lippman would turn from
+his C++ programming roots to yield to the fashion of C# to publish
+a primer on the language, and when Alexandrescu would open up
+the practical world of template programming to the C++ masses
+through his <a href="../_/http/brian.accu.org/cgi-bin/accu/rvout.cgi$/from=0rv_Francis_Glassborow&amp;file=m002281a.cgi"><i>Modern C++ Design</i></a>.
+
+<p>
+Today, with the economic signs stronger than they have
+been over the past five years,
+industry is looking to invest a bit more in the future and
+to take more risks to outpace competition.
+That might spark the spirit of innovation and exploration
+which in turn fuels interest in alternative technology.
+
+<h2>The Paradigm Shift Lag</h2>
+<p>
+I have often heard it said (but strangely enough, cannot
+track down an authoritative citation)
+that it takes a great idea 13 years to reach adoption after it is first
+introduced.
+Maybe the source was David Wheeler at AT&amp;T,
+who used to maintain that it took an idea
+15 years from the time it appeared in a research lab until it
+became mainstream.
+Such seems to have been the case with object-oriented programming
+(Simula in 1967; Smalltalk '80 in 1980), automatic transmissions
+(first introduced by Oldsmobile in 1940 but not common until the 1950s),
+and many others.
+(I'd be interested in hearing about more that you can find.)
+Maybe this corresponds to the time it takes an old generation to die out,
+or to be displaced far enough by early adapters of a new technology
+that it overtakes the inertia of earlier technologies.
+
+<p>
+From its "coming out" in 1993 to the present day is also about 13 years.
+Perhaps this wine's time has come, and that we're seeing
+echoes of it across the board.
+I'll stand up and take a risk here by saying that C++
+had a remarkably prescient view of software design.
+In a course Tom Cargill designed for
+Technology Exchange Corporation -- Addison-Wesley's
+teaching arm back in the 1980s -- he showed how most
+languages of the time were in fact slowly converging on a relatively
+stable C++ worldview.
+Maybe this trend has since converged and yielded to another
+(it's hard to argue that Python fits this model, for example -- and
+I will say more about Python later) but it was arguably true at the time.
+
+<p>
+The problem with being great and alone is that you
+stand alone.
+No other popular languages of the time featured the
+expressiveness of C++.
+Ada was taking a shot at it but would take too long
+to come to fruition, and died for lack of cultural
+compatibility with the large C language base out there.
+Java was far too immature then and C# was still to
+have its coming out at the turn of the millennium.
+From a programming language view C++ was <i>culturally</i>
+compatible with C in an upward-compatible way, but was
+not <i>ideologically</i> compatible with any other popular
+language of the time.
+
+<p>
+Also, in the 1990s -- as has been true in most software
+design thinking in the industry since the 1980s -- managers
+believed that one size fits all.
+UML is a great example of this disease.
+They were looking for a common design method that would
+insulate them from changes in technology.
+The common theme of the day was objects, and the belief
+(wildly misplaced) that OOD could save you from the pains
+of migrating from C++ to Java was a major foundation of
+management religion.
+To adopt a design strategy that depended on C++ married
+you to C++, and managers could easily fear such inflexibility
+wasn't risk-averse enough.
+
+<p>
+If one looks at a handful of popular languages
+today, one can argue that Cargill's observation
+of language convergence has
+become even more true than he may have predicted.
+The differences between C#, Java and C++ are much smaller
+today than were the differences between the main competing
+languages (Ada, Java, Visual Basic and C++? you decide)
+in the early 1990s.
+It is now easier to see, with confidence, how multi-paradigm
+design transcends the languages of the new millenium.
+In fact, it was always a broadly applicable technique if
+you were willing to replace the expressiveness of the C++
+type system with some manual discipline, but discipline
+doesn't sell, either.
+A design based on MPD would not only survive
+a language conversion but might
+help you decide, at the outset, what set of language
+features (and hence which language) might be best for
+developing a given product.
+While such choices were limited at the outset,
+the development world has slowly converged on this
+worldview, and viable implementation choices for an
+MPD design abound.
+
+<p>
+I have honestly never heard such discussions at an explicit
+level and doubt that any such rationale has risen to
+a conscious level of consideration in any project--the Sungard
+case above being the only exception I know about.
+Maybe Microsoft has a conscious MPD strategy that one sees
+reflected in their hybrid combination of languages in the
+Windows platform; however, such considerations don't really
+touch the application programmer.
+Nonetheless, the ideas have been in the air over the
+past ten years, and that's enough to
+nudge decisions one way or the other.
+
+
+
+<h1>The Next Installment</h1>
+<p>
+In the next installment I'll discuss how this thirteen-year
+hiatus affects curriculum planning, and what academia can do
+both to build a more general education framework and to
+be able to integrate new ideas as they emerge.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=167119.html">24
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=167119&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever James O. Coplien adds a new entry to <a href="../index.html$/blogger=cope.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cope.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167119&amp;title=Signs+of+the+Next+Paradigm+Shift%3A+Part+I&amp;bodytext=Design+techniques+good+and+bad+come+and+go+in+the+industry%2C+often+more+quickly+than+educators+can+foresee.%0D%0AThis+%27blog+looks+whimsically+at+a+possible+resurgence+in+Multi-paradigm+Design%2C+and+Part+II+reflects+on+how+educators+can+prepare+students+for+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167119&amp;title=Signs+of+the+Next+Paradigm+Shift%3A+Part+I">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167119&amp;title=Signs+of+the+Next+Paradigm+Shift%3A+Part+I">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jimcoplien.jpg"/></td><td>Jim Coplien is a Senior Agile Coach and System Architect at Nordija A/S, doing international consulting in organization structure, software patterns, system architecture, as well as software development in electronic design automation, telecom, and finance. In this 'blog, he reflects on his academic career pursuant to his visiting professorship at University of Manchester Institute of Science and Technology, his appointment as the 2003-2004 Vloebergh Chair at Vrije Universiteit Brussel, two years as an Associate Professor at North Central College in Naperville, Illinois, and extensive work developing some of the first C++ and OOD training materials. He is well-known for his foundational work on object-oriented programming and on patterns, and his current research explores the formal foundations of the theory of design, foundations of aesthetics and beauty, and group theoretic models of design structure. He most recent book "Organizational Patterns of Agile Software Development", co-authored with Neil Harrison, culminates a decade of research. His book "Advanced C++ Programming Styles and Idioms" defined design and programming techniques for a generation of C++ programmers, and his book "Multi-Paradigm Design for C++" presents a vision for the evolution of current OO design techniques into a more general and better grounded theory of software construction.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 James O. Coplien. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

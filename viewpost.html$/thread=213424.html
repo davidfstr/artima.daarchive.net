@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Crossing the Rich-Client Rubicon</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=213424.html">Discuss</a> | 
+<a href="mailto:?subject=Crossing the Rich-Client Rubicon&amp;body= %0AArtima Weblogs %0ACrossing the Rich-Client Rubicon %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=213424">Email</a> | 
+<a href="../viewpostP.html$/thread=213424.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=210724.html" title="What Do You Look For in a Template Engine?">Previous</a> | 
+<a class="sl" href="thread=217080.html" title="Refactoring Dynamic Code">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Crossing the Rich-Client Rubicon</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">August 29, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Much discussion on rich-client user interfaces and Ajax focuses on the client. Yet, the most fundamental design decision for a rich-client application involves the interaction between client and server, with potentially far-reaching impact on an application's overall architecture.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>A popular episode in the <a href="../_/http/www.gutenberg.org/files/6400/6400-h/6400-h.htm"><em>Life of the Caesars</em></a>, Suetonius' account of Rome's first twelve emperors, describes how Julius Caesar vacillated before deciding to cross with his army the river Rubicon on his way to call the senate at Ravenna to account:</p>
+<blockquote>
+<p>Coming up with his troops on the banks of the Rubicon, which was the boundary of his province, he halted for a while, and, revolving in his mind the importance of the step he was on the point of taking, he turned to those about him, and said: "We may still retreat; but if we pass this little bridge, nothing is left for us but to fight it out in arms... Let us go whither the omens of the Gods and the iniquity of our enemies call us. The die is now cast."  </p>
+</blockquote>
+<p>The decision to cross the Rubicon was momentous because Roman law forbade a general returning from wars to cross the river with his troops. Passing the Rubicon meant that Caesar openly challenged existing tradition, and would either have to prevail in his self-declared role as leader, or perish. Crossing the Rubicon has ever since come to mean a point of no return, a momentous decision that would change everything.</p>
+<p>Perhaps the least thing enterprise architects desire is to have to cross a point of no return. Indeed, a wise path to managing technology and design risk leads through the terrain of reversible decisions: Making small, reversible changes to a system minimizes the risk that any one of those changes do not work out. By keeping your options open, you can substitute one technology for another, should the initial choice prove ineffective.</p>
+<p>Yet, there is also risk in avoiding the decisions that involve big, fundamental changes to a system. Major redesigns of a database schema, picking a new programming language, and even choosing an enterprise framework, are often such fundamental decisions that switching to alternatives down the road, or backing out of such decisions, is seldom practical, no matter how agile the design or the development process. Still, if such decisions are called upon by pressing present needs, not making, or postponing, them could prove more disastrous over the long haul than incurring the risk of a practically irreversible decision.</p>
+<p>Is the choice of providing a rich-client user interface to an application such a big, irreversible decision?</p>
+<p>At first blush, it doesn't seem to be the case: You could just add small pieces of interactivity to an existing user interface, requiring little, if any, architectural or systemic changes. If anything, enriching a user-interface in this manner could exemplify small, reversible changes.</p>
+<p>Yet, upon a closer look, it is worth considering that almost all the major consumer-facing Web sites adhere to the principle of progressive enhancement: The basic functionality provided by a Web page works even if JavaScript is turned off in a browser; additional functionality is enabled in the presence of specific browser versions and JavaScript.</p>
+<p>Progressive enhancement can seldom just be bolted onto an existing set of HTML pages: Like security, effectively implementing progressive enhancement requires a systemic approach. Thus, the decision to provide even progressively enabled rich-client elements in the UI would require system-level, architectural support. That, in turn, suggests that properly implementing a rich-client user experience is a more involved decision. But is it an all-encompassing choice from which to back out is costly and impractical?</p>
+<p>Several frameworks attempt to alleviate the unease that come with making big decisions. Frameworks such as JSF make the question of rich client-centric architecture moot, mainly by making that decision for us. Providing a component design with client and server-side elements, turns the development process into one of defining and working with components, and letting the JSF framework and associated libraries take care of the rich-client user experience. To a lesser extent, Rails makes similar decisions for a developer, as it provides code generators for the popular Prototype and script.aculo.us Ajax libraries.</p>
+<p>Yet, I suggest that many developers choose JSF, and even to a lesser extent Rails, too, precisely for these frameworks' ability to provide high levels of rich-client user experience. It is the availability of Ajax-ready JSF components that may compel a developer to choose JSF as an architectural framework in the first place; and the ease with which to get started with Prototype or script.aculo.us through the framework are important motivators for working with Rails. In this manner, the desire of provide a rich-client user experience does lead to the big, hard-to-reverse decision of choosing a framework.</p>
+<p>Another category of rich-client frameworks, however, do not depend on any specific server-side technology. The most notable ones are Flex and the significant client-side Ajax libraries, such as Dojo. It is perfectly possible to enrich an existing Web application with Flex components without making any changes to server-side code. But beyond the most trivial visual filigree, working with Flex in that manner quickly proves ineffective.</p>
+<p>In contrast to JSF and Rails, where UI rendering for the most part takes place on the server, in the latter category of rich-client tools, rendering takes place entirely on the client. Once the client renders such UI components, the components almost always expect some kind of data from the server. In effect, the server first simply delivers the components to the client and, in a second pass, provides the components with their expected data. In a variation on this theme, it also possible to incorporate the data along with the components, embedded in the HTML as XML or JSON elements. Still, the principle is the same: The server-side framework primarily concerns itself with emitting data, and not with rendering the UI. One could argue that the primarily data-centric, as opposed to rendering-centric, task of the server a key hallmark of an Ajax-oriented architecture.</p>
+<p>I found that offering such an Ajax-centric server-side infrastructure is a major architectural decision. First, the interface to the server becomes HTTP (in the case of REST) or SOAP, and not a business-specific API written in a programming language. The deeper the HTTP or REST abstraction runs, the more sweeping the architectural decisions that provide for the rich user interface. For instance, submitting data via an Ajax POST should return HTTP response codes, not human-language error messages. It becomes the client's task to interpret those response codes and to translate them to the user.</p>
+<p>As one starts to go down the path of defining the interface between client and server in terms of REST or SOAP/RPC, the client-side portion of the project becomes big enough to warrant the organization of the code into classes. Whether through JavaScript's prototype-based objects, or with ActionScript's Java-like classes, the client-side portion of the code takes on a life of its own, with the need to manage, test, and evolve the client-side code base independent of the server's. </p>
+<p>With two parallel code-bases to maintain, it would be hard to claim that investment into the rich-client user experience is small and easily reversible. Once you go down that path, the die is cast, and you'd better have the wherewithal to stick with that design decision and to manage that architecture's inherent risks.</p>
+<p>The main risk, interestingly, may lie on the server, rather than on the client. Flex, for instance, is a so well-designed and mature that a developer with little Flex experience can create fairly complex user interfaces with it. But developing an elegant REST or SOAP/RPC interface on the server requires a lot of experience without which such projects may not succeed. In the absence of such expertise, what is likely to emerge is a hybrid of traditional, server-side rendering of HTML, with methods sprinkled here and there on server-side components to service the needs of the rich-client Flex and Ajax components.</p>
+<p>The result may not be a clean, coherent design and architecture. Inasmuch as I like Flex and some of the Ajax UI toolkits, JSF and Rails at least provide some sensible, but not always correct, defaults in binding between client and server-side components, reducing somewhat the risk of major design errors on the server.</p>
+<p>In conclusion, providing a rich-client interface is likely to be a big architectural decision. If you have already crossed the metaphorical rich-client Rubicon in your projects, to what degree did that decision impact your overall architecture? If you are standing on the banks, considering the decision, what worries you the most?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=213424.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=213424&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D213424&amp;title=Crossing+the+Rich-Client+Rubicon&amp;bodytext=Much+discussion+on+rich-client+user+interfaces+and+Ajax+focuses+on+the+client.+Yet%2C+the+most+fundamental+design+decision+for+a+rich-client+application+involves+the+interaction+between+client+and+server%2C+with+potentially+far-reaching+impact+on+an+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D213424&amp;title=Crossing+the+Rich-Client+Rubicon">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D213424&amp;title=Crossing+the+Rich-Client+Rubicon">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

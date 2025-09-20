@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Java 3D Fun with Groovy</title>
+<meta charset="utf-8"/>
+<meta content="Jeremy Meyer" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=jeremy1.html">Jeremy Meyer's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=294361.html">Discuss</a> | 
+<a href="mailto:?subject=Java 3D Fun with Groovy&amp;body= %0AArtima Weblogs %0AJava 3D Fun with Groovy %0Aby Jeremy Meyer %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=294361">Email</a> | 
+<a href="../viewpostP.html$/thread=294361.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=291467.html" title="Creating a Domain Specific Language with Groovy">Previous</a> | 
+<a class="sl" href="thread=296081.html" title="Using Groovy Builders to Simplify Complex Object Hierarchy Creation">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Musings on Language and Design</span><br>
+<span class="ts">Java 3D Fun with Groovy</span><br/>
+<span class="as">by Jeremy Meyer</span><br/>
+<span class="pd">June 2, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A quick play around with the Java3D library and Groovy to see how much easier we can make the library to use.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Java 3D Fun with Groovy</h1>
+<p>If you are anything like me, you were fascinated and enthralled by the great 3D graphics in "Avatar" (and disappointed by the story).  Occasionally, when I see graphical achievements like that, I am inspired to download the latest version of Blender, and see if I can render something superb myself. I had a similar moment after watching "Monsters Inc."</p>
+<p>
+I always discover that I can't, because as well as the obvious need to learn the finer details of a very complex world (of translations, textures and shading etc.) it also means being right-brained or creative. Not my speciality. 
+</p><p>
+This time, though, I found myself browsing for 3D images, libraries and tools, and I came across a link on instructables.com explaining how to export data from Blender to Java3D.  This sparked my interest and made me wonder how Groovy would work with Java3D, and whether we could get any leverage from it.
+</p><p>
+I thought I would play with Java3D a bit first, and see if I could create something fun. I was disappointed to find it horrendously complex. Sure, there are an enormous number of parameters that have to be added to a 3D scene, but shouldn't an API help a bit? It really felt like everything had to be done from first principals.
+</p><p>
+Here is the minimum code you need to show something in Java 3D. I have translated it into Groovy, which in this case, amounted to removing the semi-colons and replacing the types in front of every initialisation with a def statement.  Neater than the Java, but no fewer lines.
+</p>
+<pre style="color: rgb(0, 0, 153);">
+package simple
+
+import com.sun.j3d.utils.universe.SimpleUniverse
+import com.sun.j3d.utils.geometry.ColorCube
+import javax.media.j3d.BranchGroup
+
+
+class ColourCube {
+	public ColourCube() {
+		def universe = new SimpleUniverse()
+		def group = new BranchGroup()
+		group.addChild(new ColorCube(0.1))
+		universe.getViewingPlatform().setNominalViewingTransform()
+		universe.addBranchGraph(group)   
+	}
+
+	public static void main( String[] args ) {    
+		new ColourCube()
+	}
+}
+</pre>
+<p>
+I ran this quite easily in Eclipse on my Windows 7 machine, after downloading and installing Java3D. I had to add a project reference to the jar files <i>j3dcore.jar, j3dutils.jar</i> and <i>vecmath.jar</i> and under the Java build path in the project properties, I had to choose the <i>library</i> tab, <i>JRE System Library</i> and then add a <i>Native Library Location</i> which pointed to the bin directory of the Java3D install. 
+</p>
+I got this:
+<p>
+<img src="../_/https/jeremymeyer.me/images/blog/Untitled.png"/>
+</p>
+
+The results are somewhat underwhelming, mostly because the front face of the cube is coplanar with the viewing plane, and so it just looks like a square. 
+
+<h3>A lot of work</h3>
+<p>
+This also looked like a lot of work for a not very pretty result, and it struck me that creating  a new universe and adding  a new branchgroup and a new shape and a new transform etc. must be a sequence of operations that is performed again and again, and it should probably much simpler. We could even come up with a simple DSL that would let us do it.  Groovy's Builders are perfect for this, and in my next blog, I will talk about how we can make a simple builder that allows us to create graphical graphs with simple, clear, structured syntax.  For now, though, I am still on a mission to have some fun with Java3D and Groovy. So how to do this?
+</p>
+<h3>More Fun</h3>
+<p>
+The little tutorial at <a href="../_/http/www.instructables.com/id/Using-Blender-To-Create-Java3D-Models/index.html">http://www.instructables.com/id/Using-Blender-To-Create-Java3D-Models/</a> described how to download some Blender data, and export it to a Java3D readable data source, using a Python Script. If you don't know Blender, you won't know that its scripting language is Python. This allows immense power and flexibility when creating animations. (Any chance of a Groovy plugin anyone?).
+</p><p>
+Having a penchant for the macabre, I downloaded this data for a skull, made publicly available by its kind creator here: <a href="../_/http/e2-productions.com/repository/modules/PDdownloads/visit.html$/cid=1&amp;lid=58.html">http://e2-productions.com/repository/modules/PDdownloads/visit.php?cid=1&amp;lid=58.</a>   Loading it up in Blender, I got this rather pleasing result:
+</p>
+<p>
+<img src="../_/https/jeremymeyer.me/images/blog/skull.png"/>
+</p>
+<p>
+Now I am a real ignoramus when it comes to Blender, but the point was to follow the tutorial and just export the data into Java3D readable format.  This wasn't too hard. The tutorial directed me to a sourceforge project at <a href="../_/http/sourceforge.net/projects/blend2java/index.html">http://sourceforge.net/projects/blend2java/</a> which allows you to do the conversion. I found it easy enough to work out how to run a Python script in Blender (you need to show the script panel and open a text file) and the result was  
+ two xml files, Skull_Head.000.Skull.Shape3D.xml and Skull_Head.000.Mandible.Shape3D.xml.
+<a href="../_/http/www.jeremymeyer.com/downloads/SkullXMLFiles.zip"> get them in a zip file here.
+</a>
+</p>
+<h3>Loading Up the Data</h3>
+
+The Java example in the tutorial was somewhat confused, and certainly not minimal. The author, by his own admission was new to Java (and anyway, I wanted it in Groovy) so I rewrote the code, in a somewhat hacky, skull specific way as follows:
+
+<pre style="color: rgb(0, 0, 153);">
+package simple
+
+import java.beans.XMLDecoder
+import com.sun.j3d.utils.universe.SimpleUniverse
+import javax.media.j3d.*
+import javax.vecmath.*
+import java.awt.Color
+
+
+public class LoadedShape extends Shape3D {
+	public LoadShape () {
+
+	}
+	Shape3D loadShape(String filename) {
+		def de = new XMLDecoder(
+					new BufferedInputStream(
+	                       new FileInputStream(filename)))
+	    def ls = de.readObject()
+	    de.close()
+		ls
+	}
+	public static void main (String[] args) {
+		def universe = new SimpleUniverse()
+		def group = new BranchGroup()
+		def loadedShapes = []
+		def ls1 = new LoadedShape().loadShape(args[0])
+		def ls2 = new LoadedShape().loadShape(args[1])
+		group.addChild(ls1)
+		def jawTg = new TransformGroup()
+		jawTg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE)
+		jawTg.addChild(ls2)
+		group.addChild(jawTg)
+		Light light = new DirectionalLight(new Color3f(Color.BLUE), new Vector3f(1, -1, -1))
+		light.setInfluencingBounds(new BoundingSphere())
+		group.addChild(light)
+		universe.addBranchGraph(group)
+		def t3d = universe.getViewingPlatform().getViewPlatformTransform()
+		def t1 = new Transform3D()
+		t3d.getTransform(t1)
+		def jawTransform = new Transform3D()
+		jawTg.getTransform(jawTransform)
+		t1.setTranslation new Vector3f(0.0f, 1.8f, 18f)
+		t3d.setTransform t1
+		50.times{
+			3.times { angle -&gt;
+			jawTransform.rotX (angle / 10.0)
+			jawTg.setTransform jawTransform
+			Thread.sleep 200
+			}
+		}
+	}
+}
+</pre>
+<p>
+Definitely hacky, loading up the two files separately, but the loading of the shapes is very simple using the XMLDecoder class. 
+</p><p>
+It took some experimenting to get the position of the skull in the viewing platform right, but it proved the concept and with the addition of a nice, blue light, it produced another pleasing image, this time in the Java3D window:
+</p>
+<p>
+<img src="../_/https/jeremymeyer.me/images/blog/javaskull.png"/>
+</p>
+<p>
+By adding the jaw to its own TransformGroup, I was able to move it independently of the head (which is obviously why it was rendered in two parts). The two loops at the end of the code above make the jaw go up and down in a comical "<i>yuk yuk</i>" fashion. Perhaps with work I could render the entire scene from Shakespeare's Hamlet, where Hamlet holds up the skull of Yorick and talks to it.
+</p>
+<h3>Nice Result, but..</h3>
+<p>
+So, it was certainly fun, and I learnt a lot about transform groups and viewing planes etc. but it seems extraordinarily difficult to create a 3D scene in code. As I said earlier, Groovy has just the mechanism to help, in its "Builders".
+</p>
+More about those next time!
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=294361.html">22
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=294361&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jeremy Meyer adds a new entry to <a href="../index.html$/blogger=jeremy1.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/jeremy1.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D294361&amp;title=Java+3D+Fun+with+Groovy&amp;bodytext=A+quick+play+around+with+the+Java3D+library+and+Groovy+to+see+how+much+easier+we+can+make+the+library+to+use.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D294361&amp;title=Java+3D+Fun+with+Groovy">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D294361&amp;title=Java+3D+Fun+with+Groovy">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jeremyMeyer.jpg"/></td><td>Jeremy has been designing and developing software for over 20 years, as well as teaching its mastery. He is fascinated by all aspects of architecture, design and development, the philosophical, the psychological and the aesthetic. He currently heads up the training division at hybris Software, a fast growing and very exciting eCommerce company.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Jeremy Meyer. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

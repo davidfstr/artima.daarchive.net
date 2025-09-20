@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Myth of External Program Documentation</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=12199.html">Discuss</a> | 
+<a href="mailto:?subject=The Myth of External Program Documentation&amp;body= %0AArtima Weblogs %0AThe Myth of External Program Documentation %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=12199">Email</a> | 
+<a href="../viewpostP.html$/thread=12199.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=8671.html" title="The Future of UML">Previous</a> | 
+<a class="sl" href="thread=40382.html" title="Jini Community Meeting - part I">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">The Myth of External Program Documentation</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">September 7, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+If you read Computer Science text books you might imagine external program documentation actually exists. Yet, when I asked many of my  colleagues if they had ever had such documentation throughout a project's life cycle, they laughed a bit uncomfortably and said, "well, no, not really." What's going on here?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<title>Documentation </title>
+<meta content="BBEdit 7.0.4" name="generator"/>
+</head>
+<body>
+<blockquote>
+	"Do you have written documentation for your project? You know, all that
+	stuff the books say you're supposed to have: theory of operations documents
+	and high-level designs and stuff like that?", I asked.
+	<br/>
+	"You're kidding, right?", was the response.
+</blockquote>
+<h2>The Myth of External Program Documentation</h2>
+<p>
+In this blog I'd like to pick up on something I ended with last time. Here's
+the final note from <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=8671.html">
+The Future of UML</a>:
+</p>
+<blockquote>
+	I ran into somebody who had still been associated with the project this summer, 
+	some 4+ years after the first new Prescriber had shipped. "Had the documentation 
+	been helpful?", I asked. "Are you kidding?!", my friend replied. "It scared the 
+	hell out of 'em." I looked aghast. He continued, "they take one look at the size 
+	of the notebook you left and they say I'm not touching that! It looks complicated!"
+</blockquote>
+<p>
+If you read Computer Science text books you might imagine external program 
+documentation such as high-level designs, specifications, and theory of operation
+descriptions actually exist in most projects. Yet, when I asked many of my friends
+and colleagues if they had ever had such documentation throughout a project's
+life cycle, they laughed a bit uncomfortably and said, "well, no, not really."
+What's going on here?
+</p>
+<p>
+While we're on it, how do you explain the reaction to the project documentation
+I'd left for the Prescriber? Is this common? The answer to that appears to be 
+"yes". External program documentation, despite what you may have <i>learned</i>
+in all those high-minded computer science text books, remains one of the weak links
+in software development. How did this come to be and what is it costing us? And,
+why, if the industry standard is to eschew external program documentation, do we
+continue to preach the importance of such things?
+</p>
+<h2>Obsolescence</h2>
+<p>
+In his book <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0201616416/index.html">
+Extreme Programming Explained: Embrace Change</a>, Kent Beck expands on the original
+programmer adage "good, fast, cheap: pick two" and claims customers actually choose
+three of four factors: cost, schedule, features, and quality. Developers <i>choose</i> 
+(or are at least stuck with) the last variable. In either
+case I think we have, at best, done a poor job of identifying costs or, at worst,
+have openly lied about costs, thereby skewing what customers might have selected.
+</p>
+<p>
+Program maintenance constitutes 40-80% of software costs, yet I recall
+few discussions during program planning or development about such things.
+Further, maintenance costs fall largely into the category of <i>enhancements</i>.
+As Robert Glass in his book
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0321117425/index.html">
+Facts and Fallacies of Software Engineering</a>, puts it:
+</p>
+<blockquote>
+	The 60/60 rule: 60 percent of software's dollar is spent on
+	maintenance, and 60 percent of that maintenance is enhancement.
+	Enhancing old software is, therefore, a big deal.
+</blockquote>
+<p>
+Given this large number one might expect that we'd be looking for ways 
+to manage this cost and mitigate any associated risks. Steve Rakitin, in
+his book 
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/1580532969/index.html">
+Software Verification and Validation for Practitioners and Managers</a>,
+make the observation (also quoting from DeMarco and Lister) that 
+"Turnover is incredibly expensive." Rakitin's book focuses squarely on
+software quality and I believe he's right to discuss turnover in his
+"Balancing People, Process, and Product" chapter. But, <i>why</i> is
+turnover so expensive?
+</p>
+<p>
+It is estimated that roughly 30% of the total maintenance time is spent
+"understanding the existing product". (Again, I turned to Glass's book
+for this figure since it was handy.) This fact relates directly to the
+turnover number as illustrated by an Air Force study in 1983 where 
+researchers found that the "biggest problem of software maintenance"
+was "high [staff] turnover" (at 8.7 on a scale of 1 to 10), "understanding
+and lack of documentation" (7.5), and "determining the place to make a
+change" (6.9). I contend they are all related. If you have no <b>usable</b>
+documentation then all of the information is in people's heads. If the
+heads walk out the door (turnover) then the information needs to be
+rediscovered. That is not cheap.
+</p>
+<p>
+Of course, <b>useless</b> documentation is no help. Since a small 
+percentage of the software life cycle is dedicated to the creation of
+documentation, the quality of it is immediately suspect. After all, 
+if the documentation is already untrustworthy, why maintain it? 
+Why throw good money after bad? But, is a given document useless 
+10 minutes after it is written? How about 10 days? How about 10
+weeks? The tendency is to dismiss anything outside the code as
+"out-of-sync with reality" whether, objectively, that is true or
+not.
+</p>
+<p>
+Finally, there is a notion that the code is golden (at least
+documents itself) even if no other external document is present
+purporting to do so. Tools like JavaDOC, which scrape the Java
+source code of your project and create a hierarchy of web pages,
+can create the documentation at the push of a button. The bits
+will be new and fresh but are they <i>right</i>? That is, how
+is it more likely that the comments describing the inner workings
+of a particular subsystem are more accurate, descriptive, and insightful
+just because they were pulled from the Java code? Put another way,
+does source code and its associated comments ever get "out-of-sync"?
+Of course it can. At best the co-location of the documentation and the
+code can eliminate the need for "finding the right place to update the
+documentation", but it isn't a panacea. It still takes work, and 
+discipline, to ensure the documentation is correct.
+</p>
+<p>
+Assume for a moment we're willing to maroon the maintenance
+programmer with no (useful) documentation. Can documentation early
+the software life cycle help mitigate risk? It can't be out-of-sync
+too far while we're still writing it, can it?
+</p>
+<h2>Failure to Drive Out Risk</h2>
+<p>
+One of the arguments for external program documentation, especially before the
+coding stage, is that it should help drive out risk. I actually agree with this,
+at least in principal, but have been forced to also recognize this activity's
+limits. For example, it isn't unheard of to have a feasibility study to
+determine if a project is even worth attempting. Certainly this would qualify
+as a risk reducing activity. Yet, as Glass recounts in his book, he was in the 
+audience at the International Conference on Software Engineering (ICSE) in Tokyo in
+1987 when Jerry Weinberg presented his keynote. Weinberg asked the audience who among
+them had ever participated in a feasibility study where the answer
+came back <b>"No"</b>. Not a single hand of the 1,500 in attendance was raised.
+Which begs the question "how many of these documents are <i>good science</i>
+and how many are simply <i>position papers</i>.
+</p>
+<p>
+Before we have too much fun beating up management on their feasibility studies
+I think we should take a hard look at our own writings. That is, how many of
+our (scant few) documents are intended to be <i>good science</i> and how many
+have simply been constructed to deflect attacks from our critics, get our way on
+some technical issue, select our favorite vendor, choose our favorite product,
+or simply embarrass those who dared to disagree with us? 
+</p>
+<p>
+Glass quotes a fellow named Bill Curtis who said "in a room full of top software 
+designers, if any two of them agree, that's a majority." We programmers do like
+to have our opinions! But, it is sometimes difficult to even have documentation
+crisp enough to know what it is we are arguing about. I've seen some poor designs
+win over better alternatives put forth because the advocate for the better alternative
+simply didn't have the presentation skills to get the facts out there. Winning
+the argument and getting the right answer are two different things. In the case
+where the poorer design won, it is difficult to justify the documentation process
+as risk mitigation.
+</p>
+<h2>Literature</h2>
+<p>
+In many ways, a good design document is like a novel. It speaks of a world
+thus far only fictitious, in a tense that makes it sound like it already 
+exists. "The program does this and this and that..." Since most engineers
+are poor writers (or, at least <i>inexperienced novelists</i>), it is no
+wonder good design documents are hard to find. 
+</p>
+<p>
+I think it goes beyond that, however. It takes some courage to put things
+in writing and then live with the consequences. Going <i>on the record</i>
+may not be in your (personal) best interest -- even if you're right. And,
+of course, being wrong, in writing, can hang about your neck like the 
+proverbial albatross.
+</p>
+<p>
+In some ways software design documents differ from novels:
+usually the novelist knows how the story is going to end. Such is not always
+the case in software development. Yet, the design decisions made early in a
+project will affect the software throughout its life cycle. Have you ever worked
+on something and asked, either under your breath or even out loud, "what were
+they thinking?!" Documentation of the thinking at the time, even if it drew
+incorrect conclusions, would be revealing to a maintenance programmer later.
+Such revelations could save that programmer hours or even days if they had
+such a document. "Oh, I see where they were going with this; and, I can see
+why it didn't work out." Still, with all the value that might give, we don't
+do it.
+</p>
+<p>
+The final comparison to literature I believe is most apt. Writers
+make little money. This may also be true in the software world. Our boss or
+our customer needs the software; the documentation is <i>our problem</i> or 
+just some <i>internal software concern</i>. Customers and management don't
+put any emphasis on it, so software developers concentrate on what they're
+being measured upon: delivering code.
+</p>
+<h2>Myth vs. Reality</h2>
+<p>
+My problem with all this is that I can't reconcile the <i>software engineering
+practices book</i> world from the <i>real</i> world. The software books blithely
+continue to tell us about external program documentation and how it is used
+throughout the software life cycle. For the vast majority of projects I have
+worked on, there are no such documents. I contend we should fix one or the 
+other. The Extreme Programming crew has made their choice: they don't pretend
+to create such artifacts. (Castigate them if you must, but at least they
+are honest about what they do.) For the rest of us, it is a world of denial.
+I can't help but wonder if we couldn't do better.
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<b>References</b>
+<br/>
+<ul>
+<li><b>Facts and Fallacies of Software Engineering</b> by Robert L. Glass.
+		<br/>
+		Find it on <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0321117425/index.html">here</a>.
+	</li>
+<li><b>Extreme Programming Explained: Embrace Change</b> by Kent Beck.
+		<br/>
+		Find it on <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0201616416/index.html">here</a>.
+	</li>
+<li>Curtis, B. R., Guindon, H. Krasner, D. Waltz, J. Elam, and N. Iscoe. 1987.
+		<br/>
+<i>Empirical Studies of the Design Process: Papers for the Second Workshop
+		on Empirical Studies of Programmers.</i> MCC Technical Report Number STP-260-87.
+		<br/>
+		I wasn't able to find this on the web. The reference is from the Glass book
+		(above). It sounds interesting, though. If somebody has a pointer to it, please
+		let me know. I'd like to read the original.
+	</li>
+<li><b>Software Verification and Validation for Practitioners and Managers, Second Edition</b>
+		by Steven R. Rakitin 
+		<br/>
+		Find it on <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/1580532969/index.html">here</a>. 
+		My review of that work appears on that page as well. 
+	</li>
+<li><b>Peopleware : Productive Projects and Teams, 2nd Edition</b> by 
+		Tom DeMarco &amp; Timothy Lister
+		<br/>
+		Find it on <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0932633439/index.html">here</a>.
+	</li>
+<li><b>The Psychology of Computer Programming Silver Anniversary Edition</b> by
+		Gerald M. Weinberg.
+		<br/>
+		Find it on <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0932633420/index.html">here</a>.
+		My review for the work may also be found on that page. Weinberg explore
+		what does, and does not, motivate software professionals which, of course,
+		is directly related to this.
+	</li>
+<li>See all of my reviews on amazon.com 
+		<a href="../_/http/www.amazon.com/exec/obidos/tg/cm/member-reviews/-/A1VVCPL1NEHUCW/index.html">here</a>.
+	</li>
+</ul>
+<a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=12199.html">14
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=12199&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D12199&amp;title=The+Myth+of+External+Program+Documentation&amp;bodytext=If+you+read+Computer+Science+text+books+you+might+imagine+external+program+documentation+actually+exists.+Yet%2C+when+I+asked+many+of+my++colleagues+if+they+had+ever+had+such+documentation+throughout+a+project%27s+life+cycle%2C+they+laughed+a+bit+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D12199&amp;title=The+Myth+of+External+Program+Documentation">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D12199&amp;title=The+Myth+of+External+Program+Documentation">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr></body>
+</html>

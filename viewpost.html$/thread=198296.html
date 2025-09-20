@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Working Effectively With Characterization Tests</title>
+<meta charset="utf-8"/>
+<meta content="Alberto Savoia" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=agitator.html">Alberto Savoia's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=198296.html">Discuss</a> | 
+<a href="mailto:?subject=Working Effectively With Characterization Tests&amp;body= %0AArtima Weblogs %0AWorking Effectively With Characterization Tests %0Aby Alberto Savoia %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=198296">Email</a> | 
+<a href="../viewpostP.html$/thread=198296.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=196922.html" title="Developer Testing Masters and Brain Surgeons">Previous</a> | 
+<a class="sl" href="thread=198674.html" title="Working Effectively With Characterization Tests - Part 2">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Agitating Thoughts &amp; Ideas</span><br>
+<span class="ts">Working Effectively With Characterization Tests</span><br/>
+<span class="as">by Alberto Savoia</span><br/>
+<span class="pd">March 9, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the first installment in a series of short articles I plan to write on characterization testing.  Characterization testing is an important concept and an essential tool for software developers working with legacy code (i.e. most of us) and it deserves broader exposure and more attention.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>This is the first installment in a series of short articles I plan to write on characterization testing.  Characterization testing is an important concept and an essential tool for software developers stuck with, ahem, working with legacy code.  Michael Feathers introduced the term and did a great job of explaining the hows and whys of characterization tests in his book <em>“Working Effectively With Legacy Code”</em>.  If you are a software developer or manager working with legacy code, you really ought to buy the book and read it from beginning to end.  But while you wait for your Amazon.com order to arrive, I hope you enjoy my little homage, introduction, and personal twist on working with characterization tests.</p>
+<div class="section">
+<h1><a id="part-1-an-introduction-to-characterization-tests" name="part-1-an-introduction-to-characterization-tests">Part 1 – An Introduction To Characterization Tests</a></h1>
+<p>We typically think of a software test for a given piece of code as some sort of executable specification for that code; in other words, the test embodies the intended behavior of that code.  When one of these tests fails, it usually means that the code does not do what it’s supposed to do according to some explicit, or implied, specification.  Let’s call this type of test a specification test.</p>
+<p>A thorough set of specification tests is a great thing to have if you have inherited and need to modify or augment an existing body of code.  But what if that body of code does not come with an adequate set of such tests and the specifications are either non-existent, limited, or out of date?  This situation is all too common.  I would not be surprised if the majority of software developers today are working on code that they did not originally write, with only vague and partial specifications of what it is supposed to do, with few or no automated tests to ensure that their changes will not cause serious regressions in functionality.  In other words, they are working with ... legacy code.  Without proper specifications or tests, the only thing the developer has to work with is the existing code and its actual behavior: not what the code is supposed to do, but what it actually does.  And in most cases, the job is to modify existing functionality or add new functionality without breaking anything else.  It’s a tall order.  What’s a poor developer to do?</p>
+<p>Michael Feathers has the best set of answers to this challenging and complicated question, and explains his approach thoroughly in his excellent book <em>“Working Effectively With Legacy Code”</em>.  In this series of short articles, I am going to focus on one of the most important and effective techniques presented in the book – characterization tests.</p>
+<p>Michael Feathers defines characterization tests as tests that characterize the actual behavior of a piece of code.  In other words, they don’t check what the code is supposed to do, as specification tests do, but what the code actually and currently does.</p>
+<p>Having a set of characterization tests helps developers working with legacy code because they can run those tests after modifying their code and make sure that their modification did not cause any unintended or unwanted changes in functionality somewhere else.</p>
+<p>Enough theory.  Let’s create some characterization tests.  Time for a <em>Hello World</em> example.</p>
+<div class="section">
+<h2><a id="manual-creation-of-characterization-tests" name="manual-creation-of-characterization-tests">Manual Creation of Characterization Tests</a></h2>
+<p>Michael Feathers suggests a simple algorithm for writing  characterization tests:</p>
+<ol class="arabic simple">
+<li>Use a piece of code in a test harness.</li>
+<li>Write an assertion that you know will fail.</li>
+<li>Run the test and let the failure tell you what the actual behavior is.</li>
+<li>Change the test so that it expects the behavior that the code actually produces.</li>
+<li>Repeat.</li>
+</ol>
+<p>Let’s assume that I have inherited the maintenance for a sales management system (oh joy!), and that I have to make some changes to the way commissions are calculated. The code below implements steps 1 and 2 in the suggested algorithm (using the JUnit testing framework):</p>
+<pre class="literal-block">
+public void testCalculateCommissionDue() {
+        assertEquals(-42.42, SalesUtil.calculateCommissionDue(1000.0));
+}
+</pre>
+<p>The piece of code I am using is the method <em>calculateCommissionDue()</em>, part of the Java class <em>SalesUtil</em>, and I expect my assertion that the commission on $1000.00 is -$42.42 to fail – unless this company has a truly original compensation plan for sales people.</p>
+<p>I run the JUnit test (step 3) and get the following failure message:</p>
+<p><em>junit.framework.AssertionFailedError: expected:&lt;-42.42&gt; but was:&lt;200.0&gt;</em></p>
+<p>All right. It looks like for sales of $1000.0, the actual and current behavior says that the commission is $200.0.  I don’t know if that’s right or wrong, but it looks like a reasonable value.  I have to assume that, if neither the sales people nor the accounting people have not complained so far, the current behavior is what’s expected.  Since people are particularly touchy when it comes to money, I’d better make sure that when I start making changes I don’t unintentionally change this behavior.  So I modify the test to reflect the actual behavior (step 4):</p>
+<pre class="literal-block">
+public void testCalculateCommissionDue() {
+        assertEquals(200.0, SalesUtil.calculateCommissionDue(1000.0));
+}
+</pre>
+<p>I re-run the test and see that it passes. Cool, I have my first characterization test.  It’s not much, but it’s a start.</p>
+<p>What next? Step 5 says, repeat.  Sounds a bit like the instructions on your shampoo bottle. doesn’t it?  And if you are a programmer, I bet that you never repeat after you rinse. In this case, however, you do need to repeat because one test is probably not going to cut it. But how many time do you need to repeat?  When can you stop testing and start changing the code?  It all depends on the circumstances, and there are no easy answers.  Michael Feathers provides the following heuristics for writing characterization tests:</p>
+<ol class="arabic simple">
+<li>Write tests for the area where you will make your changes.  Write as many test cases as you feel you need to understand the behavior of the code.</li>
+<li>After doing this, take a look at the specific things you are going to change, and attempt to write tests for those.</li>
+<li>If you are attempting to extract or move some functionality, write tests that verify the existence and connection of those behaviors on a case-by-case basis.  Verify that you are exercising the code that you are going to move and that it is connected properly.  Exercise conversions.</li>
+</ol>
+<p>Wow.  It sounds like a lot of work.  Where to start? What am I going to do next with this example?</p>
+<p>Well, you’ll have to wait for the next installment in the series, since I promised myself to keep each of part of this series short and sweet.  In the meantime, why don’t you try your hand at writing some characterization tests on your own? Download some open source code that you are not familiar with (I suggest something very simple to get started) and see what you can do.</p>
+</div>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=198296.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=198296&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Alberto Savoia adds a new entry to <a href="../index.html$/blogger=agitator.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/agitator.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D198296&amp;title=Working+Effectively+With+Characterization+Tests&amp;bodytext=This+is+the+first+installment+in+a+series+of+short+articles+I+plan+to+write+on+characterization+testing.++Characterization+testing+is+an+important+concept+and+an+essential+tool+for+software+developers+working+with+legacy+code+%28i.e.+most+of+us%29+and+it+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D198296&amp;title=Working+Effectively+With+Characterization+Tests">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D198296&amp;title=Working+Effectively+With+Characterization+Tests">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/albertosavoia.jpg"/></td><td>Alberto Savoia is founder and CTO at Agitar Software, and he has been life-long agitator and innovator in the area of software development and testing tools and technology.  Alberto's software products have won a number of awards including: the JavaOne's Duke Award, Software Development Magazine's Productivity Award, Java Developer Journal's World Class Award, and Java World Editor's Choice Award.  His current mission is to make developer unit testing a broadly adopted and standar industry practice rather than a rare exception.  Before Agitar, Alberto worked at Google as the engineering executive in charge of the highly successful and profitable ads group. In October 1998, he cofounded and became CTO of Velogic/Keynote (NASD:KEYN), the pioneer and leading innovator in Internet performance and scalability testing. Prior to Velogic, Alberto had 13-year career at Sun Microsystems where his most recent positions were Founder and General Manager of the SunTest business unit, and Director of Software Technology Research at Sun Microsystems Laboratories.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Alberto Savoia. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

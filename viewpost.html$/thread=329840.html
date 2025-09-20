@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaScript Redux (and Closures)</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=329840.html">Discuss</a> | 
+<a href="mailto:?subject=JavaScript Redux (and Closures)&amp;body= %0AArtima Weblogs %0AJavaScript Redux (and Closures) %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=329840">Email</a> | 
+<a href="../viewpostP.html$/thread=329840.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=328540.html" title="Scala: The Static Language that Feels Dynamic">Previous</a> | 
+<a class="sl" href="thread=331407.html" title="Coffee with James Ward">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">JavaScript Redux (and Closures)</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">July 15, 2011</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+It appears we are stuck with JavaScript, at least in the near-to-mid term. Although the language is an abomination, some things are getting better. I discovered a couple of great lectures and a book that might change your perspective (a little) about the language.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>In addition, if you still don't understand closures, these lectures might solve that problem for you. In other languages, closures are presented as "it would be nice to have" without terribly compelling use cases. But in JavaScript, closures are essential in order to rescue the language from complete chaos. Closures are much more compelling and easier to understand within the context of JavaScript.</p>
+<div class="section">
+<h1><a id="why-am-i-doing-this-the-decline-of-flash" name="why-am-i-doing-this-the-decline-of-flash">Why Am I Doing This? (The Decline of Flash)</a></h1>
+<p>I would probably be much more of a user interface (UI) guy if the tools didn't cause me to tear out handfuls of my now-precious thinning hair. Every single time I try to find a new and better way to do UI I run into everything from edge cases that the language designers didn't think were important, to downright bad design.</p>
+<p>For quite awhile I've felt that programming Flash with Flex was going to be the good solution, because they started from scratch to specifically solve the UI problem, and "adapted" to the browser via a virtual machine (VM). Through one of my conferences, I knew about Flex before Adobe bought the company that created the technology, and it always seemed promising. For a time I was even writing and speaking about Flex.</p>
+<p>Now that I examine my feelings a bit more deeply, I realize that my intuition was telling me, "Yes, but." As in, "But it's not going to work out in the long term." (My intuition is very mysterious and there's no logic to how it knows things. If there <em>was</em> logic, I guess I wouldn't need intuition).</p>
+<p>This is not the fault of Flex, but rather an accumulation of occurrences (things like those I try to puzzle through in <a class="reference" href="../_/http/www.reinventing-business.com/index.html">Reinventing Business</a>). Of course a big change happened when Flash didn't keep up with handheld devices and it became clear that Flash was a drain on batteries (if we'd gotten better battery technology then things might have gone a different way, but even then manufacturers would probably just have made smaller devices. On handhelds, code efficiency is going to be an issue for a long time). Worse, Steve Jobs declared "no Flash on iOS." It's hard to ignore the direction of Apple these days. I know that Adobe is working on a solution for this, translating Flex into some kind of HTML5; perhaps this will pull the fat out of the fire but that remains to be seen.</p>
+<p>Friends have been reporting stability issues with Flash. I've had it lock up the Chrome browser a couple of times. Basic quality control issues on such a (relatively) old (and essential) piece of software is a troubling development.</p>
+<p>One of the big nails in the coffin for me happened when Adobe decided to drop support for Flex on Linux. It's not just the fact that they've backed away from a promise, it's the deeper implication: it means that bean counters rather than technologists are setting the goals for a technology company, and that has never turned out well.</p>
+<p>I've declared elsewhere that "Trust is the first law of the Internet," and this is an example of that. If I can't trust that Adobe will support Flash on all platforms, then I can't get boxed into it. Thus I must start moving away from Flash as a general-purpose solution. As heinous as the alternative is (HTML/CSS/JavaScript), it seems we are doomed to it for the near term.</p>
+<p>I still do like Flex and see it as a solution when you can control where it's being used, but if I was trying to build a general-purpose application that had the remotest chance of being used on handhelds (and these days, when is that not a possibility?) I'd have to use HTML5.</p>
+<p>I do notice Adobe seems to be branching out; there's now a <a class="reference" href="../_/https/www.adobe.com/cfusion/tdrc/index.cfm$/product=flash_builder_php.cfm">FlashBuilder 4.5 for PHP</a>, although I have no idea what it even means to build Flash for PHP, unless it creates the front end as Flash and automatically connects it to a PHP back end and writes the necessary communication code for you. And FlashBuilder 4.5 is supposed to create apps that run on Flash-hostile handhelds like iOS, so all might not be lost in the Flash world.</p>
+<p>I'd sure love to see Adobe use its formidable talents to create the ultimate HTML5 development environment. With their ability and reputation for tools, they could charge well for it and make a lot of money (after this article was written, Adobe announced an <a class="reference" href="../_/http/www.tuaw.com/2011/08/01/adobe-introduces-edge-1-0-the-html-5-tool-with-an-eye-towards-o/index.html">HTML5 tool for animation</a>). I'm not holding my breath, but I'd strongly suggest they consider it. (The only recommendation I've gotten so far for an HTML5 IDE is <a class="reference" href="../_/http/www.aptana.com/index.html">Aptana</a> so I don't yet know this space very well).</p>
+</div>
+<div class="section">
+<h1><a id="javascript-is-an-abomination" name="javascript-is-an-abomination">JavaScript is an Abomination</a></h1>
+<p>The first time I had to do something in JavaScript the experience made me recoil in horror. The syntax of the language varied across browsers! That was some years ago and things have improved (as long as you can assume more modern browsers), but it left a bad taste in my mouth.</p>
+<p>I recently came across the lecture
+<a class="reference" href="../_/http/youtu.be/hQVTIJBZook/index.html">Javascript: The Good Parts</a> by Douglas Crockford. He has studied JavaScript long and hard from a language scholar's perspective. He invented the <em>JavaScript Object Notation</em> (JSON) which has become an often-nicer-than-XML alternative for passing data around (there's even JSON-RPC for remote procedure calls; the <a class="reference" href="../_/http/golang.org/index.html">Go language</a> has this in their standard library whereas they have yet to implement XML-RPC). Crockford also created the very useful <a class="reference" href="../_/http/www.jslint.com/index.html">JSLint</a> tool that checks your JavaScript for the legion of possible bad coding practices. Everyone should be using this.</p>
+<p>Based on his lecture, I went out and bought his <a class="reference" href="../_/http/www.amazon.com/gp/product/0596517742/ref=as_li_ss_tl$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=217145&amp;creative=399369&amp;creativeASIN=0596517742/index.html">book of the same name</a>. If you must work with JavaScript, this book is required reading -- it's not an introduction to the language, but it's necessary in order to understand the countless pitfalls and idiocies of the language.</p>
+<p>If you have any doubts (or outrage) about my use of the word "abomination," Crockford's book will eliminate these. As you go through the book (which will probably require repeated readings if you are a serious JavaScript developer), your forehead will become red and splotchy from all the facepalming you do.</p>
+<p>Seriously, it's incredible how bad this language is. And the deep irony is that there are now legions of programmers whose first experience has been writing JavaScript, typically copied from equally terrible "view source" examples they've seen on the web.</p>
+<p>Crockford's book teaches you deeper ideas in the language and ways to (barely) bring it under control, but he shows you again and again how troubled and flawed this language is. And I love his arrogance; in the lecture he says that you can learn the wrong way to do things by reading "any other book on JavaScript."</p>
+<p>The lecture <a class="reference" href="../_/http/youtu.be/seX7jYI96GE/index.html">Learning to Love Javascript</a> by Alex Russell is a little more hopeful and gives you additional perspective on the language. Russell is on the committee and tells you how they're trying to improve things. He also works for Google, who seem to be adopting some variant of JavaScript to be used for scripting.</p>
+</div>
+<div class="section">
+<h1><a id="closures-and-why-they-re-essential-in-javascript" name="closures-and-why-they-re-essential-in-javascript">Closures and Why They're Essential in JavaScript</a></h1>
+<p>Closures appear to be the most misunderstood language feature I've ever seen. I cannot count the number of times I've seen writers equate closures to anonymous functions. This confused me for the longest time when I was trying to figure them out, and the propagation of this idea has confused many others as well (I suspect that a huge number of people in the Java community have been actually asking for anonymous functions when they've been saying closures).</p>
+<p><em>Closure</em> means that a block of code "closes over" variables defined outside that block. More importantly, those variables <em>persist</em> even after they would ordinarily have gone out of scope and disappeared. The closure captures and retains surrounding variables.</p>
+<p>Javascript has no linker and this means there <em>must</em> be global variables. This is one of the worst things about the language. If you're creating small toy examples or simple scripts, this is tolerable. But JavaScript is used within your browser, which is an accumulative environment which assembles lots of code from lots of servers to present a page. And each piece of code makes its own global variables and functions which can collide -- at the time you load the page, so there's virtually no way to predict it -- with all the other code that's been loaded. Loading a page becomes a fantastic, spectacular war.</p>
+<p>The solution is to use closures to create variables that are essentially private. Once those variables have gone out of scope (a tricky term in JavaScript, which has a different idea of scoping), they become unavailable and invisible except to the closure that captured them (often this closure happens to be an anonymous function, which contributes to the confusion about the term).</p>
+<p>This is just one of the problems that you must solve in order to turn JavaScript into a tolerably controllable language. Crockford's book is all about these things, and once you read it you begin to understand why it's taken so long for AJAX libraries to appear -- first, enough people had to understand both the problems and the solutions and the need to standardize those solutions.</p>
+<p>It also becomes clear that the <em>only</em> reasonable way to develop pages using JavaScript is to find and use the best AJAX libraries (at this point, I'm a novice and don't know what those are). Using JavaScript with AJAX seems to be much like programming in a slightly different language.</p>
+</div>
+<div class="section">
+<h1><a id="the-lack-of-leadership" name="the-lack-of-leadership">The Lack of Leadership</a></h1>
+<p>One thing that's very frustrating is how long we've been doing this, and how many opportunities that the various committees have had to try to fix things. I'm going to guess that there's been too much at stake and pressures from corporations have prevented anything useful from happening.</p>
+<p>I don't know who to blame for the way that this has all happened. W3C, I suppose. It doesn't really matter. I can't imagine how we've managed to collect and save all these worst-possible decisions, but it looks like we're totally stuck with this mass of mess.</p>
+<p>Really, after all this time there's no way to include standard headers and footers on a web page? And CSS -- who thought that was a good idea? (They couldn't even make a uniformly-adopted standard). It doesn't seem like complaining is going to do any good, either. These standards, as far as I can tell, are created in some kind of weird vacuum.</p>
+<p>There is one way out that I can imagine. As the saying goes, the solution to all programming problems is to add another layer of abstraction. In this case, that means that we need a virtual machine for languages as part of the foundation for all browsers. Obviously, the default language distributed with browsers would be JavaScript with all its bad parts, but the virtual machine would allow the addition of many other options -- initially, as downloads but eventually as standard browser distributions. This way we could evolve to much more civilized and powerful languages.</p>
+<p>The other layer of abstraction we need is a pluggable DOM. Again, this would allow much better DOMs to replace the crippled one that we must cope with now. Both the VM and pluggable DOM would be tricky to design and implement because of both backward compatibility and the need for cooperation within a single page. But it's important, because the browser is arguably the single most important piece of software in the world -- it's becoming the OS for the user -- and this problem needs to be solved.</p>
+</div>
+<div class="section">
+<h1><a id="the-rise-of-alternatives" name="the-rise-of-alternatives">The Rise of Alternatives</a></h1>
+<p>If I had to program in JavaScript for web apps, I would take a serious look at <a class="reference" href="../_/http/jashkenas.github.com/coffee-script/index.html">CoffeeScript</a> (also recommended by Alex Russel). I hope we'll see more of these near-term alternative solutions to the problem.</p>
+<p>Interestingly, the <a class="reference" href="../_/http/code.google.com/googleapps/appsscript/index.html">Google Apps Scripting language</a> appears to be a (civilized) form of JavaScript, and it looks very powerful, so following my intuition and learning this could actually pay off in the short term. But I also suspect that I will (eventually) have no choice but to roll up my sleeves and wade into the muddy, messy morass that is HTML/CSS/JavaScript. I'm only hoping that, by finding the right tools, I can keep the mess below my knees. Well, below the waist, maybe.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=329840.html">29
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=329840&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D329840&amp;title=JavaScript+Redux+%28and+Closures%29&amp;bodytext=It+appears+we+are+stuck+with+JavaScript%2C+at+least+in+the+near-to-mid+term.+Although+the+language+is+an+abomination%2C+some+things+are+getting+better.+I+discovered+a+couple+of+great+lectures+and+a+book+that+might+change+your+perspective+%28a+little%29+about+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D329840&amp;title=JavaScript+Redux+%28and+Closures%29">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D329840&amp;title=JavaScript+Redux+%28and+Closures%29">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2011 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

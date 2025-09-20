@@ -1,0 +1,553 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Managing Records in Python (Part 1 of 3)</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=236637.html">Discuss</a> | 
+<a href="mailto:?subject=Managing Records in Python (Part 1 of 3)&amp;body= %0AArtima Weblogs %0AManaging Records in Python (Part 1 of 3) %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=236637">Email</a> | 
+<a href="../viewpostP.html$/thread=236637.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=266907.html" title="Converting .jpeg images in .cbz format">Previous</a> | 
+<a class="sl" href="thread=274019.html" title="Interfaces vs Inheritance (or, watch out for Go!)">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Managing Records in Python (Part 1 of 3)</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">September 7, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the updated translation of a beginner-level paper I wrote for Stacktrace one year ago (see http://stacktrace.it/articoli/2008/05/gestione-dei-record-python-1/).
+It basically discusses Python 2.6 namedtuples (plus some musing of mine).
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Everybody has worked with records: by reading CSV files, by
+interacting with a database, by coding in a programmming language.
+Records look like an old, traditional, boring topic where
+everything has been said already. However this is not the
+case. Actually, there is still plenty to say about records: in this
+three part series I will discuss a few general techniques to read,
+write and process records in modern Python. The first part
+(the one you are reding now) is introductory and consider the problem
+of reading a CSV file with a number of fields which is known only at
+runt time; the second part discusses the problem of interacting with a
+database; the third and last part discusses the problem of rendering
+records into XML or HTML format.</p>
+<div class="section">
+<h1><a id="record-vs-namedtuple" name="record-vs-namedtuple">Record vs namedtuple</a></h1>
+<p>For many years there was no record type in the Python language, nor in
+the standard library.  This is hard to believe, but true: the Python
+community has asked for records in the language from the beginning,
+but Guido never considered that request. The canonical answer was "in
+real life you always need to add methods to your data, so just use a
+custom class".  The good news is that the situation has finally
+changed: starting from Python 2.6 records are part of the standard
+library under the dismissive name of <em>named tuples</em>. You can use named
+tuples even in older versions of Python, simply by downloading
+<a class="reference" href="../_/http/www.pycon.it/pycon2/schedule/speaker/raymond-hettinger/index.html">Raymond Hettinger</a>'s <a class="reference" href="../_/http/aspn.activestate.com/ASPN/Cookbook/Python/Recipe/500261/index.html">recipe</a> on the Python Cookbook:</p>
+<pre class="literal-block">
+$ wget http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/500261/index_txt
+-O namedtuple.py
+</pre>
+<p>The existence of named tuples has changed completely the way of
+managing records: nowadays a named tuple has become <em>the one obvious
+way</em> to implement immutable records. Mutable records
+are much more complex and they are not available in the standard
+library, nor there are plans for their addition, at least as far as
+I know. There are  many viable alternatives if you need mutable
+records: the typical use case is managing database records and
+that can be done with an Object Relational Mapper. There is also
+<a class="reference" href="../_/http/code.activestate.com/recipes/576555/index.html">a Cookbook recipe</a> for mutable records
+which is a natural extension of the namedtuple
+recipe.
+Notice however that there are people who think that mutable records are
+<em>Evil</em>.  This is the dominant opinion in the functional programming
+community: in that context the only way to modify a field is to create
+a new record which is a copy of the original record except for the
+modified field. In this sense named tuples are functional structures
+and they support <em>functional update</em> via the <tt class="docutils literal"><span class="pre">_replace</span></tt> method; I
+will discuss this point in detail in a short while.</p>
+<p>To use named tuples is very easy and you can just look at the
+examples in the <a class="reference" href="../_/http/docs.python.org/library/collections.html$/highlight=namedtuple#collections.namedtuple.html">standard library documentation</a>.
+Here I will duplicate part of what you can find in there,
+for the benefit of the lazy readers:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; from collections import namedtuple
+&gt;&gt;&gt; Article = namedtuple("Article", 'title author')
+&gt;&gt;&gt; article1 = Article("Records in Python", "M. Simionato")
+&gt;&gt;&gt; print article1
+Article(title='Records in Python', author="M. Simionato")
+</pre>
+</blockquote>
+<p><tt class="docutils literal"><span class="pre">namedtuple</span></tt> is a function working as a class factory:
+it takes in input the name of the class and the names of the fields
+- a sequence of strings or a string of space-or-comma-separated names -
+and it returns a subclass of <tt class="docutils literal"><span class="pre">tuple</span></tt>.
+The fundamental feature of named tuples is that the fields are
+accessible both per index <em>and</em> per name:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; article1.title
+'Records in Python'
+&gt;&gt;&gt; article1.author
+"M. Simionato"
+</pre>
+</blockquote>
+<p>Therefore, named tuples are much more readable than ordinary tuples:
+you write <tt class="docutils literal"><span class="pre">article1.author</span></tt> instead of <tt class="docutils literal"><span class="pre">article1[1]</span></tt>. Moreover,
+the constructor accepts both a positional syntax and a keyword
+argument syntax, so that it is possible to write</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; Article(author="M. Simionato", title="Records in Python")
+Article(title='Records in Python', author="M. Simionato")
+</pre>
+</blockquote>
+<p>in the <em>opposite order</em> without issues. This is a major strength
+of named tuples. You can pass all the arguments as positional
+arguments, all the arguments are keyword arguments and even
+some arguments as positional and some others as keyword arguments:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; title = 'Records in Python'
+&gt;&gt;&gt; kw = dict(author="M. Simionato")
+&gt;&gt;&gt; Article(title, **kw)
+Article(title='Records in Python', author="M. Simionato")
+</pre>
+</blockquote>
+<p>This "magic" has nothing to do with <tt class="docutils literal"><span class="pre">namedtuple</span></tt> per se: it is the
+standard way argument passing works in Python, even if I bet many
+people do not know that it is possible to mix the arguments. The only
+real restriction is that you must put the keyword arguments <em>after</em>
+the positional arguments.</p>
+<p>Another advantage is that named tuples <em>are</em> tuples, so that you can use
+them in your legacy code expecting regular tuples, and everything will
+work just fine, including tuple unpacking (i.e. <tt class="docutils literal"><span class="pre">title,</span> <span class="pre">author</span> <span class="pre">=</span>
+<span class="pre">article1</span></tt>), possibly via the <tt class="docutils literal"><span class="pre">*</span></tt> notation (i.e. <tt class="docutils literal"><span class="pre">f(*article1)</span></tt>).</p>
+<p>An additional feature with respect to traditional tuples, is that
+named tuples support functional update, as I anticipated before:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; article1._replace(title="Record in Python, Part I")
+Article(title="Record in Python, Part I", author="M. Simionato")
+</pre>
+</blockquote>
+<p>returns a copy of the original named tuple with the field <tt class="docutils literal"><span class="pre">title</span></tt>
+updated to the new value.</p>
+<p>Internally, <tt class="docutils literal"><span class="pre">namedtuple</span></tt> works by generating the source code from
+the class to be returned and by executing it via <tt class="docutils literal"><span class="pre">exec</span></tt>. You can
+look at the generated code by setting the flag <tt class="docutils literal"><span class="pre">verbose=True</span></tt> when
+you invoke``namedtuple``. The readers of my series about Scheme
+(<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=251474.html">The Adventures of a Pythonista in Schemeland</a> ) will certainly be
+reminded of macros. Actually, <tt class="docutils literal"><span class="pre">exec</span></tt> is more powerful than Scheme
+macros, since macros generate code at compilation time whereas <tt class="docutils literal"><span class="pre">exec</span></tt>
+works at runtime. That means that in order to use macro you must know
+the structure of the record before executing the program, whereas
+<tt class="docutils literal"><span class="pre">exec</span></tt> is able to define the record type during program execution.
+In order to do the same in Scheme you would need to use <tt class="docutils literal"><span class="pre">eval</span></tt>, not macro.</p>
+<p><tt class="docutils literal"><span class="pre">exec</span></tt> is usually considered a <a class="reference" href="../_/http/en.wikipedia.org/wiki/Code_smell/index.html">code smell</a>, since most beginners
+use it without need. Nevertheless, there are case where only the power
+of <tt class="docutils literal"><span class="pre">exec</span></tt> can solve the problem: <tt class="docutils literal"><span class="pre">namedtuple</span></tt> is one of those
+situations (another good usage of <tt class="docutils literal"><span class="pre">exec</span></tt> is in the <a class="reference" href="../_/http/www.python.org/doc/lib/module-doctest.html">doctest</a> module).</p>
+</div>
+<div class="section">
+<h1><a id="parsing-csv-files" name="parsing-csv-files">Parsing CSV files</a></h1>
+<p>No more theory: let be practical now, by showing a concrete
+example.  Suppose you need to parse a CSV files with N+1 rows and M
+columns separated by commas, in the following format:</p>
+<pre class="literal-block">
+field1,field2,...,fieldM
+row11,row12,...,row1M
+row21,row22,...,row2M
+ ...
+rowN1,rowN2,...,rowNM
+</pre>
+<p>The first line (the header) contains the names of the fields. The precise
+format of the CSV file is not know in advance, but only at runtime, when
+the header is read. The file may come from an Excel sheet, or from a database
+dump, or could be a log file. Suppose one of the fields is a date
+field and that you want to extract the records between two dates,
+in order to perform a statistical analysis and to generate a report
+in different formats (another CSV file, or a HTML table for upload
+on a Web site, or a LaTeX table to be included in a scientific
+paper, or anything else). I am sure most of you had to do something
+like first at some point.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/log.gif" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/log.gif">
+<p>To solve the specific problem is always easy: the difficult thing is
+to provide a general recipe. We would like to avoid to write 100 small
+scripts, more or less identical, but with a different management of
+the I/O depending on the specific problem. Clearly, different business
+logic will require different scripts, but at least the I/O part should
+be common. For instance, if the originally the CSV file has 5 fields,
+but then after 6 months the specs change and you need to manage a file
+with 6 fields, you don't want to change the script; idem if the names
+of the fields change. Moreover, it must be easy to change the output
+format (HTML, XML, CSV, ...) with a minimal effort, without changing
+the script, but only some configuration parameter or command line
+switch.  Finally, and this is the most difficult part, one should not
+create a monster. If the choice is between a super-powerful framework
+able to cope with all the possibilities one can imagine and a poor man
+system which is however easily extensible, one must have the courage
+for humility. The problem is that most of the times it is impossible
+to know which features are really needed, so that one must
+implement things which will be removed later. In practice, coding in
+this way you will have to work two or three times more than
+the time needed to write a monster, to produce much less. On the other
+hand, we all know that given a fixed amount of functionality,
+programmers should be payed inversally to the number of lines of code
+;)</p>
+<p>Anyway, stop with the philosophy and let's go back to the problem.
+Here is a possible solution:</p>
+<pre class="literal-block">
+# tabular_data.py
+from collections import namedtuple
+
+def headtail(iterable):
+    "Returns the head and the tail of a non-empty iterator"
+    it = iter(iterable)
+    return it.next(), it
+
+def get_table(header_plus_body, ntuple=None):
+    "Return a sequence of namedtuples in the form header+body"
+    header, body = headtail(header_plus_body)
+    ntuple = ntuple or namedtuple('NamedTuple', header)
+    yield ntuple(*header)
+    for row in body:
+        yield ntuple(*row)
+
+def test1():
+    "Read the fields from the first row"
+    data = [['title', 'author'], ['Records in Python', 'M. Simionato']]
+    for nt in get_table(data):
+        print nt
+
+def test2():
+    "Use a predefined namedtuple class"
+    data = [['title', 'author'], ['Records in Python', 'M. Simionato']]
+    for nt in get_table(data, namedtuple('NamedTuple', 'tit auth')):
+        print nt
+
+if __name__ == '__main__':
+    test1()
+    test2()
+</pre>
+<p>By executing the script you will get:</p>
+<pre class="literal-block">
+$ python tabular_data.py
+NamedTuple(title="title", author='author')
+NamedTuple(title='Records in Python', author="M. Simionato")
+NamedTuple(tit="title", auth='author')
+NamedTuple(tit='Records in Python', auth="M. Simionato")
+</pre>
+<p>There are many remarkable things to notice.</p>
+<ol class="arabic">
+<li><p class="first">First of all, I did follow the golden rule of the smart programmer, i.e.
+I did <em>change the question</em>: even if the problem asked to read a
+CSV file, I implemented a <tt class="docutils literal"><span class="pre">get_table</span></tt> generator instead, able
+to process a generic iterable in the form header+data, where the
+header is the schema - the ordered list of the field names - and
+data are the records. The generator returns an iterator in the form
+header+data, where the data are actually named tuples. The greater
+generality allows a better reuse of code, and more.</p>
+</li>
+<li><p class="first">Having followed rule 1, I can make my application more testable,
+since the logic for generating the <tt class="docutils literal"><span class="pre">namedtuple</span></tt> has been decoupled
+from the CSV file parsing logic: in practice, I can test the logic
+even <em>without</em> a file CSV. I do not need to set up a test environment
+and test files: this is a very significant advantage, especially if
+you consider more complex situations, for instance when you have to
+work with a database.</p>
+</li>
+<li><p class="first">Having changed the question from "process a CSV file" into
+"convert an iterable into a namedtuple sequence" allows me
+to leave the job of reading the CSV files to the right object,
+i.e. to <tt class="docutils literal"><span class="pre">csv.reader</span></tt> which is part of the standard library and
+that I can afford not to test (in my opinion
+you should not test everything, there are things that
+must be tested with high priority and others that should be
+tested with low priority or even not tested at all).</p>
+</li>
+<li><p class="first">Having <tt class="docutils literal"><span class="pre">get_table</span></tt> at our disposal, it takes just a line to solve
+the original problem, <tt class="docutils literal"><span class="pre">get_table(csv.reader(fname))</span></tt>: we do not
+even need to write a hoc library for that.</p>
+</li>
+<li><p class="first">It is trivial to extend the solution to more general cases.
+For instance, suppose you have a CSV file without header,
+with the names of the fields known in some other way.
+It is possible to use <tt class="docutils literal"><span class="pre">get_table</span></tt> anyway, it is enough to add
+the header at runtime:</p>
+<pre class="literal-block">
+get_table(itertools.chain([fields], csv.reader(fname)))
+</pre>
+</li>
+<li><p class="first">For lack of a better name, let me call <em>table</em> the structure
+header + data. Clearly the approach is meant to convert tables
+into other tables (think of data mining/data filtering applications)
+and it will be natural to compose operators working on tables.
+This is a typical problem begging for a functional approach.</p>
+</li>
+<li><p class="first">For reasons of technical convenience I have introduced the function
+<tt class="docutils literal"><span class="pre">headtail</span></tt>; it is worth mentioning that in Python 3.0 <em>tuple unpacking</em>
+has been extended so that it will be possible to write directly
+<tt class="docutils literal"><span class="pre">head,</span> <span class="pre">*tail</span> <span class="pre">=</span> <span class="pre">iterable</span></tt> instead of <tt class="docutils literal"><span class="pre">head,</span> <span class="pre">tail</span> <span class="pre">=</span> <span class="pre">headtail(iterable)</span></tt>
+- functional programmers
+will recognize the technique of pattern matching of conses.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">get_table</span></tt> allows to alias the names of the field, as shown by
+<tt class="docutils literal"><span class="pre">test2</span></tt>. That feature can be useful in many situations, for instance
+if the field names are cumbersome and it makes sense to use abbreviations,
+or if the names as read from the CSV file are not valid identifiers
+(in that case <tt class="docutils literal"><span class="pre">namedtuple</span></tt> would raise a <tt class="docutils literal"><span class="pre">ValueError</span></tt>).</p>
+</li>
+</ol>
+<p>This is the end of part I of this series. In part II I will discuss how
+to manage record coming from a relational database. Don't miss it!</p>
+</img></div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=236637.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=236637&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236637&amp;title=Managing+Records+in+Python+%28Part+1+of+3%29&amp;bodytext=This+is+the+updated+translation+of+a+beginner-level+paper+I+wrote+for+Stacktrace+one+year+ago+%28see+http%3A%2F%2Fstacktrace.it%2Farticoli%2F2008%2F05%2Fgestione-dei-record-python-1%2F%29.%0D%0AIt+basically+discusses+Python+2.6+namedtuples+%28plus+some+musing+of+mine%29.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236637&amp;title=Managing+Records+in+Python+%28Part+1+of+3%29">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236637&amp;title=Managing+Records+in+Python+%28Part+1+of+3%29">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

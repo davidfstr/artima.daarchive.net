@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Java EE: "Java Ever Evolving"</title>
+<meta charset="utf-8"/>
+<meta content="Sean Landis" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=seanl.html">Sean Landis' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=165855.html">Discuss</a> | 
+<a "java="" %0a%0ahttps:="" %0aby="" %0ajava="" ee:="" ever="" evolving"="" evolving"&body="%0AArtima" href="mailto:?subject=Java EE: " java="" landis="" sean="" viewpost.jsp?thread='165855"' weblogs="" www.artima.com="">Email</a> | 
+<a href="../viewpostP.html$/thread=165855.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=59975.html" title="Service Oriented Architectures - Separating Hype From Reality">Previous</a> | 
+<a class="sl" href="thread=246513.html" title="Traps &amp; Pitfalls of Agile Software Development - A Non-Contrarian View">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">People Over Process</span><br>
+<span class="ts">Java EE: "Java Ever Evolving"</span><br/>
+<span class="as">by Sean Landis</span><br/>
+<span class="pd">June 25, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+With the demise of my former employer, I found 
+myself on the streets holding a sign that said: "Will do Jini for food." I finally landed a job with a company that does Jini, although I am
+not doing Jini. This entry is a reflective on what I
+learned about Java EE in that three month period.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Drinking the Java EE Kool-aid</h1>
+<p>I knew it was going to be hard to find another Jini-related job, especially
+since I was not able to relocate; but I had no idea. In the past, I'd never had
+more than a week between jobs so I figured this wouldn't take too long. After
+a few weeks though, I realized there was a pattern developing. Nearly all the 
+jobs in my area were J2EE jobs. In fact, if they were asking for a Java 
+programmer, what they really meant was J2EE programmer. Java had become
+synonymous with J2EE.</p>
+<p>
+It was time to list J2EE experience, no matter how meager, in my resume. As if
+by magic, I started getting calls. Unfortunately, no one wanted to pay my
+going rate for the previously mentioned meager J2EE experience. Thus began my 
+quest for J2EE enlightenment.
+</p>
+<p>
+I had a chance to go to JavaOne for not too much of my own money and I figured
+this would be a great opportunity to pour a pitcher full of J2EE down my
+throat. Sun's theme for this JavaOne was Java EE which is the new moniker for the
+latest version of Java Enterprise technology. All kinds of great new stuff 
+was in store for the J2EE community.
+</p>
+<p>
+For me, the theme of JavaOne was waiting in line to drink the Kool-aid. A new 
+system was put 
+in place to ensure people didn't get stiffed on the sessions they wanted to
+see. Or at least they didn't get stiffed at the last moment. Instead we had to 
+sign up online for the right to wait in ridiculously long lines to scan our
+Java card to make sure we were authorized to see the session. 
+I don't know if this
+was any better than before, but it gave me time to think about Jonestown. 
+</p>
+<p>
+I always felt that enterprise Java was a giant hairball. The more I learned
+the less I liked. Everything was wrong. Since I had a Jini job, and Jini I
+felt, was actually a well-designed technology, I didn't worry too much about
+the pathetic state of enterprise Java. Now though, I was waiting in line and
+I was going to choke down the Java EE Kool-aid regardless of how I felt about
+it.
+</p>
+<h1>EJB: Distributed Objects Gone Bad</h1>
+<p>
+How in the world did EJB end up requiring that an object need multiple 
+interfaces? Why is the programmer burdened with so many details? Why is this
+technology so over-complicated? Why is it so limited? Why is it so slow?
+Why is it so heavy? Why must all my "distributed objects" run in a single
+app server? The list goes on and on. 
+</p>
+<p>
+Most of this garbage is probably a result of a rush-to-market standardization
+(I use that term loosely) process. To some extent, the technology was born of fear, rushed to market to be the first to fill an obvious need. Regardless, the enterprise Java world was blessed with a number of
+forward-thinking open projects such as Spring, JBoss, and Hibernate. These
+efforts, I think, really drove improvements in the standards. I may be wrong,
+but from my outsider's view, developers, being so pragmatic, finally got sick
+and tired of the crap and started building the right stuff. 
+</p>
+<p> 
+One side-effect was EJB 3.0 which I learned at JavaOne, really ain't so bad. 
+Some of the wild-and-wooly open source ideas eventually ended up in the standard. It
+reminds me of how race cars influence our minivans. Did I just equate EJB 3.0 
+with a minivan? Ok, our Suburbans.
+</p>
+<h1>JSF Finally Accepted?</h1>
+<p>
+JSF has been around for a long time but it finally seems to be gaining some
+traction. I understand the EE community had to wait a couple of years for
+the standard and reference implementation to be completed and that there was
+a general fear that it would be EJB for the UI. To me it looks like YMAB: Yet
+More Angle Brackets. But experts assure me it's a really sound platform. 
+</p>
+<p>
+Platform because those same experts say that JSF is a great foundation but
+there weren't a lot of capabilities delivered with it. There must be truth to
+the goodness of JSF (and the incompleteness), because of the vast number of 
+frameworks built atop it:
+</p>
+<ul>
+<li>Seam</li>
+<li>Faclets</li>
+<li>Shale</li>
+<li>MyFaces</li>
+<li>Tomahawk</li>
+<li>Oracle's ADF</li>
+</ul>
+<p>
+Just to name a few.
+I confess I don't know a lot about these but I think it's fair to say groups
+of people aren't going to invest the time to create these frameworks
+atop a technology that sucks.
+</p>
+<h1>Converging Upon Goodness</h1>
+<p>
+So it appears enterprise Java is converging toward goodness. Many times I
+heard folks at JavaOne and at
+a recent <i>No Fluff, Just Stuff</i> conference say, "Java EE is finally 
+approaching what it should have been in the first place!" I'm not going to 
+list all the improvements, but from my less expert eyes, Java EE is a vast
+improvement over its predecessors. It addresses many of the things I found
+intuitively repulsive at first glance.
+</p>
+<p>
+I might just be able to enjoy a new life with Java EE. Maybe it won't be
+such a compromise of my professional standards. And, after all, it probably
+is the best way to deliver web applications and services. Or is it?
+</p>
+<h1>The EE Counter-culture</h1>
+<p>
+I notice enterprise Java programmers divide into two groups. On one side of 
+the room are the Java EE folk who feel the pain is worth the gain. On the
+other side are the <i>agilists</i> for a lack of a better term. These are the
+pragmatic folk who are more focused on getting the job done quickly and 
+efficiently than they are about following standards. They are the ones who
+use and maybe even helped build technologies like Ruby on Rails, Spring, 
+Hibernate and other lightwieght frameworks. This counter-culture rightly
+views Java EE with skepticism. They fashion themselves the enlightened 
+counter-culture of enterprise computing.
+</p>
+<p>
+The later is the group that recently seems to have had the greatest influence on
+enterprise Java and I am sure they will continue to be on the leading edge. 
+These are probably the same kinds people who are building the 200 or so AJAX 
+toolkits. It is this group, and what they stand for, that gives me pause
+as I put the jug of Kool-Aid to my lips.
+</p>
+<h1>If It's So Great, Why Do We Need So Many Toolkits?</h1>
+<p>
+The progress made with AJAX, JSF, EJB 3.0, and Java EE in general, hasn't
+seemed to stop the gushing flow of new frameworks and alternative technologies.
+If Java EE is so great, why do we need all this other stuff? Maybe this 
+question just shines a light on the fact that I don't get it. But it seems to
+me that if the state of the enterprise Java market were sound,
+convergence would reduce the need for all this extra stuff. The good news,
+I suppose, is that, at least in the case of JSF, many of these toolkits are
+being built atop the core Java EE technology rather in independent of it.
+</p>
+<p> 
+My belief is that several forces are at work. First being that we simply 
+haven't tapped out the potential of web-based computing. New tools that enable
+powerful paradigms are arising all the time. AJAX makes rich clients more
+practical, for example. And there is convergence on what denotes good practice,
+thus allowing the abstraction level to rise resulting in new toolkits and
+technologies. For example, Ruby on Rails uses stereotypes, 
+or templates (or whatever they're 
+called in that world) to rapidly build <i>good enough</i> web apps. 
+</p>
+<p>
+So I guess all this change should be expected. But that doesn't mean I'm not
+nervous about it.
+</p>
+<h1>My Big Questions</h1>
+<p>
+How are organizations dealing with the turmoil of the rapidly changing
+ enterprise computing 
+landscape? There are so many options and choices. There are so many tools 
+and frameworks, many of which don't seem to worry much about backward 
+compatibility. Knowing how fast things are changing, what is the thought
+process for picking a suite of enterprise tools for constructing an 
+application?
+</p>
+<p>
+Once the choices are made and the application is built, how 
+do companies evolve? I've been bitten by this recently on my own 
+small EE project.
+In a matter of a year, the component technologies have changed 
+dramatically. Deprecation is rampant, backward compatibility is elusive, and
+the standards are changing. I understand the issue of technology 
+migration in general but in this EE world, the depth and breadth of the 
+problem seems so vast as to make it intractable for traditional approaches. 
+</p>
+<p> 
+As I interviewed for all the J2EE jobs I spoke of eariler, this theme seemed
+universal. All the companies were struggling to keep up. All the companies were
+in some form of entropic distress. None of them seemed to have an answer other
+than to throw more people and more expertise at their problem. Hire someone 
+well-versed in the latest toolkits and TLAs and hope they are the hero that
+saves the day.
+</p>
+<p>
+Maybe my impressions are wrong. Maybe I'm trying to justify my ingrained
+prejudices toward enterprise Java. I don't know. But now that I've sipped the 
+Kool-Aid, I'm beginning to wonder if I'm making a mistake. Ah heck! Look on 
+the bright side: If nothing else, there's plenty of work to do! Gulp!
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=165855.html">24
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=165855&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Sean Landis adds a new entry to <a href="../index.html$/blogger=seanl.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/seanl.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D165855&amp;title=Java+EE%3A+%22Java+Ever+Evolving%22&amp;bodytext=With+the+demise+of+my+former+employer%2C+I+found+%0D%0Amyself+on+the+streets+holding+a+sign+that+said%3A+%26quot%3BWill+do+Jini+for+food.%26quot%3B+I+finally+landed+a+job+with+a+company+that+does+Jini%2C+although+I+am%0D%0Anot+doing+Jini.+This+entry+is+a+reflective+on+what+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D165855&amp;title=Java+EE%3A+%22Java+Ever+Evolving%22">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D165855&amp;title=Java+EE%3A+%22Java+Ever+Evolving%22">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/seanlandis.jpg"/></td><td>Sean Landis is a technologist and programmer interested in, among other things, mobile and distributed sytems, location-based services, and skiing.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Sean Landis. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Service Locator Pattern Revisited, Part 1</title>
+<meta charset="utf-8"/>
+<meta content="Ian Robertson" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=ianr.html">Ian Robertson's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=238562.html">Discuss</a> | 
+<a href="mailto:?subject=Service Locator Pattern Revisited, Part 1&amp;body= %0AArtima Weblogs %0AService Locator Pattern Revisited, Part 1 %0Aby Ian Robertson %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=238562">Email</a> | 
+<a href="../viewpostP.html$/thread=238562.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=218314.html" title="A case for member literals in Java">Previous</a> | 
+<a class="sl" href="thread=238700.html" title="Service Locator Pattern Revisited, Part 2">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Code by Any Other Name</span><br>
+<span class="ts">Service Locator Pattern Revisited, Part 1</span><br/>
+<span class="as">by Ian Robertson</span><br/>
+<span class="pd">September 14, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Traditional implementations of the Service Locator Pattern result in a large amount of boilerplate code.  This article, the first of a two part series, shows that this is not a necessary weakness.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>When designing for testability, it's important to be able to mock out
+certain classes in order to test other classes which depend on them.
+The old fashion way of doing this was to use the
+<a href="../_/http/martinfowler.com/articles/injection.html#UsingAServiceLocator">Service
+Locator Pattern</a>.  The idea was that for each service which one
+might want to be able to mock, instead of having client code construct
+the service directly, clients would call a (static) method which would
+provide an appropriate instance of the service.  In a production
+environment, this would typically return a singleton, but unit tests
+would be able to change what was returned by calling another (static)
+method to override what instance was returned.</p>
+<p>The problem with traditional implementations of the Service Locator
+Pattern is that each locator involves a fair amount of boilerplate.
+At minimum, you need a static "get" method; to enable mockability, you
+have to add a "set" method, and a variable to bridge between the get
+and the set.  On top of all this, you need to decide where these
+methods belong.  If you put all your locator methods in a single
+class, that class will quickly become difficult to manage.  By
+contrast, putting each locator method in its own class requires even
+more boilerplate.  Neither approach does much for predictability; at
+best, there is a convention about where to find a locator method for a
+given class.</p>
+<p>It's possible, indeed quite easy, to have a single
+locator for all services.  Martin Fowler does this with
+his <a href="../_/http/martinfowler.com/articles/injection.html#ADynamicServiceLocator">Dynamic
+  Service Locator</a> pattern, creating a map from String keys to
+services.  He rightly laments, however, that:</p>
+<blockquote>
+<p>On the whole I dislike this approach. Although it's certainly
+flexible, it's not very explicit. The only way I can find out how to
+reach a service is through textual keys. I prefer explicit methods
+because it's easier to find where they are by looking at the interface
+definitions.</p>
+</blockquote>
+<p>(An additional problem with his locator is that, as with JNDI, it
+requires the client to do class casts from the locator.)
+
+<h2> A type-safe universal service locator.</h2>
+<p>The problem of deciding what a good key is for each service becomes
+much simpler when one restricts themselves to the case where, for
+any service interface, there is a unique implementation of that
+interface which is meant to be used in production. In this case, the
+interface class itself makes for a fine key.  Taking advantage of the
+fact that the <code>Class</code> class itself is generic, one can
+doubly benefit from this choice by avoiding the need for class
+casting.  Add in annotations to configure the default implementation
+for each service, and you can create a very simple and effective
+universal means of acquiring services.    J. McConnell
+once observed that an "provider of services" should be called a
+Bordello, and the name stuck.  Here's the main API:</p>
+<blockquote>
+<code>
+<font color="#7f0055"><b>public class </b></font><font color="#000000">Bordello </font><font color="#000000">{</font><br>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public static </b></font><font color="#000000">&lt;T&gt; T get</font><font color="#000000">(</font><font color="#000000">Class&lt;T&gt; interfaceClass</font><font color="#000000">) { ... }</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public static </b></font><font color="#000000">&lt;T&gt; </font><font color="#7f0055"><b>void </b></font><font color="#000000">set</font><font color="#000000">(</font><font color="#000000">Class&lt;T&gt; interfaceClass, T providor</font><font color="#000000">) { ... }</font><br/>
+<font color="#000000">}</font></br></code>
+</blockquote>
+<p>Before looking at a way to implement this, lets look at a simple
+example of how it is used.  First, we have a service interface:</p>
+<blockquote>
+<code>
+<font color="#646464">@Implementor</font><font color="#000000">(</font><font color="#000000">HelloServiceImpl.</font><font color="#7f0055"><b>class</b></font><font color="#000000">)</font><br/>
+<font color="#7f0055"><b>public interface </b></font><font color="#000000">HelloService </font><font color="#000000">{</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public </b></font><font color="#7f0055"><b>void </b></font><font color="#000000">sayHello</font><font color="#000000">(</font><font color="#000000">String name</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#000000">}</font></code>
+</blockquote>
+<p>Note the <code>@Implementor</code> annotation here; it defines the
+standard implementation to be used unless specified otherwise.  This
+implementation follows:</p>
+<blockquote>
+<code>
+<font color="#7f0055"><b>public class </b></font><font color="#000000">HelloServiceImpl </font><font color="#7f0055"><b>implements </b></font><font color="#000000">HelloService </font><font color="#000000">{</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public </b></font><font color="#7f0055"><b>void </b></font><font color="#000000">sayHello</font><font color="#000000">(</font><font color="#000000">String name</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">    </font><font color="#000000">System.out.println</font><font color="#000000">(</font><font color="#2a00ff">"Hello, " </font><font color="#000000">+ name</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">  </font><font color="#000000">}</font><br/>
+<font color="#000000">}</font></code>
+</blockquote>
+</p>A client need only call <code>Bordello.get</code> to get a service
+implementation:</p>
+<blockquote>
+<code>
+<font color="#7f0055"><b>public class </b></font><font color="#000000">HelloClient </font><font color="#000000">{</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public </b></font><font color="#7f0055"><b>void </b></font><font color="#000000">greetFormally</font><font color="#000000">(</font><font color="#000000">String surname</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">    </font><font color="#000000">Bordello.get</font><font color="#000000">(</font><font color="#000000">HelloService.</font><font color="#7f0055"><b>class</b></font><font color="#000000">)</font><font color="#000000">.sayHello</font><font color="#000000">(</font><font color="#2a00ff">"Sir " </font><font color="#000000">+ surname</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">  </font><font color="#000000">}</font><br/>
+<font color="#000000">}</font></code>
+</blockquote>
+Finally, let's look at a unit test for <code>HelloClient</code>.
+Since the standard <code>HelloService</code> implementation prints
+to <code>System.out</code>, testing with it is not easy.  So we create
+a mock service implementation which simply verifies its argument is
+what we expect, tell Bordello to provide that, and then test our
+client's method:
+<blockquote>
+<code>
+<font color="#ffffff">  </font><font color="#646464">@Test </font><font color="#7f0055"><b>public </b></font><font color="#7f0055"><b>void </b></font><font color="#000000">testGreeting</font><font color="#000000">() {</font><br/>
+<font color="#ffffff">    </font><font color="#000000">HelloService mockHelloService = </font><font color="#7f0055"><b>new </b></font><font color="#000000">HelloService</font><font color="#000000">() {</font><br/>
+<font color="#ffffff">      </font><font color="#7f0055"><b>public </b></font><font color="#7f0055"><b>void </b></font><font color="#000000">sayHello</font><font color="#000000">(</font><font color="#000000">String name</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">        </font><font color="#000000">assertEquals</font><font color="#000000">(</font><font color="#2a00ff">"Sir Smith"</font><font color="#000000">, name</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">      </font><font color="#000000">}</font><br/>
+<font color="#ffffff">    </font><font color="#000000">}</font><font color="#000000">;</font><br/>
+<font color="#ffffff">    </font><font color="#000000">Bordello.set</font><font color="#000000">(</font><font color="#000000">HelloService.class, mockHelloService</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">    </font><font color="#7f0055"><b>new </b></font><font color="#000000">HelloClient</font><font color="#000000">()</font><font color="#000000">.greetFormally</font><font color="#000000">(</font><font color="#2a00ff">"Smith"</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">  </font><font color="#000000">}</font></code>
+</blockquote>
+<h2>A basic Bordello implementation</h2>
+<p>To do all this, we only need two framework classes - <code>Implementor</code>
+and <code>Bordello</code>.  The annotation has no surprises:</p>
+<blockquote>
+<code>
+<font color="#3f5fbf">/**</font><br/>
+<font color="#ffffff"> </font><font color="#3f5fbf">* Indicates the default implementation for a service.</font><br/>
+<font color="#ffffff"> </font><font color="#3f5fbf">*/</font><br/>
+<font color="#646464">@Documented</font><br/>
+<font color="#646464">@Target</font><font color="#000000">(</font><font color="#000000">ElementType.TYPE</font><font color="#000000">) </font><font color="#646464">@Retention</font><font color="#000000">(</font><font color="#000000">RetentionPolicy.RUNTIME</font><font color="#000000">)</font><br/>
+<font color="#7f0055"><b>public @interface </b></font><font color="#000000">Implementor </font><font color="#000000">{</font><br/>
+<font color="#ffffff">  </font><font color="#000000">Class&lt;?&gt; value</font><font color="#000000">()</font><font color="#000000">;</font><br/>
+<font color="#000000">}</font></code>
+</blockquote>
+<p>The main class is equally straightforward:</p>
+<blockquote>
+<code>
+<font color="#7f0055"><b>public class </b></font><font color="#000000">Bordello </font><font color="#000000">{</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>private final static </b></font><font color="#000000">Map&lt;Class&lt;?&gt;, Object&gt; services</font><br/>
+<font color="#ffffff">    </font><font color="#000000">= </font><font color="#7f0055"><b>new </b></font><font color="#000000">ConcurrentHashMap&lt;Class&lt;?&gt;, Object&gt;</font><font color="#000000">()</font><font color="#000000">;</font><br/>
+<font color="#ffffff"></font><br/>
+<font color="#ffffff">  </font><font color="#3f5fbf">/**</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">* Acquire an implementation of a service. If one has not already</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">* been instantiated, instantiate the class defined by the</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">* </font><font color="#3f3fbf">Implementor annotation on the interface</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">*/</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public static </b></font><font color="#000000">&lt;T&gt; T get</font><font color="#000000">(</font><font color="#000000">Class&lt;T&gt; interfaceClass</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">    </font><font color="#7f0055"><b>synchronized </b></font><font color="#000000">(</font><font color="#000000">interfaceClass</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">      </font><font color="#000000">Object service = services.get</font><font color="#000000">(</font><font color="#000000">interfaceClass</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">      </font><font color="#7f0055"><b>if </b></font><font color="#000000">(</font><font color="#000000">service == </font><font color="#7f0055"><b>null</b></font><font color="#000000">) {</font><br/>
+<font color="#ffffff">        </font><font color="#7f0055"><b>try </b></font><font color="#000000">{</font><br/>
+<font color="#ffffff">          </font><font color="#000000">Class&lt;?&gt; implementingClass =</font><br/>
+<font color="#ffffff">            </font><font color="#000000">interfaceClass.getAnnotation</font><font color="#000000">(</font><font color="#000000">Implementor.</font><font color="#7f0055"><b>class</b></font><font color="#000000">)</font><font color="#000000">.value</font><font color="#000000">()</font><font color="#000000">;</font><br/>
+<font color="#ffffff">          </font><font color="#000000">service = implementingClass.newInstance</font><font color="#000000">()</font><font color="#000000">;</font><br/>
+<font color="#ffffff">          </font><font color="#000000">services.put</font><font color="#000000">(</font><font color="#000000">interfaceClass, service</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">        </font><font color="#000000">}</font><br/>
+<font color="#ffffff">        </font><font color="#7f0055"><b>catch </b></font><font color="#000000">(</font><font color="#000000">Exception e</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">          </font><font color="#7f0055"><b>throw new </b></font><font color="#000000">RuntimeException</font><font color="#000000">(</font><font color="#000000">e</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">        </font><font color="#000000">}</font><br/>
+<font color="#ffffff">      </font><font color="#000000">}</font><br/>
+<font color="#ffffff">      </font><font color="#7f0055"><b>return </b></font><font color="#000000">interfaceClass.cast</font><font color="#000000">(</font><font color="#000000">service</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">    </font><font color="#000000">}</font><br/>
+<font color="#ffffff">  </font><font color="#000000">}</font><br/>
+<font color="#ffffff"></font><br/>
+<font color="#ffffff">  </font><font color="#3f5fbf">/**</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">* Set an alternate service implementation.</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">* Typically only called in unit tests.</font><br/>
+<font color="#ffffff">   </font><font color="#3f5fbf">*/</font><br/>
+<font color="#ffffff">  </font><font color="#7f0055"><b>public static </b></font><font color="#000000">&lt;T&gt; </font><font color="#7f0055"><b>void </b></font><font color="#000000">set</font><font color="#000000">(</font><font color="#000000">Class&lt;T&gt; interfaceClass, T providor</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">    </font><font color="#7f0055"><b>synchronized </b></font><font color="#000000">(</font><font color="#000000">interfaceClass</font><font color="#000000">) {</font><br/>
+<font color="#ffffff">      </font><font color="#000000">services.put</font><font color="#000000">(</font><font color="#000000">interfaceClass, providor</font><font color="#000000">)</font><font color="#000000">;</font><br/>
+<font color="#ffffff">    </font><font color="#000000">}</font><br/>
+<font color="#ffffff">  </font><font color="#000000">}</font><br/>
+<font color="#000000">}</font></code>
+</blockquote>
+<p>This is the simplest form; in practice there are number of
+improvements that can be easily made, from more robust behaviors to
+supporting additional "scopes" such as instance-per-request and
+thread-local.  Sanjay Acharya has blogged about
+an <a href="../_/http/sleeplessinslc.blogspot.com/2008/09/service-locator-pattern-how-shall-i.html">
+alternate approach</a> which, rather than looking at an annotation on
+the interface to find the preferred implementation, scans the
+classpath to find the sole implementation. The upshot, however, is that
+having done this once, no per-service locator code is needed.</p>
+<p>In Part 2, I'll compare Bordello to Dependency Injection.<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/></p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=238562.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=238562&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Ian Robertson adds a new entry to <a href="../index.html$/blogger=ianr.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/ianr.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238562&amp;title=Service+Locator+Pattern+Revisited%2C+Part+1&amp;bodytext=Traditional+implementations+of+the+Service+Locator+Pattern+result+in+a+large+amount+of+boilerplate+code.++This+article%2C+the+first+of+a+two+part+series%2C+shows+that+this+is+not+a+necessary+weakness.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238562&amp;title=Service+Locator+Pattern+Revisited%2C+Part+1">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238562&amp;title=Service+Locator+Pattern+Revisited%2C+Part+1">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ianRobertson.jpg"/></td><td>Ian Robertson is an application architect at Verisk Health. He is interested in finding concise means of expression in Java without sacrificing type safety. He contributes to various open source projects, including <a href="../_/http/www.jamon.org/index.html">jamon</a> and <a href="../_/http/www.pojomatic.org/index.html">pojomatic</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Ian Robertson. All rights reserved.</div>
+</p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

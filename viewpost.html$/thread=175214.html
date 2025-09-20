@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Netbeans Module for JMX enabling your application</title>
+<meta charset="utf-8"/>
+<meta content="Gregg Wonderly" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#FFCC99" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=greggwon.html">Gregg Wonderly's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=175214.html">Discuss</a> | 
+<a href="mailto:?subject=Netbeans Module for JMX enabling your application&amp;body= %0AArtima Weblogs %0ANetbeans Module for JMX enabling your application %0Aby Gregg Wonderly %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=175214">Email</a> | 
+<a href="../viewpostP.html$/thread=175214.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=162688.html" title="Java desktop drag and drop">Previous</a> | 
+<a class="sl" href="thread=175938.html" title="Netbeans JMI programming...">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software and Return on Investment</span><br>
+<span class="ts">Netbeans Module for JMX enabling your application</span><br/>
+<span class="as">by Gregg Wonderly</span><br/>
+<span class="pd">September 6, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I am finishing up a rather large application that needs some JMX management capabilities.  I've got a lot of classes that need to be MBean enabled, and I really don't want to go through and change them to inherit from StandardMBean.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Forays into Netbeans and JMI</h1>
+I've been playing around with the Netbeans IDE for some time now.  In 5.0, they've finally cleaned up enough issues that I feel like I can be productive with the way that I work.  One of the standing issues for me and IDEs is whether or not it supports the Perforce SCM.  That was an initial issue with 5.0, but the Netbeans Module system and built in authoring support made it possible for me to define a half-dozen or so actions, fairly quickly, that let me interact with perforce.  More about that in another blog.
+<p>
+Netbeans includes the ability to analyze, alter, and generate the structure of Java source code in modules.  That's what I'm getting the most mileage out of.
+<h2>A Netbeans JMX Module</h2>
+What I wanted to talk about was the module I created to help me make changes to existing classes so that they can become MBeans with attributes and operations without having to change the object hierarchy.  The StandardMBean class will use introspection and/or a passed interface, to build a DynamicMBean.  So, if you take an existing class, and add a couple of methods such as:
+<pre>
+    StandardMBean bean;
+    protected void registerMBean() {
+        bean = new StandardMBean( this, MyInterface.class );
+        MBeanServer appsrvr = MBeanServerFactory.createMBeanServer();
+        appsrvr.registerMBean( bean, getObjectName() );
+    }
+
+    protected ObjectName getObjectName() {
+        return new ObjectName( getClass().getPackage().getName()+":"+
+            "type=name,name="+getClass().getName() );
+    }
+</pre>
+
+You can add a call to registerMBean in the classes constructor, and have a working
+MBean for access to your class base on the methods defined in the <code>MyInterface</code>
+interface definition.  StandardMBean uses the JavaBean principles to find attributes by
+looking for setter and getter patterns.  The other methods in the interface become operations.
+<p>
+I created a Netbeans module that embodies this pattern.
+<h2>The Modules Operation</h2>
+The Netbeans plugin generates two different support classes, plus manages an interface (the MyInterface business above).  It then augments the class you are manipulating to make it possible for the user of the module to just put the call to registerMBean() in one place, one time, and be done.
+<p>
+The user of the module only needs to right click on a field name, or method name, and select the modules action from the menu.  Depending on the selected object, appropriate steps are taken to process the users request.
+<p>
+The two support classes and the interface are always created if not present already.  The two support classes and the interface are placed into the same package as the class being manipulated.  This might create some redundant code.  I am contemplating how to deal with this issue more easily.  However, there are some customization possiblities of those two classes which I think makes it interesting to keep them in the package with the class(es) that are using them.
+
+<h3>Generating an Operation from a Method</h3>
+If the user selects a method, the interface will be augmented with a definition of the same method signature.  An additional exception, java.io.IOException, will be added to the throws clause as needed so that the interface can be used directly in remoting application environments, such as Jini.
+<h3>Generating an Attribute from a Field</h3>
+Field processing is more complex because there are some additional features provided.  When the user selects a field to be processed, a wizard opens.  The first pane lets the user select whether they want to allow read, write, read-write or no access to the field.  The user can also specify a different name for the Attribute than the field name so that odd field naming practices don't create Attribute names which are difficult to use. Based
+on the users selection, the appropriate methods will be added to the interface to allow
+setting, getting, or neither access to the field.  No access to the field is related to the options on the second pane.
+<p>
+The second pane allows the user to select to receive notification on field value changes.  It also allows the user to attach either a CounterMonitor and/or a GaugeMonitor to the fields values.  Because of the monitors, a getter will be needed.  If notifications on change are requested, a setter will be added to the class to centralize updates to the field, but it will not be present in the interface.
+<h2>Summary</h2>
+Below is an example class which has been manipulated by this module.  It shows an overview of what's possible.  The registerMBean() method needs some lines of code
+added for each field that is managed.  So, I've placed marker tokens in comments that
+allow the code generation to find the information it needs to manage the content
+of this method.
+<p>
+This is still a work in progress, but so far, it look like it will be useful for our needs.
+<hr/>
+<pre>
+/*
+ * BreakTest.java
+ *
+ * Created on September 5, 2006, 4:46 PM
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
+ */
+
+package org.wonderly.test2;
+
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.MBeanNotificationInfo;
+import javax.management.MBeanRegistrationException;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+import javax.management.MalformedObjectNameException;
+import javax.management.NotCompliantMBeanException;
+import javax.management.Notification;
+import javax.management.ObjectName;
+import javax.management.StandardMBean;
+import javax.management.monitor.CounterMonitor;
+import javax.management.monitor.GaugeMonitor;
+
+/**
+ *
+ * @author gregg
+ */
+public class BreakTest implements IJMXBreakTest {
+    int fld;
+    String val;
+    int other1;
+    int other2;
+
+    /** Creates a new instance of BreakTest */
+    public BreakTest() {
+    }
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>fld</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Fld</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #setFld(int)
+     */
+    public synchronized int getFld() {
+        return fld;
+    }
+
+    /**
+     * This method is used to set the current value of
+     * the <code>fld</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Fld</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #getFld()
+     */
+    public synchronized void setFld(int val) throws IOException, MalformedObjectNameException {
+        int oval = fld;
+        fld = val;
+        bean.notifyAttributeChange( "Fld", oval, val );
+    }
+
+    /**
+     * A logging instance for use by the generated code.
+     */
+    private java.util.logging.Logger log = Logger.getLogger( getClass().getName() );;
+
+    /**
+     * This field refers to this instances MBean
+     */
+    private EventingMBean bean;
+
+    /**
+     * This method registers the requested monitors for the
+     * <code>Fld</code> attribute.
+     */
+    protected void registerMonitorsFld(EventingMBean bean, javax.management.ObjectName on) throws InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
+        log.fine("registering mbean monitors for \"Fld\"");
+        GaugeMonitor gageMonitor = new GaugeMonitor() {
+            public void sendNotification( Notification notif ) {
+                notif.setUserData( getFld() );
+                super.sendNotification( notif );
+            }
+        };
+        gageMonitor.setObservedAttribute( "Fld");
+        gageMonitor.setGranularityPeriod( 100000 );
+        gageMonitor.setNotifyHigh( true );
+        gageMonitor.setNotifyLow( true );
+        gageMonitor.stop();
+        gageMonitor.addObservedObject( bean.getObjectName() );
+        CounterMonitor cntMonitor = new CounterMonitor() {
+            public void sendNotification( Notification notif ) {
+                notif.setUserData( getFld() );
+                super.sendNotification( notif );
+            }
+        };
+        cntMonitor.setObservedAttribute( "Fld");
+        cntMonitor.setGranularityPeriod( 100000 );
+        cntMonitor.stop();
+        cntMonitor.addObservedObject( bean.getObjectName() );
+        if( usePlatformServer() ) {
+            log.finer("registering with platform mbean server");
+            platformMBeanServer.registerMBean( gageMonitor, bean.getObjectName("GaugeFld"));
+            platformMBeanServer.registerMBean( cntMonitor, bean.getObjectName("CounterFld"));
+        }
+        log.finer("registering with application mbean server");
+        appMBeanServer.registerMBean( gageMonitor, bean.getObjectName("GaugeFld"));
+        appMBeanServer.registerMBean( cntMonitor, bean.getObjectName("CounterFld"));
+    }
+
+    /**
+     * This is the reference to the platform MBeanServer
+     * which was used to register MBeans.
+     * @see #appMBeanServer
+     */
+    protected javax.management.MBeanServer platformMBeanServer;
+
+    /**
+     * This is the reference to the application MBeanServer
+     * which was used to register MBeans.
+     * @see #platformMBeanServer
+     */
+    protected javax.management.MBeanServer appMBeanServer;
+
+    /**
+     * This method initializes all aspects of the JavaBeans which
+     * are needed to support the options selected.  Do not edit out the {...}
+     * markers from comments below as they are used by the code generation
+     * steps to find the various pieces already in place so that only the needed
+     * new code is added.
+     */
+    private void registerMBean() throws InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
+        EventingMBean bean = new EventingMBean(this,org.wonderly.test2.IJMXBreakTest.class);
+        ObjectName on = bean.getObjectName();
+        if( usePlatformServer() ) {
+            platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+            platformMBeanServer.registerMBean( bean, on );
+        }
+        appMBeanServer = MBeanServerFactory.createMBeanServer();
+        appMBeanServer.registerMBean( bean, on );
+        // Do not edit the lines below with {XXXX} tags on them.
+        // Registration of monitors will be added here {REGMON}
+        // {REGMON-MaxValue}
+        registerMonitorsMaxValue( bean, on);
+        // {REGMON-MinValue}
+        registerMonitorsMinValue( bean, on);
+        // {REGMON-Fld}
+        registerMonitorsFld( bean, on);
+        // Notifications will be added here {NOTIFADD}
+        // {NOTIFADD-MaxValue}
+        log.fine("add notification info for MaxValue");
+        bean.addNotificationInfo( new MBeanNotificationInfo(
+            new String[] { "MaxValue" },
+            "MaxValue",
+            "MaxValue value change notification"
+            ));
+        // {NOTIFADD-MinValue}
+        log.fine("add notification info for MinValue");
+        bean.addNotificationInfo( new MBeanNotificationInfo(
+            new String[] { "MinValue" },
+            "MinValue",
+            "MinValue value change notification"
+            ));
+        // {NOTIFADD-Val}
+        log.fine("add notification info for Val");
+        bean.addNotificationInfo( new MBeanNotificationInfo(
+            new String[] { "Val" },
+            "Val",
+            "Val value change notification"
+            ));
+        // {NOTIFADD-Fld}
+        log.fine("add notification info for Fld");
+        bean.addNotificationInfo( new MBeanNotificationInfo(
+            new String[] { "Fld" },
+            "Fld",
+            "Fld value change notification"
+            ));
+    }
+
+    /**
+     * This method provides the plugable place to override how the use
+     * of the platform MBeanServer is selected.  The platform server is actively used
+     * by default in this implementation.
+     */
+    private boolean usePlatformServer() {
+        return System.getProperty( getClass().getPackage().getName()+".noplatform") == null;
+    }
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>val</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Val</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #setVal(java.lang.String)
+     */
+    public synchronized java.lang.String getVal() {
+        return val;
+    }
+
+    /**
+     * This method is used to set the current value of
+     * the <code>val</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Val</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #getVal()
+     */
+    public synchronized void setVal(java.lang.String val) throws IOException, MalformedObjectNameException {
+        java.lang.String oval = val;
+        val = val;
+        bean.notifyAttributeChange( "Val", oval, val );
+    }
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>minValue</code> field.  The associated MBean attribute will
+     * be capitalized as <code>MinValue</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #setMinValue(int)
+     */
+    public synchronized int getMinValue() {
+        return other1;
+    }
+
+    /**
+     * This method is used to set the current value of
+     * the <code>minValue</code> field.  The associated MBean attribute will
+     * be capitalized as <code>MinValue</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #getMinValue()
+     */
+    public synchronized void setMinValue(int val) throws IOException, MalformedObjectNameException {
+        int oval = other1;
+        other1 = val;
+        bean.notifyAttributeChange( "MinValue", oval, val );
+    }
+
+    /**
+     * This method registers the requested monitors for the
+     * <code>MinValue</code> attribute.
+     */
+    protected void registerMonitorsMinValue(EventingMBean bean, javax.management.ObjectName on) throws InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
+        log.fine("registering mbean monitors for \"MinValue\"");
+        GaugeMonitor gageMonitor = new GaugeMonitor() {
+            public void sendNotification( Notification notif ) {
+                notif.setUserData( getMinValue() );
+                super.sendNotification( notif );
+            }
+        };
+        gageMonitor.setObservedAttribute( "MinValue");
+        gageMonitor.setGranularityPeriod( 100000 );
+        gageMonitor.setNotifyHigh( true );
+        gageMonitor.setNotifyLow( true );
+        gageMonitor.stop();
+        gageMonitor.addObservedObject( bean.getObjectName() );
+        if( usePlatformServer() ) {
+            log.finer("registering with platform mbean server");
+            platformMBeanServer.registerMBean( gageMonitor, bean.getObjectName("GaugeMinValue"));
+        }
+        log.finer("registering with application mbean server");
+        appMBeanServer.registerMBean( gageMonitor, bean.getObjectName("GaugeMinValue"));
+    }
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>maxValue</code> field.  The associated MBean attribute will
+     * be capitalized as <code>MaxValue</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #setMaxValue(int)
+     */
+    public synchronized int getMaxValue() {
+        return other2;
+    }
+
+    /**
+     * This method is used to set the current value of
+     * the <code>maxValue</code> field.  The associated MBean attribute will
+     * be capitalized as <code>MaxValue</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #getMaxValue()
+     */
+    public synchronized void setMaxValue(int val) throws IOException, MalformedObjectNameException {
+        int oval = other2;
+        other2 = val;
+        bean.notifyAttributeChange( "MaxValue", oval, val );
+    }
+
+    /**
+     * This method registers the requested monitors for the
+     * <code>MaxValue</code> attribute.
+     */
+    protected void registerMonitorsMaxValue(EventingMBean bean, javax.management.ObjectName on) throws InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
+        log.fine("registering mbean monitors for \"MaxValue\"");
+        GaugeMonitor gageMonitor = new GaugeMonitor() {
+            public void sendNotification( Notification notif ) {
+                notif.setUserData( getMaxValue() );
+                super.sendNotification( notif );
+            }
+        };
+        gageMonitor.setObservedAttribute( "MaxValue");
+        gageMonitor.setGranularityPeriod( 100000 );
+        gageMonitor.setNotifyHigh( true );
+        gageMonitor.setNotifyLow( true );
+        gageMonitor.stop();
+        gageMonitor.addObservedObject( bean.getObjectName() );
+        if( usePlatformServer() ) {
+            log.finer("registering with platform mbean server");
+            platformMBeanServer.registerMBean( gageMonitor, bean.getObjectName("GaugeMaxValue"));
+        }
+        log.finer("registering with application mbean server");
+        appMBeanServer.registerMBean( gageMonitor, bean.getObjectName("GaugeMaxValue"));
+    }
+}
+</pre>
+The generated interface is shown below.  Notice how the setters for minValue and maxValue are not present since I just configured those to notify on change and have gauges.
+<pre>
+/*
+ * IJMXBreakTest.java
+ *
+ * Created on September 6, 2006, 12:50 PM
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
+ */
+
+package org.wonderly.test2;
+
+import java.io.IOException;
+import java.rmi.Remote;
+import javax.management.MalformedObjectNameException;
+
+/**
+ * This interface defines the MBean attributes and Operations
+ * which the implementing class should provide.  This interface is
+ * intended to be RMI compatible.  All methods throw
+ * {@link java.io.IOException} to provide RMI compatibility without
+ * the {@link java.rmi.RemoteException} being the limit of exceptions
+ * thrown due to I/O or communications issues.
+ * 
+ * This interface is machine generated and methods may be added
+ * by subsequent development activities.  It can be freely edited
+ * but that might affect its correctness.
+ */
+public interface IJMXBreakTest extends Remote {
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>fld</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Fld</code> due to the
+     * mechanisms implemented by the {@link javax.management.StandardMBean}.
+     * @see #setFld(int)
+     */
+    public int getFld() throws IOException;
+
+    /**
+     * This method is used to set the current value of
+     * the <code>fld</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Fld</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #getFld()
+     */
+    public void setFld(int val) throws IOException, MalformedObjectNameException;
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>val</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Val</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #setVal(java.lang.String)
+     */
+    public java.lang.String getVal() throws IOException;
+
+    /**
+     * This method is used to set the current value of
+     * the <code>val</code> field.  The associated MBean attribute will
+     * be capitalized as <code>Val</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     * @see #getVal()
+     */
+    public void setVal(java.lang.String val) throws IOException, MalformedObjectNameException;
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>minValue</code> field.  The associated MBean attribute will
+     * be capitalized as <code>MinValue</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     */
+    public int getMinValue() throws IOException;
+
+    /**
+     * This method is used to retrieve the current value of
+     * the <code>maxValue</code> field.  The associated MBean attribute will
+     * be capitalized as <code>MaxValue</code> due to themechanism implemented by the {@link javax.management.StandardMBean}.
+     */
+    public int getMaxValue() throws IOException;
+    
+}
+</pre>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=175214&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Gregg Wonderly adds a new entry to <a href="../index.html$/blogger=greggwon.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/greggwon.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D175214&amp;title=Netbeans+Module+for+JMX+enabling+your+application&amp;bodytext=I+am+finishing+up+a+rather+large+application+that+needs+some+JMX+management+capabilities.++I%27ve+got+a+lot+of+classes+that+need+to+be+MBean+enabled%2C+and+I+really+don%27t+want+to+go+through+and+change+them+to+inherit+from+StandardMBean.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D175214&amp;title=Netbeans+Module+for+JMX+enabling+your+application">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D175214&amp;title=Netbeans+Module+for+JMX+enabling+your+application">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/gregg.jpg"/></td><td>Gregg Wonderly graduated from Oklahoma State University in 1988 with an MS in COMSCI.  His areas of concentration include Operating Systems and Languages.  His first job was at the AT&amp;T Bell Labs facilities in Naperville IL working on software retrofit for the 5ESS switch.  He designed a procedure control language in the era of the development of Java with similar motivations that the Oak and then Java language development was driven by.  Language design is still at the top of his list, but his focus tends to be on application languges layered on top of programming languages such as Java.  Some just consider this API design, but there really is more to it!  Gregg now works for Cyte Technologies Inc., where he does software engineering and design related to distributed systems in highly available environments.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Gregg Wonderly. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

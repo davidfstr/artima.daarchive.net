@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Errors of Our Ways</title>
+<meta charset="utf-8"/>
+<meta content="Nancy Nicolaisen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=nancyn.html">Nancy Nicolaisen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=225544.html">Discuss</a> | 
+<a href="mailto:?subject=The Errors of Our Ways&amp;body= %0AArtima Weblogs %0AThe Errors of Our Ways %0Aby Nancy Nicolaisen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=225544">Email</a> | 
+<a href="../viewpostP.html$/thread=225544.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=223987.html" title="Touring the Smallest Symbian App">Previous</a> | 
+<a class="sl" href="thread=226394.html" title="You’re Just My Type">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Symbinia</span><br>
+<span class="ts">The Errors of Our Ways</span><br/>
+<span class="as">by Nancy Nicolaisen</span><br/>
+<span class="pd">February 23, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The main job of a phone, after all, is to behave in a phone-like manner: always connected, always on and always available.  If application failure could preempt these canonical device behaviors, we’d have, um..Windows.  But we don’t.  Thus, an incorruptible safety net is required, and we get this from the Symbian Leave architecture.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+In Symbian, Leaving is the mechanism by which we mediate conditions that prevent apps from performing as intended.  Whether precipitated by pilot error or a simple inability on the part of the device to perform as hoped, fault conditions on a phone are materially different than those on other types of devices.  The main job of a phone, after all, is to behave in a phone-like manner: always connected, always on and always available.  If application failure could preempt these canonical device behaviors, we’d have, um..Windows.  But we don’t.  Thus, an incorruptible safety net is required, and we get this from the Symbian Leave architecture.  
+</p><p><b>Why This Isn’t Vanilla C++</b>
+</p><p>Most programmers have, at the very least, a curiosity about why things are like they are.  It naturally follows, since we are using C++, that one might wonder why Symbian has its own unique error recovery scheme. After all, one of C++’s notable strengths is its built-in error handling facility, the exception mechanism.  
+</p><p>At the time Symbian was under development, C++ exception handling had not yet achieved standardization or full compiler integration.   Later, when exception handling behavior was well defined, this infrastructure came at the price of considerable overhead in terms of code size, application memory footprint and execution performance.  C++ exceptions, while a good big- and medium-sized programming technology, simply didn’t fit in the available space on a mobile device.  Think of it as being more or less analogous to the fact that on an airliner, you get to eat micro pretzels, but at the movies you can buy and enjoy a cubic yard of popcorn.  In both cases, you’re occupying a seat, but it’s what’s containing that seat that dictates the menu. 
+</p><p>So.  Leaves and the Clean Up Stack.  Learn to love them and the whole landscape of Symbian programming spreads itself out at your feet.
+</p><p><b>A Peek Inside The Oyster</b>
+</p><p>Leaves occur when a program makes requests for resources that the system can’t satisfy.  Very often, these are a result of memory allocation failures.  Low memory is, after all, the default operating condition on well designed embedded systems. Leaving offers us a very light weight, yet well defined, exception handling mechanism. Here are the basics:</p><p><i>
+   •	Leaves propagate program execution errors to logic that can handle them.</i></p><p>
+   •	Execution is suspended where the Leave occurs.</p><p>
+   •	Execution resumes at the point where the Leave is TRAPped.</p><p>
+   •	Respectively, these are equivalent to setjmp() and longjmp().</p><p>
+</p><p>An application’s actual implementation of Leave behavior relies on these User class functions:</p><p><i>
+   •	User::Leave() Leaves unconditionally, carrying the integer passed to it as a Leave code</i></p><p>
+   •	User::LeaveIfNoMemory() Leaves unconditionally, but passes a hard-coded Leave value of KErrNoMemory.</p><p>  
+   •	User::LeaveIfNull() tests a pointer parameter and Leaves with a KErrNoMemory if the pointer is NULL.</p><p>
+   •	User::LeaveIfError() tests an integer parameter and Leaves if the value is less than zero. </p><p> 
+</p><p>And where, you might be wondering, do we Leave <i>to</i>?  Leaves land in a corresponding TRAP macro.  There are two forms of the TRAP macro, but they behave in exactly the same fashion:
+</p><p><b>    TRAP( ReturnStatusCode, MightBeALeaver() );
+</b></p><p>      if(ReturnStatusCode==NOT_SO_GOOD)
+</p><p>        { //Do something about it... }
+</p><p>The TRAP macros work recursively, which is to say they TRAP Leaves from any functions called by the one named in the macro.  They may be nested. By default, all Symbian programs have at least one TRAP macro, which is provided by the app framework.  TRAPs are, however, extremely expensive, and so you must balance their necessary uses against their considerable processor and memory consumption.  Every TRAP entry and exit switches user app code into privileged mode, in order to access kernel resources.  Also, TRAPs cause allocation of storage for a backup copy of the thread’s stack. In the event a Leave actually occurs, the previous system state is restored from this snapshot.  The Take Home Lesson:
+</p><p><i>Used together, Leaves and TRAPs detect recoverable error and redirect execution to remediate.</i>
+</p><p>Given the preceding, there are some basic, hard and fast rules about Leaves that we currently know enough to digest.</p><p><i>
+   •	You can’t Leave in a constructor or a destructor, because this would very likely leak heap memory. Constructions which aren’t Leave safe are always done in two phases so that the first phase, the actual constructor, </i>is<i> Leave safe.</i></p><p>
+   •	You should never Leave and return an error.  These are mutually exclusive behaviors in the Symbian context.</p><p>
+   •	We don’t use Leaves to direct the normal flow of program logic. </p><p>
+</p><p>One reason the Symbian error handling model is far more lightweight than C++ exception handling is that while Leaving functions deallocate all local objects, <i>they call no destructors. </i> For this reason, were Leaves the only mechanism for handling runtime errors, we’d have a fairly serious problem. A Leave could deallocate locally stored (stack based) pointers to heap based objects, orphaning objects on the heap and causing memory leakage.  This undesirable side effect is prevented by the use of the Clean Up Stack.
+</p><p><b>The Clean Up Stack</b>
+</p><p>When I think about the mechanics of the Clean Up Stack, it seems a little like this is the place where Symbian programming is actually assembly language cross dressing as C++.  There are two basic things to understand about this tool:  First you need to have a definite, specific grasp of what does and does not go on the Clean Up Stack; And second, pushing and popping objects has to happen in a definite, particular order.  This last is ordinary stack behavior, but if you haven’t had hands on experience with this data structure, it may seem intimidating.  <i>Fear not. </i> In this post we are going to do a flyover of the Clean Up stack, its conventions and its uses.  We will return to this topic at least twice more, to explore its operations in thoroughly meticulous fashion and completely illuminate its relationship to Symbian data typing. For now, we examine key principles of the Clean Up Stack architecture:
+</p><p><b>The Clean Up Stack provides a way to ensure that heap based objects are properly deallocated if a function Leaves before it can delete or destruct them normally. </b>  Much in the same fashion that the TRAP macro stores a copy of a thread’s stack in order to correctly restore state in the event of a Leave, the Clean Up Stack ensures the integrity of the heap. 
+</p><p><b>Pointers to objects that are not Leave safe must be pushed onto the Clean Up Stack. </b> An item is not "Leave safe" if it’s deletion would cause heap memory to be leaked. 
+</p><p><b>It works like the plate dispenser in the cafeteria. </b>  "Pop" removes the topmost element and "Push" adds an element at the topmost position.  Since in this case, the items we are shoving around point to heap space allocations, it is very important to keep track of the order in which they come and go.  Otherwise, we create the potential for double deletion, deleting things in the wrong order or leaking heap memory.
+</p><p><b>The Clean Up Stack Push operations are, themselves, Leave safe. </b>  Clean Up Stack architecture makes it impossible to orphan an object passed in to it for a PUSH operation. We’ll explore why this is so at a later point in time.  The important thing here is that as an app programmer, you have no responsibility for managing the integrity of underlying Clean Up Stack data structures or functionality.  
+</p><p><b>Symbian’s overall system of ensuring heap integrity relies on two things: Appropriate use of the Clean Up Stack and adherence to Symbian data type conventions. </b>  Put another way, this comes down to the first rule of good programming practice, as related to me by my sister decades ago, when we were in college. <i>Rule of thumb: Always know where your space is coming from. </i>
+</p><p><b>Looking Ahead: </b>
+</p><p>A "whole cloth" understanding of the Symbian programming model relies on the interweaving of safety mechanisms (Leaves and the Clean Up Stack) and the conventional use of Symbian Data Types. After you understand these two things, both individually and in relation to one another, you have a solid foundation on which to build just about any sort of app.  So next, we look at data types.
+</p><p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=225544.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=225544&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Nancy Nicolaisen adds a new entry to <a href="../index.html$/blogger=nancyn.html">her weblog</a>, subscribe to her <a href="../feeds/bloggers/nancyn.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D225544&amp;title=The+Errors+of+Our+Ways&amp;bodytext=The+main+job+of+a+phone%2C+after+all%2C+is+to+behave+in+a+phone-like+manner%3A+always+connected%2C+always+on+and+always+available.++If+application+failure+could+preempt+these+canonical+device+behaviors%2C+we%E2%80%99d+have%2C+um_Windows.++But+we+don%E2%80%99t.++Thus%2C+an+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D225544&amp;title=The+Errors+of+Our+Ways">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D225544&amp;title=The+Errors+of+Our+Ways">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Nancy Nicolaisen has authored three books on C++ programming topics; hundreds of articles for print magazines including Byte, Dr. Dobbs and PC Magazine; and was the chief contributor to codeguru.com's Windows CE Zone.  Former researcher and Computer Science Professor, she specializes in small device and embedded systems programming.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Nancy Nicolaisen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

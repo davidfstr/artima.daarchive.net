@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2011 - Day 1</title>
+<meta charset="utf-8"/>
+<meta content="Sean Landis" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=seanl.html">Sean Landis' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=335733.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2011 - Day 1&amp;body= %0AArtima Weblogs %0AJavaOne 2011 - Day 1 %0Aby Sean Landis %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=335733">Email</a> | 
+<a href="../viewpostP.html$/thread=335733.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=246513.html" title="Traps &amp; Pitfalls of Agile Software Development - A Non-Contrarian View">Previous</a> | 
+<a class="sl" href="thread=335781.html" title="JavaOne 2011 - Day 2">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">People Over Process</span><br>
+<span class="ts">JavaOne 2011 - Day 1</span><br/>
+<span class="as">by Sean Landis</span><br/>
+<span class="pd">October 5, 2011</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The day one keynote convinced everyone that Java is moving forward. There are good things happening, good things on the horizon, and a few surprise changes-in-direction from Oracle.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+JavaOne keynotes are pretty low-key compared to years past. The theme this year is that Java is back on track and "moving forward" once again. I must agree; many new releases were announced. It is a small crowd but nearly double last year according to Oracle.
+</p>
+<p>
+The schedule—lot's of "Cloud" sessions—gives hints of where Java is headed. Clouds of all sorts are here. Whatever your favorite definition of cloud, there's something for you. I am also struck by the number of REST-related sessions. Web services are a key enabler for cloud computing and it seems REST is the way to get there.
+</p>
+<p>
+There was a dog and pony show about the Intel/Sun-Oracle relationship over the years. The data was impressive though. In the six years working closely with Intel, JVM performance has improved fourteen-fold and concurrent user capability has improved fifty times.
+</p>
+<p>
+Ashok Joshi announced that Oracle is introducing its own NoSQL database. This, along with cloud computing, marks a turn around for Oracle, which had panned both technologies as fads in the past. Some numbers were presented that showed linear scalability for their new database. Off to a good start.
+</p>
+<p>
+Mark Rienhold gave a presentation on the new features of Java 7, several of which received big applause. The language changes are going to help reduce code size, improve safety, and increase clarity. They are evolutionary in nature, but much welcomed.
+</p>
+<p>
+Looking forward, Mark gave a survey of the key features being considered for Java 8. The two big things are Project Lambda and Project Jigsaw. Project Lambda will provide functional programming features without breaking backward compatibility. It's a good effort, striking the balance well. There are no closures because only "effectively final" variables can be referred to in the body of a function. Project Lambda will be a great enhancement to Java, keeping it competitive with newer languages for a few more years.
+</p>
+<p>
+Project Jigsaw is a bit less satisfying. The main goal, of providing modular control for programming-in-the-large, is an important addition to Java. But there are some other confusing directions that may undermine the utility of this project. For example, version information can be embedded in source code, thus enabling a dependency graph within the JVM. This begins to encroach on the Maven value proposition and Oracle is, in fact, experimenting with using Maven repositories. It remains to be seen whether it is a good idea to embed versioning and dependency information in code, and it remains to be seen what Oracle does with this information.
+</p>
+<p>
+One benefit of modules is to allow smaller deploys and standard configurations. For example, a goal is to be able to load a runnable JVM application in under 10MB. One hopes this will reduce build times and program startup.
+</p>
+<p>
+It was mentioned that OSGi capabilities were being considered as part of the project. Sun had a history of folding existing technologies into core Java, whether they belong there or not. Think CORBA, XML, SQL, and JAX-WS. It appears that Project Jigsaw may be heading in that direction. My hope is the designers stick with the primary goal of improving programming-in-the-large and enabling reduced footprints.
+</p>
+<p>
+Other Java 8 features under consideration include Project Nashorn (JavaScript on the JVM), JVM convergence (with JRocket), type annotations, and a new date/time API.
+</p>
+<p>
+A laundry list of potential Java 9 features were presented including self-tuning JVM, improved native integration, big data support, reification, tail calls and continuations, JVM multi-tenancy, and resource management. These all seem like great ideas.
+</p>
+<p>
+Rich Bair discussed JavaFX and announced version 2.0, which is moving away from scripting and toward native Java. Is JavaFX giving up on taking down Adobe Flex, and now aiming at GWT? JavaFX still seems to me like a storm in a teacup, or coffee mug. Who is using it? Run everywhere is still a long way off. There were some pretty demos, but I've seen these for several years so JavaFX is still niche technology. Scene Builder for NetBeans was highlighted, but it is unclear whether more popular IDEs will be supported.
+</p>
+<p>
+Linda DeMichele presented a new layer of lipstick for Java EE 7: as a PaaS solution. Moving EE into the cloud involves adding a slew of metadata for provisioning, configuration, QoS, sharability, and APIs. Key enablers are JAX-RS, caching, state management, and JSON among others. Finally, a raft of new roles will be introduced. It all smacks of extreme overengineering to me.
+</p>
+<p>
+Arun Gupta gave a demo of this and the elephant in the room was that provisioning takes forever. It appears Glassfish has been extended to control the provisioning and elasticity capabilities. Other extensions mentioned were CDI, managed beans, JMS 2.0, and services metadata.
+</p>
+<p>
+Hinkmond Wong spoke on mobile. It seemed not much new here. There was a rigged DNLP demo that wasn't very compelling. 
+</p>
+<p>
+I attended The Future of Java Build and Continuous Integration. This was a panel discussion which, I am afraid, had nothing new to discuss. Best practices seem to be meeting the needs for those who are using them. There were a couple of tidbits. Eclipse said it will never ship Jenkens because it changes too fast. Everyone on the panel agreed. An online Hudson book was just finished. One panel member is working on Hudson in the cloud.
+</p>
+<p>
+I attended an interesting presentation by Bob Lee on the dark underbelly of references. I now understand soft, weak, and phantom references. If you don't, look up the presentation. You'll probably be surprised.
+</p>
+<p>
+Alex Buckley drilled down on Project Lambda to Multicore and Beyond. He discussed the main features for building better parallel libraries and code as data.
+It all starts with functional interfaces that express a function as one method.
+The lambda expression is introduced as an implementation of a functional interface, along with a concise syntax for writing them. As I mentioned, you can only refer to effectively final variables, which is an extension of today's final-only variable use. Improved type inference enables the concise syntax. There is a new syntax for direct method references, allowing you to assign a method to a variable, for example. Finally, to avoid breaking compatibility, an interface syntax for default implementation is a new language feature. It allows a virtual extension or fallback to a static method defined somewhere else if it is not defined in an implementing class. 
+</p>
+<p>
+I attended a presentation called JAX-RS 2.0: what's in JSR 339? by Santiago Pericas-Geertsen. There are many new features being considered for the next release. The key items to expect are a client API, Filters, asynchronous invocation, JSR 330 (dependency injection), hypermedia support (transition links in headers), validation support, and better content negotiation support. These features have appeared in some REST framework implementations and seem to be best-in-class approaches. Check JSR draft and java.net for more details.
+</p>
+<p>
+I had a great breakfast at Sears diner and great Thai food at Old Siam. I recommend both.
+</p>
+<h1>Resources</h1>
+<p>
+<table>
+<tr><td>
+<a href="../_/http/www.artima.com/shop/agile_hiring/index.html"><img alt="front cover Agile Hiring" src="../_/https/www.artima.com/images/agileHiringCover135x175.gif" style="border-width: 0;"/></a>
+</td>
+<td>
+Sean Landis is the author of <em>Agile Hiring</em>, techniques that will transform how you hire software professionals.
+<a href="../_/http/www.artima.com/shop/agile_hiring/index.html">http://www.artima.com/shop/agile_hiring</a>
+</td>
+</tr>
+</table>
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=335733&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Sean Landis adds a new entry to <a href="../index.html$/blogger=seanl.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/seanl.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335733&amp;title=JavaOne+2011+-+Day+1&amp;bodytext=The+day+one+keynote+convinced+everyone+that+Java+is+moving+forward.+There+are+good+things+happening%2C+good+things+on+the+horizon%2C+and+a+few+surprise+changes-in-direction+from+Oracle.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335733&amp;title=JavaOne+2011+-+Day+1">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335733&amp;title=JavaOne+2011+-+Day+1">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/seanlandis.jpg"/></td><td>Sean Landis is a technologist and programmer interested in, among other things, mobile and distributed sytems, location-based services, and skiing.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2011 Sean Landis. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

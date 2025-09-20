@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The adventures of a Pythonista in Schemeland/5</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=239699.html">Discuss</a> | 
+<a href="mailto:?subject=The adventures of a Pythonista in Schemeland/5&amp;body= %0AArtima Weblogs %0AThe adventures of a Pythonista in Schemeland/5 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=239699">Email</a> | 
+<a href="../viewpostP.html$/thread=239699.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=239568.html" title="The adventures of a Pythonista in Schemeland/4">Previous</a> | 
+<a class="sl" href="thread=240272.html" title="Installing Ubuntu on my MacBook">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The adventures of a Pythonista in Schemeland/5</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">October 6, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this installment I will talk about tail call optimization, performance and the R6RS module system.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">About tail call optimization (and the module system)</h1>
+<p>In order to speak of Scheme performance one needs to write at least a
+few benchmarks. This is not completely trivial, for at least a couple
+of reasons. The first reason is shallow, but it may be baffling for
+beginners: since there is no <tt class="docutils literal"><span class="pre">for</span></tt> loop in Scheme, how are we
+supposed to write a benchmark, which is usually based on running many
+times the same instructions and measuring the total time spent? We
+will see in a moment that there is an easy solution to this question
+(use recursion). On the other hand, there is a second more serious
+question: since there is no fully portable way to write a library in
+Scheme, how can we write a benchmark library?  There is no real answer,
+so we will restrict ourselves to R6RS-compliant
+Scheme implementations where there is a standard concept of library.</p>
+<div class="section">
+<h1><a id="there-are-no-for-loops-in-scheme" name="there-are-no-for-loops-in-scheme">There are no <tt class="docutils literal"><span class="pre">for</span></tt> loops in Scheme</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">for</span></tt> loop is missing in Scheme as a primitive construct since
+it is useless in a language that guarantees tail call optimization.
+If you studied the concept of <em>tail call</em> at college you know what
+I am talking about; on the other hand, if you forgot it, or if you did
+study Physics like me, it is worth spending a couple of words on
+the subject. The ones who want to know more, may consult
+this <a class="reference" href="../_/http/en.wikipedia.org/wiki/Tail_call_optimization/index.html">Wikipedia article</a>.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/Ouroboros.png" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/Ouroboros.png">
+<p>The important point beyond the tail recursion concept
+is that it is always possibile to convert a <tt class="docutils literal"><span class="pre">for</span></tt>
+into a recursive function in <em>tail call</em> form, i.e. a recursive
+function returning a value or a call to itself. For instance,
+the Python loop:</p>
+<pre class="literal-block">
+# a loop printing 1 2 3
+for i in range(1,4):
+   print i,
+</pre>
+<p>can be converted to a recursive function <tt class="docutils literal"><span class="pre">print_up_to_3</span></tt>:</p>
+<pre class="literal-block">
+def print_up_to_3(i):
+   if i == 4: return
+   print i,
+   return print_up_to_3(i+1)
+
+print_up_to_3(1)
+</pre>
+<p>Here the last instruction of the function (the tail) is a call to
+itself, hence the name <em>tail call</em>.</p>
+<p>Tail call optimization is guaranteed by the
+Scheme language. Scheme compilers/interpreters are able
+to recognize recursive functions in tail call form and to convert
+them internally in <tt class="docutils literal"><span class="pre">for</span></tt> loops. As a consequence, the programmer
+has no need to write <tt class="docutils literal"><span class="pre">for</span></tt> loops directly: she can just use
+recursive function. Our example would look as follows in Scheme:</p>
+<pre class="literal-block">
+(define (print-up-to-3 i)
+   (unless (= i 4)
+     (display i) (display " ")
+     (print-up-to-3 (+ i 1))))
+
+(print-up-to-3 1)
+</pre>
+<p>This works, but it is not really readable; to improve the situation Scheme
+provides a little syntactic sugar called <em>named let</em>:</p>
+<pre class="literal-block">
+(let loop ((i 1))
+  (unless (= i 4)
+     (display i) (display " ")
+     (loop (+ i 1))))
+</pre>
+<p>Traditionally the function in the <em>named let</em> construct is called <tt class="docutils literal"><span class="pre">loop</span></tt>
+to make clear to the programmer that we are emulating a <tt class="docutils literal"><span class="pre">for</span></tt> loop.
+In this example <tt class="docutils literal"><span class="pre">loop</span></tt> is exactly equivalent to <tt class="docutils literal"><span class="pre">print-up-to-3</span></tt>.</p>
+<p>Let me point out two things before closing this paragraph:</p>
+<ol class="arabic">
+<li><p class="first">there are other <tt class="docutils literal"><span class="pre">let</span></tt> forms, used to define local variables.
+The simplest one is <tt class="docutils literal"><span class="pre">let</span></tt>:</p>
+<pre class="literal-block">
+&gt; (let ((a 1) (b 2)) (+ a b)) ; =&gt; 3
+</pre>
+<p>The scope of <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> is limited to the current S-expression/form;
+if <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are defined outside the <tt class="docutils literal"><span class="pre">let</span></tt> form, internally
+<tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> <em>shadow</em> the outer names.</p>
+</li>
+<li><p class="first">there is actually a <tt class="docutils literal"><span class="pre">do</span></tt> loop in the language, but it is cumbersome
+to use and redundant because the <em>named let</em> allows you to perform
+everything <tt class="docutils literal"><span class="pre">do</span></tt> does. I see it as a useless construct in a language
+that would like to be minimalist but it is not.</p>
+</li>
+</ol>
+</img></div>
+<div class="section">
+<h1><a id="there-is-no-portable-module-system" name="there-is-no-portable-module-system">There is no portable module system</a></h1>
+<p>As I have anticipated, libraries are the weak point of Scheme.
+There are few libraries available and it is also difficult to
+write portable ones. The reason is that historically Scheme
+never had any standard module system until very recently, with
+the R6RS document: that means nearly all current implementations
+provide different and incompatible module systems.</p>
+<p>In order to understand the reason for this serious lack, you must
+understand the philosophy behind Scheme, i.e. the so called
+<a class="reference" href="../_/http/www.jwz.org/doc/worse-is-better.html">MIT approach</a>: things must be done well, or not at all.
+For thirty years the Scheme community has not been able to converge on
+a well done single module system. It is only in 2007 that a standard module
+system has been blessed by the Scheme committee: but even that
+was done with a lot of opposition and there are implementors who
+said they will <em>never</em> support R6RS.</p>
+<p>As a consequence of history and mentality, if you
+want to write a library for implementation X, you need to do a lot of
+boring and uninspiring work to port the library to implementations Y,
+Z, W, ...  (there are <em>dozens</em> of different implementations).
+Moreover, a few implementations do not have a module system at all, so
+you may be forced to solve name clashes issue <em>by hand</em>, changing the
+names of the functions exported by your library, if they shadow names
+coming from third party libraries (!)</p>
+<p>Personally, I picked up Scheme 5 years ago, but never used it
+because of the lack of a standardized module system. The main reason why
+I have decided to go back to Scheme and to write this series is the
+coming of the R6RS document last year. The R5RS standard has lots of defects,
+but at least now I can write a library and I can have people using
+different implementations install it and use it (nearly) seemlessly.</p>
+<p>Since there is some hope for a large diffusion of R6RS module system
+in the future, I have decided to use it and to ignore implementations
+not supporting it. I should notice however that there are
+solutions to run R6RS modules on top of R5RS implementations, like
+the <a class="reference" href="../_/http/www.cs.indiana.edu/~aghuloum/r6rs-libraries/index.html">psyntax</a> package, but I have not tried it, so I cannot comment
+on its reliability.</p>
+<p>As first example of usage
+of the R6RS module system, I will define a <tt class="docutils literal"><span class="pre">repeat</span></tt> library exporting
+a <tt class="docutils literal"><span class="pre">call</span></tt> function which is able to call a procedure <tt class="docutils literal"><span class="pre">n</span></tt> times.
+Here is the code, that should be self-explanatory:</p>
+<pre class="literal-block">
+(library (repeat)
+  (export call)
+  (import (rnrs))
+
+  (define (call n proc . args)
+    (let loop ((i 0))
+      (when (&lt; i n) (apply proc args) (loop (+ 1 i))))))
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">export</span></tt> declaration corresponds to Python's <tt class="docutils literal"><span class="pre">__all__</span></tt>:
+only the names listed in <tt class="docutils literal"><span class="pre">export</span></tt> are exported. In this case we
+will export only the function <tt class="docutils literal"><span class="pre">(call</span> <span class="pre">n</span> <span class="pre">proc</span>
+<span class="pre">.</span> <span class="pre">args)</span></tt>. Notice the dot in the argument list: that means that the functions
+accept a variable number of arguments, which are collected in the list
+<tt class="docutils literal"><span class="pre">args</span></tt>.  In other words, <tt class="docutils literal"><span class="pre">.</span> <span class="pre">args</span></tt> is the moral equivalent of
+<tt class="docutils literal"><span class="pre">*args</span></tt> in Python, with some difference that we will ignore for
+the moment. The <tt class="docutils literal"><span class="pre">apply</span></tt> function applies the argument list to the
+input procedure <tt class="docutils literal"><span class="pre">proc</span></tt>, which is called many times until the index
+<tt class="docutils literal"><span class="pre">i</span></tt> reaches the value <tt class="docutils literal"><span class="pre">n</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">(import</span> <span class="pre">(rnrs))</span></tt> imports all the libraries of the current version of the
+"Revised Report on Scheme", i.e. the R6RS report. At the REPL this is
+automatically done by the system, but for batch scripts it is mandatory
+(as Pythonistas say <em>explicit is better than implicit</em>). It is also
+possible to import subsections of the whole library. For instance
+<tt class="docutils literal"><span class="pre">(import</span> <span class="pre">(rnrs</span> <span class="pre">base))</span></tt> imports only the base library of the R6RS,
+<tt class="docutils literal"><span class="pre">(import</span> <span class="pre">(rnrs</span> <span class="pre">io))</span></tt> imports only the I/O libraries, et cetera.</p>
+<p>The usage of the libray is trivial: it is enough to put the file
+<tt class="docutils literal"><span class="pre">repeat.sls</span></tt> somewhere in the Ikarus search path (specified
+by the environment variable <tt class="docutils literal"><span class="pre">IKARUS_LIBRARY_PATH</span></tt>). Then,
+you can import the library as follows:</p>
+<pre class="literal-block">
+$ rlwrap ikarus
+Ikarus Scheme version 0.0.2
+Copyright (c) 2006-2007 Abdulaziz Ghuloum
+&gt; (import (repeat))
+&gt; (call 3 display "hello!\n")
+hello!
+hello!
+hello!
+</pre>
+<p>By default <tt class="docutils literal"><span class="pre">(import</span> <span class="pre">(repeat))</span></tt> imports all the names exported by
+the module <tt class="docutils literal"><span class="pre">repeat</span></tt>, something that a Pythonista would never do
+(it is equivalent to a <tt class="docutils literal"><span class="pre">import</span> <span class="pre">*</span> <span class="pre">from</span> <span class="pre">repeat</span></tt>); fortunately it is
+possible to list the names to be imported, or to add a custom prefix:</p>
+<pre class="literal-block">
+&gt; (import (only (repeat) call)); import only call from repeat
+call
+#&lt;procedure call&gt;
+&gt; (import (prefix (repeat) repeat:)); import all with prefix repeat:
+&gt; repeat:call
+#&lt;procedure call&gt;
+</pre>
+</div>
+<div class="section">
+<h1><a id="a-simple-benchmark" name="a-simple-benchmark">A simple benchmark</a></h1>
+<p>The main advantage of Scheme with respect to Python is the performance.
+In order to show the differences in performance I will go back to
+the factorial example of <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=239568.html">episode 4</a>. I will compare the following
+Python script:</p>
+<pre class="literal-block">
+# fact.py
+import sys, timeit
+
+def fact(x):
+    if x == 0: return 1
+    else: return x * fact(x-1)
+
+if __name__ == '__main__':
+    n = int(sys.argv[-1])
+    t = timeit.Timer('fact(%d)' % n, 'from fact import fact')
+    print t.repeat(1, number=10000000)
+    print fact(n)
+</pre>
+<p>with the following R6RS-compliant script (written in Ikarus Scheme):</p>
+<pre class="literal-block">
+; fact.ss
+(import (rnrs) (only (repeat) call) (only (ikarus) time))
+
+(define (fac x)
+  (if (= x 0) 1
+      (* x (fac (- x 1)))))
+
+(define n
+  (string-&gt;number (car (reverse (command-line)))))
+
+(time (call 10000000 (lambda () (fac n))))
+(display "result:") (display (fac n)) (newline)
+</pre>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/clessidra.png" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/clessidra.png" style="width: 175px;">
+<p>I will notice two things:</p>
+<ol class="arabic simple">
+<li>Python manages to compute the factorial of 995, but then it faces
+the stack wall and it raises a
+<tt class="docutils literal"><span class="pre">RuntimeError:</span> <span class="pre">maximum</span> <span class="pre">recursion</span> <span class="pre">depth</span> <span class="pre">exceeded</span></tt> whereas Scheme
+has no issues whatsoever;</li>
+<li>In order to compute the factorial of 995 ten thousands times, Python
+takes 15.2 seconds, whereas Ikarus takes 7.2 seconds.</li>
+</ol>
+<p>Notice that since the factorial of 995 is a <em>large</em> number, the computation
+time is spent in multiplication of large numbers, which are implemented
+in C. Python has its own implementation of
+long integers, whereas Ikarus uses the GNU Multiprecision library (<a class="reference" href="../_/http/gmplib.org/index.html">gmp</a>):
+the times measured here mean that the <a class="reference" href="../_/http/gmplib.org/index.html">gmp</a> implementation of
+long integers is more efficient than the Python one, but they
+say nothing on the relative performances of the two languages.
+It is more interesting to see what happens for small numbers.
+For instance, in order to compute the factorial of 7 for 10 millions
+of times, Python takes 30.5 seconds, whereas Ikarus takes
+3.08 seconds and thus it is nearly <em>ten times</em> faster than Python.
+This is not surprising at all, since function calls in Python
+are especially slow whereas they are optimized in Scheme. Moreover
+Ikarus is a native code compiler.</p>
+<p>It means Ikarus' <a class="reference" href="../_/http/en.wikipedia.org/wiki/REPL/index.html">REPL</a> works by compiling expressions to native code,
+whereas Python's REPL compiles to bytecode. The technology is called
+incremental compilation and it is commonly used in Lisp languages
+from decades, even if it may look futuristic for C/C++ programmers.
+The factorial example is not very practical (on purpose), but it
+is significant, in the sense that it is legitimate to expect
+good performances from Scheme compilers. The fastest
+Scheme compiler out there is <a class="reference" href="../_/http/community.schemewiki.org/$/Stalin/index.html">Stalin</a>, but I would not recommend
+it to beginners.</p>
+<p>The next episodes will be devoted to the dangers of benchmarks,
+do not miss it!</p>
+</img></div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=239699.html">13
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=239699&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D239699&amp;title=The+adventures+of+a+Pythonista+in+Schemeland%2F5&amp;bodytext=In+this+installment+I+will+talk+about+tail+call+optimization%2C+performance+and+the+R6RS+module+system.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16"/>Digg
+  </a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D239699&amp;title=The+adventures+of+a+Pythonista+in+Schemeland%2F5">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D239699&amp;title=The+adventures+of+a+Pythonista+in+Schemeland%2F5">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

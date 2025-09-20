@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/29</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=261363.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/29&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/29 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=261363">Email</a> | 
+<a href="../viewpostP.html$/thread=261363.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=260195.html" title="The Adventures of a Pythonista in Schemeland/28">Previous</a> | 
+<a class="sl" href="thread=261364.html" title="The Adventures of a Pythonista in Schemeland/30">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/29</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">June 26, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this episode I explain how to break hygiene in Scheme macros by using datum-&gt;syntax. I discuss how you can play
+with the lexical context. Finally, I spend some word on non-hygienic macro systems versus hygienic systems.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">Breaking hygiene</h1>
+<p>In the <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=260195.html">previous episode</a> I said that hygienic macros are good, since
+they solve the variable capture problem. However, purely hygienic macros
+introduce a problem of their own, since they
+make it impossible to introduce variables at all.
+Consider for instance the following trivial macro:</p>
+<pre class="literal-block">
+(def-syntax (define-a x)
+  #'(define a x))
+</pre>
+<p><tt class="docutils literal"><span class="pre">(define-a</span> <span class="pre">x)</span></tt> <em>apparently</em> expand to <tt class="docutils literal"><span class="pre">(define</span> <span class="pre">a</span> <span class="pre">x)</span></tt>, so
+you may find the following surprising:</p>
+<pre class="literal-block">
+&gt; (define-a 1)
+&gt; a
+Unhandled exception
+ Condition components:
+   1. &amp;undefined
+   2. &amp;who: eval
+   3. &amp;message: "unbound variable"
+   4. &amp;irritants: (a)
+</pre>
+<p>Why is the variable <tt class="docutils literal"><span class="pre">a</span></tt> not bound to 1? The problem is that hygienic
+macros <em>never introduce identifiers implicitly</em>.
+Auxiliary names introduced in a macro <em>are not visible outside</em> and the
+only names which enter in the expansion are the ones we put in.
+A mechanism to introduce identifiers, i.e. a mechanism
+to break hygiene, is needed if you want to define binding forms.</p>
+<div class="section">
+<h1><a id="datum-syntax-revisited" name="datum-syntax-revisited"><tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> revisited</a></h1>
+<p>Scheme has a builtin mechanism to break hygiene, and we already saw
+it: it is the <tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> utility which converts literal
+objects (<em>datums</em>) into syntax objects.  I have shown
+<tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> at work in episodes <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=260182.html">27</a> and <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=260195.html">28</a> : it was used there
+to convert lists describing source code into syntax objects.  A more
+typical use case for <tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> is to turn symbols into proper
+identifiers. Such identifiers can then be introduced in macros and
+made visible to expanded code.</p>
+<p>In order to understand the mechanism, you must always remember
+that identifiers in Scheme - in the technical sense of objects
+recognized by the <tt class="docutils literal"><span class="pre">identifier?</span></tt> predicate - are not just raw
+symbols, they are syntax objects with lexical information attached to
+them. If you want to turn a raw symbol into an identifier you must add
+the lexical information to it, and this is done by copying the lexical
+information coming from the context object in <tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt>.</p>
+<p>For instance, here is how
+you can "fix" the macro <tt class="docutils literal"><span class="pre">define-a</span></tt>:</p>
+<pre class="literal-block">
+(def-syntax (define-a* x)
+  #`(define #,(datum-&gt;syntax #'define-a* 'a) x))
+</pre>
+<p>The symbol <tt class="docutils literal"><span class="pre">'a</span></tt> here is being promoted to a <em>bona fide</em> identifier,
+by adding to it the lexical context associated to the macro name.
+You can check that the identifier <tt class="docutils literal"><span class="pre">a</span></tt> is really introduced as
+follows:</p>
+<pre class="literal-block">
+&gt; (define-a* 1)
+&gt; a
+1
+</pre>
+<p>A more realistic example is to use <tt class="docutils literal"><span class="pre">syntax-&gt;datum</span></tt>
+to build new identifiers from strings.
+For that purpose I have added an <tt class="docutils literal"><span class="pre">identifier-append</span></tt>
+utility in my <tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">lang)</span></tt> library, defined as follow:</p>
+<pre class="literal-block">
+;; take an identifier and return a new one with an appended suffix
+(define (identifier-append id . strings)
+  (define id-str (symbol-&gt;string (syntax-&gt;datum id)))
+  (datum-&gt;syntax id (string-&gt;symbol (apply string-append id-str strings))))
+</pre>
+<p>Here is a simple <tt class="docutils literal"><span class="pre">def-book</span></tt> macro using <tt class="docutils literal"><span class="pre">identifier-append</span></tt>:</p>
+<pre class="literal-block">
+(def-syntax (def-book name title author)
+  (with-syntax (
+     (name-title (identifier-append #'name "-title"))
+     (name-author (identifier-append #'name "-author")))
+     #'(begin
+         (define name (vector title author))
+         (define name-title (vector-ref name 0))
+         (define name-author (vector-ref name 1)))))
+</pre>
+<p><tt class="docutils literal"><span class="pre">def-book</span></tt> here is just as an example of use of <tt class="docutils literal"><span class="pre">identifier-append</span></tt>,
+it is not as a recommended pattern to define records.
+There are much better ways to define records in Scheme, as we will see
+in part VI of these Adventures.</p>
+<p>Anyway, <tt class="docutils literal"><span class="pre">def-book</span></tt> works as follows.
+Given a single identifier <tt class="docutils literal"><span class="pre">name</span></tt> and two values it
+introduces three identifiers
+in the current lexical scope: <tt class="docutils literal"><span class="pre">name</span></tt> (bound to a vector
+containing the two values), <tt class="docutils literal"><span class="pre">name-title</span></tt> (bound to the
+first value) and <tt class="docutils literal"><span class="pre">name-author</span></tt> (bound to the second value).</p>
+<pre class="literal-block">
+&gt; (def-book bible "The Bible" "God")
+&gt; bible
+#("The Bible" "God")
+&gt; bible-title
+"The Bible"
+&gt; bible-author
+"God"
+</pre>
+</div>
+<div class="section">
+<h1><a id="playing-with-the-lexical-context" name="playing-with-the-lexical-context">Playing with the lexical context</a></h1>
+<p>The lexical context is just the set of
+names which are visible to an object in a given lexical position
+in the source code. Here is an example of a lexical context which
+is particularly restricted:</p>
+<pre class="literal-block">
+#!r6rs
+(library (experimental dummy-ctxt)
+ (export dummy-ctxt)
+ (import (only (rnrs) define syntax))
+ (define dummy-ctxt #'here)
+ )
+</pre>
+<p>The identifier <tt class="docutils literal"><span class="pre">#'here</span></tt> only sees the names <tt class="docutils literal"><span class="pre">define</span></tt>,
+<tt class="docutils literal"><span class="pre">syntax</span></tt> and <tt class="docutils literal"><span class="pre">dummy-ctxt</span></tt>: this is the lexical
+context of any object in its position in the source code. Had we not
+restricted the import, the lexical context of <tt class="docutils literal"><span class="pre">#'here</span></tt> would have
+been the entire <tt class="docutils literal"><span class="pre">rnrs</span></tt> set of identifiers. We can use <tt class="docutils literal"><span class="pre">dummy-ctxt</span></tt>
+to expand a macro into a minimal context. Here is an example of
+a trivial macro expanding into such minimal context:</p>
+<pre class="literal-block">
+&gt; (import (experimental dummy-ctxt))
+&gt; (def-syntax expand-to-car
+   (lambda (x) (datum-&gt;syntax dummy-ctxt 'car)))
+</pre>
+<p>The macro <tt class="docutils literal"><span class="pre">expand-to-car</span></tt> expands to a syntax object obtained by
+attaching to the symbol <tt class="docutils literal"><span class="pre">'car</span></tt> the lexical context <tt class="docutils literal"><span class="pre">dummy-ctxt</span></tt>.
+Since in such lexical context the built-in <tt class="docutils literal"><span class="pre">car</span></tt> is not defined,
+the expansion fails:</p>
+<pre class="literal-block">
+&gt; (expand-to-car)
+ Unhandled exception
+  Condition components:
+    1. &amp;undefined
+    2. &amp;who: eval
+    3. &amp;message: "unbound variable"
+    4. &amp;irritants: (car)
+</pre>
+<p>A similar macro <tt class="docutils literal"><span class="pre">expand-to-dummy-ctxt</span></tt> instead would succeed since
+<tt class="docutils literal"><span class="pre">dummy-ctxt</span></tt> is bound in that lexical context:</p>
+<pre class="literal-block">
+&gt; (def-syntax expand-to-dummy-ctxt
+    (lambda (x) (datum-&gt;syntax dummy-ctxt 'dummy-ctxt)))
+&gt;  (expand-to-dummy-ctxt)
+#&lt;syntax here [char 115 of /home/micheles/gcode/scheme/aps/dummy-ctxt.sls]&gt;
+</pre>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/you-are-here.png" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/you-are-here.png">
+<p>In the definition of <tt class="docutils literal"><span class="pre">define-macro</span></tt> I gave
+in episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=260195.html">28</a> I used the name of the defined macro as lexical
+context. The consequence of this choice is that <tt class="docutils literal"><span class="pre">define-macro</span></tt> style
+macros are expanded within the lexical context of the code
+where the macro is invoked. For instance in this example</p>
+<pre class="literal-block">
+&gt; (let ((x 42))
+   (define-macro (m) 'x) ; (m) should expand to 42
+   (let ((x 43))
+     (m)))
+43 ; surprise!
+</pre>
+<p><tt class="docutils literal"><span class="pre">(m)</span></tt> expand to 43 since in the lexical context where the macro
+is invoked <tt class="docutils literal"><span class="pre">x</span></tt> is bound to 43. However, this behavior is quite
+surprising, and most likely not what it is wanted. This is actually
+another example of the free-symbol capture problem. It should be
+clear that the capture comes from expanding the macro in the macro-call
+context, not in the macro-definition context.</p>
+</img></div>
+<div class="section">
+<h1><a id="hygienic-vs-non-hygienic-macro-systems" name="hygienic-vs-non-hygienic-macro-systems">Hygienic vs non-hygienic macro systems</a></h1>
+<p>Understanding non-hygienic macros is important if you intend to work
+in the larger Lisp world. In the scheme community
+everybody thinks that hygiene is an essential feature and
+all major Scheme implementations provide hygienic macros; nevertheless,
+in the rest of the world things are different.</p>
+<p>For instance, Common Lisp does not use hygienic macros and it copes with the
+variable capture problem by using <tt class="docutils literal"><span class="pre">gensym</span></tt>; the free symbol
+capture problem is not solved, but it is extremely rare, because
+Common Lisp has multiple namespaces and a package system.</p>
+<p>The hygiene problem is more serious in <a class="reference" href="../_/http/en.wikipedia.org/wiki/Lisp-1#The_function_namespace/index.html">Lisp-1</a> dialects like the
+newborns <a class="reference" href="../_/http/arclanguage.org/index.html">Arc</a> and <a class="reference" href="../_/http/clojure.org/index.html">Clojure</a>.  <a class="reference" href="../_/http/arclanguage.org/index.html">Arc</a> macros behave just like
+<tt class="docutils literal"><span class="pre">define-macro</span></tt> and are fully unhygienic, whereas <a class="reference" href="../_/http/clojure.org/Macros/index.html">Clojure macros</a> are
+rather special, being nearly hygienic. In particular Clojure
+macros are not affected by the free-symbol capture problem:</p>
+<pre class="literal-block">
+user=&gt; (defmacro m[x] `(list ~x))
+#'user/m
+user=&gt; (let [list 1] (m 2))
+(2)
+</pre>
+<p>The reason is that Clojure is smart enough to recognize the fully
+qualified <tt class="docutils literal"><span class="pre">list</span></tt> object appearing at macro definition
+time (<tt class="docutils literal"><span class="pre">clojure.core/list</span></tt>) as a distinct object from the local
+variable <tt class="docutils literal"><span class="pre">list</span></tt> bound to the number 1.  Moreover, the ordinary
+capture problem can be solved with <tt class="docutils literal"><span class="pre">gensym</span></tt> or even cooler feature,
+automatic gensyms (look at the documentation of the <a class="reference" href="../_/http/clojure.org/reader#syntax-quote/index.html">syntax-quote</a>
+reader macro if you want to know more).  Speaking as a
+non-expert, Clojure macros seem to fare pretty well with respect to
+the hygiene issue.</p>
+<p>It is worth mentioning that if you use a package system (like in
+Common Lisp) or a namespace system (like in Clojure) in practice
+variable capture becomes pretty rare. In Scheme instead, which uses a
+module system, hygiene is essential: if you are writing a module
+containing macros which can be imported and expanded in an unknown
+lexical scope, in absence of hygiene you could introduce name clashes
+impossible to foresee in advance, and that could be solved only by the
+final user, which however will likely be ignorant of how your library
+works.</p>
+<p>This is why in Scheme the macro expansion is not literally
+inserted in the original code, and a lot of magic takes place to avoid
+name clashes. In practice, the implementation of Scheme macros takes
+care of distinguishing the introduced identifiers with some specific
+mechanism (it could be based on marking the names, or on explicit
+renaming). As a consequence, the mechanism of macro expansion is less
+simple to explain: you cannot just cut and paste the result
+of the expansion in your original code.</p>
+<p>Personally I have made my mind up and I am in the pro-hygiene camp
+now.  I should admit that for a long time I have been in the opposite
+camp, preferring the simplicity of <tt class="docutils literal"><span class="pre">define-macro</span></tt> over the
+complexity of <tt class="docutils literal"><span class="pre">syntax-case</span></tt>. It turns out I was wrong.  The major
+problem of <tt class="docutils literal"><span class="pre">syntax-case</span></tt> is a cosmetic one: it looks very complex
+and cumbersome to use, but that can be easily solved by providing a
+nicer API - which I did with <tt class="docutils literal"><span class="pre">sweeet-macros</span></tt>. Actually I have
+been able to use <tt class="docutils literal"><span class="pre">sweet-macros</span></tt> for twenty episodes without
+explaining the intricacies of the hygienic expansion.</p>
+<p>Having attended to a talk on the subject at the <a class="reference" href="../_/http/www.european-lisp-symposium.org/index.html">EuroLisp Symposium</a>,
+I will mention here that there are <a class="reference" href="../_/http/p-cos.net/documents/hygiene.pdf">ways to implement hygienic
+macros</a> on top of <tt class="docutils literal"><span class="pre">defmacro</span></tt> in Common Lisp <em>portably</em>. Therefore
+there is no technical reason why hygienic macros are not widespread in
+the whole Lisp world, just a matter of different opinions on the
+importance of the problem and the different tradeoffs.  I believe that
+eventually all Lisp dialects will start using hygienic macros, but
+that could take decades, because of inertia and backward-compatibility
+concerns.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=261363&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D261363&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F29&amp;bodytext=In+this+episode+I+explain+how+to+break+hygiene+in+Scheme+macros+by+using+datum-%26gt%3Bsyntax.+I+discuss+how+you+can+play%0D%0Awith+the+lexical+context.+Finally%2C+I+spend+some+word+on+non-hygienic+macro+systems+versus+hygienic+systems.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D261363&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F29">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D261363&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F29">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

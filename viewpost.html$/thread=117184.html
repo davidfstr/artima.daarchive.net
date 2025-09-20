@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2005: Wrap Up</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=117184.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2005: Wrap Up&amp;body= %0AArtima Weblogs %0AJavaOne 2005: Wrap Up %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=117184">Email</a> | 
+<a href="../viewpostP.html$/thread=117184.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=117079.html" title="JavaOne 2005, Day 3: Share the News!">Previous</a> | 
+<a class="sl" href="thread=118828.html" title="Readable Method Calls in Java">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2005: Wrap Up</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">July 8, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This article is my end-of-show wrap up, with notes on a variety of announcements and things. It compares Groovy to BeanShell, describes great new announcements like AJAX and Hibernate, and takes a look at a radically new concept that was a major theme of the show--EASE OF USE enhancements coming up in J2EE, NetBeans, and Java Studio Creator.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>It was a great show, with some exciting new technologies to cover including 
+  Groovy, JackPot, and the NetBeans Colloboration APIs. The final day had some 
+  good stuff, but at the end of the day I still had my socks on (translation: 
+  no earth-shattering revelations occurred), so I decided it was time to write 
+  my traditional "wrap up" article.</p>
+<p>A funny thing happened on the way to writing that article, though. So many ideas were spinning around in my head that it took a week to capture them all. Those thoughts will appear in an upcoming series of  articles. But now, at last, here is my wrap-up article for JavaOne 2005. It covers:</p>
+<ul>
+<li> <a href="#BeanShellVsGroovy">BeanShell vs. Groovy--Which Script Engine 
+    is Right for You?</a></li>
+<li><a href="#AJAX"> Ajax--Web Pages that Work like Desktop Apps</a></li>
+<li><a href="#Hibernate">Don't Persist--Hibernate</a></li>
+<li><a href="#NetBeans">NetBeans--An IDE Who's Time Has Come</a></li>
+<li><a href="#JavaStudioCreator">Java Studio Creator--To Simplify Web Development</a></li>
+<li><a href="#J2EEeaseOfUse">J2EE Ease of Use--A Phrase You Never Thought You'd 
+    Hear</a></li>
+</ul>
+<p name="BeanShellVsGroovy"><a name="BeanShellVsGroovy"></a> </p>
+<h2>BeanShell vs. Groovy--Which Script Engine is Right for You? <a class="purpleLink" href="#BeanShellVsGroovy">#</a></h2>
+<p>As I wrote in <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=116723.html">It's 
+  a Groovy Day!</a>, Groovy is one sexy scripting engine. But <a href="../_/http/www.beanshell.org/index.html">BeanShell</a> 
+  has been around for quite awhile. In fact, it pioneered the whold concept of 
+  scripting engines for the JVM. Here then, are some reasons why you might want 
+  to choose BeanShell:</p>
+<ul>
+<li>
+<p><strong>"Pure" Java syntax.</strong> Groovy has added it's own 
+      syntax, using square brackets to create lists for example, and adding <tt>==~</tt> 
+      as a pattern-matching operator for Strings. Since BeanShell restricts itself 
+      to existing Java syntax, it never has to worry about a future incompatibility 
+      with the Java language</p>
+</li>
+<li>
+<p><strong>Smaller footprint.</strong> Beanshell is tiny--a minute fraction 
+      of Groovy's size. If you need a scripting engine in a cellphone, this is 
+      the one to use.</p>
+</li>
+<li>
+<p><strong>Faster.</strong> In addition to beeing smaller, BeanShell doesn't 
+      build classes. Groovy has a runtime dependency on ASM, a tool that builds 
+      byte codes for classes dynamically. After building a class, Groovy runs 
+      it. BeanShell skips all that and interprets your scripts directly. </p>
+</li>
+<li>
+<p><strong>Dynamic.</strong> BeanShell creates a small stub that the JVM thinks 
+      is a class it's executing. That creates the interesting capability to hack 
+      a BeanShell script while it's running as part of a servlet, so you don't 
+      have recycle the servlet to test your changes.</p>
+</li>
+<li>
+<p><strong>Available today.</strong> It's there now. It runs. No waiting.</p>
+</li>
+</ul>
+<p>Here, on the other hand, is the short list of reasons why you might prefer 
+  to use Groovy as your scripting engine:</p>
+<ul>
+<li>
+<p><strong>It's sexy. </strong>Things like pattern-matching operators really 
+      float my boat. I find that stuff a great selling point. I want my language 
+      to make it easy to do the things I do frequently.</p>
+</li>
+<li>
+<p><strong>It's powerful. </strong>The ability to apply <em>closures</em> 
+      (unnamed blocks of code) to whole collections using commnads like <tt>Collection.each</tt>, 
+      <tt>Table.eachRow</tt>, and <tt>File.eachLine</tt> let you get a lot done 
+      in a few lines of code.</p>
+</li>
+<li>
+<p><strong>It's cool. </strong>It's sexy. And it's powerful. What's not to 
+      like?.</p>
+</li>
+<li>
+<p><strong>It's compilable.</strong> It's already building classes, so all 
+      it has to do is save the classes so you can run them directly or use them 
+      in your application.</p>
+</li>
+<li>
+<p><strong>It solves "point of pain" use cases for developers. </strong>The 
+      ability to add functionality to ANT scripts and replace XSLT for XML processing 
+      are just two of the many areas in which the language has been explicitly 
+      designed to solve problems for developers.</p>
+</li>
+</ul>
+<p><a name="Ajax"></a> </p>
+<h2>Ajax--Web Pages that Work like Desktop Apps <a class="purpleLink" href="#Ajax">#</a></h2>
+<p>I never got to see this, but from the sound of things, it's going to make web 
+  applications virtually indistinguishable from their desktop cousins. The Asynchronous 
+  Javascript and XML (AJAX) engine enables client buffering of data and manipulations 
+  that let you smoothly pan across a map, for example, instead of jumping from 
+  screen to screen. Apparently, the image buffering goes on in the background, 
+  so it's transparent to the user (depending on network traffic, I'm guessing).</p>
+<p>Fromt the sound of things, Ajax is going to usher in an era of truly <em>distributed</em> 
+  computing, where the application you're running over the web is indistinguishable 
+  from one running on the desktop, without requiring a monstrous connection speed. 
+  It could also let a web-based email client load messages in the background and 
+  let the user scroll through them, instead of paging through 25 at a time..</p>
+<a name="Hibernate"></a>
+<h2>Don't Persist--Hibernate <a class="purpleLink" href="#Hibernate">#</a></h2>
+<p>Hibernate was getting a lot of buzz at the show. I never got a chance to look 
+  at it, but I'm told it's a lot easier to use than JDBC. Apparently, it uses 
+  reflection to persist your objects to a relational database in an intelligent, 
+  query-able way (rather than saving them as Binary Large Objects (BLOBs), for 
+  example. </p>
+<a name="NetBeans"></a>
+<h2>NetBeans--An IDE Who's Time Has Come <a class="purpleLink" href="#NetBeans">#</a></h2>
+<p>I saw this tagline on a slide at the convention: "NetBeans 4.1 is not 
+  your father's NetBeans". From where I'm sitting, that looks like the truth. 
+  There are plenty of new features on the way in <a href="../www.netbeans.org/index.html">NetBeans</a>, 
+  including:</p>
+<ul>
+<li>A better layout manager</li>
+<li>An interactive GUI designer</li>
+<li> ANT-based builds</li>
+<li>Support for remote collaboration, as described in <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117079.html">Share 
+    the News!</a></li>
+<li>Restart your application "on the fly", to speed up the test-run-debug 
+    cycle.</li>
+<li>Refactoring that includes EJBs as well as server code.</li>
+<li>"Logical" project view, to hide files that provide the "plumbing"</li>
+<li>Code folding, to hide event-listeners and other such wiring, so you can 
+    focus on application logic</li>
+<li>Drag and drop external resources, like an EJB, database, or JMS messenger. 
+    Wrappers are automatically constructed so you don't have to.</li>
+</ul>
+<p>And all of that is in additon to a great suite of tools for testing, refactoring, 
+  and debugging server-side apps and client apps.</p>
+<a name="JavaStudioCreator"></a>
+<h2>Java Studio Creator--To Simplify Web Development <a class="purpleLink" href="#JavaStudioCreator">#</a></h2>
+<p>Due out later this year, Java Studio Creator is an IDE based on NetBeans that 
+  makes it <em>really</em> easy to build a web application. Here are some of its 
+  features:</p>
+<ul>
+<li>
+<p>The GUI design tool operates graphically. You can drag components from 
+      the default library, and you can drag a line between a label and a field, 
+      for example.When you set the "required" property on the field, 
+      the label automatically gets an asterisk, and the system ensures that a 
+      value is filled in before the form is accepted--so you write less code to 
+      check for errors and spend your time processing data. </p>
+</li>
+<li>
+<p>You can define "virtual forms" for master/detail relationships, 
+      so you process those parts of the form that have actually changed. </p>
+</li>
+<li>
+<p>The look and feel of JSF components can be changed all at one time by dropping 
+      in a jar file that defines the "Theme"--or create your own.</p>
+</li>
+<li>
+<p>You can import component libraries provided by other vendors, and target 
+      the application for a variety of web servers.</p>
+</li>
+<li>
+<p>New application models simplify the process of building an application 
+      and keep the wiring hidden away, out of sight.</p>
+</li>
+<li>
+<p>One of the new application types, <em>portlets</em>, lets you export a 
+      WAR that can be deployed on a portal server.</p>
+</li>
+</ul>
+<p></p>
+<a name="J2EEeaseOfUse"></a>
+<h2>J2EE Ease of Use--A Phrase You Never Thought You'd Hear <a class="purpleLink" href="#J2EEeaseOfUse">#</a></h2>
+<p>The next version of the J2EE specification is explicity target at--get this--<em>ease 
+  of use</em>. A lot of effort is going into tools to take the pain out of J2EE 
+  development, as well. The combined result of these efforts may well be something 
+  like a reasonable development environment.</p>
+<p>This is coming from a J2SE guy, you understand. I've looked at J2EE before, 
+  but the wiring was pretty darn complex. XML descriptor files had to describe 
+  things in <em>other</em> XML descriptor files that matched the source code. 
+  It was difficult to get everything to work properly for a simple web application--much 
+  less a full-blown business application with EJBs and all the rest. So I pretty 
+  well stayed on the J2SE side of things, where I could make a bit more sense 
+  of things. But that could change. Rapidly.</p>
+<p>Some of things that are coming include:</p>
+<ul>
+<li>
+<p><strong>Annotations.</strong> Use of annotations in your source code to 
+      describe components, instead of external XML descriptor files. That's easier 
+      to maintain, and the number of descriptor files drops from 9 to 2--so innstead 
+      of writing 792 lines of XML, you're writing 26.</p>
+</li>
+<li>
+<p><strong>EJBs as POJOs</strong>. EJBs become Plain Old Java Objects (POJOs) 
+      so you can extend them </p>
+</li>
+<li>
+<p><strong>NetBeans improvements</strong>. As mentioned earlier, NetBeans 
+      is making it a lot easier to develop web applications.</p>
+</li>
+<li>
+<p><strong>Java Studio Creator.</strong> A way to take the pain out of web 
+      development.</p>
+</li>
+<li>
+<p><strong>GlassFish.</strong> Sun's Application Server 9 for J2EE and basic 
+      web apps, which will be open sourced. (App Server 8 made humungous strides 
+      in the ease-of-use department, compared to App Server 7. It will be interesting 
+      to see what things are like in App Server 9.)</p>
+</li>
+</ul>
+<p>As part of Sun's commitment to making life easier for developers, they recruited 
+  Paul Anderson of the Anderson Software Group (<a href="../_/http/www.asgteach.com/index.html">http://www.asgteach.com</a>) 
+  to teach people how to use Java Studio Creator. The presentation and lab exercises 
+  were smooth and well-paced. They displayed the polish of a professional educator. 
+  Of course, all the polish in the world wouldn't have made much difference if 
+  Creator were difficult to use. So it was the right combination of product and 
+  presentation. In other words, J2EE is growing up. It's becoming less about technology, 
+  and more about getting things done.</p>
+<p>The guiding principle in all this appears to be "things just work". 
+  Things are getting simpler, and the tools are taking over the complicated wiring 
+  and keeping the plumbing hidden behind the walls. You do less, and the container 
+  does more--so you can focus your attention on the problem you're trying to solve 
+  instead of spending your time on implementation details.</p>
+<h2>Resources</h2>
+<p>Previous articles in this series:</p>
+<ul>
+<li><a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=116723.html"> JavaOne 
+    2005, Day 1: It's a Groovy Day</a> (Groovy script-processing engine)</li>
+<li><a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=116895.html">JavaOne 
+    2005, Day 2: Hitting the Jackpot!</a> (Rule-processsing engine for source 
+    modifications)</li>
+<li><a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117079.html">JavaOne 
+    2005, Day 3: Share the News!</a> (APIs that enable distributed collaboration)</li>
+</ul>
+<p>Resources mentioned in this article:</p>
+<ul>
+<li><a href="../_/http/www.beanshell.org/index.html">BeanShell</a>: http://www.beanshell.org/</li>
+<li><a href="../www.netbeans.org/index.html">NetBeans</a>: www.netbeans.org/</li>
+<li><a href="../_/http/www.asgteach.com/index.html">Anderson Software Group</a>: http://www.asgteach.com<br/>
+</li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=117184.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=117184&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D117184&amp;title=JavaOne+2005%3A+Wrap+Up&amp;bodytext=This+article+is+my+end-of-show+wrap+up%2C+with+notes+on+a+variety+of+announcements+and+things.+It+compares+Groovy+to+BeanShell%2C+describes+great+new+announcements+like+AJAX+and+Hibernate%2C+and+takes+a+look+at+a+radically+new+concept+that+was+a+major+theme+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D117184&amp;title=JavaOne+2005%3A+Wrap+Up">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D117184&amp;title=JavaOne+2005%3A+Wrap+Up">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>How Useful Are Code Metrics?</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=157839.html">Discuss</a> | 
+<a href="mailto:?subject=How Useful Are Code Metrics?&amp;body= %0AArtima Weblogs %0AHow Useful Are Code Metrics? %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=157839">Email</a> | 
+<a href="../viewpostP.html$/thread=157839.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=157470.html" title="Compatibility versus Entropy in Java and Python">Previous</a> | 
+<a class="sl" href="thread=158489.html" title="Database Partitioning for Scale">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">How Useful Are Code Metrics?</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">April 26, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In a recent developerWorks article, Andrew Glover suggests you continuously monitor code metrics to help you correct code quality problems, which could affect the long-term viability of your architecture. How useful have are code metrics in practice?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+In the article, <a href="../_/http/www-128.ibm.com/developerworks/java/library/j-cq04256/index.html">In pursuit of code quality: Code quality for software architects</a>, Andrew Glover explains the difference
+between <em>afferent</em> (incoming) and <em>efferent</em> (outgoing) coupling. He also describes metrics for <em>abstractness</em>, a measure of the number of abstract versus concrete types in a package, and <em>instability</em>, a measure of how likely a module will change over time. Finally, he defines <em>balance</em>, a measure of how "balanced" the abstractness and instability of your packages are. These concepts were described in Bob Martin's 1994 paper, <a href="../_/http/www.objectmentor.com/publications/oodmetrc.pdf">Object Oriented Design Quality Metrics: An Analysis of Dependencies</a> (PDF).
+</p>
+<p>
+I believe that one hindrance to creating quality software is the difficulty of visualizing what you've built. Most of the time we look at our system through a tiny window (our IDE), peering at one small area of code at a time. Imagine the difficulty of designing a quality chair if you could only look at your creation through a one-inch square cut in a board, held close up to the chair. I believe that having higher-level views of your system, and looking at those views regularly, can help you create better quality software.
+</p>
+<p>
+The main tool I use in Java development to visualize my design at a higher level than code is JavaDoc. As I better organize and simplify the JavaDoc view of my design, I find I improve my design.
+</p>
+<p>
+Another technique I think is useful is simply drawing a diagram of the system's architectural layers, which indicates which layers depend on which other layers. The very act of attempting to make such a drawing can help you realize where you should avoid coupling. Once you've decided what your layers are, you can then manage coupling by monitoring and enforcing those layers as you code.
+</p>
+<p>
+A couple months ago, I integrated <a href="../_/http/clarkware.com/software/JDepend.html">JDepend</a> in our build at Artima, because I wanted a tool that would generate a graphical view of the coupling between our packages. I was unfortunately unable to prune unwanted detail out of the resulting graph, so I'm still looking for a better graphical solution. Nevertheless, I was intrigued by all the numbers JDepend generated in its raw output. JDepend reports the very code metrics described in Bob Martin's paper and Andrew Glover's article. Could these numbers be used as another high-level view of the system to help me visualize my design?
+</p>
+<p>
+The suggested way to visualize all these numbers is by graphing the abstractness and instability of each package, and then looking at the distance from each point to the "main sequence." The main sequence is the line drawn from the two ideal points of (instability 0, abstractness 1) and (instability 1, abstractness 0). The distance between a package's point on this graph and the main sequence measures that package's balance between abstractness and instability. According to Bob Martin's paper, the most desirable points are those close to the main sequence line.
+</p>
+<p>
+JDepend calculates this distance for you, so you can just scan through the output looking for high distance numbers. When doing so for our code, however, the numbers don't match  my intuitive notion of what constitutes good and bad coupling. For example, we have a package of utilities called <code>com.artima.common</code>. My goal is to have the classes in this package depend on nothing else in <code>com.artima.*</code>, but right now it has two minor dependencies to two other <code>com.artima</code> packages. Many classes in other <code>com.artima.*</code> packages call into <code>com.artima.common</code>, so its instability is quite low, 0.22. But because the package contains only concrete classes, its abstractness is 0. As a result, its distance is high, 0.78, which according to Bob Martin's paper, should be considered a warning sign of bad coupling.
+</p>
+<p>
+I think the main question I have about these metrics is the notion that packages whose types don't have many external dependencies should contain more abstract than concrete classes. From the paper:
+</p>
+<blockquote>
+...If a category is to be stable, it should also consist of abstract classes so that it can be extended. Stable categories that are extensible are flexible and do not constrain the design.
+</blockquote>
+<p>
+Thus, the reasoning is that abstract classes can be extended in other  packages, but this is also true of concrete classes. In addition, the notion that a stable package should be extensible I think undervalues the utility of stable classes that can simply be used, not extended.
+</p>
+<p>
+What I find most useful about the output of JDepend is the explicit lists of dependencies, which help me see couplings that I intuitively don't like. The other numbers are interesting, but I don't currently have much confidence in the distance value as a measure of quality. Have you used such metrics in practice? If so, how do you used the numbers to guage and improve the quality of your design? 
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=157839.html">32
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=157839&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D157839&amp;title=How+Useful+Are+Code+Metrics%3F&amp;bodytext=In+a+recent+developerWorks+article%2C+Andrew+Glover+suggests+you+continuously+monitor+code+metrics+to+help+you+correct+code+quality+problems%2C+which+could+affect+the+long-term+viability+of+your+architecture.+How+useful+have+are+code+metrics+in+practice%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D157839&amp;title=How+Useful+Are+Code+Metrics%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D157839&amp;title=How+Useful+Are+Code+Metrics%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

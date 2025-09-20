@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Automatically Synchronize Your Site</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=204059.html">Discuss</a> | 
+<a href="mailto:?subject=Automatically Synchronize Your Site&amp;body= %0AArtima Weblogs %0AAutomatically Synchronize Your Site %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=204059">Email</a> | 
+<a href="../viewpostP.html$/thread=204059.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a buttons"="" buy="" class="sl" href="thread=204039.html" now"="" title="The Second Half of ">Previous</a> | 
+<a class="sl" href="thread=204711.html" title="Web Standards: Only Less of a Mess">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Automatically Synchronize Your Site</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">April 28, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The most interesting part of this is not the tool -- although that was fun to create -- but the process of letting go that allowed me to build it.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+Backstory: I started using Zope many years ago. I've slowly discovered that Zope is great, amazing, spectacular, as long as you live and breathe Zope (it's especially good for big, industrial-strength, powerful customized sites). But Zope pretty much reinvents the world, so if a web site is something that you do casually on the side, the Zope world is going to look different than your normal world. So you forget the Zope world every time, and either have to relearn it when you come back, or end up just using the bare bones basics of Zope. That's what I did.
+
+<p>As an example: the most trivial and basic thing you could want to do, take the fields in an input form and store them: Very nontrivial in Zope. Using raw Python, PHP, Perl, on your server: fairly trivial.
+
+<p>So I've been slowly trying to shift away from Zope into something clean, basic, and straightforward. I've been moving towards the Unix philosophy: instead of one, big, do-all tool (Zope), piece things together using a lot of little tools. So: CSS, HTML, PHP (but only simple PHP for simple things), standalone Python or a framework like TurboGears (for more complex things). Cheap server (GoDaddy, in my case) from a service that's big enough I don't have to worry about uptime and maintenance issues (and so my system can easily be transferred to customers with low budgets). And very simple development tools.
+
+<p>Perhaps they've gotten better, but I'm still smarting horribly from my initial experience with web page development tools. There turned out to be no way they could isolate you from the underlying code, so you ended up hacking on horrible HTML. After looking in vain for a tool that would generate readable (that is, editable) HTML, I reverted to hand-coding everything, just so it was maintainable. I've been fairly happy with that decision.
+
+<p>CSS, although it is far from living up to its promise, was a big aid in this direction. They wanted to allow you to annotate your HTML with styles, defined in a single place so they could be easily changed. Noble and desirable, so probably the stupidest thing in CSS is that you can't actually create your own styles, as in &lt;MyStyle&gt;, but that you must use the hacky and verbose style="MyStyle" which was a sad and costly compromise. And of course there's the fact that CSS doesn't behave the same on all platforms, something else it promised to do. Despite all that, it's a big improvement. And the pages seem to come up a lot faster, which makes sense because pages are now primarily content and have much less markup (which can be cached), thus there's a lot less to move across the wire.
+
+<p>So now my pages are relatively readable and so not very hard to write and maintain by hand (which is something that Zope also provided). Thus I am able to move away from Zope and as I do so things actually seem to get better in a number of places (I know, Zope can also do CSS just fine. My problem isn't that, it's the programing issues).
+
+<p>The point of this article is another feature of Zope that I "couldn't live without": through-the-web editing. Zope allows you to create and edit objects from any machine, using only a web browser. I've actually used this feature a handful of times while traveling, via internet cafes. But hardly ever. Nonetheless, I was convinced I needed it and that's what I found fascinating. I didn't think about it very hard before making this decision, because if I had I would have questioned the value of it.
+
+<p>Through-the-web editing is so amazingly primitive that I have often found myself copying the contents of a page into UltraEdit, performing more sophisticated edits there, and pasting it back in. That should have clued me in, but it took awhile.
+
+<p>I searched for through-the-web editing tools that might be installed on Godaddy. These are a bit vague -- the descriptions I read did not make it clear exactly what they did, but the most promising open-source one appeared to be the unfortunately-but-unforgetably-named "fckeditor." I didn't get around to trying it before I had my epiphany.
+
+<p>Which was this: I just want to edit files, using powerful editing tools (including python tools I might write myself), and just have the results magically appear on the server. Through-the-web editing was holding me back, a lot. And as happens lately when I have one of these epiphanies, I always wonder what else I'm stuck on that's holding me back.
+
+<p>Anyway, here's my solution. This program watches the entire subtree from where it's started, and anytime a file becomes newer than the last time the program recorded the modification date, that file is copied to the server. If you add new directories, those are automatically created on the server. The program repeats every second (printing '.' when there's nothing to do, so you know it's alive), which means you get reasonably responsive results.
+
+<p>The directory and file information is stored in a text file using Python's <b>pprint</b> (pretty-printing), so the file is both readable and editable. This information is stored as the text representation of a tuple of a list and a dictionary; to recover this information all I do is <b>eval</b> the contents of that file, which happens on program startup. Every time the directory is successfully updated to the server, the information is stored to disk.
+
+<blockquote><pre><b>
+"""
+updateSite.py
+
+by Bruce Eckel, www.MindView.net
+
+Mirror (every repeatInterval seconds) the current directory
+hierarchy onto a web site using ftp. Only updates files that
+have changed since the last update. Does NOT compare this
+hierarchy with the destination web site. If something has
+changed since last time, it's pushed onto the server.
+
+Place this program at the root of your web site tree on your
+computer, then just double-click it to run it. It will run in
+the background until you kill the window.
+
+"""
+repeatInterval = 1.0 # seconds
+fileData = "updateSiteData.txt"
+excludeFiles = (fileData, "updateSiteConfig.txt")
+
+site, user, password = eval(file("updateSiteConfig.txt").read())
+
+import os, ftplib, traceback, threading, pprint
+
+class SiteUpdater(object):
+    def __init__(self):
+        # Read in old file data:
+        if os.path.exists(fileData):
+            self.oldDirs, self.oldFiles = eval(file(fileData).read())
+        else:
+            self.oldDirs = []
+            self.oldFiles = {}
+        self.__connect()
+        self.updateSite()
+
+    def __connect(self):
+        self.ftp = ftplib.FTP()
+        self.ftp.connect(site, port=21)
+        self.ftp.login(user, password)
+        print "Connected"
+
+    def __del__(self):
+        self.ftp.close()
+
+    @staticmethod
+    def getTree():
+        changedFiles = {}
+        newDirs = []
+        for dir, subdirs, files in os.walk("."):
+            newDirs += [os.path.join(dir, d) for d in subdirs]
+            for path in [os.path.join(dir, f) for f in files if f not in excludeFiles]:
+                changedFiles[path] = os.path.getmtime(path)
+        return (newDirs, changedFiles)
+
+    @staticmethod
+    def __flush():
+        """
+        Force all files and dirs to be up to date
+        """
+        file(fileData, 'w').write(pprint.pformat(SiteUpdater.getTree()))
+
+    def getUpdateLists(self, newDirs, changedFiles):
+        dirUpdates = [path for path in newDirs if path not in self.oldDirs]
+        fileUpdates = []
+        for path in changedFiles:
+            if path in self.oldFiles and self.oldFiles[path] == changedFiles[path]:
+                continue
+            fileUpdates.append(path)
+
+        # Sorting dirUpdates produces short directories first:
+        return sorted(dirUpdates), sorted(fileUpdates)
+
+    def updateSite(self):
+        newDirs, changedFiles = self.getTree()
+        dirUpdates, fileUpdates = self.getUpdateLists(newDirs, changedFiles)
+
+        if not fileUpdates and not dirUpdates:
+            print ".",
+        else:
+            print
+            try:
+                for d in dirUpdates: # Create new directories
+                    dir = d[1:].replace('\\', '/') # Strip leading '.'
+                    self.ftp.mkd(dir)
+                    print "created", dir
+                for f in fileUpdates:
+                    dir, name = os.path.split(f)
+                    dir = dir[1:].replace('\\', '/') # Strip leading '.'
+                    self.ftp.cwd(dir)
+                    self.ftp.storbinary('STOR ' + name, file(f, "rb"))
+                    print "updated", f
+                # Only store the updates if we get through the whole list:
+                file(fileData, 'w').write(pprint.pformat((newDirs, changedFiles)))
+                self.oldDirs = newDirs[:]
+                self.oldFiles = changedFiles.copy()
+            except:
+                traceback.print_exc()
+                # Close and restart if there are any ftp problems:
+                print "Session timed out; reconnecting"
+                self.ftp.close()
+                self.ftp = None
+                self.__connect()
+        threading.Timer(repeatInterval, self.updateSite).start()
+
+if __name__=="__main__":
+    try:
+        SiteUpdater()
+    except:
+        traceback.print_exc()
+        raw_input("Press Enter...")
+</b></pre></blockquote>
+<p>Most ftp servers will disconnect after awhile. This program detects a disconnect because an exception is thrown when you try to write to a disconnected ftp object; in that case it automatically closes the connection and opens a new one (there may be a more elegant way to do this, and I'd love to hear about it). This way, it can just keep quietly running and updating in the background. All I have to do is edit the files in my tree and they show up on the server.
+
+<p>I've been using this for a couple of weeks and so far it's been very nice. Now I can edit files with a sophisticated editor, so I'm much more productive. And I don't miss through-the-web editing.
+
+<p>The only other things I'd like to be able to do on the Godaddy site -- and I've read bits and pieces about Apache servers in general that make me think this is possible -- is:
+<ul>
+<li>Automatically open index.html if only a directory, and no file, is given in the URL.
+<li>Run PHP scripts inside .html files.
+<li>Automatically include a header and footer without having to explicitly type the lines in every file.
+</li></li></li></ul>
+<p>Pointers appreciated.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=204059.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=204059&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204059&amp;title=Automatically+Synchronize+Your+Site&amp;bodytext=The+most+interesting+part+of+this+is+not+the+tool+--+although+that+was+fun+to+create+--+but+the+process+of+letting+go+that+allowed+me+to+build+it.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204059&amp;title=Automatically+Synchronize+Your+Site">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204059&amp;title=Automatically+Synchronize+Your+Site">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Ruby vs. Groovy</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=152728.html">Discuss</a> | 
+<a href="mailto:?subject=Ruby vs. Groovy&amp;body= %0AArtima Weblogs %0ARuby vs. Groovy %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=152728">Email</a> | 
+<a href="../viewpostP.html$/thread=152728.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=152464.html" title="Make, Mailing Lists, and Ruby">Previous</a> | 
+<a class="sl" href="thread=152949.html" title="Ruby Reviews">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">Ruby vs. Groovy</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">March 20, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Ruby and Groovy are contrasted. Despite high hopes and 
+best wishes for the Groovy project, in this author's eyes Ruby turns out to be the winner for most scripting tasks.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section" id="preface">
+<h1><a name="preface">Preface</a></h1>
+<p>It has taken me quite a while to decide to share these thoughts.
+I really like the folks who are implementing Groovy. I found
+them to be extremely helpful on the mailing list, and I like their
+basic concept. A truly portable scripting language is a
+terrific idea. Unfortunately, that portability seems to be acquired
+at the expense of the two features that make scripting languages
+so seductive: Minimal coding and fast write/test/revise cycles.</p>
+<p>On the other hand, even if Groovy eventually turns out to be
+terrific, it would still make sense to learn Ruby today--if only
+because so much has been written about it. That abundance makes it 
+possible to become familiar with the strange new constructs like closures 
+that are so unfamiliar to most Java hackers. So understandnig
+both Java and Ruby should make it possible to easily transition 
+to Groovy, when it makes sense.</p>
+</div>
+<div class="section" id="comparing-the-languages">
+<h1><a name="comparing-the-languages">Comparing the Languages</a></h1>
+<p>I began looking at Groovy with high hopes and great
+expectations, but reluctantly had to conclude that it's going
+to be the technology of choice only in very limited set of
+use cases--primarily ones in which the VM is already running.</p>
+<p>For general purpose scripting, the time it takes to crank up
+the VM and intitialize the interpreter is a deal killer--as much
+as 30 or 40 seconds on my machine. I get better performance
+compiling and testing Java code in an IDE, especially if it supports
+incremental compilation in a background task.</p>
+<p>The start-up delay is sufficient by itself to rule out Groovy as a
+general purpose scripting language. But unfortunately, it gets
+worse:</p>
+<blockquote>
+<ul class="simple">
+<li>Things are still in flux, to the point that many discussions on 
+the user list are aimed at deciding how the language should be 
+implemented. That's terrific, from the agile methodology 
+perspective. It means that user needs are feeding into the design.
+But it also means that the basic language design is not yet complete.</li>
+<li>Lack of documentation. It's to be expected at this stage of its
+evolution, but given that things haven't entirely settled down yet,
+it's pretty scary to contemplate using it for anything important.</li>
+<li>Mostly unhelpful ANT integration. Ruby got this one right with
+Rake--super simple syntax plus the power of the language when
+you need it. Groovy has (so far) missed a serious opportunity 
+here. You can call ANT tasks from a Groovy script, and you
+can invoke a Groovy shell from inside ANT, but neither one of 
+those alternatives has anything like the expressive power or
+sheer convenience of Rake. (For more on Rake, see Martin Fowler's 
+article at <a class="reference" href="../_/http/www.martinfowler.com/articles/rake.html">http://www.martinfowler.com/articles/rake.html</a>)</li>
+<li>Dependence on the Java library. It provides a lot of power,
+but utilizing those libraries means the language hasn't provided
+the kinds of one-line operations that make it easy to do the simple
+things you can do with Ruby--for example I/O and XML parsing.
+(For more, see <em>Make, Mailing Lists, and Ruby</em> at
+<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=152464.html">http://www.artima.com/weblogs/viewpost.jsp?thread=152464</a>)</li>
+<li>Ruby has some really cool features like modules and structs. Maybe
+Groovy does, too. It's hard to say, given the documentation. But
+more likely the requirement that compiled Groovy scripts must
+function as JVM classes will be a limiting factor in this area.</li>
+<li>Then there are features inspired by Unix command shells--the ability
+to expand variables inside of a double-quoted string, and the ability
+to execute a shell command inside of back-quotes and get back the 
+return string. Of course, shell commands are platform=dependent. But
+in Ruby the very definition of a method is determined at runtime, so 
+it's possible to code multiple-platform versions with no significant
+overhead--because the conditional branch that determines how the 
+method operates only occurs once, when the method is first read.</li>
+<li>Rake may well be taking advantage of the dynamic behavior when it
+implements the kind of cross-platform commands you typically need in 
+a shell script: Commands like cd, mkdir, and mkdir_p (to a make a 
+directory from a path, and all directories that need to be made to 
+get to it). To tell you the truth, I don't know any language intended
+for scripting can do without such things. (To my mind, those functions
+should be part of the standard library.)</li>
+<li>And speaking of dynamic, runtime behavior, Ruby has lambda functions: 
+the ability to generate code on the fly and execute it. Those turn out
+to be useful when defining Rake tasks, as Jim Weirich describes so
+nicely:
+<a class="reference" href="../_/http/onestepback.org/index.cgi/Tech/Ruby/EckelAndFowlerOnBuildSystems.rdoc">http://onestepback.org/index.cgi/Tech/Ruby/EckelAndFowlerOnBuildSystems.rdoc</a>
+<a class="reference" href="../_/http/onestepback.org/index.cgi/Tech/Rake/Tutorial/RakeTutorialAnotherCExample.red">http://onestepback.org/index.cgi/Tech/Rake/Tutorial/RakeTutorialAnotherCExample.red</a></li>
+</ul>
+</blockquote>
+<p>Ruby sure isn't perfect. There are many Perlisms I'd rather not have seen,
+and it has too many ways to do things, imo. That flexibility is great when
+you're <em>writing</em> code, but it makes things harder when you're <em>reading</em> it,
+because you have to master the idioms favored by whoever did the writing. 
+(You can alias things in Ruby and you can even overload operators--so you 
+could conceivably write something that /nobody/ could read.)</p>
+</div>
+<div class="section" id="bottom-line">
+<h1><a name="bottom-line">Bottom Line</a></h1>
+<p>If you need a scripting language, Ruby is a great one.</p>
+<p>When it comes to building an application with multiple authors and long
+term maintainability, I'd say there's a lot of decision-making to do before
+going with Ruby. If you're going agile with a small team that can easily 
+teach each other its favorite idioms, Ruby will probably work. If you adhere 
+to a more structured methodology and have a large, long term project with many lines
+of code--so you can expect a fair amount of turnover among the people who will
+be maintaining it--then Ruby probably isn't a good fit.</p>
+<p>Once the problems of documentation and open design issues are resolved,
+Groovy may yet find a home in that sort of application-building environment.
+It will provide dynamic flexibility, like Ruby, but with full JVM
+integration so you can build and use Java classes.</p>
+<p>But when we begin to drag in all that machinery, we're not talking about something
+that feels like a "scripting" language, anymore. We're talking about something that
+lies somewhere between a scripting language and an application programming language. So Groovy may yet find a home, but for the kind of fast development cycles I was looking for, Groovy simply isn't the language. At least not yet.</p>
+<p>I still think that a truly portable dynamic scripting language is a great idea. I just
+don't see how it can be done in the JVM, except in some sort of server-side setting where the JVM is kept running and initialized, and there is some mechanism to feed it a script on the fly.</p>
+<p>But to rapidly develop those scripts, an "on the fly" mechanism is needed for testing, as well. In other words, the JVM has to be effectively part of the operating system--wholly integrated into it so the startup time disappears. Until that's done, I don't see how Groovy can provide the same kind of immediacy that Ruby provides. The other problems can eventually be resolved. But that startup hurdle seems insurmountable in theory, as well as in practice.</p>
+<p>Then again, maybe there are some viable usage scenarios I've overlooked.
+That would be nice.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=152728.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=152728&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D152728&amp;title=Ruby+vs.+Groovy&amp;bodytext=Ruby+and+Groovy+are+contrasted.+Despite+high+hopes+and+%0D%0Abest+wishes+for+the+Groovy+project%2C+in+this+author%27s+eyes+Ruby+turns+out+to+be+the+winner+for+most+scripting+tasks.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D152728&amp;title=Ruby+vs.+Groovy">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D152728&amp;title=Ruby+vs.+Groovy">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

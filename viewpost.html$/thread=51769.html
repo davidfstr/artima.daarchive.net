@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Tortoise and the Hare</title>
+<meta charset="utf-8"/>
+<meta content="Robert C. Martin" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=unclebob.html">Robert C. Martin's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=51769.html">Discuss</a> | 
+<a href="mailto:?subject=The Tortoise and the Hare&amp;body= %0AArtima Weblogs %0AThe Tortoise and the Hare %0Aby Robert C. Martin %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=51769">Email</a> | 
+<a href="../viewpostP.html$/thread=51769.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=37870.html" title="Modelling the real world.">Previous</a> | 
+<a class="sl" href="thread=59084.html" title="Differentiation through Obfuscation">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Uncle Bob's Software Craftsmanship Corner</span><br>
+<span class="ts">The Tortoise and the Hare</span><br/>
+<span class="as">by Robert C. Martin</span><br/>
+<span class="pd">May 27, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In software the race goes to those who go well, not those who go fast.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+Have you ever been to a tractor pull?  Imagine a huge arena filled with mud and churned up soil.  Huge tractors tie themselves up to devices of torture and try to pull them accross the arena.  The devices get harder to pull the farther they go.  They are inclined planes with wheels on the rear and a wide shoe at the front that sits squarely on the ground.  There is a huge weight at the rear that is attached to a mechnism that drags the weight up the inclined plane and over the shoe as the wheels turn.  This steadily increases the weight over the shoe until the friction overcomes the ability of the tractor.
+<p></p>
+Writing software is like a tractor pull.  You start out fast without a lot of friction. Productivity is high, and you get a lot done.  But the more you write the harder it gets to write more.  The weight is being dragged up over the shoe.  The more you write the more the mess builds.  Productivity slows.  Overtime increases.  Teams grow larger.  More and more code is piled up over the shoe, and the development team grinds to a halt unable to pull the huge mass of code any farther through the mud.
+<p>
+Our industry is addicted to speed; and it's killing us.  As we leap out of the starting gate on a new project, if we focus on speed over quality, we sew the cause of our eventual defeat.  As an industry, as a <i>profession</i>, we need to seriously re-think the way we do software.  In software, speed kills.
+<p>
+The way to go fast, is to go <i>well</i>.  Going well means taking time to keep the code clean, to write tests, to refactor, to take <i>care</i> of the code.  Going well means taking a deliberate and caring attitude for the code, and the system.  Going well means working as a team, communicating frequently, reviewing and inspecting code and designs.  Going well means never checking in code that fails unit tests or acceptance tests.  Going well means integrating frequently, at least once per day. Going well means staying rested.
+<p>
+There is always time to write tests.  There is always time to refactor and keep the code clean.  There is always time to review and inspect and pair.  There is always time to integrate frequently.  Indeed, there is no time <i>not</i> to do these things, because these are the things that keep us going fast.  These are the things that keep the weight back over the wheels rather than over the shoe.  These are the things that keep our productivity high, and our code flexible and malleable.
+<p>
+Over the years I've published a lot about design principles, design patterns, and development practices that can help teams keep their code clean and flexible.  However, these principles, patterns, and practices are only of use to the folks who take the time to use them.  Interestingly enough, these are the same folks who will get done faster, and better, than those who don't take the time.  Those who don't take the time just keep dragging the weight up over the shoe.
+<p>
+The next time you say to yourself: "I don't have time to do it right." -- <b>stop!</b>  Rethink the issue.  You don't have time <i>not</i> to do it right!  
+<p>
+Where did we get the idea that our companies wanted us to write crap?  Aren't they paying a lot of money for this software?  Aren't they going to depend upon this software for profits?  Isn't this software <i>worth a lot</i>?  If so, then why would our company want to pay for crap that slows us down?  Wouldn't they rather have good clean code that keeps us running fast?  
+<p>
+A few years ago I hired two apprentices.  I gave them a project to do.  They came back a day later and said they were done and asked if I'd like to see it.  I knew this project should take more than a day, so I started asking them about how they had built the project.  I asked them whether they had written tests, or whether they had separated concerns.  I showed them alternate designs and different coding practices that were better than the ones they had used.  They were incredulous.  "We feel bad because you are paying us a lot and we want to get this done fast." they said.  I explained to them that the software they were writing was intrinsic to my business, and that it was more important to me that it be done well, than done fast.  I explained that if they didn't do it well, then they'd be maintaining a mess for years, and that maintenance would take much more time and energy than they'd saved by doing it fast.  I told them to go back and do it well.  And they did.
+<p>
+We often blame managers for schedule pressure.  We often complain that our companies set unreasonable deadlines and have unrealistic expectations.  This might be true, but it's only half the problem.  The other half, the most important half, is within us.  <i>We</i> consider our worth as programmers to be more associated with speed than with quality.  And that's a tragedy; because it leads us to create messes.  It leads us down the slower path.  By rushing we ruin our chance to truly go fast.
+<p>
+I was with a team the other day, and the manager of the team said to them:  "I want this code to be something you'd be willing to hang on your grandmother's refrigerator.  I want it to be high quality.  Remember, two years from now all people will see is the mess, they won't see how fast you got it done.  Nobody remembers the speed, they only remember the mess.  So do it right".  The programmers looked at him skeptically.  Their <b>boss</b> just told them to go well, instead of going fast, and they didn't believe him.  What does it take?
+<p>
+Take my advice: go well, not fast.  Care about your code.  Take the time to do things right.  In software, slow and steady wins the race; and speed kills.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=51769.html">30
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=51769&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Robert C. Martin adds a new entry to <a href="../index.html$/blogger=unclebob.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/unclebob.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D51769&amp;title=The+Tortoise+and+the+Hare&amp;bodytext=In+software+the+race+goes+to+those+who+go+well%2C+not+those+who+go+fast.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D51769&amp;title=The+Tortoise+and+the+Hare">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D51769&amp;title=The+Tortoise+and+the+Hare">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bobmartin.jpg"/></td><td>Robert C. Martin (Uncle Bob) has been a software professional since 1970 and an international software consultant since 1990.  He is founder and president of Object Mentor Inc., a team of experienced consultants who mentor their clients worldwide in the fields of C++, Java, OO, Patterns, UML, Agile Methodologies, and Extreme Programming.  In 1995 Robert authored the best-selling book: Designing Object Oriented C++ Applications using the Booch Method, published by Prentice Hall.  From 1996 to 1999 he was the editor-in-chief of the C++ Report. In 1997 he was chief editor of the book: Pattern Languages of Program Design 3, published by Addison Wesley.  In 1999 he was the editor of "More C++ Gems" published by Cambridge Press.  He is co-author, with James Newkirk, of "XP in Practice", Addision Wesley, 2001. In 2002 he wrote the long awaited "Agile Software Development: Principles, Patterns, and Practices", Prentice Hall, 2002.  He has published many dozens of articles in various trade journals, and is a regular speaker at
+international conferences and trade shows.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Robert C. Martin. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

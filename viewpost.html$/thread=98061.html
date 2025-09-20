@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Negatable Marker Annotations</title>
+<meta charset="utf-8"/>
+<meta content="Eamonn McManus" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=dichotomy.html">Eamonn McManus' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=98061.html">Discuss</a> | 
+<a href="mailto:?subject=Negatable Marker Annotations&amp;body= %0AArtima Weblogs %0ANegatable Marker Annotations %0Aby Eamonn McManus %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=98061">Email</a> | 
+<a href="../viewpostP.html$/thread=98061.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=85553.html" title="JavaPolis 2004 Trip Report">Previous</a> | 
+<a class="sl" href="thread=142428.html" title="Java API Design Guidelines">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Dr. Dichotomy's Development Diary</span><br>
+<span class="ts">Negatable Marker Annotations</span><br/>
+<span class="as">by Eamonn McManus</span><br/>
+<span class="pd">March 9, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The Java language has always had the notion of marker interfaces. A problem with these is that if a parent class has the marker, all its children inevitably do too.  On the other hand, marker annotations don't necessarily have this limitation.  Here's how to define a marker that can be cancelled in a subclass.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>A <em>marker interface</em> is an interface with no methods,
+    which a class can implement to show that it has certain properties.
+    Well-known examples are <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Cloneable.html">
+<code>Cloneable</code></a>
+    and <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/io/Serializable.html">
+<code>Serializable</code></a>.  A class can implement
+	<code>Serializable</code> to indicate that it has been
+	designed to be serialized, for example.</p>
+<p>One problem with marker interfaces is that when a class implements an interface, all of its subclasses inherit that implementation.  Since <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Number.html">
+<code>Number</code></a> implements <code>Serializable</code>,
+	any subclass such as <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Integer.html">
+<code>Integer</code></a>
+	or <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/util/concurrent/atomic/AtomicInteger.html">
+<code>AtomicInteger</code></a>
+	does too.</p>
+<p>What can you do if you want to define a subclass of
+      <code>Number</code> that is not Serializable?  You are forced to
+      resort to a hack: define a <a href="../_/http/java.sun.com/j2se/1.5.0/docs/guide/serialization/spec/output.html#861">
+<code>writeObject</code></a> method that throws <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/io/NotSerializableException.html">
+<code>NotSerializableException</code></a>.  Instances of your
+	class will still appear to be serializable (<code>instanceof
+	Serializable</code> is still true) but will not actually be.
+	Yuck.</p>
+<p>Annotations, introduced with Tiger (J2SE 5), provide an
+      alternative to marker interfaces.  If serialization were being
+      defined now, then instead of specifying serializability like
+      this...</p>
+<pre>
+public class Number implements Serializable {...}
+</pre>
+<p>...you might specify it like this...</p>
+<pre>
+@Serializable
+public class Number {...}
+</pre>
+<p>Annotations can be defined such that they either are or are not
+      inherited by subclasses.  We could decide that the
+      hypothetical <code>@Serializable</code> annotation is
+      inheritable when we define it:</p>
+<pre>
+@Inherited
+public @interface Serializable {}
+</pre>
+<p>In this case, subclasses of our <code>@Serializable
+	Number</code> class like <code>Integer</code> are
+	automatically <code>@Serializable</code> themselves.  This is
+	usually what you want, but just as with the marker interface
+	there is no way to cancel serializability in a subclass.  Once
+	an inheritable marker annotation is in a superclass, a
+	subclass can't turn it off.</p>
+<p>Alternatively, we could omit the <code>@Inherited</code>
+      annotation from the definition of <code>@Serializable</code>.
+      Then <code>Integer</code> is not automatically
+      <code>@Serializable</code> even if <code>Number</code> is.  We
+      can explicitly choose whether or not to make it so.  But we no
+      longer get the behaviour that we usually want, which is that a
+      class is automatically <code>@Serializable</code> if its parent
+      is.</p>
+<p>We could define a <code>@NotSerializable</code> marker
+      annotation, just as we could define a <code>NotSerializable</code>
+      marker interface, so a subclass could override the inherited
+      <code>@Serializable</code> by saying it was
+      <code>@NotSerializable</code> after all.  But how ugly.</p>
+<p>Fortunately, there is a nicer solution using what I'll call
+    <em>negatable marker annotations</em>.  The idea is simple.  We
+    change the definition of <code>@Serializable</code> to this:</p>
+<pre>
+@Inherited
+public @interface Serializable {
+    boolean value() default true;
+}
+</pre>
+<p>With this definition, we can still define <code>Number</code>
+    as before:</p>
+<pre>
+@Serializable
+public class Number {...}
+</pre>
+<p>Subclasses of <code>Number</code> are now automatically
+      <code>@Serializable</code> too.  But if we want to define a
+      subclass that is not, we simply write:</p>
+<pre>
+@Serializable(false)
+public class UnserializableInteger extends Number {...}
+</pre>
+<p>It could hardly be simpler!</p>
+<p>When we write <code>@Serializable</code> with this definition,
+      it's equivalent to writing <code>@Serializable(true)</code>.  We
+      can omit <code>true</code> since it's the default value, and
+      then there's nothing left but <code>@Serializable()</code>.  The
+      annotation syntax allows us to omit the empty parentheses too,
+      and that leaves us with plain <code>@Serializable</code>.</p>
+<p>The code that uses reflection to know whether a class is
+      <code>@Serializable</code> or not is different with this
+      definition.  With a plain marker annotation, we would use:</p>
+<pre>
+Class c = <em>whatever</em>;
+Serializable ann = c.getAnnotation(Serializable.class);
+boolean isSerializable = <b>(ann != null)</b>;
+</pre>
+<p>With a negatable marker annotation, we must use:</p>
+<pre>
+Class c = <em>whatever</em>;
+Serializable ann = c.getAnnotation(Serializable.class);
+boolean isSerializable = <b>(ann != null &amp;&amp; ann.value())</b>;
+</pre>
+<p>The class is serializable if the <code>@Serializable</code>
+    annotation is present (<code>ann != null</code>)
+    <em>and</em> the value of the annotation is true
+    (<code>ann.value()</code>, which we could also write as
+    <code>ann.value() == true</code>).</p>
+<p>Negatable marker annotations can have other applications than
+      cancelling inherited annotations.  For example, suppose you have
+      a convention that an interface called
+      <code><em>Something</em>MBean</code> is an "MBean interface",
+      whatever that might be.  You can add a negatable
+      <code>@MBean</code> annotation to supplement this convention.
+      You can say that an interface is an MBean interface even if
+      isn't called <code><em>Something</em>MBean</code>, by using
+      <code>@MBean</code>.  And, you can say that an interface is
+      <em>not</em> an MBean interface even if it <em>is</em> called
+      <code><em>Something</em>MBean</code>, by using
+      <code>@MBean(false)</code>.</p>
+<p>Negatable marker annotations also allow you to be more
+      explicit.  With plain marker annotations, if a class is marked
+      <code>@Serializable</code> then you know that its designers
+      intended it to be serializable.  But if it is not marked
+      <code>@Serializable</code>, you only know that <em>either</em>
+      its designers intended it not to be serializable <em>or</em>
+      they didn't think about the question.  A negatable marker
+      annotation allows you to write <code>@Serializable(false)</code>
+      to be explicit about it.</p>
+<hr/>
+<p>I haven't seen this idea elsewhere, but I would amazed if it
+      has not been independently invented several times.  Let me
+      know!</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=98061.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=98061&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eamonn McManus adds a new entry to <a href="../index.html$/blogger=dichotomy.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/dichotomy.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D98061&amp;title=Negatable+Marker+Annotations&amp;bodytext=The+Java+language+has+always+had+the+notion+of+marker+interfaces.+A+problem+with+these+is+that+if+a+parent+class+has+the+marker%2C+all+its+children+inevitably+do+too.++On+the+other+hand%2C+marker+annotations+don%27t+necessarily+have+this+limitation.++Here%27s+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D98061&amp;title=Negatable+Marker+Annotations">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D98061&amp;title=Negatable+Marker+Annotations">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/eamonnmcmanus.jpg"/></td><td>Eamonn McManus is the technical lead of the JMX team at Sun
+Microsystems.  As such he heads the technical work on JSR 3 (JMX API)
+and JSR 160 (JMX Remote API).  In a previous life, he worked at the
+Open Software Foundation's Research Institute on the Mach microkernel
+and countless other things, including a TCP/IP stack written in Java.
+In an even previouser life, he worked on modem firmware in Z80
+assembler.  He is Irish, but lives and works in France and in French.
+His first name is pronounced Aymun (more or less) and is correctly
+written with an acute accent on the first letter, which however he
+long ago despaired of getting intact through computer systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eamonn McManus. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

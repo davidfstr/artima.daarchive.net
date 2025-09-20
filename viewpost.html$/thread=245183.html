@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Myth Makers 1: Scala's "Type Types"</title>
+<meta charset="utf-8"/>
+<meta content="Martin Odersky" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=modersky.html">Martin Odersky's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=245183.html">Discuss</a> | 
+<a "type="" %0a%0ahttps:="" %0aby="" %0athe="" 1:="" href="mailto:?subject=The Myth Makers 1: Scala's " makers="" martin="" myth="" odersky="" scala's="" type="" types"="" types"&body="%0AArtima" viewpost.jsp?thread='245183"' weblogs="" www.artima.com="">Email</a> | 
+<a href="../viewpostP.html$/thread=245183.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=179766.html" title="Pimp my Library">Previous</a> | 
+<a class="sl" href="thread=249289.html" title="Speaking at FOSDEM">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Ideas, Languages, and Programs</span><br>
+<span class="ts">The Myth Makers 1: Scala's "Type Types"</span><br/>
+<span class="as">by Martin Odersky</span><br/>
+<span class="pd">December 18, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Busting some myths that have sprung up around Scala.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>2008 has seen a lot of activity around Scala.  All major IDEs now have
+<a class="reference" href="../_/http/www.scala-lang.org/node/94/index.html">working</a> <a class="reference" href="../_/http/plugins.intellij.net/plugin/$/id=1347/index.html">Scala</a> <a class="reference" href="../_/http/wiki.netbeans.org/Scala/index.html">plugins</a>. A complete Scala <a class="reference" href="../_/http/www.artima.com/shop/programming_in_scala/index.html">tutorial and reference book</a>
+was published and several others are in the pipeline. Scala is
+used in popular <a class="reference" href="../_/http/ccl.northwestern.edu/netlogo/index.html">environments</a> and <a class="reference" href="../_/http/liftweb.net/index.php/Main_Page/index.html">frameworks</a>, and is being adopted by more
+and more professional programmers in organizations like <a class="reference" href="../_/http/www.slideshare.net/al3x/why-scala-presentation$/type=powerpoint/index.html">Twitter</a>,
+<a class="reference" href="../_/http/www.imageworks.com/index.html">Sony Imageworks</a>, and <a class="reference" href="../_/http/www.nature.com/index.html">Nature</a>, along with many others.</p>
+<p>It's also a sign of growing momentum that well-known commentators like
+<a class="reference" href="../_/http/www.ibm.com/developerworks/views/java/libraryview.html$/search_by=scala.html">Ted Neward</a>, <a class="reference" href="../_/http/www.codecommit.com/blog/category/scala/index.html">Daniel Spiewak</a> and the <a class="reference" href="../_/http/www.javaposse.com/index.html">JavaPosse</a> have covered Scala in
+depth. Other bloggers have argued more from the outside, without
+really getting into Scala all that deeply. I find the latter also useful,
+because it shows how Scala is perceived in other parts of the
+programming community.  But sometimes, initial misconceptions can
+create myths which stand in the way of deeper understanding.</p>
+<p>So, as an effort of engaging in the debate, let me address in a series
+of blog posts some of the myths that have sprung up in the last months
+around and about Scala. I'll start with a post by <a class="reference" href="../_/http/steve-yegge.blogspot.com/2008/06/rhinos-and-tigers.html">Steve Yegge</a>. Like
+many of Steve's blogs, this one is quite funny, but that does not make
+it true.</p>
+<p>Steve (in his own words) "disses" Scala as "Frankenstein's
+Monster" because "there are type types, and
+type type types". (Don't ask me what that means!)
+In fact, it seems he took a look at the <a class="reference" href="../_/http/www.scala-lang.org/node/198/index.html">Scala Language
+Specification</a>, and found its systematic use of types intimidating. I
+can sympathize with that. A specification is not a tutorial. Its
+purpose is to give compiler writers some common ground on which to
+base their implementations. This is not just a theoretical nicety: the
+implementation of JetBrains' Scala compiler for IntelliJ makes
+essential use of the language specification; that's how they can match
+our standard Scala compiler pretty closely. The other purpose of a
+specification is that "language lawyers" - people who know the
+language deeply - can resolve issues of differing
+interpretations. Both groups of people value precision over extensive
+prose. Scala's way of achieving precision in the spec is to be rather
+formal and to express all aspects of compile-time knowledge as
+types. That's a notational trick which let us keep the Scala spec
+within 150 pages - compared to, for instance, the 600 pages of the
+<a class="reference" href="../_/http/java.sun.com/docs/books/jls/index.html">Java Language Specification</a>.</p>
+<p>The way a spec is written has nothing to do with the experience of
+programmers. Programmers generally find Scala's type system helpful in
+a sophisticated way. It's smart enough to infer many type annotations
+that Java programmers have to write. It's flexible enough to let
+them express APIs any way they like. And it's pragmatic
+enough to offer easy access to dynamic typing where required. In fact
+Scala's types get out of the way so much that Scala was invited to
+be a contender in last JavaOne's <a class="reference" href="../_/http/java.sun.com/javaone/sf/2008/articles/scripting.html">Script Bowl</a>, which is normally a
+shootout for scripting languages.</p>
+<p>But Steve's rant was not really about technical issues anyway. He
+makes it clear that this is just one move in a match between
+statically and dynamically typed languages. He seems to see this as
+something like a rugby match (or rather football match in the US),
+where to score you need just one player who makes it to the ground
+line. Steve's on the dynamically typed side, pushing <a class="reference" href="../_/http/www.mozilla.org/rhino/index.html">Rhino</a> as the
+<a class="reference" href="../_/http/steve-yegge.blogspot.com/2007/02/next-big-language.html">Next Big Language</a>. Java is the 800-Pound Gorilla on the statically
+typed side. Steve thinks he has Java covered, because its type system
+makes it an easy target. Then out of left field comes another
+statically typed language that's much more nimble and agile. So he
+needs to do a quick dash to block it. If he can't get at the
+programming experience, it must be the complexity of the
+specification. This is a bit like saying you should stay away from
+cars with antilock braking systems because the internal workings of
+such systems are sophisticated!</p>
+<p>Not quite surprisingly, a number of other bloggers have taken Steve's
+rather lighthearted jokes as the truth without bothering to check the
+details too much and then have added their own myths to it. I'll write
+about some of them in the next weeks.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=245183.html">13
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=245183&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Martin Odersky adds a new entry to <a href="../index.html$/blogger=modersky.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/modersky.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D245183&amp;title=The+Myth+Makers+1%3A+Scala%27s+%22Type+Types%22&amp;bodytext=Busting+some+myths+that+have+sprung+up+around+Scala.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D245183&amp;title=The+Myth+Makers+1%3A+Scala%27s+%22Type+Types%22">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D245183&amp;title=The+Myth+Makers+1%3A+Scala%27s+%22Type+Types%22">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/martinodersky.jpg"/></td><td>Martin Odersky is the inventor of the Scala language and professor at <a href="../_/http/ic.epfl.ch/index.html">EPFL</a> in Lausanne, Switzerland. In 2008, he was appointed fellow of the ACM for his contributions to the fusion of functional and object-oriented programming. He believes the two paradigms are two sides of the same coin, to be
+unified as much as possible. To prove this, he has worked on
+a number of language designs, from <a href="../_/http/lampwww.epfl.ch/pizza/index.html">Pizza</a> to <a href="../_/http/lamp.epfl.ch/pizza/gj/index.html">GJ</a> to <a href="../_/http/lamp.epfl.ch/funnel/index.html">Functional Nets</a>.  He has also
+influenced the development of Java as a co-designer of <a href="../_/http/jcp.org/en/jsr/detail$/id=14/index.html">Java generics</a> and as the
+original author of the current <a href="../_/http/java.sun.com/j2se/1.4.2/docs/tooldocs/windows/javac.html">javac<a></a>
+
+reference compiler.</a></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Martin Odersky. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

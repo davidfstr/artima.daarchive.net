@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Cathedral and the Pirate</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=262565.html">Discuss</a> | 
+<a href="mailto:?subject=The Cathedral and the Pirate&amp;body= %0AArtima Weblogs %0AThe Cathedral and the Pirate %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=262565">Email</a> | 
+<a href="../viewpostP.html$/thread=262565.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=261930.html" title="What I Learned at EuroPython">Previous</a> | 
+<a class="sl" href="thread=262742.html" title="EuroPython Keynote Video Available">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">The Cathedral and the Pirate</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">July 12, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The impact of the Google Chrome OS, told through (probably excessive) metaphor.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Windows is an enormous collection of design mistakes that work well enough to get by. Each mistake eventually turns into myth -- after awhile, no one understands the reasoning behind it so everyone begins to believe it was a carefully-considered decision that has deep technical roots and can't be modified for fear of the entire stack falling over. For years the mythology of Windows has grown and evolved into the <a class="reference" href="../_/http/catb.org/esr/writings/cathedral-bazaar/index.html">cathedral described by Eric Raymond</a> -- filled with rococo curlicues and other tributes to the forgotten gods of past technical decisions.</p>
+<p>Along comes Google, the pirate. It uses a new kind of ship, swift and agile that can dart among the lumbering Microsoft galleons. The galleons have three and four rows of heavy cannon, but they are too ungainly to turn, and the big guns, so effective when attacking a fixed fortress, can hit nothing (Apple is far over the horizon during all this, in a high-tech racing sailboat. It's just one boat, but it flies).</p>
+<p>The pirates have no allegiance to history, and no respect for encrusted, senseless decisions. They take aim at anything that looks interesting, whether or not the monarchy behind the galleons considers it important. They begin chipping off customers and carrying them away. The monarchy harrumphs and dismisses the tiny losses with a wave of the hand. "Mere decoration. Statistical outliers. Not important."</p>
+<p>Microsoft becomes accustomed to the petty theft of things it wasn't paying attention to anyway. The initial concern about the pirates is downgraded to annoyance. After all, the monarchy is vast and entrenched -- really, what could challenge it?</p>
+<p>So the two settle into a weirdly symbiotic relationship; Google subtly taking over -- and fixing -- things that Microsoft hadn't seized with both hands, and Microsoft spasming a bit at each cut, then settling back down and going back to sleep, a water buffalo bothered by mosquitoes.  Google steadily adds fast little ships to its fleet. A few sink without taking anyone else down. A few become more powerful, but without seizing control of nearby ships. They are a loose affiliation, held together only by the web of advertising.</p>
+<p>Unfortunately for the monarchy, each interaction with the pirates further convinces it that galleons are the winning solution. After all, they survive each encounter with insignificant losses, chalked up to a need for minor adjustments. The right way to do things is to put everything into one basket and then <em>guard that basket</em>.</p>
+<p>Microsoft continues to make variations on the same operating system. Customers pay more and more for virus prevention and removal (despite virus software, my brother -- who provides IT services to small and medium businesses -- says he spends fully half his time cleaning up virus-infected systems).</p>
+<p>Google can live with all this, because they are taking over the new, relatively undefended frontier of the internet. Bill Gates saw the importance of the net and his last grand effort before going philanthropic was to try to wake Microsoft up to the fact that the internet was going to be very important. The behemoth arose long enough to make a few attempts at creating internet services that looked and acted like desktop applications, tied to the operating system. But there were too many VPs defending their turf to do anything actually innovative (some of you will remember when there was a temporary rallying cry -- originating from Gates, I believe -- that Microsoft was all about "innovation." This was Gates' attempt at creative visualization, as in "keep telling yourself you are a thin person, and eventually it will happen").</p>
+<p>Amidst all this, Internet Explorer (IE) appeared, starting the browser wars.</p>
+<p>The fallout was that there were no standards. Standards were invented by a committee somewhere, mostly out of touch with actually need. Then there were implementations, and Microsoft felt they could do whatever they wanted in order to leverage the OS (obviously you don't want to mess with the crown jewels, obviously you continue to manipulate things to promote the OS, as long as you can get away with it). Nobody correctly followed the non-standard, so all browsers are broken, some are useful.</p>
+<p>After endless years of this, Google sees that browsers will <em>never</em> be fixed. They will <em>always</em> be messed up and require cross-browser fixes within every web application you create, even the simplest ones.</p>
+<p>This is one thing I haven't understood: Google's choice of JavaScript as the client-side programming language. They've had to struggle with cross-browser flaws in every application they've made, so why not use something like Flash to raise the level of abstraction out of the mire of the browsers?</p>
+<p>Or ... you could take a bigger risk and redefine the playing field by creating your own browser, and then implement the most advanced technologies, correctly, or at least the way you want them. At some point -- you've got enough clout, after all -- you can start saying "this application will only run properly under Google Chrome." And for that matter, you can start shipping Chrome with all the necessary support for offline storage and connection to the operating system services required to create more sophisticated apps. "Developers, developers, developers!" will soon start creating their own apps that will only run under Chrome, just because it's the easiest path (they already know JavaScript, but now it works without pain and they have access to storage and other OS things, but sandboxed so they don't have to worry about viruses and other corruption).</p>
+<p>Hmm. It's almost starting to sound like an operating system. And if we solve all these problems through the browser, why not make the browser the operating system? Heck, as far as the vast majority of people are concerned, "operating system" means "windowing system," because that's what they interact with. More and more, people begin using computers because of the internet, so the browser is the first thing they encounter anyway -- that other stuff is messy and complicated, while the browser makes sense. Why <em>not</em> make the browser the primary contact to the OS?</p>
+<p>The timing is perfect. Microsoft still has no clue how big the Vista disaster really is. They won't until Windows 7 comes out and all the people who were burned with Vista decide just to stick with XP or whatever they are currently tolerating. Marketing isn't going to fix this one, no matter how hard the folks in Redmond fling vast sums of money at the problem (the temptation to wade into that river of money will be great).</p>
+<p>And of course there's the netbook. The price of these will continue to go down, especially if the OS becomes less intrusive and requires less processing power. Most people are using netbooks the way the name sounds -- to connect to the internet. If Chrome OS has a small footprint and runs on cheap, low-power chips without bogging them down, then the solid-state disk versions of netbooks become more practical and useful.</p>
+<p>The timing of the shot across Microsoft's bow is no coincidence. Redmond is just starting to crank up the marketing for Windows 7, and one of the significant improvements is that it actually works on netbooks. Vista doesn't, so Microsoft had to continue to sell XP -- just when they decided to force those darn reluctant customers to upgrade to Vista by terminating XP, along came the disruptive netbooks. With Windows 7, Microsoft will finally be able to kill XP. But two problems remain:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>The Microsoft tax adds a lot to the cost of a really cheap netbook, which as I noted, will be getting cheaper. When the computer costs $200 or $150 or $100, people really start to notice the extra $50 to Microsoft. Linux has always been the free alternative, but the typical Linux distro includes a lot of stuff that doesn't fit (and isn't necessary) on solid-state netbooks (the Chrome OS is built on a Linux kernel). Plus, your grandma or uncle doesn't know who Linux is or whether he can be trusted (after all, he has these wild and crazy free love hippie roots). Google, now, I've heard of them, and free sounds pretty good.</li>
+<li>Unless we've suddenly switched to a parallel reality in the last cycle of Windows, Windows 7 will require the netbook to have a hard disk. Google Chrome won't, and will work just fine on the solid-state disk versions of netbooks. Not only that, the solid-state disk versions will boot much faster in combination with the very lightweight Chrome OS. The combination of cost and dramatic performance difference will make Windows 7 on a netbook look like a terrible choice. Add to this all the people burned by Vista and buyers will run towards netbooks with Chrome and away from netbooks with a hard disk and Windows 7.</li>
+</ol>
+</blockquote>
+<p>What's sad is that there are a lot of really smart people trapped within the Monarchy of Microsoft, doing great work that will never see the light of day (better than not being allowed to do great work at all, which is no doubt what keeps them there. But creating things that won't be used is soul-sucking). The only "innovation" that comes from Redmond happens when a competitor creates something that gains traction.</p>
+<p>Take .NET, for example. Java tried to be OS-agnostic, and Microsoft was about the OS, so it created .NET. In many ways, .NET is a significant improvement over Java. But it's not revolutionary as Java was (by introducing the virtual machine, garbage collection and unified error reporting into the programming mainstream). It evolves Java, but with sometimes subtle and sometimes not-subtle ties to Windows. Can I program .NET on my Mac? I don't even know, since I could never take it seriously (every programming conference I attend anymore is almost universally filled with Macs. If it's all about "Developers, developers, developers!" then Microsoft really hasn't begun to see the problems yet, stacking up like the traffic in the Greater Seattle area).</p>
+<p>Microsoft <em>could</em> have taken .NET and created a thin layer of glue onto the hardware, and come up with a really good, robust, and revolutionary OS. When I mentioned this in a previous blog, a commenter who apparently worked within Microsoft research said that a project like that had been going on and some pieces of it might eventually appear in Windows. Of course, it could never be put out there as a real OS because it would compete with Windows and someone has too much turf power for that to happen.</p>
+<p>Contrast this with Chrome OS. It's been pointed out that Android is also being used as an OS, so gasp! There are two potentially competing OSes from a single company! Google shrugs and says "yeah, there might be some overlap, but they were designed with different goals in mind so we'll just see what happens." Something that would cause major political battles within Microsoft produces indifference within Google.</p>
+<p>Another "innovation by reaction" from Microsoft is Silverlight. Adobe has been making inroads with Flash and Flex, which produce applications that are browser and OS independent. Everyone has Flash on their computer -- everyone. Why does Microsoft need to invent a new system? Flash is <em>too</em> cross platform, and doesn't help sell OSes, and is in fact becoming its own OS! This is certainly the first argument that comes to mind, and it's the very one that makes a lot of programmers suspicious that there's a poison pill buried somewhere within Silverlight so that, in the end, the really interesting things only work on Windows.</p>
+<p>I think it's good that Microsoft created Silverlight, and Sun created JavaFX. It's really invigorated Flash/Flex development at Adobe, for one thing, and it promotes the idea that we need to stop wasting our time solving cross-browser incompatibility problems in our applications. (Disclosure: I consulted for Adobe on Flex for about a year, but that contract ended over a year ago).</p>
+<p>Now, Google could have created its own RIA platform and made it run on the various different browsers, but they chose not to. I think this is because, first of all, Adobe already solved the problem and Google didn't seem to see the value of duplicating the effort (as Sun and Microsoft did). What, really, would it have accomplished? But by creating a new browser and expanding its footprint into an OS, Google is moving diagonally. And note that this "OS" will run just as happily by itself as it does under Windows or MacOS, so it becomes something universal that everyone can learn once and use everywhere -- which makes it viral. And the best thing is that it doesn't matter to Google whether you use Chrome as a browser on your OS, or Chrome <em>as</em> your OS. (One of the great things about free software is that you can always say "sure, whatever works for you. It's all the same to me").</p>
+<p>Now take a step back and look at this from the developer's standpoint. If you can start assuming that everyone has Chrome in one form or another, and that it supports the leading-edge JavaScript, HTML and CSS -- well, that means you can write powerful code once and run it everywhere. From a business standpoint the cost savings are compelling. Far more compelling than paying for endless bug fixes due to cross-browser incompatibilities. It means the difference between treading water and moving forward two, three, four times faster than your competitors.</p>
+<p>The second reason Google made Chrome instead of another RIA platform is branding for trust. Flash is pretty invisible to most people, which is fine; for what it does I suspect it's actually <em>better</em> that it's invisible -- Java has always had problems becoming ubiquitous because installation and usage were too intrusive for the majority of end users. But if you want to solve all the messy programming problems created by Windows and the browser wars, you need to get everyone's trust and imprint it, so that the salesperson can say to the new netbook buyer "this runs the Google OS" and our novice buyer will think "I've heard of Google and everyone says good things about it." (Which, by and large, everyone does).</p>
+<p>Consider the Windows 7 sale: it starts out adding significant cost to a cheap netbook appliance. It takes a long time to boot. And the customer will probably ask about viruses -- they've certainly heard a lot about those. The salesperson will say that you can add software to prevent viruses, but such software will be much more interesting to the salesperson as an add-on purchase. And the customer will also know stories about the escalating virus wars where Microsoft and the virus software manufacturers are constantly trying to plug the leaky dike. Maybe the customer should just go with the free, super-fast, virus-proof thingy from Google instead.</p>
+<p>I don't see how Microsoft can change. What you've got is one of those nets in the jungle (think "Lost" here) which springs up and traps people into a hanging ball of bodies. Take one of those nets and fill it with Microsoft VPs. The net is constantly pressing them together as they struggle. No one can see that the net itself is an arbitrary constraint, because it presses everyone into a zero-sum game. Google comes wandering through the jungle, whistling, notices for a moment the ball of VPs fighting among themselves, and wanders on.</p>
+<p>Unfortunately, the only way to fix the problem is for someone to come along and cut through the net, while everyone inside is screaming "Don't cut it! We'll fall!" And of course there would be a fair number of bruises, sprains and some broken bones. (Important note to Microsoft: I now do management consulting, although prepare yourself for truly outrageous fees, payable in advance. I can definitely come in and fix your company).</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=262565.html">13
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=262565&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D262565&amp;title=The+Cathedral+and+the+Pirate&amp;bodytext=The+impact+of+the+Google+Chrome+OS%2C+told+through+%28probably+excessive%29+metaphor.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D262565&amp;title=The+Cathedral+and+the+Pirate">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D262565&amp;title=The+Cathedral+and+the+Pirate">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

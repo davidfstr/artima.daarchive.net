@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>A (Brief) History of Object-Functional Programming</title>
+<meta charset="utf-8"/>
+<meta content="Kevin Wright" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=kevwright.html">Kevin Wright's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=275983.html">Discuss</a> | 
+<a href="mailto:?subject=A (Brief) History of Object-Functional Programming&amp;body= %0AArtima Weblogs %0AA (Brief) History of Object-Functional Programming %0Aby Kevin Wright %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=275983">Email</a> | 
+<a href="../viewpostP.html$/thread=275983.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=275588.html" title="The Autoproxy Plugin - Part II">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">A Taste of Scala</span><br>
+<span class="ts">A (Brief) History of Object-Functional Programming</span><br/>
+<span class="as">by Kevin Wright</span><br/>
+<span class="pd">December 6, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+An not-so-serious overview of the events in software development that led to the creation of Scala.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="foreword" name="foreword">Foreword</a></h1>
+<p>Once upon a time, there was a language, it was called Scala.</p>
+<p>People came to look at the language, and they announced that it was “pretty impressive”, but they thought that the feature set was changing too fast, and that nobody was using it yet outside of hobby projects.  It sure did look good, but nobody wanted to risk their career on it, it was too young, it might not last.</p>
+<p>Then something happened; Scala grew up.  Twitter announced that they used it to replace some of their Ruby back-end, and SAP were using it, and EDF.  The news spread and new developers also came to see that Scala was “pretty impressive”, whilst the early pilgrims began to look at it with renewed interest and a glint in their eye.</p>
+<p>What they saw was a language that is now mature and ready to be used in anger.  With the approach of version 2.8, Scala is coming of age, and it is indeed “pretty impressive”!</p>
+</div>
+<div class="section">
+<h1><a id="programming-is-life" name="programming-is-life">Programming is Life</a></h1>
+<p>Languages evolve, they spawn children, and they give rise to distinct species.  Much like the formation of life on a young earth, programming languages came to existence in a bubbling primordial soup of CPU instruction sets and mathematical ideas.  Unlike the formation of life, there was no slime involved <a class="footnote-reference" href="#id3" id="id1" name="id1">[1]</a>.</p>
+<p>But this isn’t the vicious tooth and claw battle of natural selection, although it sometimes feels that way with the ongoing wars about tabs vs. spaces and exactly where you should stick your brackets.  Languages are picked with as much care as a breeder of thoroughbreds will choose horses.  Just as in biology, this artificial selection is not without its problems, and inbreeding is an ever-present risk.  Fortunately, there is a flip-side to this coin, good husbandry and horticulture also takes advantage of <a class="reference" href="../_/http/en.wikipedia.org/wiki/Heterosis/index.html">hybrid vigour</a>.  This is where two parents are specifically chosen for their differences to create offspring that is stronger than either, the idea being that both sets of weaknesses will be cancelled out.  The same thinking has been applied in the world of programming languages too <a class="footnote-reference" href="#id4" id="id2" name="id2">[2]</a>, with many now fusing concepts from Object-Oriented and Functional styles to offer the programmer incredible power and expressiveness.</p>
+<p>Scala is one of them.</p>
+<hr class="docutils">
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1" name="id3">[1]</a></td><td>To the best of my knowledge, although there was a bit of dust.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2" name="id4">[2]</a></td><td>Memes can also evolve...</td></tr>
+</tbody>
+</table>
+</hr></div>
+<hr class="docutils"/>
+<div class="section">
+<h1><a id="get-on-with-it" name="get-on-with-it">Get on with it!</a></h1>
+<p>Most folk reading this will be Java programmers, so I’d like to explain some of the ideas behind functional programming before covering the sordid details of how functions and objects interact.</p>
+<p>The internet is already full of better explanations that I can ever dream of writing, so I’ll keep it short.</p>
+</div>
+<div class="section">
+<h1><a id="what-is-a-function" name="what-is-a-function">What is a function?</a></h1>
+<p>In mathematics, a function is a thing that takes one value (the input) then uses it somehow to produce another value (the output).  This definition covered almost every eventuality for a long time, even when mathematicians started seriously stretching the definition of what a number is; complex numbers, matrices, vectors, co-ordinates (both Polar and Cartesian), quaternions...  Lots of things can be treated as a number if you squint in just the right way.</p>
+<p>This was fine for a long time, then programmers were invented, and then computers were invented <a class="footnote-reference" href="#id6" id="id5" name="id5">[3]</a>.  Once computers settled into the collective consciousness and matured a bit, the programmers began to think differently about them, one such thought was that looking at oversized print-outs with endless lists of three letter opcodes was a pretty good way to give oneself a headache.</p>
+<p>If only they could group together some of these sequences and give them a name then we’d have a neat way to reuse stuff and all that time spent repeating things could be freed up to, hopefully, be spent down the pub (or looking at quaternions, or writing pong).  Because so many of these programmers were also mathematicians, and because so many of their programs were working on mathematical problems, it was decided that the idea of a function fitted very nicely with the idea of a pre-packaged unit of behaviour, and so 2nd generation languages were born.</p>
+<hr class="docutils"/>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5" name="id6">[3]</a></td><td>Yes, really.  Ada Lovelace was doing her thing before Babbage assembled so much as a single gear.</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
+<div class="section">
+<h1><a id="trouble-in-paradise" name="trouble-in-paradise">Trouble in Paradise...</a></h1>
+<p>The fit wasn’t perfect though.  There was the question of functions that needed to work with multiple inputs or (more frustratingly) multiple outputs.  Fortunately some mathematicians already allowed for functions with multiple inputs, so this idea was adopted very early on and ways were figured out to return multiple values (usually by subverting the input parameters and writing back out to them).  Other mathematicians (like Haskell) didn’t like multiple inputs and came up with the idea of higher-order functions instead, functions that could return other functions, or take functions as arguments, but these were harder to implement for the programmers and so got ignored at first.</p>
+<p>Another discrepancy with the functions of programming was in side effects.  A function might do a different thing every time it was used with the same input (such as when reading a file), or it could do something besides just returning a value (such as printing a line to the console).  Even worse, it was possible that a value might have been changed after being used as an argument to a function!  As a program needs to have side effects in order to do more than warm the CPU this wasn’t worried about very much, except by the mathematicians that didn’t especially like beer but still had free time on their hands.</p>
+<p>So the functions of programming were not the same as the functions of mathematics.  They had a new (and less precise) definition: A procedure, or bunch of instructions, with a name, that can optionally have one or more inputs and one or more outputs, some of which can be both at the same time, and might also do other stuff on the side.</p>
+</div>
+<div class="section">
+<h1><a id="a-reprive-ahead-of-its-time" name="a-reprive-ahead-of-its-time">A reprive ahead of its time</a></h1>
+<p>Of course, a lot of mathematicians weren’t happy about the way functions were being undermined, so a new breed of programming language was created to give back some of what was lost and once again put this stuff on a solid theoretical framework.</p>
+<p>Functions became first class entities and not just a name for a bunch of code.  This allowed for Haskell's higher-level functions to be used in designing software.  Language features also evolved to encourage immutable values, so that functions couldn’t muck about with their inputs.  Currying was implemented and Tuples were used, so that functions could give a respectable facade of only having one input and one output.  Interesting stuff was also being done <a class="footnote-reference" href="#id11" id="id7" name="id7">[4]</a> to restrict those pesky side-effects, if they couldn’t be totally eliminated, then they could certainly be put in their place!  This family was known as “functional” programming languages, due to the importance placed on returning functions back to their mathematical roots. The family includes such languages as Lisp, Scheme, Caml, Erlang, F#, Clojure, etc.</p>
+<p>Being a good example of sound engineering, functional languages are elegant in design, comprehensible <a class="footnote-reference" href="#id12" id="id8" name="id8">[5]</a>, efficient and internally consistent.  Also, as so often happens with Good Ideas™, they spent a long time being largely ignored by the mainstream.  The programmers <a class="footnote-reference" href="#id13" id="id9" name="id9">[6]</a> were still very conscious of why they liked functions in the first place; the need to split their systems up into distinct, named units of behaviour that could be isolated and reused in different ways.  This need was still itching and so the Object-Oriented paradigm was born as a way to scratch it <a class="footnote-reference" href="#id14" id="id10" name="id10">[7]</a>.  For the time being, functional programming was delegated to being a hobby, and also a handy way to find cute new material for the occasional dissertation or thesis.  It was believed that functional languages were slower than their imperative cousins, but this was mostly taken on faith and nobody really went out of their way to prove it.  It was also believed that, although FP looked very neat for small programs and for demos, it wouldn’t be able to scale up to programs that were hundreds of thousands of lines long, it wouldn’t be maintainable.</p>
+<hr class="docutils"/>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7" name="id11">[4]</a></td><td>Often using monads</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8" name="id12">[5]</a></td><td>Except, maybe, for (all(the(parenthesis())))</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9" name="id13">[6]</a></td><td>at least, those who wanted to be pragmatic so they could get more beer time</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id14" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10" name="id14">[7]</a></td><td>But that’s a different story...</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
+<div class="section">
+<h1><a id="renaissance" name="renaissance">Renaissance</a></h1>
+<p>But this stuff wasn’t just a hobby.  In common with all the best revolutions it was just bubbling underground for a few years until the world was ready for it.  Mainstream programmers were increasingly finding that there were things they could easily think of, but which couldn’t be easily expressed in their (object oriented) code.  Even simple ideas like “take this list of strings, and turn it into a list of uppercase strings” would run into subtle problems.  Sometimes the list of uppercase strings would be missing the first entry because they’d started counting from 1 instead of 0, sometimes another user would find that their list had all been turned to uppercase for them even though they didn’t want it to be, there were also a lot of null pointer exceptions.</p>
+<p>Slowly, people began clamouring for closures, and continuations, and for other tricks to make their programs more robust and easier to maintain.  But these weren’t things that could be built from objects, so enhanced for-loops were invented, and anonymous classes, and the visitor pattern, and the command pattern; none of them matched perfectly what the programmers were thinking, but they still helped and made a lot of problems more manageable <a class="footnote-reference" href="#id16" id="id15" name="id15">[8]</a> (even if they did create a small swamp of boilerplate code).  The time was ripe for a paradigm shift, and functional programming was awaiting its grand entrance.</p>
+<hr class="docutils"/>
+<table class="docutils footnote" frame="void" id="id16" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id15" name="id16">[8]</a></td><td>Though not the null pointer exceptions</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
+<div class="section">
+<h1><a id="feature-envy" name="feature-envy">Feature Envy</a></h1>
+<p>Via Erlang, Ericsson demonstrated that the FP paradigm could scale to massive systems.  It could be made fast, maintainable, testable, and remarkably free of errors.  This was FP outside of the labs and it was looking better than the object-oriented systems.  Ericsson programmers were getting more beer time than ever before.  The gauntlet had been thrown down!</p>
+<p>On the other side of the fence, programmers were looking at FP with thoughtful expressions and a hint of jealousy.  Java was getting bloated, and every new feature seemed to come with its own requirement for boilerplate code.  Even small programs are now littered with annotations and template parameters and duplicate type declarations, big programs are even worse.  To add insult to injury, the debate about how to add closures doesn’t look like reaching an early conclusion, and we still have the endless lists of get/set methods in java beans.  Something had to give.</p>
+<p>Despite this, Java is not without a LOT of strengths.  The Virtual Machine is one of the most mature and optimised on the market and can be found everywhere, from washing machines and mobile phones through to countless web servers and desktop computers.  The ecosystem with its range of open source libraries and frameworks for the language is just astounding, the paid-for stuff is pretty hot too.  Under the Java umbrella, the world has been flooded with projects that flourished and matured following corporate investment and millennia of collective development time.</p>
+<p>That’s an awful lot to give up just for a few new language features</p>
+</div>
+<div class="section">
+<h1><a id="we-can-have-our-cake-and-eat-it-too" name="we-can-have-our-cake-and-eat-it-too">We can have our cake... and eat it too!</a></h1>
+<p>What was needed was a way to keep all that juicy java goodness, but to have it a la carte with a refreshing order of FP at the same time.  Scala stepped in to meet this need, although it wasn’t the only contender.  Pizza came first, but it’s seen as a prototype for Scala nowadays.</p>
+<p>Other languages learned to run on the JVM too, such as JavaFX, JRuby, Jython, Groovy etc.  Most of them also had closures and other elements of FP, but in the nation of Java these newcomers weren’t quite native citizens, behaving more like immigrants with a shiny new work visa and a foreign accent.</p>
+<p>The fashion for dynamic languages didn’t help either; by pretending that types don’t exist it becomes difficult to generate compiled code that “speaks” idiomatic Java.  This can be big problem if you’re producing objects to be handed to a 3rd party library.  In some cases the language barrier was so challenging that it needed an interpreter, such as the JSR233 Scripting API or the Bean Scripting Framework.</p>
+<p>Scala came to the party with a new trick, it integrates so tightly with Java that it can speak types like a native.  Instead of acting like a migrant worker this is a naturalised, passport carrying, citizen.  From the outside world Java and Scala compile to classes that look identical <a class="footnote-reference" href="#id21" id="id17" name="id17">[9]</a>, this is hardly surprising as it was an explicit goal in the design of the language.  It’s even more impressive when considering that Scala is a fully-fledged FP language, embracing and unifying the twin worlds of objects and functions in a beautifully consistent manner.</p>
+<p>Because of this tight integration, Scala can be used as a drop-in replacement for java and nothing forces you to write a single line of code in a functional style.  Features like type inference, traits, clean property handling <a class="footnote-reference" href="#id22" id="id18" name="id18">[10]</a>, and the fusion of member variables with constructor arguments all allow it to be used as a kind of java-with-a-cleaner-syntax.  Even foregoing the benefits of FP, it can be argued that Scala is still a worthy successor by being much more object-oriented than Java:</p>
+<ul class="simple">
+<li>Everything is an object, including number literals and functions.  In Java, methods aren’t objects, nor are primitives. 2.toString is a valid statement in Scala.</li>
+<li>It does away with static class members, these are mostly an anachronism dating back to Java’s heritage as a C++ successor.  C++ was a hybrid language itself, with the goal of supporting the procedural style of C whilst also adding support for objects.  Static members aren’t very object-oriented as they can’t implement an interface, or take advantage of polymorphism and overloading in the same manner as instance members.  It’s also not possible to pass a class as an argument to a function that will then use its static members <a class="footnote-reference" href="#id23" id="id19" name="id19">[11]</a>.  Instead, Scala offers singleton objects which have none of these failings.  The new concept of companions allows a singleton to access the restricted members on instances of a same named class, thus duplicating the privileges of static members.</li>
+<li>All properties on an object are implemented behind-the-scenes as a hidden field and a pair of methods to get and set the field <a class="footnote-reference" href="#id24" id="id20" name="id20">[12]</a>.  No more public access to your object’s internal data that can be directly modified by anyone.</li>
+</ul>
+<p>In the future, virtual classes may well be added to this list, making Scala’s support for objects even more impressive.</p>
+<p>The world of functional programming is supported just as well:</p>
+<ul class="simple">
+<li>tail-call optimisation of recursive functions</li>
+<li>pattern matching</li>
+<li>first class and higher order functions</li>
+<li>partial functions (not defined for all possible input values)</li>
+<li>currying and partial application of functions</li>
+<li>closures</li>
+<li>concise language syntax to declare immutable values, and a good library to work with immutable collections.</li>
+<li>continuations (scala 2.8 plus)</li>
+</ul>
+<hr class="docutils"/>
+<table class="docutils footnote" frame="void" id="id21" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id17" name="id21">[9]</a></td><td>Except for the scala library import</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id22" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id18" name="id22">[10]</a></td><td>No more of those endless get/set methods to litter your code</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id23" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id19" name="id23">[11]</a></td><td>Actually it is, but you have to do tricky stuff with reflection.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id24" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id20" name="id24">[12]</a></td><td>These methods don’t use the same cumbersome naming convention as Java’s bean accessors, although generation of such accessors can be explicitly requested by using the @BeanProperty annotation.</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
+<div class="section">
+<h1><a id="so-what-does-this-all-mean" name="so-what-does-this-all-mean">So what does this all mean?</a></h1>
+<p>FP has proven itself, and a growing number of developers are now coming to recognise the problems that are best suited to this approach.  Scala demonstrates how functional design patterns can be added to the programmers’ arsenal without needing to sacrifice the benefits of object-orientation.  It also shows how the two styles can complement each other to produce a robust well-rounded language, without any hint of multiple personality disorder.</p>
+<p>Once you get beyond basic syntax and concepts of closures, first class properties, higher order functions, traits, immutable refs, etc., the deeper potential of Scala reveals itself in the interplay between features. Some of the design choices made over the lifetime of the language have resulted in powerful synergies <a class="footnote-reference" href="#id26" id="id25" name="id25">[13]</a>; and learning this new generation of object-functional design patterns perhaps offers the key to being truly effective in Scala.</p>
+<p>With future articles, I hope to further explain this exciting language by covering some of the ideas that are helping to spread its growing popularity.</p>
+<hr class="docutils"/>
+<table class="docutils footnote" frame="void" id="id26" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id25" name="id26">[13]</a></td><td>I’m proud to rescue this word from its mindless enslavement by corporate jargon.  Terminology is important to us developers, we should fight for our political prisoners!</td></tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils"/>
+<div class="section">
+<h1><a id="what-happened-to-the-next-autoproxy-article" name="what-happened-to-the-next-autoproxy-article">What happened to the next AutoProxy article?</a></h1>
+<p>The plugin is work in progress</p>
+<p>I'm still fighting the compiler over correct generation of field setter delegates, when I've resolved this problem it'll be part of the write-up and I'll post my experience.</p>
+<p>In the meantime, this is an article I wrote a couple of months ago, but never found the time to proof-read and format.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=275983.html">59
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=275983&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Kevin Wright adds a new entry to <a href="../index.html$/blogger=kevwright.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/kevwright.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D275983&amp;title=A+%28Brief%29+History+of+Object-Functional+Programming&amp;bodytext=An+not-so-serious+overview+of+the+events+in+software+development+that+led+to+the+creation+of+Scala.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D275983&amp;title=A+%28Brief%29+History+of+Object-Functional+Programming">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D275983&amp;title=A+%28Brief%29+History+of+Object-Functional+Programming">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Kevin Wright has finally settled back in London to work on market
+analysis for the telecoms industry after having worked his way around
+Europe in manufacturing, finance and even online gaming. He's a
+self-appointed Scala Evangelist and an active participant in every forum
+he can find, where he's currently trying to build interest in the London
+Scala Users' Group.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Kevin Wright. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%"/>
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+<a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Upgrading Jini lookup to include more explict control and flexibility</title>
+<meta charset="utf-8"/>
+<meta content="Gregg Wonderly" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#FFCC99" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=greggwon.html">Gregg Wonderly's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=136457.html">Discuss</a> | 
+<a href="mailto:?subject=Upgrading Jini lookup to include more explict control and flexibility&amp;body= %0AArtima Weblogs %0AUpgrading Jini lookup to include more explict control and flexibility %0Aby Gregg Wonderly %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=136457">Email</a> | 
+<a href="../viewpostP.html$/thread=136457.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=136455.html" title="Are Web Services an Investment or an infinite Cost?">Previous</a> | 
+<a class="sl" href="thread=143013.html" title="Are your loops volatile controlled?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software and Return on Investment</span><br>
+<span class="ts">Upgrading Jini lookup to include more explict control and flexibility</span><br/>
+<span class="as">by Gregg Wonderly</span><br/>
+<span class="pd">November 14, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I've been working on an enhancement to Jini servce lookup in my reef project over on jini.org.  I've still got more work to do before getting to the proposal stage.  Here's where I'm at.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Some Background</h1>
+The Jini service lookup specification and implementation present in the <a href="../_/http/java.sun.com/products/jini/2.1/doc/api/net/jini/core/lookup/ServiceRegistrar.html">ServiceRegistrar</a>  presents some interesting issues for large numbers of services, all of which might be of interest to desktop environments.
+<p>
+ServiceRegistrar's <a href="../_/http/java.sun.com/products/jini/2.1/doc/api/net/jini/core/lookup/ServiceRegistrar.html#lookup(net.jini.core.lookup.ServiceTemplate,%20int)">lookup(ServiceTemplate,int)</a>
+method returns a <a href="../_/http/java.sun.com/products/jini/2.1/doc/api/net/jini/core/lookup/ServiceMatches.html">ServiceMatches</a>  object that then provides access to an array of 
+<a href="../_/http/java.sun.com/products/jini/2.1/doc/api/net/jini/core/lookup/ServiceItem.html">ServiceItem</a>  Objects.  The ServiceItem class has no accessor methods, and just provides fields with access to the unmarshalled form of the service registration data values, namely the ServiceID, an Entry[] and service object.
+<p>
+What happens with this implementation is that if a ServiceTemplate matches more than just a couple of services, a whole bunch of code downloads can occur and a lot of time can elapse while the service code is downloaded and the service registration objects are instantiated.  This API doesn't provide any real flexibility in controlling when unmarshalling occurs or which values are unmarshalled.
+<p>
+Over on my <a href="../_/http/reef.jini.org/index.html">reef</a> project at <a href="../_/http/www.jini.org/index.html">jini.org</a>, I'm trying to deal with a number of things related to service lookup.
+<h1>The Problem</h1>
+I have a collection of about 12 services that are ran simultaneously as part of a larger application framework.  In a recent customer deployment, we would have 4 of machines running this 12 services.  Each of the services have 2 or more serviceUIs that are advertised.  One for managing the service's Jini configuration (an AdminUI) and one for the MainUI.  This results in about 25 total UI instances per machine.  There are about 15 distinct jar files associated with these 12 services that would need to be downloaded too.
+<p>
+With 4 machines, that means about 100 serviceUIs and about 60 download requests using ServiceRegistrar to lookup these services.  The kicker is that some of the users of these clients connect with a cellphone dialup or similar low bandwidth connection to access the mainUI for some of these services.
+<p>
+I was confronted with a real need to greatly reduce and explicitly control the moment of downloading code.  The client computers are not big computers either, so I really need to control the total number of live objects too.
+<h1>Some Background on Service Lookup Variations</h1>
+An intesting collection of discussions have happened on the <a href="../_/http/www.jini.org/index.html">jini-users</a> mailing list over the years regarding variations on service lookup.  Over the years a number of different people have asked about controlling service lookup more explicitly with pattern matching and other requests.  The standing theme of many of the replies has always been, "Create a service which does what you need, and have the client use that service to do the lookups."
+<p>
+This is largely a valid response from a number of perspectives, but it doesn't make it any easier to get the results one might really need.  It is an architecture which uses existing functionality and extends it to be more useful.  The fact that there is some additional work involved in creating and deploying another service creates some barries however.
+
+<h1>The Issues I'd Like to Resolve</h1>
+There are a number of barries that ServiceRegistrar presents to the user.  Some of these are part of past implementation details.  Some of the barriers are only in place now because of new additions to Jini, such as JERI.  Here's my view on the important things.
+
+<h2>Marshalling</h2>
+In the world of RMI, object passed between JVMs are marshalled implicitly through serialization or explicitly as MarshalledObject instances into a network transportable form.  On the other end, they must be unmarshalled and instantiated back into live objects.  Serialization doesn't carry codebase information with the object. So, if both ends don't know about the same version (serial version id) of the class, there
+will be problems.  The java.rmi.MarshalledObject class provides support for use of a codebase annotation that allows the receiving JVM to download code to have the correct version of the class active.  In the typical deployment, the contract of use between two JVMs will be manifested in an interface.  The downloaded class is just the implementation of the interface(s).<p>
+One of the issues with the service lookup/matching specification is that it doesn't demand marshalling it just says that lookup comparisons must be equivalent to MarshalledObject.equals() behavior.  There are some interesting reasons why one might choose to not specify the required implementation.  But, this, to me, leaves the door opened for lookup service implementations that won't use marshalling, and thus won't provide the client the opportunity to control the unmarshalling.
+
+<h2>Constraints</h2>
+The Jini Extensible Remote Invocation (JERI) stack implemented in Jini2.0 provides a nice, plugable stack of remote method invocation control.  You can start at the bottom with endpoints that provide transport control.  Next up the stack, the invocation layer provides a way to translate between invocation paradigms on each end.  This allows native java objects on one end to be translated into XML based messaging for instance.  Next up the stack is the Exporter (service end) and Proxy Preparer (client end).  These two objects present the final remote call transport contract to each end.
+<p>
+The <a href="../_/file/c:/jini2_1beta2/doc/api/net/jini/jeri/BasicILFactory.html">BasicILFactory</a> class provides the ability to supply <a href="../_/file/c:/jini2_1beta2/doc/api/net/jini/core/constraint/MethodConstraints.html">MethodConstraints</a>
+to dictate what types of criteria the transport, invocation and client environments must meet to use the service.  There are some interesting interactions here from the perspective that you can tell the invocation layer that your service needs to have a secure transport, with the endpoint implementation providing this guarentee.  There are some interactions through the layers that make it possible for the question of "is this constraint met?" to be answered.  This happens through a number of paths of execution from both the client side (proxy preparation) and the service side (proxy verification and invocation layer validation during inbound calls).
+<p>
+I'd like for service lookup results to allow the client software to query the service for its requirements so that a first time use of a service could allow the client to assert the required constraint implementations through dialogs or wizards that would help users understand more about the service requirements.  Currently, these implementation details are manually managed and the deployment environment is assumed to be managed by well trained people who most likely already know the requirements that need to be met.
+<p>
+Login identities for authentication and authorization are one barrier, but there are other constraints that the user can meet with explicit control of their environment.
+<h2>Filtering</h2>One of the common question about using service lookup on the jini-users mailing list has involved more sophisticated filtering of returned results.  In particular, partial string matches as well as <b>"and"</b> vs <b>"or"</b> matching logic of the ServiceTemplate fields has been discussed.
+<p>
+This basic filtering request has come up in the Javaspaces realm too.  There are a wide
+diversity of potential needs for matching/discovering/filtering in the real world.  There
+needs to be some more flexibility in matching.  One of the problems is that matching in
+the server to control returned results is going to be limited because of the desires to keep user supplied code out of the lookup service to manage integrity and reliability issues.
+The current ServiceTemplate provides exact matching using simple equals() comparisons.  
+<p>
+I'd like to extend this ability to include some more explicit control over the results of matching to better control bandwidth based performance.  It would be nice to get 1 result efficiently (getting access to a single well known service), but not be burdened by the API when 100 results (all services that provide a serviceUI) would make sense as well.
+<h2>Compatibility Issues</h2>
+One of the primary concerns that I've sensed from others is that changing service lookup APIs at a basic level is problematic, because it will affect the interworking of services and clients.  My plan of action is to manage this issue by creating a new ServiceDiscovery Manager like API that wraps both the ServiceRegistrar interface use and my ServiceLookup interface use, under the covers, into a new API for service lookup.  This API will make ServiceRegistrar implementations and ServiceLookup implementations usable with the same, new API.  There will be a few issues that need to be worked through though.
+<h1>What's Next</h1>
+I'll be trying to put together a buildable version of reggie with ServiceLookup extensions in it next.  Tearing apart the existing build and breaking it down into just building reggie will take a bit of time for the disection of the ant files.  Once I have the build working outside of the JTSK build, then I'll be ready to start supporting a trial version that will be more consumable then what is currently in CVS.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=136457.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=136457&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Gregg Wonderly adds a new entry to <a href="../index.html$/blogger=greggwon.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/greggwon.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D136457&amp;title=Upgrading+Jini+lookup+to+include+more+explict+control+and+flexibility&amp;bodytext=I%27ve+been+working+on+an+enhancement+to+Jini+servce+lookup+in+my+reef+project+over+on+jini.org.++I%27ve+still+got+more+work+to+do+before+getting+to+the+proposal+stage.++Here%27s+where+I%27m+at.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D136457&amp;title=Upgrading+Jini+lookup+to+include+more+explict+control+and+flexibility">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D136457&amp;title=Upgrading+Jini+lookup+to+include+more+explict+control+and+flexibility">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/gregg.jpg"/></td><td>Gregg Wonderly graduated from Oklahoma State University in 1988 with an MS in COMSCI.  His areas of concentration include Operating Systems and Languages.  His first job was at the AT&amp;T Bell Labs facilities in Naperville IL working on software retrofit for the 5ESS switch.  He designed a procedure control language in the era of the development of Java with similar motivations that the Oak and then Java language development was driven by.  Language design is still at the top of his list, but his focus tends to be on application languges layered on top of programming languages such as Java.  Some just consider this API design, but there really is more to it!  Gregg now works for Cyte Technologies Inc., where he does software engineering and design related to distributed systems in highly available environments.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Gregg Wonderly. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

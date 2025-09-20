@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Storing and Tracking Matrix Rows and Columns at Compile-Time</title>
+<meta charset="utf-8"/>
+<meta content="Christopher Diggins" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cdiggins.html">Christopher Diggins' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=109715.html">Discuss</a> | 
+<a href="mailto:?subject=Storing and Tracking Matrix Rows and Columns at Compile-Time&amp;body= %0AArtima Weblogs %0AStoring and Tracking Matrix Rows and Columns at Compile-Time %0Aby Christopher Diggins %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=109715">Email</a> | 
+<a href="../viewpostP.html$/thread=109715.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=109459.html" title="boost::any meet ootl::any_ptr">Previous</a> | 
+<a class="sl" href="thread=111079.html" title="C++ Meta-Binders">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Heron-Centric: Ruminations of a Language Designer</span><br>
+<span class="ts">Storing and Tracking Matrix Rows and Columns at Compile-Time</span><br/>
+<span class="as">by Christopher Diggins</span><br/>
+<span class="pd">May 15, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Here is a method for for representing and computing rows and columns at compile-time, and to do matrix multiplication accordingly. (trickier than it might sound)
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+Disclaimer: I had horrible food poisoning recently so I can't be held responsible for the quality of this work ... good or bad ;-) 
+
+<pre>
+
+#include &lt;iostream&gt;
+#include &lt;numeric&gt;
+#include &lt;valarray&gt;
+#include &lt;cassert&gt;
+
+template&lt;class Value_T, unsigned int Size_N, unsigned int Stride_N&gt;
+class Slice
+{
+public:
+  // constructor
+  Slice(Value_T* x) : p(x) { }
+  // typedef
+  typedef Value_T value_type;
+  // only a forward iterator is provided,
+  // others are left as an exercise for the reader
+  struct Slice_forward_iter {
+    Slice_forward_iter(Value_T* x) : p(x) { }
+    Value_T&amp; operator*() { return *p; }
+    const Value_T&amp; operator*() const { return *p; }
+    Value_T&amp; operator++() { Value_T* tmp = p; p += Stride_N; return *tmp; }
+    Value_T&amp; operator++(int) { return *(p+=Stride_N); }
+    bool operator==(const Slice_forward_iter&amp; x) { return p == x.p; }
+    bool operator!=(const Slice_forward_iter&amp; x) { return p != x.p; }
+    Value_T* p;
+  };
+  typedef Slice_forward_iter iterator;
+  typedef const Slice_forward_iter const_iterator;
+  // public functions
+  iterator begin() { return iterator(p); }
+  iterator end() { return iterator(p + (Size_N * Stride_N)); }
+  value_type&amp; operator[](size_t n) { return *(p + (n * Stride_N)); }
+  const value_type&amp; operator[](size_t n) const { return *(p + (n * Stride_N)); }
+  static size_t size() { return Size_N; }
+  static size_t stride() { return Stride_N; }
+private:
+  // prevent default construction
+  Slice() { };
+  Value_T* p;
+};
+
+template&lt;class Value_T, unsigned int Rows_N, unsigned int Cols_N&gt;
+class Matrix
+{
+public:
+  typedef Slice&lt;Value_T, Cols_N, 1&gt; row_type;
+  typedef Slice&lt;Value_T, Rows_N, Cols_N&gt; col_type;
+  const row_type row(unsigned int n) const {
+    assert(n &lt; rows);
+    return row_type(data + (n * Cols_N));
+  }
+  const col_type column(unsigned int n) const {
+    assert(n &lt; cols);
+    return col_type(data + n);
+  }
+  row_type operator[](unsigned int n) { return row(n); }
+  const row_type operator[](unsigned int n) const { return row(n); }
+  const static unsigned int rows = Rows_N;
+  const static unsigned int cols = Cols_N;
+  typedef Value_T value_type;
+private:
+  mutable Value_T data[Rows_N * Cols_N];
+};
+
+template&lt;class Matrix1, class Matrix2&gt;
+struct MatrixMultiplicationType {
+  typedef Matrix&lt;typename Matrix1::value_type, Matrix1::rows, Matrix2::cols&gt; type;
+};
+
+template&lt;class Slice1_T, class Slice2_T&gt;
+typename Slice1_T::value_type dot_product(Slice1_T x, Slice2_T y) {
+  assert(x.size() == y.size());
+  return std::inner_product(x.begin(), x.end(), y.begin(), typename Slice1_T::value_type(0));
+}
+
+template&lt;class Matrix1, class Matrix2&gt;
+typename MatrixMultiplicationType&lt;Matrix1, Matrix2&gt;::type
+matrix_multiply(const Matrix1&amp; m1, const Matrix2&amp; m2)
+{
+  typename MatrixMultiplicationType&lt;Matrix1, Matrix2&gt;::type result;
+  assert(Matrix1::cols == Matrix2::rows);
+  for (int i=0; i &lt; Matrix1::rows; ++i)
+  for (int j=0; j &lt; Matrix2::cols; ++j)
+    result[i][j] = dot_product(m1.row(i), m2.column(j));
+  return result;
+}
+
+template&lt;typename Matrix_T&gt;
+void output_matrix(const Matrix_T&amp; x) {
+  for (int i=0; i &lt; x.rows; ++i) {
+    for (int j=0; j &lt; x.cols; ++j) {
+      std::cout &lt;&lt; x[i][j] &lt;&lt; ", ";
+    }
+    std::cout &lt;&lt; std::endl;
+  }
+  std::cout &lt;&lt; std::endl;
+}
+
+void test_matrix() {
+  Matrix&lt;int, 1, 2&gt; m1;
+  m1[0][0] = 2;
+  m1[0][1] = 3;
+  Matrix&lt;int, 2, 2&gt; m2;
+  m2[0][0] = 2;
+  m2[0][1] = 0;
+  m2[1][0] = 0;
+  m2[1][1] = 2;
+  output_matrix(m2);
+  Matrix&lt;int, 1, 2&gt; m3 = matrix_multiply(m1, m2);
+  output_matrix(m3);
+}
+
+int main() {
+  test_matrix();
+  system("pause");
+  return 0;
+}
+</pre>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=109715.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=109715&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Christopher Diggins adds a new entry to <a href="../index.html$/blogger=cdiggins.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cdiggins.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D109715&amp;title=Storing+and+Tracking+Matrix+Rows+and+Columns+at+Compile-Time&amp;bodytext=Here+is+a+method+for+for+representing+and+computing+rows+and+columns+at+compile-time%2C+and+to+do+matrix+multiplication+accordingly.+%28trickier+than+it+might+sound%29&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D109715&amp;title=Storing+and+Tracking+Matrix+Rows+and+Columns+at+Compile-Time">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D109715&amp;title=Storing+and+Tracking+Matrix+Rows+and+Columns+at+Compile-Time">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/christopherdiggins.jpg"/></td><td>Christopher Diggins is a software developer and freelance writer. Christopher loves programming, but is eternally frustrated by the shortcomings of modern programming languages. As would any reasonable person in his shoes, he decided to quit his day job to write his own ( <a href="../_/http/www.heron-language.com/index.html">www.heron-language.com</a> ). Christopher is the co-author of the <a href="../_/http/www.cpp-cookbook.com/index.html">C++ Cookbook</a> from O'Reilly. Christopher can be reached through his home page at  <a href="../_/http/www.cdiggins.com/index.html">www.cdiggins.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Christopher Diggins. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

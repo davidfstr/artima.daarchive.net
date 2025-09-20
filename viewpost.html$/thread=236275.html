@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Things to Know About Python Super [1 of 3]</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=236275.html">Discuss</a> | 
+<a href="mailto:?subject=Things to Know About Python Super [1 of 3]&amp;body= %0AArtima Weblogs %0AThings to Know About Python Super [1 of 3] %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=236275">Email</a> | 
+<a href="../viewpostP.html$/thread=236275.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=236286.html" title="Less is More, or How to Publish Articles on Artima">Previous</a> | 
+<a class="sl" href="thread=236278.html" title="Things to Know About Python Super [2 of 3]">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Things to Know About Python Super [1 of 3]</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">August 12, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+super is perhaps the trickiest Python construct: this
+series aims to unveil its secrets
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="foreword" name="foreword">Foreword</a></h1>
+<p>I begun programming with Python in 2002, just after the release of
+Python 2.2.  That release was a major overhaul of the language:
+new-style classes were introduced, the way inheritance worked changed
+and the builtin <tt class="docutils literal"><span class="pre">super</span></tt> was introduced. Therefore, you may correctly
+say that I have worked with <tt class="docutils literal"><span class="pre">super</span></tt> right from the beginning; still, I
+never liked it and over the years I have discovered more and more of
+its dark corners.</p>
+<p>In 2004 I decided to write a comprehensive paper documenting
+<tt class="docutils literal"><span class="pre">super</span></tt> pitfalls and traps, with the goal of publishing it on the
+Python web site, just as I had published my essay on multiple
+inheritance and the <a class="reference" href="../_/http/www.python.org/download/releases/2.3/mro/index.html">Method Resolution Order</a>. With time the paper
+grew longer and longer but I never had the feeling that I had covered
+everything I needed to say: moreover I have a full time job, so I
+never had the time to fully revise the paper as a whole. As a consequence,
+four years have passed and the paper is still in draft status. This is
+a pity, since it documents issues that people encounter and that
+regularly come out on the Python newsgroups and forums.</p>
+<p>Keeping the draft sitting on my hard disk is doing a disservice to the
+community. Still, I lack to time to finish it properly. To
+come out from the impasse, I decided to split the long paper in a series of
+short blog posts, which I do have the time to review properly. Moreover
+people are free to post comments and corrections in case I am making
+mistakes (speaking about <tt class="docutils literal"><span class="pre">super</span></tt> this is always possible). Once I
+finish the series, I may integrate the corrections, put it together
+again and possibly publish it as whole on the Python website.
+In other words, in order to finish the task,
+I am trying the strategies of <em>divide et conquer</em>
+and <em>release early, release often</em>. We will see how it goes.</p>
+</div>
+<div class="section">
+<h1><a id="introduction" name="introduction">Introduction</a></h1>
+<p><tt class="docutils literal"><span class="pre">super</span></tt> is a Python built-in, first introduced in Python 2.2 and
+slightly improved and fixed in later versions, which is often
+misunderstood by the average Python programmer. One of the reasons for
+that is the poor documentation of <tt class="docutils literal"><span class="pre">super</span></tt>: at the time of this
+writing (August 2008) the documentation is incomplete and in some parts
+misleading and even wrong. For instance, the standard documentation
+(even for the new 2.6 version
+<a class="reference" href="../_/http/docs.python.org/dev/library/functions.html#super">http://docs.python.org/dev/library/functions.html#super</a>) still says:</p>
+<pre class="literal-block">
+super(type[, object-or-type])
+  Return the superclass of type. If the second argument is omitted the
+  super object returned is unbound. If the second argument is an object,
+  isinstance(obj, type) must be true. If the second argument is a type,
+  issubclass(type2, type) must be true. super() only works for new-style
+  classes.
+</pre>
+<p>[UPDATE: the final version of Python 2.6 has a better documentation
+for <tt class="docutils literal"><span class="pre">super</span></tt>, as a direct consequence of this post ;)].
+The first sentence is just plain wrong: <tt class="docutils literal"><span class="pre">super</span></tt> does not return the
+superclass. There is no such a thing as <em>the superclass</em> in a Multiple
+Inheritance (MI) world. Also, the sentence about <em>unbound</em> is misleading,
+since it may easily lead the programmer to think about bound and unbound
+methods, whereas it has nothing to do with that concept.
+IMNSHO <tt class="docutils literal"><span class="pre">super</span></tt> is one of the most tricky and surprising Python
+constructs, and we absolutely need a document to shed light on its secrets.
+The present paper is a first step in this direction: it aims to tell you
+the <em>truth</em> about <tt class="docutils literal"><span class="pre">super</span></tt>. At least the amount of truth
+I have discovered with my experimentations, which is certainly
+not the whole truth ;)</p>
+<p>A fair warning is in order here: this document is aimed at expert
+Pythonistas. It assumes you are familiar with <a class="reference" href="../_/http/www.python.org/download/releases/2.2.3/descrintro/index.html">new style classes</a> and
+the <a class="reference" href="../_/http/www.python.org/download/releases/2.3/mro/index.html">Method Resolution Order</a> (MRO); moreover a good understanding of
+<a class="reference" href="../_/http/users.rcn.com/python/download/Descriptor.htm">descriptors</a> would be extremely useful. Some parts also require good
+familiarity with <a class="reference" href="../_/http/www.ibm.com/developerworks/library/l-pymeta.html">metaclasses</a>. All in all, this paper is not for the
+faint of heart ;)</p>
+</div>
+<div class="section">
+<h1><a id="there-is-no-superclass-in-a-mi-world" name="there-is-no-superclass-in-a-mi-world">There is no superclass in a MI world</a></h1>
+<p>Readers familiar will single inheritance languages, such as
+Java or Smalltalk, will have a clear concept of superclass
+in mind. This concept, however, has <em>no useful meaning</em> in Python or in
+other multiple inheritance languages. I became convinced of this fact
+after a discussion with Bjorn Pettersen and Alex Martelli
+on <a class="reference" href="../_/http/tinyurl.com/5ms8lk/index.html">comp.lang.python in May 2003</a>
+(at that time I was mistakenly thinking that one could define a
+superclass concept in Python). Consider this example from that
+discussion:</p>
+<blockquote>
+<pre class="literal-block">
+       +-----+
+       |  T  |
+       |a = 0|
+       +-----+
+     /         \
+    /           \
++-------+    +-------+
+|   A   |    |   B   |
+|       |    | a = 2 |
++-------+    +-------+
+    \           /
+     \         /
+       +-----+
+       |  C  |
+       +-----+
+          :
+          :    instantiation
+          c
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class T(object):
+...     a = 0
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class A(T):
+...     pass
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class B(T):
+...     a = 2
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(A,B):
+...     pass
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = C()
+</pre>
+</blockquote>
+<p>What is the superclass of <tt class="docutils literal"><span class="pre">C</span></tt>? There are two direct superclasses (i.e. bases)
+of <tt class="docutils literal"><span class="pre">C</span></tt>: <tt class="docutils literal"><span class="pre">A</span></tt> and <tt class="docutils literal"><span class="pre">B</span></tt>. <tt class="docutils literal"><span class="pre">A</span></tt> comes before <tt class="docutils literal"><span class="pre">B</span></tt>, so one would naturally
+think that the superclass of <tt class="docutils literal"><span class="pre">C</span></tt> is <tt class="docutils literal"><span class="pre">A</span></tt>. However,
+<tt class="docutils literal"><span class="pre">A</span></tt> inherits its attribute <tt class="docutils literal"><span class="pre">a</span></tt> from <tt class="docutils literal"><span class="pre">T</span></tt>
+with value <tt class="docutils literal"><span class="pre">a=0</span></tt>: if <tt class="docutils literal"><span class="pre">super(C,c)</span></tt> was returning
+the superclass of <tt class="docutils literal"><span class="pre">C</span></tt>, then <tt class="docutils literal"><span class="pre">super(C,c).a</span></tt> would return 0. This
+is NOT what happens. Instead, <tt class="docutils literal"><span class="pre">super(C,c).a</span></tt> walks trought the
+method resolution order  of the class of <tt class="docutils literal"><span class="pre">c</span></tt> (i.e. <tt class="docutils literal"><span class="pre">C</span></tt>)
+and retrieves the attribute from the first class above <tt class="docutils literal"><span class="pre">C</span></tt> which
+defines it. In this example the MRO of <tt class="docutils literal"><span class="pre">C</span></tt> is <tt class="docutils literal"><span class="pre">[C,</span> <span class="pre">A,</span> <span class="pre">B,</span> <span class="pre">T,</span> <span class="pre">object]</span></tt>, so
+<tt class="docutils literal"><span class="pre">B</span></tt> is the first class above <tt class="docutils literal"><span class="pre">C</span></tt> which defines <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">super(C,c).a</span></tt>
+correctly returns the value 2, not 0:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; super(C,c).a
+2
+</pre>
+</blockquote>
+<p>You may call <tt class="docutils literal"><span class="pre">A</span></tt> the superclass of <tt class="docutils literal"><span class="pre">C</span></tt>, but this is not a useful
+concept since the methods are resolved by looking at the classes
+in the MRO of <tt class="docutils literal"><span class="pre">C</span></tt>, and not by looking at the classes in the MRO of <tt class="docutils literal"><span class="pre">A</span></tt>
+(which in this case is <tt class="docutils literal"><span class="pre">[A,T,</span> <span class="pre">object]</span></tt> and does not contain <tt class="docutils literal"><span class="pre">B</span></tt>).
+The whole MRO is needed, not just the first superclass.</p>
+<p>So, using the word <em>superclass</em> in the standard docs is
+misleading and should be avoided altogether.</p>
+</div>
+<div class="section">
+<h1><a id="bound-and-unbound-super-methods" name="bound-and-unbound-super-methods">Bound and unbound (super) methods</a></h1>
+<p>Having established that <tt class="docutils literal"><span class="pre">super</span></tt> cannot return the
+mythical superclass, we may ask ourselves what the hell it is returning
+;) The truth is that <tt class="docutils literal"><span class="pre">super</span></tt> returns proxy objects.</p>
+<p>Informally speaking, a proxy is an object with
+the ability to dispatch to methods of other objects via delegation.
+Technically, <tt class="docutils literal"><span class="pre">super</span></tt> is a class overriding the <tt class="docutils literal"><span class="pre">__getattribute__</span></tt>
+method. Instances of <tt class="docutils literal"><span class="pre">super</span></tt> are proxy objects providing
+access to the methods in the MRO. The dispatch is done in such a way
+that</p>
+<p><tt class="docutils literal"><span class="pre">super(cls,</span> <span class="pre">instance-or-subclass).method(*args,</span> <span class="pre">**kw)</span></tt></p>
+<p>corresponds more or less to</p>
+<p><tt class="docutils literal"><span class="pre">right-method-in-the-MRO-applied-to(instance-or-subclass,</span> <span class="pre">*args,</span> <span class="pre">**kw)</span></tt></p>
+<p>There is a caveat at this point: the second argument can be
+an instance of the first argument, or a subclass of it.
+In the first case we expect a <em>bound</em> method to be returned
+and in the second case and <em>unbound</em> method to be returned.
+This is true in recent versions of Python: for instance, in this example</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class B(object):
+...     def __repr__(self):
+...         return "&lt;instance of %s&gt;" % self.__class__.__name__
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(B):
+...     pass
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class D(C):
+...     pass
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; d = D()
+</pre>
+</blockquote>
+<p>you get</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print super(C, d).__repr__
+&lt;bound method D.__repr__ of &lt;instance of D&gt;&gt;
+</pre>
+</blockquote>
+<p>and</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print super(C, D).__repr__
+&lt;unbound method D.__repr__&gt;
+</pre>
+</blockquote>
+<p>However, if you are still using Python 2.2 (there are unlucky people forced
+to use old versions) your should be aware that <tt class="docutils literal"><span class="pre">super</span></tt> had a bug
+and <tt class="docutils literal"><span class="pre">super(&lt;class&gt;,</span> <span class="pre">&lt;subclass&gt;).method</span></tt> returned a <em>bound</em> method,
+not an unbound one:</p>
+<pre class="literal-block">
+&gt;&gt; print super(C, D).__repr__ # in Python 2.2
+&lt;bound method D.__repr__ of &lt;class '__main__.D'&gt;&gt;
+</pre>
+<p>That means that in Python 2.2 you get:</p>
+<pre class="literal-block">
+&gt;&gt; print super(C, D).__repr__() # in Python 2.2
+&lt;instance of type&gt;
+</pre>
+<p><tt class="docutils literal"><span class="pre">D</span></tt>, seen as an instance of the (meta)class <tt class="docutils literal"><span class="pre">type</span></tt>, is being passed as
+first argument to <tt class="docutils literal"><span class="pre">__repr__</span></tt>.
+This has been fixed in Python 2.3+, where you correctly get
+a <tt class="docutils literal"><span class="pre">TypeError</span></tt>:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print super(C, D).__repr__() # the same as B.__repr__()
+Traceback (most recent call last):
+ ...
+TypeError: unbound method __repr__() must be called with D instance as first
+argument (got nothing instead)
+</pre>
+</blockquote>
+<p>The point is subtle, but usually one does not see problems since typically
+<tt class="docutils literal"><span class="pre">super</span></tt> is invoked on instances, not on subclasses, and in this case it
+works correctly in all Python versions:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; print super(C, d).__repr__()
+&lt;instance of D&gt;
+</pre>
+</blockquote>
+<p>When I was using Python 2.2, due to the bug just discussed, and due to
+the <tt class="docutils literal"><span class="pre">super</span></tt> docstring</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; print super.__doc__
+super(type) -&gt; unbound super object
+super(type, obj) -&gt; bound super object; requires isinstance(obj, type)
+super(type, type2) -&gt; bound super object; requires issubclass(type2, type)
+Typical use to call a cooperative superclass method:
+class C(B):
+    def meth(self, arg):
+        super(C, self).meth(arg)
+</pre>
+<p>I got the impression that in order to get unbound methods I needed to use
+the unbound <tt class="docutils literal"><span class="pre">super</span></tt> object. This is actually untrue. To understand how
+bound/unbound methods work we need to talk about descriptors.</p>
+</div>
+<div class="section">
+<h1><a id="super-and-descriptors" name="super-and-descriptors"><tt class="docutils literal"><span class="pre">super</span></tt> and descriptors</a></h1>
+<p>Descriptors (more properly I should speak of the descriptor protocol) were
+introduced in Python 2.2 by Guido van Rossum. Their primary motivation
+was technical, since they were needed to implement the new-style object
+system. Descriptors were also used to introduce new standard concepts in
+Python, such as classmethods, staticmethods and properties. Moreover,
+according to the traditional transparency policy of Python, descriptors
+were exposed to the application programmer, giving him/her the freedom
+to write custom descriptors.  Any serious Python programmer should have
+a look at descriptors: luckily they are now very well documented (which was
+not the case when I first studied them :-/) thanks to the <a class="reference" href="../_/http/users.rcn.com/python/download/Descriptor.htm">beautiful essay</a>
+of Raimond Hettinger. You should read it before continuing this article,
+since it explains all the details. However, for the sake of our discussion
+of <tt class="docutils literal"><span class="pre">super</span></tt>, it is enough to say that a <em>descriptor class</em> is just a
+regular new-style class which implements a <tt class="docutils literal"><span class="pre">.__get__</span></tt> method with
+signature <tt class="docutils literal"><span class="pre">__get__(self,</span> <span class="pre">obj,</span> <span class="pre">objtyp=None)</span></tt>. A <em>descriptor object</em>
+is just an instance of a descriptor class.</p>
+<p>Descriptor objects are intended to be used as attributes (hence their
+complete name attribute descriptors). Suppose that <tt class="docutils literal"><span class="pre">descr</span></tt> is a
+given descriptor object used as attribute of a given class C.
+Then the syntax <tt class="docutils literal"><span class="pre">C.descr</span></tt> is actually interpreted by Python as a
+call to <tt class="docutils literal"><span class="pre">descr.__get__(None,</span> <span class="pre">C)</span></tt>, whereas the same syntax for an
+instance of C corresponds to a call to <tt class="docutils literal"><span class="pre">descr.__get__(c,</span> <span class="pre">type(c))</span></tt>.</p>
+<p>Since the combination of descriptors and super is so tricky, the core
+developers got it wrong in different versions of Python.  For
+instance, in Python 2.2 the only way to get the unboud method
+<tt class="docutils literal"><span class="pre">__repr__</span></tt> is via the descriptor API:</p>
+<pre class="literal-block">
+&gt;&gt; super(C, d).__repr__.__get__(None, D) # Python 2.2
+&lt;unbound method D.__repr__&gt;
+</pre>
+<p>You may check that it works correctly:</p>
+<pre class="literal-block">
+&gt;&gt; print _(d)
+&lt;instance of D&gt;
+</pre>
+<p>In Python 2.3 one can get the unbond method by using the <tt class="docutils literal"><span class="pre">super(cls,</span> <span class="pre">subcls)</span></tt>
+syntax, but the syntax <tt class="docutils literal"><span class="pre">super(C,</span> <span class="pre">d).__repr__.__get__(None,</span> <span class="pre">D)</span></tt> also
+works; in Python 2.4+ instead the same syntax returns a <em>bound</em> method,
+not an unbound one:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; super(C, d).__repr__.__get__(None, D) # in Python 2.4+
+&lt;bound method D.__repr__ of &lt;instance of D&gt;&gt;
+</pre>
+<p>The core developers changed the behavior again, making
+my life difficult while I was writing this paper :-/
+I cannot trace the history of the bugs of <tt class="docutils literal"><span class="pre">super</span></tt> here, but if you
+are using an old version of Python and you find something weird with
+<tt class="docutils literal"><span class="pre">super</span></tt>, I advice you to have a look at the Python bug tracker
+before thinking you are doing something wrong.
+In this case, to be correct, the change is not in <tt class="docutils literal"><span class="pre">super</span></tt>, but in the
+descriptor implementation. In Python 2.2-2.3 you could
+get an unbound method from a bound one as follows:</p>
+<pre class="literal-block">
+&gt;&gt; d.__repr__.__get__(None, D) # in Python 2.2-2.3
+&lt;unbound method D.__repr__&gt;
+</pre>
+<p>In Python 2.4 that does not work anymore:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; d.__repr__.__get__(None, D) # in Python 2.4+
+&lt;bound method D.__repr__ of &lt;instance of D&gt;&gt;
+</pre>
+<p>Still, you can get the unbound method by passing for the underlying
+function first:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; d.__repr__.im_func.__get__(None, D) # in Python 2.4+
+&lt;unbound method D.__repr__&gt;
+</pre>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=236275.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=236275&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236275&amp;title=Things+to+Know+About+Python+Super+%5B1+of+3%5D&amp;bodytext=super+is+perhaps+the+trickiest+Python+construct%3A+this%0D%0Aseries+aims+to+unveil+its+secrets&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236275&amp;title=Things+to+Know+About+Python+Super+%5B1+of+3%5D">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236275&amp;title=Things+to+Know+About+Python+Super+%5B1+of+3%5D">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

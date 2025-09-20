@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Groovy AI Tic tac toe</title>
+<meta charset="utf-8"/>
+<meta content="Jeremy Meyer" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=jeremy1.html">Jeremy Meyer's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=274909.html">Discuss</a> | 
+<a href="mailto:?subject=Groovy AI Tic tac toe&amp;body= %0AArtima Weblogs %0AGroovy AI Tic tac toe %0Aby Jeremy Meyer %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=274909">Email</a> | 
+<a href="../viewpostP.html$/thread=274909.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=232401.html" title="Why it's better to be lazy">Previous</a> | 
+<a class="sl" href="thread=291467.html" title="Creating a Domain Specific Language with Groovy">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Musings on Language and Design</span><br>
+<span class="ts">Groovy AI Tic tac toe</span><br/>
+<span class="as">by Jeremy Meyer</span><br/>
+<span class="pd">November 27, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A happy little voyage of discovery down the Groovy road.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Discovering Groovy</h1>
+<p>I have been enjoying Groovy much more than I thought.  Really enjoying it, in fact.  Looking around, I find that surprisingly few books have been published on it, and not enough is being said about it. Ok, it is a language that seems to be perceived to have lost its way a bit, but I think it has pretty much found it now.</p>
+<p>Like Ruby, which experienced an upsurge of  interest with the creation of Rails, Groovy suddenly got very interesting to me with the invention of Grails. I liked the idea of an easier way to use all the great frameworks I wanted to use like Hibernate and Spring and SiteMesh etc. It had started to sound like it was worthwhile taking a look. And I am very glad I did.</p>
+<p>I love Ruby, and I love the whole model of dynamic scripting languages, especially ones which run on the JVM.  But using Ruby and Rails, I kept finding my brain stretched just a little bit by having to learn new syntax at the same time as getting comfortable with new paradigms. It was taking too long to switch my brain into a different mode, and that made it very hard for me to persuade customers to take the plunge in all good concience.</p>
+<p>I remembered how exciting Java was when I first learnt it, because it seemed so simple to use and well designed after C++, so I found myself wondering if perhaps Groovy had that same sense of newness and elegance and simplicity whilst being built on something familiar.</p>
+<p>It did.</p>
+<p>I had heard a few reports about Groovy, the negatives of which were usually prefixed by "you used to have to",  or "you didn't used to be able to",  and the positives which usually took the form of "..easy for a Java developer"  or "seamless.. because you can just use Java".  So it sounded like it was improving. </p>
+<p>A friend (and wonderfully pragmatic hacker) said to me "the best thing about Groovy is that at a pinch you can almost just change a .java file to a .groovy file and run it".  Quite true. You almost can. But you wouldn't want to. That would miss the point. And it's quite an important point. </p>
+<h1>Groovy Isn't Java</h1>
+<p>Groovy is definitely not Java. In fact it isn't even Java-ish.  Possibly an odd statement , but let me justify it.  Ok, it is a JVM language, which means that you can use all your Java libraries, (and best of breed frameworks), but then so are many other languages (like JRuby, Jython, Clojure or Scala) which aren't Java-ish either. The thing is that you don't expect them to be, but because Java code is almost 100% compatible with Groovy, one would have thought that Groovy would be very Java-ish.  </p>
+<p>Yes, it integrates truly seamlessly with your Java code, meaning that your classes can extend Java classes, and operations that take Java objects will willingly take Groovy objects, if typed in the right way.  And of course you can usually get away with just writing Java code. But, and here's the rub. This makes your Groovy code non-idiomatic.  The Groovy idioms are distinctly different and if you are going to embrace Groovy, it seems you will have to leave some Java habits behind.  </p>
+<p>The upside, and it is a very, very important upside in my book, is that  as a Java developer you are not sacrificing productivity from the outset, and as you learn the paradigms, you can refactor your code. This is an enormous benefit. It might offend the purist, who would claim that using a new, dynamic language and not bothering to learn its idioms is pointless, and even destructive, but if I can convince people that their Groovy code will at worst look like Java, and at best give them all the advantages of Groovy, then suddenly I have a strong argument for them diving in and trying something new. </p>
+<p>So how is it not Java-ish? </p>
+<p>Obviously Java code is too noisy to be great for scripting. It wasn't designed that way. For a dynamic scripting language, you want simplicity and clarity, and to my mind Groovy has successfully delivered.  </p>
+<p>So, apart from all the powerful features in Groovy (of which more later) the language itself is really nice to write in. Anyone who knows, (and yes, even loves) Java will appreciate how many of its little linguistic annoyances have been tackled by Groovy. </p>
+<p>Downcasting, for loops, iterators, checked exceptions, etc.. are all frequent pain points. Java code is strewn with semi-colons and type declarations.  Iterating through hash tables is not ideal even since the introduction of the collections looping constructs.  Although Java has the concept of a closure, with the anonymous inner class method, again there is a load of  messy brackets and typing that has to be done to use them. </p>
+<p>So.. you might ask, "Wouldn't it be Groovy if we could.."</p>
+<ul>
+<li>have much more type inference and hence shorter declaration statements</li>
+<li>leave out semi-colons; if they weren't necessary</li>
+<li>leave out brackets (if methods had only one parameter)</li>
+<li>iterate over collections with default iterator variables</li>
+<li>create ad-hoc, minimal closures to make free use of dependency injection</li>
+<li>dynamically add methods to classes</li>
+<li>treat exceptions as unchecked</li>
+<li>have built-in language support for regular expressions</li>
+<li>have duck typing, or parametric polymorphism</li>
+<li>easily create DSLs</li>
+</ul>
+And of course the reason I have listed these particular questions is that the answer in each case is "we can and it is".
+
+<h1>Using Groovy</h1>
+<p>So, I wanted to discover for myself whether or not I could easily use these features and create something which was more or less Groovy, in a decent amount of time. In other words, is this all just lip service, or does it work? Is it worth learning a dynamic scripting language that works with Java and the JVM, when I could just be using Java? 
+Is it really going to be easy enough to learn to actually save me time?</p>
+<p>I decided to focus on the basics of the language, the syntax, and some of the basic Groovy idioms. If that was a good experience then the 
+mental shift of working with a dynamic scripting language would seem more worthwhile.</p>
+<p>Like most of the people reading this blog, I am sure, I like to learn a language by programming in it. So I chose an amusing little project which I first came across about 15 years ago.</p>
+<h1>Learning Machines</h1>
+<p>Donald Michie's MENACE (Matchbox Educable Noughts And Crosses Engine) was an early 1960 example of machine learning. (Noughts and Crosses is what we Brits call Tic Tac Toe.)</p>
+<p>The original machine was an array of matchboxes (about 300)  with a picture on each one of a possible Tic Tac Toe position, and some beans or beads in the box; one to represent each of the free squares (by number, color or whatever). So if there were 4 possible moves left on the board, there would be 4 beans in the box, each uniquely identifying one of those four squares.</p>
+<p>A human player would make a move on a piece of paper, or Tic Tac Toe board, then  pick up the matchbox bearing the picture matching the current position, shake it and take out the bean which represented MENACE's next move.  So far it just sounds like a random generator, but the clever part of it is that if MENACE lost a game, the human player would "punish" the machine by throwing away the last bean that was taken out of a matchbox. That means that given the same situation in the next game, MENACE could not make that move again. Thus MENACE would learn in a  rudimentary way, to play Tic Tac Toe, by gradually running out of bad moves.</p>
+<p>Since not all positions necessarily have any good moves which can be made, occasionally an empty matchbox is discovered, signifying that the only moves left are bad. In that case the offending bean  from the previous box would be disposed of.  This would prevent MENACE from getting into such a predicament the next time around.</p>
+<p>Coincidentally, it seems that someone has recently re-created an <a href="../_/http/boingboing.net/2009/11/02/mechanical-computer.html">original "hardware" version of MENACE </a> with the slight improvement over the algorithm above. In this case, wins are rewarded by adding a bean to each matchbox representing every move made in that game. This increases the chance of MENACE making winning moves, but does not change the end result.</p>
+<p>You might be thinking "Tic Tac Toe is a simple and silly example. Why not use 3 for loops and 2 if statements and make a perfect player from the get go?". Well you certainly could do that, but this is about giving ourselves something challenging enough to do with Groovy to make the project worthwhile. Also it is a lot more fun playing the game repeatedly to see how long it takes before it starts forcing a draw, than it would be playing a game which will always win or draw. (Of course no game should ever win if it is playing against someone who has taken 5 minutes to master the game).</p>
+<h1>The Project</h1>
+<p>The project is a Groovy simulation of the MENACE computer. Instead of using beads in a matchbox we keep a list of all bad moves, a simple array of positions which we serialize between games. We have two interfaces, text and GUI.</p>
+<p>Although the code is more succinct than it would be in Java, if you include the Swing interface to the game (which makes it much easier to play) the whole project is about 300 lines of code. I have included it all <a href="../_/http/www.jeremymeyer.com/downloads/groovyaitictactoe.zip">[here]</a>  but I want to highlight the parts of code that I think are a great improvement over Java and which made it quite a joy to code. I have avoided some of the really powerful features of Groovy, and not focussed on its dynamicism and hence its suitability for DSLs, an interesting topic for another conversation.</p>
+<p>I used the Groovy Eclipse plugin at <a href="../_/http/groovy.codehaus.org/Eclipse+Plugin/index.html">http://groovy.codehaus.org/Eclipse+Plugin</a>, but you can run this code from the command line or use the plugin of your choice. To run from the command line, (assuming you have Groovy installed, I used version 1.6.3) unzip the zip file, keeping its folder structure, and from its root directory, type "groovy tictactoe/GamePanel".</p>
+<p>The code is made up of 3 classes. <b>Position</b>, <b>Game</b> and <b>GamePanel</b>.  </p>
+<p><b>Position</b> is a fancy wrapper around an array of pieces, and is also the MVC model for <b>GamePanel</b> which is the GUI interface class. <b>Game</b> is the controller which allows the human to move, checks the computer's response to see if it is bad  and stores the bad move if the computer loses.</p>
+<h1>The Position Class</h1>
+<p>Groovy classes are stored in files with a .groovy extension.  You could of course just run Groovy code without any classes, because it is a scripting language, but since we are creating a proper program, we are using classes.</p>
+<p>Position is obviously a bit more than just a wrapper for an array, but thinking about it as such is a good start. I have used ellipses to show that it is a fragment, and colored the Groovy code green for comparison with the blue Java code.<p>
+<pre>
+<font color="#009955">
+public class Position implements Cloneable {
+   ..
+   def pieces = [0,0,0,0,0,0,0,0]
+   ..
+}
+</font>
+</pre>
+<p>The class definition looks pretty much like Java, but there are no semicolons and there is no need to define what the pieces array type is.  Not perhaps a huge saving in time / effort and readability, you might think, except that the Java equivalent fragment would actually have to be:</p>
+<pre>
+<font color="#0000FF">
+public class Position implements Cloneable {
+   ..
+   int[] pieces = {0,0,0,0,0,0,0,0}
+
+   public void setPieces (int[] pieces) {
+      this.pieces = pieces
+   }
+
+   public int[] getPieces () {
+      return pieces
+   }
+   ..
+}
+</font>
+</pre>
+..because Groovy generates a getter and a setter for you, and even better, if you create your own getters and setters, it allows you to use bean property syntax.. so, 
+<pre>
+<font color="#009955">
+position.pieces[3] = 1
+</font>
+</pre>
+
+in Groovy, would actually be calling your getter to get the pieces array.  That was 6 lines down to 2, assuming we are happy with a default getter / setter.  Just compare the number of times "int[]"  and the word "pieces" occurs in each example, too. Excellent simplification!  Of course, if you aren't careful it can bite you, you have to make sure you actually want bean properties.</p>
+<p>After a little study, it becomes apparent that any Tic Tac Toe position has 7 tactically identical positions which can be created by flipping and rotating the board.  Since we want to find bad moves, it speeds things up if we consider all equivalent moves.  The diagram shows an example of 3 equivalent positions (out of a possible 8).</p>
+<p><img src="../_/https/jeremymeyer.me/images/blog/equivalence.bmp"/></p>
+<p>A nice way to represent a board for easy comparison is to treat the 3 by 3 grid as a simple 9 digit, base 3 number, with 0 being empty, 1 being X and 2 being 0.  If we flip and rotate all the positions of the board, convert to this number, and take the smallest value of the 8 unique positions, we have a good way of "factorising" the position. We can use this to compare positions for equivalence, and for a bad move, we just need to store this integer.
+
+<p>Lets look at some of that code.</p>
+<p>To convert the position to a value:</p>
+<pre>
+<font color="#009955">
+private int getIntValue(def pos) {
+   def total = 0
+   9.times {
+      total += pos[it]*3**it
+   }
+   total
+}
+</font>
+</pre>
+This is very tidy code, and a great improvement. We want to make the method private, which we do using the familiar access specifier, but we don't need to specify the type for total.  We can use the very elegant "<b>9.times</b>" syntax to give us our loop and in the curly braces (actually a closure) we have the default index operator "it" which we can use.  On top of this, we can use ** for raising to a power and we don't have to specify the return keyword to return a value.  
+
+Now we can add simple mirror and rotate translation arrays to our class. Proof that you only need these to attain every equivalent Tic Tac Toe position is left to the bored or un-trusting reader! But you can take my word for it that given any position, we need to rotate it 3 times, then mirror it and then rotate it 3 more times to have achieved every equivalent position.  Since all we are doing is moving elements, we can add create two translation arrays:
+<pre>
+<font color="#009955">
+public class Position implements Cloneable {
+   ..
+   final static int[] MIRROR = [2,1,0,5,4,3,8,7,6]
+   final static int[] ROTATE_90 = [6,3,0,7,4,1,8,5,2] 
+   def pieces = [0,0,0,0,0,0,0,0]
+   ..
+}
+</font>
+</pre>
+and then translate as we need:
+<pre>
+<font color="#009955">
+private int[] translate(def pieces, def translation) {
+   def newArray = []
+   9.times {
+         newArray[translation[it]] = pieces[it] 
+     }
+   newArray
+}
+</font>
+</pre> 
+so to rotate we can do:
+<pre>
+<font color="#009955">
+..
+translate(currentBoard, ROTATE_90)
+..
+</font>
+</pre>
+<p>
+The position can also return the winner. 0 if the game is still in progress, 1 if X and 2 if O.</p>  
+Here is an annoying little artifact in Groovy.. Note that the fragment for checking if there are empty squares is nice and minimal.
+<pre>
+<font color="#009955">
+..
+for (p in pieces) {
+   if (!p) 
+      return 0
+}
+..
+</font>
+</pre>
+<p>This makes use of Groovy's intelligent coercion which will coerce a null or a zero integer to the boolean value "<b>false</b>". Reminiscent of C perhaps, but with a little more safety. BUT..</p>
+<p>There was an interesting gotcha here. Well, it got me anyway. I wanted to do the following:</p>
+<pre>
+<font color="#009955">
+..
+pieces.each {
+   if (!it)
+      return 0
+}
+..
+</font>
+</pre>
+<p>To be a bit more Groovy, and use the default closure variable "<b>it</b>". But it won't work here. The reason is that the <b>.each</b> is actually a method that takes a closure as a parameter, (the {} block that follows it) and since closures can be called like methods, the return statement just returns from the closure. In fact, all it will do is just iterate through the loop again. This had me scratching my head for a long time, and it was very annoying indeed. 
+Still, so far, there have been many more things that I have enjoyed</p>
+<p>Lastly, the position can also display itself. This is not necessary if we are using the GUI interface, but of course it is good for debugging.</p>
+<p>To get a primitive (but perfectly adequate) display which looks like this:</p>
+<pre>
+<b>
+---------
+[O][ ][O]
+[O][X][X]
+[X][ ][O]
+
+</b>
+</pre>
+We need: 
+<pre>
+<font color="#009955">
+
+private void display() {
+   println "---------"
+   3.times {y-&gt;
+      3.times {x-&gt;
+         print getXY(x,y)==0? "[ ]" :(getXY(x,y)==COMPUTER?"[X]":"[O]") 
+      }
+      println ""
+   }
+}
+</font>
+</pre>
+<p>You will notice two things here. Firstly, we don't have to do all that blathery "System.out.println" business. Granted, most Java developers can type it in their sleep with a single, multi finger thump on the keyboard, but why do we have to think about System.out? It is horrible.</p>
+<p>Secondly, you will notice that the nested times loops are passing parameters to the closures. This is neat syntax. In this case it would override the  default <b>it</b> variable, and although we only need one, I found using x and y to be more intuitive than using x and it.</p>
+<p>Let's amuse ourselves for a moment by looking at the Java equivalent.</p>
+<pre>
+<font color="#0000FF">
+
+private void display() {
+   System.out.println("---------");
+   for (int y = 0; y &lt; 3; y++) {
+      for (int x = 0; x &lt; 3; x++) {
+         System.out.print(""+ (getXY(x,y)==0? "[ ]"):(getXY(x,y)==COMPUTER? "[X]":"[O]")); 
+      }
+      System.out.println ("");
+   }
+}
+</font>
+</pre>
+<p>Wow. Noisy.</p>
+<p>Let's have a look at some of the highlights of the Game class.</p>
+<h1>The Game Class</h1>
+<p>The Game class's job is to load the list of bad moves, get a move from each player in turn, check that the game hasn't been won, and if it has, store the last, bad move (if the computer lost). The game can be played in text or GUI mode.</p>
+<p>Since we are using Java serialization to persist the bad moves,  we can just use an ObjectOutputStream, so it should look just like the Java..</p>
+<pre>
+<font color="#009955">
+
+private void persistBadMoves() {
+new ObjectOutputStream (new      
+   FileOutputStream(FILE_NAME)).withStream {             
+      it.writeObject(badMoves)
+   }
+}
+</font>
+</pre>
+<p>Except that it doesn't quite. The first thing you probably noticed is that you don't have an Exception declaration or 6 lines of exception handling with an IOException stuffed into a RuntimeException and re-thrown. (Even describing that takes a long time!)  The other thing you might have noticed is that Groovy adds the <b>withStream</b> method to streams which takes a closure as a parameter. The stream is referenced via the default parameter <b>it</b> inside the closure.  withStream is also polite enough to close the stream at the end of the closure code. Ok, I might not be inspired enough to attempt a "poignant" guide to Groovy, but I have to say, when I write which is as simple as the code above, and it does what I want.. it makes me excited, and I think "Cool!".</p>
+<p>To achieve the same effect in Java (i.e. do the same job, not make me think "Cool!") we would have to do:</p>
+<pre>
+<font color="#0000FF">
+
+private void persistBadMoves() {
+ObjectOutputStream oos = null;
+try {
+   oos = new ObjectOutputStream (new FileOutputStream(FILE_NAME));
+   oos.writeObject(badMoves);
+   }
+   } catch (IOException ioe) {
+      throw new RuntimeException(ioe);
+   }
+   finally {
+   if (oos != null)
+      oos.close();
+   }
+}
+</font>
+</pre>
+<p>This time I count 11 lines of Java to 4 lines of Groovy.  If we wanted to do something fancy and really did need to implement the try / catch / finally, we could use another Groovy paradigm, which is the null-safe dereferencing syntax.</p>
+<pre>
+<font color="#009955">
+..
+finally {
+   oos?.close()
+}
+</font>
+</pre>
+<p>The "<b>?</b>" means "call the method if not null". Excellent!</p>
+<h1>The GamePanel Class</h1>
+<p>This is the smallest, simplest class, and makes the most use of the seamless integration with Java. The GamePanel is the view of the MVC pattern. It is also a JPanel, which is to say that it is a  Groovy class which inherits from Java's  javax.swing.JPanel. That is simply done with the declaration:</p>
+<pre>
+<font color="#009955">
+public class GamePanel extends JPanel {
+</font>
+</pre>
+<p>It loads up 3 images which it uses to create the board. Unsurprisingly these are:</p>
+<table>
+<tr>
+<td><img src="../_/https/jeremymeyer.me/images/blog/nought.bmp">, </img></td>
+<td><img src="../_/https/jeremymeyer.me/images/blog/cross.bmp"/> and </td>
+<td><img src="../_/https/jeremymeyer.me/images/blog/board.bmp"/></td>
+</tr>
+</table>
+<p>I went with a hand-drawn look to make it look a little quirky.
+Again we are saved lots of the bother of exception handling by Groovy, so all we need to do to load the images up is : </p>
+<pre>
+<font color="#009955">
+..
+images[0] = ImageIO.read(new File(path+"board.bmp"))
+images[1] = ImageIO.read(new File(path+"nought.bmp"))
+images[2] = ImageIO.read(new File(path+"cross.bmp"))
+..
+</font>
+</pre>
+<p>Since our main game loop is waiting for input from the user, and that input is coming from a mouse event, we have two threads which need to synch with each other. The easiest way to implement this is to make use of  the Java concurrency class SynchronousQueue. A very tidy way of having two threads producing, consuming and blocking. Groovy has no problem integrating with this class.</p>
+<pre>
+<font color="#009955">
+queue  = new SynchronousQueue()
+</font>
+</pre>
+<p>A bit of translation lets us find out which square of the Tic Tac Toe grid is being clicked on, and we can put that integer into the queue.</p>
+<pre>
+<font color="#009955">
+queue.put(((int)((it.x-35)/100) + (int)((it.y-35)/100)*3))
+</font>
+</pre>
+<p>A simple getter calls the take() method which causes the calling thread to block whilst waiting for the integer:</p>
+<pre>
+<font color="#009955">
+
+public int getMove() {
+   queue.take()
+}
+</font>
+</pre>
+<p>There is another delightful construct which I really like.  Groovy has some great short hand syntax for Maps.You can define a map in Groovy by simply saying:
+<pre><font color="#009955">fruit = [a: "apple", b: "banana", p: "plum"]</font></pre>
+<p>Under  the covers, Groovy will use a HashMap or whatever class is most appropriate, but for a small map, this is very useful. 
+Now using the as keyword, I was able to make use of a great little Groovy abstraction:</p>
+<pre>
+<font color="#009955">
+..
+addMouseListener ([
+   mouseClicked: {queue.put(((int)((it.x-35)/100) + (int)((it.y-35)/100)*3))},
+   mouseEntered: {},
+   mouseExited:  {},
+   mousePressed: {},
+   mouseReleased:{}
+   ] as MouseListener)
+..
+</font>
+</pre>
+<p>This looks a bit odd at first, the Java addMouseListener method above is being passed a map of closures, where the map key is the method name of the MouseListener interface and the value is the closure containing the code to be run, i.e. the method body. 
+That is a great abstraction of an interface implementation, a mapping of method names to closures. This is not hugely different from using an anonymous inner class, but after all, we are using these particular closures in an identical way to an inner class, and again, the syntax is cleaner and less noisy than that of Java.</p>
+<p>It is a simple matter just to override an inherited Java method with Groovy code so the paint method of our panel is very similar to what it would be if it was Java, just Groovier.</p>
+<pre>
+<font color="#009955">
+public void paint(Graphics g) {
+   g.drawImage(images[0],0,0,null)
+   model.pieces.eachWithIndex {p,i -&gt;
+   if (p&gt;0) {
+      g.drawImage(images[p],x_coord[i],y_coord[i],null)
+   }
+}
+</font>
+</pre>
+<p>The model to view transformations come from the x_coord and y_coord arrays, so that we can position the images in the right places. 
+The panel is laid out in a JFrame giving us a pleasant looking interface.</p>
+<img src="../_/https/jeremymeyer.me/images/blog/tttgame.png"/>
+<h1>Groovy has a lot more to offer</h1>
+<p>I have deliberatlely not focussed on any of the dynamic features of Groovy for the purposes of this discussion, or on how easy it is to create DSLs, or domain specific languages, but those are the reason you really want to be using a language like Groovy, and once you have enjoyed it, like I have, hopefully you will start exploring it.</p>
+<p>I hope you have fun with the code, or even just playing the game.</p><p>So what do you think? Does this make you consider using Groovy?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=274909.html">12
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=274909&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jeremy Meyer adds a new entry to <a href="../index.html$/blogger=jeremy1.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/jeremy1.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D274909&amp;title=Groovy+AI+Tic+tac+toe&amp;bodytext=A+happy+little+voyage+of+discovery+down+the+Groovy+road.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D274909&amp;title=Groovy+AI+Tic+tac+toe">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D274909&amp;title=Groovy+AI+Tic+tac+toe">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jeremyMeyer.jpg"/></td><td>Jeremy has been designing and developing software for over 20 years, as well as teaching its mastery. He is fascinated by all aspects of architecture, design and development, the philosophical, the psychological and the aesthetic. He currently heads up the training division at hybris Software, a fast growing and very exciting eCommerce company.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Jeremy Meyer. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

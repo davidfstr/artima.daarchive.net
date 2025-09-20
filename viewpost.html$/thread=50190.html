@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Converting a Java Class to a Jini Service</title>
+<meta charset="utf-8"/>
+<meta content="Gregg Wonderly" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#FFCC99" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=greggwon.html">Gregg Wonderly's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=50190.html">Discuss</a> | 
+<a href="mailto:?subject=Converting a Java Class to a Jini Service&amp;body= %0AArtima Weblogs %0AConverting a Java Class to a Jini Service %0Aby Gregg Wonderly %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=50190">Email</a> | 
+<a href="../viewpostP.html$/thread=50190.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=47365.html" title="Where do I start with Jini?">Previous</a> | 
+<a class="sl" href="thread=72823.html" title="Web Services vs Jini">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software and Return on Investment</span><br>
+<span class="ts">Converting a Java Class to a Jini Service</span><br/>
+<span class="as">by Gregg Wonderly</span><br/>
+<span class="pd">May 19, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Recently, while working with a partner to integrate their software into our Jini infrastructure, I employeed a simple pattern which I have used many times.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Deploying a Java Class as a Jini Service</h1>
+For some existing Java applications, there is some class that client applications use to interact with a service of some sort.  That service might be a simple class that is a library of routines for Fast Fourier Transforms, or a more sophisticated application that has a UDP based client/server protocol that is hidden by a wrapper class.  To deploy such classes as Jini services provides a very interesting opportunity to let you distribute updates more readily, as well as start to provide remote services through an implementation that evolves over time.
+<h1>The Pattern</h1>
+The pattern I used involves creating 1 new interface and 2 new classes.  The interface defines a factory method for getting an instance of the Object that we want to turn into a service.  There needs to be an implementation of this factory, and there needs to be a Jini service that deploys either an instance of the factory, or a remote reference to the factory if the server will manage the creation of the objects.  In this case, I chose to deploy an instance of the factory since I had no server side interest in that process.
+<h2>The Interface for the Factory</h2>
+This interface is simple.  It has a single method and is shown below.  The single method, throws Exception because that is what the constructor for the implementation Object throws, and so I needed to make that exception flow through to the caller.
+<p>
+This factory methods exception list needs to take into account current and future requirements for exceptions.  If you are going to serialize an instance of the factory implementation as your service implementation, think carefully about if/when you might choose to make that a remote method call.  Include IOException in the throws clause if you have any possibility of ever making the method call execute remotely.
+<pre>
+package product.access;
+
+import product.parts.*;
+
+public interface ProductFactory {
+	public ProductClient getInstance() throws Exception;
+}
+</pre>
+<h2>The factory interface implementation</h2>
+Next, we need to define a class that will implement the factory interface defined above.  In my case, I am creating a Serialized object as the service implementation, so I have defined the class to implement the interface as shown above, but to also implement the java.io.Serializable interface to allow the factory object to be Serialized.
+<p>
+This implementation just has to use <code>new</code> to create an instance of the class that I want to be the service implementation, and return that.  If you have parameters that you need to pass, then change the factory method definition, and the implementation method to have those arguments so that the user of the factory, can pass any arguments needed.
+<pre>
+package product.access;
+
+import product.parts.*;
+import java.io.Serializable;
+
+public class ProductFactoryImpl 
+		implements ProductFactory, Serializable {
+	public ProductClient getInstance() throws Exception {
+		return new ProductClientImpl();
+	}
+}
+</pre>
+<h2>Creating the Jini Service Implementation</h2>
+Finally, we need to create a Jini service that will register this service with the lookup server.  To do this, I made use of a very convienent class that I support on the <a href="../_/http/startnow.jini.org/index.html">startnow.jini.org</a> project. <a href="../_/http/startnow.jini.org/nonav/javadocs/org/wonderly/jini2/PersistentJiniService.html">PersistentJiniService</a> provides a whole bunch of convenience methods and implementation details that let you not have to worry so much about remembering all the details.
+<p>
+This class definition below shows how I overrode the getExportedObject() method so that it just returns an instance of the Serializable factory class defined above.  This is the object that is sent off to the Lookup Server, and will thus be what the user of the service gets when they lookup the service, and then download the implementation.
+<pre>
+package product.access;
+
+import java.io.*;
+
+import product.parts.*;
+import net.jini.config.*;
+import org.wonderly.jini2.*;
+
+public class ProductFactoryService extends PersistentJiniService {
+
+	public static void main( String args[] ) 
+			throws IOException, ConfigurationException {
+		new ProductFactoryService( args );
+	}
+	
+	public ProductFactoryService( String args[] ) 
+			throws IOException, ConfigurationException {
+		super( args );
+		startService("product", "product.ser");
+	}
+	protected Object getExportedObject() {
+		return new ProductFactoryImpl();
+	}
+}
+</pre>
+<h2>Configuration for the Service</h2>
+Finally, there are the details of the Configuration that is used to deploy the service into the Jini network.  I deployed the service with JRMP and all other defaults that PersistentJiniService provides by using a config file that only contains:
+<pre>
+import net.jini.core.entry.Entry;
+import net.jini.lookup.entry.Name;
+
+project.access.ProjectFactoryService {
+	entries = new Entry[] {
+		new Name( "project" )
+	};
+}
+</pre>
+While there are still a couple of other items that I dealt with for specifics of this application, this is the basic structure of this pattern.  The <code>ProductClient</code> interface and the <code>ProductClientImpl</code> class are the things that change for each application.  There are many variations on this pattern that include the remoting of the factory interface method as I described above.
+<h1>In Summary</h1>
+There's not a lot of magic here.  The tedious parts are covered by the code in PersistentJiniService.  If you have these kinds of tools available to you, you'll find it very quick to do these kinds of projects.  It took me about 30min to devise, implement, test and deploy this solution.  I've fed the ideas back to our partners, and they can hopefully use the concrete example to get a good idea of how they might fully Jini enable their application.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=50190.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=50190&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Gregg Wonderly adds a new entry to <a href="../index.html$/blogger=greggwon.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/greggwon.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D50190&amp;title=Converting+a+Java+Class+to+a+Jini+Service&amp;bodytext=Recently%2C+while+working+with+a+partner+to+integrate+their+software+into+our+Jini+infrastructure%2C+I+employeed+a+simple+pattern+which+I+have+used+many+times.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D50190&amp;title=Converting+a+Java+Class+to+a+Jini+Service">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D50190&amp;title=Converting+a+Java+Class+to+a+Jini+Service">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/gregg.jpg"/></td><td>Gregg Wonderly graduated from Oklahoma State University in 1988 with an MS in COMSCI.  His areas of concentration include Operating Systems and Languages.  His first job was at the AT&amp;T Bell Labs facilities in Naperville IL working on software retrofit for the 5ESS switch.  He designed a procedure control language in the era of the development of Java with similar motivations that the Oak and then Java language development was driven by.  Language design is still at the top of his list, but his focus tends to be on application languges layered on top of programming languages such as Java.  Some just consider this API design, but there really is more to it!  Gregg now works for Cyte Technologies Inc., where he does software engineering and design related to distributed systems in highly available environments.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Gregg Wonderly. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

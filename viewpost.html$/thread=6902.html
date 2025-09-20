@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Java's Real Value Proposition</title>
+<meta charset="utf-8"/>
+<meta content="Brian Murphy" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=btmurphy.html">Brian Murphy's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6902.html">Discuss</a> | 
+<a href="mailto:?subject=Java's Real Value Proposition&amp;body= %0AArtima Weblogs %0AJava's Real Value Proposition %0Aby Brian Murphy %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=6902">Email</a> | 
+<a href="../viewpostP.html$/thread=6902.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Qu'est Que C'est? ... Fa Fa Fa Fa</span><br>
+<span class="ts">Java's Real Value Proposition</span><br/>
+<span class="as">by Brian Murphy</span><br/>
+<span class="pd">July 7, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In his essay titled, "Java's Cover", Paul Graham
+explains why he thinks Java is a "stinker". 
+Although some of the points made are valid,
+there are many misconceptions that are unfair or outright
+wrong, and need to be corrected. More importantly, 
+Dr. Graham seems to miss the real value propostion of
+Java as a language and platform.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+A few weeks ago, in his Artima blog, my buddy John McClain told us about an 
+interesting essay by Paul Graham (located at 
+<a href="../_/http/www.paulgraham.com/hp.html">
+<code>http://www.paulgraham.com/hp.html</code></a>)
+in which hackers (in the true definition of "hacker") are compared to painters.
+Well, anything John tells me to read, I read; because John has never steered 
+me wrong. Heck, if it weren't for John, I'd probably never read Slashdot. 
+Anyway, after reading the essay, I was impressed enough not only with the 
+content of the essay, but also with the style and layout of Dr. Graham's web 
+site, that I started rooting around the site; looking for other interesting 
+things to read that might be there. Now, anyone who knows me is probably 
+thinking, "That must be some site!" 
+<p>
+You see, I've always been more of a 'pencil-and-paper' Math geek kinda guy, 
+rather than a point-and-click-surf-the-web kinda guy. I guess I probably
+wouldn't fit in with the hackers. Although, like a lot of hackers, I've taken 
+only one CS course in my life. That was in high school, a long time ago.
+I was so turned off by the processes and formalisms (like flow-charting)
+that were imposed on us that I swore I'd never take another one. But I 
+do like to think long and hard about a program, and even make rough design 
+sketches (in pencil of course), before I start pounding on the keyboard.
+And according to the author, that makes me not a hacker; I think he's 
+probably right. I guess that makes me more of a ... well, a mathematician,
+posing as programmer. 
+<p>
+And the author is right about another thing in that first essay: 
+mathematicians do think they're smarter than everyone else. And this used 
+to drive me crazy in grad school. With a few notable exceptions, most of 
+my professors and peers in grad school had quite a high opinion of their 
+own abilities. I used to wonder, "How can people who wear their pants up 
+around their chest possibly be smarter than the rest of us?" Of course, 
+that kind of attitude always got me in trouble with my professors and 
+office mates. So I guess I was a misfit in the world of mathematics, just 
+as I seem to be a misfit in the world of computers ... but I digress.
+<p>
+So, I don't surf that often, unless it's in the ocean. And I've not been 
+known to root around anyone's web site, unless it's for free (as in free 
+speech) software or free music; you know, the important stuff .... but 
+again, I digress. The point is, the quality of the first essay, and the 
+quality of the site where it's hosted, caused me to discover another 
+essay by Paul Graham that people who visit Artima might find interesting 
+as well. That essay is titled, "Java's Cover", and is located at, 
+<a href="../_/http/www.paulgraham.com/javacover.html">
+<code>http://www.paulgraham.com/javacover.html</code></a>.
+<p>
+Like the first essay, this one is very well written, and makes a lot of 
+valid points that really hit the nail on the head. But there were some things
+the author said not only about Java, but also about Sun in general and its
+handling of Java in particular, that I happen to disagree with. At first, 
+I thought I'd send Dr. Graham an e-mail containing the appropriate 
+corrections. "Yeah", I thought. "He'll be so grateful that someone he's 
+never met is nice enough to tell him all the things he's wrong about. 
+Yeah, that's the ticket." But then in a brief moment of sanity I realized 
+what an idiot I was. And besides, I'd never be able to bring myself to hit 
+the 'send' button anyway; too much of a coward. So I was faced with a small 
+dilemma. I felt that it was important that someone stick up for Java and 
+Sun, but I wanted to remain somewhat anonymous. And then it came to me. 
+I figured I could write up a reply and post it at Artima; who's going to 
+read what I have to say there anyway? And if anyone does happen to stumble 
+across my ramblings, I'm among friends, right? .... right!?  So here goes 
+nothin'. 
+<p>
+Dr. Graham introduces his essay with a caveat in which he says he's not
+really writing about Java, but about hacker's radar. If that's true, then
+I suppose my comments below should be directed more at the misconceptions
+held by the hackers, rather than the author. But when you read the essay I
+think you'll probably come to the same conclusion I did:  even though the 
+author makes claims to the contrary, he himself has some serious, critical 
+biases against both Java and Sun.
+<p>
+Some of Dr. Graham's criticisms of Java in particular, and Sun in general,
+are actually well-founded. And I'll try to point them out; hopefully, 
+without getting myself into too much trouble with my employer. Fortunately
+for me, Sun has always been - and continues to be - an "engineer's company",
+as opposed to one of those companies where fear-and-loathing of management
+runs rampant. This has allowed for quite a bit of self-examination and even 
+self-criticism. The reason for this, I believe, is because of leaders like 
+Scott McNealy and Bill Joy. Because of people like McNealy and Joy, as 
+well as other technical leaders like Rob Gingell, critical review without 
+retribution has always been part of the culture at Sun.
+<p>
+Prior to joining the company, I always had a lot of respect for Sun. And
+I figured that upon joining Sun some of that respect would decrease once
+I saw what goes on behind closed doors. This is fairly typical of most 
+successful companies; everything the public sees generally has some kind
+of "spin" on it. So I was pleasantly surprised when I joined Sun and found
+that for the most part, its a very well-intentioned company that's just
+trying to build good stuff; where the company will win or lose based on
+the merits of the stuff we create, not on "out-marketing" the competition.
+Of course, as Sun has grown, it certainly has acquired its share of 
+self-serving, political "weenies" (the technical term), but those folks 
+seem to be more than offset by the many good people still at Sun. Which 
+brings me to my first reply to Dr. Graham's essay. 
+<p>
+In the essay, Dr. Graham seems to credit all of Java's popularity on nothing
+but an aggressive marketing strategy that's laced with ulterior motives
+marked by a desperation caused by the current economy. Consider some of
+the following reasons Dr. Graham gives for Java being -- as he puts it -- a 
+"stinker":
+<p>
+<ul>
+<li>"It has to be energetically hyped."
+    <li>"It has ulterior motives. ... the reason we hear about Java all the
+         time is not because it has something to say about programming 
+         languages. We hear about Java as part of a plan by Sun to undermine 
+         Microsoft."
+    <li>"Java .... happens to be controlled by a giant company. So the 
+         language is likely to have the same drab clunkiness as anything 
+         else that comes out of a big company."
+    <li>"Its daddy is in a pinch. ... If Sun runs into trouble, they could 
+         drag Java down with them."
+  </li></li></li></li></ul>
+<p>
+The statements above seem to paint the following picture:
+<p>
+<ul>
+<li>Java is so big, bad, clunky, and useless that it has to be "sold"
+        to developers like a good-for-nothing used car to an unsuspecting 
+        customer.
+   <li>Sun is some kind of huge, evil company that has complete control over
+       Java and its future; and has devised some kind of sinister plot to
+       use Java to destroy its competitors.
+  </li></li></ul>
+<p>
+I think Dr. Graham has given Sun way too much credit. First, Dr. Graham
+doesn't seem to understand that there are other companies (IBM and BEA 
+just to name two) that exert an incredible amount of influence and control 
+over Java. I know this from personal experience. My group's work has been
+directly and negatively affected by that influence; trust me, it's quite 
+formidable. These companies make a lot more money off of Java than Sun does. 
+They also are responsible for quite a bit of the hype (as well as the 
+"clunkiness") that Dr. Graham is blaming on Sun. Granted, Sun has 
+hyped -- and continues to hype -- Java, but to place all the blame on 
+Sun is simply unfair. And then to say that Java has nothing to say, and 
+that Sun is simply using it to undermine Microsoft is just plain ludicrous. 
+Such a statement contains the same sort of arrogance that Dr. Graham seems 
+to be crediting to Sun.
+<p>
+To support my rebuttal above, I think it's important that I say a few words
+about Scott McNealy. No matter what you may think about Scott McNealy and his 
+antics in the media, my take on him is that he really is a true leader who 
+believes deeply in technology. He's definitely not your typical CEO who just 
+wants to make a lot of money while destroying his competitors along the way. 
+I truly believe he wants to create great technology. And I believe he thinks 
+there's more than enough money to go around for other companies who also want 
+to create great technology. 
+<p>
+At JavaOne 2002, I was listening to a keynote given by McNealy. I was sitting 
+next to a colleague who had never heard him speak before. Her prior impression 
+of him was the typical one: brash, anti-MicroSoft, a lot of hype, a typical 
+CEO. After listening to the keynote, she turned to me and said, "Wow, he 
+really wants to save the world, doesn't he?" And I thought, "She's right.
+He does seem to care more about good technology than about just making 
+money."
+<p>
+Unlike other CEO's I've encountered, McNealy seems to understand that he's 
+not smarter than everyone else; he actually listens to the techies he has 
+advising him (people like Bill Joy and Rob Gingell). Unfortunately, as 
+companies grow, it gets harder and harder to innovate because "the Bozo factor"
+begins to take effect (a term coined by McNealy himself). The Bozo factor 
+occurs when a company grows so fast it can't be as selective as it could 
+be in the early days. Mediocre employees, exemplified by "weenie" middle 
+managers, begin to leave the sinking ships of failing competitors looking 
+for a safe place to hide and avoid risk. As more and more of these 
+well-meaning but misguided souls join the successful company, progress 
+and innovation becomes more difficult to achieve because information 
+flow is prevented in an effort to avoid risk at all costs. 
+<p>
+This is why I am fairly certain that Sparc and Java would not exist today if 
+they had been proposed at a company like IBM or HP or Xerox. At that time, 
+those companies were much larger than Sun, and were infested with folks 
+unwilling to risk violating the status quo. Paraphrasing Dr. Graham in his 
+first essay noted above, '... startups win ... big companies want to minimize 
+risk at all costs'. As Dr. Graham says, "Big companies win by sucking less 
+than other big companies." So I believe Dr. Graham would concur with my 
+supposition about Sparc and Java. And I think it's important to remember that
+when Sparc was proposed, and certainly when Java was proposed, Sun was not
+a startup; although McNealy continued to instill the startup mentality.
+Oh, and it's not just large companies that lack vision; people in the media 
+seem to suffer from risk aversion as well. I can still remember the 
+dire predictions of doom for Sun in the "San Jose Mercury News" that were
+motivated by Sun's decision to switch to Sparc. 
+<p>
+Which brings me to Dr. Graham's criticisms of Java itself. Although Dr. 
+Graham might agree with me that Java could not have survived -- and certainly 
+could not have thrived -- at many other companies other than Sun, he 
+certainly doesn't share my respect for the technology as a programming
+language or a platform. Before I respond to some of his criticisms of Java
+though, I should probably say a few words about my own views on programming
+languages; so that you can better put my words into perspective.
+<p>
+As I said above, I'm certainly not a hacker. I have a lot of respect for
+the hacker culture; and I wish I were good enough to be a part of that
+culture ... sigh ... but I know the limitations of my own abilities. But
+it's important for you to understand that I have programmed; whether it
+was good or bad programming is a matter of opinion. Additionally, I'm not 
+a "software snob". You probably already know what I mean by that term. A 
+software snob is one of those people who think their way is the only way; 
+they're generally arrogant and condescending, and they almost always dismiss 
+anyone who doesn't share their "religious" views. Although it could be a 
+particular technique or pattern for solving a problem, software snobs are 
+often characterized by a belief in a particular programming language. The 
+first time I encountered true software snobbery was around the time OO 
+techniques in general, and C++ in particular, were becoming popular with
+the "unwashed" masses. Prior to that, it just seemed like random encounters 
+with arrogant, condescending people (although in Math grad school, such 
+encounters were far more common than random). 
+<p>
+I can remember sitting in design reviews for systems that had hard real-time
+signal processing requirements. Because the system was a large, distributed
+system consisting of components involved in non-real-time resource allocation
+and command and control, as well as real-time signal acquisition and analysis,
+some parts were written in assembler, some were written in C and C++, and 
+some were written in (gasp!) Ada. The assembler and C folks were hard core 
+signal processors -- FFT's, power spectrums, low and high pass filters,
+sampling, aliasing, that sort of thing. Although the C++ and Ada folks would 
+gang up on the signal processors ("Assembler and C is for neanderthals. Our 
+methodologies are better than yours."), the real fun was in watching the 
+religious wars between the C++ folks and the Ada folks ("My language is 
+better than yours. You idiot! That's not object oriented!") 
+<p>
+In the end, all of the posturing and all of the animosity was just so
+unnecessary. The components that required assembler had incredibly high
+throughputs that could be achieved only with specially tuned assembler code.
+The C and C++ components didn't need assembler, but had certain requirements
+that Ada couldn't handle. And everything else had to be written in Ada
+because the customer required it. (Yes, I agree with Dr. Graham. The fact 
+that the DoD likes Java has me a bit concerned too). So what was there to 
+argue about? I can't tell you how many meetings I sat through listening to 
+people whining about the inadequacies of the others' language of choice. It 
+was a very interesting study in human nature. People seem to defend 
+their turf and respective belief systems like they would their own 
+children from an attacker.
+<p>
+Looking back on that experience and my participation in the project, I
+recall that I wasn't real particular about what language I was using. I was 
+always much more interested in the problem that was being solved, and how 
+to solve it. My interest in the language that was used to implement the 
+solution was restricted to whether or not the language could support the 
+solution. So I guess you could call me a "software slut" rather than a 
+snob. I'd program in anything as long as it helped solve the problem. 
+Fortunately for me, I had to program in all four of the languages used 
+on that project. Except for C, I had never previously programmed in any 
+of them, and I found all four to be interesting and valuable. They each 
+had their positive and negative aspects, and they each taught me something 
+that I didn't know previously.
+<p>
+So when all is said and done, my interest has always been in the problem
+at hand, not the language. Of course, it's great if the language you choose
+(or more likely, that's been chosen for you) is a language that you already
+know and love, but since that doesn't happen very often, I find that I
+have a lot less stress than the people who constantly grouse about being
+forced to compromise their artistic integrity. Which leads me to the whole
+point of this posting. Dr. Graham has some serious criticisms of Java
+as a language; some of them are deserved. But most of his criticisms sound
+a lot like the sort of closed-minded snobbery I experienced on the project 
+described above.
+<p>
+I've programmed in a lot of the languages Dr. Graham claims were developed
+for the masses (the so-called "mediocre programmers"); languages like Fortran,
+C++, and (gasp!) Ada. I've also programmed in a couple of the languages that
+Dr. Graham calls the "good languages"; C and Perl for example. While I have 
+to admit that I liked programming in both C and Perl, and I can see why 
+there might be some religious fervor for each, I'm not sure I would 
+(or could) use either of them to do what I'm doing now with Java. You see, 
+I need to move objects around the network.
+<p>
+Reading Dr. Graham's essay made me think back on all the projects I've 
+worked on, the problems those projects addressed, and the languages used 
+to implement solutions to the problems. This caused me to come to the 
+following realization. Throughout my career the languages I used always 
+changed from project to project, but the problem being solved has always 
+fundamentally remained the same. Whether the problem domain was command 
+and control, signal acquisition and analysis, transport and robotic control, 
+telecom middleware, etc., the problem ultimately was always a distributed 
+problem that required disparate components on remote systems to communicate 
+and cooperate with each other. Being able to move objects allows one to
+better build such systems. And when building such systems, I also need 
+distributed agreement and distributed security. Java either provides 
+these things for me, or it allows me to provide them.
+<p>
+I realize that this aspect of Java might get lost in the marketing hype 
+surrounding Java; especially when all that one looks at is the cover. And
+I have to admit that after attending the most recent JavaOne that it appears
+that Dr. Graham is right about another thing. The "committee" Dr. Graham
+refers to that controls Java from Sun's perspective has decided to 
+de-emphasize the code mobility capabilities of Java and instead add 
+"features" that will make it even more attractive to the masses. (By the way, 
+that so-called "committee" is a lot smaller than you'd expect. Some might 
+even say that it's really just one or two people. Of course, this doesn't
+include all the people from outside of Sun that are driving Java). 
+Nevertheless, when you open the "book" and look inside, you see that 
+(in my opinion of course) Java's true strength lies in its ability 
+to move code; not in generics or meta tags, or built-in XML parsers, etc.
+<p>
+For years the hype around Java was "Write Once, Run Anywhere" (WORA); for 
+some it still is. And it was a simple and easy-to-understand message. But 
+people -- even some of Sun's own people -- didn't see what WORA actually 
+brought to the table. WORA allows for code mobility because it places 
+the <b><i>agreement</i></b> at the appropriate place in the system -- in 
+the language and in the interfaces you define. 
+<p>
+A lot of people (again, even some Sun people) seem to think that the term
+"code mobility" means that you write and test an application on one system,
+and then zip it up, "walk it over" to another system, install it, and run
+it on that other system. They think that that is what WORA brings to the
+table. But in my opinion, that is not what code mobility is. To me, code 
+mobility is when an application already running on one system can receive 
+and run (securely and without prior knowledge other than interfaces) another 
+piece of code from (a proxy to) an application that's running somewhere 
+else. This, in my opinion, is what makes Java special. And this is why I
+use (and will continue to use) Java.
+<p>
+And so it's important to be careful when judging a book or language by its 
+cover. Since a lot of people have no interest in problems in distributed 
+computing, they overlook this important aspect of Java. They view Java as 
+"just another language", which may or may not stand up well against their 
+particular language of choice, depending on the type of problem they're 
+trying to solve. I happen to have a particular interest in distributed 
+computing. I believe Java addresses that problem better than any other 
+language I've used so far. I don't use Java because of marketing or hype 
+or because it's "pseudo-hip" or because everyone else is using it. I use 
+Java because it allows me to move code.
+<p>
+Dr. Graham says, "From what little I know about Java, there seem to be 
+a lot of protocols for doing things." On the contrary, Java actually 
+allows us to free ourselves from such dependencies (see "The End of Protocols"
+by Jim Waldo, at 
+<a href="../_/http/developer.java.sun.com/developer/technicalArticles/jini/protocols.html">
+<code>http://developer.java.sun.com/developer/technicalArticles/jini/protocols.html</code></a>).
+As I said above, whenever a distributed system is defined, generally some 
+form of agreement must occur some place in the system. It might be that your 
+component and some remote component must agree on the structure and meaning 
+of a certain set of messages that are passed back and forth. Or it might 
+mean that a special XML parser has to be defined and installed on every 
+node in the system. And it might mean that in either case, when a change 
+is necessary, a new parser must be installed everywhere; or every component 
+might need to be brought down, re-compiled, and re-started to accommodate 
+new messages. I think the strength of Java is that it allows the placement 
+of the agreement in such a system to be in what I consider to be the 
+<i>right</i> place. The agreement doesn't have to be in the message protocols 
+or the parsers. Java allows the agreement to be in the language itself and 
+the interfaces.
+<p>
+Once you agree that your components are written in Java, and you agree upon, 
+and define, your remote interfaces, everything else is local and private; 
+all communication protocols are private details of the implementation. You 
+don't have to get any third parties to agree to the meaning or structure 
+of your messages, or to install any parsers; they only have to agree to 
+use Java, and to honor the contract reflected in the interfaces that make 
+up the system.
+<p>
+And so this is why I think Java is not just another language. This is what 
+I think is special about it; what its real value proposition is. And why it's 
+not just for the masses. Java provides a well-defined system for contractual 
+agreement that enables the movement of code; ultimately resulting in an 
+elegant mechanism for building truly distributed systems. As John McClain 
+puts it, "Java allows you to move objects onto the network."
+<p>
+<p>
+Well, if you've made it this far, then I have to admit, I'm impressed. 
+Most people, walk away after the first or second sentence. Although
+I seem incapable of making my points in any kind of short, concise, or 
+coherent manner, I guess the main points I'm trying to make are that Sun
+really isn't an evil company, Java really isn't a bad language that's
+good only for the "dumb programmer", and the language one uses is just 
+a tool used to solve a problem. The language isn't the end in and of
+itself; it shouldn't take precedence over the problem it's intended to 
+solve.
+<p>
+Just because you love a particular language, because it has all the 
+"right" features, and it's got the right amount of elegance, deserving 
+of a programmer of your stature, it doesn't mean that that language is 
+appropriate for any and all problems. If I'm a carpenter who needs to
+cut off the end of a board, I certainly can use my favorite hammer
+to pound on the end of the board until it breaks off. But that particular
+problem would probably be better solved if I used my saw; even though 
+I really like my hammer a lot more than my saw, and even though I usually
+use my hammer to solve most of my problems. Sometimes my saw is the
+appropriate tool to use to solve the problem at hand.
+<p>
+So I would ask Dr. Graham not to write off Java so quickly. I believe
+it does have value; it does address certain problems better than most other
+languages. It just may be that he doesn't know what those problems are.
+And it may be that IBM and BEA (and even Sun) doesn't know what those
+problems are either. But a boy can dream, can't he?
+<p>
+Thanks for having patience with me.
+<p>
+Regards,<br/>
+Brian<br/>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6902.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=6902&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Brian Murphy adds a new entry to <a href="../index.html$/blogger=btmurphy.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/btmurphy.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6902&amp;title=Java%27s+Real+Value+Proposition&amp;bodytext=In+his+essay+titled%2C+%22Java%27s+Cover%22%2C+Paul+Graham%0D%0Aexplains+why+he+thinks+Java+is+a+%22stinker%22.+%0D%0AAlthough+some+of+the+points+made+are+valid%2C%0D%0Athere+are+many+misconceptions+that+are+unfair+or+outright%0D%0Awrong%2C+and+need+to+be+corrected.+More+importantly%2C+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6902&amp;title=Java%27s+Real+Value+Proposition">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6902&amp;title=Java%27s+Real+Value+Proposition">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/brianmurphy.jpg"/></td><td>Since joining Sun in 1997, Brian Murphy has been a member of the Jini Network Technology development team, contributing in various capacities to each of the releases of the Jini Starter Kit. In the early days, Brian was a member of the team that designed and implemented the Jini Lookup Service. He was the technical lead on both the 1.1 and 1.2 releases of Jini, was one of the technical editors of "Core Jini", and authored a number of chapters of the 2nd edition of "The Jini Specifications". Prior to joining Sun, Brian worked in the telecommunications, robotics and defense industries, developing various distributed and client/server systems, as well as developing algorithms in the field of digital signal processing.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Brian Murphy. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>SOA, 5 Years In</title>
+<meta charset="utf-8"/>
+<meta content="Josh Long" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=joshlong.html">Josh Long's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=290352.html">Discuss</a> | 
+<a href="mailto:?subject=SOA, 5 Years In&amp;body= %0AArtima Weblogs %0ASOA, 5 Years In %0Aby Josh Long %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=290352">Email</a> | 
+<a href="../viewpostP.html$/thread=290352.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=248983.html" title="Scalability Is Not An Architectural Capability Anymore">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Full contact Java Programming</span><br>
+<span class="ts">SOA, 5 Years In</span><br/>
+<span class="as">by Josh Long</span><br/>
+<span class="pd">April 26, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A look at some of the core values espoused by SOA in Thomas Erl's fantastic "Service Oriented Architecture: Concepts, Technology and Design," 5 years later.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>SOA, 5+ Years on </h1>
+<p>
+One of my favorite books is Thomas Erl's  "<a href="../_/http/www.amazon.com/Service-Oriented-Architecture-SOA-Concepts-Technology/dp/0131858580/index.html">Service Oriented Architecture: Concepts, Technology, and Design</a>" It was published in 2005 (5 years ago! Time flies!), right at the beginning of the SOA craze. As we know, <a href="../_/http/apsblog.burtongroup.com/2009/01/soa-is-dead-long-live-services.html">SOA died</a> in January 2009. SOA got  very hot as a buzzword and it became very difficult to find a clear, guiding description of the tenants that embody SOA. We all knew that "SOA" meant loose, open systems. But what does that mean? Who knew? SOA became a buzzword. It became a vacuous, nebulous idea that nobody quite understood, but everybody wanted. It was born of the then nascent web services paradigm.  
+</p><p>
+The book offers a pretty good rubric of   the  values espoused by SOA, many of which I think are right on, and generic enough to be useful, and timeless. I reprint them here:
+</p> <ol><li>
+<b>loose coupling:</b> services maintain a relationship that minimizes dependencies and only requires that they retain an awareness of each other </li>
+<li>
+<b>Service Contract</b> : services adhere to a communications agreement, as defined collectively by one or more
+ services descriptions and related documents </li><li>
+<b>Autonomy</b>: services have control over the logic encapsulated </li><li> 
+abstraction: beyond what is describe in the service contract, service hide logic from the outside world </li><li>
+<b>reusability</b>: logic is divided into services with the intention of promoting reuse </li><li>
+<b>composability</b>: collections of services can be coordinated and assembled to form composite services </li><li>
+<b>Statelessness</b>: services minimize retaining information specific to an activity </li><li>
+<b>discoverability</b>: services are designed to be outwardly descriptive so that they can be found and assessed via available discovery mechanisms </li></ol>
+<p>
+
+The book itself then goes on for around 800 pages and details the strategic business and architectural requisites to meet these objectives, these laudable principles, along with technical elaboration. It  spends an agonizing 17 chapters dealing with these objectives in terms of the various Web service specifications which - even then, 5 years ago - were termed "WS-*"! Sure, hindsight's 20/20, but anytime you have to write a book on an umbrella technology platform so expansive that it can be meaningfully referred to as WS-&lt;wildcard&gt;, that should be a clue as to the viability of that platform. Clearly, some of the technologies are no longer relevant, or stagnant. 
+
+</p><p> 
+For example: does anyone use <a href="../_/http/en.wikipedia.org/wiki/WS-Notification/index.html">WS-notifcations,</a> or <a href="../_/http/www.ibm.com/developerworks/webservices/library/specification/ws-eventing/index.html">WS-eventing,</a> or <a href="../_/http/msdn.microsoft.com/en-us/library/aa480724.aspx">WS-EventNotification</a>? Would you perpetuate the decision if you had it to do over again in light of open messaging systems like <a href="../_/http/www.amqp.org/confluence/display/AMQP/Advanced+Message+Queuing+Protocol/index.html">AMQP</a> and <a href="../_/http/stomp.codehaus.org/index.html">STOMP?</a>
+</p><p> 
+The book doesn't list explicitly list the WS-* initiatives as being a key part of SOA in the rubric above, but reading between the lines, "open systems" certainly didn't mean DCE, CORBA or EJB! The content covering on the various web service specifications seems not just a little outdated today, of course, but it's worth noting that it was written before we had a clearer idea of <a href="../_/http/en.wikipedia.org/wiki/Representational_State_Transfer/index.html">RESTful</a> architectures. At the time, the web services stack du jour was indeed WS-*, so that's fine. Nowadays, you might argue that - in the world of mashups, RIA and more - SOA is as much about simpler RESTful services as it is about WS-*. So, we might as well specify "web services" as part of SOA. The implication is that - even in a federated, enterprise service tier, you're going to have heterogeneous consumers. 
+</p><p> 
+Another one that could afford a second look is "discoverability." Discoverability never really happened.. not in a real way. It's something that has proven at best a secondary concern. I can only speculate as to why: do services tiers not grow to the size that might require a directory? Is it possible that the much vaunted, rapid free-for-all, dynamic consumption of third party services supposedly brokered only by an reflective scan of the services capabilities is not here, yet? The only major specification that I know of is UDDI, which is long since irrelevant today. Even major, initial proponents of the convoluted specification have long since shutdown their registries. There's a renewed interest, of late, in more general-purpose service registries (called SOA registries today, or service repositories, or SOA repositories). One example is <a href="../_/http/www.mulesoft.org/display/GALAXY/Home/index.html">MuleSoft's Galaxy</a> offering, which enables precisely this. It's worth mentioning that this isn't a standard, though, de-facto or otherwise. 
+</p><p> 
+I think we can generally agree that loose coupling is a reality, and an unarguable win. Reuse is, as always, a win. </p><p> 
+
+Service composition is... not quite what it should be, yet. There are some problems. First, composition is not the same as reuse. Reusing a generic service is quite different from building a facade on top of a series of other services with the intent of providing a more granular result. In fact, we have patterns to describe just such an arrangement, like facade. If the services are of different protocols and platforms, then these kinds of "compositions" start falling into the realm of <a href="../_/http/en.wikipedia.org/wiki/Enterprise_service_bus/index.html">Enterprise Service Buses</a> - they become an integration problem. An ESB consumes the other services and fronts them to the client, providing an appropriate, aggregate result. </p><p> 
+Another barrier to composition (and reuse, for that matter) are transactional semantics. If the services being used are "read-only," as they often are in REST services, then there's no need for concern. If the services mutate state, then it is important to have some sort of compensation mechanism in place. This leads to thinking in terms of units of works, and "compensatory transactions." Often, services that compose other services are referred to as orchestration services, sitting right above the services tier (the top block on the architectural "tiers" cake). Orchestration - in practice - means <a href="../_/http/en.wikipedia.org/wiki/Business_process_management#BPM_technology/index.html">BPM and workflow,</a> which in turn means state. You can't "undo" a service invocation on the client if you don't "remember" what the original state was. A workflow engine keeps that state for you, and lets you model compensatory processes naturally. So, composition is rarely as simple as calling two methods from one method. </p><p> 
+
+Depending on the volatility of the origin services, a lot of work is required of the client to resilient to failures in those services. Additionally, because web services are by their very nature distributed and thus out-of-process, you can make no guarantees about their availability. One workaround to volatile, networked services is to build in retry logic, but this presumes that service calls are indempotent. Another workaround is to build in temporal decoupling and queue requests against the target service. This notion - that you can dampen the delays caused by slower upstream services by using queues - is core to the stage event driven architectural (<a href="../_/http/www.eecs.harvard.edu/~mdw/proj/seda/index.html">SEDA</a>) pattern. 
+</p><p> 
+Statelessness is a very powerful concept, but, as we've just discussed, it can sometimes be at odds with other tenants and goals. An itinerary based routing (<a href="../_/http/msdn.microsoft.com/en-us/library/ee236651(BTS.10).aspx">IBR</a>) ESB - most of them are IBR - imposes, and infers, state on otherwise stateless services. You describe an integration flow in terms of correlations: "when message X emerges from queue A with correllation key XK, send to service Y and encode the correllation key as a request parameter" That state is thus decentralized. Any single operation is O(1) time and there's no "memory" - each service forgets as soon as it has responded. We infer process state simply by correlating. Individual services are stateless, but clearly state is important. Additionally, because we eschew keeping state in the bus (there's no centralized process manager), each invocation re-encodes the state we need, which - strictly speaking - is wasteful. </p><p> 
+
+Service contracts and loose coupling are occasionally at odds with each other: a sufficiently descriptive service contract will prescribe enough that it can't be useful to some clients. 
+</p><p> 
+On the whole, REST negates a lot of the issues I raise here. With a RESTful architecture there are only 4 ways to do anything (GET, PUT, POST, DELETE) and the mechanism to do them is ubiquitous, so it's reusable. RESTful composition is still subject to the same issues I've described earlier, but discoverability gains some ground: just bookmark the URL! REST services are based on HTTP, and so they are stateless. REST services are loosely coupled because REST services can be versioned, and thus no client should ever be required to change. The payload of requests and responses can be negotiated at exchange time between the client and the  service, so there is also no reason it couldn't be reused with ease by multiple clients. </p><p> 
+
+Looking forward, I think the architectural lessons learned are valuable, and continue to be important in todays architectures. SOA provided us with a mechanism to build singly-focused, reusable services in a generic, adaptive fashion. As we move into the world of cloud - which is to network operations what SOA was to distributed computing - I think these lessons will be even more important. </p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=290352.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=290352&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Josh Long adds a new entry to <a href="../index.html$/blogger=joshlong.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/joshlong.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D290352&amp;title=SOA%2C+5+Years+In&amp;bodytext=A+look+at+some+of+the+core+values+espoused+by+SOA+in+Thomas+Erl%27s+fantastic+%26quot%3BService+Oriented+Architecture%3A+Concepts%2C+Technology+and+Design%2C%26quot%3B+5+years+later.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D290352&amp;title=SOA%2C+5+Years+In">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D290352&amp;title=SOA%2C+5+Years+In">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/joshlong.jpg"/></td><td>Josh Long (<a href="../_/http/www.joshlong.com/index.html">http://www.joshlong.com</a>) is an enterprise architect, consultant, and author. When he's not hacking on code, he can be found at the local Java User Group or at the local coffee shop. Josh likes solutions that push the boundries of the technologies that enable them. His interests include scalability, BPM, grid processing, mobile computing and so-called "smart" systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Josh Long. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

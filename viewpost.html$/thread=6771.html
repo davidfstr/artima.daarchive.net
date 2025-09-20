@@ -1,0 +1,1071 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Teaching OO:  Putting the Object back into OOD</title>
+<meta charset="utf-8"/>
+<meta content="James O. Coplien" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cope.html">James O. Coplien's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6771.html">Discuss</a> | 
+<a href="mailto:?subject=Teaching OO:  Putting the Object back into OOD&amp;body= %0AArtima Weblogs %0ATeaching OO:  Putting the Object back into OOD %0Aby James O. Coplien %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=6771">Email</a> | 
+<a href="../viewpostP.html$/thread=6771.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+<a class="sl" href="thread=72425.html" title="East of West and West of East: Engaging Other Academic Cultures">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software: The Next Generation</span><br>
+<span class="ts">Teaching OO:  Putting the Object back into OOD</span><br/>
+<span class="as">by James O. Coplien</span><br/>
+<span class="pd">July 5, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Almost everyone who teaches object orientation uses
+the class as a fundamental building block.
+Such an approach misses the central point of object
+orientation:  the objects themselves, and what they
+portend for flexibility and effective design.
+This weblog is a case study in teaching object orientation.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Welcome</h1>
+<p>
+Welcome to my new blog!
+It's a pleasure to be here among such good company.
+This is my first blogging foray, and I'm looking forward
+both to exploring this new medium and to using the medium
+for exploring my own learnings together with the rest of you.
+
+<p>
+It may be good to start with introductions.
+I am an Electrical Engineer and Computer Scientist
+by training, having received degrees in these
+fields in 1977 and 1979, respectively.
+I capped off my education with a Ph.D. three
+years ago.
+Most of my work career has been at Bell Laboratories,
+where I started in 1979.
+I spent my early Bell Labs years on a large
+development project and then moved on to a technology
+transfer organization, where I spent more than a decade
+doing early work with the C++ language,
+with distributed workstations,
+and version and configuration management.
+When I left Bell Labs in 2001, I had been in the
+Research area for about 10 years.
+Most of my research focused on software architecture
+(including the foundational work on software patterns) and
+organizational structure.
+
+<p>
+I am a long-time critic of some of the value systems
+and practices of academics in general and of academic
+computer science in particular.
+I have worked over the past decade to gain
+first-hand credibility with academic culture, both
+to further my understanding of the issues and to
+gain the credentials that might one day allow me
+to change the field from the inside.
+That's where I am now, and that's what I do.
+I teach computer science at
+<a href="../_/http/noctrl.edu/index.html">North Central College</a>,
+and also teach discrete mathematics and English composition.
+I am also the
+<a href="../_/http/www.vub.ac.be/e-brief/pnl/archief/270103/onderwijs.html">Vloebergh
+Professor of Computer Science</a>
+at <a href="../_/http/www.vub.ac.be/index.html">Vrije Universiteit Brussel</a>
+and am a
+<a href="../_/http/www.co.umist.ac.uk/research/visiting_professors.htm">Visiting
+Professor</a> of 
+<a href="../_/http/www.co.umist.ac.uk/index.html">Computer Science</a> at
+<a href="../_/http/www.umist.ac.uk/index.html">University
+of Manchester</a> (formerly UMIST).
+
+<p>
+I plan on using this space to reflect on experiences
+I haven't yet committed to writing, and particularly
+my recent experiences as an educator.
+I frequently admonish my English composition
+students with Forster's saw:
+"How can I know what
+I think until I see what I say?"
+I hope that mindset serves me well here,
+and that it provides you an opportunity to challenge
+your worldviews and to respond in your own
+pen with your own thoughts.
+
+<h1>Teaching Design</h1>
+<p>
+At the
+<a "="" href="../_/http/www.acm.org/sigplan/oopsla/oopsla99/2_ap/2f_edusym.html">OOPSL
+A  
+1999 Educators' Symposium</a>, I emphasized
+the importance of teaching design in undergraduate computer science
+curricula.
+I'm trying to put my money where my mouth is now that
+I'm in that position.
+I taught object-oriented analysis and design this term.
+It became an interesting opportunity because it forced
+me to think about what's <i>really</i> important about objects:
+one can leave only so many ideas in a student's head
+over the course of a few short weeks, so it's important
+to make a lasting impression about the key elements.  
+
+<p>
+It would have been easy enough to focus on the standard
+set of principles:  coupling and cohesion, perhaps
+modularity, and of course the <i>piece de resistance</i>,
+polymorphism.
+But I found it difficult to justify these principles from
+any value proposition that I felt I could sell to the students.
+So it was time to go back to basics, and that's what I did.
+
+<p>
+And of course I wanted to feature the main attractions of
+contemporary object-oriented analysis and design.
+The CS department is driven to a large degree by input
+from an industry board.
+That board conveys pressing industrial needs, and we respond.
+We add formal foundation courses to round out the
+collection of courses.
+So in the interest of giving students something
+practical and current, I knew that both Use Cases
+and CRC cards would figure strongly in the material.
+
+<h3>A Two-Pronged Approach: Function and Structure</h3>
+<p>
+What I ended up doing was to present design as a two-pronged
+excercise:  structural design, and functional design.
+Structural design gives a system the long-term stable
+structure that can reduce discovery costs,
+localize maintenance work, and provide a foundation for reuse.
+The main component of structure--in the conventional
+view--is the system classes and the relationships
+between them.
+
+<p> 
+The other perspective is functional design.
+Though it featured more strongly in some of the
+earliest design approaches for computer programming,
+it has made a resurgence in object-oriented
+days in the guise of Use Cases.
+
+<p> 
+Both structure and function are important to
+profitability.
+When we think of profitability we most often
+think of the functional side:
+What can we sell, and for how much?
+The functional side is directly visible to 
+the customer.
+Function is what customers are willing to
+spend money for;  it is the direct customer
+value that software enterprises deliver.
+A common view is that
+good function, delivered in a timely fashion,
+is the hearbeat of a thriving enterprise.
+
+<p>
+Profitability isn't only about revenue,
+but about cost as well.
+Good structure holds down
+development costs by localizing change.
+It might also reduce cost by making the code
+easier to understand and hence to modify.
+Even though customers don't care about internal  
+structure--they probably don't even see it--they
+will pay a price for poor structure in feature
+delivery schedules and perhaps even in the very
+feasibility of some features.
+Experience tends to bear out that poor design
+shows through all the way to the end user, too,
+as Brenda Laurel points out in her seminal book
+<i>Computers as Theatre</i> (Addison-Wesley, 1993).
+These are competitive considerations in
+the marketplace, considerations that affect
+the <i>revenue</i> stream.
+Beneath these factors lurks the increase in
+raw development <i>cost</i> that owes to
+poor structuring:  long discovery times,
+or more intense coordination across major interfaces.
+
+<p>
+These last few paragraphs seem to have sidetracked
+us from a focus on good object-oriented pedagogy to
+business practices.
+I bring up the business perspective not so much
+because I feel that academia should take industry
+as its primary client.
+Computer science to the contrary not withstanding,
+academia has a long legacy of being the cradle
+of great new ideas whose relevance isn't appreciated
+until many years after their "discovery."  
+However, industrial practice is often a good
+litmus test for the viability of our design models
+and of the teaching models that convey them.
+
+<p>
+I highlight this dichotomy between structure and
+function because it relates directly to how software
+design is often taught, as well as because it can
+relate to the "real concerns" of the business world.
+We have seen the history of software development
+pass through fads that cycle back and forth
+between structure and function.
+<i>Structured design</i> is often caricatured as relating
+to structure. 
+It was followed by structured programming, which
+focused more on program flow (function) than on  
+the structure per se;  structure was subordinate
+to function.
+Then came abstract data types, and slightly later,
+object orientation:  the functional view got the short
+shrift.
+Finally, came Use Cases: a noble attempt to resurrect
+the functional view.
+That's where we are now.
+
+<p> 
+I believe there are some simple ways to
+integrate the functional and structural view.
+This integration has some surprising results
+for how we view object oriented design and
+its activities, and has repercussions that
+go far beyond pedagogy.
+Let's have a look at the common contemporary
+processes of object-oriented design and
+contrast them with a simple alternative 
+view.
+
+<h1>Classes, Objects, and Other Things</h1>
+<h2>Teaching OO: The Class-ical Way</h2>
+<p>
+If you look at most syllabi to seek out the single
+most fundamental concept of object-oriented 
+programming, I'm guessing that we'd find it 
+to be the <i>class</i>.
+
+<p>
+If you ask people about object-oriented <i>design</i>
+notations such as UML, most people naturally think about class
+diagrams. 
+Object diagrams and dynamics are almost always
+secondary to the class model.
+Even when faced with an object model of their
+own making, most programmers have difficulty
+answering the question:  "Where did that
+object come from, and where was it created?"
+We extrapolate our static source code view into 
+how we model the application as a whole.
+Maybe we do that to avoid the complexities of   
+the highly dynamic object structure;
+an object model either can capture the
+relationships as they exist at a single
+moment in time or, as is more likely done,
+combine some relatively arbitrary collection
+of relationships that cover a span of execution.
+But class models already capture many such
+relationships anyhow.
+    
+<p>
+If you ask people about the building blocks  
+of object-oriented <i>programming</i> they will
+also likely mention classes.
+Most popular programming languages use
+classes as their basic building block.
+Classes are the foundation of object-based   
+and object-oriented programming in C++.
+They are unavoidable in Java and Smalltalk.
+Thinking ahead to coding, most designers
+bring the programming constructs into
+their design thinking.
+This <i>is</i> a natural and healthy
+practice--but as all practices must be  
+tempered with other considerations as
+we'll see later.
+
+<p>
+Trygve Reenskaug 
+(author of <i>Working with Objects</i>,
+Prentice-Hall, 1996)
+notes that this is pretty funny:
+we call it <i>object</i>-oriented programming,
+yet we tend to focus on classes.
+There are some strong cognitive reasons behind
+the human tendency to focus on classes. 
+Humans love to classify and organize to help 
+their understanding.
+Classes are a way of grouping lots of related
+objects from the perspective of structure.
+We feel a sense of power in this grouping.   
+What's more, we become a bit drunk on this  
+same power when we discover that we can group
+related classes together into a hierarchy   
+under a single base class.
+Classes become king.
+
+<p> 
+This isn't the first time that the class
+tradition has come into question.
+The <a href="../_/http/research.sun.com/self/papers/papers.html">self</a> programming language,
+pioneered by Dave Ungar and Randy Smith, demonstrated that  
+a real programming language based on objects
+instead of classes could deliver powerful 
+flexibility and convenience.
+Both Ungar's vision of flexibility and
+Trygve's vision of objects would find
+vindication later in history as components   
+became popular.
+Components are heralded for their improved
+flexibility over objects, something I suspect
+Ungar always had in mind.
+Trygve Reenskaug, on the other hand, said   
+that components were what he <i>always</i>
+envisioned object-oriented programming to  
+be from the beginning.
+Classes have prevented these two visions
+from flourishing and in fact may make
+it difficult for fledgling practitioners to
+appreciate the fundamental benefits of  
+object orientation itself--particularly
+the benefits of combining the structural
+and functional views.
+   
+<p>
+Even though we have Use Cases in a very few   
+contemporary course syllabi, classes rule in
+software engineering education. 
+We tend to keep Use Cases in our back pocket
+in case someone asks where we capture functional
+requirements.
+But they tend to fall out of our back pocket 
+and get lost once we move on to class design,
+based perhaps on the misplaced belief that
+the class member functions capture all
+we need to remember about the functional view.
+And the classes have a strongly hierarchical
+nature to their structure.
+
+<p>
+But there are two problems here:
+the functional view
+still is important, and that the world  
+is rarely very hierarchical.
+We can "make" the world appear hierarchical
+from a structural view.
+But it is rarely possible even to reconcile 
+the functional view with this hierarchical
+structure.
+And because the functional view is key to
+what generates your key revenues, that's a
+problem:  you don't sell classes, you sell   
+functionality. 
+
+<h2>Teaching OO: The Next Generation</h2>
+<p>
+Much of object-oriented pedagogy (and perhaps
+of pedagogy in general) seems to be based on hierarchy.
+The high point of many expositions of object orientation
+comes with the revelation of inheritance hierarchies
+supported by run-time polymophism.   
+I think this tendency to hierarchy comes from our
+need to organize--and that's fine--but I think
+it goes too far in most expositions of object orientation.
+It often goes so far as to <i>eliminate</i> information
+to reduce apparent complexity.
+There is a term for the elimination of information: <i>abstraction</i>.
+   
+<p>
+While we want to organize essential complexity and
+minimize accidental complexity, it is dangerous to
+put aside elements of essential complexity. 
+Such elements will be important either in an early
+offering of the system or will become important
+as the system evolves.
+It's best to put the right framework in place
+for these "details" up front;  it may be  
+almost impossible to add them later.
+Mies van der Rohe said, "God is in the details."
+<p>
+Hierarchy has become an important abstraction
+tool in many design paradigms.
+Used effectively, it brings organizational
+power.
+Used to shed essential complexity, it is evil.
+In most object oriented design, most abstraction
+is evil.
+It is an excuse to ignore things we don't   
+want to deal with even though we should.  
+
+<p> 
+We start to reduce complexity by grouping 
+objects together into classes, which is      
+in accordance with how most popular programming
+languages work.
+These programming languages are popular because
+they are efficient.
+But then we take an overly casual and slightly
+dangerous leap from this hierarchy of objects
+to hierarchies of classes.
+
+<p>
+Why is this dangerous?
+There are several ways to describe this danger,  
+but I'll focus on one.
+When we group objects together the result isn't
+an object:  it's something different, a <i>class</i>.  
+That's a healthy distinction that helps the designer
+look at a program in two useful ways:
+the dynamic structure of objects,
+and the static, source-code structure of classes.
+But when we combine a hierarchy of related classes
+under a common construct that groups them together,
+we too often just use the concept of "class" again.
+The problem is that it's not a class any more:
+it's not a single structure that captures the  
+structure of all the objects of all the classes
+being grouped together.
+Making this level of abstraction into a class
+discards the information that the resulting entity
+stands in for a larger number of classes in the 
+subtending inheritance graph.
+
+
+<h3>Roles to the Rescue</h3>
+<p>
+This perspective precipitates two interesting insights.
+The first is that for a class-based OO educator,
+this level of compression points out
+a missing concept:  the elusive concept that
+ties related classes together.
+That missing concept is a <i>role</i> and   
+has long been featured in what were considered
+to be offbeat design methods like Reenskaug's
+OORAM.
+A role characterizes part of the interface of an object,
+such that the responsibilities characterize some sphere
+of knowledge or influence.
+A given object can take on several roles at once.
+Consider a Circle object as an example:  we can
+ask it to yield its circumference, location, or area;
+we can ask it to move, rotate or warp:
+these owe to a role we might call Shape.
+We may also want Circle to respond to requests
+to draw itself on some output medium, or to
+change its color: these owe to a role called Drawable.
+An image file object might also respond to all
+the responsibilities of Drawable, though that may
+be all that images have in common with Shapes.
+
+<p>
+The second insight is that progress in programming  
+languages has caught up with this reality:
+roles appear as a first-class programming
+construct in the guise of Java interfaces.
+
+<p>
+There are interesting corrollaries to these insights.
+The first is that roles are more about objects than
+they are about classes.
+A class is a total classification of objects.  
+Rather than thinking of a role as a partial
+interface to some class,
+it might be better to think of it as a
+partial classification of a set of objects. 
+To me, that suggests deferring classes
+until students have mastered the concepts
+of objects: the grouping of responsibilities,
+and the colocation of active data and the
+functions that operate on them.
+
+<p>
+Second, because they are not total classifications
+roles break down the tyrrany of hierarchy.
+That is a better match for the real world.  
+When God created the world, she did not create
+it as a hierarchy of classes.
+She may not even have created it, as Kant might
+insist, from a universe of discrete, identifiable
+objects.
+Roles provide the freedom to define a software
+reality that can align with a myriad of important
+design perspectives that range from the marketing
+view to the structural view.
+A class is, after all, just an implementation
+of what might be a degenerate kind of role.
+
+<p>
+Third, because roles are closer to objects,
+they are closer to the structure of Use Cases 
+than classes are.
+Objects are run-time animals, and the role
+interface to an object reflects a set of
+responsibilities related more by some function
+than by any structural consideration.
+Yet as partial classifications, roles can 
+also bridge the gap to the structural world.
+This is perhaps the most powerful contribution
+of roles:  as a locus for the intersection
+of structure and function.
+
+<h1>Pedagogical Reflections on Design</h1>
+<p>
+My challenge at the beginning of this term was
+to sort out the whole notion of object-oriented
+design for cogent presentation to a wide variety
+of students.
+I had a hunch that an object-based focus
+would win out over a class-based approach
+(in terms of comprehensibility and conceptual
+integrity).
+And I followed the haunting voice of Trygve
+in the back of my head, both with regard to
+the centrality of objects and with regard
+to the place of roles in design.
+The result was wonderfully satisfying.
+
+<p>
+Very early in the class, perhaps on the first
+day, I introduced the traditional design
+dichotomy between function and structure.
+I put this in the context of design approaches
+that historically preceded objects in their   
+own fifteen minutes of fame.
+That objects were not an end-all and be-all
+would be a recurring theme in the course,
+though the course itself focused on objects  
+without going into other approaches in any depth.
+
+<p>
+I then introduced a simple notion
+of objects as loci of structure and behavior. 
+From the outside, all we see of an object
+are behaviors through which we can ask it to do
+things on our behalf.
+That was a natural lead-in to abstract
+data types, with a careful emphasis on the
+"abstract" and "type" parts of the moniker.
+Note that students faced ADTs quite a bit   
+before they would encounter classes.
+I avoided class and language issues, but  
+focused on things that are important from
+the perspective of Conway's Law--the rule
+that says that software architecture exists
+mostly for the sake of the structure of
+the organization that builds it.
+With those ideas grounded, I could move
+on to classes, but more as a convention
+of packaging than as any important unit
+of intrinsic structure.
+
+<p>
+At about the same time I introduced roles
+as being the analysis or design counterpart
+of what we had been talking about as ADTs. 
+I made the perfunctory concessions to C++  
+and its convention to use pure abstract base
+classes as a way to capture the semantics
+of roles and ADTs, and appealed to the notion
+of Java interfaces with which they were already
+familiar.
+
+<p>
+Next I introduced Use Cases.
+We introduced fat and thin Use Cases following
+a conventional exposition, using Alistair     
+Cockburn's <i>Writing Effective Use Cases</i>
+book (Addison-Wesley, 2000).
+
+<p>
+Then, and only then, did I introduce CRC cards.  
+CRC cards are the place where the structure
+of classes comes together with the dynamics of Use Cases.
+A hands-on CRC exercise provided the students with a vision of how
+dynamics help shape the structure, and how the
+structure yields insight into the dynamics.
+For me, this was the high point of the 
+object modeling part of the course.
+It represents the central essence of object orientation.
+
+<p>
+Oh, yes, we went on to do inheritance and   
+polymorphism to round out the picture,
+and later went on to more advanced concepts
+including reflection, aspects, and most other
+buzzwords of the contemporary object-oriented
+arena.
+We also covered the perfunctory issues of
+covariance and contravariance, building largely
+on the Liskov Subsitutability Principle but
+more broadly grounding the issue of subtyping
+in Bertrand Meyer's taxonomy of IS-A inheritance,
+supported by Design By Contract.
+And of course we covered patterns and a few
+more popular topics.
+But more importantly we came back and reflected
+on where we had been, and critiqued the
+various structure techniques much as one finds
+in the discussion of the piece you're reading here.
+
+<h3>CRC Cards Tie it All Together</h3>
+<p>
+CRC cards were created by Ward Cunningham
+(see his blog at this site) back in the
+Smalltalk days at Tektronix (or perhaps it was at Wyatt).
+Smalltalk features classes as its staple building blocks
+so it was natural to take those concepts into the
+design arena.
+
+<p>  
+But a programming language class conveys both
+behavior and structure, while the CRC card
+approach quickly settled on a responsibility-driven
+approach. 
+CRC cards are all about what an object can <i>do</i>
+rather than being about what an object <i>is</i>.
+In fact, they look more like roles than like  
+classes!
+Kent Beck, who has worked closely with Ward
+over the years and who has done much of the work
+to popularize CRC cards, once remarked in a workshop
+that CRC cards weren't really about classes but
+about roles.
+
+<p>
+In fact, CRC cards are a powerful hybrid representation
+that brings classes, objects and roles together.
+When Kent and Ward do CRC card exercises, they tend
+to think of a card as an object when you are holding
+it in the air, and as a class when it's on the table.
+The responsibility focus is a way to keep the design
+close to the Use Cases:
+Use Cases come down to collection of responsibilities,
+and object-oriented design is in large part the  
+activity of grouping those responsibilities together.
+CRC cards do that.
+The resulting entities may or may not be building
+blocks;  what makes a good building block depends
+in part on embedded software, available software
+packages, and even tradition.
+CRC cards can capture that, too
+
+<p>
+This perspective on Use Cases, objects, roles and classes
+let me integrate them together around a small number
+of intuitive concepts.
+If students understand what responsibilities are, they
+can understand Use Cases and can certainly understand roles.
+Looking at objects as locales of structure and behavior 
+makes object-oriented design "real" in terms of the programming world familiar
+to them, and bringing in the concept of classes as optimizations
+(sharing member function code and a structural skeleton across objects)
+makes it concrete in terms of a programming language.
+Rather than clumsily introducing Use Cases as a front-end
+to the "find the objects" exercise, or of explaining the
+similarities and differences between responsibility-based
+design and some other flavor of object-oriented design,
+this approach serves to point to a larger, single   
+underlying model of which classes, objects, Use Cases
+and roles are just facets.
+
+<p>
+It is this underlying model that I would call   
+the object paradigm.
+
+<p>
+By the end of the course, students could tie together
+the basic concepts of responsibilities, objects, classes,
+and roles.
+They understood how Use Cases fit into the process.
+They understood the interplay between the functional
+and structural views of the system as embodied in   
+Use Case responsibilities and classes respectively--a
+view that takes students all the way from the classes
+of programming to the organizational structures that
+separate functional concerns from structural concerns.
+
+<p>
+I'm guessing that most people who teach CRC cards
+teach them as classes rather than as roles.
+People gravitate toward classes for the same reasons
+we discussed earlier: reducing the amount of information
+one must deal with, and talking about design in terms
+that already are familiar from programming.
+I am concerned that this misses the essential
+foundations not only of CRC cards but, more worrisomely,
+the responsibility-based foundations of object orientation
+itself.
+
+<p>
+And here's the punch line:  it isn't only pedagogy that
+falls short on these issues.
+Most designers in the real world tend to work the same way.
+It is at least sad, and perhaps scary, that most people
+are using object orientation in a way that is based
+on modules with polymorphism and instantiation rather
+than on a more living design approach that embraces
+Use Cases and the dynamic view that objects bring.
+
+<h1>Beyond Pedagogy: Fundamentals of Design</h1>
+<p>
+In some sense, one can look at this exercise in crafting a
+course on object-oriented analysis and design
+as an exercise in building an object model.
+It's important to understand that I didn't approach
+it that way.
+I focused on fundamentals, fundamentals
+that led to fundamental benefits such as ease of
+evolution, accommodation for Conway's Law,
+software compression, and relationship to business goals.
+It was a quite un-academic tact.
+A more academic tact would have started either
+with programming language or perhaps wth type theory
+and the semantics of inheritance.
+
+<p>
+It was satisfying to see that this approach tied to 
+the fundamental notions of design in a way that
+may not be satisfying to someone looking to tout
+the benefits of a given programming language or
+methodology, but that might be more satisfying to
+someone with a degree in engineering or architecture.
+Design is the collection of activities and tools that
+take one from the understanding of a problem to its solution.
+
+<p>
+<i>What problem you are solving?</i>
+In a companion course on Systems Analysis,
+we teach students that this is one of the most 
+important questions you can ask.
+This question is too often lost in most contemporary
+object-oriented development, since objects focus
+more on the structural component of design than
+on the functional leg of design.
+
+<p>
+There was an activity in the 1970s called the 
+"design movement" that included people as disparate  
+as Peter Naur (the "N" in "BNF") and Christopher   
+Alexander.
+(See <i>Developments in Design Methodology</i>
+by Nigel Cross, Wiley, 1984.)
+Much of their work focused on the interplay back
+and forth between the problem domain and solution
+domain.
+The "problem domain" brings customer desires and
+needs.
+What the design movement learned is that this
+customer view should be tempered with the realities
+that unfold during design.
+In software, we know this as iterative design.
+In the object-oriented analysis course we
+typified the solution component as the class
+structure, and the customer problem component
+as the Use Cases.
+CRC cards are the place where these two worlds
+come together--where struggles with the solutuion offer
+insight into the problem itself.
+Reconciling these forces both keeps the customer
+happy by meeting functional requirements,
+and keeps the enterprise happy by leading
+to a structure that best accommodates evolution.    
+
+<p> 
+Infusing roles is a good lead-in for many other
+features of the object community.
+Aspects can be described as collections of
+roles in a more straightforward way than
+is feasible from a basis in classes. 
+The focus on Conway's Law is a direct
+lead-in to refactoring.
+
+<p>
+These results are not just academic.
+They do in fact lead to an object model
+and a design approach that accommodates 
+that model.
+But it is more than an object model: it
+is also a business model and a process
+model, a model that is practical,
+teachable, and perhaps even powerful.
+What, in summary, is the development approach
+based on that model?
+
+<p>
+<ol>
+<li>
+Elicit functional requirements from
+customers and other stakeholders and
+capture them as use cases.
+<li>
+In parallel, capture structural and non-functional
+requirements that come from the embedded base and
+from domain experts.
+<li> 
+Use CRC cards to iterate the Use Cases and
+class structures against each other.
+<li>
+Precipitate classes and roles from the CRC
+cards.
+Classes come from total classifications,
+and roles are partial classifications that
+relate to Use Case-centered concerns 
+<li>
+Code it up, and use the insights
+from the coding experience as input 
+to further iterations of the CRC exercise.
+</li></li></li></li></li></ol>
+<p>
+That's it.
+On one hand, none of the notions are individually
+profound.
+But on the other hand, this perspective 
+combines a small number of fundamental
+concepts into a consistent, integrated 
+picture of the fundamentals of object 
+orientation.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6771.html">27
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=6771&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever James O. Coplien adds a new entry to <a href="../index.html$/blogger=cope.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cope.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6771&amp;title=Teaching+OO%3A++Putting+the+Object+back+into+OOD&amp;bodytext=Almost+everyone+who+teaches+object+orientation+uses%0D%0Athe+class+as+a+fundamental+building+block.%0D%0ASuch+an+approach+misses+the+central+point+of+object%0D%0Aorientation%3A++the+objects+themselves%2C+and+what+they%0D%0Aportend+for+flexibility+and+effective+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6771&amp;title=Teaching+OO%3A++Putting+the+Object+back+into+OOD">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6771&amp;title=Teaching+OO%3A++Putting+the+Object+back+into+OOD">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jimcoplien.jpg"/></td><td>Jim Coplien is a Senior Agile Coach and System Architect at Nordija A/S, doing international consulting in organization structure, software patterns, system architecture, as well as software development in electronic design automation, telecom, and finance. In this 'blog, he reflects on his academic career pursuant to his visiting professorship at University of Manchester Institute of Science and Technology, his appointment as the 2003-2004 Vloebergh Chair at Vrije Universiteit Brussel, two years as an Associate Professor at North Central College in Naperville, Illinois, and extensive work developing some of the first C++ and OOD training materials. He is well-known for his foundational work on object-oriented programming and on patterns, and his current research explores the formal foundations of the theory of design, foundations of aesthetics and beauty, and group theoretic models of design structure. He most recent book "Organizational Patterns of Agile Software Development", co-authored with Neil Harrison, culminates a decade of research. His book "Advanced C++ Programming Styles and Idioms" defined design and programming techniques for a generation of C++ programmers, and his book "Multi-Paradigm Design for C++" presents a vision for the evolution of current OO design techniques into a more general and better grounded theory of software construction.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 James O. Coplien. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

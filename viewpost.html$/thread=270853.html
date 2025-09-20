@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Two Conferences and a Workshop</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=270853.html">Discuss</a> | 
+<a href="mailto:?subject=Two Conferences and a Workshop&amp;body= %0AArtima Weblogs %0ATwo Conferences and a Workshop %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=270853">Email</a> | 
+<a href="../viewpostP.html$/thread=270853.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=269972.html" title="You Can't Do What You Want By Doing Something Else">Previous</a> | 
+<a class="sl" href="thread=274384.html" title="I Believe in Design">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Two Conferences and a Workshop</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">October 14, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I drove down to Boulder last weekend to participate in an open-spaces Python conference, speak at an eyes-forward programming conference, and attend a workshop on TurboGears 2. Here's what I learned.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="the-front-range-python-unconference" name="the-front-range-python-unconference">1. The Front-Range Python Unconference</a></h1>
+<p>This was the first time the organizers had tried an open-spaces approach, and I learned a few things by witnessing it. The first time you do one of these things, you can't imagine that they will work at all, and because of this it's far too easy to slide back into old habits. The event was held at the Google offices in Boulder, and one big mistake was pre-announcing that there were projectors available in all rooms. This basically invites everyone to bring their slide deck, and once you get slotted into that approach, every conversation that tries to start is met with "yes, that's interesting, but let me just get back to my slide deck."</p>
+<p>I am not by any means saying that the conference was bad, not at all. I enjoyed it. But if you went with the expectation of conversation rather than presentation, in most rooms you didn't find that. And seeing what open spaces conferences <em>can</em> be, it's always disappointing to see backsliding into eyes-forward conferences.</p>
+<p>To pull it off, you need full commitment. It also really helps if you have a core group of people who've done it before and can lead everyone else -- at the very least you need one experienced person to establish the structure at the beginning. If someone's entire life has been spent sitting and listening to lectures, it's not that surprising that, without guidance in a new direction, they fall back into that pattern.</p>
+<p>I have seen this kind of thing in many forms -- this weekend's Python unconference did (IMO) the right thing by fully committing to open spaces and I would have volunteered to introduce the concepts but it seemed like it might have been intrusive. On numerous occasions I've been asked to manage open spaces at a conference, but these are usually situations where the conference organizers may be thinking "this unconference thing is getting viral, maybe we should get some skin in the game." The problem with those has been that they have been eyes-forward conferences that are throwing a little open-spaces into the mix just in case. All the marketing and the history of the conference promises eyes-forward, and that's what people show up expecting. They come for a set of lectures that were advertised, and it's almost impossible to change people's patterns at that point. The Pycon conference has been more successful, but only after some time and fine-tuning and (again) after there are enough people who've experienced it to lead the others away from eyes-forward stuff. Personally, I'd like to see Pycon go to a completely open-spaces forum, but I can only imagine what kind of push-back we'd get from the community who expects a traditional conference (the conference organizing committee, however, might see it as a great relief).</p>
+<p>Everyone at last weekend's conference seemed pretty happy with the results. It was free, after all, and I think people got a pretty good payoff for showing up, a lot better than they normally expect. I only lament because I know how good it can be when you give up projectors and slide decks and lectures and focus on conversations. I did have a discussion with the conference organizer and he could see what had happened so I'm sure he will try harder next time to move it in the direction of open spaces.</p>
+<p><em>Aside</em>: at one point we had the opportunity to take a tour of the offices. I had no desire to do so; indeed I actively avoided a trip through the cubicles, knowing instinctively that I would find it depressing. I can visit, but I don't think that life in a cubicle is part of my next life.</p>
+</div>
+<div class="section">
+<h1><a id="developer-day" name="developer-day">2. Developer Day</a></h1>
+<p>I was interested in this event because of its goals: make a conference that's local and inexpensive. Also, they asked me to speak, and if I <em>am</em> going to an eyes-forward conference (as this one was), then I find speaking to be much more engaging than attending -- indeed, I basically never attend an eyes-forward conference anymore unless I've got something else to do (when I was on the senior advisory board for the Software Development Conference, a completely eyes-forward event, I was always involved in something other than just conferences).</p>
+<p>There were about 40 people or so, in a single room with serial presenters and about 20 minutes between each presenter. I didn't see much conversation going on among the attendees (as a fan of open spaces, this always bugs me -- I think "if we're going to travel any distance to be in the same room, we should be talking to each other! I can watch lectures on the web!").</p>
+<p>I saw two talks before giving the closing keynote. The first one was on Scala, and I learned a little more about it. The second was on core animation on the iPhone and Mac. This one assumed you knew Objective C, but it was primarily the library calls that you made in order to achieve nice effects. Although the code was very succinct -- you could do amazing things with just a few lines -- I came away wondering how much effort it would be to figure out those few lines, which seemed very obscure to me and the presenter didn't really try to explain them because, I suspect, that would have taken us down the rabbit hole. Afterwards we went to a bar and one of the other people at my table said that he had been studying this stuff for 3 months and couldn't yet see where the steep part of the learning curve might start easing off. Apparently it's not the Objective-C that's hard to figure out, but the libraries and framework structure. So that is a useful thing to know.</p>
+<p>Aside: James Ward told me that at the Max conference, someone demonstrated a tool that takes a SWF and rebuilds it (using cross-compiler magic) into a legal iPhone app -- including the rule that you can't use a VM (even though Flash is a VM). Some very clever stuff, and it opens the door to creating iPhone apps with Flex. Adobe needs to hire this guy if they haven't already!</p>
+<p>This was not the first Developer Day; they've had them in several other places in the country. It seemed successful enough from the standpoint of the attendees, although I don't know whether the conference organizers achieved their goals (we'll see if they continue to schedule others).</p>
+</div>
+<div class="section">
+<h1><a id="turbogears-2-workshop" name="turbogears-2-workshop">3. TurboGears 2 Workshop</a></h1>
+<p>Chris Perkins has been doing a lot of the core work on TurboGears 2, and one of the problems he's been trying to fix is education, thus this workshop. He said we were the guinea pigs for the workshop, which he plans to take to a number of other cities (I'll blog about it when I get the full schedule from him).</p>
+<p>I've been periodically puttering with TurboGears for awhile, so I have a basic feel for it; I even rewrote the introductory Wiki tutorial (which has since been significantly modified). This time, Chris was focusing on the process of taking an existing database and building a TurboGears 2 application around it.</p>
+<p>My experience was around the tools we used. Chris is all about the tools, and it was extremely useful to be marched through them.</p>
+<p>A great deal of the smoothness of the workshop depended on <strong>easy_install</strong>, which, as many people already know, works great except when it doesn't work at all (we had at least one example of this). Most of the time, though, it did its job in a way that allowed us to very quickly experience new tools and libraries. For example, no one had used <strong>coverage</strong> so Chris was able to very quickly guide us through installation and use (his TurboGears tools generate a test framework).</p>
+<p>We installed everything within a <strong>virtualenv</strong>, another tool I've been hearing about but haven't used. This creates a directory where all the installations go, and doesn't load anything into your default Python installation. If and when you need to back out, you just delete the <strong>virtualenv</strong> directory and it's all gone. In order to use it, you must run <strong>activate</strong>, which puts you in a special command prompt while inside <strong>virtualenv</strong>. One thing Chris pointed out is that some of the sloppier installations don't always behave properly under <strong>virtualenv</strong> -- they still end up putting things in your <strong>site-packages</strong>.</p>
+<p>One of the most impressive tools Chris had us use was the simplest, and thus something you wouldn't necessarily think of: he got everyone in the room to install an IRC client (if they didn't already have one) and connect to the <strong>#turbogears</strong> chat. This was very beneficial during the workshop, because if you need to download something or put in a command, Chris could just put the URL or command on IRC and everyone in the workshop would immediately have it (so simple, yet so obvious once you see it working). But IRC also had a second effect, which was to get everyone used to the IRC channel where a lot of the TurboGears technorati hang out, so it's a good place to get fast answers (I also encouraged Chris to try to use StackOverflow, primarily because SO reduces or eliminates the problem of duplicate question-answer sessions that has been the bane of newsgroups by exhausting all the experts until they flee).</p>
+<p>Here is the (edited) list of commands that I used during the workshop (they should work once you have both <a class="reference" href="../_/http/www.python.org/download/index.html">Python</a> and <a class="reference" href="../_/http/peak.telecommunity.com/dist/ez_setup.py">easy_install</a> installed):</p>
+<pre class="literal-block">
+505  sudo easy_install virtualenv
+510  virtualenv tgtut --no-site-packages
+511  cd tgtut
+512  mkdir src
+583  source bin/activate
+585  easy_install sqlalchemy
+588  easy_install sqlautocode
+589  easy_install ipython
+591  easy_install -f ../pypi/ ipython
+601  sqlautocode sqlite:///moviedemo.db -o tables.py
+603  sqlautocode -d -n -o model.py sqlite:///moviedemo.db
+605  python model.py
+607  easy_install -i http://www.turbogears.org/2.1/downloads/current/index tg.devtools
+608  paster quickstart
+613  python setup.py develop -i http://www.turbogears.org/2.1/downloads/current/index
+614  paster setup-app development.ini
+616  nosetests
+617  easy_install coverage
+618  nosetests --with-coverage --cover-package=moviedemo
+619  nosetests -v
+626  easy_install -U tgext.admin
+627  paster serve development.ini --reload
+631  easy_install tw.dojo
+</pre>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=270853.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=270853&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D270853&amp;title=Two+Conferences+and+a+Workshop&amp;bodytext=I+drove+down+to+Boulder+last+weekend+to+participate+in+an+open-spaces+Python+conference%2C+speak+at+an+eyes-forward+programming+conference%2C+and+attend+a+workshop+on+TurboGears+2.+Here%27s+what+I+learned.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D270853&amp;title=Two+Conferences+and+a+Workshop">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D270853&amp;title=Two+Conferences+and+a+Workshop">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

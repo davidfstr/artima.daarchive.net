@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Heron Tackles the WideFinder Challenge</title>
+<meta charset="utf-8"/>
+<meta content="Christopher Diggins" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cdiggins.html">Christopher Diggins' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=285952.html">Discuss</a> | 
+<a href="mailto:?subject=Heron Tackles the WideFinder Challenge&amp;body= %0AArtima Weblogs %0AHeron Tackles the WideFinder Challenge %0Aby Christopher Diggins %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=285952">Email</a> | 
+<a href="../viewpostP.html$/thread=285952.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=284558.html" title="(Re-)Introducing the Heron Programming Language">Previous</a> | 
+<a class="sl" href="thread=289749.html" title="Heron 1.0 Alpha 3 : Compile-Time Reflection, the HeronEdit IDE, and more">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Heron-Centric: Ruminations of a Language Designer</span><br>
+<span class="ts">Heron Tackles the WideFinder Challenge</span><br/>
+<span class="as">by Christopher Diggins</span><br/>
+<span class="pd">March 18, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Tim Bray's WideFinder project is to write a simple log-file parsing program that runs fast on modern CPUs with low clock rates but many cores. I decided to tackle it with the newest Heron release (version 1.0 Alpha 2).
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+The Widefinder project started with a captivating <a href="../_/http/www.tbray.org/ongoing/When/200x/2007/09/20/Wide-Finder/index.html">series of blog posts</a> by Tim Bray at Sun Microsystems. Tim stated a desire for a programming language with the ease of use and elegance of Ruby, but which could automatically exploit available hardware parallelism. Tim's working example for the was a simple log file parsing script.
+</p>
+<p> 
+This challenge sparked a massive programming language shoot-out. Tim and many others 
+started comparing various languages and implementations of the log-file processing script 
+in terms of raw processing speed.
+</p>
+<p>
+I decided to tackle Wide Finder using the <a href="../_/http/code.google.com/p/heron-language/downloads/list/index.html">latest version of Heron</a>. Rather than trying to achieve sheer processing speed I first wanted to see if I could get it to work, after all Heron is still just in Alpha releases. Next I wanted to see what improvements in speed I could get in running the interpreter in multi-threaded mode. 
+</p>
+<p>
+First I have to admit that the current Heron interpreter is not very efficient, after all it is still in Alpha, so the results are rather unimpressive when looked at on their own. On my machine it took 9 seconds to parse a 1 megabyte log file with about 10,000 lines when running in single-threaded mode. To put Heron in single-thread mode you have to set <code>maxthreads</code> value in the config.xml file to 1. However, when I flip the mode to multi-threaded by setting <code>maxthreads</code> to -1, it takes 30% less time to execute on a dual-core laptop.   
+</p>
+<p>
+The reason I get this speed-up for free is because my implementation is heavily CPU bound and the bottle-neck is in the sort function. The sort I use relies heavily on Heron's <code>select</code> operation, which is an implicitly parallelized operation in Heron.   
+</p>
+<p>
+In Heron the <code>select</code> operation takes a list and a predicate expression. It returns a new list which contains members of the original list for which the predicate returns true. For example <code>select (x from xs) x % 2</code> will return all even numbers from the list <code>xs</code>.   
+</p>
+<p>
+The WideFinder sample program and test data is available in the latest Heron release, which is now <a href="../_/http/code.google.com/p/heron-language/downloads/list/index.html">Heron 1.0 Alpha 2</a>. Below is the Heron WideFinder implementation:
+</p>
+<pre>
+module WideFinder
+{
+    imports
+    {
+        sorting = new Heron.Standard.Sorting();
+        console = new Heron.Windows.Console();
+    }
+    methods
+    {
+        Main()
+        {
+            var lines = File.ReadAllLines(@"testdata\wide-finder-test-data.txt");
+            var dict = table(url:String, cnt:Int) { };
+            var re = new Regex(@"GET /ongoing/When/\d\d\dx/(\d\d\d\d/\d\d/\d\d/[^ \.]+)");
+
+            WriteLine("Counting entries");
+
+            foreach (line in lines)
+            {
+                var m = re.Match(line);
+                if (m.get_Success())
+                {
+                    var c = m.get_Groups().ToList()[1].get_Captures().ToList()[0];
+                    var s = c.get_Value();
+                    if (!dict.HasKey(s))
+                        dict.Add([s, 1]); 
+                    else
+                        dict[s].cnt = dict[s].cnt + 1;
+                }
+            }
+
+            WriteLine("Counted the entries");
+            WriteLine("Sorting the keys");
+            
+            var keys = dict.GetColumn(0);
+            keys = Sort(
+                keys,
+                function (a, b) { 
+                    return dict[b].cnt - dict[a].cnt; 
+                }); 
+            WriteLine("Sorted the keys");
+
+            foreach (i in 0..9)
+            {
+                var key = keys[i];
+                Console.WriteLine(key + " = " + dict[key].ToString());
+            }
+        }
+    }
+}
+
+module Heron.Standard.Sorting
+{
+    methods
+    {
+        Sort(xs : List, compare : Function) : List 
+        {
+            if (xs.Count() &lt; 2) 
+                return xs;
+            
+            if (xs.Count() == 2)
+                if (compare(xs[0], xs[1]) &lt;= 0)
+                    return xs; else
+                    return [xs[1], xs[0]];
+
+            var pivot = xs[0];
+            var tail = xs.Slice(1, xs.Count() - 1);
+            
+            var as = select (x from tail) 
+                compare(x, pivot) &lt;= 0;
+
+            var bs = select (x from tail) 
+                compare(x, pivot) &gt; 0;
+
+            as = Sort(as, compare);
+            bs = Sort(bs, compare);
+            var r = as.ToList();
+            r.Add(pivot);
+            r.AddRange(bs);
+            return r;
+        }
+    }
+}
+</pre>
+<p>
+While it would be easy to find a number of flaws with my implementation, I think this this is still an interesting proof of concept. For me it demonstrates how parallelized list operations built into a language can be effective at leveraging multiple cores, without requiring extra work from a programmer.   
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=285952.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=285952&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Christopher Diggins adds a new entry to <a href="../index.html$/blogger=cdiggins.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cdiggins.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D285952&amp;title=Heron+Tackles+the+WideFinder+Challenge&amp;bodytext=Tim+Bray%27s+WideFinder+project+is+to+write+a+simple+log-file+parsing+program+that+runs+fast+on+modern+CPUs+with+low+clock+rates+but+many+cores.+I+decided+to+tackle+it+with+the+newest+Heron+release+%28version+1.0+Alpha+2%29.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D285952&amp;title=Heron+Tackles+the+WideFinder+Challenge">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D285952&amp;title=Heron+Tackles+the+WideFinder+Challenge">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/christopherdiggins.jpg"/></td><td>Christopher Diggins is a software developer and freelance writer. Christopher loves programming, but is eternally frustrated by the shortcomings of modern programming languages. As would any reasonable person in his shoes, he decided to quit his day job to write his own ( <a href="../_/http/www.heron-language.com/index.html">www.heron-language.com</a> ). Christopher is the co-author of the <a href="../_/http/www.cpp-cookbook.com/index.html">C++ Cookbook</a> from O'Reilly. Christopher can be reached through his home page at  <a href="../_/http/www.cdiggins.com/index.html">www.cdiggins.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Christopher Diggins. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

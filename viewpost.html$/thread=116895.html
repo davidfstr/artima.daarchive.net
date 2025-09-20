@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2005, Day 2: Hitting the Jackpot!</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=116895.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2005, Day 2: Hitting the Jackpot!&amp;body= %0AArtima Weblogs %0AJavaOne 2005, Day 2: Hitting the Jackpot! %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=116895">Email</a> | 
+<a href="../viewpostP.html$/thread=116895.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=116723.html" title="JavaOne 2005, Day 1: It's a Groovy Day">Previous</a> | 
+<a class="sl" href="thread=117079.html" title="JavaOne 2005, Day 3: Share the News!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2005, Day 2: Hitting the Jackpot!</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">June 29, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+You go to JavaOne in hopes of hearing about realy cool things. Every once in a while, you get something extremely cool--elegant, even--something like Project Jackpot. If you need to clean up your source files en masse, do it elegantly, and do it quickly, then Jackpot is the tool you've been waiting for.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Early in my career, I saw my mentor (a certain David Smith), become outraged when
+keypunch operators were spending hour after hour making changes to files that
+could just as easily have been programmed. "Sure," he said to the project
+manager, "<em>You</em> don't mind doing the job with manual labor, because
+<em>you're</em> not the one who's doing the work." His reaction reflected a
+deep-seated appreciation for the value of human effort that turned out
+to be contagious.</p>
+<p>It has been many years since I first heard that, but it's a lesson that always
+stuck with me: <em>Never</em> do large amounts of mindless, repetitive work if you can
+possibly get the computer to do it for you.</p>
+<p>When you think about it, it only stands to reason:</p>
+<blockquote>
+<ul class="simple">
+<li>The computer will work all day and all night, never taking a break, without
+complaining.</li>
+<li>The computer will do what you told it to do, with no mistakes, at high
+speed.</li>
+<li>Once you've taught the computer how do to the task, it doesn't forgets. You
+can ask it to do the same thing next year, and every year thereafter.</li>
+</ul>
+</blockquote>
+<p>When it comes to making a large number of changes to a massive collection of
+source files--or even just examining them to look for patterns--Jackpot was made
+to order. Better yet, Jackpot puts an expert at your elbow, so you can get their
+advice on changes you should make, but may never have thought of on your own.</p>
+<div class="section" id="introducing-jackpot">
+<h1><a name="introducing-jackpot">Introducing JackPot</a></h1>
+<p>Jackpot is a tool for source code examination and transformation that lets you
+automate the process of inspecting, reporting on, and modifying source
+files. It was developed by James Gosling and Tom Ball, with the help of Neal
+Gafter, who made the javac compiler reentrant so Jackpot could use it.</p>
+<p>To define the changes you want to make, you create a pattern-based series of
+production rules and save them in a file. (I think of that file as a filter.)
+The rules have the form: <tt class="literal"><span class="pre">source-pattern</span> <span class="pre">=&gt;</span> <span class="pre">result-pattern</span></tt>, where <tt class="literal"><span class="pre">=&gt;</span></tt> is
+the production operator. When Jackpot runs, code that matches the source
+pattern on the left is transformed into the result pattern on the right.</p>
+<blockquote>
+<strong>Note:</strong> You can also write your own transformation class, instead of a
+series of rules. It requires knowledge of the Abstract Syntax Tree
+produced by javac, and an understanding of the Visitor pattern--the
+most useful pattern there is for operating on tree structures.</blockquote>
+<p>Jackpot is based on javac, so anything the compiler can process, Jackpot can
+process. And in addition to using javac to read the source file coming in,
+Jackpot uses javac to verify that resulting source code, after all changes
+have been applied, will still compile. That helps rules-authors to avoid
+mistakes.</p>
+</div>
+<div class="section" id="why-you-want-it">
+<h1><a name="why-you-want-it">Why You Want It</a></h1>
+<p>There is tremendous power in the concept of a rule set. In essence, it
+<em>captures the expertise of the author</em>. When you run that rule set,
+you have the expert at your elbow, suggesting changes. The transformations
+might produce cleaner code, better performing code, more localizable code, or
+adhere to any other principles that might guide an expert when modifying
+a class.</p>
+<p>In effect, Jackpot puts a <em>variety</em> of experts at your beck and call, so you
+can ask them:</p>
+<blockquote>
+"If you wanted to make this code (cleaner, faster, localizable, take your
+pick), how would you modify it?"</blockquote>
+<p>In addition to making changes, Jackpot can be useful for examining code,
+as well. In all, Tom Ball noted several general categories of use for Jackpot:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Source auditing:</strong> Examining code for adherence to conventions (like lint).</li>
+<li><strong>Source archeology</strong>: Finding patterns in existing code and figuring out how it works.</li>
+<li><strong>Refactoring:</strong>  Making the code better.</li>
+<li><strong>Reengineering:</strong>  Converting to new APIs or new technologies.</li>
+<li><strong>Pretty-printing:</strong> Making code more readable and maintainable.</li>
+</ul>
+</blockquote>
+<p>Some of the rule sets that Tom Ball demonstrated were designed to:</p>
+<blockquote>
+<ul class="simple">
+<li>Clean up code (40-some rules that eliminate extraneous code)</li>
+<li>Make code that compiles faster</li>
+<li>Convert code that uses StreamTokenizer to use the new Scanner class</li>
+<li>Simplify loops so they run faster</li>
+</ul>
+</blockquote>
+<p>Some other possible applications for transformation rules include:</p>
+<blockquote>
+<ul class="simple">
+<li>Making code localizable</li>
+<li>Optimizing code for performance</li>
+<li>Removing debug logic before compiling the production version</li>
+</ul>
+</blockquote>
+<p>There is a lot to know in many of those areas. It's difficult to acquire the
+knowledge necessary to make code that is maintainable <em>and</em> localizable <em>and</em>
+high-performance <em>and</em> well-documented <em>and</em> makes use of the latest APIs--and
+oh, by the way, it has to run properly, too. Jackpot, and the library of
+transformation rules that will surely grow up around it, will make it possible
+to get the expert advice you need to achieve all of those goals.</p>
+</div>
+<div class="section" id="writing-production-rules">
+<h1><a name="writing-production-rules">Writing Production Rules</a></h1>
+<p>When you write a production rules, you include meta-variables that define
+place holders in the current syntax tree. At the moment, meta-variables
+are defined as syymbols that have a trailing underscore (although that
+may change if a better suggestion comes in).</p>
+<p>For example, in the expression, <tt class="literal"><span class="pre">if</span> <span class="pre">(v</span> <span class="pre">==</span> <span class="pre">true)</span></tt>, <tt class="literal"><span class="pre">v</span></tt> is a literal that only matches
+the symbol "v" in the source code. But in the expression, <tt class="literal"><span class="pre">if</span> <span class="pre">(v_</span> <span class="pre">==</span> <span class="pre">true)</span></tt>, <tt class="literal"><span class="pre">v_</span></tt> is a
+meta-variable that matches any expression in that position in the syntax tree.</p>
+<p>Having defined v_, you can now use it the right-hand side of the
+production. For example: <tt class="literal"><span class="pre">if</span> <span class="pre">(v_</span> <span class="pre">==</span> <span class="pre">true)</span> <span class="pre">=&gt;</span> <span class="pre">if</span> <span class="pre">(v_)</span></tt></p>
+<p>That rule says to change an expression like <tt class="literal"><span class="pre">if</span> <span class="pre">(succeeded==true)</span></tt> to <tt class="literal"><span class="pre">if</span>
+<span class="pre">(succeeded)</span></tt> --an obvious simplification.</p>
+<p>You can also qualify an expression with a "where" clause like you used to see in
+mathematics texts. In this case, you introduce the where clause with a
+double-colon (::) For example, you could rewrite the previous expression like
+this: <tt class="literal"><span class="pre">if</span> <span class="pre">(v_</span> <span class="pre">==</span> <span class="pre">true)</span> <span class="pre">=&gt;</span> <span class="pre">if</span> <span class="pre">(v_)</span> <span class="pre">::</span> <span class="pre">v_</span> <span class="pre">instanceof</span> <span class="pre">Boolean</span></tt></p>
+<p>(You can also check to see if <tt class="literal"><span class="pre">v_</span></tt> extends some class, or is a superclass of it,
+among other things.)</p>
+</div>
+<div class="section" id="fast-operation-with-simple-safe-undo">
+<h1><a name="fast-operation-with-simple-safe-undo"><em>Fast</em> Operation, with Simple, Safe Undo</a></h1>
+<p>Under the Hood, Jackpot stores, examines, and/or operates on three trees provided
+by javac:</p>
+<blockquote>
+<ul class="simple">
+<li>Abstract Syntax Tree (AST) (syntax hierarchy--code nesting)</li>
+<li>Type System  (class hierarchy--inheritance)</li>
+<li>Symbol Table (instantiation hierarchy--ownership)</li>
+</ul>
+</blockquote>
+<p>Using those three hierarchies allows precise operation. That operation occurs at
+high speed, for a  variety of reasons:</p>
+<p>First, the javac compiler isn't generating byte codes and it's not doing
+optimizations. It only parses the class files and produces an AST (abstract
+syntax tree). So that part of the process takes seconds, even for a large
+number of files.</p>
+<p>Second, Jackpot is optimized for the AST. Patterns are found as early in
+the tree in possible, before the exponential explosion drains performance.</p>
+<p>Third, although Jackpot creates a new AST for the result, it shares
+copies of existing nodes. So a minimum number of changes made, and most
+of those involve swapping a few pointers around.</p>
+<blockquote>
+<strong>Note:</strong> Node-sharing posible, because no node knows what its parent
+is.</blockquote>
+<p>When Jackpot modifies a node, that node and its parents are copied to
+to the new tree. When copying parents, Jackpot follows a linear chain up
+to the root, without the exponential explosion that occurs when you follow
+the branches down towards the leaves, so it operates in essentially linear
+time.</p>
+<p>Undo is accomplished by removing the node, along with its parents--again,
+a linear operation that is both fast and safe, because the original nodes
+remain untouched.</p>
+<p>In short, Jackpot runs very quickly, in essentialy linear time (Order N, where
+N is the product of the number of rules to process and the amount of code
+you're operating on).</p>
+</div>
+<div class="section" id="format-control">
+<h1><a name="format-control">Format Control</a></h1>
+<p>You can use a rule set to reformat an entire file, although in many cases
+that's undesirable. You can also use them to format the results of
+source code modifications.</p>
+<p>Reformatting an entire file is useful when you're the sole author, especially
+when you've inherited a project. But for a large project with multiple authors,
+where the files are under source control, massive reformatting generally
+isn't a good idea--unless everyone knows it's coming and all files are checked
+in first. Otherwise, format changes will swamp the real differences, making
+them virtually impossible to locate.</p>
+<p>When making a small change to a source file, therefore, it's generally not a good
+idea for Jackpot to reformat the entire file. On the other hand, it's impractical
+for Jackpot to deduce the style that happens to exist in that file. So when Jackpot
+makes changes, it uses your specified style settings (of which there are many) to
+format the new code.</p>
+<p>As a result, the new code may or may not adhere to the style exhibited in that
+file. But it will definitely conform to your coding standard--and you can always
+run a Jackpot pretty-print filter on the whole file, if you have that luxury.</p>
+</div>
+<div class="section" id="what-jackpot-doesn-t-do">
+<h1><a name="what-jackpot-doesn-t-do">What Jackpot Doesn't Do</a></h1>
+<p>Jackpot doesn't parse code comments the way that javadoc does, for example, so
+it won't help very much in that area. For that, you still need to use a tool
+like DocCheck and make changes manually. (DocCheck is available at
+<a class="reference" href="../_/http/java.sun.com/j2se/javadoc/doccheck/index.html">http://java.sun.com/j2se/javadoc/doccheck/</a>)</p>
+<blockquote>
+<strong>Note:</strong> As the author of DocCheck, I can tell you that it does a
+thorough job. Another tool I wrote that may be published by Sun's
+java tools group in the near future is CommentMerge--a heavily-tested
+program that merges API comments into existing source code. At some
+point, I would dearly love to see the javadoc syntax tree grafted onto the
+AST, and use Jackpot rules to implement a merge of DocCheck and CommentMerge
+for comment transformations!</blockquote>
+<p>The only other thing that Jackpot doesn't do, besides slicing your bread,
+is checking out files from the source control system. If you're making
+changes to a large number of files, that's obviously an issue. The solutions
+are to:</p>
+<blockquote>
+<ol class="loweralpha simple">
+<li>Use Jackpot as part of an IDE that will check out the files
+automatically.</li>
+<li>Use Jackpot to generate a list of files that need to be changed,
+and funnel that list to a script that checks them out. (That
+would be an excellent job for Groovy, in fact. See JavaOne, Day 1:
+It's a Groovy Day!, at <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=116723.html">http://www.artima.com/weblogs/viewpost.jsp?thread=116723</a>)</li>
+</ol>
+</blockquote>
+</div>
+<div class="section" id="availability">
+<h1><a name="availability">Availability</a></h1>
+<p>Although the Jackpot engine is working, it isn't currently available because
+the NetBeans integration isn't totally working, at the moment. (The IDE will provide
+a GUI, so you can examine suggested changes and choose whether or not to apply them.)</p>
+<p>To find out when Jackpot is released as a NetBeans module, register at <a class="reference" href="../_/http/www.netbeans.org/index.html">http://www.netbeans.org/</a>.</p>
+<p>On the other hand, Tom Ball also left open the possiblity of creating a command-line
+version that could be built into an ANT task and eventually integrated into other
+IDEs. The best way to check progress on that front is most likely to monitor his
+blog at <a class="reference" href="../_/http/weblogs.java.net/blog/tball/index.html">http://weblogs.java.net/blog/tball/</a>.</p>
+</div>
+<div class="section" id="resources">
+<h1><a name="resources">Resources</a></h1>
+<ul class="simple">
+<li>NetBeans (get on the mailing list for announcements): <a class="reference" href="../_/http/www.netbeans.org/index.html">http://www.netbeans.org/</a></li>
+<li>Tom Ball's weblog: <a class="reference" href="../_/http/weblogs.java.net/blog/tball/index.html">http://weblogs.java.net/blog/tball/</a></li>
+<li>His post on Jackpot:
+<a class="reference" href="../_/http/weblogs.java.net/blog/tball/archive/2005/06/project_jackpot.html">http://weblogs.java.net/blog/tball/archive/2005/06/project_jackpot.html</a></li>
+<li>DocCheck: <a class="reference" href="../_/http/java.sun.com/j2se/javadoc/doccheck/index.html">http://java.sun.com/j2se/javadoc/doccheck/</a></li>
+<li>Other comment-processing doclets intended for use with javadoc:
+<a class="reference" href="../_/http/www.doclet.com/index.html">http://www.doclet.com/</a></li>
+<li>JavaOne, Day 1: It's a Groovy Day!
+<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=116723.html">http://www.artima.com/weblogs/viewpost.jsp?thread=116723</a></li>
+</ul>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=116895.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=116895&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D116895&amp;title=JavaOne+2005%2C+Day+2%3A+Hitting+the+Jackpot%21&amp;bodytext=You+go+to+JavaOne+in+hopes+of+hearing+about+realy+cool+things.+Every+once+in+a+while%2C+you+get+something+extremely+cool--elegant%2C+even--something+like+Project+Jackpot.+If+you+need+to+clean+up+your+source+files+en+masse%2C+do+it+elegantly%2C+and+do+it+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D116895&amp;title=JavaOne+2005%2C+Day+2%3A+Hitting+the+Jackpot%21">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D116895&amp;title=JavaOne+2005%2C+Day+2%3A+Hitting+the+Jackpot%21">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

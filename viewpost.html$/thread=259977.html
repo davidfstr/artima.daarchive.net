@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/26</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=259977.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/26&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/26 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=259977">Email</a> | 
+<a href="../viewpostP.html$/thread=259977.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=258580.html" title="The Adventures of a Pythonista in Schemeland/25">Previous</a> | 
+<a class="sl" href="thread=260182.html" title="The Adventures of a Pythonista in Schemeland/27">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/26</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">June 11, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this episode I add another item to the macro programmer toolkit (macros taking macros as arguments) and I bring an argument in favor of good old parentheses.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">Macros taking macros as arguments</h1>
+<p>There is no limit to the sophistication of macros: for instance,
+it is possible to define higher order macros, i.e. macros
+taking other macros as arguments or macros expanding into other
+macros. Higher order macros allow an extremely compact and elegant
+programming style; on the other hand, they are exposed to the risk of
+making the code incomprehensible and pretty hard to debug.  I have already
+shown an example of macro expanding into a macro transformer in episode
+<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=256848.html">22</a>, and explained the intricacies of the tower of meta-levels; in
+this episode instead I will consider a much simpler class of higher
+order macros, macros taking macros as arguments. Moreover, I will spend some
+time discussing the philosophy of Scheme and explaining the real
+reason why there are so many parentheses.</p>
+<div class="section">
+<h1><a id="scheme-as-an-unfinished-language" name="scheme-as-an-unfinished-language">Scheme as an unfinished language</a></h1>
+<p>Most programmers are used to work with a <em>finished</em> language.  With
+<em>finished</em>, I mean that the language provides not only a basic core of
+functionalities, but also a toolbox of ready-made solutions making the
+life of the application programmer easier.  Notice that here I am not
+considering the quality of the library coming with the language (which
+is extremely important of course) but language-level features, such as
+providing syntactic sugar for common use cases.</p>
+<p>As a matter of fact, developers of the XXIth century take for granted a
+<em>lot</em> of language features that were uncommon just a few years
+ago. This is particularly true for developers working with dynamic
+languages, which are used to features like built-in support for regular
+expressions, a standard object system with a Meta Object Protocol, a
+Foreign Function Interface, a sockets/networking interface,
+support for concurrency via microthread <em>and</em> native threads <em>and</em>
+multiprocesses and more; nowadays <a class="reference" href="../_/https/developer.mozilla.org/en/New_in_JavaScript_1.7">even Javascript</a> has list
+comprehension and generators!</p>
+<p>Modern finished languages spoil the programmer, and this is the reason
+why they are so much popular. Of course not all finished languages are
+equivalent, and some are more powerful and/or easier to use than
+others. Some programmers will prefer Python over Java, others will prefer
+Ruby, or Scala, or something else, but the concept of finished
+language should be clear. On the other hand Scheme, at least as specified in
+the R6RS standard - I am not talking about concrete implementations
+here - is missing lots of the features that modern languages provide
+out the box. Compared to the expectations of the modern developer,
+Scheme feels very much like an unfinished language.</p>
+<p>I think the explanation for the current situation is more
+historical and social than technical. On one hand, a lot of people in
+the Scheme world want Scheme to stay the way it is, i.e. a language
+for language experimentations and research more than a language for
+enterprise work (for instance a standard object system would
+effectively kill the ability to experiment with other object
+systems and this is not wanted).
+On the other hand, the fact that there are so many
+implementations of Scheme makes difficult/impossible to specify too
+much: this the reason why there are no standard debugging tools for
+Scheme, but only implementation-specific ones.</p>
+<p>Even if the Scheme language has been left unfinished - does not matter
+if by choice or out of necessity - it has been equipped with a
+built-in mechanism enabling the user to finish the language according
+to his/her preferences. Such a mechanism is of course the mechanism of
+macros. Actually, one of the main use of macros is to fill out the
+deficiencies left out by the standard.  Most people nowadays prefer to
+have ready-made solutions, because they have deadlines, projects to
+complete and no time nor interest in writing things that should be
+made by language designers, so they dismiss Scheme immediately after
+having having read the standard specification.</p>
+<p>However, one should make a distinction: while it is
+true that Scheme - in the sense of the language specified by the
+R6RS standard - is unfinished, concrete implementations of Scheme
+tends to be much more complete. If you give up portability
+and you marry a specific implementations you get all the
+benefit of a "finished" language. Consider for instance PLT Scheme,
+or Chicken Scheme, which are two big Scheme implementations: they
+have support for every language-level feature you get in a mainstream
+language and decent size libraries so that they are perfectly usable
+(and used) for practical tasks you could do with Python or Ruby or
+even a compiled language. Another option if you want to use Scheme in
+an enterprise context is to use a Scheme implementation running on the
+Java virtual machine (SISC, Kawa ...)  or on the .NET
+platform (IronScheme). Alternatively, you could use a Scheme-like
+language such as <a class="reference" href="../_/http/clojure.org/index.html">Clojure</a>, developed by Rich Hickey.</p>
+<p>Clojure runs on the Java Virtual Machine,
+it is half lisp and half Scheme, it has a strong functional flavour in
+it, and an interesting support to <a class="reference" href="../_/http/clojure.org/concurrent_programming/index.html">concurrency</a>. It also
+shares the following caracteristics with Python/Ruby/Perl/...:</p>
+<ol class="arabic simple">
+<li>it is a one-man language (i.e. it is not a comprimise language made
+by a committee) with a clear philosophy and internal consistency;</li>
+<li>it is language made from scratch, with no preoccupations of backward
+compatibility;</li>
+<li>it provides special syntax/libraries for common operations (
+<a class="reference" href="../_/http/clojure.org/special_forms/index.html">syntax conveniences</a>) that would never enter in the Scheme standard.</li>
+</ol>
+<p>Such caracteristics make Clojure very appealing. However,
+personally I have no need to
+interact with the Java platform  professionally (and even there I would probably
+choose Jython over Clojure for reason of greater familiarity) so I have not
+checked out Clojure and I have no idea about it except what you can
+infer after reading its web site. If amongst my readers
+there is somebody with experience in Clojure, please feel free to add
+a comment to this article.
+I personally am using Scheme since I am interested in macrology and no
+language in existence can beat Scheme in this respect. Also, I am
+using for Scheme for idle speculation and not to get anything done ;-)</p>
+</div>
+<div class="section">
+<h1><a id="two-second-order-macros-to-reduce-parentheses" name="two-second-order-macros-to-reduce-parentheses">Two second order macros to reduce parentheses</a></h1>
+<p>A typical example of idle speculation is
+the following question: can we find a way to reduce the number of
+parentheses required in Scheme? Finding tricks for reducing parentheses
+is a pointless exercise per se, but it gives a reason to teach a few other
+macro programming techniques - in particular second order
+macros taking macros as arguments - and to explain why parentheses
+are actually good and should not be removed.</p>
+<p>In episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=258580.html">25</a> I defined a recursive <tt class="docutils literal"><span class="pre">cond-</span></tt> macro taking
+less parentheses than a regular <tt class="docutils literal"><span class="pre">cond</span></tt>, using an accumulator.  Here
+I will generalize that approach, by abstracting the accumulator
+functionality into a second order macro, called <tt class="docutils literal"><span class="pre">collecting-pairs</span></tt>,
+which takes as input another macro and a sequence of arguments, and
+calls the input macro with the arguments grouped in pairs.
+That makes it possible to call with less parentheses any macro of
+the form <tt class="docutils literal"><span class="pre">(macro</span> <span class="pre">expr</span> <span class="pre">...</span> <span class="pre">(a</span> <span class="pre">b)</span> <span class="pre">...)</span></tt>, by calling it as
+<tt class="docutils literal"><span class="pre">(collecting-pairs</span> <span class="pre">(macro</span> <span class="pre">expr</span> <span class="pre">...)</span> <span class="pre">a</span> <span class="pre">b</span> <span class="pre">...)</span></tt>.</p>
+<p>Here is the code implementing <tt class="docutils literal"><span class="pre">collecting-pairs</span></tt>:</p>
+<pre class="literal-block">
+(def-syntax collecting-pairs
+  (syntax-match ()
+    (sub (collecting-pairs (name arg ...) x1 x2 ...)
+     #'(collecting-pairs "helper" (name arg ...) () x1 x2 ...))
+    (sub (collecting-pairs "helper" (name arg ...) (acc ...))
+     #'(name arg ... acc ...))
+    (sub (collecting-pairs "helper" (name arg ...) (acc ...) x)
+     #'(syntax-violation 'name "Mismatched pairs" '(name arg ... acc ... x) 'x))
+    (sub (collecting-pairs "helper" (name arg ...) (acc ...) x1 x2 x3 ...)
+     #'(collecting-pairs "helper" (name arg ...) (acc ... (x1 x2)) x3 ...))
+    ))
+</pre>
+<p><tt class="docutils literal"><span class="pre">collecting-pairs</span></tt> can be used with many syntactic expressions like
+<tt class="docutils literal"><span class="pre">cond</span></tt>, <tt class="docutils literal"><span class="pre">case</span></tt>, <tt class="docutils literal"><span class="pre">syntax-rules</span></tt>, et cetera. Here is an example
+with the <a class="reference" href="../_/http/www.r6rs.org/final/html/r6rs/r6rs-Z-H-14.html#node_idx_384">case</a> expression:</p>
+<pre class="literal-block">
+&gt; (collecting-pairs (case 1)
+      (1) 'one
+      (2) 'two
+      (3) 'three
+      else 'unknown))
+one
+</pre>
+<p>Using a second order macro made us jump up one abstraction level, by
+encoding the accumulator trick into a general construct that can be
+used with a whole class of <tt class="docutils literal"><span class="pre">cond</span></tt>-style forms.
+However, <tt class="docutils literal"><span class="pre">collecting-pairs</span></tt> cannot do anything to reduce parentheses
+in <tt class="docutils literal"><span class="pre">let</span></tt>-style forms. To this aim we can introduce a different
+second order macro, such as the following "colon" macro:</p>
+<pre class="literal-block">
+(def-syntax : ; colon macro
+  (syntax-match ()
+    (sub (: let-form e); do nothing
+         #'e)
+    (sub (: let-form e1 e2)
+         (syntax-violation ': "Odd number of arguments" #'let-form))
+    (sub (: let-form patt value rest ... expr)
+         #'(let-form ((patt value)) (: let-form rest ... expr))
+         (identifier? #'let-form)
+         (syntax-violation ': "Not an identifier" #'let-form))
+    ))
+</pre>
+<p>The colon macro expects as argument another macro, the
+<tt class="docutils literal"><span class="pre">let-form</span></tt>, which can be any binding macro such that
+<tt class="docutils literal"><span class="pre">(let-form</span> <span class="pre">((patt</span> <span class="pre">value)</span> <span class="pre">...)</span> <span class="pre">expr)</span></tt> is a valid syntax. For instance
+<tt class="docutils literal"><span class="pre">(let</span> <span class="pre">((name</span> <span class="pre">value)</span> <span class="pre">...)</span> <span class="pre">expr)</span></tt> can be rewritten as <tt class="docutils literal"><span class="pre">(:</span> <span class="pre">let</span> <span class="pre">name</span> <span class="pre">value</span>
+<span class="pre">...</span> <span class="pre">expr)</span></tt>, by removing four parentheses. Here is a test with <tt class="docutils literal"><span class="pre">let*</span></tt>:</p>
+<pre class="literal-block">
+(test "colon-macro" (: let* x 1 y x (+ x y)) 2)
+</pre>
+<p>The latest version of the <tt class="docutils literal"><span class="pre">aps</span></tt> package provides a colon <tt class="docutils literal"><span class="pre">:</span></tt> form in the
+<tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">lang)</span></tt> module. In the following Adventures I will never use
+<tt class="docutils literal"><span class="pre">collecting-pairs</span></tt> and <tt class="docutils literal"><span class="pre">:</span></tt> since I actually like parentheses.
+The reason is that parens make it easier to write macros with
+pattern matching techniques, as I argue in the next paragraph.</p>
+</div>
+<div class="section">
+<h1><a id="the-case-for-parentheses" name="the-case-for-parentheses">The case for parentheses</a></h1>
+<p>Paren-haters may want to use <tt class="docutils literal"><span class="pre">collecting-pairs</span></tt> and the colon macro
+to avoid parentheses. They may even go further, and rant that the
+basic Scheme syntax should require less parentheses.
+However, that would be against the Scheme philosophy:
+according to the Scheme philosophy a programmer should not write
+code, he should write macros writing code for him. In other words,
+automatic code generation is favored over manual writing.</p>
+<p>When writing macros, it is much easier
+to use a conditional with more parentheses like <tt class="docutils literal"><span class="pre">cond</span></tt> than a
+conditional with less parentheses like <tt class="docutils literal"><span class="pre">cond-</span></tt>. The parentheses
+allows you to group expressions in group that can be repeated via
+the ellipsis symbol; in practice, you can write things like
+<tt class="docutils literal"><span class="pre">(cond</span> <span class="pre">(cnd?</span> <span class="pre">do-this</span> <span class="pre">...)</span> <span class="pre">...)</span></tt> which cannot be written
+with <tt class="docutils literal"><span class="pre">cond-</span></tt>.
+On the other hand, different languages adopt different philosophies;
+for instance Paul Graham's <a class="reference" href="../_/http/www.paulgraham.com/arcll1.html">Arc</a> uses less parentheses. This is
+possible since it does not provide a macro system based on
+pattern matching (which is a big <em>minus</em> in my opinion).</p>
+<p>Is it possible to have both a syntax with few parentheses for writing
+code manually and a syntax with many parentheses for writing macros?
+Clearly the answer is yes: the price to pay is to double the
+constructs of the language.  Python is an example of such a language
+with a two-level syntax: it provides both a simple syntax, limited but
+able to cover the most common case, and a fully fledged syntax, giving
+all the power you need, which however is used rarely. For instance,
+here a table showing some of the most common syntactic sugar used in
+the Python language:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%"/>
+<col width="62%"/>
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Simplified syntax</th>
+<th class="head">Full syntax</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>obj.attr</td>
+<td>getattr(obj, 'attr')</td>
+</tr>
+<tr><td>x + y</td>
+<td>x.__add__(y)</td>
+</tr>
+<tr><td>c = C()</td>
+<td>c = C.__new__(C); c.__init__()</td>
+</tr>
+</tbody>
+</table>
+<p>In principle, the Scheme language could follow exactly the same route,
+by providing syntactic sugar for the common cases and a low level
+syntax for the general case. For instance, in the case of the
+conditional syntax, we could have a fully parenthesized <tt class="docutils literal"><span class="pre">__cond__</span></tt>
+syntax for usage in macros and <tt class="docutils literal"><span class="pre">cond</span></tt> syntax with less parens for
+manual usage. That, in theory: in practice Scheme only provides the
+low level syntax, leaving to the final user the freedom (and the
+burden) of implementing his preferred high level syntax.  Since syntax
+is such a subjective topic, in practice I think it is impossible for a
+language designed by a committee to converge on an high level
+syntax. This is a consequence of the infamous <a class="reference" href="../_/http/en.wikipedia.org/wiki/Bikeshed/index.html">bikeshed effect</a>.</p>
+<p>The bikeshed effect is typical of any project
+designed by a committee: when it comes to proposing advanced
+functionalities that very few can understand, it is easy to get
+approval from the larger community.  However, when it comes to simple
+functionality of common usage, everybody has got a different opinion
+and it is practically impossible to get anything approved at all.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/bikeshed.jpg" class="right" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/bikeshed.jpg" style="width: 400px;">
+<p>To avoid that, the standard does not provide
+directly usable instruments: instead, it provides general instruments
+which are intended as building blocks on that of which everybody can
+write the usable abstractions he/she prefers.
+On the other hand Lisp-like languages
+designed by a <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=235725.html">BDFL</a> (like <a class="reference" href="../_/http/www.paulgraham.com/arcll1.html">Arc</a> and <a class="reference" href="../_/http/clojure.org/index.html">Clojure</a>) provide a high level
+syntax, which is the one the BDFL like.
+You may try it and see if you like it. Good luck!</p>
+</img></div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=259977&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D259977&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F26&amp;bodytext=In+this+episode+I+add+another+item+to+the+macro+programmer+toolkit+%28macros+taking+macros+as+arguments%29+and+I+bring+an+argument+in+favor+of+good+old+parentheses.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D259977&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F26">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D259977&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F26">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

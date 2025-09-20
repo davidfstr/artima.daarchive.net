@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>A Puzzling Divertimento</title>
+<meta charset="utf-8"/>
+<meta content="David Goodger" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#DDDDDD" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=goodger.html">David Goodger's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=177220.html">Discuss</a> | 
+<a href="mailto:?subject=A Puzzling Divertimento&amp;body= %0AArtima Weblogs %0AA Puzzling Divertimento %0Aby David Goodger %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=177220">Email</a> | 
+<a href="../viewpostP.html$/thread=177220.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=177168.html" title="Python For Dummies">Previous</a> | 
+<a class="sl" href="thread=177911.html" title="Mickey’s Infinite Copyright">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pythonista &amp; Techno-Geek</span><br>
+<span class="ts">A Puzzling Divertimento</span><br/>
+<span class="as">by David Goodger</span><br/>
+<span class="pd">September 23, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The Polyform Puzzler project was begun to scratch an old itch.  After a long delay, the project was finally launched and is now maturing nicely.  Interested parties are welcome to join in!
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Polyforms are shapes constructed by combining identical basic polygons
+(by their edges) or polyhedra (by their sides) in all possible ways.
+The most famous polyforms are the
+tetrominoes (which we've all seen in Tetris) and the pentominoes.
+There are 12 pentominoes, figures constructed from 5 squares:</p>
+<div class="figure">
+<img alt="../_/http/puzzler.sf.net/docs/images/ominoes/pentominoes.png" src="../_/http/puzzler.sf.net/docs/images/ominoes/pentominoes.png">
+<p class="caption">The 12 pentominoes, with their common names.</p>
+</img></div>
+<p>Many sets of polyforms can combine to fill certain areas or volumes.
+These can be called "polyform puzzles" or "combinatoric dissection
+puzzles".  For example, the pentominoes can fill a 6x10 rectangle:</p>
+<div class="figure">
+<img alt="../_/http/puzzler.sf.net/docs/images/ominoes/pentominoes6x10.png" src="../_/http/puzzler.sf.net/docs/images/ominoes/pentominoes6x10.png">
+<p class="caption">One 6x10 pentominoes solution.</p>
+</img></div>
+<p>There are 2339 distinct ways to fit the pentominoes into a 6x10
+rectangle, but it's not so easy to find one!  <a class="reference" href="../_/http/puzzler.sourceforge.net/index.html">Polyform Puzzler</a> can
+find them all.</p>
+<p>Other polyforms include polyiamonds (made from equilateral triangles),
+polyhexes (hexagons), polycubes, and polysticks (grid line segments).
+Many other polyforms are possible, and there are many web sites
+devoted to their exploration.</p>
+<p>My interest in polyforms began when I discovered pentominoes, in
+Arthur C. Clarke's novel <cite>Imperial Earth</cite>, probably around the time I
+was 11 or 12 years old.  I picked up a pentominoes puzzle ("Hexed", by
+Gabriel Toys) at a local hobby store and spent many hours discovering
+solutions.</p>
+<p>In university, probably while avoiding legitimate study, I wrote the
+first implementation of a pentominoes-solving project, in Object
+Pascal.  I developed an algorithm that solved the puzzle using brute
+force with some intelligence applied:</p>
+<ul class="simple">
+<li>Place each pentomino in every possible location.</li>
+<li>Confirm that the remaining empty spaces all have areas that are a
+multiple of 5 squares.</li>
+<li>For areas of exactly 5 squares, determine the piece that fits and
+confirm its availability.</li>
+<li>Check for bottlenecks that force a subset of the remaining space to
+accept only a single specific piece, and confirm its availability.</li>
+</ul>
+<p>When I first learned Python, I reimplemented this as a practical
+learning exercise.  I improved the algorithm a bit and got it to work
+pretty well, if not completely bug-free.  It was a fun and interesting
+exercise, but the code was complicated and ran slow.  (It didn't help
+that I only had a 66MHz computer at the time.)</p>
+<p>I even went so far as to register the "puzzler" project on
+SourceForge, but didn't take it any further at that time.  I had
+scratched my itch enough, and another itch became more persistent...</p>
+<p>While writing the second implementation and learning Python I
+discovered Python docstrings and started looking around for
+auto-documentation systems to exploit them.  I couldn't find anything
+that worked well for me, so I started scratching <em>that</em> itch, and
+eventually <a class="reference" href="../_/http/docutils.sf.net/rst.html">reStructuredText</a> &amp; <a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a> were born.  You could say
+that Polyform Puzzler spawned <a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a>.</p>
+<p>This summer I discovered a new approach for solving polyform puzzles,
+Donald Knuth's "Dancing Links Algorithm X" ("DLX") approach to the
+"exact cover" problem (described in the <a class="reference" href="../_/http/puzzler.sourceforge.net/docs/FAQ.html">Polyform Puzzler FAQ</a>,
+question 4.1).  This approach was so different from what I'd done
+previously, and so obviously superior, that my old itch resurfaced.
+<a class="reference" href="../_/http/puzzler.sourceforge.net/index.html">Polyform Puzzler</a> is the result.</p>
+<p>Since <a class="reference" href="../_/http/puzzler.sourceforge.net/index.html">Polyform Puzzler</a> launched on SourceForge in early August, it
+has been steadily maturing.  The project code consists a set of
+front-end applications (solvers) for specific polyform puzzles and a
+Python library that does the heavy lifting (definitions of the
+polyforms, puzzles, and coordinate systems; and the DLX exact cover
+algorithm).  New polyforms and new puzzles can easily be defined and
+added to the core.</p>
+<p>Release 1 on August 8 featured 4 polyforms and 28 puzzles.  The
+project currently features over 100 puzzles, configurations of 12 polyforms:
+pentominoes, solid pentominoes, pentacubes, tetracubes, soma cubes, hexiamonds,
+heptiamonds, tetrahexes, pentahexes, order 1-4 polyhexes, tetrasticks, and
+order 1-4 polysticks.  We have SVG rendering for most polyforms, X3D models for
+3-D polyforms (polycubes), and the capability to save session state
+(so a puzzle can be stopped and restarted).  The project includes a
+gallery of <a class="reference" href="../_/http/puzzler.sourceforge.net/docs/puzzles.html">puzzles &amp; solutions</a>; some examples below.</p>
+<div class="figure">
+<img alt="../_/http/puzzler.sourceforge.net/docs/images/hexes/pentahexes-5x24-trapezoid.png" src="../_/http/puzzler.sourceforge.net/docs/images/hexes/pentahexes-5x24-trapezoid.png"/>
+<p class="caption">5x24 Pentahex Trapezoid</p>
+</div>
+<div class="figure">
+<img alt="../_/http/puzzler.sf.net/docs/images/iamonds/heptiamonds-snowflake-2.png" src="../_/http/puzzler.sf.net/docs/images/iamonds/heptiamonds-snowflake-2.png"/>
+<p class="caption">Heptiamonds Snowflake 2</p>
+</div>
+<div class="figure">
+<img alt="../_/http/puzzler.sf.net/docs/images/cubes/pentacubes-corner-crystal.png" src="../_/http/puzzler.sf.net/docs/images/cubes/pentacubes-corner-crystal.png"/>
+<p class="caption">Pentacubes Corner Crystal</p>
+</div>
+<p>In the short term I plan to add SVG rendering of polysticks (but the
+coordinate system code has to be reworked first) and then release version
+2.  In the long term, I hope to explore some ideas for
+as-yet-unexplored or minimally-explored polyforms,
+and perhaps work on a GUI.  One pressing need is for
+greater speed; the exact_cover module should be rewritten as a C
+extension.  Do I have to recondition my rusty C, or will some kind
+soul save me from the frustration?</p>
+<p>I would welcome the participation of others interested in polyform
+puzzles.  (I'd like to stop saying "I" so much and start saying "we" more ;-)</p>
+<p>(Portions of this article were adapted from the <a class="reference" href="../_/http/puzzler.sourceforge.net/docs/FAQ.html">Polyform Puzzler FAQ</a>.)</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=177220.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=177220&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever David Goodger adds a new entry to <a href="../index.html$/blogger=goodger.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/goodger.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D177220&amp;title=A+Puzzling+Divertimento&amp;bodytext=The+Polyform+Puzzler+project+was+begun+to+scratch+an+old+itch.++After+a+long+delay%2C+the+project+was+finally+launched+and+is+now+maturing+nicely.++Interested+parties+are+welcome+to+join+in%21&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16"/>Digg
+  </a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D177220&amp;title=A+Puzzling+Divertimento">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D177220&amp;title=A+Puzzling+Divertimento">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>David Goodger has been using Python since 1998, and began working on reStructuredText and Docutils in 2000.  A proud Canadian, he lived in
+Japan for 7 years, where a stint at a document processing company in
+Tokyo began his love/hate relationship with structured markup.  David
+is a Python Enhancement Proposal (PEP) Editor and a member of the
+Python Software Foundation.  He currently lives outside of Montreal,
+Quebec, with his Japanese wife and their two children.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 David Goodger. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

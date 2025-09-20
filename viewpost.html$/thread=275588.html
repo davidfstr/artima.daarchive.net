@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Autoproxy Plugin - Part II</title>
+<meta charset="utf-8"/>
+<meta content="Kevin Wright" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=kevwright.html">Kevin Wright's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=275588.html">Discuss</a> | 
+<a href="mailto:?subject=The Autoproxy Plugin - Part II&amp;body= %0AArtima Weblogs %0AThe Autoproxy Plugin - Part II %0Aby Kevin Wright %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=275588">Email</a> | 
+<a href="../viewpostP.html$/thread=275588.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=275135.html" title="The Autoproxy Plugin - Part I">Previous</a> | 
+<a class="sl" href="thread=275983.html" title="A (Brief) History of Object-Functional Programming">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">A Taste of Scala</span><br>
+<span class="ts">The Autoproxy Plugin - Part II</span><br/>
+<span class="as">by Kevin Wright</span><br/>
+<span class="pd">December 2, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Using Scala to make your code lovely
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><em>Follow-up to</em> <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=275135.html">Part One</a>: <em>It looks like the name of the annotation is open for debate.  For anyone with an account, please do head over to the</em> <a class="reference" href="../_/http/tinyurl.com/yb2uq6g/index.html">wave for this project</a> <em>and add to the discussion there.  Otherwise, feel free to add a comment below.  For the remainder of this article I'm trialling the alternative @mixin annotation</em></p>
+<div class="section">
+<h1><a id="back-story" name="back-story">Back Story</a></h1>
+<p>Some months ago, I ran into a small problem with the Scala REPL (Read-Evaluate-Print-Loop) under MS Windows.</p>
+<p>This was using <a class="reference" href="../_/http/jline.sourceforge.net/index.html">JLine</a>, which hooks a native library into the command window to find the window size and to support key bindings such as tab completion.  JLine is a great solution, except when you need to run the REPL in a nested process with redirected I/O, or connect to it remotely via a protocol such as Telnet.  In such cases you have to sacrifice functionality.</p>
+<p>Seeing the situation, I felt that Scala could benefit from a swing-based REPL.  This would not need JLine to support the full range of functionality in 2.8, would be embeddable, and would allow for connecting to a remote JVM.  It also looked like a good project to stretch my growing experience of coding in Scala and gave me a chance to experiment with a bit of swing in the language.</p>
+<p>For various reasons, this project has been postponed (demand from the community wasn't strong at the time, JEditorPane and JTextPane still need to be ported over to the scala swing library, and it looked unlikely that I would have it done in time for the then-predicted 2.8 release), but it <em>did</em> expose me to lots of code that looked a bit like this:</p>
+<pre class="literal-block">
+class MyClass(peer: OtherClass) {
+  def method1 = peer.method1
+  def method2(n:Int) = peer.method2(n)
+  def method3(s: String) = peer.method3(s)
+  def prop1 = peer.prop1
+  def prop1_=(n:Int) = peer.prop1_=(n)
+  def prop2 = peer.prop2
+  ...
+}
+</pre>
+<p>Pulling in a bunch of methods and properties from elsewhere is why traits were invented, it's the entire reason that Scala has "with" as a keyword.  But, as discussed in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=275135.html">part I</a>, traits/mixins are of no use in this situation because the OtherClass instance, peer, already exists.</p>
+<p>Still, the code contains a lot of boilerplate - the sort of thing that IDEs can readily generate for Java projects.  This just <em>has</em> to be a code smell. Surely, there's something the compiler can do to help?</p>
+</div>
+<div class="section">
+<h1><a id="dynamic-mixins" name="dynamic-mixins">Dynamic Mixins</a></h1>
+<p>What I first wanted is a way to change an expression like this:</p>
+<pre class="literal-block">
+val x = new Foo with Bar
+</pre>
+<p>and instead write something like this:</p>
+<pre class="literal-block">
+val f = //create or fetch an instance of Foo
+val x = f with Bar
+</pre>
+<p>Thus decorating a pre-existing instance of Foo with extra functionality.  This capability is often referred to as "dynamic mixins" on the Scala mailing lists.</p>
+<p>Although such syntax may be possible <a class="footnote-reference" href="#id2" id="id1" name="id1">[1]</a> , it would require a change to the parsing rules of Scala and is really beyond the scope of a compiler plugin.</p>
+<p>Instead, I settled on the @mixin (formerly @proxy) annotation to extend the language in a more plugin-friendly fashion:</p>
+<pre class="literal-block">
+class Bar(@mixin foo: Foo) {
+  ...
+}
+val f = ...some method returning an instance of Foo...
+val x = new Bar(f)
+</pre>
+<p>I then sought feedback about this approach via the Scala mailing lists and the responses were unexpected!  Instead of just seeing my proposal as a dynamic alternative to mixins, there was a lot of curiosity about <em>other</em> ways in which this annotation might be used.  Since that time I've expanded the scope of the plugin and I'm now testing it in a number of scenarios that are increasingly removed from the original goal.  The remainder of this article covers some of the uses...</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1" name="id2">[1]</a></td><td><em>Use of the "new" keyword avoids any ambiguities.  Consider "val f = new Foo with bar" and "val f = Foo with Bar", in the second case Bar is being mixed into the existing singleton object Foo.  It should even be possible to refer to this type signature as "Foo.type with Bar", though in practice it would probably be cleaner to use a type alias or a dedicated interface trait for the purpose.</em></td></tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h1><a id="customising-accessors" name="customising-accessors">Customising accessors</a></h1>
+<p>Non-private member variables in Scala are generated as a hidden field, plus a getter and (in the case of vars) setter method.  Sometimes it's desirable to override these generated methods, perhaps for logging, security or to notify change listerners.</p>
+<p>One way to achieve this is to create a private member and hand-craft the accessors:</p>
+<pre class="literal-block">
+class Foo {
+  private[this] val x0 : Int = 0
+  def x = { x0 }
+  def x_=(value : Int) = {
+    // custom behaviour goes here
+    x0 = value
+  }
+}
+</pre>
+<p>This needs a naming convention to be chosen for the private fields.  It also needs the developer to write a getter method identical to the one the compiler would have generated, which feels a bit redundant.</p>
+<p>It's easy enough to avoid the proliferation of private names by holding them all in a singleton object:</p>
+<pre class="literal-block">
+class Foo {
+  private[this] object props {
+    val x : Int = 0
+  }
+  def x = { props.x }
+  def x_=(value : Int) = {
+    // custom behaviour goes here
+    props.x = value
+  }
+}
+</pre>
+<p>This approach then lends itself to using autoproxy for re-use of the compiler-generated methods:</p>
+<pre class="literal-block">
+class Foo {
+  private[this] @mixin object props {
+    var a : Int = _
+    var b : Double = _
+    var c : String = _
+  }
+
+  //The following defs are mixed in: a, a_=, b, b_=, c
+  //a delegate for c_= is NOT created as it already exists below
+
+  def c_=(str : String) = println("c set to " + str); props.c = str
+}
+</pre>
+<p>Thus allowing accessors to be selectively overridden, with minimal boilerplate.</p>
+</div>
+<div class="section">
+<h1><a id="mixing-in-parameterized-traits" name="mixing-in-parameterized-traits">Mixing-in Parameterized Traits</a></h1>
+<p>Due to type erasure, the types Foo[String] and Foo[Bar] are identical at runtime, with the type safety only being enforced within the compiler.  Scala 2.8 offers the @specialize annotation, manifests and view bounds to help out with many of the problems that this can cause, but there is one problem that can't be handled - mixing in differently paramaterized versions of the same trait:</p>
+<pre class="literal-block">
+trait Foo[T] {
+  def foomethod(arg: T) = println(arg)
+}
+
+//can't do this!
+class Bar extends Foo[String] with Foo[Int] {
+  def barmethod = println("bar method")
+}
+</pre>
+<p>Once again, autoproxy can help here:</p>
+<pre class="literal-block">
+trait Foo[T] {
+  def foomethod(arg: T) = println(arg)
+}
+
+//this works though!
+class Bar {
+  @mixin val foo1 = new Foo[Int]
+  @mixin val foo2 = new Foo[String]
+  def barmethod = println("bar method")
+}
+</pre>
+<p>This approach is fine for methods such as foomethod above that have different type signatures in each of the mixed-in traits, they will just end up as overloaded versions in the Bar class.</p>
+<p>However, for any method that exists in both Foo[Int] and Foo[String] with the same signature, the generated delegate will use the version from Foo[Int] as it was the first mixin listed in Bar.  Depending on your needs, this can be seen as either a problem to work around or a useful design feature.</p>
+</div>
+<div class="section">
+<h1><a id="the-future" name="the-future">The Future</a></h1>
+<p>The plugin is still in desperate need of testing in as many scenarios as possible.  But I'm hopeful of having it up to production quality in time for the 2.8 Scala release.</p>
+<p>One problem I <em>would</em> like to tackle though is javabean properties.  Currently, if a field is annotated as @BeanProperty then it has getXXX and setXXX methods generated in addition to the standard scala getters and setters, when such an object is mixed-in then separate delegates will be created for the Scala and the JavaBean accessors.  Ideally, it should be possible to mixin an object, override the Scala accessors, and have the JavaBean accessors delegate to the overridden implementation instead of the original.</p>
+<p>It would also be a very useful extra if I could take an existing object using Javabean style properties, and proxy it using Scala style properties.</p>
+</div>
+<div class="section">
+<h1><a id="and-the-next-article" name="and-the-next-article">And The Next Article?</a></h1>
+<p>I'll cover how the plugin is implemented.  This involved some fun interactions with the typer phase of the compiler, which fails if delegates have not yet been generated, but also needs to be run to provide information used in generating the delegates.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=275588.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=275588&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Kevin Wright adds a new entry to <a href="../index.html$/blogger=kevwright.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/kevwright.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D275588&amp;title=The+Autoproxy+Plugin+-+Part+II&amp;bodytext=Using+Scala+to+make+your+code+lovely&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D275588&amp;title=The+Autoproxy+Plugin+-+Part+II">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D275588&amp;title=The+Autoproxy+Plugin+-+Part+II">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Kevin Wright has finally settled back in London to work on market
+analysis for the telecoms industry after having worked his way around
+Europe in manufacturing, finance and even online gaming. He's a
+self-appointed Scala Evangelist and an active participant in every forum
+he can find, where he's currently trying to build interest in the London
+Scala Users' Group.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Kevin Wright. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

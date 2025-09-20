@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Modeling to Avoid Hacking Your Model in ORM Mapping Format</title>
+<meta charset="utf-8"/>
+<meta content="Josh Long" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=joshlong.html">Josh Long's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=247671.html">Discuss</a> | 
+<a href="mailto:?subject=Modeling to Avoid Hacking Your Model in ORM Mapping Format&amp;body= %0AArtima Weblogs %0AModeling to Avoid Hacking Your Model in ORM Mapping Format %0Aby Josh Long %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=247671">Email</a> | 
+<a href="../viewpostP.html$/thread=247671.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=245528.html" title="The New Old">Previous</a> | 
+<a class="sl" href="thread=248983.html" title="Scalability Is Not An Architectural Capability Anymore">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Full contact Java Programming</span><br>
+<span class="ts">Modeling to Avoid Hacking Your Model in ORM Mapping Format</span><br/>
+<span class="as">by Josh Long</span><br/>
+<span class="pd">January 17, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Discussion on modeling, its advantages, using either UML or ER. A solution using Maven is provided to provide a work flow using ER modeling.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+There's a lot of power attached  - especially in recent  years -   to the notion that you can write a few classes and have a DAO, table schema, web page view, and more generated. The testament to this is Ruby On Rails, where the ActiveRecord model class is the all-powerful, canonical source of everything in the stack. I agree with the notion that there should be one source for the design - where it makes sense - but I don't see any value in making that source the classes used to model the entities in the system, especially if the entity class is destined to be but a language level construct for interfacing with a database.
+</p><p>
+I model my entities using tools, if I have a choice. It solves a lot of problems. The first, and most certainly least relevant: it generates the pretty picture management will want to see when it comes time to do design documents. Instant management-karma! Modeling provides your mind with a bird's eye-view of your domain model so you can more readily see interplay among your entities, or violations of your normalized forms. Modeling provides also facilitates DRY, because - with a little work - you can come up with a work flow that makes the model the canonical design, and all other artifacts are generated from that.
+</p><p>
+A tangential effect to modeling is that you avoid having to express the database schema in terms of Hibernate's various mapping methodologies, which is important because Hibernate will let you take advantage of features that don't get expressed in DDL, but in memory. Further, your domain model will hopefully, usually, and likely, outlive your Hibernate code.
+</p><p>
+Modeling presents the involved with many choices. The first one: whether to use Entity-Relational diagrams or UML diagrams. I've used both.
+</p> <h2>
+UML</h2><p>
+One recipe   with which I've had quite a bit of success   involved two sheep sacrifices, <a href="../_/http/www.andromda.org/index.html">AndroMDA</a>, <a href="../_/http/web.aanet.com.au/persabi/andromda/index.html">the AndroMDA EJB3 plugin</a>, and <a href="../_/http/maven.apache.org/index.html">Maven</a>. It  worked quite well for my work flow, though the feedback cycle was very slow.  The process: model in Magic Draw (or whatever tool you prefer), output to XMI, and use the Maven plug in to generate the Hibernate (I should say "JPA", as these are JPA annotated) entities from the XMI files. Run the application that actually uses the entity classes to have the Hibernate tool create/update the table's schema. Occasionally, I had an extra step: run another Maven projects build to have it auto-generate the ActionScript AMF classes from the compiled .class files for the entities. This was useful if you wanted to neatly expose Hibernate entities to your Flex/Flash client.
+</p><p>
+This took all of about two minutes or so, even if I was just trying to add one field to the entity. Naturally, this fact along was compelling incentive-enough to sit and really think through modifying the diagram: it's too painful to do for something that didn't merit it!
+</p><p>
+This approach also provided no good way to override the construction of the classes, that I could see, so adding things like <a href="../_/http/www.hibernate.org/410.html">Hibernate Search</a> annotations was impossible. (Naturally, there are alternatives in that specific case, like <a href="../_/http/www.compass-project.org/index.html">Compass</a>, but you can see my point). That approach fails to take into account that your was using a tool that models object oriented relationships, not schema, to model schema. I rarely mode objects. I model physical model for a database. Expressing that physical model in terms of Hibernate was a secondary or tertiary concern.
+</p><h2>ER </h2>
+<p>
+My recipe for ER seems to be the most productive, so I'll share that one here. Naturally, any feedback's appreciated! It's so simple, it's deceptive. Use an ER tool. There are many, many, many tools out there. A very smart person I knew swore by, and bought - of his own cash - a copy of <a href="../_/http/www.ca.com/us/products/product.aspx$/id=260.aspx">CA's ERWin</a>. There are many other tools that are both proprietary and open source. For our purposes, something simple is fine, so long as you can export DDL to your database of choice. I recommend using <a href="../_/http/code.google.com/p/power-architect/index.html">Power Architect</a>, which is fine for this example.
+</p><p>Use it to build your model. There's a lot to know about ER modeling, not the least of which is that ER itself has many different syntaxes. A great introduction is <a href="../_/http/www.amazon.com/Beginning-Relational-Data-Modeling-Second/dp/1590594630/index.html">Beginning Relational Data Modeling, by Sharon Allen and Even Terry</a>.  I bring this point up because the syntax ("crow's feet") used in PowerArchitect is different than that of what's used in the book (IDEF1X). Export the model to your database - you do so by configuring a source connection and then using the icon with the word 'SQL' on it. Then run your Maven build against that schema.
+</p><p>
+What follows is the XML you'll need for your Maven project, as well a the sample <code>.properties</code> file you'll need to get this to all work. The parts in bold are the part that're doing the magic. Configure those. In the case of the properties file, I include a lot of commented configuration, for your experimentation only. The part that's in bold is what you need to configure to your liking.
+Your directory structure should look like:<br>
+<pre>
+pom.xml
+src/main/resources/hibernate.properties 
+</pre>
+</br></p>
+
+Using it - once you have everything setup - is as simple as <code>mvn clean compile hibernate3:hbm2java</code>. Verify that it produced classes by checking the <code>target/hibernate3/generate-sources</code> folder.
+</p>
+<p><b>The Maven POM</b></p>
+<pre style="color:#545454;">  &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;group&lt;/groupId&gt;
+    &lt;artifactId&gt;artifact&lt;/artifactId&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;group-artifact&lt;/id&gt;
+            &lt;dependencies&gt;&lt;/dependencies&gt;
+        &lt;/profile&gt;
+    &lt;/profiles&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+            &lt;artifactId&gt;hibernate&lt;/artifactId&gt;
+            &lt;version&gt;3.2.5.ga&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+            &lt;artifactId&gt;hibernate-entitymanager&lt;/artifactId&gt;
+            &lt;version&gt;3.3.1.ga&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.persistence&lt;/groupId&gt;
+            &lt;artifactId&gt;persistence-api&lt;/artifactId&gt;
+            &lt;version&gt;1.0&lt;/version&gt;
+            &lt;scope&gt;compile&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.5&lt;/source&gt;
+                    &lt;target&gt;1.5&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        <span style="color:black; font-weight:bold;">    &lt;plugin&gt;
+                &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                &lt;artifactId&gt;hibernate3-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0-alpha-2&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;components&gt;
+                        &lt;component&gt;
+                            &lt;name&gt;hbm2java&lt;/name&gt;
+                        &lt;/component&gt;
+                    &lt;/components&gt;
+                    &lt;componentProperties&gt;
+                        &lt;implementation&gt;jdbcconfiguration&lt;/implementation&gt;
+                        &lt;export&gt;true&lt;/export&gt;
+                        &lt;jdk5&gt;true&lt;/jdk5&gt;
+                        &lt;ejb3&gt;true&lt;/ejb3&gt;
+                    &lt;/componentProperties&gt;
+                &lt;/configuration&gt;
+                &lt;dependencies&gt;
+                    &lt;dependency&gt;
+                        &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+                        &lt;groupId&gt;postgresql&lt;/groupId&gt;
+                        &lt;version&gt;8.1-404.jdbc3&lt;/version&gt;
+                    &lt;/dependency&gt;
+                &lt;/dependencies&gt;
+            &lt;/plugin&gt; </span>
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;jboss&lt;/id&gt;
+            &lt;url&gt;http://repository.jboss.com/maven2&lt;/url&gt;
+            &lt;releases&gt;&lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;false&lt;/enabled&gt;
+            &lt;/snapshots&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+            &lt;id&gt;jboss-snapshot&lt;/id&gt;
+            &lt;url&gt;http://snapshots.jboss.org/maven2&lt;/url&gt;
+            &lt;releases&gt;&lt;/releases&gt;
+            &lt;snapshots&gt;&lt;/snapshots&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+    &lt;pluginRepositories&gt;
+        &lt;pluginRepository&gt;
+            &lt;id&gt;codehaus-plugins&lt;/id&gt;
+            &lt;url&gt;http://repository.codehaus.org/org/codehaus/mojo/&lt;/url&gt;
+            &lt;releases&gt;&lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;false&lt;/enabled&gt;
+            &lt;/snapshots&gt;
+        &lt;/pluginRepository&gt;
+        &lt;pluginRepository&gt;
+            &lt;id&gt;jboss-plugins&lt;/id&gt;
+            &lt;url&gt;http://repository.jboss.com/maven2&lt;/url&gt;
+            &lt;releases&gt;&lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;false&lt;/enabled&gt;
+            &lt;/snapshots&gt;
+        &lt;/pluginRepository&gt;
+        &lt;pluginRepository&gt;
+            &lt;id&gt;jboss-snapshot-plugins&lt;/id&gt;
+            &lt;url&gt;http://snapshots.jboss.org/maven2&lt;/url&gt;
+            &lt;releases&gt;&lt;/releases&gt;
+            &lt;snapshots&gt;&lt;/snapshots&gt;
+        &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;
+&lt;/project&gt;
+
+</pre>
+<p><b>Relevant Properties File</b></p>
+<pre style="color:#545454;">
+hibernate.query.substitutions true 1, false 0, yes 'Y', no 'N'
+<span style="color:black; font-weight:bold;">
+hibernate.dialect org.hibernate.dialect.PostgreSQLDialect
+hibernate.connection.driver_class org.postgresql.Driver
+hibernate.connection.url jdbc:postgresql://your_host/your_db
+hibernate.connection.username your_user
+hibernate.connection.password your_pw
+</span>
+hibernate.connection.shutdown=true
+hibernate.connection.pool_size 1
+hibernate.proxool.pool_alias pool1
+hibernate.max_fetch_depth 1
+hibernate.jdbc.batch_versioned_data true
+hibernate.jdbc.use_streams_for_binary true
+hibernate.cache.provider_class org.hibernate.cache.EhCacheProvider
+</pre>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=247671&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Josh Long adds a new entry to <a href="../index.html$/blogger=joshlong.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/joshlong.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D247671&amp;title=Modeling+to+Avoid+Hacking+Your+Model+in+ORM+Mapping+Format&amp;bodytext=Discussion+on+modeling%2C+its+advantages%2C+using+either+UML+or+ER.+A+solution+using+Maven+is+provided+to+provide+a+work+flow+using+ER+modeling.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D247671&amp;title=Modeling+to+Avoid+Hacking+Your+Model+in+ORM+Mapping+Format">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D247671&amp;title=Modeling+to+Avoid+Hacking+Your+Model+in+ORM+Mapping+Format">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/joshlong.jpg"/></td><td>Josh Long (<a href="../_/http/www.joshlong.com/index.html">http://www.joshlong.com</a>) is an enterprise architect, consultant, and author. When he's not hacking on code, he can be found at the local Java User Group or at the local coffee shop. Josh likes solutions that push the boundries of the technologies that enable them. His interests include scalability, BPM, grid processing, mobile computing and so-called "smart" systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Josh Long. All rights reserved.</div>
+</p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

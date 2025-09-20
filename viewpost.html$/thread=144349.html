@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Implementing Implicit Behavioral Subtyping using Traits</title>
+<meta charset="utf-8"/>
+<meta content="Christopher Diggins" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cdiggins.html">Christopher Diggins' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=144349.html">Discuss</a> | 
+<a href="mailto:?subject=Implementing Implicit Behavioral Subtyping using Traits&amp;body= %0AArtima Weblogs %0AImplementing Implicit Behavioral Subtyping using Traits %0Aby Christopher Diggins %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=144349">Email</a> | 
+<a href="../viewpostP.html$/thread=144349.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=142895.html" title="Static Behavioral Subtyping and Heron Traits">Previous</a> | 
+<a class="sl" href="thread=144509.html" title="What's up with Diggins?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Heron-Centric: Ruminations of a Language Designer</span><br>
+<span class="ts">Implementing Implicit Behavioral Subtyping using Traits</span><br/>
+<span class="as">by Christopher Diggins</span><br/>
+<span class="pd">January 13, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I thought I would share my latest attempt at writing a white paper describing the implicit behavioral subtyping mechanism I am using for the current Heron prototype (yes you can download it at http://www.heron-language.com/ ). Any comments would be appreciated.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h2>Abstract</h2>
+<p>
+  The primary problem with structural subtyping, semantic malformance (e.g. contract violations), can be alleviated by introducing behavioral constraints into the specification of the subtype. This paper describes a mechanism to implement implicit behavioral subtyping, by applying structural subtyping as well as precondition and postcondition assertions to traits.
+</p>
+<h2>Introduction</h2>
+<p>
+  This work is demonstrated using the Heron programming language. Heron is a statically typed experimental programming language, which is implemented using a Heron to C++ translator, HeronFront. The HeronFront tool translates trait constructs written in Heron to classes with the implicit behavioral subtyping semantics described in this paper. Apart from the introduction of traits and some rather minor syntactic difference, the Heron langauge shares C++ syntax and semantics.
+</p>
+<h2>Traits</h2>
+<p>
+  Traits were first described by Schärli et al. [Sch03] as a compositional model for structuring object oriented programs. A trait is a construct similar to Java interfaces in that it is used to characterize the function signatures (sometime described as a method dictionary) for a set of types, and can be used as a polymorphic reference which binds to a conforming object. The Heron trait has similar syntax to traits in Scala 1.0 [Ode05] which has since been replaced by mixin-classes. The function signatures that it provides are known as the required functions, and are sometimes referred to as "super-sends" because they delegate the implementation to the super type.
+  Unlike a Java interface, a trait may also have member functions which call other member functions or one of the required functions. The member functions of a trait are referred to as extension functions to clearly delineate them from class member functions.
+</p>
+<h2>Structural Subtyping</h2>
+<p>
+  Structural subtyping (also known as implicit subtyping, signature based polymorphism, and colloquially as duck-typing), is a method of deducing a subtype relationship at either run-time or compile-time. Trait instances in Heron are associated with super types using a structural subtyping mechanism.
+</p>
+<p>
+  Implicit subtyping has several advantages:
+  <ul>
+<li>
+      separation of mechanisms of inheritance and subtyping - the problems with this are explored in depth with regards to the C++ language by Baumgartner and Russo [Bau95].
+    </li>
+<li>subtyping without recompilation - new subtype relationships can be created without requiring recompilation or rewriting of the super-type. This not only increases compilation times significantly, it makes binary-only distribution of components more feasable and useful, and cross-language development more feasable.
+    </li>
+<li>more flexible and extensible designs - all possible subtype relationships don't have to be decided a priori, and can be restricted in scope to particular modules.
+    </li>
+<li>mock objects - it is easier to create mock objects for testing, a crucial component of TDD methodologies
+    </li>
+</ul>
+</p>
+<p>
+  Implicit subtyping can be achieved, rather surprisingly, in the C++ programming language using only template meta-programming techniques [Dig04], and more conveniently with macros [Tur05].
+</p>
+<p>
+  Several dynamically typed languages support structural subtyping but only a few statically typed language provide support for it. The main languages being the various ML dialects. A now discontinued extension to the GCC C++ compiler, did support a similar structure also called signatures [Bau97].
+</p>
+<h2>Heron Syntax</h2>
+<p>
+  Except where stated, Heron statements have precisely the same syntax and semantics as C++. HeronFront
+  does a literal mapping of most statements from Heron to C++ with no checking.
+</p>
+<p>
+  Heron traits are divided up into four sections (inherits, requires, public, private), and optional template parameters.
+  Heron also introduces two new keywords: _result and _override.
+</p>
+<p>
+  The _result keyword corresponds to a variable which is implicitly declared at the beginning of every non-void function in a trait.
+  Every non-void function in a trait also contains the implicit statement "return _result;" as a last line.
+  A return statement takes on a new meaning in Heron, it assigns the expression to _result, and then jumps to the end of the
+  function, so that the postconditions can still be evaluated.
+</p>
+<p>
+  The _override keyword corresponds to a delegation of the current function to the appropriate function in the super-type.
+  This means that a required function in a trait with no preconditions and posconditions can be written equivalently
+  either as:
+</p>
+<h4>1)</h4>
+<pre>
+  trait T {
+    requires {
+      def f() : int;
+    }
+  }
+</pre>
+<h4>2)</h4>
+<pre>
+  trait T {
+    requires {
+      def f() : int {
+        _override;
+      }
+    }
+  }
+</pre>
+<p>
+  The actual C++ code generated for the _override keyword would resemble more or less:
+</p>
+<pre>
+  _result = _get()-&gt;f();
+</pre>
+<p>
+  The _get() reserved member function returns a pointer to a class which forwards the function
+  to the bound object.
+</p>
+<h2>Trait Semantics</h2>
+<p>
+  An instance of a trait in Heron can bound to any concrete object which provides the appropriate
+  function signatures, for example:
+</p>
+<pre>
+  /*
+    Heron code which we assume is translated into a C++
+    header file using HeronFront and #included
+
+    trait MyTrait {
+      require {
+        def set(int n);
+        def get() : int;
+      }
+    }
+  */
+
+  class MyClass {
+    public:
+      MyClass() : m(0) { }
+      void set(int n) {
+        data = n;
+      }
+      int get() {
+        return data;
+      }
+    private:
+      int data;
+  };
+
+  int main() {
+    MyTrait t;
+    MyClass c;
+    t = c;
+    printf("%d\n", t.get()); // outputs 0
+    printf("%d\n", c.get()); // outputs 0
+    t.set(1);
+    printf("%d\n", t.get()); // outputs 1
+    printf("%d\n", c.get()); // outputs 1
+  }
+</pre>
+<h2>Heron Trait Grammar</h2>
+<pre>
+  statement ::==
+    <i>any legal C++ statement</i>
+
+  function-param ::==
+    type identifier
+
+  function-return-type ::==
+    <b>:</b> type
+
+  function ::==
+    <b>def</b> identifier <b>(</b> function-param<sup>*</sup> <b>)</b> function-return-type<sup>?</sup>
+    <b>{</b> statement<sup>*</sup> <b>}</b>
+
+  function-or-type-or-macro ::==
+    function | class | trait | macro
+
+  template-parameters ::==
+    <b>[</b> meta-type identifier <b>]</b>
+
+  inherits-section ::==
+    <b>inherits</b> <b>{</b> type-specifier<sup>*</sup> <b>}</b>
+
+  requires-section ::==
+    <b>requires</b> <b>{</b> function<sup>*</sup> <b>}</b>
+
+  public-section ::==
+    <b>public</b> <b>{</b> function-or-type-or-macro<sup>*</sup> <b>}</b>
+
+  private-section ::==
+    <b>private</b> <b>{</b> function-or-type-or-macro<sup>*</sup> <b>}</b>
+
+  trait ::==
+    <b>trait</b> identifer template-parameters<sup>?</sup> <b>{</b>
+    inherits-section<sup>?</sup>
+    requires-section<sup>?</sup>
+    public-section<sup>?</sup>
+    private-section<sup>?</sup>
+    <b>}</b>
+</pre>
+<h2>Same Structure, Different Semantics</h2>
+<p>
+  Implicit subtyping has the disadvantage that syntactic conformance can occur in types which do not share semantics. An
+  illustrative example can be found when comparing LIFO stacks and FIFO stacks. This is illustrated in Example X.
+</p>
+<h4>Example</h4>
+<pre>
+  trait Stack[T : type] {
+    requires {
+      def push(T x);
+      def pop();
+      def top() : T&amp;;
+      def is_empty() : bool;
+    }
+  }
+
+  trait FifoStack[T : type] {
+    inherits {
+      Stack[T];
+    }
+  }
+
+  trait LifoStack[T : type] {
+    inherits {
+      Stack[T];
+    }
+  }
+</pre>
+<p>
+  The problem occurs when we try to execute some algorithm which expects a FifoStack, but instead receives
+  a LifoStack.
+</p>
+<p>
+  The proposed solution to the problem of structural conformance with semantic malformance, is to introduce
+  contract verification, in the form of precondition and postcondition assertions. In other words implicit
+  behavioral subtyping.
+</p>
+<h2>Contract Verification</h2>
+<p>
+  A contract is the name collectively given to the preconditions, postconditions, and invariants, which a
+  type is expected to satisfy. A contract can be used to characterize the behavior of a type [Mey97], [Lis99].
+  Rather than creating a brand new syntax, including keywords, Heron relies solely on the C++ language facilities
+  to enable the programmer to define how they choose to verify the preconditions and postconditions.
+</p>
+<p>
+  Contract verification can be achieved by writing the required function using the explicit syntax and the _override
+  keyword, and inserting precondition and postcondition checks before and after respectiviely the _override call,
+  as follows:
+</p>
+<p>
+  How the pre and post functions are implemented is up to the programmer, but they can be implemented as macros create
+  two new macros as follows:
+</p>
+<pre>
+  #define pre(expr) assert(expr &amp;&amp; "precondition violation")
+  #define post(expr) assert(expr &amp;&amp; "postcondition violation")
+</pre>
+<h2>Implicit Behavioral Subtyping</h2>
+<p>
+  Implicit behavioral subtyping is a stronger form of structural subtyping which introduces
+  precondition and postcondition assertions into the verification. The following example
+  shows the differentiation between a FIFO stack and LIFO stack
+</p>
+<pre>
+  trait Stack[T : type] {
+    requires {
+      def push(T x);
+      def pop();
+      def top() : T&amp;;
+      def is_empty() : bool;
+    }
+  }
+
+  trait FifoStack[T : type] {
+    inherits {
+      Stack[T];
+    }
+    requires {
+      def push(T x) {
+        if (!is_empty()) {
+          T old = top();
+          _override;
+          post(old == top());
+          post(!is_empty());
+        }
+        else {
+          _override;
+          post(!is_empty());
+        }
+      }
+      def pop() {
+        pre(!is_empty());
+        _override;
+      }
+      def top() : T&amp; {
+        pre(!is_empty());
+        _override;
+      }
+    }
+  }
+
+  trait LifoStack[T : type] {
+    inherits {
+      Stack[T];
+    }
+    requires {
+      def push(T x) {
+        _override;
+        post(!is_empty());
+        post(x == top());
+      }
+      def pop() {
+        pre(!is_empty());
+        _override;
+      }
+      def top() : T&amp; {
+        pre(!is_empty());
+        _override;
+      }
+    }
+  }
+</pre>
+<p>
+  The difference in behavior between the two kinds of stack ADT's, can be expressed as whether or not push
+  affects the status of the top, in the case of a non-empty stack. This is a non-trivial assertion, and
+  to express it we need the full the range of the language. To achieve this, Heron allows any C++ statement
+  to be used before or after the super-send (i.e. the _override keyword).
+</p>
+<h2>Verifying Invariants</h2>
+<p>
+  Heron currently provides no convenient syntax for verifying invariants, however this should change in the
+  next major release of HeronFront. See the section "Future Direction" for more information. For the time
+  being an invariant can be simply explicitly checked after each required function along with the postconditions.
+</p>
+<h2>External Function Dispatch versus Virtual Function</h2>
+<p>
+  Common OOPL implementations implement runtime polymorphism using the mechanism of virtual functions.
+  One difference with Heron is that it implements runtime function dispatch externally to the class, rather
+  than through the use of virtual function. This means that a pointer to a function dispatch table is
+  associated with the trait instance rather than the object instance. This approach carries several advantages
+  <ul>
+<li>intra-method calls can be more easily inlined</li>
+<li>the memory and cpu overhead associated with polymorphism only occurs when the polymorphism is needed
+      rather than throughout the lifetime of every single object.
+    </li>
+<li>no more undiscovered bugs due to unanticipated virtual function overrides - testing of OO designs
+      frequently overlooks the various possibilities of virtual function override abuse.
+    </li>
+</ul>
+</p>
+<h2>The Generated C++ Code</h2>
+<p>
+  HeronFront generates C++ classes which support signature matching semantics. This is accomplished using template
+  meta-programming techniques. Every trait is associated with a single class which has a template constructor, a
+  template assignment operator, and a dispatcher object along with the expected required and extension functions.
+  The dispatcher object is implemented as a concrete subtype inheriting from an abstract supertype which contains a pure
+  virtual function for each required function in the trait. The extension functions are implemented directly in the trait class.
+  Example X contains an example of code generated for a simple trait.
+</p>
+<pre>
+  trait Indexable[type Element] {
+    requires {
+      def get(uint n) : Element {
+        assert(n &lt; count());
+        _override;
+      }
+      def set(uint n, Element x) {
+        assert(n &lt; count());
+        _override;
+      }
+      def count() : uint;
+    }
+    public {
+      def is_empty() {
+        return count() == 0;
+      }
+    }
+  }
+</pre>
+<p>
+  Here is the code generated by the most recent version of HeronFront:
+</p>
+<pre>
+  template&lt;class Element &gt;
+  struct Indexable {
+    template&lt;typename _T&gt;
+    Indexable(_T&amp; _x) {
+      new(&amp;_data) _concrete&lt;_T&gt;(&amp;_x);
+      assert(sizeof(_concrete&lt;_T&gt;) &lt;= (sizeof(void*) * 2));
+      }
+    struct _abstract {
+      virtual Element get(uint n) = 0;
+      virtual void set(uint n, Element x) = 0;
+      virtual uint count() = 0;
+      };
+    template&lt;typename _T&gt;
+    struct _concrete : _abstract {
+      _concrete(_T* x) : _object(x) { }
+      Element get(uint n) {
+        Element _result;
+        #define _override return _object-&gt;get(n)
+        assert ( n &lt; count ( ) ) ;
+        _override ;
+        return _result;
+        #undef _override
+        }
+      void set(uint n, Element x) {
+        #define _override _object-&gt;set(n, x)
+        assert ( n &lt; count ( ) ) ;
+        _override ;
+        #undef _override
+        }
+      uint count() {
+        return _object-&gt;count();
+        }
+      _T* _object;
+      };
+    _abstract* _get() { return reinterpret_cast&lt;_abstract*&gt;(_data); }
+    _abstract* operator-&gt;() { return _get(); }
+    void* _data[2];
+    // requires section functions
+    Element get(uint n) {
+      return _get()-&gt;get(n);
+      }
+    void set(uint n, Element x) {
+      _get()-&gt;set(n, x);
+      }
+    uint count() {
+      return _get()-&gt;count();
+      }
+    // public non-delegated member functions
+    bool is_empty() {
+      bool _result;
+      return count ( ) = 0 ;
+      return _result;
+      }
+    };
+</pre>
+<p>
+  This code is quite complex, but the most important characteristics are:
+
+  <ul>
+<li>it has the same memory footprint as two void pointers</li>
+<li>it uses the C++ virtual function dispatch mechanism internally to dynamically dispatch functions rather
+      than the more unweildy function pointer table approach first described in [Dig04].
+    </li>
+<li>it uses placement new to construct the correct data type internally</li>
+</ul>
+
+  It should be noted that the technique does make some assumptions about alignment of pointers, which will
+  affect the portability of the technique in some cases. The trade-off however is that the method used
+  is very compact and efficient.
+</p>
+<h2>Future Directions</h2>
+<p>
+  The largest gap in this work is the inability to express a class invariant in a single location. Class invariants currently have to be verified with the preconditions and postconditions (arguably either one is sufficient). A class invariant is an example of a crosscutting concern. Direct support for class invariant verification can be added to a programming language such as Java or C++ with relative ease, but this ignores the more general problem of the inability to express crosscutting concerns. Ideally a language would provide such a mechanism which can then be used to implement invariant verification, along with other crosscutting concerns.
+</p>
+<p>
+  It is the author's desire to introduce an extremely minimal form of aspect oriented programming support [Kic97] into Heron in the form of macros which are automatically inserted around each member function. These macros would be ideally associated with a class, or a module, and can be inherited from one class to another.
+</p>
+<p>
+  There is a possibility of introducing a mutable state into traits in the context of Heron.
+</p>
+<h2>Acknowledgements</h2>
+<p>
+  Special thanks to Peter Grogono. Thanks also to the many people at Artima.com who have patiently discussed the topics of structual and behavioral subtyping with me. 
+</p>
+<h2>References</h2>
+<ul>
+<li>[Lis99] Behavioral Subtyping Using Invariants and Constraints, July 1999, Barabara H Liskov, Jeanette M Wing, CMU-CS-99-156</li>
+<li>[Mey97] B. Meyer. Object-Oriented Software Construction, Second Edition. Prentice Hall, 1997.</li>
+<li>[Bau95] Signatures: A Language Extension for Improving Type Abstraction and Subtype Polymorphism in C++ (1995) Gerald Baumgartner,
+    Vincent F. Russo Software--Practice \&amp; Experience
+  </li>
+<li>[Bau97] Implementing signatures for C++, Gerald Baumgartner, Vincent F. Russo, ACM Transactions on Programming Languages and Systems
+    (TOPLAS) archive volume 19,  Issue 1  (January 1997) Pages: 153 - 187</li>
+<li>[Fin01] <a href="../_/http/www.ccs.neu.edu/scheme/pubs/fse01-flf.pdf">http://www.ccs.neu.edu/scheme/pubs/fse01-flf.pdf</a> Behavioral Contracts and Behavioral Subtyping,
+    FSE 2001, Robert Bruce Findler, Mario Latendresse, Matthias Felleisen
+  </li>
+<li>[Kic97] Kiczales, Gregor, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin (1997).
+    "Aspect-Oriented Programming" Proceedings of the European Conference on Object-Oriented Programming, vol.1241, pp.220242.</li>
+<li>[Sch03] <a href="../_/http/www.iam.unibe.ch/~scg/cgi-bin/oobib.cgi$/query=nathanael+traits+composable+units+ecoop.cgi">Traits: Composable Units of Behavior</a>,
+    Nathanael Schärli, Stéphane Ducasse, Oscar Nierstrasz, and Andrew P. Black.
+    University of Berne / OGI School of Science &amp; Engineering, May 2003 Proceedings of ECOOP 2003</li>
+<li>[Dig04] C++ with Interfaces, Christopher Diggins, September 2004 C++ Users Journal</li>
+<li>[Tur05] <a href="../_/http/www.kangaroologic.com/interfaces/index.html">http://www.kangaroologic.com/interfaces/</a></li>
+<li><a href="../_/http/research.microsoft.com/specsharp/index.html">http://research.microsoft.com/specsharp/</a></li>
+<li>[Ode05] <a href="../_/http/scala.epfl.ch/docu/files/ScalaReference.pdf">http://scala.epfl.ch/docu/files/ScalaReference.pdf</a>Scala Language Specification, June 20, 2005</li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=144349.html">35
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=144349&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Christopher Diggins adds a new entry to <a href="../index.html$/blogger=cdiggins.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cdiggins.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D144349&amp;title=Implementing+Implicit+Behavioral+Subtyping+using+Traits&amp;bodytext=I+thought+I+would+share+my+latest+attempt+at+writing+a+white+paper+describing+the+implicit+behavioral+subtyping+mechanism+I+am+using+for+the+current+Heron+prototype+%28yes+you+can+download+it+at+http%3A%2F%2Fwww.heron-language.com%2F+%29.+Any+comments+would+be+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D144349&amp;title=Implementing+Implicit+Behavioral+Subtyping+using+Traits">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D144349&amp;title=Implementing+Implicit+Behavioral+Subtyping+using+Traits">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/christopherdiggins.jpg"/></td><td>Christopher Diggins is a software developer and freelance writer. Christopher loves programming, but is eternally frustrated by the shortcomings of modern programming languages. As would any reasonable person in his shoes, he decided to quit his day job to write his own ( <a href="../_/http/www.heron-language.com/index.html">www.heron-language.com</a> ). Christopher is the co-author of the <a href="../_/http/www.cpp-cookbook.com/index.html">C++ Cookbook</a> from O'Reilly. Christopher can be reached through his home page at  <a href="../_/http/www.cdiggins.com/index.html">www.cdiggins.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Christopher Diggins. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

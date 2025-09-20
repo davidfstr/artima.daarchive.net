@@ -1,0 +1,1085 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Comparing Inner Class/Closure Proposals</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=202004.html">Discuss</a> | 
+<a href="mailto:?subject=Comparing Inner Class/Closure Proposals&amp;body= %0AArtima Weblogs %0AComparing Inner Class/Closure Proposals %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=202004">Email</a> | 
+<a href="../viewpostP.html$/thread=202004.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=182412.html" title="Clear, Consistent, and Concise Syntax (C3S) for Java">Previous</a> | 
+<a class="sl" href="thread=206350.html" title="Super Type Tokens">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Comparing Inner Class/Closure Proposals</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">April 11, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+There are at least 4 inner class/closure proposals for Java 7 and it is hard to compare them because they use different terms and different syntax for similar concepts. This post makes the comparison easier by seperating concerns.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 align="CENTER">Comparing Inner Class/Closure Proposals</h1>
+<p>
+  There are at least 4 inner class/closure proposals for
+  Java 7 and it is hard to compare them because they use different terms and
+  different syntax for similar concepts.
+  The idea of this post is to separate out the inner class/closure part of
+  the proposals from the <i>extras</i> and make explicit that the extras can
+  be added or taken away from any of the proposals or be part of other proposals;
+   because they are <em>separate</em> concerns.
+  This separation of concerns gives clarity and also allows you to roughly
+  rank the various features (my ranking is the order presented).
+
+</p>
+<p>
+  In some instances
+  there is synergy between these separate concerns and hence these extras are
+    presented together with the main proposal. In fact all but the 
+  <a href="../_/http/docs.google.com/Doc.aspx$/id=k73_1ggr36h.aspx">CICE</a> 
+  proposal covers issues other
+  than the inner classes/closures themselves. Before continuing I should declare
+  my self-interest; I authored the 
+  <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=182412.html">C3S</a> proposal.
+  Explanations and examples of the
+  different features are given below, but first an “at a glance” comparison.
+</p>
+<table border="1">
+<caption>Table 1: “At a Glance” Comparison</caption>
+<th>
+<tr>
+<td><strong>Feature</strong></td>
+<td><a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=182412.html"><strong>C3S</strong></a></td>
+<td><a href="../_/http/docs.google.com/Doc$/id=ddhp95vd_6hg3qhc/index.html"><strong>FCM</strong></a></td>
+<td><a href="../_/http/docs.google.com/Doc.aspx$/id=k73_1ggr36h.aspx"><strong>CICE</strong></a></td>
+<td><a href="../_/http/www.javac.info/closures-v05.html"><strong>BGGA</strong></a></td>
+</tr>
+</th>
+<tbody>
+<tr>
+<td>1. Short syntax for the creation of an instance of an inner class/closure</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>2. Access to both <code>this</code> pointers and methods within an inner class</td>
+<td>Y</td>
+<td> </td>
+<td>Y</td>
+<td> </td>
+</tr>
+<tr>
+<td>3. More than one method in an inner class/closure instance</td>
+<td>Y</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>4. Implementation of methods defined in classes</td>
+<td>Y</td>
+<td> </td>
+<td>Y</td>
+<td> </td>
+</tr>
+<tr>
+<td>5. Type inference</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>6. Method, constructor, and field literals</td>
+<td> </td>
+<td>Y</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>7. Short syntax (particularly for control structures and short methods)</td>
+<td>Y</td>
+<td>Y</td>
+<td> </td>
+<td>Y</td>
+</tr>
+<tr>
+<td>8. Assignment to local variables and no <code>final</code> requirement</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>9. Variable number of exceptions</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>10. Method/function types (with shorter syntax)</td>
+<td> </td>
+<td>Y</td>
+<td> </td>
+<td>Y</td>
+</tr>
+<tr>
+<td>11. Non-local, <code>return</code>, <code>break</code>, and <code>continue</code></td>
+<td>Y</td>
+<td>Y</td>
+<td> </td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<h1>Definition of terms</h1>
+<ul>
+<li>
+<p>
+  Closure is a new term in the <i>current Java 6 context</i>; closures are like inner
+  classes except that the normal inner class <code>this</code> pointer isn't available, 
+  only the pointer to the enclosing class, which is confusingly (?), called 
+  <code>this</code>.
+</p>
+</li>
+<li>
+<p>
+<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=182412.html">C3S</a>
+  is Clear, Consistent, and Concise Syntax for Java
+</p>
+</li>
+<li>
+<p>
+<a href="../_/http/docs.google.com/Doc$/id=ddhp95vd_2s8vjwv/index.html">FCM</a>
+  is First Class Methods v0.5 and the companion Java Control Abstraction (<a href="../_/http/docs.google.com/Doc$/id=ddhp95vd_8f8zkn3/index.html">JCA</a>) </p>
+</li>
+<li>
+<p>
+<a href="../_/http/docs.google.com/Doc.aspx$/id=k73_1ggr36h.aspx">CICE</a>
+  is Concise Instance Creation Expressions
+</p>
+</li>
+<li>
+<p>
+<a href="../_/http/www.javac.info/closures-v05.html">BGGA</a>
+  is Closures for the Java Programming Language v0.5 (named after the initials
+  of the authors)
+
+</p>
+</li>
+</ul>
+<h1>Summary of features </h1>
+<p>
+  From the table you can see that the proposals only really agree that there
+    should be: short syntax for inner classes/closures, more type inference,
+    a variable number of exceptions,
+    and that the read-only and <code>final</code> declaration restriction for
+    local variables should be removed. Should these be the only extensions made
+    to Java? </p>
+<p>As for the other features, that depends upon the weighting
+      you give each feature. This weighting need not be a simple progression
+      of a weighting of 11 for your number 1 to a weighting of 1 for your number
+      11. For example I personally give little weighting to my numbers 8 to 11
+  inclusive; however others find these points important and therefore I have
+  included some of them in my C3S proposal to hopefully  broaden acceptance.</p>
+<h1>Explanations and examples</h1>
+<h2>1. Short syntax for creation of an instance of an inner class/closure</h2>
+<p>
+  This is the focus of all the proposals and a typical use
+  is to apply a method to the elements in a collection.
+</p>
+<h4>C3S</h4>
+<pre> 
+    declare ls = ... ;
+    sort ls, <b>method( s1, s2 ) { s1.length - s2.length }</b>;
+</pre>
+<h4>FCM</h4>
+<pre>
+    List&lt; String &gt; ls = ... ;
+    sort( ls, <b>#( String s1, String s2 ) { return s1.length() - s2.length(); }</b> );
+</pre>
+<h4>CICE</h4>
+<pre>
+
+    List&lt; String &gt; ls = ... ;
+    sort( ls, <b>Comparator&lt; String &gt;( String s1, String s2 ) { return s1.length() - s2.length(); }</b> );
+</pre>
+<h4>BGGA</h4>
+<pre>
+    List&lt; String &gt; ls = ... ;
+    sort( ls, <b>{ String s1, String s2 =&gt; s1.length() - s2.length() }</b> );
+
+</pre>
+<h2>2. Access to both <code>this</code> pointers and to methods within an inner class</h2>
+<p>
+  This is the real distinguishing feature between a closure
+  and an inner class, a closure <i>only</i> has access to the <code>this</code> 
+  pointer associated with the enclosing
+  class and <i>not</i>, also, its inherited <code>this</code> pointer.
+  Therefore inside a closure you cannot call any other method of the closure including
+  itself (inner classes don’t have these restrictions). C3S and CICE have inner
+  classes, whereas FCM and BGGA only have closures.  Anything that can be done
+  with a closure can therefore be done with an inner class but <i>not</i> vice
+  versa. For inner classes there may be a case for adding a keyword, say 
+  <code>enclosing</code>, that is used like <code>this</code>, 
+  but refers to the enclosing class
+  (what do people think about adding this keyword?). For me this is a very
+  important feature, so I will give three examples.
+
+</p>
+<h3>A. Reducer</h3>
+<p>
+  Firstly, consider a 
+  <code>reduce</code> method (a.k.a. <code>fold</code>) on a list. If you had a class 
+  <code>Reducer</code> as shown, using Java 6 syntax:
+</p>
+<pre>
+    public abstract class Reducer&lt; E &gt; {
+      public E total;
+      public Reducer( final E initial ) { total = initial; }
+      public abstract void call( E element );
+      public static &lt; T &gt; T reduce( final Iterable&lt; T &gt; collection, final Reducer&lt; T &gt; reducer ) {
+        for ( final T element : collection ) { reducer.call( element ); }
+        return reducer.total;
+      }
+    }
+
+</pre>
+<p>then</p>
+<h4>C3S</h4>
+<pre>
+    method Integer sum() { 
+      return reduce ls, <b>new( 0 ) { method( e ) { total += e } };</b>
+    }
+</pre>
+<h4>
+  FCM (Only one <code>this</code>, therefore make <code>total</code> explicit 
+  and use <code>each</code> instead of <code>reduce</code>.)
+
+</h4>
+<pre>
+    Integer sum() {
+      Integer <b>total = 0</b>;
+      each( ls, <b>#( Integer e ) { total += e; }</b> );
+      return <b>total</b>;
+    }
+</pre>
+<p>Alternatively <code>reducer</code> could be re-written to pass the 
+<code>total</code> each
+time and then you could write:</p>
+<pre>
+    Integer sum() {
+      return reduce( ls, <b>0, #( Integer total, Integer e ) { return total += e; }</b> );
+    }
+</pre>
+<h4>
+  CICE (Constructor must have zero arguments, therefore
+  use straight Java 6 code. Alternatively code similar to FCM above could
+  be used.)
+</h4>
+<pre>
+    Integer sum() {
+      return reduce( ls, new Reducer( 0 ) {
+        public void call( e ) { total += e; }
+      } );
+    }
+</pre>
+<h4>
+  BGGA (Only one <code>this</code>, therefore make <code>total</code> explicit 
+  and use <code>each</code> instead of <code>reduce</code>. 
+  Code not shown since it is similar to FCM above.)
+
+</h4>
+<h3>B. Recursion</h3>
+<p>
+  The second example of needing access to the methods inside
+  the inner class is recursion (without access to methods within the inner
+  class you cannot use recursion — it is a long while since I used a language
+  without recursion :-(   ). Given a list of <code>Integer</code>s:
+</p>
+<h4>C3S</h4>
+<pre>
+
+    method Integer sumOfFactorials( final Iterable&lt; Integer &gt; ls ) {
+      return reduce ls, new( 0 ) { 
+        method( e ) { total += <b>factorial e</b> }
+        static method int factorial( final int x ) {
+          if ( x &lt;= 1 ) { return 1 }
+          x * <b>factorial x – 1</b>
+      }
+    };
+</pre>
+<h4>
+  FCM (No access to methods within the closure from within
+  the closure, therefore use normal Java 6.)
+</h4>
+<pre>
+    Integer sumOfFactorials( final Iterable&lt; Integer &gt; ls ) {
+      return reduce( ls, new Reducer&lt; Integer &gt;( 0 ) {
+        public void call( e ) { total += <b>factorial( e )</b>; }
+        static int factorial( final int x ) {
+          if ( x &lt;= 1 ) { return 1; }
+          return x * <b>factorial( x – 1 )</b>;
+        }
+      };
+    }
+</pre>
+<h4>
+  CICE (Constructor must have zero arguments and only
+  one method allowed, therefore use straight Java 6 code as above.)
+</h4>
+<h4>
+  BGGA (No access to methods within the closure from
+  within the closure, therefore use Java 6 as shown for FCM above.)
+</h4>
+<h3>C. Worker</h3>
+<p>
+  With the advent of multi-core processors the importance of multi-threaded
+  code will increase. Any new language features should anticipate this trend
+  and a favour multi-threading. Access to the enclosing scope is of less value
+    in a multi-threaded environment since the enclosing scope may be long gone
+    when the method is evaluated. Multi-threading therefore emphasizes access
+    to the inherited <code>this</code> pointer and to methods and fields within
+    an inner class.</p>
+<p>For example, at times you need to wait for previous tasks to complete before
+  proceeding. This can be done by waiting for <code>Future</code>s to complete;
+  a <code>Future'</code>s <code>get</code> method will sleep a thread for example.
+  Unfortunately a <code>Thread</code> is expensive and therefore you ideally
+  don't want to sleep one. Instead you might delay scheduling a calculation until
+  its inputs are ready:
+</p>
+<pre>
+  static method&lt; R, A1, A2 &gt; Future&lt; R &gt; submitWithGuard(
+          final ExecutorService pool,
+          final Future&lt; A1 &gt; a1,
+          final Future&lt; A2 &gt; a2,
+          final Method2&lt; R, A1, A2 &gt; binary ) {
+    final result = FutureTask&lt; R &gt;.new method { binary.call a1.get, a2.get };
+    pool.submit method {
+        if ( a1.isDone &amp;&amp; a2.isDone ) { pool.submit result } <em>// inputs available, submit job</em>
+        else { pool.submit <strong>this</strong> } <em>// inputs not available, check again</em> in the future
+    };
+    return result;
+  }
+</pre>
+<p> FCM and BGGA cannot implement <code>submitWithGuard</code>, as
+  shown above, because it accesses the inherited <code>this</code> and instead normal Java
+  6 would be used or a name would be given to the inner class via a method declaration
+  (which would then be wrapped in a <code>Runnable</code>). A CICE implementation
+  would be similar to the above code, but a little more verbose. </p>
+<h2>3. More than one method in an inner class/closure</h2>
+<p>
+  C3S is unique in allowing the overriding of more than one
+  method. The others can only override one method and therefore some uses,
+  particularly for asynchronous calls, can’t be accomplished directly. EG imagine
+  a method called <code>time</code> that
+  takes an array of <code>Callable</code> methods,
+  runs them all a few times and in different orders, and then reports the average
+  execution time for each as well as checking each call gives the same result.
+  This <code>time</code> method requires
+  objects that have a <code>call</code> method
+  from <code>Callable</code>, but <i>also</i> uses
+  the <code>toString</code> method for identification
+  and reporting purposes.
+
+</p>
+<h4>C3S</h4>
+<pre>
+    time <b>new {
+      method Integer call { ...; ... }
+      method toString { "Method1" }
+    }, new {
+      method Integer call { ...; ... }
+      method toString { "Method2" }
+    };</b>
+</pre>
+<h4>FCM (Only one method allowed therefore use straight Java 6.)</h4>
+<pre>
+    time( new Callable&lt; Integer &gt;() {
+      public Integer call() { ...; return ...; }
+      public String toString() { return "Method1"; }
+    }, new Callable&lt; Integer &gt;() {
+      public Integer call() { ...; return ...; }
+      public String toString() { return "Method2"; }
+    } );
+</pre>
+<h4>CICE (Only one method allowed therefore use straight Java 6, as shown above for FCM.)</h4>
+<h4>BGGA (Only one method allowed therefore use straight Java 6, as shown above for FCM.)</h4>
+<h2>4. Implementation of methods from classes</h2>
+<p>
+  No problem with C3S and no problem for CICE provided that
+  for CICE there is only one abstract method to override (see point 3 above).
+  FCM can implement a method from a class provided that only one method is
+  to be implemented, the class doesn't have generic arguments, the class
+  has a no-arg constructor, and no access is required to other class members. 
+  BGGA can’t use classes
+  at all. Consider an <code>Integer</code> array
+  factory (a factory that returns a <code>List</code> of <code>Integer</code>s,
+  but the list is fixed sized):
+
+</p>
+<h4>C3S</h4>
+<pre>
+    static <b>method</b> List&lt; Integer &gt; factory( final int capacity ) { <b>// final optional</b>
+
+      return <b>AbstractList.new&lt; Integer &gt;</b> {
+        private final values = <b>Integer.new[ size ]</b>;
+        <b>method size { capacity };
+        method get( index ) { values[ index ] }
+        method set( index, value ) {
+          final temp = values[ index ];
+          values[ index ] = value;
+          temp
+        }</b>
+      }
+    }
+</pre>
+<h4>
+  FCM (No access to inherited <code>this</code> (see point 2 above), therefore
+  use standard Java 6.)
+</h4>
+<pre>
+    static List&lt; Integer &gt; factory( final int capacity) {
+      return new AbstractList&lt; Integer &gt;() {
+        private final Integer[] values = new Integer[ size ];
+        public int size() { return capacity; }
+        public Integer get( final int index ) { return values[ index ]; }
+        public Integer set( final int index, final Integer value ) {
+          final Integer temp = values[ index ];
+          values[ index ] = value;
+          return temp;
+        }
+      };
+    }
+</pre>
+<h4>
+  CICE (Cannot override more than one method (point 3
+  above), therefore use standard Java 6 (see FCM above).)
+</h4>
+<h4>
+  BGGA (Cannot extend abstract classes <i>at all</i>,
+  therefore use standard Java 6 (see FCM above).)
+</h4>
+<h2>5. Type inference</h2>
+<p>
+  C3S, FCM, and BGGA have some type inference and CICE states
+  that type inference could be added. The type inference for C3S 
+  (but see below for other examples),
+  FCM, BGGA, and suggested for CICE is to infer a class/interface/method name.
+  EG the sort example given in 1 above which in C3S is:
+</p>
+<pre>
+    sort ls, <b>method( s1, s2 ) { s1.length - s2.length }</b>;
+</pre>
+<p>
+  Infers: the interface name, <code>Comparable</code>, 
+  the generic type parameter, <code>String</code>,
+  the return type, <code>int</code>, the
+  method argument types, both <code>String</code>,
+  and the method name, <code>compare</code>.
+  The examples for BGGA and FCM are almost identical, except that the argument
+  type is needed, and therefore FCM and BGGA are not shown; for CICE you need
+  to supply the interface name and argument types (see 1 above). The type inference
+  in C3S is however much more extensive than for the other proposals and more
+  extensive than the above example demonstrates. The C3S type inference is
+  similar in scope and nature to the type inference that is in Scala. This
+  copying of Scala is an important point, since Scala demonstrates that this
+  level of type inference is practical and still produces good error messages
+  unlike more extensive type inference in other languages. In C3S the method
+  construct given above can be used for any declaration, 
+  e.g. an anonymous <code>AbstractList</code>:
+
+</p>
+<pre>
+    static <b>method</b> List&lt; Integer &gt; factory( final int capacity ) {
+      return <b>AbstractList&lt; Integer &gt;.new</b> {
+        private final values = <b>Integer.new[ size ]</b>;
+        <b>method size { capacity };
+        method get( index ) { values[ index ] }
+        method set( index, value ) {
+          final temp = values[ index ];
+          values[ index ] = value;
+          temp
+	    }</b>
+
+      };
+    }
+</pre>
+<p>
+  Also in the <code>AbstractList</code> example above note how
+  the type of variable declarations are inferred from the right hand side.
+  To support this type inference a new keyword <code>declare</code> is
+  added for non final declarations, e.g.:
+</p>
+<pre>
+    <b>declare</b> list = <b>ArrayList.new</b>( 1, 2, 3 );
+
+</pre>
+<p>Instead of:</p>
+<pre>
+    List&lt; Integer &gt; list = new ArrayList&lt; Integer &gt;( 1, 2, 3 );
+</pre>
+<h2>6. Method, constructor, and field literals</h2>
+<p>
+  The FCM proposal provides syntax for method, constructor,
+  and field literals (currently only a type has a literal in Java, 
+  <code><i>name</i>.class</code>, and strings have to be used
+  for the others). The proposal in FCM mimics the construct used in Javadocs,
+  e.g.:
+</p>
+<pre>
+    Method m = <i>ClassName</i>#<i>methodName</i>( <i>argumentTypes</i> );
+    Constructor&lt; ClassName &gt; c = <i>ClassName</i>#ClassName( <i>argumentTypes</i> );
+    Field f = <i>ClassName</i>#<i>fieldName</i>;
+</pre>
+<p>A unique and emphasized feature of FCM is the ability to refer to methods
+as an alternative to writing an inner class/closure. E.G.:</p>
+<pre>
+    public void init() {
+      JButton button = ...;
+      button.addActionListener( <b>this#handleAction( ActionEvent )</b> );
+    }
+    public void handleAction( ActionEvent ev ) {
+      // handle event
+    }
+</pre>
+<p>This syntax allows you to seperate out the method to a stand alone method.
+Assuming that no access to local variables is required. The above code could
+alternatively be written as:</p>
+<pre>
+      button.addActionListener( <b>#( ActionEvent e ) { handleAction( e ); }</b> );
+</pre>
+<h2>7. Short syntax (particularly for control structures and short methods)</h2>
+<p>
+  C3S, FCM, and BGGA provide short syntax for constructs
+  other than inner classes/closures, the other proposals don’t address further
+  short syntax. First BGGA, it has two other short syntax constructs
+  one for short methods and one for control like constructs. The short method
+  construct is from within a closure <i>only</i> (i.e. <i>not</i> generally available).
+  The short method construct is that <code>return</code> isn’t used; instead
+  a statement without a <i>terminating</i> semicolon <i>must</i> be used instead.
+  E.G.:
+
+</p>
+<pre>
+    Boolean someMethod() {
+      return invert( <b>{ =&gt; true }</b> );
+    }
+</pre>
+<p>
+  (Note <code>{ =&gt; true; }</code>, <code>{ =&gt; return true }</code>  and 
+  <code>{ =&gt; return true; }</code> might not behave how you expect.)
+
+</p>
+<p>
+  BGGA also provides short syntax for control structures,
+  it uses the <code>for</code> keyword to
+  identify these methods and allows the movement of the closure to outside
+  the method brackets, provided that the closure is the last argument. E.G.
+  an <code>each</code> iterator might be:
+</p>
+<pre>
+    public static &lt; V &gt; void <b>for</b> each( Iterable&lt; V &gt; collection, <b>{ V =&gt; void } block</b> ) {
+      for ( V v : collection ) { block( v ); }
+    }
+    ...
+    <b>for each( Integer e : ls ) { total += e; }</b>
+
+</pre>
+<p>
+  If <code>each</code> where not declared with <code>for</code> 
+  then its use in BGGA it would be:
+</p>
+<pre>
+    public static &lt; V &gt; void each( Iterable&lt; V &gt; collection, { V =&gt; void } block ) {
+      for ( V v : collection ) { block( v ); }
+    }
+    ...
+    each( ls, { Integer e =&gt; total += e; } );
+
+</pre>
+<p>
+  FCM does not have any short method syntax but it does have control syntax,
+much along the lines of BGGA and therefore not shown.</p>
+<p>C3S takes a different
+    approach than BGGA, it provides general short constructs, not just specifically
+    for inner classes, that can be used throughout Java and all of which are
+    optional. Type inference, discussed above, is an example. Others examples
+    are: method declarations in general, generic declarations, inference of generic
+    types for constructors, declaration of constructors, and declaration of properties.
+    See <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=182412.html">C3S</a> for
+  details. It is interesting to note that in <i>the vast majority</i> of examples
+  C3S versions are the most concise; this is a surprising result since C3S’s
+  design favoured clarity and therefore used keywords rather than symbols and
+  since the keywords are longer than the symbols used in other proposals you
+  might expect C3S to be verbose. The reason that C3S is the most concise, is
+  because generally applicable constructs have been favoured in C3S over constructs
+  with a few use cases.
+</p>
+<p>
+  For <i>all</i> methods C3S makes <code>return</code> optional
+  and uses the value of the last line in the block if <code>return</code> is
+  omitted, therefore the <code>invert</code> example
+  above in C3S would be:
+
+</p>
+<pre>
+    <b>method</b> Boolean someMethod {
+      return invert <b>method { true }</b>;
+    }
+</pre>
+<p>
+  (Note <code>{ true; }</code>, <code>{ return true }</code>  and <code>{ return
+  true; }</code> all do the same as <code>{ true }</code>.)
+
+</p>
+<p>
+  For all methods C3S makes unambiguous brackets optional
+  (like Ruby) and makes the semicolon before a closing brace optional (like
+  Pascal), therefore the <code>for</code> example in C3S is:
+</p>
+<pre>
+    each ls, method( e ) { total += e };
+</pre>
+<h2>8. Assignment to local variables and no <code>final</code> requirement</h2>
+<p>
+  All the proposals are basically the same, they allow writing
+  to local variable (in the case of CICE a writable local needs to be annotated
+  with <code>public</code>) and there is no need to declare local variables <code>final</code>. 
+  Since all the proposals are so similar on this point only C3S is shown:
+</p>
+<pre>
+    <b>method</b> int sum() {
+      int total = 0;
+      each ls, method( e ) { total += e };
+      return total;
+    }
+</pre>
+<p>In BGGA you can turn off access to non-final local variables by making
+the interface that the closure implements the method of extend
+<code>RestrictedFunction</code>. It is not clear how practical this 
+technique of adding <code>RestrictedFunction</code> would be since
+you can't retrofit to existing code easily.</p>
+<h2>9. Variable number of exceptions</h2>
+<p>
+  At times it is convenient to be able to declare very general
+  methods that throw any number of exceptions, including checked exceptions.
+  Currently either <code>RuntimException</code>s <i>only</i> are
+  allowed, e.g. <code>Runnable</code>, or <code>Exception</code>,
+  as opposed to a specific exception list, is thrown, e.g. <code>Callable</code>.
+  C3S, FCM, and BGGA propose solutions, C3S uses generic varargs and FCM and
+  BGGA provide a similar capability but don’t use the varargs syntax.
+
+</p>
+<h4>C3S</h4>
+<pre>
+    interface&lt; R, A1, <b>Throwable... Es</b> &gt; Method1 {
+      method R call( A1 a1 ) <b>throws Es</b>;
+    }
+</pre>
+<h4>FCM &amp; BGGA</h4>
+<pre>
+    interface Method1&lt; R, A1, <b>throws Es</b> &gt; {
+      R call( A1 a1 ) <strong>throws Es</strong>;
+    }
+</pre>
+<h4>CICE</h4>
+<p>
+  Joshua Bloch (one of the authors of CICE) said in an email:
+</p>
+<blockquote>
+While CICE [JB said BGGA but I am sure he meant CICE] doesn't specifically allow for disjunctively typed throws clauses (“Variable number of exceptions”) it doesn't rule it out either.  I see this as a defect in the generic typing facility that should be fixed there.  Once so fixed, it will apply to all parameterized types, even those produce using old-fashioned anonymous class instance creation expressions.
+</blockquote>
+<p>This is a fair point, “Variable number of exceptions” is a seperate concern.</p>
+<h2>10. Method/function types (with shorter syntax)</h2>
+<p>
+  FCM and BGGA both provide support for declaring the type
+  of classes that contain a single method. In both cases the syntax is based
+  on their inner class/closure syntax, e.g.:
+</p>
+<pre>
+    <b>#( void( MouseEvent ) ) me = #( MouseEvent e ) { ...; ...; };</b> // FCM
+    <b>{ MouseEvent =&gt; void } me = { MouseEvent e =&gt; ...; ...; };</b> // BGGA
+
+</pre>
+<p>In both cases the types above are translated into a standard interface, e.g.:</p>
+<pre>
+    Method1&lt; Void, MouseEvent &gt;
+</pre>
+<p>
+  See point 9 above for the definition of <code>Method1</code>. To
+  convert the anonymous method given in the above example to an instance of
+  Method1 the correct generic parameters for Method1 need to be inferred. The
+  generic arguments are easy, since they are explicitly stated, the return
+  type of the anonymous method is however potentially difficult. Consider (in
+  FCM syntax):
+
+</p>
+<pre>
+    #( boolean useIntegerArithmatic, Number value ) {
+      if ( useIntegerArithmatic ) { return value.longValue() * 2L; } 
+      return value.doubleValue() * 2.0; 
+    }
+</pre>
+<p>The correct return type is <code>Number</code>, but this is very hard to deduce.</p>
+<p>
+  With C3S (and potentially with CICE, but the concept isn’t
+  explicitly mentioned) there is no new syntax and instead <code>Method1</code> is
+  used directly. This option avoids the difficulty of inferring the return
+  type. The equivalent “mouse” line in C3S and CICE is:
+
+</p>
+<pre>
+    declare me = <b>Method1&lt; Void, MouseEvent &gt;</b>.method( e ) { ...; ... }; // C3S
+    <b>Method1&lt; Void, MouseEvent &gt;</b> me = <b>Method1&lt; Void, MouseEvent &gt;</b>( MouseEvent e ) { ...; ...; }; // CICE
+
+</pre>
+<h3>Note on variance as used in BGGA and FCM</h3>
+<p>
+  The above examples given for FCM and BGGA are slightly simplified. In practice
+  both proposals suggest variance is used to make the method types more general.
+  E.G. in FCM (but similarly for BGGA):
+</p>
+<pre>
+    #( Number( Number, Number ) ) add = #( final Number lhs, final Number rhs ) { return lhs.doubleValue() + rhs.doubleValue(); };
+</pre>
+<p>Is translated into:</p>
+<pre>
+    Method2&lt; <b>? extends Number</b>, <b>? super Number</b>, <b>? super Number</b> &gt; add = new Method2&lt; Number, Number, Number &gt; () {
+      public Double call( final Number lhs, final Number rhs ) { return lhs.doubleValue() + rhs.doubleValue(); }
+    };
+
+</pre>
+<p>
+  Note how the generic arguments to <code>Method2</code> when declaring <code>add</code> use
+  variance.  The idea is to increase the generality of the method, this is
+  a laudable aim.
+</p>
+<h2>11. Non-local <code>return</code>, <code>break</code>, and <code>continue</code></h2>
+<p>
+  C3S, FCM, and BGGA support non-local <code>return</code>, <code>break</code>,
+  and <code>continue</code>, whereas CICE doesn’t. In BGGA this facility is highly
+  emphasized whereas in C3S it is listed as a possible future option. In BGGA
+  it is considered a <i>most</i>
+  important feature and new syntax is introduced into closures for <i>normal</i> method
+  return and the normal method return syntax is <i>used</i> for a non-local
+  return (see point 7 above). It is hard to find a good usage example for non-local
+  returns because throwing an exception is a viable alternative; in fact they
+  are implemented by throwing an exception! Another point to note is that the
+  concept of non-local returns is only applicable in single threaded code in
+  which the evaluation order is well known (typically sequential). This style
+  of coding will be used less in the future because processors are all going
+  multi-core and therefore favour multi-threading. (This multi-core and hence
+  multi-threading for the future was noted in point 2 above.)
+</p>
+<p>
+  As already noted; a good example
+  is hard to find, but suppose that the collections library did not contain 
+  <code>binarySearch</code> but did contain <code>each</code> 
+  (and you didn’t want to use a loop!):
+
+</p>
+<h4>C3S</h4>
+<pre>
+    method Integer find( final Integer key ) {
+      each list, method( e ) {
+        if ( e.equals key ) { <b>find.return</b> e }
+      };
+      null
+    }
+</pre>
+<h4>BGGA</h4>
+<pre>
+
+    Integer find( final Integer key ) {
+      for each ( final Integer e : list ) {
+        if ( e.equals( key ) ) { <b>return</b> e; }
+      };
+      return null;
+    }
+</pre>
+<p>
+  (The most common justification for the non-local return
+  feature of BGGA using the traditional method return syntax is that it allows
+  easy refactoring of something like a <code>for</code> loop into an 
+  <code>each</code> loop. It is true that this refactoring
+  is simple in BGGA, but I would suggest that the <i>more</i> common refactoring
+  of an inner class’s method/closure into a stand-alone method is now harder.
+  Therefore the use of normal method syntax for non-local return seems dubious.
+  The value you place on this feature would seem to depend on your programming
+  style. If you use a heavy procedural style then you might make extensive
+  use of blocks nested inside one another. However if you use an OO style or
+  a functional style you are much more likely to use a lot of small methods
+  instead and therefore hardly ever use a non-local return.)</p>
+<p>In BGGA you can turn off non-local returns by making
+the interface that the closure implements the method of extend
+<code>RestrictedFunction</code>. It is not clear how practical this 
+technique of adding <code>RestrictedFunction</code> would be since
+you can't retrofit to existing code easily.</p>
+<p>Code for FCM would be similar to the above BGGA code and therefore isn't shown.
+There is however a major point of difference between FCM and BGGA, in BGGA a
+non-local <code>return</code> is allowed for all closures. In FCM non-local
+returns are only allowed in control blocks.
+In fact in FCM all <code>return</code> statements within a control block are non-local
+returns and further more the return type of a control loop block is <code>void</code>
+and therefore no confusion exists as to whether a return is local or not. 
+This difference concerning non-local returns considerably simplifies the FCM proposal.
+</p>
+<h1>Acknowledgements</h1>
+<p>
+  Stefan Schultz and Stephen Colebourne (the authors of
+  FCM) both suggested that I write this blog. I asked the authors of the
+  respected proposal to check my examples of their code, thanks 
+  to those who responded.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=202004.html">9
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=202004&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D202004&amp;title=Comparing+Inner+Class%2FClosure+Proposals&amp;bodytext=There+are+at+least+4+inner+class%2Fclosure+proposals+for+Java+7+and+it+is+hard+to+compare+them+because+they+use+different+terms+and+different+syntax+for+similar+concepts.+This+post+makes+the+comparison+easier+by+seperating+concerns.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D202004&amp;title=Comparing+Inner+Class%2FClosure+Proposals">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D202004&amp;title=Comparing+Inner+Class%2FClosure+Proposals">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

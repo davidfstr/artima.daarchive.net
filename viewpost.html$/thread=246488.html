@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Setting Multiple Inheritance Straight</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=246488.html">Discuss</a> | 
+<a href="mailto:?subject=Setting Multiple Inheritance Straight&amp;body= %0AArtima Weblogs %0ASetting Multiple Inheritance Straight %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=246488">Email</a> | 
+<a href="../viewpostP.html$/thread=246488.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=246483.html" title="Mixins considered harmful/2">Previous</a> | 
+<a class="sl" href="thread=247186.html" title="Resuscitating a Seven Year Old Laptop">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Setting Multiple Inheritance Straight</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">January 10, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I have argued many times that multiple inheritance is bad. Is it possible to set it straight without loosing too much espressive power? My strait module is a proof of concept that it is indeed possible. Read and wonder ...
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>As you may know, for some time I have been running a campaign against
+multiple inheritance and mixins - you may want to read the
+conclusion of the <a class="reference" href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=237121.html">third article</a> of the series
+<em>Things to Know About Super</em> and
+<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=246341.html">the first</a> and <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=246483.html">the second</a> article of the series
+<em>Mixins considered harmful</em>.
+Following that route, last week I decided to
+release a module I wrote this summer, the <a class="reference" href="../_/http/pypi.python.org/pypi/strait/index.html">strait</a> module, which
+implements traits for Python.</p>
+<p>The implementation is inspired by the 2003
+paper <a class="reference" href="../_/http/www.iam.unibe.ch/%7Escg/Archive/Papers/Scha03aTraits.pdf">Traits - Composable Units of Behavior</a>. Traits are
+simple since they cannot have common methods and the method
+resolution order is trivial. There is an implementation of the concept
+in the Smalltalk implementation <a class="reference" href="../_/http/www.squeak.org/index.html">Squeak</a>.</p>
+<p>The <a class="reference" href="../_/http/pypi.python.org/pypi/strait/index.html">strait</a> module was written as a design exercise, to prove a few points:</p>
+<ul class="simple">
+<li>that you can replace multiple inheritance with a less powerful but also
+simpler and less dangerous mechanism, without losing much
+expressive power;</li>
+<li>that a language such as Python is powerful enough that you can implement
+traits in 100 lines by using single inheritance only;</li>
+<li>that you can keep a kind of method cooperation even using traits,
+but in a simpler way than using multiple inheritance, basically
+by setting straight the original hierarchy.</li>
+</ul>
+<p>The documentation of the <a class="reference" href="../_/http/pypi.python.org/pypi/strait/index.html">strait</a> module is intended for language designers,
+framework writers and advanced Python programmers. It actually was
+written for the guys of the python-dev list, as a companion to
+a <a class="reference" href="../_/http/www.gossamer-threads.com/lists/python/dev/673833/index.html">thread about my articles on super</a>. It is not intended for
+the average Joe programmer, and it is somewhat technical, focusing
+on the details on the Python implementation. On the other hand,
+knowing that alternatives to multiple inheritance and mixins exist
+in my opinion is good for everybody.</p>
+<p>Thus, I have decided to supplement the documentation of the strait
+module with a few notes explaining what traits are, the differences
+with multiple inheritance and mixins and what we mean by method
+cooperation.  The notes here are intended for any programmer with
+experience in OOP, and they are not Python specific at all.</p>
+<div class="section">
+<h1><a id="multiple-inheritance-and-method-cooperation" name="multiple-inheritance-and-method-cooperation">Multiple inheritance and method cooperation</a></h1>
+<p><a class="reference" href="../_/http/en.wikipedia.org/wiki/Multiple_inheritance/index.html">Multiple inheritance</a>, <a class="reference" href="../_/http/en.wikipedia.org/wiki/Mixins/index.html">mixins</a> and <a class="reference" href="../_/http/www.iam.unibe.ch/%7Escg/Archive/Papers/Scha03aTraits.pdf">traits</a> are usually considered
+advanced techniques of object oriented programming, since the most
+popular languages (Java, C#, VisualBasic, PHP) do not support them, or
+support them in a poor way (C++).  On the other hand, those techniques
+are pretty common in the coolest languages out there, such as Python
+(featuring multiple inheritance), Ruby (featuring mixins) and Scala
+(featuring "traits").  I am quoting the term "traits" when referred to
+Scala, since Scala traits are more similar to Python mixins
+than to Squeak traits. Actually, Scala traits can be composed when
+they override the same method and the order of the composition
+determines the resulting pattern of super calls: that means that Scala
+traits have basically all the complications of Python mixins, which
+I would rather avoid.</p>
+<p>Multiple inheritance is the most general technique among the three
+cited before: mixins can be seen as a restricted form of multiple
+inheritance and traits as a restricted form of mixins.
+Multiple inheritance is available in various languages, such as
+C++, Common Lisp, Python, Eiffel, and others.
+In a multiple inheritance language, a class can have more than one parent
+and thus can inherit methods and attributes from more sources at
+the same time. Maintaining code taking advantages of
+(multiple) inheritance is nontrivial, since in order to understand how
+a class works, one needs to study all of its parents (and the parents
+of the parents, recursively).</p>
+<p>That means that there is a strong coupling of the code:
+changing any method in any
+ancestors has an effect on the class. To some extent this
+is is inevitable, since the other face of code reuse if code coupling
+(you cannot have one without the other) and one has to cope with that.
+Also, you have the same problem
+even with single inheritance, when you have a deep hierarchy.
+However, multiple inheritances adds another level of complication.</p>
+<p>For instance, the order of the parents
+is significant: a class <em>C1</em> inheriting from <em>P1</em> and <em>P2</em> does
+not necessarily behave the same as a class <em>C2</em> inheriting from <em>P2</em> and
+<em>P1</em> where the order of the parents is inverted.
+The reason is that for common methods, i.e. methods with the same name,
+the methods of <em>P1</em> have the precedence over the
+methods of <em>P2</em> for the class <tt class="docutils literal"><span class="pre">C1(P1,</span> <span class="pre">P2)</span></tt>, but not
+for the class <tt class="docutils literal"><span class="pre">C2(P2,</span> <span class="pre">P1)</span></tt>.
+Since the common methods are silently overridden and programmers are not
+quite good at remembering the ordering, that may give raise to subtle bugs.</p>
+<p>The situation is worse if one looks at the higher order ancestors:
+the order of overriding (the so called MRO, Method
+Resolution Order) is definitely non trivial:
+I actually wrote a long essay on the subject, describing
+the <a class="reference" href="../_/http/www.python.org/download/releases/2.3/mro/index.html">Python MRO</a> and I refer to that reference for the details.
+While that reference is Python specific, the concept of method
+resolution (also called <em>linearization</em> in the Lisp world) is
+general and applies to many languages, including Dylan and Common
+Lisp.</p>
+<p>If you want to know more about the linearizations
+of Dylan and Common Lisp, you should look at <a class="reference" href="../_/http/192.220.96.201/dylan/linearization-oopsla96.html">this paper</a>. On the other
+hand, if you are a reader of my <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=238789.html">Scheme series</a> or a Scheme practitioner,
+I suggest you to read the
+paper <a class="reference" href="../_/http/www.cs.utah.edu/plt/publications/aplas06-fff.pdf">Scheme with Classes, Mixins, and Traits</a>, which describes
+the object system of PLT Scheme, which support both cooperative
+mixins and traits in the Squeak sense.</p>
+<p>Scala does not support full multiple inheritance, but its traits
+are nearly as powerful (the only difference between a trait and a
+regular class is that the trait does not define a constructor)
+and nearly as complicated, therefore I would consider Scala in
+the same class with Python and Common Lisp. If you
+want to look at how Scala works, you may look the <a class="reference" href="../_/http/www.scala-lang.org/docu/files/ScalaOverview.pdf">Scala Overview</a>
+paper. Theoretically, the Python MRO is the best one,
+since it is monotonic, but in practice all MROs are quite complicated.</p>
+<p>The point to notice is that the complication of the MRO is by design:
+languages with a non-trivial MRO where <em>designed</em> this way
+to make possible <a class="reference" href="../_/http/www.python.org/download/releases/2.2.3/descrintro/#cooperation/index.html">method cooperation via super calls</a>. That means
+that if both parents <tt class="docutils literal"><span class="pre">P1</span></tt> and <tt class="docutils literal"><span class="pre">P2</span></tt> define a method <tt class="docutils literal"><span class="pre">m</span></tt>,
+a child class <tt class="docutils literal"><span class="pre">C</span></tt> can override it and still have access to
+the <tt class="docutils literal"><span class="pre">m</span></tt> methods of the parents via <tt class="docutils literal"><span class="pre">super</span></tt>: <tt class="docutils literal"><span class="pre">C.m</span></tt> will
+call first <tt class="docutils literal"><span class="pre">P1.m</span></tt> and then <tt class="docutils literal"><span class="pre">P2.m</span></tt>, if <tt class="docutils literal"><span class="pre">P1.m</span></tt> features
+a <tt class="docutils literal"><span class="pre">super</span></tt> call itself.</p>
+<p>Of course, this
+is just one possible design: different languages may adopt different
+designs. For instance the Eiffel language implements multiple
+inheritance, but it raises an exception when two methods with
+the same name are present: the programmer is forced to specify an
+explicit renaming (this is basically what happens for traits).</p>
+<p>Years ago, I thought such a design to be simplistic (even stupid) and
+very much inferior to the Python cooperative design: nowadays I have
+had more experience with real life large object oriented systems using
+multiple inheritance and I have come to appreciate "stupid"
+designs. Actually, nowadays I think Smalltalk made the right choice
+thirty years ago, deciding to <em>not</em> support multiple inheritance nor
+mixins.</p>
+</div>
+<div class="section">
+<h1><a id="mixins-and-traits-without-multiple-inheritance" name="mixins-and-traits-without-multiple-inheritance">Mixins and traits without multiple inheritance</a></h1>
+<p>In practice, the overriding problem is not very frequent (it is serious
+when it happens, but it <em>rarely</em> happens) since usually frameworks are
+designed to mix <em>independent</em> sets of functionality. Usually one does
+not need the full power of multiple inheritance: mixins or traits are
+powerful enough to implement most frameworks.</p>
+<p>In a language with multiple inheritance it is natural
+to implement mixins as classes.
+However, this is not the only solution. In general, we can speak
+of mixin programming in any language where it is possible to inject
+methods in the namespace of a class, both statically before class creation
+or dynamically after class creation.</p>
+<p>For instance,
+Ruby does not support multiple inheritance, bit it does support mixins
+since it is possible to include methods coming from a module:</p>
+<pre class="literal-block">
+class C_with_mixin &lt; C:
+   include M # M is a module
+</pre>
+<p>There is an advantage in this approach: modules have no parents and
+there is no concept of method resolution order, so it is much easier
+to figure out what a mixin does, as compared to figure out what
+a mixin implemented as a class in a multiple inheritance hierarchy
+does. On the other hand, there is no method cooperation in the sense
+of Python or Scala <tt class="docutils literal"><span class="pre">super</span></tt> or CLOS <tt class="docutils literal"><span class="pre">call-next-method</span></tt>.
+There is a limited
+cooperation between parent and sons only, since Ruby <tt class="docutils literal"><span class="pre">super</span></tt>
+(like Java <tt class="docutils literal"><span class="pre">super</span></tt>), is able to dispatch to the parent
+class only.
+This is not
+necessarily a bad thing, though.</p>
+<p>Ruby mixins are much simpler than Scala traits or Python mixins,
+but they still suffer for the ordering problem: mixing the module <em>M1</em> and the
+module <em>M2</em> is different than mixing the module <em>M2</em>
+and the module <em>M1</em>: if the modules contain methods with
+the same name, changing the composition order affects the
+resulting class.</p>
+<p>Traits were invented just to solve this problem: common methods
+raise an error unless the programmer specifies the precedence
+explicitly, or she renames the methods. After that, traits commute.
+Traits are therefore the most explicit and safest technique,
+whereas multiple inheritance is the most fragile technique,
+with mixins in between.</p>
+<p>A proper implementation of traits should also include introspection
+tools such that a class can be seen both as a flat collection of
+methods and as a composite entity (the original paper about traits
+explain this point pretty well). That should help with the namespace
+pollution problem by giving to the developer the ability to see the
+class as a composition of traits (one could argue that in Python pydoc
+allows you to see the origin of the methods as coming from parent
+classes, but that support is insufficient to manage situations with
+complicate inheritance hierarchies and lots of methods).</p>
+<p>In Python you can also implement mixins without inheritance simply by
+dynamically adding methods to a class, starting from a method dictionary
+<tt class="docutils literal"><span class="pre">M</span></tt>:</p>
+<pre class="literal-block">
+class C_with_mixin(C):
+   pass
+
+for name in M: # M is a dictionary of methods
+   setattr(C_with_mixin, name, M[name])
+</pre>
+<p>Implementing Ruby mixins in Python is therefore trivial, you can
+just read the methods from a module dictionary. Implementing
+traits is a bit less trivial, since you must check for common
+names and raise an error in that case. Moreover you must be
+careful with ordering issues: the traits paper says that
+methods coming from a trait must take the precedence over
+methods coming from the base class, but they must <em>not</em> take
+the precedence over methods defined in the class.</p>
+<p>I took some liberty with my own implementation of traits,
+which was just <em>inspired</em> by the Squeak implementation, but
+it is not the same. In particular, I added some support
+for cooperation of traits, i.e. there is a kind of <tt class="docutils literal"><span class="pre">super</span></tt>,
+but its functionality is limited with respect to the regular
+super, and it is a bit more akward to use: this is on purpose,
+to discourage designs based on method cooperation, which I
+think are fragile and not to be recommended (again, see the
+<a class="reference" href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=237121.html">third article</a> on my series about <tt class="docutils literal"><span class="pre">super</span></tt>).
+Still, in the
+very few special case where one wants cooperation, that is
+possible indeed.</p>
+<p>All those points are explained in the documentation of the <a class="reference" href="../_/http/pypi.python.org/pypi/strait/index.html">strait</a> module,
+so you should look there, if you are really interested in the subject.
+Here I will just add that I still prefer <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=237764.html">generic functions</a> to traits.
+Nevertheless, traits may have a role if you want to follow the traditional
+route of having methods inside classes, and they are a smaller leap
+from traditional object oriented programming. Moreover, it is much
+easier to convert a pre-existing framework from using mixins to
+using traits than to convert it generic functions.</p>
+<p>If you want to play with traits in Python, you are welcome to try the
+<a class="reference" href="../_/http/pypi.python.org/pypi/strait/index.html">strait</a> module. Enjoy!</p>
+<p><em>Post scriptum</em>. I realize that this post may be misinterpreted, so
+let me make clear a couple of points:</p>
+<ol class="arabic simple">
+<li>I am <em>not</em> asking for removing multiple inheritance in Python and
+replacing it with traits. However, I am saying to people writing
+new languages: <em>think twice before adding multiple inheritance</em>.
+Certainly it is more <a class="reference" href="../_/http/sayspy.blogspot.com/2007/04/five-1-things-i-hate-about-python-and.html">difficult to implement</a> than traits; moreover,
+I am arguing that it makes life more difficult for yours users too.</li>
+<li>I do <em>not</em> think traits are the best thing after sliced bread. They
+are a bit better than multiple inheritance, but I still recommend
+to keep things simple and to use both (single) inheritance and
+traits as little as possible.</li>
+</ol>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=246488.html">13
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=246488&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D246488&amp;title=Setting+Multiple+Inheritance+Straight&amp;bodytext=I+have+argued+many+times+that+multiple+inheritance+is+bad.+Is+it+possible+to+set+it+straight+without+loosing+too+much+espressive+power%3F+My+strait+module+is+a+proof+of+concept+that+it+is+indeed+possible.+Read+and+wonder+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D246488&amp;title=Setting+Multiple+Inheritance+Straight">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D246488&amp;title=Setting+Multiple+Inheritance+Straight">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

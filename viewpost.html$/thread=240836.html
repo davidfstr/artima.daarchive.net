@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/12</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=240836.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/12&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/12 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=240836">Email</a> | 
+<a href="../viewpostP.html$/thread=240836.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=240833.html" title="The Adventures of a Pythonista in Schemeland/11">Previous</a> | 
+<a class="sl" href="thread=243830.html" title='The Third Cycle of the "Adventures of a Pythonista in Schemeland"'>Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/12</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">November 22, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this episode I discuss the utility of macros for enterprise programmers.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="are-macros-just-syntactic-sugar" name="are-macros-just-syntactic-sugar">Are macros "just syntactic sugar"?</a></h1>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/sugar.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/sugar.jpg">
+<p>There is a serious problem when teaching macros to beginners: the real
+power of macros is only seen when solving difficult problems, but you
+cannot use those problems as teaching examples.  As a consequence,
+virtually all beginner's introductions to macros are dumbed down:
+usually they just show a few trivial examples about how to
+modify the Scheme syntax to resemble some other language. I did the same
+too. This way of teaching macros has two negative effects:</p>
+<ol class="arabic simple">
+<li>beginners are naturally inclined to pervert
+the language instead of learning it;</li>
+<li>beginners can easily dismiss macros as mere
+syntactic sugar.</li>
+</ol>
+<p>The first effect is the most dangerous: the fact that you can implement a C-like
+<tt class="docutils literal"><span class="pre">for</span></tt> loop in Scheme does not mean that you should use it! I
+strongly believe that learning a language means learning its idioms:
+learning a new language means that you must change the way you think
+when writing code. In particular, in Scheme, you must get used to
+recursion and accumulators, not to imperative loops, there is no other
+way around.</p>
+<p>Actually, there are cases
+where perverting the language may have business sense. For instance, suppose
+you are translating a library from another language with a
+<tt class="docutils literal"><span class="pre">for</span></tt> loop to Scheme. If you want to spend a minimal effort in the
+translation and if for any reason you want to stay close to the
+original implementation (for instance, for simplifying maintenance),
+then it makes sense to leverage on the macro
+facility and to add the <tt class="docutils literal"><span class="pre">for</span></tt> loop to the language syntax.</p>
+<p>The problem is that it is very easy to abuse the mechanism. Generally
+speaking, the adaptibility of the Scheme language is a double-edged
+sword.  There is no doubts that it increases the programmer
+expressivity, but it can also make programs more difficult to
+read. The language allow you to invent your own idioms that
+nobody else uses, but perhaps this is not such a good idea if you care
+about other people reading your code. For this reason macros in the
+Python community have always been viewed with suspicion: I am also
+pretty confident that they will never enter in the language.</p>
+<p>The second effect (dismissing macros) is less serious: lots of
+people understimate macros as mere syntactic sugar, by forgetting that
+all Turing complete languages differ solely on syntactic sugar.
+Moreover, thinking too much about the syntactic sugar aspect make them
+blind to others and more important aspects of macros: in particular,
+the fact that macros are actually <em>compilers</em>.</p>
+<p>That means that you can implement
+with macros both <em>compile time checks</em> (as I have stressed in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240805.html">episode #10</a>,
+when talking about guarded patterns) and <em>compile time computations</em>
+(I have not discussed this point yet) with substantial
+benefits for what concerns both the reliability and the performance of
+your programs. In <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240833.html">episode #11</a> I have already shown how
+you can use macros to avoid expensive function calls in benchmarks
+and the example generalizes to any other situations.</p>
+<p>In general, since macros allows you to customize the evaluation mechanism
+of the language, you can do with macros things which are impossible
+without them: such an example is the <tt class="docutils literal"><span class="pre">test</span></tt> macro discussed
+in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240833.html">episode #11</a>. I strongly suggest you to read the third comment
+to that episode, whereas it is argued that it is impossible to
+implement an equivalent functionality in Python.</p>
+<p>So, you should not underestimate the power of macros; on the other
+hand, you should also not underestimate the complexity of macros.
+Recently I have started a <a class="reference" href="../_/http/groups.google.com/group/comp.lang.scheme/browse_frm/thread/8927053ede92fd27$/hl=en/index.html">thread on comp.lang.scheme</a> with 180+ messages
+about the issues I have encountered when porting my <tt class="docutils literal"><span class="pre">sweet-macros</span></tt>
+library between different Scheme implementations, and the thread ended
+up discussing a lot of hairy points about macros (expand-time vs run-time,
+multiple instantiation of modules, separate compilation, and all that).</p>
+</img></div>
+<div class="section">
+<h1><a id="about-the-usefulness-of-macros-for-application-programmers" name="about-the-usefulness-of-macros-for-application-programmers">About the usefulness of macros for application programmers</a></h1>
+<p>I am not an advocate of macros for enterprise programming. Actually,
+even ignoring the issue with macros, I cannot advocate
+Scheme for enterprise programming because of the lack of a standard
+library worth of its name. This was more of an issue with R5RS Scheme,
+but it is still a problem since Scheme has an extremely small standard
+library and no concept of <em>batteries included</em> à la Python. As a
+consequence, everybody has to invent its own collections of utilities,
+each collection a little bit different from the other.</p>
+<p>For instance,
+when I started learning Scheme I wrote a lot of utilities;
+later on, I discovered that I could find the same utilites, under
+different names and slightly different signatures, in various Scheme
+frameworks.  This never happened to me in Python to the same extent,
+since the standard library is already coding in an uniform way most of
+the useful idioms, so that everybody uses the library and there is
+less need to reinvent the wheel.</p>
+<p>On the other hand, I am not a macro aficionado like Paul Graham, who says:</p>
+<blockquote>
+<em>When there are patterns in source code, the response should not be
+to enshrine them in a list of "best practices," or to find an IDE
+that can generate them.  Patterns in your code mean you are doing
+something wrong.  You should write the macro that will generate them
+and call that instead.</em></blockquote>
+<p>I think Graham is right in the first part of its analysis, but not in
+the conclusion. I agree that patterns are a <a class="reference" href="../_/http/en.wikipedia.org/wiki/Code_smell/index.html">code smell</a> and I think
+that they denote a lack in the language or in its standard library. On
+the other hand, the real solution for the enterprise programmer is not
+to write her own macro which nobody knows, but to have the feature
+included in the language by an authoritative source (for instance
+Guido van Rossum in the case of Python) so that <em>all</em> users of the
+language get the benefit in an uniform way.</p>
+<p>This happened recently in Python, with the ternary operator, with the
+<tt class="docutils literal"><span class="pre">try</span> <span class="pre">..</span> <span class="pre">except</span> <span class="pre">..</span> <span class="pre">finally</span></tt> statement, with
+the <em>with statement</em>, with extended generators and in many other
+cases. The Scheme way in which everybody writes his own language
+makes sense for the academic researcher, for the solitary hacker,
+or for very small team of programmers, but not for the enterprise.</p>
+<p>Notice that I am not talking about specialized newly invented
+constructs: I am talking about <em>patterns</em> and by definition, according
+to the <a class="reference" href="../_/http/en.wikipedia.org/wiki/Design_Patterns/index.html">GoF</a>, a pattern cannot be new, it must be a tried and tested solution
+to a common problem. If something is so common and well known
+to be a pattern, it
+also deserves to be in the standard library of the language, or
+in a standard framework. This
+works well for scripting languages, which have a fast evolution,
+and less well in languages designed by committee, where you can
+wait years and years for any modernization of the language/library
+(we all know Paul Graham is coming from Common Lisp, so his position
+is understandable).</p>
+<p>In my opinion - and your are free to disagree of course - the
+enterprise programmer is much better served by a language without
+macros but with a very complete library where all useful constructs
+have been codified already.
+After all, 99.9% of the times the enterprise
+programmer has to do with already solved problems: it is not by
+chance that frameworks are so used in the enterprise world. Notice
+that by "enterprise programmer" I mean the framework <em>user</em>, not
+the framework <em>writer</em>.</p>
+<p>Take my case for instance: at work I am doing some Web programming,
+and I just use one of the major Python web frameworks (there already
+too many of them!); I do quite of lot of interaction with databases,
+and I just use the standard or <em>de facto</em> standard drivers/libraries
+provided for the task at hand; I also do some scripting task:
+then I use the standard library a lot. For all the task I
+routinely perform at my day job macros would not help me a bit:
+after all Python has already many solutions to avoid boilerplate
+(decorators, metaclasses, etc.) and the need for macros is not
+felt. I admit that some times I wished for new constructs in Python:
+but usually it was just a matter of time and patience to get them in
+the language and while waiting I could always solve my problems
+anyway, maybe in a less elegant way.</p>
+<p>There are good use cases for macros, but there also plenty of workarounds
+for the average application programmer.</p>
+<p>For instance, a case where one could argue for macros, is when there
+are performance issues, since macros are able to lift computations from
+runtime to compile time, and they can be used for code
+optimization. However, even without macros, there is plenty of room
+for optimization in the scripting language world, which typically
+involve interfacing with C/C++.</p>
+<p>There are also various standard techniques for <em>code generation</em> in C,
+whereas C++ has the infamous <em>templates</em>: while those are solutions
+very much inferior to Scheme macros, they also have the enormous
+advantage of working with an enterprise-familiar technology, and you
+certainly cannot say that for Scheme.</p>
+<p>The other good use for macros is to implement compile time checks:
+compile time checks are a good thing, but in practice people have
+learned to live without them by relying on a good unit test coverage, which
+is needed anyway.</p>
+<p>On the other hand, one should not underestimate the downsides of
+macros. Evaluation of code defined inside of the macro body at
+compile time or suspension of evaluation therein leads often to bugs
+that are hard to track. The behaviour of the code is generally not
+easy to understand and debugging macros is no fun.</p>
+<p>That should explain why the current situation about Scheme in the
+enterprise world is as it is. It is also true that
+the enterprise programmer's job is sometimes quite
+boring, and you can risk brain atrophy, whereas for sure
+you will not incur in this risk if you keep reading my <em>Adventures</em> ;)</p>
+<p>You may look at this series as a cure against senility!</p>
+</div>
+<div class="section">
+<h1><a id="appendix-a-pythonic-for-loop" name="appendix-a-pythonic-for-loop">Appendix: a Pythonic <tt class="docutils literal"><span class="pre">for</span></tt> loop</a></h1>
+<p>In this appendix I will give the solution to the exercise suggested
+at the end of <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240805.html">episode #10</a>, i.e. implementing a Python-like <tt class="docutils literal"><span class="pre">for</span></tt>
+loop.</p>
+<p>First of all, let me notice that Scheme already has the functionality
+of Python <tt class="docutils literal"><span class="pre">for</span></tt> loop (at least for lists) via the <a class="reference" href="../_/http/www.r6rs.org/final/html/r6rs/r6rs-Z-H-14.html#node_idx_644">for-each</a>
+construct:</p>
+<pre class="literal-block">
+&gt; (for-each (lambda (x y) (display x) (display y)) '(a x 1) '(b y 2))
+abxy12
+</pre>
+<p>The problem is that the syntax looks quite different from Python:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; for (x, y) in (("a", "b"), ("x", "y"), (1, 2)):
+...     sys.stdout.write(x); sys.stdout.write(y)
+</pre>
+<p>One problem is that the order of the list is completely different, but
+this is easy to fix with a <tt class="docutils literal"><span class="pre">transpose</span></tt> function:</p>
+<pre class="literal-block">
+(define (transpose llist) ; llist is a list of lists
+  (if (and (list? llist) (for-all list? llist))
+      (apply map list llist)
+      (error 'transpose "Not a list of lists" llist)))
+</pre>
+<p>(if you have read carefully <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240793.html">episode #8</a> you will notice the
+similarity between <tt class="docutils literal"><span class="pre">transpose</span></tt> and <tt class="docutils literal"><span class="pre">zip</span></tt>). <tt class="docutils literal"><span class="pre">transpose</span></tt>
+works as follows:</p>
+<pre class="literal-block">
+&gt; (transpose '((a b) (x y) (1 2)))
+((a x 1) (b y 2))))
+</pre>
+<p>Then there is the issue of hiding the <tt class="docutils literal"><span class="pre">lambda</span></tt> form, but this is an
+easy job for a macro:</p>
+<pre class="literal-block">
+(def-syntax for
+  (syntax-match (in)
+   (sub (for el in lst do something ...)
+        #'(for-each (lambda (el) do something ...) lst)
+        (identifier? #'el))
+   (sub (for (el ...) in lst do something ...)
+        #'(apply for-each (lambda (el ...) do something ...) (transpose lst))
+        (for-all identifier? #'(el ...))
+        (syntax-violation 'for "Non identifier" #'(el ...)
+                          (remp identifier? #'(el ...))))
+   ))
+</pre>
+<p>The important thing to notice in this implementation is the usage of a guard
+with an <tt class="docutils literal"><span class="pre">else</span></tt> clause: that allows to
+introduce two different behaviours for the macro at the same time.
+If the pattern variable <tt class="docutils literal"><span class="pre">el</span></tt> is an identifier, then <tt class="docutils literal"><span class="pre">for</span></tt> is
+converted into a simple <tt class="docutils literal"><span class="pre">for-each</span></tt>:</p>
+<pre class="literal-block">
+&gt; (for x in '(1 2 3) (display x))
+123
+</pre>
+<p>On the other hand, if the pattern variable <tt class="docutils literal"><span class="pre">el</span></tt> is a list of
+identifiers and <tt class="docutils literal"><span class="pre">lst</span></tt> is a list of lists, then the macro
+also reorganizes the arguments of the underlying <tt class="docutils literal"><span class="pre">for-each</span></tt>
+expression, so that <tt class="docutils literal"><span class="pre">for</span></tt> works as Python's <tt class="docutils literal"><span class="pre">for</span></tt>:</p>
+<pre class="literal-block">
+&gt; (for (x y) in '((a b) (x y) (1 2)) (display x) (display y))
+abxy12
+</pre>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=240836.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=240836&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240836&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F12&amp;bodytext=In+this+episode+I+discuss+the+utility+of+macros+for+enterprise+programmers.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240836&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F12">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240836&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F12">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

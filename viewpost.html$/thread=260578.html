@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Why? Language Archaeology ... and Metaprogramming</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=260578.html">Discuss</a> | 
+<a href="mailto:?subject=Why? Language Archaeology ... and Metaprogramming&amp;body= %0AArtima Weblogs %0AWhy? Language Archaeology ... and Metaprogramming %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=260578">Email</a> | 
+<a href="../viewpostP.html$/thread=260578.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=259358.html" title="A Career in Computing">Previous</a> | 
+<a class="sl" href="thread=261930.html" title="What I Learned at EuroPython">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Why? Language Archaeology ... and Metaprogramming</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">June 16, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I showed up at the organizational meeting for the ANSI/ISO C++ standards committee because Bjarne Stroustrup asked me to. I knew him from my early C++ work and from conferences, and I suspect he considered me a friendly influence.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I had no intention of committing to the time, money and travel necessary to meet three times a year, for a week each time, but the organizational meeting was in Washington DC and I was living in Pennsylvania at the time so I thought "what the heck, I'll drive a few hours and check it out."</p>
+<blockquote>
+<p><strong>Note:</strong> <em>My keynote at the upcoming EuroPython conference, June 30-July 2 in Birmingham, UK will be on language archaeology. I'll also be giving a talk on Metaprogramming, sitting on a panel, and generally participating for the whole 3 days. If you're there, feel free to draft me for an open-spaces discussion, or start a hallway conversation -- I'm going there because I want to talk about Python.</em></p>
+<p><em>You can find out more about the conference, and register,</em> <a class="reference" href="../_/http/www.europython.eu/index.html">here</a>. <em>There are also pre-conference tutorials beginning on June 28th.</em></p>
+</blockquote>
+<div class="section">
+<h1><a id="language-archaeology" name="language-archaeology">Language Archaeology</a></h1>
+<p>What I found at the C++ committee meeting were most of the smartest people in the C++ community, gathered together in one place, available to answer my questions. I quickly realized this was far better than I could ever find in any graduate school program. And if you factor in the opportunity costs of graduate school, a far better deal financially as well.</p>
+<p>I was hooked, and kept attending for about 8 years. The committee continued after I wandered away; the standard hadn't been completed yet but Java had appeared by that time and some others were also drifting off (It's the problem with being a technological stimulus junkie -- I do delve deep, but I'm always looking for more productivity leverage so it's not too hard to distract me with promising language features).</p>
+<p>Each time we met, I would show up with a list of the thorniest C++ questions that had accumulated for me in the interim. I would usually have them all clarified within a couple of days. That, and being exposed to upcoming features early, was the most valuable short-term benefit of being on the committee.</p>
+<p>In the long term, watching the addition of language features into the C++ puzzle was deep learning. It's easy now to monday-morning quarterback and say that C++ sucks and was badly designed, and many people do so without any understanding of the constraints under which it was designed. Whether or not it was entirely legitimate, Stroustrup's constraint was that a C program should compile with either trivial or (preferably) no changes under C++. This provided an easy evolution path for C programmers, but it was a big limitation and accounts for virtually every difficult feature that people complain about. But because those features are hard to understand, many people jump to the conclusion that C++ was badly designed, which is far from the truth.</p>
+<p>Java fed this perception with its cavalier attitude about language design. I've written about this in <a class="reference" href="../_/http/mindview.net/Books/TIJ4/index.html">Thinking in Java</a> <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=193593.html">and</a> <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=244996.html">in</a> <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=227728.html">many</a> <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=221903.html">weblogs</a>, so longtime followers already know that Java tweaked me the wrong way from the start, because of the dismissive attitude of Gosling and the language designers. To be honest, my first "encounter" with Gosling left a bad taste in my mouth -- it was many years before, when I first began using Unix at one of the first companies I worked (Fluke, which makes electronic test equipment; I was doing embedded systems programming). One of the other software engineers was coaching me and had guided me towards emacs. But the only tool available in the company at that time was the commercial (Unipress) version of <a class="reference" href="../_/http/en.wikipedia.org/wiki/Gosling_Emacs/index.html">Gosling Emacs</a>. And if you did something wrong, the program would insult you by calling you a turkey and filling the screen with garbage. This, in a commercial product for which the company had paid fair amounts of cash. Needless to say, as soon as Gnu emacs became stable the company switched over to that (I've met Richard Stallman. He's crazy, sure. But he's wicked smart, and smart enough to know that when you are in trouble, you need help, lots of it, and not insults).</p>
+<p>I have no idea how much this formative experience with Gosling influenced my later feelings about his work, but the fact that the attitude about C++ was "we looked at it and it sucked so we decided to whip out a language of our own" didn't help. Especially when I began to tease it apart in the process of writing <em>Thinking in Java</em> and discovered, time after time, features and libraries where the decisions were slapdash -- indeed, most of these had to be repaired, sometimes after years of programmer suffering. And on numerous occasions Gosling admitted that they had to <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=173229.html">cut corners to hurry and get it out or else the internet revolution would have passed them by</a>.</p>
+<p>So the reason I'm giving this keynote is that I find it very helpful to understand why language features exist. If they're just handed to you on a platter by a college professor, you tend to develop a mythology around the language and to say "there's some really important reason for this language feature that the smart people who created the language understand and that I don't, so I'll just take it on faith." And at some point, faith-based acceptance of language features is a liability; it prevents you from being able to analyze and understand what's going on. In this keynote, I look at a number of features and examine how they are implemented in different languages, and why.</p>
+<p>Here's an example: object creation. In C, you declare variables and the compiler creates stack space for you (uninitialized, containing garbage unless you initialize it). But if you want to do it dynamically, you must use the <strong>malloc()</strong> and <strong>free()</strong> standard library functions, and carefully perform all the initialization and cleanup by hand. If you forget, you have memory leaks and similar disasters, which happened frequently.</p>
+<p>Because <strong>malloc()</strong> and <strong>free()</strong> were "only" library functions, and confusing and scary at that, they often didn't get taught in basic programming classes like they should have. And when programmers needed to allocate lots of memory, instead of learning about and dealing with these functions they would often (I kid you not) just allocate huge arrays of global variables, more than they ever thought they'd need. The program seemed to work, and no one would ever exceed those bounds anyway -- so when it did happen, years later, the program would break and some poor sod would have to go in and puzzle it out.</p>
+<p>Stroustrup decided that dynamic allocation needed to be easier and safer -- it needed to be brought into the core of the language and not relegated to library functions. And it needed to be coupled with the same guaranteed initialization and cleanup that constructors and destructors provide for all objects.</p>
+<p>The problem was the same millstone that dogged all C++ decisions: backward compatibility with C. Ideally, stack allocation of objects could simply have been discarded. But C compatibility required stack allocation, so there needed to be some way to distinguish heap objects from stack objects. To solve this problem, the <strong>new</strong> keyword was appropriated from Smalltalk. To create a stack object, you simply declare it, as in <strong>Cat x;</strong> or, with arguments, <strong>Cat x("mittens");</strong>. To create a heap object, you use <strong>new</strong>, as in <strong>new Cat;</strong> or <strong>new Cat("mittens");</strong>. Given the constraints, this is an elegant and consistent solution.</p>
+<p>Enter Java, after deciding that everything C++ is badly done and overly complex. The irony here is that Java <em>could</em> and <em>did</em> make the decision to throw away stack allocation (pointedly ignoring the debacle of primitives, which I've addressed elsewhere). And since all objects are allocated on the heap, there's no need to distinguish between stack and heap allocation. They could easily have said <strong>Cat x = Cat()</strong> or <strong>Cat x = Cat("mittens")</strong>. Or even better, incorporated type inference to eliminate the repetition (but that  -- and other features like closures -- would have taken "too long" so we are stuck with the mediocre version of Java instead; type inference has been discussed but I will lay odds it won't happen. And shouldn't, given the problems in adding new features to Java).</p>
+<p>Guido Van Rossum (creator of Python) took a minimalist approach -- the oft-lambasted use of whitespace is an example of how clean he wanted the language. Since the <strong>new</strong> keyword wasn't necessary, he left it out, so you say <strong>x = Cat("mittens")</strong>. Ruby could have also used this approach, but one of Ruby's main constraints is that it follows Smalltalk as much as possible, so in Ruby you say <strong>x = Cat.new("mittens")</strong> (here's a <a class="reference" href="../_/http/www.rubycentral.com/pickaxe/intro.html">nice introduction to Ruby</a>). But Java made a point of dissing the C++ way of doing things, so the inclusion of the <strong>new</strong> keyword is a mystery. My guess, after studying decisions made in the rest of the language, is that it just never occurred to them that they could get away without it.</p>
+<p>So that's what I mean about language archaeology. I have a list of other features for similar analysis during the keynote. I hope that people will come away with a better perspective on language design, and a more critical thought process when they are learning programming languages.</p>
+</div>
+<div class="section">
+<h1><a id="metaprogramming" name="metaprogramming">Metaprogramming</a></h1>
+<p>Ordinary programs manipulate data. Most of the time, ordinary programming is all you need. But sometimes you find yourself writing the same kind of code over and over, thus violating the most fundamental principle in programming: DRY ("Don't Repeat Yourself"). And yet, there doesn't seem to be any way in your programming language to fix the problem directly, so you are left duplicating code, knowing that your project continues to scatter this duplicated code throughout, and that if you need to change anything you're going to have to find every piece of duplicated code and fix it and test it over again. And on top of that, it's just plain inelegant.</p>
+<p>This is where metaprogramming comes in. Metaprograms manipulate programs. Metaprogramming is code that modifies other code. So when you find yourself duplicating code, you can write a metaprogram and apply that instead, and you're back to following DRY.</p>
+<p>Because metaprogramming is so clever and feels so powerful, it's easy to look for applications everywhere. It's worth repeating that most of the time, you don't need it. But when you do, it's amazingly useful.</p>
+<p>This is why it keeps springing up, even in languages that really fight against code modification. In C++, which has no run-time model (everything compiles to raw code, another legacy of C compatibility), template metaprogramming appeared. Because it's such a struggle, template metaprogramming was very complex and almost no one figured out how to do it.</p>
+<p>Java does have a runtime model and even a way to perform dynamic modifications on code, but the static type checking of the language is so onerous that raw metaprogramming was almost as hard to do as in C++ (I show these techniques in <em>Thinking in Java</em>). Clearly the need kept reasserting itself, because first we saw Aspect-Oriented Programming (AOP), which turned out to be a bit too complex for most programmers. Somehow, (and I'm kind of amazed that such a useful feature got through so late in Java's evolution), annotations got added, and these are really a metaprogramming construct -- annotations can even be used to modify code during compilation, much like C++ template metaprogramming (this form is more complex, but you don't need it as often). So far, annotations seem to be fairly successful, and have effectively replaced AOP.</p>
+<p>Ruby takes a different approach, appropriate to Ruby's philosophy. Like Smalltalk, everything in Ruby is fungible (this is the very thing that makes dynamic languages so scary to folks who are used to static languages). I have no depth in Ruby metaprogramming, but as I understand it, it is just part of the language, with no extra constructs required. In combination with the optional-parameter syntax, it makes Ruby very attractive for creating <em>Domain Specific Languages</em> (DSLs), an example of which is Ruby on Rails.</p>
+<p>Python also felt the pressure to support metaprogramming, which began to appear in 2.x versions of the language in the form of metaclasses. Metaclasses turned out to be (like AOP in Java) too much of a mental shift to allow easy use by mainstream Python programmers, so in the most recent versions of Python, <em>decorators</em> were added. These are similar in syntax to Java annotations, but more powerful in use, primarily because Python is as fungible as Ruby. What's interesting is that the intermediate step of actually applying the decorator turns out to be less of an intrusion, (as it might initially appear) but rather a beneficial annotation that makes the code more understandable. Indeed, one of the main problems with metaclasses (other than the complexity) was that you couldn't easily see by looking at the code what it does; you had to know that the magic had been folded in because of the metaclass. Whereas, with decorators, it is clear that metaprogramming actions are being applied to a function or class.</p>
+<p>Although we haven't seen an explosion in the creation of DSLs in Python as we have in Ruby (it's certainly possible to create DSLs in Python), decorators provide an interesting alternative: instead of creating an entirely new language syntax, you can create a decorated version of Python. Although this might not be tightly targeted to domain users as DSLs are, it has the benefit of being more easily understandable to someone who is already familiar with Python (rather than learning a new syntax for each DSL).</p>
+<p>Python decorators (both function and class decorators) have almost completely replaced the need for metaclasses, but there is still one obscure situation where metaclasses are still necessary, and this is when you must perform special activities as part of object creation, before initialization occurs. Thankfully, this situation tends to be a rather small edge case, so most people can get by using decorators for metaprogramming.</p>
+<p>In the EuroPython presentation, I will be introducing metaprogramming with decorators, as well as demonstrating the special case where metaclasses are still necessary.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=260578.html">89
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=260578&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260578&amp;title=Why%3F+Language+Archaeology+_+and+Metaprogramming&amp;bodytext=I+showed+up+at+the+organizational+meeting+for+the+ANSI%2FISO+C%2B%2B+standards+committee+because+Bjarne+Stroustrup+asked+me+to.+I+knew+him+from+my+early+C%2B%2B+work+and+from+conferences%2C+and+I+suspect+he+considered+me+a+friendly+influence.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260578&amp;title=Why%3F+Language+Archaeology+_+and+Metaprogramming">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260578&amp;title=Why%3F+Language+Archaeology+_+and+Metaprogramming">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

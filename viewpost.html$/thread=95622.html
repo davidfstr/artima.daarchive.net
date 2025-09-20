@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Architecture the Accelerator</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=95622.html">Discuss</a> | 
+<a href="mailto:?subject=Architecture the Accelerator&amp;body= %0AArtima Weblogs %0AArchitecture the Accelerator %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=95622">Email</a> | 
+<a href="../viewpostP.html$/thread=95622.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=92979.html" title="Static Versus Dynamic Attitude">Previous</a> | 
+<a class="sl" href="thread=131099.html" title="Announcing Ruby Code &amp; Style">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">Architecture the Accelerator</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">February 23, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Writing mediocre code may help you move fast in the short term, but it can slow you down in the long term. A good architecture can help you move fast in the long term, but slows you down in the short term. How is a developer to decide how good is good enough?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+In the discussion of my recent weblog post, <a href="thread=91774.html">Can You Write Quality Software Quickly</a>, Bob Martin wrote:
+
+<blockquote>
+The only way to go really fast is to write the best code you can possibly write, with the best design you can possibly give it. Any other technique will slow you down. ... In my estimation the belief that quality is an expediter rather than an impediment is what separates professionals from amateurs.
+</blockquote>
+<p>
+My experience has been that writing mediocre code helps me move quickly in the short term, but often slows me down in the long term. In addition, I have observed that it is usually quality <em>architecture</em>, not quality code in general, that helps me move quickly in the long term. And herein lies the tradeoff: although a quality architecture can help me move quickly in the long term, building a good architecture slows me down in the short term.
+
+<p>
+I agree with Bob Martin that quality code is an expediter, but I think it is important to appreciate that quality has a cost, and development teams need to make cost/benefit analyses. In some situations, the "best code you can possible write" will be the right level of quality to aim for, in others it will not. You have to judge the return on investment of your development efforts. The higher the quality, the higher the cost. As you invest more in quality, at some point you will start getting diminishing returns.
+
+<p>
+Unfortunately you never have complete information about exactly where that point of diminishing returns is, because to know where that point is you have to predict the future. So you need to make a judgment, given each situation, as to the level of quality that gives the optimum return and aim for that. Moreover, you have to make a judgment as to which parts of your system deserve more attention, because the return on investment from quality is not spread homogenously throughout your system. Lately, my intuition has been telling me that the place I should really be investing in quality is in the architecture, because that will help me move quickly in the long term.
+
+<h1>The Meaning of Architecture</h1>
+<p>
+By "architecture," I mean the basic technologies, structure, and programming conventions of a software system. In his interview, <a href="thread=95622.html">Growing, Pruning, and Spiking your Architecture</a>, Luke Hohmann defined architecture like this:
+
+<blockquote>
+...Architecture is some reasonable regularity about the structure of the system, the way the team goes about building its software, and how the software responds and adapts to its own environment. How well the architecture responds and adapts, and how well it goes through that construction process, is a measure of whether that architecture is any good.
+</blockquote>
+<p>
+Architecture includes technology choices that you use intact. For example, at Artima we're in the process of defining a new architecture, and we have already made some technology choices: Linux on commodity PCs, Java, Tomcat, Hibernate, Velocity, PostgreSQL, Lucene, Jini, JavaSpaces. These choices are part of our architecture.
+
+<p>
+Architecture also encompasses the basic organization of the system, the kind of thing you'd see represented in a block diagram. A crucial aspect of our architecture, for example, is how we will be distributing functionality across clusters of servers so that changes are as easy as possible to make and scalability is easy to attain. Although we have done a bit of investigation and planning, we haven't made many decisions in that area yet. 
+
+<p>
+Architecture also involves the infrastructure you build to support your development processes. You'll likely invest a significant amount of time creating test harnesses and writing build scripts. You may create domain-specific languages that generate code. Such tools represent a structure in which you work together with others to create the software.
+
+<p>
+The rest of an architecture is embodied in conventions. In our new architecture, for example, we had many questions to answer. How will we render web pages? How will we version entities in the database? How will we name variables? I believe it is worthwhile to come up with one answer to each of these questions that we then use throughout the system. I foresee deciding upon and enforcing many, many such conventions.
+
+<h1>Moving Really Quickly</h1>
+<p>
+An architecture can make you fast to the extent that it supports the kind of changes and enhancements you need to make in the future. What are the key ingredients that enable you to build such an architecture? In my experience, you need a combination of domain knowledge and luck.
+
+<p>
+For example, Artima.com started out in 1996 as a single HTML file that I edited by hand. Over time I added more pages, also edited by hand. Before long I found I was quite regularly needing to make global changes, such as altering the headers and footers on all pages. I realized I needed a way to quickly and easily make changes to every page. So I added HTML comments in each page that essentially marked up the header, footer, and other logical areas of the page. Whenever I needed to make a global change, I wrote a Perl script that iterated through all the HTML files and made changes based on the markup comments. If I wanted to update the header of all pages, for example, I'd write a Perl script to look for the HTML comments that marked the beginning and end of the header on each page, and replace what was between them.
+
+<p>
+The Perl approach worked for quite a while, but as the growth in the number of pages accelerated, the Perl approach became unwieldy. Some pages managed to not get the comments in the right places, so they wouldn't get updated, and these failures wouldn't be obvious to me when I ran the Perl script. As a result, I eventually replaced the Perl technique with a small Java application I called "Page Pumper." Page Pumper read an XML descriptor and a Raw HTML file for each page, and generated HTML files that were served up by Apache on the live web site. I still use a decendant of that original Page Pumper today, and it still helps me move quickly when I need to make global changes to the Artima Developer website. When I decided to put a search box at the bottom of every page on the site, for example, the entire process of updating the code of Page Pumper, testing the change, regenerating and deploying all pages on the live site took 15 minutes.
+
+<p>
+I knew how to write Page Pumper because I had domain knowledge. I had experienced that in the domain of publishing a website, the site-wide look and feel of pages tends to be constantly tweaked and massaged. The trouble is that I didn't have complete knowledge of the future. For example, when I wrote Page Pumper, Artima was composed primarily of static web pages. Page Pumper worked very well for generating static pages. I didn't foresee that I would eventually be generating pages dynamically with Java code in a servlet container. When that time came, I did manage to hack Page Pumper so that it worked with JSPs too, but it wasn't a very good fit. In the new architecture, the plan is to have all pages generated dynamically, and I don't expect we'll need a Page Pumper anymore.
+
+<p>
+The reason I said you need luck as well as domain knowledge to create a good architecture is that you can't see everything that's coming in the future. Domain knowledge helps you predict the future only to the extent that the future resembles the past. Today Artima is a web site, but tomorrow it may be running in car dashboards and cell phones, or something else I have never imagined. When that time comes, the architecture I'm building today will likely not, unless I am lucky, be ready to support those new requirements gracefully. When those new requirements come, I will likely need to invest more time in architecture building.
+
+<p>
+I'm curious to what extent your experience matches my own. Have you found that a quality architecture is the primary accelerator? To what extent have you found general code quality enables you to move quickly? Have you found that the quality of one part of your system is more important than quality of other parts? If so, which parts and why? Has code quality mattered more on some teams you worked than others? Does the return on code quality increase as the size of the team increases? Please add to the discussion by posting on the forum for this post.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=95622.html">59
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=95622&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D95622&amp;title=Architecture+the+Accelerator&amp;bodytext=Writing+mediocre+code+may+help+you+move+fast+in+the+short+term%2C+but+it+can+slow+you+down+in+the+long+term.+A+good+architecture+can+help+you+move+fast+in+the+long+term%2C+but+slows+you+down+in+the+short+term.+How+is+a+developer+to+decide+how+good+is+good+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D95622&amp;title=Architecture+the+Accelerator">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D95622&amp;title=Architecture+the+Accelerator">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

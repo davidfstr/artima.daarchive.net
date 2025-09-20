@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Seeking Scalable Web Authentication</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=159960.html">Discuss</a> | 
+<a href="mailto:?subject=Seeking Scalable Web Authentication&amp;body= %0AArtima Weblogs %0ASeeking Scalable Web Authentication %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=159960">Email</a> | 
+<a href="../viewpostP.html$/thread=159960.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=158489.html" title="Database Partitioning for Scale">Previous</a> | 
+<a class="sl" href="thread=160383.html" title="Code Generation and Standards Support in NetBeans">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">Seeking Scalable Web Authentication</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">May 14, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The traditional J2EE approach to authentication sessions is placing identity information in the servlets Session object. The memory used by the Sessions, and potential need to replicate them, places a drag on scalability. In this article, I propose a different approach that is more scalable because it requires less shared state.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+Many web applications require giving users the ability log in, after which their identity will be recognized on subsequent requests. In the J2EE world, this has traditionally been implemented by placing some identity data, such as a user ID or JAAS <code>Subject</code>, in the servlets <code>Session</code> object. When asked to create a new <code>Session</code>, the servlets framework creates a hopefully hard-to-guess string to serve as the session ID, and sends this ID back to the client in the response, either as a cookie or via URL-rewriting. (In the URL-rewriting approach, the session ID is embedded into any URL on the page that links to other pages of the same application.) On a subsequent request, the servlets framework grabs the session ID from the URL or cookie, and makes the corresponding <code>Session</code> available to the servlet handling the request. To figure out which user is responsible for a given request, the servlet can simply look at the identity data in the <code>Session</code>.
+</p>
+<p>
+Using a <code>Session</code> approach for log in has two implications for scalability. First, since you are consuming server memory for each logged in user (the identity data), and servers have finite memory, you place some upper limit on the number of users that can be logged in at once on a single server. Second, if you use multiple servers in a cluster to host the same application, you may need to allow the servers to share <code>Session</code> state in some way. Sharing state between servers in a cluster adds network traffic between those servers, which may eventually become a bottleneck to scalability. Moreover, if session state is simply replicated among all the servers in the cluster, you can only increase the maximum number of logged in users by decreasing the size of the identity data or increasing the amount of memory on each server.
+</p>
+<p>
+In general, a good way to design for scalability is first, to avoid server-side state entirely, and second, if you can't avoid state, to avoid sharing that state among multiple servers. If you are using the <code>Session</code> approach to implementing log in, you've accepted using in-memory state to store the identity data. Whether or not you need to share that state among servers in a cluster depends on how many nines of reliability you want on your users' authentication sessions. For security reasons, you'll probably want your users' authentication sessions to expire after some length of inactivity. After that period the user will have to log in again. The number of nines in question here is the percentage of time (99.9% , 99.999%, etc.) a user will remain logged in prior to your chosen inactivity timeout.
+</p>
+<p>
+In front of your server cluster, you'll likely have some kind of load balancer. The first strategy you should probably consider using is session affinity: configuring the load balancer to always send requests containing session IDs back to the server from which the session ID originated. If you use session affinity, then you'll get quite a few nines without sharing session state. If a server crashes, the load balancer will detect the failure and send subsequent requests to other servers in the cluster. Users that were logged into the crashed server will find themselves abruptly logged off, and will need to log in again. For many applications, however, this may be acceptable. If so, session state need not be shared, at least not for log in. (<code>Session</code>s are also often used to hold conversational state, which you may decide you need to share across the cluster even if you don't need to share the identity data.) One important implication of not sharing <code>Session</code> data is that you will be able to increase the maximum number of users logged into your cluster by simply adding more servers to the cluster. 
+</p>
+<p>
+If you do decide the <code>Session</code> data should be shared, on the other hand, the simplest approach may be to replicate the session across all servers in the cluster, so that every server will have a copy of every <code>Session</code>. If full replication becomes a drag on scalability, you can switch to a partitioned approach, in which each <code>Session</code> is "backed up" to one or two other servers rather than replicated to all. Alternatively, the session data could be backed up by saving it to a third party such as a shared network file system, database, or JavaSpace. The combination of session affinity with a partitioned approach to sharing session state should enable you to increase the amount of memory available to hold sessions horizontally by adding servers to your cluster, rather than vertically by adding memory to each server.
+</p>
+<h1>Considering clusters of clusters</h1>
+<p>
+The <code>Session</code> approach to implementing log in, along with session affinity and session sharing techniques, has worked just fine for a large number of J2EE applications. However, in thinking about scalability for Artima's new architecture, which will serve up a network of sites, I became concerned about the <code>Session</code> approach. As I described in my previous weblog entry, <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=158489.html">Database Partitioning for Scale</a>, we are planning to make it possible to scale our database horizontally by partitioning sites data into multiple databases. We haven't decided whether we will actually deploy multiple databases, but we wanted to make it easy to do so if we later decide to take that approach. Each sites database (whether we have one or a hundred) will be accessed by a “mini-cluster,” a small cluster of servers, and different mini-clusters may or may not be driven by different load balancers.
+</p>
+<p>
+On top of this cluster of clusters network topology, we want to implement single-sign on across the network. If you log into one site in our network, and then follow a link to another site in our network, we want the second site to recognize you. In other words, you wouldn't log into a site in the Artima network, you'd log into the entire network. In addition, we don't want a server crash or reboot to log our users off. We will likely deploy new software quite often, such as on a weekly basis, and when we do that we may  need to reboot servers. Though being logged off unexpectedly is likely only slightly annoying to users, to me kicking users off the network while they are actively using it seems unprofessional.
+</p>
+<p>
+Given our cluster of clusters network topology, the single-sign on requirement, and our desire that authentication sessions survive server restarts, I began wondering if there was a better way than the usual  <code>Session</code>s approach for log in. The main source of my concern was that the technique of session affinity is most effective when every server participating in the authentication session belongs to the same cluster, and that wouldn't necessarily true in our cluster of clusters topology. For example, if you log into a site served by mini-cluster A, a server in A would create the session ID and return it. Thereafter, requests to that site, and any other site hosted by mini-cluster A, would go back to the load balancer fronting A, which would direct the requests back to the originating server that created the <code>Session</code>. However, if the user clicked on a link to a site served by mini-cluster B, that request might end up at a different load balancer (the one for mini-cluster B) that has never heard of the session ID. In that case, the server in mini-cluster B that receives the request would need to get the session state from the appropriate server in mini-cluster A. Thereafter, the load balancer for B could redirect all requests with that session ID to the same server.
+</p>
+<h1>The thousand servers thought experiment</h1>
+<p>
+One of the techniques I have used to design for scalability has been to ask myself how I would implement our requirements across 1000 servers. If it will scale to 1000 servers, I figured, it should work on 10, or 100, or however many we may ever need to deploy. The cluster of clusters topology mixed with the single-sign on requirement adds a bit of complexity to <code>Session</code> sharing, and a bit more drag on scalability, but I believe it could be done. When thinking about single-sign on across 1000 servers partitioned into multiple mini-clusters, however, I began to wonder if a better way existed. Is there a way to implement our requirements that doesn't require <code>Session</code> data at all? 
+</p>
+<p>
+One potential <code>Session</code>-less approach to log in is HTTP authentication. When using this aspect of the HTTP standard, users provide a username and password to the browser, and the browser sends these credentials in one form or another to the server on subsequent requests. The server can authenticate the user by essentially logging them in again on each request, for example, by computing a hash of the password sent via HTTP Basic Authentication and comparing the supplied username and hash to that stored in a shared database. (In our case, since we want single-sign on across our network, we had already decided to provide usernames and password hashes to all servers via a shared database.) Unfortunately, although HTTP authentication would help with scalability by eliminating the need to share any state between servers beyond usernames and password hashes to support log in, it brings up several other concerns, which I described in an earlier weblog entry, <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=155252.html">HTTP Authentication Woes</a>.
+</p>
+<p>
+Despite HTTP authentication's problems, however, I wondered if I could potentially take a cue from it. HTTP authentication does not require data other than a username and password hash to be shared across servers primarily because it includes the username and password, in some form, with every request in the authentication session. In other words, once you use HTTP authentication to log into a <em>realm</em>, an area of a site, the credentials will be sent in some form along with every request to that realm until the browser is exited. By including some form of user log in credentials in the session ID placed in a cookie or embedded in URLs, I mused, a server could determine the identity of a user solely by inspecting the session ID that arrived with the request, and referring to user data that's already shared among the servers via our shared database. I'll call this the “embedded” approach, because the session ID is not just a hard-to-guess string, but a  hard-to-guess string that includes embedded user credentials.
+</p>
+<p>
+In the embedded approach, the server could still store identity data in a hash table using the session ID (or part of it) as a key. However, such state is now transformed into a cache that serves merely as a performance optimization. The server-side state is not necessary. If memory gets low on a server because too many users have logged in, some of those cached identities, probably the least recently used, could be evicted from the cache. If a request later arrives that includes one of the session IDs whose identity data had been evicted, the server could use the credentials embedded in the session ID itself to re-authenticate the user. Moreover, given that a server can authenticate a user solely from the session ID and shared user data, any cached identity information need not be shared between servers.
+</p>
+<p>
+For example, if a user logs into a site in the Artima network hosted by mini-cluster A, the load balancer driving cluster A, because of session affinity, will subsequently send all requests to the server that handled the log in. Most likely, that server will contain the identity data in a cache keyed by the session ID. This means that most often authentication of a request will be efficiently performed through a simple hash table lookup. If a request arrives containing a session ID for which the server has evicted the identity data from the cache because of low memory, the server will have to once again perform “full-blown” authentication by extracting the credentials from the session ID and comparing them against the shared user data. If the full-blown authentication succeeds, identity data can once again be placed in the cache, possibly squeezing out of the cache some other now least recently used identity information.
+</p>
+<p>
+If the server crashes, the load balancer will direct subsequent requests with that session ID to a different server in mini-cluster A. When the first such request arrives at this “fail-over” server, the session ID will not exist in its cache. The fail-over server will therefore need to perform full-blown authentication. On subsequent requests, however, the fail-over server will likely have the identity data in its cache, yielding efficient authentication via hash table lookup. If the user at some point clicks on a link to a site hosted by mini-cluster B, the receiving server will on the first request need to perform full-blown authentication using the credentials embedded in the session ID, and thereafter will be likely be able to use hash-table-lookup authentication.
+</p>
+<h1>Security implications</h1>
+<p>
+Probably the main weakness of using session IDs stored in cookies or rewritten URLs for authentication is that session IDs can be rather easily hijacked. For example, if a session ID is transmitted in plain text over HTTP (not HTTPS),  it can be intercepted by monitoring the network traffic between you and the server. A session ID may also be hijacked via a cross-site scripting attack, or by the person who uses a public computer after you walk away from it without logging out. Or, if your session ID shows up in a rewritten URL that you email to a friend, and they click on the URL while your session is still active, they get logged in as you. (This is one way in which URL rewriting is less secure than cookies.) To reduce the potential for session hijacking, it is useful if the session ID times out after a period of time. If someone does obtain a session ID from one of your active sessions, they can only act as you while that session is active. After you log out, or after your session times out due to inactivity, the session ID is worthless.
+</p>
+<p>
+Another potential problem with session IDs is that they may contain encoded information, such as server IP addresses or session ID counts, that should not be revealed to the public. Also, the session ID generation algorithm, if poorly designed, could enable an attacker to guess neighboring session IDs from a few legitimately obtained session IDs. Lastly, session IDs must be assigned such that they are unique across the entire cluster. If two servers assigned the same session ID for you and your archenemy, and a request from your archenemy ended up at your server, he would assume your identity. To avoid these problems, session IDs should be assigned in a way that is difficult to guess and unique across the cluster, with any encoded information either already public knowledge or very difficult to extract.
+</p>
+<h1>Implementing the embedded credentials approach</h1>
+<p>
+With these security issues in mind, my thought was that we could replicate a pair of "session passwords" across all servers, replacing each password every other 15 minutes. For example, if session password 0 is replaced at 2:00, session password 1 would be replaced at 2:15, session password 0 would again be replaced at 2:30, session password 1 again at 2:45, and so on. Each session password, therefore, would be in force for 30 minutes. The session ID could then include some hard-to-guess user credential encrypted with the latest session password. We would, therefore, also have to replicate a 0 or 1 to indicate which session password to use to encrypt user credentials, and this 0 or 1 could be included in the session ID as well. For the credential, we could use all or part of the user's password hash. (We don't store user passwords in the database, just a hash of the password, so we couldn't use the user's password as this credential.) But to avoid letting any string derived from the user's password back out the door, and to simplify matters when users change their password, I figure we'll generate a unique hard-to-guess string for each user and store it in the shared database when they create their account. This string could then be used as the credential to encrypt with the session password.
+</p>
+<p>
+To ensure each session ID is unique without requiring servers to communicate with each other (except through the already shared user data), I figured we could include some non-encrypted string that is unique for each user in the session ID. If we decide that we  don't mind letting the public know each user's ID (the primary key in the database), we could derive a string from that. Or, alternatively, we could generate yet another unique string when a user creates their account, save that in the shared database, and use it as the user identifier in the session ID. 
+</p>
+<p>
+For example, one form such a session ID could take is:
+</p>
+<pre>
+&lt;session password index (0 or 1)&gt; &lt;user identifier&gt; &lt;separator character&gt; &lt;encrypted credential&gt;
+</pre>
+<p>
+Each server could maintain a cache of user identities (and possibly other things such as roles and permissions) and the user's credential encrypted by one or both of latest session passwords, keyed by the user identifier. When a request arrives at a server that includes a session ID, the server can extract the user identifier from the session ID, and use it to look up this user's data in the cache. If found, the server would then compare the encrypted credential from the session ID with the corresponding one stored in the cache. If it matches, then the user is authenticated. If the corresponding credential does not appear in the cache, the server would encrypt the user credential with the session password identified by the index (0 or 1) in the session ID and place it in the cache. If the resulting string matches the encrypted credential in the session ID, the user is authenticated. If not, the user will have to log in again.
+</p>
+<p>
+Several scenarios exist in which a session ID will arrive at a server for which the user's identity data is not stored in the cache. The data may have been in the cache earlier, but evicted because of low memory. Or, the data may have been in a different server that crashed, and the load balancer chose this server for fail-over. Or the user may have clicked on a link to a site hosted by this server's mini-cluster on a page obtained from a server in a different mini-cluster. For whatever reason, if a session ID arrives at a server and it finds no identity data in its cache, it will attempt to perform full-blown authentication. It will figure out which user the request is supposedly from (by looking at the user identifier in the session ID), and which password that user's credential was supposedly encrypted with (from the session password index in the session ID). It will encrypt that user's credential with the specified password and compare it with the encrypted credential in the session ID. If it matches, the user is authenticated. If not, the user will need to log in again.
+</p>
+<h1>Design tradeoffs</h1>
+<p>
+The advantage of the embedded approach over the traditional <code>Session</code> approach is that it minimizes the amount of data that needs to be shared among the servers. Instead of sharing all the sessions of all the logged in users, it requires sharing only three pieces of data: two session passwords and the index (0 or 1) of the latest password. Not only is this less data, it is less dynamic. This data changes—and those changes must therefore be replicated—only once every 15 minutes. Other than the session passwords, the only other data that needs to be shared between servers is data already available via our shared user database.
+</p>
+<p>
+One downside from a security perspective is that you can't invalidate a session ID by logging off. When you log off in this scheme, you essentially log off your browser by removing the session ID cookie or removing the session ID from the URLs. If someone has hijacked your session ID in the meantime, they would still be able to use it if they make a request before the session password used to encrypt your credential was replaced (up to 30 minutes). One such scenario is if you were logged in via URL rewriting on a public computer, and didn't close the browser or otherwise purge the history after logging off. For a few minutes thereafter, the person using the computer after you could log back in as you by clicking the back button and returning to one of those rewritten URLs. (This scenario highlights another way that URL rewriting is less secure than cookies for holding session IDs.) By contrast, if you log out of a server using the traditional <code>Session</code> approach, you not only log out of the browser by removing the session ID from the cookies or URL, you also log out of the server by removing the <code>Session</code> object. 
+</p>
+<p>
+On the other hand, one security advantage of the embedded approach over the traditional <code>Session</code> approach is that it makes less harmful one kind of potential denial of service attack: a script that repeatedly logs a user in. Such an attack attempts to fill server memory with <code>Session</code>s. In the embedded case, the memory impact of repeatedly logging in the same user would be that the user's identity data gets cached once on each server that receives the log in requests.
+</p>
+<p>
+One important difference between the two approaches is that an embedded credential is only a token that can be used to authenticate a user. A traditional session ID, by contrast, is a token that can be used to authenticate a user <em>and</em> a handle for any other arbitrary state, such as conversational state, that may be stored on the server in the <code>Session</code> object. I will discuss conversational state in a later weblog post, but in our case conversational state need only be shared within a mini-cluster. Because of our single-sign on requirement, however, we need to recognize session IDs across all servers in all mini-clusters. So in our case, it seems natural to handle authentication and conversational state differently anyway.
+</p>
+<p>
+In the embedded approach, at any one time two hard-to-guess strings exist that will authenticate a user when presented as a session ID in a cookie or rewritten URL. You can find out what the latest of those two strings is simply by logging in over HTTPS with your username and password. If cookies are enabled, the session ID will be stored as a cookie. If not, it will show up in rewritten URLs. On subsequent requests, if the session password has changed since the previous request, the response of the new request will contain a different session ID. So as you use the network, every 15 minutes or so, you'll get a new session ID. Most of the time the session ID will be transmitted in the clear over HTTP, so it has the same hijacking potential as traditional session IDs. 
+</p>
+<p>
+I recognize that the session passwords need to be hard to predict, and I'm not sure yet how to create them. We could use an intelligently seeded pseudo random number generator, or perhaps base them on some snapshot of server traffic, or a combination of the two. The user credential should also be difficult to predict. And of course an important part of the security is that the user credentials and session passwords, and the algorithm used to encrypt one with the other, be kept secret.
+</p>
+<p>
+Although I don't like the loss of ability to log out of a server, I feel it is an acceptable design tradeoff since in exchange we have less state to share between our servers, and hence an easier path to scalability. In general, session IDs sent over HTTP are a rather insecure means of authentication, but they are good enough for a lot of purposes. My feeling is that the embedded approach is good enough to apply to the same sorts of authentication problems as the traditional <code>Session</code> approach, but with less drag on scalability. For certain situations, however, I feel that neither approach is sufficient and that other security and authentication mechanisms should be layered on top of the session ID. I'll talk more about that in a later weblog post.
+</p>
+<p>
+What's your opinion? Have you heard of anyone taking an embedded approach for authentication in practice? Have you any experiences to relate about security or scaling in either this or the traditional <code>Session</code> approach?
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=159960.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=159960&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D159960&amp;title=Seeking+Scalable+Web+Authentication&amp;bodytext=The+traditional+J2EE+approach+to+authentication+sessions+is+placing+identity+information+in+the+servlets+Session+object.+The+memory+used+by+the+Sessions%2C+and+potential+need+to+replicate+them%2C+places+a+drag+on+scalability.+In+this+article%2C+I+propose+a+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D159960&amp;title=Seeking+Scalable+Web+Authentication">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D159960&amp;title=Seeking+Scalable+Web+Authentication">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

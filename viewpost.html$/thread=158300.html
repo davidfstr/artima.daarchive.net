@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Solution Based Modelling - Lost OO Wisdom</title>
+<meta charset="utf-8"/>
+<meta content="Andy Dent" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=andydent.html">Andy Dent's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=158300.html">Discuss</a> | 
+<a href="mailto:?subject=Solution Based Modelling - Lost OO Wisdom&amp;body= %0AArtima Weblogs %0ASolution Based Modelling - Lost OO Wisdom %0Aby Andy Dent %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=158300">Email</a> | 
+<a href="../viewpostP.html$/thread=158300.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=157854.html" title="The Sidewalk Tripping Theory of Product Adoption">Previous</a> | 
+<a class="sl" href="thread=158340.html" title="BON Dynamic Diagrams in UML for SOA Description">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Thinking Upside Down</span><br>
+<span class="ts">Solution Based Modelling - Lost OO Wisdom</span><br/>
+<span class="as">by Andy Dent</span><br/>
+<span class="pd">April 29, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Goldstein &amp; Alger developed an OO design method that was clearer than UML or Booch and better founded in theory. It was a standard in EDS but has vanished into obscurity. Maybe it's time to look backwards for some insight or at least pick up an old copy of their book for the pleasure of a clear read of what OO development is all about.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><em>Developing Object-Oriented Software for the Macintosh</em> is not exactly the kind of book title that makes your average non-Mac OO developer grab a book off the shelf.</p>
+<p>More than anything else, that book titling decision by Addison Wesley may have killed off a very promising OO design method that is still worth studying, if you can find an out-of-print copy.</p>
+<p>Amongst its many other virtues, it has a single chapter summary of Lakoff's seminal work on category theory and how we categorise things - <em>Women, Fire and Dangerous Things</em> that I have lent to multiple people as a well-received alternative to wading through the full philosophical tome.</p>
+<div class="section" id="five-characteristics-of-a-good-methodology">
+<h1><a name="five-characteristics-of-a-good-methodology">Five Characteristics of a Good Methodology</a></h1>
+<p>Remember this was published by 1992, I don't think we've learned anything to better this list in the last 15 years.</p>
+<blockquote>
+<ol class="arabic simple">
+<li>It Has to Work</li>
+</ol>
+<p><em>The methodology has to work. It should consistently provide high quality software that is on time, within budget, and meets the needs of the users of the software. No other measure of success matters.</em></p>
+<ol class="arabic simple" start="2">
+<li>It Must Allow for Continual Evolution</li>
+</ol>
+<p><em>Since we know that it is futile to try to develop fixed specifications, let's not try. Instead, our methodology should correspond to the way people think and businesses operate: by cyclical refinement. There will be no fixed ending point. Rather, there will be an on-going evolution that never ends, but with points of equilibrium along the way. Release of software will be based on utility of the "intermediate" result, not any notions of finality.</em></p>
+<ol class="arabic simple" start="3">
+<li>There Must be Rapid Turnaround</li>
+</ol>
+<blockquote>
+<em>We know that the software itself will change the need, it is doubly important to start reaping results quickly. No siz-month to two-year turnaround here: initial results should be available in days or weeks.</em></blockquote>
+<ol class="arabic simple" start="4">
+<li>It Must Minimze Distortion</li>
+</ol>
+<p>.. <em>popular childhood game called "Telephone," in which a person at one end of a long line of people whispers some complicated story into the next person's ear. That person quickly turns to the next one in line and repeats the story, and so on until the last one in the line tells the story - or such of it as has survived - to the prolonged laughter of the group. Seldom does the end result even resemble the initial story.</em></p>
+<p><em>This game illustrates an important point: The more people we have involved in developing the software, the more important smooth communication becomes.</em> ...
+<em>Ideally, everybody involved should be able to explain perceptions and needs in ways that translate directly into software, and should be able to understand the structure of the resulting software without knowing much about computers. Put another way, we need a common lexicon and structure throughout the process of creating software, from analysis to code.</em></p>
+<ol class="arabic simple" start="5">
+<li>The Process Must Be Stable</li>
+</ol>
+<p><em>We should be free to roam through the needs and design of the software, confident that short-term mistakes will be picked up and corrected in due course. It should matter little the order in which we explore the relevant topics. If the methodology is stable, comparable results wil be produced regardless. In particular, we should be able to focus first on central issues. Stability also implies - assuming that the right people are brought into the team - that the oder or manner in which we talk to various participants will at wors affect the time it takes to produce results, not the accuracy of the results. The methodology should not present a canvas on which we paint, but a chalkboard, portions of which can be erased and modified at any time.</em> <a class="citation-reference" href="#goldsteinalger1992a" id="id1" name="id1">[GoldsteinAlger1992a]</a></p>
+</blockquote>
+</div>
+<div class="section" id="the-right-way-to-design-a-graphic-notation">
+<h1><a name="the-right-way-to-design-a-graphic-notation">The Right Way to Design a Graphic Notation</a></h1>
+<blockquote>
+<em>Notations have a long history in computer software, starting with flowcharts and proceeding through structure charts, data flow diagrams...various ways of visualizing objects and classes. However helpful these notations have been, they are quite crude by graphic design industry standards. The authors know this first-hand. They enlisted the help of a professional design firm to help develop a notational scheme for use with SBM, only to endure their amazement and, at times, benevolent laughter over our early, two-dimensional attempts at graphic symbols.</em> <a class="citation-reference" href="#goldsteinalger1992b" id="id2" name="id2">[GoldsteinAlger1992b]</a></blockquote>
+<p>I got myself kicked off the early UML design discussion mailing list (OTUG) for taking Booch et al to task for their refusal to consider that they might not be the world's best graphic communicators and should consult some specialists. Sorry, UML users, I tried and a lot of more important people than I agreed but we were stuck with boxes and lines.</p>
+</div>
+<div class="section" id="visual-design-language">
+<h1><a name="visual-design-language">Visual Design Language</a></h1>
+<p>Unfortunately, I have been unable to find any copies of Goldstein &amp; Alger's Visual Design Language online, other than a couple of figures in <a class="citation-reference" href="#mattson1994" id="id3" name="id3">[Mattson1994]</a>.</p>
+<p>The specific graphics are rather moot in this UML-dominated world, however some of their principles can still be applied (note these are Western-oriented visual cues):</p>
+<ol class="arabic simple">
+<li>Centre the most important elements on the diagram.</li>
+<li>Use size for emphasis - larger is more important <em>in the context of the diagram.</em></li>
+<li>Left to right implies time sequence.</li>
+<li>Foreground-background implies ancestry or time-sequence (note that the concept of foreground only starts to become significant when you have enough 3D-hinting in the diagram shapes).</li>
+</ol>
+<p>For a modern, UML-centric guide to such principles, see <a class="reference" href="../_/http/www.amazon.com/exec/obidos/ASIN/0521616786/andydentsrecomme/index.html">The Elements of UML Style</a> which as a version 2.0 is recent enough that you <em>can</em> still buy a copy.</p>
+</div>
+<div class="section" id="examining-the-process">
+<h1><a name="examining-the-process">Examining the Process</a></h1>
+<p>If there's interest, I'll spend a bit more time in another blog entry summarising important points from their process, which is based on:</p>
+<ol class="arabic simple">
+<li>Form Scenarios</li>
+<li>Calibrate the model - overlapping views of different aspects of the problem and solution space should be made consistent.</li>
+<li><em>Centre-Periphery-Calibrate</em></li>
+</ol>
+<blockquote>
+<ul class="simple">
+<li>Choose a central topic</li>
+<li>blanket it with scenarios</li>
+<li>expand to less central, or <em>peripheral</em> topics</li>
+</ul>
+</blockquote>
+<p><a class="citation-reference" href="#goldsteinalger1992c" id="id4" name="id4">[GoldsteinAlger1992c]</a></p>
+</div>
+<div class="section" id="other-links-of-interest">
+<h1><a name="other-links-of-interest">Other links of interest</a></h1>
+<ul class="simple">
+<li>Frameworks Magazine 1991 description of a presentation on SBM, <a class="citation-reference" href="#bamada1991" id="id5" name="id5">[Bamada1991]</a>.</li>
+<li>Attempt to get background info for a thesis, including comments by one of the authors, <a class="citation-reference" href="#comp-software-eng1992" id="id6" name="id6">[comp.software-eng1992]</a>.</li>
+<li>Comparison of Solution-Based Modelling, Business Object Notation and Object Behaviour Analysis, <a class="citation-reference" href="#mattson1994" id="id7" name="id7">[Mattson1994]</a>.</li>
+</ul>
+<table class="citation" frame="void" id="bamada1991" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<col/>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5" name="bamada1991">[Bamada1991]</a></td><td><a class="reference" href="../_/http/www.mactech.com/articles/frameworks/5_5/BAMADA_Notes_Plamondon.html">http://www.mactech.com/articles/frameworks/5_5/BAMADA_Notes_Plamondon.html</a></td></tr>
+</tbody>
+</table>
+<table class="citation" frame="void" id="comp-software-eng1992" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<col/>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6" name="comp-software-eng1992">[comp.software-eng1992]</a></td><td><a class="reference" href="../_/http/groups.google.com/group/comp.software-eng/browse_thread/thread/cbc208886ad6b0d8/7a0263602fbe2b8c$/lnk=st&amp;q=%22solution+based+modelling%22&amp;rnum=2&amp;hl=en#7a0263602fbe2b8c/index.html">http://groups.google.com/group/comp.software-eng/browse_thread/thread/cbc208886ad6b0d8/7a0263602fbe2b8c?lnk=st&amp;q=%22solution+based+modelling%22&amp;rnum=2&amp;hl=en#7a0263602fbe2b8c</a></td></tr>
+</tbody>
+</table>
+<table class="citation" frame="void" id="mattson1994" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<col/>
+<tbody valign="top">
+<tr><td class="label"><a name="mattson1994">[Mattson1994]</a></td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id7">2</a>)</em> <a class="reference" href="../_/http/citeseer.ist.psu.edu/mattsson94comparative.html">http://citeseer.ist.psu.edu/mattsson94comparative.html</a></td></tr>
+</tbody>
+</table>
+<table class="citation" frame="void" id="goldsteinalger1992a" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<col/>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1" name="goldsteinalger1992a">[GoldsteinAlger1992a]</a></td><td><em>Solution Based Modelling</em> p16-17</td></tr>
+</tbody>
+</table>
+<table class="citation" frame="void" id="goldsteinalger1992b" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<col/>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2" name="goldsteinalger1992b">[GoldsteinAlger1992b]</a></td><td><em>Solution Based Modelling</em> 112</td></tr>
+</tbody>
+</table>
+<table class="citation" frame="void" id="goldsteinalger1992c" rules="none">
+<colgroup><col class="label"/><col/></colgroup>
+<col/>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4" name="goldsteinalger1992c">[GoldsteinAlger1992c]</a></td><td><em>Solution Based Modelling</em> p159-163</td></tr>
+</tbody>
+</table>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=158300.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=158300&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Andy Dent adds a new entry to <a href="../index.html$/blogger=andydent.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/andydent.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D158300&amp;title=Solution+Based+Modelling+-+Lost+OO+Wisdom&amp;bodytext=Goldstein+%26+Alger+developed+an+OO+design+method+that+was+clearer+than+UML+or+Booch+and+better+founded+in+theory.+It+was+a+standard+in+EDS+but+has+vanished+into+obscurity.+Maybe+it%27s+time+to+look+backwards+for+some+insight+or+at+least+pick+up+an+old+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D158300&amp;title=Solution+Based+Modelling+-+Lost+OO+Wisdom">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D158300&amp;title=Solution+Based+Modelling+-+Lost+OO+Wisdom">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/andyDent.jpg"/></td><td>Andy is a free-lance developer in C++, REALbasic, Python, AJAX and other XML technologies. He works out of Perth, Western Australia for a local and international clients on cross-platform projects with a focus on usability for naive and infrequent users.  Included in his range of interests are generative solutions, software usability and small-team software processes. He still bleeds six colors, even though Apple stopped, and uses migration projects from legacy Mac OS to justify the hardware collection.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Andy Dent. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

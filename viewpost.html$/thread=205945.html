@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2007, #4: Wrapup</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=205945.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2007, #4: Wrapup&amp;body= %0AArtima Weblogs %0AJavaOne 2007, #4: Wrapup %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=205945">Email</a> | 
+<a href="../viewpostP.html$/thread=205945.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=205160.html" title="JavaOne 2007, #3: Mashup a Web App with Little or No Code">Previous</a> | 
+<a class="sl" href="thread=214719.html" title="Using Java classes in JRuby">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2007, #4: Wrapup</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 18, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A collection of interesting tidbits from the show.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><strong>Contents</strong></p>
+<blockquote>
+<ul class="simple">
+<li>Scripting Languages on the JVM</li>
+<li>Improved JRE Insallations</li>
+<li>Java Quick Start Service</li>
+<li>Java Modules</li>
+<li>Java 7 Language</li>
+<li>Java 7 Tools</li>
+<li>User Interface Testing with FEST</li>
+<li>Sun ID System</li>
+<li>DITA Pod</li>
+<li>Writing DSLs in Ruby</li>
+</ul>
+</blockquote>
+<div class="section">
+<h1><a id="scripting-languages-on-the-jvm" name="scripting-languages-on-the-jvm">Scripting Languages on the JVM</a></h1>
+<p>This year's JavaOne was unique in the number of sessions
+that had to do with scripting languages that run on the
+Java platform:</p>
+<dl class="docutils">
+<dt><strong>Scala</strong></dt>
+<dd>A very-clean java-like language that eliminates much
+of Java's verbosity. It's basically Lisp with Java
+syntax. Worth a look. For more:
+<a class="reference" href="../_/http/www.artima.com/scalazine/articles/steps.html">http://www.artima.com/scalazine/articles/steps.html</a></dd>
+<dt><strong>Groovy</strong></dt>
+<dd>An interpreted language that stays very close to Java,
+and which is reported to have settled down to the point
+that it has become usable.</dd>
+<dt><strong>JRuby</strong></dt>
+<dd>A very cool implementation of Ruby on the Java platform.
+Starts up Java apps without VM-initialization overhead,
+provides access to Java classes, installs with ease,
+and provides strong thread support:
+<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=205140.html">http://www.artima.com/weblogs/viewpost.jsp?thread=205140</a></dd>
+<dt><strong>JavaFX Script</strong></dt>
+<dd>A brand new language that aims to make it easy to
+develop dynamic web pages that run using the JVM in
+the browser.</dd>
+</dl>
+</div>
+<div class="section">
+<h1><a id="improved-jre-insallations" name="improved-jre-insallations">Improved JRE Insallations</a></h1>
+<p>Sun's Ethan Nicholas gave a talk on upcoming improvments
+in the JRE installation and startup process. They were
+extensive:</p>
+<blockquote>
+<ul>
+<li><p class="first">A new installer program with more graphics, way
+less text, and fewer clicks to get things done.
+It will be a lot less threatening to the average user.</p>
+</li>
+<li><p class="first">Updates will no longer create a new copy of the JRE,
+but will instead patch the existing version--so update
+releases will stop hogging all of the disk space in sight.</p>
+</li>
+<li><p class="first">Updates will happen much faster, as a result. But the
+initial install has been streamlined to go faster, as
+well, with a small initial module that downloads immediately
+and subsequent modules that download on demand or in the
+background.</p>
+</li>
+<li><p class="first">A toolkit for JRE deployment that includes a javascript
+file, browser plugins, and a standalone version, where
+the Javascript contains APIs useful for deployment:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>getJREs():</strong> find out which JREs are present</li>
+<li><strong>versionCheck(pattern):</strong> Use regular expressions to
+test for the existenc of some set of versions</li>
+<li><strong>installLatestJRE():</strong> to "git 'er done"</li>
+</ul>
+</blockquote>
+<p>The javascript code also contains APIs to launch applets,
+test for the presence of Java Web Start, and create a
+Java Web Start launch button.</p>
+</li>
+</ul>
+</blockquote>
+<p>The current versions of the JRE support minimal versions of
+the useful behaviors. So today, you can only detect major
+versions (e.g. version 5). But starting in early 2008, the
+APIs will be fully supported, so you can determine exactly
+which version is on the end user's system.</p>
+</div>
+<div class="section">
+<h1><a id="java-quick-start-service" name="java-quick-start-service">Java Quick Start Service</a></h1>
+<p>When the JVM is already in memory (a warm start), it starts in
+a tenth of a second. Plenty fast. The problem is when it has to be
+read in from disk (a cold start). And reading the JVM into memory
+before you need it doesn't help--you make the user's system
+begin paging sooner than it otherwise would have, and it's
+likely to be paged out by the time you need it--so you're
+back to reading from disk.</p>
+<p>The Java Quick Start service solves the problem by implementing
+a background process that reads from the disk every so often.
+That process puts the files in the disk cache, so that when the
+JVM is launched, it's doing a warm start. (But if memory is
+constrained, it disables itself so it does cause thrashing.)</p>
+<p>It may be, too, that the same modularization that improves
+download speeds can be used to improve startup speed. With that
+system, the Java Kernel is just big enough to run HelloWorld,
+and other modules are brought in as needed or in a background
+process.</p>
+</div>
+<div class="section">
+<h1><a id="java-modules" name="java-modules">Java Modules</a></h1>
+<p>Speaking of modules, the new module system for Java
+will be pretty cool. A module will be a collection
+of packages in a "super jar", but:</p>
+<blockquote>
+<ul class="simple">
+<li>Some packages are public, others can be private</li>
+<li>Public packages can be public only in their jar</li>
+<li>Dependencies wil be managed, so there are no cyclic
+dependencies</li>
+<li>Different versions of a library can co-exist in the
+same VM</li>
+<li>They'll separate APIs from SPIs</li>
+</ul>
+</blockquote>
+<p>A Service Provider Interface (SPI) is something the
+framework calls. It adds capabilities to the framework
+in the same way that an API adds capabilities to your
+application.</p>
+<p>Interestingly, adding to an API preserves compatibility
+(the application never calls it), while removing from an
+SPI also preserves compatibility (the SPI doesn't see it,
+so it doesn't provide the additional functionality).
+So if SPIs and APIs both exist in the same class, there
+are no provably compatible changes you can make.</p>
+<p>Best practice therfore suggests that APIs and SPIs
+should not only be in separate classes, they should
+be in separate packages. That way, users don't see
+things they don't care about, and they can more easily
+learn the interface by way of the IDE's code completion.</p>
+<p>The module system aids and abets that separation, making
+it possible to expose module P to users, without exposing
+sub-package P.Q.</p>
+</div>
+<div class="section">
+<h1><a id="java-7-language-and-tools" name="java-7-language-and-tools">Java 7 Language and Tools</a></h1>
+<p>Peter von der Ahe, Jonthan Gibbons, and Alex Buckley
+held on BOF on Java 7 language features. The goal
+was to present a few ideas, gather some, and
+generally invite discussion.</p>
+<p>As guideline for possible changes, Peter listed
+core language principles that are unlikely to
+change:</p>
+<blockquote>
+<ul class="simple">
+<li>Reading is more important than writing</li>
+<li>Simplicity matters</li>
+<li>One language, spoken the same everywhere</li>
+<li>Compatibility matters</li>
+</ul>
+</blockquote>
+<p>Some of the possible features included:</p>
+<blockquote>
+<ul>
+<li><p class="first"><strong>Abstraction:</strong>
+Something like closures that would keep you
+having nested try/finalies, for example when
+writing I/O code. The syntax might look like
+this:</p>
+<pre class="literal-block">
+with (InputStream is: ... )
+with (OutputSrream os: .... ) {
+  ...
+}
+</pre>
+</li>
+<li><p class="first"><strong>Enhanced Switch Statement:</strong>
+Make it work with strings, and a coverage
+check when using enums, to identify gaps.</p>
+</li>
+<li><p class="first"><strong>Reified Generics:</strong>
+Getting rid of type erasure is on the table,
+so that types can be tested at runtime, and
+allowing arrays to safely use generic types.
+It would also allow for accurate reflection
+and serialization. The big issue for all that
+is retaining back compatibility.</p>
+</li>
+</ul>
+</blockquote>
+<p>The new workflow paths for the language now
+look like this (all three will be available through
+Mercurial):</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Stable Branch:</strong> Major releases like 5, 6, 7 (bug fixes)</li>
+<li><strong>Development Branch:</strong> IDEs, GlassFish, JDK 7 until freeze (features)</li>
+<li><strong>KSL branch:</strong> Kitchen Sink Language (experiments)</li>
+</ul>
+</blockquote>
+<p>Some ideas were specifically disallowed for Java 7.
+They are features that may well be in the scripting
+languages that run on the Java platform, but they
+are inconsistent with the "prime directives" that
+Peter listed, so they are not on the table for the
+Java language:</p>
+<blockquote>
+<ul class="simple">
+<li>Dynamic typing</li>
+<li>Mixins / traits / multimethods / macros</li>
+</ul>
+</blockquote>
+<p><strong>Personal Note:</strong>
+Once a decade, I think it's time to cut the anchor
+cable and move forward without dragging all of the
+old stuff behind you. But there are many enterprises
+that would no doubt disagree with that idea, but the
+Java platform developers seem to have found ways to
+achieve similar objectives while <em>still</em> retaining
+compatibily. (One heck of an achivement, that.)</p>
+<p>My list of desirable changes includes:</p>
+<blockquote>
+<ul class="simple">
+<li>A smaller JVM, minus the deprecated APIs, that starts
+faster and takes less memory. (But with the Quick Start
+option loading APIs in the background, the goal is
+achieved in a way that retains compatibility.)</li>
+<li>If arrays aren't type safe, I figured, toss them!
+Use the syntax for something like Ruby lists, instead.
+(But modifying the VM to support runtime types, while
+at the sam preserving compatibility (!) makes it possible
+to eliminate type erasure, make arrays safe, and still
+keep old apps running.)</li>
+<li>I'd also toss primitives, go with a pure OO syntax,
+and elminate the dozens of duplicate APIs that use them.
+(But auto-boxing means you no longer have to write them,
+at least. So maybe the background-loading principle of
+the Quick Start option and the API-separation principle
+of modules could be applied to classes--so you never have
+to load the code for those APIs, or even see them???
+Probably not. But it seemed like a good thing to ask...)</li>
+</ul>
+</blockquote>
+<p>Anyway, it looks as though the platform developers are
+figuring out ways to achive very important goals in ways
+that also preserver compatibility. Pretty darn clever.</p>
+</div>
+<div class="section">
+<h1><a id="java-7-tools" name="java-7-tools">Java 7 Tools</a></h1>
+<p>The language features session covered autmented tools
+capabilities, as well:</p>
+<dl class="docutils">
+<dt><strong>JSR 199: Compiler API</strong></dt>
+<dd><p class="first">The compiler modifications let you use the javax.tools
+library to:</p>
+<blockquote class="last">
+<ul class="simple">
+<li>invoke compilers and tools</li>
+<li>control how files are found</li>
+<li>give you access to diagnostics</li>
+</ul>
+</blockquote>
+</dd>
+<dt><strong>JSR 269: Annotation Processing</strong></dt>
+<dd><p class="first">With this JSR, APT is deprecated. You now get to use
+javac instead, which gives a full semantic model of
+a Java program (but not a syntactic one). The packages
+are:</p>
+<pre class="last literal-block">
+javax.lang.model.*
+javax.annotation.processing.*
+</pre>
+</dd>
+<dt><strong>Tree API</strong></dt>
+<dd><p class="first">When you want a full syntactic model, the Tree API gives
+you the parse tree you need. It combines with compiler API
+and semantic model to give you access to the full source
+tree. The package isn't part of the standard, but it is a
+public API and use of it is encouraged:</p>
+<pre class="last literal-block">
+com.sun.source.*
+</pre>
+</dd>
+</dl>
+<p>For someone who has been using the JavaDoc program as
+a poor man's parse-tree generator for quite a while
+now, the really good news from this session was:</p>
+<blockquote>
+<ul class="simple">
+<li>The new APIs designed to be <em>very similar</em> to the JavaDoc APIs</li>
+<li>The hope is that it will be possible to deprecate JavaDoc
+(A little bit of work still needs to be done, but's close.)</li>
+</ul>
+</blockquote>
+<p>To take advantage of the new capabilities, Peter suggested
+that it would be a <em>COOL PROJECT</em> to use JackPot to transform
+a JavaDoc app into one that uses the new APIs. I couldn't agree
+more. (Race you!)</p>
+</div>
+<div class="section">
+<h1><a id="user-interface-testing-with-fest" name="user-interface-testing-with-fest">User Interface Testing with FEST</a></h1>
+<p>Orcacle developers Alex Ruiz and Yvonne Wang Price
+talked about an open source toolkit for GUI testing
+they've posted at Google:</p>
+<blockquote>
+FEST: Fixtures for Easy Software Testing, available at
+<a class="reference" href="../_/http/code.google.com/p/fest/index.html">http://code.google.com/p/fest</a></blockquote>
+<p>The library is designed for functional testing of
+Swing apps. It presents a "fluent interface" that
+lets you write readable test, like:</p>
+<pre class="literal-block">
+xxx.shouldShowErrorMessage()
+</pre>
+<p>It's object oriented, so you're interating with a GUI
+object rather than poking an x,y location on screen
+real estate. That way, the tests are more robust--they
+don't suddenly start to fail when the layout changes--
+something that can be a major problem when you're using
+test recorders that record your gestures.</p>
+<p>Possibly the nicest thing about the system is that it
+takes a screenshot when a test fails--so if something
+failed because an Antivirus dialog popped up, for
+example, it would be easy to see that.</p>
+</div>
+<div class="section">
+<h1><a id="openid-system" name="openid-system">OpenID System</a></h1>
+<p>One of the Sun pods on the show floor was focused on
+identity management: "a decentralized, web-friendly single
+sign-on mechanism that allows consumers to reuse a single
+login across different websites."</p>
+<p>For more: <a class="reference" href="../_/http/developers.sun.com/identity/index.html">http://developers.sun.com/identity/</a></p>
+</div>
+<div class="section">
+<h1><a id="dita-pod" name="dita-pod">DITA Pod</a></h1>
+<p>Another pod at the conference centered around support for
+the DITA format on the JVM. I'm intrigued by the possibility
+of using DITA to carry on a structured discussion over the web,
+so it was interesting to find so many different content
+management systems, development frameworks, editors, and
+production systems running in the JVM.</p>
+<p>For more on DITA's potential for structured discussions,
+see: <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=202756.html">http://www.artima.com/weblogs/viewpost.jsp?thread=202756</a></p>
+</div>
+<div class="section">
+<h1><a id="writing-a-dsl-in-jruby" name="writing-a-dsl-in-jruby">Writing a DSL in JRuby</a></h1>
+<p>Finally, there was a great session on writing DSLs in Ruby.
+(Coupled with the description of how to make a web app in
+Rails, that made two of the best tutorial-talks I've seen
+for Rails and Ruby, both at JavaOne!)</p>
+<p>The talk listed all of the Ruby idioms that make it
+possible to construct a DSL. I was surprised to find that
+even with my limited use of the language, I was already
+familiar with them. So it seems that I <em>do</em> know enough
+to construct a DSL. But the  bad news was that even after
+listening to the talk, I <em>still</em> didn't see how they all
+fit together.</p>
+<p>So I've got some more work to this area. But at least now
+I can be confident that I'm prepared to tackle it. I'll get
+back to you when I've made some more progress.
+:_)</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=205945.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=205945&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205945&amp;title=JavaOne+2007%2C+%234%3A+Wrapup&amp;bodytext=A+collection+of+interesting+tidbits+from+the+show.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205945&amp;title=JavaOne+2007%2C+%234%3A+Wrapup">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205945&amp;title=JavaOne+2007%2C+%234%3A+Wrapup">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

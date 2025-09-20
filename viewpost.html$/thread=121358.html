@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Messaging may not be the way to Build a Distrbuted System</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=121358.html">Discuss</a> | 
+<a href="mailto:?subject=Messaging may not be the way to Build a Distrbuted System&amp;body= %0AArtima Weblogs %0AMessaging may not be the way to Build a Distrbuted System %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=121358">Email</a> | 
+<a href="../viewpostP.html$/thread=121358.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=41021.html" title="The Seventh Jini Community Meeting (Final)">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">Messaging may not be the way to Build a Distrbuted System</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">July 31, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Eric Armstrong's recent article on Artima caught my eye and made me
+think a bit about the evolution of distributed programming techniques.
+In the beginning, there was the message. But what now?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h2>In the beginning...</h2>
+<p>
+... there was the message. Eric Armstrong's recent article on Artima 
+<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=120669.html">
+<i>Messaging is the Right Way to Build a Distributed System</i></a>
+caught my eye the other day. I've not had a chance to write anything for
+Artima in quite a while and perhaps responding to this piece is as
+good an excuse as any to get back in the habit.
+</p>
+<p>
+Eric's article made me begin thinking about the evolution of
+the distributed programming techniques I've seen and done in
+the last two decades. While a message passing paradigm started
+the ball rolling, I believe we've progressed far from that mark.
+</p>
+<h2>CSPs</h2>
+<p>
+I first started thinking about distributed computing using 
+messaging in about 1985 while working on a project that was
+trying to make a loose collection of
+devices communicate over a twisted pair network.
+It was pretty primitive compared to what we do today, but the
+problems were all the same: remoteness implies longer latencies,
+the possibilities of partial failure, managing parallelism,
+and dealing with the pure tedium of message formats and the
+protocols that carry those messages.
+</p>
+<p>
+The model we used then was reflected in Tony Hoare's book
+<i>Communicating Sequential Processes</i>. CSPs are indeed
+an excellent way to organize distributed components with simplicity.
+Each service need only have a single thread (it could have more, but
+more aren't required for this model), they take a message, perform an
+action, and send a reply message to report the results to the 
+initiator.
+</p>
+<h2>Message paradigm wrapped in an RPC</h2>
+<p>
+A few years later, I was running a project building a piece of 
+semiconductor fabrication equipment and I employed the same 
+approach. The machine had a large number of moving parts and 
+several racks of computers providing the computing power to handle
+the motion control and supervisory functions. The CSP approach
+made managing parallelism about as easy as it was going to be.
+The model was so intuitive that I constructed a programming language
+called <i>MIL</i> (the <u>M</u>achine <u>I</u>nterface <u>L</u>anguage)
+which I had hoped technicians might be able to use to calibrate
+and diagnose problems with the machine.
+</p>
+<p>
+MIL could format messages and send them on the machine's <i>message bus</i>.
+One of the mantras I'd chant was, "everything had to be on the bus!" 
+While this probably drove the engineers nuts, the approach ensured that
+the power of the network and this message passing paradigm extended into
+all of the nooks and crannies of the machine. If it works for the big
+stuff, it works for the small stuff, too.
+</p>
+<p>
+The message handling primitives of <i>send</i> and <i>receive</i> were
+quickly wrapped into procedure forms: one form for a regular RPC
+(send, wait for the reply), and call-no-wait. (The majority of the code
+written for the machine was in C and the C programmers also wrapped
+their message stuff in RPC wrappers.) The RPC form looked
+something like this in MIL:
+</p>
+<pre>
+<code>
+status := ssl_move(x:=5, y:=10, timeout:=40000)
+if (status != 0) then
+	...
+end if
+</code>
+</pre>
+<p>
+To do things in parallel, you would use the <i>no wait</i>
+form of the subroutine call which would just send the message
+and not wait for the reply. Waiting for the reply was done in
+a separate step. MIL's syntax for using the <i>no wait</i>
+form looked something like this:
+</p>
+<pre>
+
+// initialize the substrate stage
+x := ssl_initialize_no_wait(param := 5)
+// initialize the reticle stage
+y := ret_initialize_no_wait(foo := 6)
+
+// now do the rendezvous
+wait(x, 30000)
+wait(y, 30000)
+if (waiting(x) or waiting(y)) then
+...
+end if
+</pre>
+
+<p>
+In the above code, we sent messages to both the
+left substrate stage (ssl) and the reticle stage
+to have them initialize. The <code>_no_wait</code>
+forms of these routines just sent the messages to
+the respective subsystems and returned a
+<i>handle</i> that could be used later to
+recognize the arrival of the return message. So,
+in this example, we started the initialization
+process for two of the machine's subsystems and
+then, once all this activity was started (in
+parallel), we could wait for their completion with
+the <code>wait</code> command. The
+<code>wait</code> command takes a variable used as
+the status return value from the <code>send</code>
+call as the first parameter, and takes a time out
+value (in milliseconds) as the second value. In
+this case, we just start waiting for the return
+messages. In the normal case, both return messages
+will arrive, both <code>wait</code> calls will
+succeed before their timeout kicks in. The
+<code>if</code> statement after the two
+<code>wait</code> calls asks if either of those
+two <code>wait</code>s had failed by seeing if we
+are still <code>waiting</code>. All of this is
+pretty simple and it provided a very powerful,
+intuitive model that most everybody, engineers,
+technicians, test designers, etc., could use.
+</p>
+<p>
+Notice, though, that the underlying mechanism, message passing,
+eventually gathered another layer of abstraction on top of it.
+This wasn't to obscure the <i>remoteness</i> of the various 
+subsystems inside the machine; it was to provide some syntactic
+sugar that made the concepts clearer and more palatable to
+the developers.
+</p>
+<h2>Moving more than data in our messages</h2>
+<p>
+After this project it was time to waste some career cycles doing
+stuff for the web. I'd done some SQL stuff in previous jobs
+but it was interesting to me how much programming was being
+done in the database layer. It wasn't just all the SQL query
+strings that were being passed around, though there were 
+plenty of those, it was also the number of stored procedures
+that were being used. It seemed like some combination of SQL
+and the stored procedures were a programming platform in its
+own right. The lines for when code was installed and used 
+was starting to get blurred in my mind. Were SQL statements
+data or code? How about stored procedures? If you install
+stored procedures and then exercise them along with a bunch
+of other SQL code, is that <i>mobile code</i>? Or, is it
+just code that was subject to a <i>lightweight install</i>
+or <i>temporary install</i>. Was there a difference?
+</p>
+<p>
+Is a connection to a database, and the passing of SQL 
+statements just business as usual in Eric's messaging
+model? Or, is it more along the line of mobile code?
+Clearly, the purpose of moving the SQL statements to the
+database is to have the processing done closer to the
+data with only the results passed back to the initiator.
+That sounds like mobile code to me. In fact, the whole
+point of the database connector is so I don't need to 
+know how the <i>magic</i> of the transport and messaging
+between my program and the database works.
+</p>
+<h2>Why should I care about the protocol?</h2>
+<p>
+When I'm trying to talk to a service like a database
+I really don't want to care about the underlying
+transport or how they organize the messaging beneath.
+I've been given a different, higher-level view than
+all that and I'm happy for it. My program has to be
+able to handle database errors (including a lost 
+connection to the database), but I don't need to 
+understand any of that stuff the database connector
+provided.
+</p>
+<p>
+In fact, the particular transport and protocol for
+the interactions with the database are a private
+problem between the database vendor and the provider
+of the connector technology. If they release a new
+version of the database and connector, they could
+even change this protocol completely and I, after a
+quick recompile and relink, shouldn't care a bit.
+Wouldn't it be nice if more stuff worked like that?
+</p>
+<h2>More stuff <i>does</i> work like that</h2>
+<p>
+The idea of moving code isn't new. Back in 1993
+and 1994 General Magic carved out a nifty idea of
+having a scripting language regular users could use
+to help organize their personal communication. Here's
+an example of what this could have done.
+</p>
+<p>
+Let's say you set up some rules for how you wish to be contacted:
+</p>
+<ul>
+<li>If email is received during 8-6 M-F route to office mail.
+  </li>
+<li>If email is marked urgent, route to office mail and copy to 
+      my Blackberry.
+  </li>
+<li>If I haven't picked up a message during normal business hours
+      and a message is 4 hours old (or older), send a message to my
+      Blackberry with the subject only.
+  </li>
+<li>If I receive a message from "boss" during normal business hours
+       that is not picked up in 30 minutes or less, call me on my
+       cell phone and do a text-to-speech of the message
+       (so I can pick it up at the ballpark... Hey, I don't want to 
+       be fired...)
+  </li>
+</ul>
+<p>
+Telescript was going to do stuff like this and much more.
+Here's the blurb from a 
+<a href="../_/http/www.byte.com/art/9402/sec3/art1.htm">Byte magazine article</a>
+from that era:
+</p>
+<blockquote>
+"Telescript, a communications-oriented programming 
+language comparable to C or Pascal, will let developers 
+create network-independent intelligent agents and distributed 
+applications. Some of these applications, in turn, may be tools 
+that let ordinary users create intelligent agents without 
+programming. What PostScript did for cross-platform, 
+device-independent documents, Telescript aims to do for 
+cross-platform, network-independent messaging. General 
+Magic hopes Telescript will become a lingua franca for 
+communications."
+</blockquote>
+<p>
+We didn't get a world filled with Telescript. But, we do
+have a world filled with Java and we've been moving Java
+code since the beginning of the Java movement. Applets,
+those sometime cutesy and even occasionally useful pieces
+of Java code that get loaded into web browsers are an
+example of mobile code. Sometimes those applets talk back
+to the computer that served them up to our web browser.
+Again, the browser provides a place for the applet to 
+run and the applet provides a service within the page,
+but whatever protocols or messages it exchanges with
+the remote computer are invisible, and uninteresting,
+to us. Like the database connection utilities, I don't
+really care how it does its job.
+</p>
+<h2>More stuff <i>should</i> work like this</h2>
+<p>
+Moving code around, whether it be SQL commands, 
+telescript, or Java code, has much to recommend it.
+There are a couple of things that moving code
+accomplishes:
+</p>
+<ul>
+<li>Computation happens in the right place, and
+  </li>
+<li>details like protocol specifics and message formats can be hidden.
+  </li>
+</ul>
+<p>
+<a href="../_/http/www.jini.org/index.html">Jini</a>, a distributed computing model
+for Java, does move code around and for both of these reasons. But, 
+there is some reluctance even in this forward-looking group to fully
+embrace moving code to solve some problems. I had a long running 
+conversation on the JavaSpaces list where I lamented that some of 
+the proposed changes to the JavaSpaces specification made this Spring
+were trying to move data when moving code made more sense to me. 
+You can read my prattling
+<a href="../_/http/archives.java.sun.com/cgi-bin/wa$/A2=ind0501&amp;L=javaspaces-users&amp;O=A&amp;P=2296/index.html">here</a>.
+Who knows, maybe I was off my rocker--but it seemed like if moving SQL
+commands to the database for data selection made sense, moving code to a JavaSpace
+for data selection made at least as much sense.
+</p>
+<p>
+The relationship between the JavaSpaces client and the JavaSpaces
+service is managed by the mobile code of the service's <i>proxy</i>.
+Just as the database connector technology provided a local proxy 
+for the facilities supplied by the database, the JavaSpaces proxy
+supplies a facade for the JavaSpaces service. The only difference
+between these two cases is when the linkage-editor functionality
+happens. If you believe "later is better", you're gonna love Jini
+and JavaSpaces.
+</p>
+<h2>The evolution from the messaging paradigm</h2>
+<p>
+We've come a long way since the simple exchange of messages.
+We started with just simple messages, protocols that had
+to be agreed upon up-front, and Hoare's CSP model. But
+as time progressed, there was pressure on that model. 
+</p>
+<ul>
+<li><b>Pressure to move the computation closer to the data</b>
+<br/>
+      The SQL commands you send in every database query are an
+      example of moving the computation closer to the data. You
+      can buy more computing power; it is hard to buy more network
+      bandwidth. 
+   </li>
+<li><b>Pressure to keep a familiar program model like subroutine calls</b>
+<br/>
+       Messages are fine but the RPC programming model is often what
+       you're trying to do anyway: make a call, get an answer, move on.
+       Why <i>not</i> use a something that looks like a procedure or
+       function to do that?
+   </li>
+<li><b>Pressure to hide unnecessary details</b>
+<br/>
+       I don't care about the protocol between the database and
+       whatever connector technology I'm using. In fact, the
+       less I know the better off everybody is. If they want to
+       change it in their next release, that's fine with me.
+   </li>
+<li><b>Pressure to control both ends of the connection</b>
+<br/>
+       If you have to declare message formats and protocols up-front,
+       that means a lock in that could be uncomfortable later. If
+       instead you simply offer an API for the service (as the database
+       connection utility or Jini service would do), you can control
+       both ends of the protocol and the message formats because both
+       of these things are implementation details below the visibility
+       of your end-users.
+   </li>
+</ul>
+<p>
+Distributed computing's growth over the last half decade has
+been astonishing to me. And, while I'm still a fan of Hoare's
+simple model, I recognize that pressures have encouraged an
+evolution of tools, techniques, and attitudes that have made
+distributed system development easier.
+</p>
+<p>
+It may have all started with the message... but we've come a long
+way since then.
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h3>Resources</h3>
+<ul>
+<li>
+	Communicating sequential processes (Prentice-Hall International 
+	series in computer science) (Paperback), C. A. R. Hoare, 1985,
+	found on Amazon <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0131532715/index.html">
+	here</a>. This was one of the first texts I had seen on the topic.
+	It was a bit heavy on the symbology and the math, but once I <i>got it</i>,
+	I was hooked. I still have the hard-bound edition on my shelf.
+	</li>
+<li><a href="../_/http/en.wikipedia.org/wiki/General_Magic/index.html">General Magic</a>
+	invented <a href="../_/http/www.byte.com/art/9402/sec3/art1.htm">Telescript</a>
+	which was an idea out of the blue and far before its time.
+	</li>
+<li>You can learn more about Jini <a href="../_/http/www.jini.org/index.html">here</a>.
+	</li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=121358.html">13
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=121358&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D121358&amp;title=Messaging+may+not+be+the+way+to+Build+a+Distrbuted+System&amp;bodytext=Eric+Armstrong%27s+recent+article+on+Artima+caught+my+eye+and+made+me%0D%0Athink+a+bit+about+the+evolution+of+distributed+programming+techniques.%0D%0AIn+the+beginning%2C+there+was+the+message.+But+what+now%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D121358&amp;title=Messaging+may+not+be+the+way+to+Build+a+Distrbuted+System">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D121358&amp;title=Messaging+may+not+be+the+way+to+Build+a+Distrbuted+System">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

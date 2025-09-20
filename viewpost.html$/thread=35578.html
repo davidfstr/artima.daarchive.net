@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>One Assertion Per Test</title>
+<meta charset="utf-8"/>
+<meta content="Dave Astels" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D2B48C" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=dastels.html">Dave Astels' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=35578.html">Discuss</a> | 
+<a href="mailto:?subject=One Assertion Per Test&amp;body= %0AArtima Weblogs %0AOne Assertion Per Test %0Aby Dave Astels %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=35578">Email</a> | 
+<a href="../viewpostP.html$/thread=35578.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=18682.html" title="JAOO 2003 Trip Report">Previous</a> | 
+<a class="sl" href="thread=39822.html" title="TDD Jolted the Industry!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Shift Your Paradigm!</span><br>
+<span class="ts">One Assertion Per Test</span><br/>
+<span class="as">by Dave Astels</span><br/>
+<span class="pd">February 23, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+For some time I've been thinking about how TDD tests can be as simple, as expressive, and as elegant as possible.  This article explores a bit about what it's like to make tests as simple and decomposed as possible:  aiming for a single assertion in each test.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>A while ago there was a bit of fuss on the testdrivendevelopment
+Yahoo group about the idea of limiting yourself to one assertion per
+test method, which is a guideline that others and I offer for TDD
+work.
+
+<p>An address parser was the example of a situation where it was
+argued that multiple assertions per test made sense.  Date was
+formatted with one address per line, each in one of the following
+formats:
+
+<ol>
+<li><tt>ADDR1$ADDR2$CSP$COUNTRY</tt></li>
+<li><tt>ADDR1$ADDR2$CSP</tt></li>
+<li><tt>ADDR1$CSP$COUNTRY</tt></li>
+<li><tt>ADDR1$CSP</tt></li>
+</ol>
+<p>The poster went on to say:
+
+<i>My first inclination is/was to write a test like this:</i>
+<tt><pre>
+	a = CreateObject("Address")
+	a.GetAddressParts("ADDR1$ADDR2$CITY IL 60563$COUNTRY")
+	AssertEquals("ADDR1", a.Addr1)
+	AssertEquals("ADDR2", a.Addr2)
+	AssertEquals("CITY IL 60563", a.CityStatePostalCd)
+	AssertEquals("Country", a.Country)
+</pre></tt>
+<p>They didn't see how to achieve this with one assertion per test, as
+there are obviously four things to test in this case.  I decided that
+rather than simply reply, I would write some tests and code to
+illustrate my view on the matter, and offer a solid response.
+
+<p>For this problem, I chose Squeak Smalltalk (see <a href="../www.squeak.org">www.squeak.org</a>) and Java.  For the sake of
+conciseness, I'll omit any required accessors.
+
+<p>So, where to start?  Well, when doing TDD it often makes sense to
+start with something simple to quickly and easily get some code
+written and working.  Then it can be extended and evolved in response
+to further test driving.  Here the simplest case is: <tt>ADDR1$CSP</tt>.  There
+are two requirements in the parsing of this example: that the <tt>ADDR1</tt>
+was recognized, and that the <tt>CSP</tt> was recognized.  Viewed this way, we
+need two tests.  We start with one for <tt>ADDR1</tt>:
+
+<p><b>Squeak:</b>
+<tt><pre>
+    testAddr1
+        | anAddress |
+        anAddress := Address from: 'ADDR1$CITY IL 60563'.
+        self assert: anAddress addr1 equals: 'ADDR1'
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    public void testAddr1() throws Exception {
+        Address anAddress = new Address("ADDR1$CITY IL 60563");
+        assertEquals("ADDR1",  anAddress.getAddr1());
+    }
+</pre>
+</tt>
+<p>To get this to pass we need an <tt>Address</tt> class and a <tt>from:</tt> factory
+method, which creates an instance and has it parse the address string.
+For brevity, I'll skip the "return literal" step.
+
+<p><b>Squeak:</b>
+<tt><pre>
+    Object subclass: #Address
+        instanceVariableNames: 'addr1'
+        classVariableNames: ''
+        poolDictionaries: ''
+        category: 'Adaption-One Assertion Test'
+
+    (class method)
+    from: aString
+        ^self new parse: aString;
+            yourself
+
+    parse: aString
+        | parts |
+        parts := aString findTokens: '$'.
+        addr1 := (parts at: 1)
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    public class Address {
+
+        private String addr1;
+
+        public Address(String aString) {
+            parse(aString);
+        }
+
+        private void parse(String aString) {
+            StringTokenizer parts = new StringTokenizer(aString, "$");
+            addr1 = parts.nextToken();
+        }
+    }
+</pre>
+</tt>
+<p>That's well &amp; good.  The next test is for <tt>CSP</tt>.
+
+<p><b>Squeak:</b>
+<tt><pre>
+    testCsp
+        | anAddress |
+        anAddress := Address from: 'ADDR1$CITY IL 60563'.
+        self assert: anAddress csp equals: 'CITY IL 60563'
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    public void testCsp() throws Exception {
+        Address anAddress = new Address("ADDR1$CITY IL 60563");
+        assertEquals("CITY IL 60563",  anAddress.getCsp());
+    }
+</pre>
+</tt>
+<p><tt>Address&gt;&gt;parse:</tt> will need to be extended (and we need to add a <tt>csp</tt>
+instance variable and accessors):
+
+<p><b>Squeak:</b>
+<tt><pre>
+    parse: aString
+        | parts |
+        parts := aString findTokens: '$'.
+        addr1 := (parts at: 1).
+        csp := (parts at: 2)
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    private void parse(String aString) {
+        StringTokenizer parts = new StringTokenizer(aString, "$");
+        addr1 = parts.nextToken();
+        csp = parts.nextToken();
+    }
+</pre>
+</tt>
+<p>So.  We have two tests for this one situation.  Notice the duplication
+in the tests... the creation of the instance of Address that is being
+probed.  This is the fixture.  After refactoring, we have:
+
+<p><b>Squeak:</b>
+<tt><pre>
+    TestCase subclass: #Addr1CspTests
+        instanceVariableNames: 'anAddress '
+        classVariableNames: ''
+        poolDictionaries: ''
+        category: 'Adaption-One Assertion Test'!
+
+    setUp
+        anAddress := Address from: 'ADDR1$CITY IL 60563'
+
+    testAddr1
+        self assert: anAddress addr1 equals: 'ADDR1'
+
+    testCsp
+        self assert: anAddress csp equals: 'CITY IL 60563'
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    public class Addr1CspTests extends TestCase {
+    
+        private Address anAddress;
+    
+        protected void setUp() throws Exception {
+            anAddress = new Address("ADDR1$CITY IL 60563");
+        }
+
+        public void testAddr1() throws Exception {
+            assertEquals("ADDR1",  anAddress.getAddr1());
+        }
+    
+        public void testCsp() throws Exception {
+            assertEquals("CITY IL 60563",  anAddress.getCsp());
+        }
+    }
+</pre>
+</tt>
+<p>So, a fixture that creates the Address instance from the string, and
+very simple tests that focus on each aspect of that fixture.
+
+<p>The next simplest case is the obvious choice for the next fixture:
+
+<p><b>Squeak:</b>
+<tt><pre>
+    setUp
+        anAddress := Address from: 'ADDR1$CITY IL 60563$COUNTRY'
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    protected void setUp() throws Exception {
+        anAddress = new Address("ADDR1$CITY IL 60563$COUNTRY");
+    }
+</pre>
+</tt>
+<p>This set of tests will include ones for <tt>addr1</tt> and <tt>csp</tt> as before
+(refactoring this to remove that duplication is left to the reader) as
+well as a new test for country:
+
+<p><b>Squeak:</b>
+<tt><pre>
+    testCountry
+        self assert: anAddress country equals: 'COUNTRY'
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    public void testCountry() throws Exception {
+        assertEquals("COUNTRY",  anAddress.getCountry());
+    }
+</pre>
+</tt>
+<p>As before, an instance variable and associated accessors need to be
+added to the <tt>Address</tt> class.
+
+<p>This drives <tt>Address&gt;&gt;parse:</tt> to evolve:
+
+<p><b>Squeak:</b>
+<tt><pre>
+    parse: aString
+        | parts |
+        parts := aString findTokens: '$'.
+        addr1 := (parts at: 1).
+        csp := (parts at: 2).
+        country := (parts at: 3 ifAbsent: [''])
+</pre></tt>
+<p><b>Java:</b>
+<tt><pre>
+    private void parse(String aString) {
+        StringTokenizer parts = new StringTokenizer(aString, "$");
+        addr1 = parts.nextToken();
+        csp = parts.nextToken();
+        country = parts.hasMoreTokens() ? parts.nextToken() : "";
+    }
+</pre>
+</tt>
+<p>From here on, the evolution gets a bit more complex, as we add the
+<tt>ADDR2</tt> option to the mix.
+
+<h2>Conclusion</h2>
+<p>So we took a situation that was thought to require multiple assertions
+in a test and did it in such as way as to have only one assertion per
+test.
+
+<p>The key is that instead of using a single <tt>TestCase</tt> subclass with a
+complex (i.e. multiple assertion) tests for each situation, we made
+each of those situations into a separate fixture.  Each fixture is
+implemented by a separate subclass of <tt>TestCase</tt>.  Now each test focuses
+on a very small, specific aspect of that particular fixture.
+
+<p>I'm convinced writing tests like this is a useful approach.  One
+advantage is that the resulting tests simpler and easier to
+understand.  Just as important, and maybe more so, is that by adding
+the specification of the behavior one tiny piece at a time, you drive
+toward evolving the code in small, controllable, understandable steps.
+
+<p>It also fits better into the test fixture centered approach that is
+the recommended way to organize your tests.  We set up the object to
+test in the setUp method, and tested each aspect of it in individual
+tests methods.
+
+<p>As I've been writing this, something clicked.  I see these <i>test</i>
+methods as specifications of tiny facets of the required behavior.
+Thus, it makes sense to me to be as gradual as possible about it,
+driving the evolution of the code in the smallest steps possible.
+Striving for one assertion per test is a way to do that.
+
+<p>If, however, you view <i>test</i> methods as strictly performing
+verification, then I can see how it might be seen to make sense to
+invoke some code and then test all the postconditions.  But this view
+is not TDD, and doesn't buy you all of the benefits of TDD. I contend
+that central to TDD is this notion of working in the smallest steps
+possible, both for the finest-grained long-term verification, and for
+the most flexible design evolution.  Furthermore, this is best done by
+striving to keep tests as small, focused and simple as possible.
+Aiming for one assertion per test is one way to get there.
+
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=35578.html">22
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=35578&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Dave Astels adds a new entry to <a href="../index.html$/blogger=dastels.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/dastels.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D35578&amp;title=One+Assertion+Per+Test&amp;bodytext=For+some+time+I%27ve+been+thinking+about+how+TDD+tests+can+be+as+simple%2C+as+expressive%2C+and+as+elegant+as+possible.++This+article+explores+a+bit+about+what+it%27s+like+to+make+tests+as+simple+and+decomposed+as+possible%3A++aiming+for+a+single+assertion+in+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D35578&amp;title=One+Assertion+Per+Test">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D35578&amp;title=One+Assertion+Per+Test">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/daveAstels.jpg"/></td><td>Dave Astels has been developing hardware and software solutions for more than 20 years in domains ranging from environment control systems to electrical energy trading systems to mass market products. Since the late 1980s he has been working exclusively with object technologies: a mix of C++, Smalltalk, Java, and some more obscure OOPLs.  Since the late 1990s, he has been studying, using, evangelizing, and teaching Agile Development processes and practices.  He has coauthored/authored two books for Prentice Hall: "A Practical Guide to eXtreme Programming" and "Test-Driven Development: A Practical Guide". He also edits the TDD edition of The Coad Letter, which is part of the Borland Development Network.  He co-founded and runs Adaption Software, Inc. (www.adaptionsoft.com).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Dave Astels. All rights reserved.</div>
+
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+
+
+</hr></p></p></p></p>

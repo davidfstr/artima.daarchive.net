@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Wrong Correctness</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=276790.html">Discuss</a> | 
+<a href="mailto:?subject=Wrong Correctness&amp;body= %0AArtima Weblogs %0AWrong Correctness %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=276790">Email</a> | 
+<a href="../viewpostP.html$/thread=276790.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=274384.html" title="I Believe in Design">Previous</a> | 
+<a class="sl" href="thread=278900.html" title="Java Posse Roundup Registration Open">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Wrong Correctness</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">December 31, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Malcom Gladwell's latest book is a selection from his New Yorker columns. The underlying theme is what I call "wrong correctness," which is fascinating because there are enormous possibilities to be mined,  but only if we can learn how to create a new approach to business.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>We love our models. Create a model and you can cheaply predict outcome, without actually doing the experiments. They are magical windows into the future.</p>
+<p>We often think of models in terms of mathematical equations, but any kind of representation is a model. "The map is not the territory" is one of the more succinct descriptions of the disconnect between the model and the thing that it represents.</p>
+<p>Every model is an abstraction. This means that some information is removed and/or lost in creating the representation. We attempt to abstract away only the pieces that don't affect the results we seek, and in doing so we assume that the system is made up of discrete, isolated components that can be added and subtracted with little or no impact on the rest of the system. Indeed, the concept of <a class="reference" href="../_/http/en.wikipedia.org/wiki/Reductionism/index.html">reductionism</a> is itself a model, that says, in effect, that the pieces are more important than the interactions that form a whole (although I suspect it started as "let's see how far we can take this idea" rather than an expectation that this is how the world works. Only subsequently did people adopt reductionism as an accurate world view).</p>
+<p>Ironically, a model becomes a problem when it starts to work enough of the time that you begin to believe in it. You start to see the model as the world, and it becomes annoying and time consuming to constantly remind yourself that "all models are wrong, some are useful." In fact, humans are too limited <em>not</em> to see the world through our abstractions. If, every time we had to make a decision, we went back to first principles and took everything into account, we'd never do anything.</p>
+<p>Newton's laws of motion provide an excellent example. Within our realm of perception these are absolutely "true" and accurate, all the time. And yet, they are only an approximation. When you start looking at the very big, very small, very fast, etc., they don't apply anymore. But it makes no sense to take the more complex factors into account when we live well within the limits of the approximation. So we abstract away the extra bits because they have virtually no impact in our realm. Unfortunately, we tend to forget the approximation and assume that our model is the real thing. Therein lies the danger: not approximation, but ignorance.</p>
+<div class="section">
+<h1><a id="abstraction-pitfalls" name="abstraction-pitfalls">Abstraction Pitfalls</a></h1>
+<p>Models are so enticing. When you get one that works, it gives you a tremendous advantage: cheap predictability of results. It is very tempting to create a model even when it's not possible, because you want one, and you want the outcome it promises.</p>
+<p>My father spent many years in the "charting" movement, trying to understand what a stock was going to do by looking at the curve of what it had done before. There's an entire mythos around the idea that there are patterns in stock charts that will tell you what they are going to do. Numerous mathematical studies have shown conclusively that this doesn't work. The experience of the chartists themselves has shown it; the only people who make any money from this movement publish newsletters. But the idea that such a model would work is so compelling -- it would make you rich -- that people build a religion despite consistent disproof.</p>
+<p>An even more insidious problem happens when a model is possible, perhaps one that produces very limited results, but it requires very complex information in order to produce more valuable results. It becomes too expensive or you just can't figure out how to do it, so you decide to just ignore that term. The classic example of this is the cost-benefit analysis. You want numbers to produce a conclusion, so if something doesn't produce numbers, or when those numbers are too difficult to collect and quantify, the easiest thing to do is just not to include that factor. Customer satisfaction, arguably the most important value that any company needs to consider, is often left out of a cost-benefit analysis because it's too hard to include. Ditto employee satisfaction and employee effectiveness.</p>
+</div>
+<div class="section">
+<h1><a id="predictability" name="predictability">Predictability</a></h1>
+<p>One big flaw with models is that they assume the future <em>is</em> predictable. In particular, they posit that the way things are going now is pretty much how they will go in the future. This is one of the more comforting whispers you can speak to important portions of our brains. Those portions stand up and say "Yay! Sounds good to us!"</p>
+<p>The other parts, the ones that say "something bad might happen," are shushed. After all, most of the time, things are comfortably predictable. And you never know when something bad is going to come flying out of the blue, so what's the point of dwelling on it? On the personal level, at least, a cheerful outlook sounds like pretty good advice.</p>
+<p>To top it off, figuring out what to do about the random catastrophes is far from simple. A model that predicts a steadily-increasing stock market tells you what to do: invest and wait. One that says that every once in a while you'll encounter an unpredictable shake-up doesn't give any clear direction. It doesn't tell you <em>when</em> these things will happen, so there's no buy/sell prescription. Mostly it counsels keeping some of your money (enough to survive on?) somewhere safer, and only risking what you can live without.</p>
+<p>The essays in <a class="reference" href="../_/http/www.amazon.com/gp/product/0316075841$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0316075841/index.html">Gladwell's Book "What the Dog Saw"</a> suggest that just because something is unpredictable doesn't mean we should ignore it -- there is still value, sometimes exceptional value, from factoring in the chaotic.</p>
+<div class="section">
+<h2><a id="risk-management" name="risk-management">Risk Management</a></h2>
+<p>That doesn't mean it will be easy or obvious. Sometimes "factoring in the chaotic" simply means observations, and adjustments to our predictions. In the software field, consider <a class="reference" href="../_/http/www.amazon.com/gp/product/0932633609$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0932633609/index.html">Waltzing with Bears</a>, by Tom DeMarco and Timothy Lister. Their previous book, <a class="reference" href="../_/http/www.amazon.com/gp/product/0932633439$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0932633439/index.html">Peopleware</a>, was a relatively easy read because it gave sound evidence that those management practices that you already knew were dumb were, in fact, dumb -- and often more expensive than anyone credited. But in <em>Waltzing with Bears</em>, they move away from the obvious and into the arena of risk management. Here, it's not about what we know will happen, but about what usually won't happen. Many people get away with saying "it won't happen, let's ignore it" most of the time. Sometimes they're even rewarded for being positive thinkers.</p>
+<p>DeMarco and Lister first point out something very important. When someone asks you how long a particular subproject will take, it's usually implicit, and sometimes explicit, that they want to know the shortest, most optimistic time for this task. DeMarco and Lister note that the actual time for finishing a task is a probability curve, and if you only ever give the shortest time, you are giving the leading edge of the curve, where it touches the axis. Thus, each subtask prediction has a 0% probability of being correct. This means your project completion time estimation starts out, from day one, with a 0% probability of being correct. They suggest a relatively simple change in behavior: give, instead, the middle of your probability curve for each subtask, so you begin with a palpable completion time. It doesn't make the completion time predictable, but it does make it significantly less wrong.</p>
+<p>This is a big shift in perspective. All this time we've been doing project estimation quite badly. We are pressed into doing this. This pressure comes from our basic business model, which says that money is the only reason for doing anything. We optimize around money, and so naturally when we ask for a project estimate, we want the most optimistic one, the one that appears to cost the least. But if we look at it realistically, we see that (1) you can't know how long something will take, you can only guess, and (2) a collection of best-possible guesses produces a useless estimate.</p>
+<p>In <em>Peopleware</em>, DeMarco and Lister also look at estimation, but for its effect on productivity. They run a test where managers and programmers estimate the completion of a project, in various combinations: the manager alone, the programmer and manager together, the programmer alone, and no estimate at all. The rather striking result was that the programmer was most productive when there was <em>no estimate at all</em>. So not only are we estimating very badly, the cost of estimation itself appears to be quite significant. Of course, current business thinking will look at these issues and say "very interesting, but we must have estimates and naturally we want the most optimistic ones."</p>
+<p>This is the same business thinking that ignores hard facts in favor of myths and reflex reactions. An excellent example is pay-for-performance. Watch <a class="reference" href="../_/http/www.ted.com/talks/dan_pink_on_motivation.html">this TED talk by Dan Pink</a>: 40 years ago, a seminal study showed that pay-for-performance <em>only</em> produces improvements in rote assembly-line-type work. For any work that involves creativity, pay-for-performance actually <em>decreases</em> productivity; apparently it demeans people to think that their creative work is only evaluated in terms of money (in the programming profession it's relatively well-understood that, as long as they can get by OK, programmers don't care that much about the money -- it's the quality of experience that matters). The negative impact of pay-for-performance has been emphasized in all the important business books of the past decades, the books that all the business leaders profess to read and agree with. And yet the only reward these same business leaders can think of is money, so they do exactly what has been shown again and again to produce negative results.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="wrong-correctness" name="wrong-correctness">Wrong Correctness</a></h1>
+<p>This is what I mean by "wrong correctness." Somehow the behavior makes sense and, like many of the stories Gladwell tells in his books, practicing that behavior doesn't produce a big, catastrophic failure. If you fall off a cliff, you learn fast that walking on air doesn't work. But if you only occasionally stumble and slide partway down and can climb back up with only a few scrapes and bruises, you can convince yourself that this path is a reasonable one, that we can just man up and push through and we don't have to look for a better, easier path.</p>
+<p>In <a class="reference" href="../_/http/www.amazon.com/gp/product/0316017922$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0316017922/index.html">Outliers</a>, Gladwell looks at how disasters happen. It's never one big thing, but a combination of small, seemingly mundane and manageable mistakes that, taken together, produce a crash. One of Gerald Weinberg's maxims is "Things are the way they are because they got that way, one logical step at a time." Each decision is a small one and appears to be logical in isolation (there's that reductionism problem again), especially if you base your decisions on what you want to believe, or what is convenient to believe, rather than looking at experiments (this is not to say that I believe in all experimental data, just that taking an experimental attitude is more likely to produce better results).</p>
+<p>Here's another example of "wrong correctness," also from <em>Peopleware</em>: the Furniture Police. This is the team in a company that decides what furniture you can have, and how much should fit on a floor, etc. From the standpoint of the Furniture Police, the more people you can squeeze onto a floor of a building, the better. And the only metric they have for measuring their success is how much money they save. So they do the thing that is correct for them under their constraints, and cram people closer together, and show positive results through lowered costs.</p>
+<p>The actual effect is very, very wrong. It greatly reduces job satisfaction and thus productivity. It appears to save the company money but the amount it actually loses vastly outweighs the tiny savings. Of course, you'd have to look at the big picture to see the loss, rather than the quarterly report where the furniture police seem to produce a win.</p>
+<p>Notice the trend. We do these things because the small decisions seem simple and relatively obvious, and in the short term they appear to make the numbers jump in the right direction. Kudos all around, now let's see what we can do for the next quarter. And when the pressure of the long-term trend eventually bursts the dam, everyone is confused and runs around desperately trying to figure out how to fix things -- but of course, the only solutions that make sense are short-term quick fixes.</p>
+<p>So is it any wonder that, as companies get bigger, their productivity per worker goes down and down, until we get Microsoft, with billions flowing through it and amazing profitability and lots of smart people, unable to create anything new? For years and years? This is what happens when you accrete lots and lots of wrongly-correct practices. At some point you start going backwards.</p>
+</div>
+<div class="section">
+<h1><a id="myopic-short-term-thinking" name="myopic-short-term-thinking">Myopic Short-Term Thinking</a></h1>
+<p>The <a class="reference" href="../_/http/en.wikipedia.org/wiki/Deferred_gratification/index.html">marshmallow experiment</a> demonstrates that children who understand deferred gratification tend to be much more successful later in life. A study of successful people shows again and again the need for patience and perseverance. Even those who appear to become successful overnight turn out to be preparing, watching and waiting, typically for years, so they are ready when the right opportunity appears.</p>
+<p>But it's as if we are a nation of five-year-olds, who only understand instant gratification. We don't want to hear about the years of preparation. We don't want to know the backstory, we only want to hear about the sudden fireworks and imagine ourselves magically walking into the same situation and suddenly being wealthy (which will apparently suddenly make us happy -- another thing we want instantly without any long-term investment).</p>
+<p>Even if we do manage to create a human-centered company, it's only a matter of time before the incessant demands of the quarterly-profit beast erode these values. The only (rare) exceptions occur when the creators make up-front decisions to prevent such erosion from taking place; staying private, maintaining controlling interest, or creating employee/customer-owned cooperatives. Of course, such organizations don't have the potential of growing cancerously fast. To create and maintain a business like this requires strong and experienced leadership in the face of questions about optimizing growth and profits.</p>
+<div class="section">
+<h2><a id="human-resources-are-our-most-valuable-commodity" name="human-resources-are-our-most-valuable-commodity">Human Resources are our Most Valuable Commodity</a></h2>
+<p><a class="reference" href="../_/http/steveblank.com/2009/12/21/the-elves-leave-middle-earth-%E2%80%93-soda%E2%80%99s-are-no-longer-free/index.html">Steve Blank tells a story</a> that's been repeated in many forms: the seemingly small, one-logical-step-at-a-time event that makes the key players look up and notice that the company has just gone from sweet to sour. In this case it is the slightly-comical decision by a new CFO to stop providing the human resources with free soda, which was costing the company some 10K/year. An easy and rational call, which made the CFO look like a go-getter. The key engineers, once sought avidly by the company, quietly announced their availability and began disappearing. The company didn't panic because it had already gone through its change of life and become more important than its pieces; it was no longer an idealistic youth who valued things like people and quality of life. It had grown up and matured and was now in the adult business of making money. Workers had become fungible resources, easily replaceable.</p>
+<p>I remember the first time I saw this happen, in the second company where I had a "real job" after college. I'm not sure what the inciting incident was, perhaps the 3rd or 4th business reorganization within a couple of years, perhaps a sudden withdrawals of bonuses and raises. Whatever the case, a number of the engineers that I considered to be extra-smart began quietly disappearing, with the company making no-big-deal noises as this happened. My own direct manager left, which should have been cold water in my face (but I typically have to learn things in the hardest possible way, and this lesson was -- eventually -- not lost on me).</p>
+<p>When did we decide that we were no longer "personnel" (which at least sounds personal) but instead the resources that are human? To the MBAs that probably came up with it, it was certainly the next logical step in fitting everything into a spreadsheet: we've got machine resources, building resources, manufacturing resources, etc., etc., and human resources.</p>
+<p>It's the term everyone uses these days, without thought. But recent experiments with <a class="reference" href="../_/http/en.wikipedia.org/wiki/%C3%89mile_Cou%C3%A9/index.html">Émile Coué's theory of autosuggestion</a> show that repeating something to yourself has an effect whether you believe what you're saying or not. Coué came up with "every day in every way, I am getting better and better." What do you suggest to yourself every time you say "I am a human resource?"</p>
+<p>Gladwell tells the story of outstanding college football quarterbacks, the majority of whom are abject failures in professional football -- because the game is played entirely differently in the two domains. Thus, you cannot predict the success of a quarterback based on their success in college. Later in the book, he looks at the way we interview prospects for jobs. It turns out the most critical point of the interview is the initial handshake (or other initial impression). If you like the way someone shakes hands, you take whatever answers they give you and adapt them to that first impression. It's basically a romantic process, except with a real romance you decide the outcome after many months, whereas with a job interview you decide after only hours -- or actually in a moment, with the initial handshake. Even our lame attempts to simulate "real" work (by asking programming puzzles, for example), tell us nothing about the truly critical things, like how someone responds to project pressure. We suffer from <em>Fundamental Attribution Error</em> -- we "fixate on supposedly stable character traits and overlook the influence of context," and we combine this with mostly-unconscious, mostly-inappropriate snap judgments to produce astoundingly bad results. Basically, we think that someone who interviews well (one context) will work well on a task or in a team (a completely orthogonal context).</p>
+<p>The answer is something called <em>structured interviewing</em>, which changes the questions from what HR is used to -- questions where the answer is obvious, where the interviewee can generate the desired result (not unlike what we've been trained to do in school) -- to those that extract the true nature of the person. For example, when asked "What is your greatest weakness?" you are supposed to tell a story where something that is ostensibly a weakness is actually a strength. Structured interviewing, in contrast, posits a situation and asks how you would respond. There's no obvious right or wrong answer, but your answer tells something important about you, because it tells how you behave <em>in context</em>. Here's an example: "What if your manager begins criticizing you during a meeting? How do you respond?" If you go talk to the manager, you're more confrontational, but if you put up with it, you're more stoic. Neither answer is right, but the question reveals far more than the typical interview questions that have "correct" answers.</p>
+</div>
+<div class="section">
+<h2><a id="customer-support-is-a-cost-center" name="customer-support-is-a-cost-center">Customer Support is a Cost Center</a></h2>
+<p>Studies show again and again that repeat customers are your best source of business. And again and again, companies start looking at the cost of making customers happy in the same way they look at free sodas for employees: "hey, here's some fat that can be trimmed." It's a perfect example of wrong correctness and short-term thinking to say that we can cut back on customer support because it doesn't contribute to the bottom line, which is defined as sales for this quarter. Somehow everyone gets on board with these cost-cutting measures, because it seems so obvious. And often, at the same time, these same folks are saying that yes, repeat customers are very important. Except that it's so easy to make this quarter's numbers look better by doing some quick cutting. You end up cutting something that has taken years to develop, just for a quarterly bump. It's a bit like saying "I could lose 30 pounds overnight just by cutting off my leg!" Oh, sure, when I put it like that it sounds deluded. But how different is it, really?</p>
+<p>A <a class="reference" href="../_/http/theoatmeal.com/comics/customer_service/index.html">horrible customer support experience</a> isn't an accident, it's a brilliant money-saving strategy for the company. And once you've reduced everything to quarterly profits, it's the only logical strategy. To do anything else requires a fundamental shift in perspective and company structure (the very shift I'm interested in). Sure, Apple could do a better job, but they have obviously decided that customer experience is what the company is about. Things should just work, and if they don't you should have a clear path to a solution. Who even thinks about calling Microsoft? Microsoft wins by saving money. Except that they are so out of touch with their customers they don't know what to make next. And more and more of my friends, long-time Windows users, are happily defecting to Apple (and try going to a conference filled with "developers, developers, developers!" They're almost exclusively Macs these days).</p>
+<p>You know when you've found a customer-centered company (not the ones who put it in their mission statement because it sounds good, but the ones who actually do it). Trader Joe's and Costco come to mind. The experience is instantly good, and there's no sense of hidden traps waiting to spring when something goes wrong (health insurance and cars come to mind). Very quickly, you're thinking "I'm coming <em>here</em> from now on!" It's what most companies want, but don't have the patience for.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="does-why-matter-that-much" name="does-why-matter-that-much">Does "Why?" Matter That Much?</a></h1>
+<p>The list of examples of wrong correctness goes on and on. I'm sure I could write a book exclusively on the ways that we screw up. I have a reading list of books describing why we make these bad decisions. But I think that people who have spent any time in business have been personally frustrated by enough of these mistakes to know it's an overwhelming problem.</p>
+<p>I do think "why?" matters, but I also see it as an endless recursive hole; I could easily spend the rest of my life becoming an expert on why people persist in turning their businesses into hellholes.</p>
+<p>In the end I'm not so interested in understanding why we go wrong as much as discovering ways to inspire us toward naturally better decisions. In the same way that an open-spaces conference guides us to spontaneously create the best possible conference experience, I believe that there is some structure that will guide us to spontaneously create the best possible business experience (and for the rest, those not quite ready to jump in completely, make them question the knee jerk addition of structures "because that's the way you run a business").</p>
+<p>That's what I'm working on now. It's very ambitious, but it's the only thing that I find  compelling: completely change our experience of work and business to make it happiness instead of drudgery, in the same way that open-spaces make conferences wonderful instead of an effort (for both organizers and attendees). I know I can't do it by myself -- I need to find the right community-building tools so that lots of ideas can appear and flow (I imagine some kind of web-based conversation, along with in-person events like open-spaces conferences and workshops). I don't want to "own" the result, in the same way that Harrison Owen didn't try to "own" open spaces. I just want it to happen, so we can stop cramming ourselves into this small, dank, oppressive space that we've been calling business and instead venture into a big world of ebullient possibility, measured by creativity, self-expression, productivity, and joy.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=276790.html">35
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=276790&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D276790&amp;title=Wrong+Correctness&amp;bodytext=Malcom+Gladwell%27s+latest+book+is+a+selection+from+his+New+Yorker+columns.+The+underlying+theme+is+what+I+call+%26quot%3Bwrong+correctness%2C%26quot%3B+which+is+fascinating+because+there+are+enormous+possibilities+to+be+mined%2C++but+only+if+we+can+learn+how+to+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D276790&amp;title=Wrong+Correctness">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D276790&amp;title=Wrong+Correctness">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

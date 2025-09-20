@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Implementing the Null Object Pattern using AOP</title>
+<meta charset="utf-8"/>
+<meta content="Dale Asberry" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCEECC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bozomind.html">Dale Asberry's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=43091.html">Discuss</a> | 
+<a href="mailto:?subject=Implementing the Null Object Pattern using AOP&amp;body= %0AArtima Weblogs %0AImplementing the Null Object Pattern using AOP %0Aby Dale Asberry %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=43091">Email</a> | 
+<a href="../viewpostP.html$/thread=43091.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=43353.html" title="Jini and Web Services: Judy Project Overview">Previous</a> | 
+<a class="sl" href="thread=43944.html" title="Jini Gaming">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Indeterminate Heuristics</span><br>
+<span class="ts">Implementing the Null Object Pattern using AOP</span><br/>
+<span class="as">by Dale Asberry</span><br/>
+<span class="pd">April 12, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The Handy-Dandy Null Object Pattern Looked at from the AOP Perspective
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Overview</h1>
+In January 2003, I started writing a newsletter article titled "Aspect Oriented Programming: Using Aspects to Implement Design Patterns".  When I found that many patterns had already been implemented and written up, I decided to scrap the article.  However, I didn't find a Null Object pattern (NOPat) and decided that implementing it would be good practice.<br/><br/>
+
+While writing an earlier article <a href="../_/http/www.daleasberry.com/newsletters/200210/20021002.shtml">Aspect Oriented Programming (AOP): Using AspectJ to implement and enforce coding standards</a>, I was thinking about an anti-pattern that was annoying me at the time: null method return values and parameters.  I was feeling some pain tracking down NPE's in untested code.  I felt the NOPat could be leveraged to help me to at least find where the null assignments were being made.  Since I didn't own, or in some cases, have access to the source, I felt that AOP could help me implement the NOPat.<br/><br/>
+<h1>The Implementation</h1>
+The first thing I realized (partly through trial-and-error) was that I needed pointcuts that matched both null assignments to class member variables and null return value assignments to any variables.  Both types of pointcuts are needed because matching on assignments only works for class member variables and not method variables.  On the other hand, matching on calls to methods with return values misses direct variable assignments such as "a = b" or "a = null".<br/><br/>
+<h2>Let's take a look at the <a href="../_/http/dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/apbs02.html">pointcut</a> to match assignments:</h2>
+<pre>
+  <b><font color="purple">pointcut</font></b> nullMemberAssignments(Object pSetValue):
+      <b><font color="purple">set</font></b>(* *.*) &amp;&amp; <b><font color="purple">args</font></b>(pSetValue) &amp;&amp;
+      !<b><font color="purple">within</font></b>(test.NullObjectAspect) &amp;&amp; !<b><font color="purple">within</font></b>(test.NullProxy);
+</pre>
+The <b>set</b> <a href="../_/http/dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/apbs02.html">joinpoint</a>
+matches all assignment statements in the code that is to be aspected.  The <b>args</b> joinpoint matches, and binds, the value of the object being assigned.  The !<b>within</b> joinpoint is following a typical AOP idiom -- all aspected(<a href="#aspected">1</a>) code but not the aspect (and related instrumentation).<br/><br/>
+<h2>Next, we'll take a look at the pointcut to match assignments occurring due to method calls:</h2>
+<pre>
+  <b><font color="purple">pointcut</font></b> callsThatReturnAnObject(Object pCalledObject):
+      <b><font color="purple">call</font></b>(* *.*(..)) &amp;&amp; <b><font color="purple">target</font></b>(pCalledObject) &amp;&amp;
+      <b><font color="purple">!within</font></b>(test.NullObjectAspect) &amp;&amp; !<b><font color="purple">within</font></b>(test.NullProxy);
+</pre>
+The <b>call</b> joinpoint matches all method calls that return a value(<a href="#void_sig">2</a>).  The <b>target</b> joinpoint matches and binds the object of the method being invoked.
+
+<h2>Now, let's look at the "handler" code:</h2>
+As I was thinking about how to implement the handler, I realized that I needed some way to differentiate Null Object instances(<a href="#backwards">3</a>).  Each instance reflects the stack trace of where the null assignment was originally made.  HashMap immediately popped in my head -- using a HashMap is another useful idiom for maintaining aspect state between advice executions.  Since each Null Object instance would have a unique hashcode, I realized, "problem solved!"<br/><br/>
+<pre>
+  Object <b><font color="purple">around</font></b>(Object pCalledObject): callsThatReturnAnObject(pCalledObject)
+  {
+         ...
+       <font color="green">//Is the program trying to invoke a method call on a Null Object instance?</font>
+       <b><font color="purple">if</font></b>(cNullObjectMap.containsKey(pCalledObject))
+       {
+            NullPointerException lNpe = <b><font color="purple">new</font></b> NullPointerException();
+              ... 
+            lNpe.setStackTrace(lNewStackTrace);
+            lNpe.initCause((NullPointerException)cNullObjectMap.get(pCalledObject));
+            cNullObjectMap.remove(pCalledObject);
+            <b><font color="purple">throw</font></b> lNpe;
+       }
+       lRetVal = <b><font color="purple">proceed</font></b>(pCalledObject);
+       <font color="green">//Did the method return null?</font>
+       <b><font color="purple">if</font></b>(lRetVal == <b><font color="purple">null</font></b>)
+       {
+            NullPointerException lE = <b><font color="purple">new</font></b> NullPointerException();
+              ...
+            lRetVal = lErrorMethod.getReturnType().newInstance();
+              ...
+            cNullObjectMap.put(lRetVal, lE);
+       }
+         ...
+  }
+
+  Object <b><font color="purple">around</font></b>(Object pSetValue): nullMemberAssignments(pSetValue)
+  {
+         ...
+       if(pSetValue == <b><font color="purple">null</font></b>)
+       {
+            NullPointerException lE = <b><font color="purple">new</font></b> NullPointerException();
+              ...
+            lRetVal = lErrorField.getFieldType().newInstance();
+              ...
+            cNullObjectMap.put(lRetVal, lE);
+       }
+       <b><font color="purple">return proceed</font></b>(lRetVal);
+}
+</pre>
+
+The first problem I ran into was an unexpected and unhandled NPE happening in the aspect's advice.  Creating a new object using Class.newInstance() was returning a null. But why?... because the "class" was an interface!  Ouch - no apparent solution.  I put the project away for a couple days and was happily distracted by fatherhood.  When I came back, I realized almost immediately that Java 1.3's dynamic proxy fits the problem perfectly.<br/><br/>
+
+I didn't really have any problems at this stage, however, I didn't like the aspectj instrumented code showing up in the stack traces since it could be confusing to a non-aspect programmer or end-user.  After a little code refactoring, everything was in place(<a href="#testing">4</a>)!<br/><br/>
+
+Here's the sample output from test.Main:<br/>
+<pre>
+java.lang.NullPointerException
+	at test.Main.main(Main.java:33)
+Caused by: java.lang.NullPointerException: Null return value from test.Main.nullStringTest(Main.java:32)
+	at test.Main.main(Main.java:32)
+
+java.lang.NullPointerException
+	at test.Main.main(Main.java:43)
+Caused by: java.lang.NullPointerException: Null return value from test.Main.nullArrayListTest(Main.java:42)
+	at test.Main.main(Main.java:42)
+
+java.lang.NullPointerException
+	at test.Main.main(Main.java:53)
+Caused by: java.lang.NullPointerException: Null value assigned to field test.Main.cList(Main.java:22)
+	at test.Main.<init>(Main.java:22)
+	at test.Main.main(Main.java:28)
+java.lang.NullPointerException
+	at test.Main.main(Main.java:63)
+Caused by: java.lang.NullPointerException: Null return value from test.Main.nullArrayListTest(Main.java:62)
+	at test.Main.main(Main.java:62)
+Exception in thread "main" 
+</init></pre>
+<h2>Future Enhancements</h2>
+I have a couple of theories about some potential bugs that may need to be fixed.  Write test and code to verify that:
+<ul>
+<li> ... Null Object references are not being GC'd if the variable originally containing it is assigned a real object.
+<li> ... if a variable has multiple interfaces in it's class definition and if it is assigned a Null Proxy and is dereferenced as one of the other interfaces then it will throw a ClassCastException.
+</li></li></ul>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h1>Notes</h1>
+<a name="aspected">1.</a> compiled by the aspectj compiler ajc.<br/>
+<a name="void_sig">2.</a> those methods that return "void" have a different signature and is irrelevant since the compiler won't allow assigning void to an object.<br/>
+<a name="backwards">3.</a> I worked the problem backwards... I knew what the solution would sort of look like, but the direction of where to start was too fuzzy.<br/>
+<a name="testing">4.</a> although I didn't mention it directly, I maintained a simple testing class rather than full-on JUnit for simple TDD.<br/>
+<p><h1>Resources</h1></p>
+<h2>Source Code</h2>
+test.Main:<br/>
+<a href="../_/http/daleasberry.com/code_library/aspectj/project_nullobject/test/Main.java">http://daleasberry.com/code_library/aspectj/project_nullobject/test/Main.java</a><br/><br/>
+
+test.NullObjectAspect:<br/>
+<a href="../_/http/daleasberry.com/code_library/aspectj/project_nullobject/test/NullObjectAspect.java">http://daleasberry.com/code_library/aspectj/project_nullobject/test/NullObjectAspect.java</a><br/><br/>
+
+test.NullProxy:<br/>
+<a href="../_/http/daleasberry.com/code_library/aspectj/project_nullobject/test/NullProxy.java">http://daleasberry.com/code_library/aspectj/project_nullobject/test/NullProxy.java</a><br/><br/>
+
+Convenient JAR of all the above with everything compiled:<br/>
+<a href="../_/http/daleasberry.com/code_library/aspectj/project_nullobject/nullobject.jar">http://daleasberry.com/code_library/aspectj/project_nullobject/nullobject.jar</a><br/><br/>
+<h2>Definitions</h2>
+Joinpoint:<br/>
+<a href="../_/http/dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/apb.html#joinPoints">http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/apb.html#joinPoints</a><br/><br/>
+
+Pointcut:<br/>
+<a href="../_/http/dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/apbs02.html">http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/apbs02.html</a>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=43091&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Dale Asberry adds a new entry to <a href="../index.html$/blogger=bozomind.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bozomind.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D43091&amp;title=Implementing+the+Null+Object+Pattern+using+AOP&amp;bodytext=The+Handy-Dandy+Null+Object+Pattern+Looked+at+from+the+AOP+Perspective&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D43091&amp;title=Implementing+the+Null+Object+Pattern+using+AOP">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D43091&amp;title=Implementing+the+Null+Object+Pattern+using+AOP">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/daleasberry.jpg"/></td><td>R. Dale Asberry been hacking since 1978, professionally since 1990. He's certified in Java 1.1 and has a four digit MCP number. He discovered Jini at the 2000 JavaOne and has been building incredibly cool, dynamic, distributed architectures ever since! Over time, he's discovered several principles that have contributed to his success - they are the Princples of: Enabling Others, Simplicity, No Complaining, Least Work, Least Surprise, Least Damage, and "It Just Works".</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Dale Asberry. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

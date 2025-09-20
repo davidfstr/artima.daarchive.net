@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Scala: The Static Language that Feels Dynamic</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=328540.html">Discuss</a> | 
+<a href="mailto:?subject=Scala: The Static Language that Feels Dynamic&amp;body= %0AArtima Weblogs %0AScala: The Static Language that Feels Dynamic %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=328540">Email</a> | 
+<a href="../viewpostP.html$/thread=328540.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=327329.html" title="Programming Summer Camp: July 25-29 2011, Crested Butte, Colorado">Previous</a> | 
+<a class="sl" href="thread=329840.html" title="JavaScript Redux (and Closures)">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Scala: The Static Language that Feels Dynamic</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">June 12, 2011</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The highest complement you can deliver in the Python world is to say that something is "Pythonic" -- that it feels and fits into the Python way of thinking. I never imagined that a static language could feel this way, but Scala does -- and possibly even better.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I'm actually glad I waited this long before beginning to learn the language, because they've sorted out a lot of issues in the meantime. In fact, several versions of the language have made breaking changes with previous versions, requiring code rewrites. Some people have found this shocking; an indication that the language is "immature" and "not ready for the enterprise." I find it one of the most promising things about Scala -- it is not determined to become an instant boat anchor by committing to early decisions that are later revealed to be suboptimal, or outright mistakes. Java is the perfect case study, unable to pry its cold, dead fingers from old decisions made badly in a rush to meet an imagined deadline imposed by the Internet. C++ was admirable when it determined to be C-compatible because it brought legions of C programmers into the world of object-oriented programming, but coping with the resulting hurdles is no longer a good use of programmer time.</p>
+<p>Indeed, I grew tired of the whole mindset that language design is more important than programmer time; that a programmer should work for the language rather than the reverse. So much so that I thought I had grown out of programming altogether. But now I think I might just have been tired of the old generation of languages and waiting for the next generation -- and especially the forward-thinking around those languages.</p>
+<p>If you've read my past writings, you know I am unimpressed with arguments about static type checking for its own sake, which typically come down to "if I can't know X is an int, then the world will collapse!" I've written and seen enough robust code in Python to be unswayed by such histrionics; the payoff for all the hoop-jumping in C++ and Java seems small compared to what can be accomplished using far less, and much clearer, Python code.</p>
+<p>Scala is the first language I've seen where static type-checking seems to pay off. Some of its amazing contortional abilities would not, I think, be possible without static type checking. And, as I shall attempt to show in this article, the static checking is relatively unobtrusive -- so much so that programming in Scala almost feels like programming in a dynamic language like Python.</p>
+<div class="section">
+<h1><a id="it-s-not-just-about-finger-typing" name="it-s-not-just-about-finger-typing">It's Not "Just About Finger Typing"</a></h1>
+<p>One retort I've gotten a lot when I discuss the shortcomings of Java compared with a language like Python is "oh, you're just complaining about <em>Finger Typing</em>" (as opposed to the "typing" of type-checking).</p>
+<p>You can trivialize "finger typing" but in my experience it really does make a big difference when you can take an idea and express it in a few keystrokes versus the veritable vomiting of code necessary to express even the simplest concepts in Java. The real problem is not the number of keystrokes, but the mental load. By the time you've jumped through all those hoops, you've forgotten what you were actually trying to do. Often, the ceremony involved in doing something will dissuade you from trying it.</p>
+<p>Scala removes as much of the overhead (and mental load) as possible, so you can express higher-order concepts as quickly as you can type them. I was amazed to discover that in many cases, Scala is even more succinct than Python.</p>
+<p>The result of all this is something I've always loved about Python: the level of abstraction is such that you can typically express an idea in code more easily and clearly than you can by making diagrams on a whiteboard. There's no need for that intermediate step.</p>
+<p>Let's look at an example. Suppose you'd like to model buildings. We can say:</p>
+<pre class="literal-block">
+class Building
+val b = new Building
+</pre>
+<p>Note the absolute minimum amount of ceremony to create a class -- great when you're just sketching out a solution. If you don't need parens, you don't write them. A <strong>val</strong> is immutable, which is preferred in Scala because it makes concurrent code easier to write (there is also <strong>var</strong> for variables). And notice that I didn't have to put any type information on <strong>b</strong>, because Scala has <em>type inference</em> so if it can figure out the type for you, it will. No more jumping through hoops to satisfy a lazy language.</p>
+<p>If we want the <strong>Building</strong> to know how many square feet it contains, there's an explicit way:</p>
+<pre class="literal-block">
+class Building(feet: Int) {
+  val squareFeet = feet
+}
+val b = new Building(100)
+println(b.squareFeet)
+</pre>
+<p>When you <em>do</em> need to provide type information, you just give it after a colon. Note that <strong>println()</strong> does not require Java's <strong>System.out</strong> scoping. And class fields default to public -- which is not a big deal if you can stick to <strong>val</strong>, since that makes it read-only. You can always make them <strong>private</strong> if you want, and Scala has more fine-grained access control than any language I've seen.</p>
+<p>If all you want to do is store the argument in the class, as above, Scala makes it easy. Note the addition of the <strong>val</strong> in the argument list:</p>
+<pre class="literal-block">
+class Building(val feet: Int)
+val b = new Building(100)
+println(b.feet)
+</pre>
+<p>Now <strong>feet</strong> automatically becomes the field. But it doesn't stop there. Scala has the <strong>case class</strong> which does even more for you. For one thing, arguments automatically become fields, without saying <strong>val</strong> before them:</p>
+<pre class="literal-block">
+case class Building(feet: Int)
+val b = Building(100)
+println(b) // Result: Building(100)
+</pre>
+<p>Note the <strong>new</strong> is no longer necessary to create an object, the same form that Python uses. And case classes rewrite <strong>toString</strong> for you, to produce nice output.</p>
+<p>But wait, there's more! A case class automatically gets an appropriate hashcode and <strong>==</strong> so you can use it in a <strong>Map</strong> (the <strong>-&gt;</strong> separates keys from values):</p>
+<pre class="literal-block">
+val m = Map(Building(5000) -&gt; "Big", Building(900) -&gt; "Small", Building(2500) -&gt; "Medium")
+m(Building(900)) // Result: Small
+</pre>
+<p>Note that <strong>Map</strong> is available (along with <strong>List</strong>, <strong>Vector</strong>, <strong>Set</strong>, <strong>println()</strong> and more) as part of the "basic Scala building set" that comes without any imports. Again, this feels like Python.</p>
+<p>Inheritance is also succinct. Suppose we want to subclass <strong>Building</strong> to make a <strong>House</strong> class:</p>
+<pre class="literal-block">
+class House(feet: Int) extends Building(feet)
+val h = new House(100)
+println(h.feet) // Result: 100
+</pre>
+<p>Although the <strong>extends</strong> keyword is familiar from Java, notice how the base-class constructor is called -- a pretty obvious way to do it, once you've seen it. And again, you don't write any more code than what is absolutely necessary to describe your system.</p>
+<p>We can also mix in behavior using <em>traits</em>. A trait is much like an interface, except that traits can contain method definitions, which can then be combined when creating a class. Here are several traits to help describe a house:</p>
+<pre class="literal-block">
+trait Bathroom
+trait Kitchen
+trait Bedroom {
+  def occupants() = { 1 }
+}
+class House(feet: Int) extends Building(feet) with Bathroom with Kitchen with Bedroom
+var h = new House(100)
+val o = h.occupants()
+val feet = h.feet
+</pre>
+<p><strong>occupants()</strong> is a typical Scala method definition: the keyword <strong>def</strong> followed by the method name, argument list, and then an <strong>=</strong> and the body of the method in curly braces. The last line in the method produces the return value. More type inference is happening here; if we wanted to be more specific we could specify the return type of the method:</p>
+<pre class="literal-block">
+def occupants(): Int = { 1 }
+</pre>
+<p>Notice that the method <strong>occupants()</strong> is now part of <strong>House</strong>, via the mixin effect of traits.</p>
+<p>Consider how simple this code is ... and how undistracting. You can talk about <em>what</em> it's doing, rather than explaining meaningless syntactic requirements as you must do in Java. Creating a model takes no more than a few lines of straightforward code. Wouldn't you rather teach this to a novice programmer than Java?</p>
+</div>
+<div class="section">
+<h1><a id="functional-programming" name="functional-programming">Functional Programming</a></h1>
+<p>Functional programming is often promoted first as a way to do concurrency. However, I've found it to be more fundamentally useful as a way to decompose programming problems. Indeed, C++ has had functional programming virtually from inception, in the form of the STL, without built-in support for concurrency. Python also has significant functional programming libraries but these are independent of its thread support (which, since Python cannot support true parallelism, is primarily for code organization).</p>
+<p>Scala has the best of both worlds: true multiprocessor parallelism and a powerful functional programming model -- but one that does not force you to program functionally if it's not appropriate.</p>
+<p>When approaching a functional style of programming, I think it's important to go slow and be gentle with yourself. If you push too hard you can get caught up in knots. In fact, I think one of the great benefits of learning functional programming is that it disciplines you to break a problem into small, provable steps -- and to use existing (and proven) code for each of those steps whenever possible. This not only makes your non-functional code better, but it also tends to make everything you write more testable, since functional programming focuses on transforming data (thus, after each transformation, you have something else to test).</p>
+<p>Much of functional programming involves performing operations on collections. If, for example, we have a <strong>Vector</strong> of data:</p>
+<pre class="literal-block">
+val v = Vector(1.1, 2.2, 3.3, 4.4)
+</pre>
+<p>You can certainly print this using a <strong>for</strong> loop:</p>
+<pre class="literal-block">
+for(n &lt;- v) {
+  println(n)
+}
+</pre>
+<p>The left-arrow can be pronounced "in" -- <strong>n</strong> gets each value in <strong>v</strong>. This syntax is definitely a step up from having to give every detail as you had to do in C++ and Java (note that Scala does all the creation and type-inference for <strong>n</strong>). But with functional programming, you extract the looping structures altogether. Scala collections and iterables have a large selection of operations to do this for you. One of the simplest is <strong>foreach</strong>, which performs an operation on each element in the collection. So the above code becomes:</p>
+<pre class="literal-block">
+v.foreach(println)
+</pre>
+<p>This actually uses several shortcuts, and to take full advantage of functional programming you first need to understand the <em>anonymous function</em> -- a function without a name. Here's the basic form:</p>
+<blockquote>
+<strong>(</strong> <em>function parameters</em> <strong>) =&gt;</strong> <em>function body</em></blockquote>
+<p>The <strong>=&gt;</strong> is often pronounced "rocket," and it means, "Take the parameters on the left and apply them in the code on the right." An anonymous function can be large; if you have multiple lines, just put the body inside curly braces.</p>
+<p>Here's a simple example of an anonymous function:</p>
+<pre class="literal-block">
+(x:Int, y:Double) =&gt; x * y
+</pre>
+<p>The previous <strong>foreach</strong> call is, stated explicitly:</p>
+<pre class="literal-block">
+v.foreach((n:Double) =&gt; println(n))
+</pre>
+<p>Usually, you can rely on Scala to do type inference on the argument -- in this case Scala can see that <strong>v</strong> contains <strong>Double</strong> so it can infer than <strong>n</strong> is a <strong>Double</strong>:</p>
+<pre class="literal-block">
+v.foreach((n) =&gt; println(n))
+</pre>
+<p>If you only have a single argument, you can omit the parentheses:</p>
+<pre class="literal-block">
+v.foreach(n =&gt; println(n))
+</pre>
+<p>When you have a single argument, you can leave out the parameter list altogether and use an underscore in the anonymous function body:</p>
+<pre class="literal-block">
+v.foreach(println(_))
+</pre>
+<p>And finally, if the function body is just a call to a single function that takes one parameter, you can eliminate the parameter list, which brings us back to:</p>
+<pre class="literal-block">
+v.foreach(println)
+</pre>
+<p>With all these options and the density possible in functional programming, it's easy to succumb to fits of cleverness and end up writing obtuse code that will cause people to reject the language as too complex. But with some effort and focus on readability this doesn't need to happen.</p>
+<p><strong>foreach</strong> relies on <em>side effects</em> and doesn't return anything. In more typical functional programming you'll perform operations (usually on a collection) and return the result, then perform operations on that result and return something else, etc. One of the most useful functional tools is <strong>map</strong>, rather unfortunately named because it's easy to confuse with the <strong>Map</strong> data structure. <strong>map</strong> performs an operation on each element in a sequence, just like <strong>foreach</strong>, but <strong>map</strong> creates and returns a <em>new</em> sequence from the result. For example:</p>
+<pre class="literal-block">
+v.map(n =&gt; n * 2)
+</pre>
+<p>multiplies each element in <strong>v</strong> by 2 and returns the result, producing:</p>
+<pre class="literal-block">
+Vector(2.2, 4.4, 6.6, 8.8)
+</pre>
+<p>Again, using shortcuts we can reduce the call to:</p>
+<pre class="literal-block">
+v.map(_ * 2)
+</pre>
+<p>There are a number of operations that are simple enough to be called without parameters, such as:</p>
+<pre class="literal-block">
+v.reverse
+v.sum
+v.sorted
+v.min
+v.max
+v.size
+v.isEmpty
+</pre>
+<p>Operations like <strong>reverse</strong> and <strong>sorted</strong> return a new <strong>Vector</strong> and leave the original untouched.</p>
+<p>It's common to see operations chained together. For example, <strong>permutations</strong> produces an iterator that selects all the different permutations of <strong>v</strong>. To display these, we pass the iterator to <strong>foreach</strong>:</p>
+<pre class="literal-block">
+v.permutations.foreach(println)
+</pre>
+<p>Another helpful function is <strong>zip</strong>, which takes two sequences and puts each adjacent element together, like a zipper. This:</p>
+<pre class="literal-block">
+Vector(1,2,3).zip(Vector(4,5,6))
+</pre>
+<p>produces:</p>
+<pre class="literal-block">
+Vector((1,4), (2,5), (3,6))
+</pre>
+<p>(Yes, the parenthesized groups within the <strong>Vector</strong> are <em>tuples</em>, just like in Python).</p>
+<p>We can get fancy, and zip the elements of <strong>v</strong> together with those elements multiplied by 2:</p>
+<pre class="literal-block">
+v.zip(v.map(_ * 2))
+</pre>
+<p>which produces:</p>
+<pre class="literal-block">
+Vector((1.1,2.2), (2.2,4.4), (3.3,6.6), (4.4,8.8))
+</pre>
+<p>It's important to know that anonymous functions are a convenience, and very commonly used, but they are not essential for doing functional programming. If anonymous functions are making your code too complicated, you can always define a named function and pass that. For example:</p>
+<pre class="literal-block">
+def timesTwo(d: Double) = d * 2
+</pre>
+<p>(This uses another Scala shortcut: if the function body fits on one line, you don't need curly braces). This can be used instead of the anonymous function:</p>
+<pre class="literal-block">
+v.zip(v.map(timesTwo))
+</pre>
+<p>You know you could produce the same effect as the code in this section using <strong>for</strong> loops. One of the biggest benefits of functional programming is that it takes care of the fiddly code -- the very code that seems to involve the kind of common errors that easily escape our notice. You're able to use the functional pieces as reliable building blocks, and create robust code more quickly. It certainly <em>is</em> easy for functional code to rapidly devolve into unreadability, but with some effort you can keep it clear.</p>
+<p>For me, one of the best things about functional programming is the mental discipline that it produces. I find it helps me learn to break problems down into small, testable pieces, and clarifies my analysis. For that reason alone, it is a worthwhile practice.</p>
+</div>
+<div class="section">
+<h1><a id="pattern-matching" name="pattern-matching">Pattern Matching</a></h1>
+<p>It's amazing how long programmers have put up with stone-age (or more appropriately, assembly-age) language constructs. The <strong>switch</strong> statement is an excellent example. Seriously, jumping around based on an integral value? How much effort does that really save me? People have begged for things as simple as switching on strings, but this is usually met with "no" from the language designers.</p>
+<p>Scala leapfrogs all that with the <strong>match</strong> statement, that looks much like a <strong>switch</strong> statement except that it can select on just about anything. The clarity and code savings is <em>huge</em>:</p>
+<pre class="literal-block">
+// PatternMatching.scala (Run as script: scala PatternMatching.scala)
+
+trait Color
+case class Red(saturation: Int) extends Color
+case class Green(saturation: Int) extends Color
+case class Blue(saturation: Int) extends Color
+
+def matcher(arg:Any): String = arg match {
+  case "Chowder" =&gt; "Make with clams"
+  case x: Int =&gt; "An Int with value " + x
+  case Red(100) =&gt; "Red sat 100"
+  case Green(s) =&gt; "Green sat " + s
+  case c: Color =&gt; "Some Color: " + c
+  case w: Any =&gt; "Whatever: " + w
+  case _ =&gt; "Default, but Any captures all"
+}
+
+val v = Vector(1, "Chowder", Red(100), Green(50), Blue(0), 3.14)
+v.foreach(x =&gt; println(matcher(x)))
+</pre>
+<p>A <strong>case class</strong> is especially useful because the pattern matcher can decompose it, as you'll see.</p>
+<p><strong>Any</strong> is the root class of all objects including what would be "primitive" types in Java. Since <strong>matcher()</strong> takes an <strong>Any</strong> we can be confident that it will handle any type that we pass in.</p>
+<p>Ordinarily you'd see an opening curly brace right after the <strong>=</strong> sign, to surround the entire function body in curly braces. In this case, the function body is a single statement so I can take a shortcut and leave off the outer braces.</p>
+<p>A pattern-matching statement starts with the object you want to match against (this can be a tuple), the <strong>match</strong> keyword and a body consisting of a sequence of <strong>case</strong> statements. Each <strong>case</strong> begins with the match pattern, then a rocket and one or more lines of code which execute upon matching. The last line in each <strong>case</strong> produces a return value.</p>
+<p>Match expressions can take many forms, only a few of which are shown here. First, you see a simple string match; however Scala has sophisticated regular expression syntax and you can use regular expressions as match expressions, including picking out the pieces into variables. You can capture the result of a match into a variable as in <strong>case x: Int</strong>. Case classes can produce an exact match as in <strong>Red(100)</strong> or you can pick out the constructor arguments as in <strong>Green(s)</strong>. You can also match against traits, as in <strong>c: Color</strong>.</p>
+<p>You have two choices if you want to catch everything else. To capture into a variable, you can match <strong>Any</strong>, as in <strong>case w: Any</strong>. If you don't care what the value is, you can just say <strong>case _</strong>.</p>
+<p>Note that no "break" statement is necessary at the end of each <strong>case</strong> body.</p>
+</div>
+<div class="section">
+<h1><a id="concurrency-with-actors" name="concurrency-with-actors">Concurrency with Actors</a></h1>
+<p>Most of what drove me away from programming were things I had figured out but couldn't convincingly express to others. Things that the Ph.D. computer scientists <em>ought</em> to be proving. Such as:</p>
+<ul class="simple">
+<li>Beyond a certain level of program complexity, you <em>must</em> have a garbage collector. This could be as simple as any program where objects can belong to more than one collection, but at some point I believe it becomes impossible to manage memory yourself. (C++ people didn't buy this one, although C++0X has hooks now for garbage collection).</li>
+<li>Checked exceptions are a failed experiment. For small programs they seem like a good idea, but they don't scale up well.</li>
+<li>Shared-memory concurrency is impossible to get right. In theory the smartest programmer in the world could play whack-a-mole long enough to chase down and patch all the race conditions. But then, all you have to do is change the program a little and everything comes back. Shared-memory is just the wrong model for concurrency.</li>
+</ul>
+<p>Note that all these are issues of scale -- things that work in the small start falling apart as programs get bigger or more complex. That's probably why they're hard to argue about, because demonstration examples can be small and obvious.</p>
+<p>It turns out I was arguing with the wrong people. Or rather, the <em>right</em> people were not arguing about it, they were off fixing the problems. When it comes to concurrency, the right answer is one that you can't screw up: you live behind a safe wall, and messages get safely passed back and forth over the wall. You don't have to <em>think</em> about whether something is going to lock up (not on a low level, anyway); you live in your little walled garden which happens to run with its own thread.</p>
+<p>The most object-ish approach to this that I've see is actors. An actor is an object that has an incoming message queue, often referred to as a "mailbox." When someone outside your walled garden wants you to do something, they send you a message that safely appears in your mailbox, and you decide how to handle that message. You can send messages to other actors through their mailboxes. As long as you keep everything within your walls and only communicate through messages, you're safe.</p>
+<p>To create an actor, you inherit from the <strong>Actor</strong> class and define an <strong>act()</strong> method, which is called to handle mailbox messages. Here's the most trivial example I could think of:</p>
+<pre class="literal-block">
+// Bunnies.scala (Run as script: scala Bunnies.scala)
+case object Hop
+case object Stop
+
+case class Bunny(id: Int) extends scala.actors.Actor {
+  this ! Hop // Constructor code
+  start()    // ditto
+  def act() {
+    loop {
+      react {
+        case Hop =&gt;
+          print(this + " ")
+          this ! Hop
+          Thread.sleep(500)
+        case Stop =&gt;
+          println("Stopping " + this)
+          exit()
+      }
+    }
+  }
+}
+
+val bunnies = Range(0,10).map(new Bunny(_))
+println("Press RETURN to quit")
+readLine
+bunnies.foreach(_ ! Stop)
+</pre>
+<p>The <strong>act()</strong> method is automatically a <strong>match</strong> statement, although this is not built into the language -- Scala magic was used to make the <strong>Actor</strong> library work this way. Because of the <strong>match</strong> statement, <strong>case object</strong>s work especially well as messages (although, as with any <strong>match</strong> statement, you can match on virtually anything) -- a <strong>case object</strong> is just like a <strong>case class</strong> except that defining one automatically creates a singleton object.</p>
+<p>The <strong>loop{ react{</strong> construct looks a little strange at first; this is an artifact of the evolution of Scala actors. In the initial design, you only had a <strong>loop</strong> to open the <strong>match</strong> statement for mailbox messages. But later, in an act of brilliance, it was determined that the concurrency provided by threads could be combined with <em>cooperative multitasking</em>, wherein a single thread of control is passed around -- cooperatively -- among tasks.  Each task does something and then explicitly gives up control, which is then passed to the next task. The benefit of cooperative multitasking is that it requires virtually no stack space or context switching time and thus it can scale up -- often to millions of tasks. By combining this with threaded concurrency, you get the best of both worlds: The speed and scalability of cooperative tasks, which are also distributed across as many processors as are available. This all comes transparently. The <strong>loop{ react{</strong> construct should be your default choice, and doesn't cost anything. I suspect if they were creating actors from scratch now, this construct would probably have been simplified into just <strong>loop{</strong>.</p>
+<p>Note the two "naked" lines of code at the beginning of <strong>class Bunny</strong>. In Scala, you don't have to put object initialization code inside a special method, and you can put it anywhere inside the body of the class. The first line uses the <strong>Actor</strong> operator <strong>!</strong> for sending messages, and in this case the object sends a message to itself, to get things going. Then it calls <strong>start()</strong> to begin the actor's message loop. When the actor receives a <strong>Hop</strong> message, it prints itself, sends itself another <strong>Hop</strong> message, then sleeps for half a second. When it gets a <strong>Stop</strong> message it calls <strong>Actor.exit()</strong> to stop the event loop.</p>
+<p>To create all the <strong>Bunny</strong> objects I use <strong>Range()</strong> to create a sequence from 0 through 9, which is mapped onto calls to <strong>Bunny</strong> constructors. <strong>readLine</strong> waits for the user to press a carriage return, at which point a <strong>Stop</strong> message is sent to each <strong>Bunny</strong>.</p>
+<p>Scala 2.9 includes <em>parallel collections</em>, a powerful way to easily use multiple processors for bulk operations like <strong>foreach</strong>, <strong>map</strong>, etc. Suppose you have a collection of data objects called <strong>toBeProcessed</strong> and an expensive function <strong>process</strong>. To automatically parallelize the processing, you just add a <strong>.par</strong>:</p>
+<pre class="literal-block">
+val result = toBeProcessed.par.map(obj =&gt; process(obj))
+</pre>
+<p>If you know that you have objects that can be processed in parallel, this construct makes it effortless. You can find out more about parallel collections in this <a class="reference" href="../_/http/days2010.scala-lang.org/node/138/140/index.html">Scala Days 2010 video</a>.</p>
+<p>Even more powerful is the <a class="reference" href="../_/http/akka.io/index.html">akka library</a>, which builds concurrent systems that are, among other things, transparently remoteable.</p>
+<p>Scala is the best solution for concurrent programming that I've seen, and it keeps getting better.</p>
+</div>
+<div class="section">
+<h1><a id="but-scala-is-so-complex" name="but-scala-is-so-complex">But Scala is so Complex!</a></h1>
+<p>Scala does suffer from the mistaken idea that it's complicated, and for good reason. Many early adopters have been language enthusiasts who love to show how clever they are, and this only confuses beginners. But you can see from the code above that learning Scala should be a lot easier than learning Java! There's none of the horrible Java ceremony necessary just to write "Hello, world!" -- in Scala you can actually create a one-line script that says:</p>
+<pre class="literal-block">
+println("Hello, world!")
+</pre>
+<p>Or you can run it in Scala's interactive interpreter, which allows you to easily experiment with the language.</p>
+<p>Or consider opening a file and processing the contents (something that's also very high-ceremony in Java):</p>
+<pre class="literal-block">
+val fileLines = io.Source.fromFile("Colors.scala").getLines.toList
+fileLines.foreach(println)
+</pre>
+<p>(The "processing" in this case is just printing each line). The simplicity of the code required to open a file and read all the lines, combined with the power of the language, suggests that Scala can be very useful for solving scripting problems (also Scala has strong native support for XML).</p>
+<p>We can make some small modifications to create a word-count program:</p>
+<pre class="literal-block">
+for(file &lt;- args) {
+  print(file + ": ")
+  val contents = io.Source.fromFile(file).getLines.mkString
+  println(contents.split(" ").length)
+}
+</pre>
+<p><strong>args</strong> is available to all programs and contains all the command-line arguments, so this program steps through them one at a time. Here, we split words at white space but Scala also has regular expressions.</p>
+<p>It <em>is</em> possible to write complex code that requires expertise to unravel. But it's totally unnecessary to write such code when teaching beginners. Indeed, if taught right a person should come away from Scala thinking that it is a simpler, more consistent language than the alternatives.</p>
+</div>
+<div class="section">
+<h1><a id="how-to-learn" name="how-to-learn">How to Learn</a></h1>
+<p>All the Scala tutorials I encountered assume that you are a Java programmer. This is unfortunate because, as I've shown above, Scala <em>could</em> be taught as a first language in a much less-confusing way than we are forced to teach Java. But it does make it easier for writers to assume that you know how to program, and in Java.</p>
+<ul class="simple">
+<li>I found Daniel Spiewak's series of blog posts titled <a class="reference" href="../_/http/www.codecommit.com/blog/scala/scala-for-java-refugees-part-1/index.html">Scala for Java Refugees</a> to be a very helpful starting point.</li>
+<li>Next, I read <a class="reference" href="../_/http/www.artima.com/shop/programming_in_scala_2ed/index.html">Programming in Scala, 2nd Edition</a> by Martin Odersky, Lex Spoon, and Bill Venners. Odersky is the creator of the language so this is the authoritative book to read. It definitely assumes you're a Java programmer and it's not a particularly introductory book but it's worth pushing through to give you a fuller perspective on what Scala can do.</li>
+<li>The Scala language website has a <a class="reference" href="../_/http/www.scala-lang.org/node/1305/index.html">nice set of free tutorials</a> which I've been finding very useful.</li>
+<li>I've also looked for different views by reading other books, for example <a class="reference" href="../_/http/pragprog.com/titles/vsscala/programming-scala/index.html">Programming Scala</a> by Venkat Subramaniam. Although this one definitely suffers from too much cleverness (in the first chapter he gives a very obtuse example, then tells you not to worry about it, then says to study and understand it) and should certainly not be your first book, I found the different perspective to be helpful.</li>
+<li>After reading those, I took the <em>Stairway to Scala</em> workshop by Bill Venners (coauthor of <em>Programming in Scala</em>) and Dick Wall (leader of the Java Posse) in Ann Arbor in May. There's one coming up August 8-12 in San Francisco; you can find out more and register here: <a class="reference" href="../_/http/www.artima.com/shop/stairway_to_scala/index.html">http://www.artima.com/shop/stairway_to_scala</a>. This is not an especially introductory class; you should have programming experience -- ideally in Java, because that's what they refer to most -- and I strongly recommend reading <em>Programming in Scala</em> beforehand, and other books if you can manage it -- even if you don't understand it in depth, exposing your brain early will allow some concepts to become more comfortable. It made a huge difference for me to do as much study as I did before the seminar.</li>
+<li>There are also three different "tents" at the "Scala Campsite" during the <a class="reference" href="../_/https/sites.google.com/site/programmingsummercamp/index.html">Programming Summer Camp</a>.</li>
+</ul>
+<p>There are language features that I have only touched on here, or not covered at all. What I've shown should either give you the urge to learn and use Scala, or it will have you running back to the safety of your favorite language.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=328540.html">31
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=328540&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D328540&amp;title=Scala%3A+The+Static+Language+that+Feels+Dynamic&amp;bodytext=The+highest+complement+you+can+deliver+in+the+Python+world+is+to+say+that+something+is+%26quot%3BPythonic%26quot%3B+--+that+it+feels+and+fits+into+the+Python+way+of+thinking.+I+never+imagined+that+a+static+language+could+feel+this+way%2C+but+Scala+does+--+and+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D328540&amp;title=Scala%3A+The+Static+Language+that+Feels+Dynamic">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D328540&amp;title=Scala%3A+The+Static+Language+that+Feels+Dynamic">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2011 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

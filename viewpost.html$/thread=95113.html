@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>SOAP is Comatose But Not Officially Dead!</title>
+<meta charset="utf-8"/>
+<meta content="Carlos Perez" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=ceperez.html">Carlos Perez's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=95113.html">Discuss</a> | 
+<a href="mailto:?subject=SOAP is Comatose But Not Officially Dead!&amp;body= %0AArtima Weblogs %0ASOAP is Comatose But Not Officially Dead! %0Aby Carlos Perez %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=95113">Email</a> | 
+<a href="../viewpostP.html$/thread=95113.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=63261.html" title="The Architecture of Participation vesus Hacking">Previous</a> | 
+<a class="sl" href="thread=95333.html" title="The Sensible Trend of ScreenCasting">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Manageability Pro</span><br>
+<span class="ts">SOAP is Comatose But Not Officially Dead!</span><br/>
+<span class="as">by Carlos Perez</span><br/>
+<span class="pd">February 19, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+SOAP is comatose, but hasn't declared legally dead by either IBM or Microsoft. But how did this all happen? Isn't SOAP the underpinnings of Web Services, the same technology that was billed as the silver bullet to extinguish our collective integration nightmare? Well the time of reckoning has now arrived.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+SOAP is comatose, but hasn't declared legally dead by either IBM or Microsoft.  But how did this all happen?  Isn't SOAP the underpinnings of Web Services, the same technology that was billed as the silver bullet to extinguish our collective integration nightmare? Well the time of reckoning has now arrived.
+</p>
+<p>
+The arguments for and against Web Services have been raging on since the pinnacle and eventual bursting of the Internet bubble. My first blog entry on the subject of SOAP's fundamental weakness in support of interoperability was back in 2002. Back then it was already clear that SOAP was built on tight coupling and to make progress one need to make some design choices away <a href="../_/http/www.manageability.org/blog/archive/20021119%23lt_p_gt_in_a/view/index.html">from the familiar</a>.  In mid 2003, it was becoming quite apparent that the Web Standards bodies were <a href="../_/http/www.manageability.org/blog/archive/20030615%23standards_is_it_doomed_to/view/index.html">repeating the same mistakes</a> as the CORBA standardization that came before it. Finally, by the middle of 2004, the <a href="../_/http/www.manageability.org/blog/stuff/the-imminent-rise-of-rest-and-fall-of-soap/view/index.html">trade press</a> finally saw the train wreck coming.
+</p>
+<p>
+Today, half a year since my prediction of the rise of REST and the fall of SOAP, denial has been now replaced with panic.  The RESTful approach has now born fruit.  Applications like <a href="../_/http/www.oreillynet.com/pub/a/network/2004/09/28/bloglines.html">BlogLines</a>, Flickr, <a href="../_/http/mappr.com/index.html">Mappr</a>, <a href="../_/http/www.manageability.org/blog/stuff/manageability-new-link-blog/view/index.html">Del.icio.us</a> and 43Things are revealing that proof is in the pudding.  All of these have shunned SOAP in favor of more RESTful designs.  In stark contrast, the SOAP high priests have nothing to show but fancy visual tools.  Their followers are at the brink of rebellion and if they don't act quickly they could find themselves swinging from a high treetop.
+</p>
+<p>
+To witness the SOAP panic, here's a sampling from the blogsphere:
+</p>
+<p>James Govenor writes in "<a href="../_/http/www.redmonk.com/jgovernor/archives/000474.html">SOAP is boring, wake up Big Vendors or get niched</a>:</p>
+<blockquote>
+Evidence continues to mount that developers can' t be bothered with SOAP and the learning requirements associated with use of the standard for information interchange. It is often described as "lightweight", but its RPC roots keep showing. 
+<br><br/>
+Developers are turning their backs on the standard. Folks that is, building interesting information splicing apps--semantically rich platforms like flickr and Amazon are being accessed by RESTful methods, not IBM/MS defined "XML Web Services" calls.
+<br/><br/>
+What is a web service? Thats still a great question. But anyone that defines a Web Service using SOAP in the definition is missing out on where the action is. Distinctions between enterprise and "consumer" are breaking down. REST is evidently where that convergence is being played out, not WS-I.
+</br></blockquote>
+<p>Stephen O'Grady <a href="../_/http/www.redmonk.com/sogrady/archives/000465.html">writes</a>:</p>
+<blockquote>
+Case in point is what longer term readers will recognize as one of the windmills I tilt at regularly, simple, RESTian web services. I have yet to hear any vendor - not one - talk to me about how they help developers design, implement and consume RESTian web services.
+<br/>
+</blockquote>
+<p>In yet another <a href="../_/http/yergler.net/blog/archives/2005/02/08/using-java-with-cc-web-services/index.html">blog entry</a> about a project for Creative Commons webservice:</p>
+<blockquote>
+At the time, we planned to develop both SOAP and REST implementations, but left the SOAP implementation incomplete due to time constraints.  Its been on my list to finish real soon now ever since.
+<br/><br/>
+The one developer who asked me about the SOAP version was a Java developer who wanted to use the WSDL definition to make life easier. That I can sympathize with. But the fact of the matter is that I dont currently have the bandwidth to finish and maintain two separate implementations.
+<br/><br/>
+Over the weekend Mike pointed me to an interview with Stewart Butterfield, CEO of Flickr. In it he describes a similar phenomenon to what weve observed (although on a much larger scale): far more interest in REST than SOAP. 
+</blockquote>
+<p>
+Stuart Butterfield on <a href="../_/http/www.oreillynet.com/pub/a/network/2005/02/04/sb_flckr.html">Flickr</a>:
+</p>
+<blockquote>
+On the strictly practical side, I think we had one person inquire about using the SOAP version of the API. I don't know if any apps were actually built. There is at least one application built on XML-RPC. But all the others--I don't even know how many there are--are built on the REST API. It's just so easy to develop that way; I think it's foolish to do anything else.
+</blockquote>
+<p>
+Mike Champion of course is prepared to defend the faith. Where he <a href="../_/http/weblogs.asp.net/xmlteam/archive/2005/02/15.aspx">writes</a>:
+</p>
+<blockquote>
+Users of browser-based applications come to expect the quality of service one associates with the Web.  Web services toolkits such as Indigo on the other hand, are oriented toward use cases that demand high-security, support for existing enterprise messaging systems, message failure is not an option, and industrial-strength transaction processing is assumed.  The REST approach (as far as I can tell after years of discussion) assumes that all these features are provided at the application level rather than being provided by the infrastructure.  I am convinced that developers with demanding requirements for security, reliability, transactions, etc.  Generally DO want what WS-* and Indigo promise. 
+</blockquote>
+<p>What Mike seems to be saying is that REST is the Yugo and if you want the features then you have to buy a Rolls Royce.  It's a sales pitch used all too commonly. Unfortunately, if I wanted a Rolls Royce I would have purchased a JMS implementation, not a Web Services implementation with a yet to be defined solution for security.  It appears that Web Services are stuck between a rock and a hard place (see <a href="../_/http/www.dehora.net/journal/2005/02/the_integrators_dilemma.html">de hOra's rebuttal</a>).  Fortunately, history does tend to repeat itself and gives us insight on this. See Tim Bray's <a href="../_/http/www.tbray.org/ongoing/When/200x/2004/01/14/TPSM-8020/index.html">80/20 point</a> and Clay Shirky's "<a href="../_/http/www.shirky.com/writings/evolve.html">In Praise of Evolvable Systems</a>" for reference.
+</p>
+<p>
+However, let's go beyond this name-calling and look at the crux of the matter.  The primary rationale behind Web Services is to support interoperability.  So, let's examine SOAP today to discover if it is superior to REST in supporting the primary requirement. 
+</p>
+<p>
+Simon Guest of Microsoft (masters of interoperability) has a very revealing video (unfortunately only available using IE) about the <a href="../_/http/msdn.microsoft.com/msdntv/episode.aspx$/xml=episodes/en/20050210WebServicesSG/manifest.xml.aspx">gothchas in Web Service interoperability</a>. He enumerates 10 tips of Web Services Interoperability:
+</p>
+<blockquote>
+<ul>
+<li>Avoid returning empty Arrays.</li>
+<li>Services that share datatypes should be handled with care.</li>
+<li>Do not test for Null, rather check if the a returned object is Nil instead. </li>
+<li>Avoid null Dates.  In .NET dates are a value type, in Java they are reference types</li>
+<li>Don't make exact Date comparisons.</li>
+<li>Always use a Trace tool.</li>
+<li>Learn how to change the URL and ports.</li>
+<li>Unit test.</li>
+<li>Use doc/literal.</li>
+<li>Always start from the XML Schema Definition.</li>
+</ul>
+</blockquote>
+<p>
+Now take away the tips that apply to just about any software development activity (i.e debugging and unit testing) and you end up with some telling flaws in the Web Services specification.
+</p>
+<p>
+<ul>
+<li>The first flaw is that you should not violate <a href="../_/http/www.manageability.org/blog/archive/20030411%23be_liberal_in_what_you/view/index.html">Postel's Law</a>. That is "Be liberal in what you accept and conservative in what you send".  Returning empty arrays, sharing datatypes, returning null dates should never break a clients view of the world.  If the spec were rigid enough returning any of these objects should never lead to a misinterpretation in the client side. </li>
+<li>Always hide implementation. This should be pretty obvious, however most these gotchas point to the problem of implementation leaking through the abstractions.  Why should the fact that two services that share the same datatype affect how its handled in the client?  Why should client care if the server handles dates as reference types or not?  Why isn't a return of a Null date abstracted away from a client?</li>
+<li>XML Documents are not the same as Objects.  Simon St. Laurent <a href="../_/http/oreillynet.com/pub/wlg/4240/index.html">says this best</a> when he said "a schema language that describes document structures, not type structures abstracted on top of document structures."</li>
+<li>Finally, what's the complication with switching URLs and ports? The RESTful way is entirely obvious, while in SOAP the machinery usually requires digging deep inside WSDL to get access.</li>
+</ul>
+</p>
+<p>
+Of course, the last 2 tips are the most revealing of all.   If everything is sent over the wire as a XML document that is described by an XSD then it all boils down to how easy you can work with these documents.  That is working with XML api's like DOM and XPath.  The enclosing envelope should be irrelevant to the concerns of the average developer; it should be treated like just any other transport protocol. All that extra machinery provided to support the SOAP envelope is precisely that, extra machinery and has never been shown to improve interoperability.  Therefore, in terms of effort, interoperability via SOAP is not any easier than doing it in REST.  In fact, its actually more insidious because a developer is all too easily lulled in the fallacy that an object is the same as the XML document. 
+</p>
+<p>
+So here I'm going to reiterate again that SOAP is brain dead.  I sincerely hope not to write similar piece years from now when the conclusion would be entirely obvious.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=95113.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=95113&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Carlos Perez adds a new entry to <a href="../index.html$/blogger=ceperez.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/ceperez.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D95113&amp;title=SOAP+is+Comatose+But+Not+Officially+Dead%21&amp;bodytext=SOAP+is+comatose%2C+but+hasn%27t+declared+legally+dead+by+either+IBM+or+Microsoft.+But+how+did+this+all+happen%3F+Isn%27t+SOAP+the+underpinnings+of+Web+Services%2C+the+same+technology+that+was+billed+as+the+silver+bullet+to+extinguish+our+collective+integration+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D95113&amp;title=SOAP+is+Comatose+But+Not+Officially+Dead%21">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D95113&amp;title=SOAP+is+Comatose+But+Not+Officially+Dead%21">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/carlosperez.jpg"/></td><td>Carlos E. Perez has been an object-oriented practitioner for over a decade. He holds a Bachelor's Degree in Physics and a Master's Degree in Computer Science from the University of Massachusetts. He has polished his craft while working in IBM's Internet Division and IBM's TJ Watson Research Center in Hawthorne, New York. He now works for a startup 1/100,000th the size of his former employer. He writes about topics covering emerging aspect and object oriented paradigms, loosely coupled architecture, open source projects and Java evangelism.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Carlos Perez. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

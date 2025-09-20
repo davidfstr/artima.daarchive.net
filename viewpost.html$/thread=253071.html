@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Fourth Cycle of the "Adventures of a Pythonista in Schemeland"</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=253071.html">Discuss</a> | 
+<a "adventures="" %0a%0ahttps:="" %0aby="" %0athe="" a="" adventures="" cycle="" fourth="" href="mailto:?subject=The Fourth Cycle of the " in="" michele="" of="" pythonista="" schemeland"="" schemeland"&body="%0AArtima" simionato="" the="" viewpost.jsp?thread='253071"' weblogs="" www.artima.com="">Email</a> | 
+<a href="../viewpostP.html$/thread=253071.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=251474.html" title="The Adventures of a Pythonista in Schemeland: Table of Contents">Previous</a> | 
+<a class="sl" href="thread=254367.html" title="Mixins considered harmful/3">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Fourth Cycle of the "Adventures of a Pythonista in Schemeland"</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">March 21, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A preview of the next cycle of Adventures is given. I ask
+from reader's feedback and I announce the availability
+of the Adventures in both PDF and HTML formats. Rejoice!
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="request-for-feedback" name="request-for-feedback">Request for feedback</a></h1>
+<p>Episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=251159.html">18</a> closed part III of my <em>Adventures</em>.  I have not exhausted
+everything there is to say about functional programming. Actually,
+there is much more that could be written on the subject.  However, the
+third cycle was conceived just as a detour from the main topic of this
+series, i.e. macros.</p>
+<p>In part II I have just scratched the surface of what
+macros are and can do. The next cycle of <em>Adventures</em>, i.e part IV,
+will be entirely devoted to the most
+sophisticated aspects of macros.  I will show typical patterns
+of macro programming,  examples of advanced macros, as well as
+the issue of (breaking) hygiene.</p>
+<p>[UPDATE: after some thinking, I have changed my mind. Part IV
+will describe the R6RS module system and I will come back to macros
+in part V. The reason is I want to write portable macros and in
+order to do so a discussion of the module system is essential.]</p>
+<p>Part IV will not begin immediately, since I have to finish
+various Python-related papers first, so there will be a little pause. The
+pause should give you enough time to digest part III.</p>
+<p>I see that part III was little commented (except for the remarks of
+<a class="reference" href="../_/http/c2.com/cgi/wiki$/ElizabethWiethoff/index.html">Elizabeth Wiethoff</a>, hi Elizabeth! ;) I hope I have not lost all of my
+readers! I know that this is not an easy series and requires some
+effort. I would like some feedback, though.  Are you still reading the
+series? Is it going well and would you rather prefer a change of
+direction or style?</p>
+<p>Notice that by design the series is not too much
+practically-minded, since it focuses on the features that
+make Scheme Scheme, and that are missing in other languages.
+I could write a <em>Practical Scheme</em> series, explaining things like
+how you interact with the file system, with a database, how to use
+a GUI toolkit and such, but then you would not learn much about
+Scheme: this kind of tasks are more or less the same in any language.</p>
+<p>I am also curious about what the background of my readers is. The series
+is not really intended for Schemers (they should know already everything!)
+but for curious programmers with experience in other languages, say
+dynamic languages such as Perl, Python, Ruby or functional languages
+such as ML, Haskell, and somewhat Scala. I am not sure how readable
+the series is for people with experience only in Java or C++.
+Some feedback would be welcome!</p>
+</div>
+<div class="section">
+<h1><a id="the-adventures-now-even-in-pdf" name="the-adventures-now-even-in-pdf">The <em>Adventures</em> now even in PDF!</a></h1>
+<p>A reader asked me if there was a PDF version of the <em>Adventures</em>, intended
+from printing. Now, there is! ;)
+I have generate a single PDF file for the first eighteen <em>Adventures</em>;
+the content is exactly the same of the Artima posts, with a nice
+table of contents in front. You can download it from here:</p>
+<p><a class="reference" href="../_/http/www.phyast.pitt.edu/~micheles/scheme/TheAdventuresofaPythonistainSchemeland.pdf">http://www.phyast.pitt.edu/~micheles/scheme/TheAdventuresofaPythonistainSchemeland.pdf</a></p>
+<p>I have yet to fix the pictures, to spell check the whole text, and to
+review it from start to end. You will likely find small errors: in such
+a case, you are welcome to send me a note.</p>
+<p>The PDF is generated by using Python technology, i.e. <a class="reference" href="../_/http/sphinx.pocoo.org/index.html">Sphinx</a>, since
+all the <em>Adventures</em> are written as Scheme files with a big docstring
+in <a class="reference" href="../_/http/docutils.sourceforge.net/rst.html">reStructuredText</a> format. There are Scheme tools for literate
+programming and or documentation extraction (a Google search will
+find a few of them), but I have chosen <a class="reference" href="../_/http/sphinx.pocoo.org/index.html">Sphinx</a> for three reasons:</p>
+<ol class="arabic simple">
+<li>I already knew <a class="reference" href="../_/http/docutils.sourceforge.net/rst.html">reStructuredText</a> and everything I have written in
+the last 6+ years is in that format;</li>
+<li>Artima recognizes <a class="reference" href="../_/http/docutils.sourceforge.net/rst.html">reStructuredText</a>, so it was a path of minimal resistance;</li>
+<li><a class="reference" href="../_/http/sphinx.pocoo.org/index.html">Sphinx</a> is both very powerful <em>and</em> standard, in the sense that the official
+Python documentation is generated via <a class="reference" href="../_/http/sphinx.pocoo.org/index.html">Sphinx</a> and basically all famous
+Python projects are switching to <a class="reference" href="../_/http/sphinx.pocoo.org/index.html">Sphinx</a>, so it has thousands of users.</li>
+</ol>
+<p>Notice that for nearly two decades (till last year) the Python documentation
+has been generated from Perl, so I see nothing wrong in generating Scheme
+documentation from Python ;)</p>
+<p>If you prefer HTML over PDF, or if you want to leverage on the powerful
+search capabilities of Sphinx, you can browse the HTML documentation here:</p>
+<p><a class="reference" href="../_/http/www.phyast.pitt.edu/~micheles/scheme/index.html">http://www.phyast.pitt.edu/~micheles/scheme/</a></p>
+</div>
+<div class="section">
+<h1><a id="a-retrospective" name="a-retrospective">A retrospective</a></h1>
+<p>When I started writing my <em>Adventures</em> I would have never imaged that
+the project would have grown to the current size. Originally, I just
+wanted to write a couple of introductory articles about Scheme: they
+became the first three <em>Adventures</em> and were written years ago (in
+Italian).  Then, on Christmas 2007, I had a revelation about
+<tt class="docutils literal"><span class="pre">syntax-case</span></tt> macros and I decided that it was worthwhile documenting
+them.</p>
+<p>Since the Italian <a class="reference" href="../_/http/stacktrace.it/index.html">Stacktrace</a> site had just started, I came out with the
+idea of the <em>Adventures</em>: the first one was published in February, the 5th
+2008. I expected to write a few articles on
+the subject and to be done with it, but after eleven episodes,
+I realized that there was still much more to say.
+So the series migrated to the English language on Artima,
+in September, the 18th 2008.</p>
+<p>At this moment I have written 18
+episodes and I feel that I am more or less halfway through my task.
+I think that the series will keep going for at least other six months and
+that it will become of book size at the end. The PDF is already over
+one hundred pages. I do not think the series will even become a best
+seller, since it is probably appealing only to a restricted public,
+but I never wanted to become famous, and in any case this series
+has a gigantic public with compared to the public I was used
+to, when writing Physics papers ;)</p>
+<p>That's all. Keep following, and remember that the best of this series
+is yet to be seen!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=253071.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=253071&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D253071&amp;title=The+Fourth+Cycle+of+the+%22Adventures+of+a+Pythonista+in+Schemeland%22&amp;bodytext=A+preview+of+the+next+cycle+of+Adventures+is+given.+I+ask%0D%0Afrom+reader%27s+feedback+and+I+announce+the+availability%0D%0Aof+the+Adventures+in+both+PDF+and+HTML+formats.+Rejoice%21&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D253071&amp;title=The+Fourth+Cycle+of+the+%22Adventures+of+a+Pythonista+in+Schemeland%22">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D253071&amp;title=The+Fourth+Cycle+of+the+%22Adventures+of+a+Pythonista+in+Schemeland%22">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

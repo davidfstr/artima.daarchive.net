@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/27</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=260182.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/27&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/27 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=260182">Email</a> | 
+<a href="../viewpostP.html$/thread=260182.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=259977.html" title="The Adventures of a Pythonista in Schemeland/26">Previous</a> | 
+<a class="sl" href="thread=260195.html" title="The Adventures of a Pythonista in Schemeland/28">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/27</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">June 17, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In the last dozen episodes I have defined plenty of macros, but I have not really explained what macros are and how they work. This episode closes the gap: it explains the true meaning of Scheme macros by introducing the concepts of syntax object and of transformer over syntax objects.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">Syntax objects</h1>
+<p>Scheme macros - as standardized in the R6RS document -
+are built over the concept of <em>syntax object</em>.
+The concept is peculiar to Scheme and has no counterpart in other
+languages (including Common Lisp), therefore it is worth to spend some time
+on it.</p>
+<p>A <em>syntax-object</em> is a kind of enhanced <em>s</em>-expression: it contains
+the source code as a list of symbols and primitive values, but also
+additional informations, such as
+the name of the file containing the source code, the position
+of the syntax object in the file,
+a set of marks to distinguish identifiers according to their
+lexical context, and more.</p>
+<p>The easiest way to get a syntax object is to use the syntax quoting
+operation, i.e. the <tt class="docutils literal"><span class="pre">syntax</span></tt> (<tt class="docutils literal"><span class="pre">#'</span></tt>) symbol you have seen in all the
+macros I have defined until now. Consider for instance the following
+script, which displays the string representation of
+the syntax object <tt class="docutils literal"><span class="pre">#'1</span></tt>:</p>
+<pre class="literal-block">
+$ cat x.ss
+(import (rnrs))
+(display #'1)
+</pre>
+<p>If you run it under PLT Scheme you will get</p>
+<pre class="literal-block">
+$ plt-r6rs x.ss
+#&lt;syntax:/home/micheles/Dropbox/gcode/artima/scheme/x.ss:2:11&gt;
+</pre>
+<p>In other words, the string representation of the syntax object <tt class="docutils literal"><span class="pre">#'1</span></tt>
+contains the full pathname of the script and the line number/column number
+where the syntax object appears in the source code. Clearly this
+information is pretty useful for tools like IDEs and debuggers.  The
+internal implementation of syntax objects is not standardized at all,
+so that you get different
+informations in different implementations. For instance Ikarus
+gives</p>
+<pre class="literal-block">
+$ ikarus --r6rs-script x.ss
+#&lt;syntax 1 [char 28 of x.ss]&gt;
+</pre>
+<p>i.e. in Ikarus syntax objects do not store line numbers, they just store
+the character position from the beginning of the file. If you are using
+the REPL you will have less information, of course, and even more
+implementation-dependency. Here are a few example of syntax objects
+obtained from syntax quoting:</p>
+<pre class="literal-block">
+&gt; #'x ; convert a name into an identifier
+#&lt;syntax x&gt;
+&gt; #''x ; convert a literal symbol
+#&lt;syntax 'x&gt;
+&gt; #'1 ; convert a literal number
+#&lt;syntax 1&gt;
+&gt; #'"s" ; convert a literal string
+#&lt;syntax "s"&gt;
+&gt; #''(1 "a" 'b) ; convert a literal data structure
+#&lt;syntax '(1 "a" 'b)&gt;
+</pre>
+<p>Here I am running all my examples under Ikarus; your Scheme
+system may have a slightly different output representation for syntax
+objects.</p>
+<p>In general <tt class="docutils literal"><span class="pre">#'</span></tt> can be "applied" to any expression:</p>
+<pre class="literal-block">
+&gt; (define syntax-expr #'(display "hello"))
+&gt; syntax-expr
+#&lt;syntax (display "hello")&gt;
+</pre>
+<p>It is possible to extract the <em>s</em>-expression underlying the
+syntax object with the <tt class="docutils literal"><span class="pre">syntax-&gt;datum</span></tt> primitive:</p>
+<pre class="literal-block">
+&gt; (equal? (syntax-&gt;datum syntax-expr) '(display "hello"))
+#t
+</pre>
+<p>Different syntax-objects can be equivalent: for instance the improper
+list of syntax objects <tt class="docutils literal"><span class="pre">(cons</span> <span class="pre">#'display</span> <span class="pre">(cons</span> <span class="pre">#'"hello"</span> <span class="pre">#'()))</span></tt> is
+equivalent to the syntax object <tt class="docutils literal"><span class="pre">#'(display</span> <span class="pre">"hello")</span></tt> in the sense
+that both corresponds to the same datum:</p>
+<pre class="literal-block">
+&gt; (equal? (syntax-&gt;datum (cons #'display (cons #'"hello" #'())))
+          (syntax-&gt;datum #'(display "hello")))
+#t
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">(syntax</span> <span class="pre">)</span></tt> macro is analogous to the <tt class="docutils literal"><span class="pre">(quote</span> <span class="pre">)</span></tt> macro.
+Mreover, there is a <tt class="docutils literal"><span class="pre">quasisyntax</span></tt> macro denoted with <tt class="docutils literal"><span class="pre">#`</span></tt> which
+is analogous to the <tt class="docutils literal"><span class="pre">quasiquote</span></tt> macro (<tt class="docutils literal"><span class="pre">`</span></tt>).
+In analogy to
+the operations comma (<tt class="docutils literal"><span class="pre">,</span></tt>) and comma-splice
+(<tt class="docutils literal"><span class="pre">,@</span></tt>) on regular lists, there are two
+operations <tt class="docutils literal"><span class="pre">unsyntax</span></tt> <tt class="docutils literal"><span class="pre">#,</span></tt> (<em>sharp comma</em>) e <tt class="docutils literal"><span class="pre">unsyntax-splicing</span></tt>
+<tt class="docutils literal"><span class="pre">#,@</span></tt> (<em>sharp comma splice</em>) on lists and improper lists of
+syntax objects.</p>
+<p>Here is an example using sharp-comma:</p>
+<pre class="literal-block">
+&gt; (let ((user "michele")) #`(display #,user))
+(#&lt;syntax display&gt; "michele" . #&lt;syntax ()&gt;)
+</pre>
+<p>Here is an example using sharp-comma-splice:</p>
+<pre class="literal-block">
+&gt; (define users (list #'"michele" #'"mario"))
+&gt; #`(display (list #,@users))
+(#&lt;syntax display&gt;
+(#&lt;syntax list&gt; #&lt;syntax "michele"&gt; #&lt;syntax "mario"&gt;) . #&lt;syntax ()&gt;)
+</pre>
+<p>Notice that the output - in Ikarus - is an improper list. This is
+somewhat consistent with the behavior of usual quoting: for usual
+quoting <tt class="docutils literal"><span class="pre">'(a</span> <span class="pre">b</span> <span class="pre">c)</span></tt> is a shortcut for <tt class="docutils literal"><span class="pre">(cons*</span> <span class="pre">'a</span> <span class="pre">'b</span> <span class="pre">'c</span> <span class="pre">'())</span></tt>, which
+is a proper list, and for syntax-quoting <tt class="docutils literal"><span class="pre">#'(a</span> <span class="pre">b</span> <span class="pre">c)</span></tt> is equivalent
+to <tt class="docutils literal"><span class="pre">(cons*</span> <span class="pre">#'a</span> <span class="pre">#'b</span> <span class="pre">#'c</span> <span class="pre">#'())</span></tt>, which is an improper list.  The
+<tt class="docutils literal"><span class="pre">cons*</span></tt> operator here is a R6RS shortcut for nested conses: <tt class="docutils literal"><span class="pre">(cons*</span>
+<span class="pre">w</span> <span class="pre">x</span> <span class="pre">y</span> <span class="pre">z)</span></tt> is the same as <tt class="docutils literal"><span class="pre">(cons</span> <span class="pre">w</span> <span class="pre">(cons</span> <span class="pre">x</span> <span class="pre">(cons</span> <span class="pre">y</span> <span class="pre">z)))</span></tt>.</p>
+<p>However, the result of a quasi quote interpolation is very much
+<em>implementation-dependent</em>: Ikarus returns an improper list, but other
+implementations returns different results; for instance Ypsilon
+returns a proper list of syntax objects whereas PLT Scheme returns
+an atomic syntax object. The lesson here is that you cannot
+rely on properties of the inner representation of syntax objects:
+what matters is the code they correspond to, i.e. the result of
+<tt class="docutils literal"><span class="pre">syntax-&gt;datum</span></tt>.</p>
+<p>It is possible to promote a datum to a syntax object with the
+<tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> procedure, but in order
+to do so you need to provide a lexical context, which can be specified
+by using an identifier:</p>
+<pre class="literal-block">
+&gt; (datum-&gt;syntax #'dummy-context '(display "hello"))
+#&lt;syntax (display "hello")
+</pre>
+<p>(the meaning of the lexical context in <tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> is tricky and
+I will go back to that in a future episode).</p>
+<div class="section">
+<h1><a id="what-syntax-match-really-is" name="what-syntax-match-really-is">What <tt class="docutils literal"><span class="pre">syntax-match</span></tt> really is</a></h1>
+<p><tt class="docutils literal"><span class="pre">syntax-match</span></tt> is a general utility to perform pattern matching on
+syntax objects; it takes a syntax object in output and returns a
+syntax object in output. Here is an example of a simple transformer based on
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt>:</p>
+<pre class="literal-block">
+&gt; (define transformer
+    (syntax-match ()
+      (sub (name . args) #'name))); return the name as a syntax object
+
+&gt; (transformer #'(a 1 2 3))
+#&lt;syntax a&gt;
+</pre>
+<p>For convenience, <tt class="docutils literal"><span class="pre">syntax-match</span></tt> also accepts a second syntax
+<tt class="docutils literal"><span class="pre">(syntax-match</span> <span class="pre">x</span> <span class="pre">(lit</span> <span class="pre">...)</span> <span class="pre">clause</span> <span class="pre">...)</span></tt> to match syntax expressions
+directly. This is more convenient than writing
+<tt class="docutils literal"><span class="pre">((syntax-match</span> <span class="pre">(lit</span> <span class="pre">...)</span> <span class="pre">clause</span> <span class="pre">...)</span> <span class="pre">x)</span></tt>.
+Here is a simple example:</p>
+<pre class="literal-block">
+&gt; (syntax-match #'(a 1 2 3) ()
+   (sub (name . args) #'args)); return the args as a syntax object
+#&lt;syntax (1 2 3)&gt;
+</pre>
+<p>Here is an example using <tt class="docutils literal"><span class="pre">quasisyntax</span></tt> and <tt class="docutils literal"><span class="pre">unsyntax-splicing</span></tt>:</p>
+<pre class="literal-block">
+&gt; (syntax-match #'(a 1 2 3) ()
+    (sub (name . args) #`(name #,@#'args)))
+(#&lt;syntax a&gt; #&lt;syntax 1&gt; #&lt;syntax 2&gt; #&lt;syntax 3&gt;)
+</pre>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/hieroglyphics.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/hieroglyphics.jpg">
+<p>As you see, it easy to write hieroglyphs if you use <tt class="docutils literal"><span class="pre">quasisyntax</span></tt>
+and <tt class="docutils literal"><span class="pre">unsyntax-splicing</span></tt>. You can avoid that by means of the
+<tt class="docutils literal"><span class="pre">with-syntax</span></tt> form:</p>
+<pre class="literal-block">
+&gt; (syntax-match #'(a 1 2 3) ()
+    (sub (name . args) (with-syntax (((a ...) #'args)) #'(name a ...))))
+(#&lt;syntax a&gt; #&lt;syntax 1&gt; #&lt;syntax 2&gt; #&lt;syntax 3&gt;)
+</pre>
+<p>The pattern variables introduced by <tt class="docutils literal"><span class="pre">with-syntax</span></tt>
+are automatically expanded inside the syntax template, without need to
+resort to the quasisyntax notation (i.e. there is no need for
+<tt class="docutils literal"><span class="pre">#`</span></tt> <tt class="docutils literal"><span class="pre">#,</span></tt> <tt class="docutils literal"><span class="pre">#,@</span></tt>).</p>
+</img></div>
+<div class="section">
+<h1><a id="what-macros-really-are" name="what-macros-really-are">What macros really are</a></h1>
+<p>Macros are in one-to-one correspondence with syntax transformers, i.e. every
+macro is associated to a transformer which converts a syntax object
+(the macro and its arguments) into another syntax object (the
+expansion of the macro). Scheme itself takes care of converting the
+input code into a syntax object (if you wish, internally
+there is a <tt class="docutils literal"><span class="pre">datum-&gt;syntax</span></tt> conversion) and the output syntax object
+into code (an internal <tt class="docutils literal"><span class="pre">syntax-&gt;datum</span></tt> conversion).</p>
+<p>Consider for instance a macro to apply a function to a (single)
+argument:</p>
+<pre class="literal-block">
+(def-syntax (apply1 f a)
+  #'(f a))
+</pre>
+<p>This macro can be equivalently written as</p>
+<pre class="literal-block">
+(def-syntax apply1 (syntax-match () (sub (apply1 f a) (list #'f #'a))))
+</pre>
+<p>The sharp-quoted syntax is more readable, but it hides the underlying list
+representation which in some cases is pretty useful. This second form
+of the macro is more explicit, but still it relies on <tt class="docutils literal"><span class="pre">syntax-match</span></tt>.
+It is possible to provide the same functionality without using
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt> as follows:</p>
+<pre class="literal-block">
+(def-syntax apply1
+  (lambda (x)
+    (let+ ((macro-name func arg) (syntax-&gt;datum x))
+      (datum-&gt;syntax #'apply1 (list func arg)))))
+</pre>
+<p>Here the macro transformer is explicitly written as a lambda function,
+and the pattern matching is performed by hand by converting
+the input syntax object into a list and by using the list
+destructuring form <tt class="docutils literal"><span class="pre">let+</span></tt> introduced in episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=249681.html">15</a>. At the
+end, the resulting list is converted back to a syntax object
+in the context of <tt class="docutils literal"><span class="pre">apply1</span></tt>. Here is an example of usage:</p>
+<pre class="literal-block">
+&gt; (apply1 display "hey")
+hey
+</pre>
+<p><tt class="docutils literal"><span class="pre">sweet-macros</span></tt> provide a convenient feature:
+it is possible to extract the associated
+transformer for each macro defined via <tt class="docutils literal"><span class="pre">def-syntax</span></tt>. For instance,
+here is the transformer associated to  the <tt class="docutils literal"><span class="pre">apply1</span></tt> macro:</p>
+<pre class="literal-block">
+&gt; (define tr (apply1 &lt;transformer&gt;))
+&gt; (tr #'(apply1 display "hey"))
+#&lt;syntax (display "hey")&gt;
+</pre>
+<p>The ability to extract the underlying transformer is useful in
+certain situations, in particular when debugging. It can also
+be exploited to define extensible macros, and I will come back
+to this point in the future.</p>
+</div>
+<div class="section">
+<h1><a id="a-nicer-syntax-for-association-lists" name="a-nicer-syntax-for-association-lists">A nicer syntax for association lists</a></h1>
+<p>The previous paragraphs were a little abstract and
+probably of unclear utility (but what would you expect from
+an advanced macro tutorial? ;). Now let me be more
+concrete. My goal is to provide
+a nicer syntax for association lists (an association list is just
+a non-empty list of non-empty lists) by means of an <tt class="docutils literal"><span class="pre">alist</span></tt>
+macro expanding into an association list.
+The macro accepts a variable
+number of arguments; every argument is of the form <tt class="docutils literal"><span class="pre">(name</span> <span class="pre">value)</span></tt> or
+it is a single identifier: in this case latter case it must be
+magically converted
+into the form <tt class="docutils literal"><span class="pre">(name</span> <span class="pre">value)</span></tt> where <tt class="docutils literal"><span class="pre">value</span></tt> is the value of the
+identifier, assuming it is bound in the current scope, otherwise
+a run time error is raised <tt class="docutils literal"><span class="pre">"unbound</span> <span class="pre">identifier"</span></tt>. If you try to
+pass an argument which is not of the expected form, a compile time
+syntax error must be raised.
+In concrete, the macro works as follows:</p>
+<pre class="literal-block">
+(test "simple"
+      (let ((a 0))
+        (alist a (b 1) (c (* 2 b))))
+        '((a 0) (b 1) (c 2)))
+
+(test "with-error"
+     (catch-error (alist a))
+     "unbound variable")
+</pre>
+<p>Here is the implementation:</p>
+<pre class="literal-block">
+(def-syntax (alist arg ...)
+  (with-syntax ((
+     ((name value) ...)
+     (map (syntax-match ()
+            (sub n #'(n n) (identifier? #'n))
+            (sub (n v) #'(n v) (identifier? #'n)))
+          #'(arg ...)) ))
+     #'(let* ((name value) ...)
+         (list (list 'name name) ...))))
+</pre>
+<p>The expression <tt class="docutils literal"><span class="pre">#'(arg</span> <span class="pre">...)</span></tt> expands into a list of syntax
+objects which are then transformed by the <tt class="docutils literal"><span class="pre">syntax-match</span></tt> transformer,
+which converts identifiers of the form <tt class="docutils literal"><span class="pre">n</span></tt> into couples of the form
+<tt class="docutils literal"><span class="pre">(n</span> <span class="pre">n)</span></tt>, whereas it leaves couples <tt class="docutils literal"><span class="pre">(n</span> <span class="pre">v)</span></tt> unchanged, just
+checking that <tt class="docutils literal"><span class="pre">n</span></tt> is an identifier.
+This is a typical use case for
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt> as a list matcher inside a bigger macro. We will
+see other use cases in the next Adventures.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=260182.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=260182&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260182&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F27&amp;bodytext=In+the+last+dozen+episodes+I+have+defined+plenty+of+macros%2C+but+I+have+not+really+explained+what+macros+are+and+how+they+work.+This+episode+closes+the+gap%3A+it+explains+the+true+meaning+of+Scheme+macros+by+introducing+the+concepts+of+syntax+object+and+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260182&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F27">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260182&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F27">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

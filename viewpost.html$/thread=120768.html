@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Generics vs. Dynamic Checking</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=120768.html">Discuss</a> | 
+<a href="mailto:?subject=Generics vs. Dynamic Checking&amp;body= %0AArtima Weblogs %0AGenerics vs. Dynamic Checking %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=120768">Email</a> | 
+<a href="../viewpostP.html$/thread=120768.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=120532.html" title="Is Jikes Being Abandoned?">Previous</a> | 
+<a class="sl" href="thread=122020.html" title="What is Consulting?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Generics vs. Dynamic Checking</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">July 26, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This entry is a replacement for "When Generics Fail" (which was deleted). In that, I began with casting solution, thinking that there wasn't a generic solution, then Krzysztof Sobolewski corrected me. So instead, I will compare the two solutions.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Both solutions work, but with generics you get static type checking -- although you may decide that the syntax is fairly heavy in the generic version.
+
+<p>Here's the old solution, for comparison. It uses <b>Object</b> and casting, instead of generics.
+
+<hr/>
+<h2>A test framework</h2>
+<p>To prevent code duplication and to provide consistency among tests, I've put the basic functionality of the test process into a framework. This is another example of the Template Method design pattern. In this case, however, the core code (that doesn't change) is in the timedTest() method in a separate class Tester, and the Test.test() method is overridden for each particular test:
+
+<pre>
+//: containers/Test.java
+// Framework for performing timed tests on containers.
+
+public abstract class Test {
+  static int size;
+  protected static int reps = 50000;
+  private String name;
+  // Pass the command-line arguments to this
+  // method, to modify the default number of reps:
+  public static void setReps(String[] commandLineArgs) {
+    if(commandLineArgs.length &gt; 0)
+      reps = new Integer(commandLineArgs[0]);
+  }
+  public Test(String name) { this.name = name; }
+  public String toString() { 
+    return String.format(Tester.stringField(), name);
+  }
+  // Override this Template Method for different tests:
+  abstract void test(Object container);
+} ///:~
+</pre>
+<p>To use the framework, you create an array of Test objects and an array of container objects to be tested, and pass these to the Tester constructor. When you call run(), each test is run for each one of the container objects in your list, for three different data set sizes (given by the sizes array, which you can also change):
+
+<pre>
+//: containers/Tester.java
+// Applies Test objects to lists of different containers.
+import java.util.*;
+
+public class Tester {
+  public static int fieldWidth = 8;
+  public int[] sizes = { 10, 100, 1000 };
+  private Test[] tests;
+  private String alternateName;
+  private List<?> containers;
+  static String stringField() { 
+    return "%-" + fieldWidth + "s"; 
+  }
+  static String doubleField() { 
+    return "%-" + fieldWidth + ".2f";
+  }
+  public Tester(Test[] tests, List<?> containers) {
+    this.tests = tests;
+    this.containers = containers;
+    System.out.println(Test.reps + " repetitions");
+  }
+  public Tester(Test[] tests, List<?> containers, 
+      String alternateName) {
+    this(tests, containers);
+    this.alternateName = alternateName;
+  }
+  // Override this to modify pre-test initialization:
+  protected Object initialize(Object container) {
+    return container;
+  }
+  public void run() {
+    for(Object container : containers)
+      timedTest(container);
+  }
+  private void timedTest(Object container) {
+    String name = alternateName;
+    if(name == null)
+      name = container.getClass().getSimpleName();
+    System.out.println("-------------- " + name + 
+      " --------------");
+
+    System.out.format(stringField(), "size");
+    for(Test tst : tests)
+      System.out.print(tst);
+    System.out.println();
+    for(int size : sizes) {
+      Test.size = size;
+      System.out.format(stringField(), size);
+      for(Test tst : tests) {
+        container = initialize(container);
+        long start = System.nanoTime();
+        tst.test(container); // Call the template method
+        double duration = System.nanoTime() - start;
+        duration /= (double)Test.size;
+        System.out.format(doubleField(), duration/1.0e7);
+      }
+      System.out.println();
+    }
+  }
+} ///:~
+</pre>
+<p>The first constructor just uses the name of the class as the header, but if you want an alternate name, use the second constructor.
+<p>If you need to perform special initialization, override the initialize() method. This takes the container object and returns it after it's been initialized. You can see in test() that the result is assigned back to the container reference, and this allows you to replace the container with a completely different initialized container.
+<p>Tester also manages the formatting of the output, so it contains a fieldWidth that you can change. This is used to produce format strings.
+
+<h2>Choosing between Lists</h2>
+<p>All Lists hold their elements in the sequence in which you insert those elements. This program is a performance test for the most essential of the List operations:
+
+<pre>
+//: containers/ListPerformance.java
+// Demonstrates performance differences in Lists.
+// {Args: 500} Small to keep build testing short
+import java.util.*;
+import net.mindview.util.*;
+
+public class ListPerformance {
+  static Test[] tests = {
+    new Test("add") {
+      void test(Object container) {
+        List<integer> list = (List<integer>)container;
+        for(int i = 0; i &lt; reps; i++) {
+          list.clear();
+          for(int j = 0; j &lt; size; j++)
+            list.add(j);
+        }
+      }
+    },
+    new Test("get") {
+      void test(Object container) {
+        List<integer> list = (List<integer>)container;
+        for(int i = 0; i &lt; reps; i++) {
+          for(int j = 0; j &lt; size; j++)
+            list.get(j);
+        }
+      }
+    },
+    new Test("set") {
+      void test(Object container) {
+        List<integer> list = (List<integer>)container;
+        for(int i = 0; i &lt; reps; i++) {
+          for(int j = 0; j &lt; size; j++)
+            list.set(j, 1);
+        }
+      }
+    },
+    new Test("iterate") {
+      void test(Object container) {
+        List<integer> list = (List<integer>)container;
+        //int passes = reps / 10;
+        for(int i = 0; i &lt; reps; i++) {
+          for(Integer t : list)
+            ;
+        }
+      }
+    },
+    new Test("insert") {
+      void test(Object container) {
+        List<integer> list = (List<integer>)container;
+        int half = list.size() / 2;
+        for(int i = 0; i &lt; reps; i++)
+          list.add(half, 1);
+      }
+    },
+    new Test("remove") {
+      void test(Object container) {
+        List<integer> list = (List<integer>)container;
+        int half = list.size() / 2;
+        while(list.size() &gt; half)
+          list.remove(0);
+      }
+    },
+  };
+  public static void main(String[] args) {
+    Test.setReps(args);
+    // Can only do these three tests on an array:
+    new Tester(new Test[] { tests[1], tests[2], tests[3] },
+      Arrays.asList(1), "Array as List") {
+      // This will be called before each test. The dummy
+      // container argument is replaced with an 
+      // non-resizeable array-backed list:
+      protected Object initialize(Object container) {
+        Integer[] ia =
+          new CountingIntegerList(Test.size)
+          .toArray(new Integer[]{});
+        return Arrays.asList(ia);
+      }
+    }.run();
+
+    List<? extends List<Integer>&gt; lists = Arrays.asList(
+      new ArrayList<integer>(),
+      new LinkedList<integer>(),
+      new Vector<integer>());
+    new Tester(tests, lists).run();
+  }
+} /* Output: (Sample)
+50000 repetitions
+-------------- Array as List --------------
+size    get     set     iterate
+10      0.12    0.17    0.45
+100     0.09    0.12    0.28
+1000    0.09    0.12    0.27
+50000 repetitions
+-------------- ArrayList --------------
+size    add     get     set     iterate insert  remove
+10      0.31    0.17    0.28    0.36    16.59   12.46
+100     0.57    0.16    0.33    0.33    1.67    1.24
+1000    0.50    0.15    0.25    0.33    0.22    0.13
+-------------- LinkedList --------------
+size    add     get     set     iterate insert  remove
+10      0.67    0.19    0.27    0.38    0.14    0.04
+100     0.59    0.41    0.46    0.22    0.05    0.00
+1000    0.81    8.11    8.01    0.21    0.02    0.00
+-------------- Vector --------------
+size    add     get     set     iterate insert  remove
+10      0.45    0.14    0.17    0.39    17.12   12.49
+100     0.45    0.13    0.19    0.33    1.67    1.25
+1000    0.64    0.12    0.16    0.32    0.17    0.13
+*///:~
+</integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></pre>
+<p>Because the container argument is passed as an Object, each Test.test() method must cast the container argument to a Test<integer>.
+<p> ...
+ 
+<h2>Choosing between Sets</h2>
+<p>Depending on the behavior you desire, you can choose a TreeSet, a HashSet, or a LinkedHashSet. The following test program gives an indication of the performance trade-off between the implementations:
+
+<pre>
+//: containers/SetPerformance.java
+// {Args: 500}
+import java.util.*;
+
+public class SetPerformance {
+  private static Test[] tests = {
+    new Test("add") {
+      void test(Object container) {
+        Set<integer> set = (Set<integer>)container;
+        for(int i = 0; i &lt; reps; i++) {
+          set.clear();
+          for(int j = 0; j &lt; size; j++)
+            set.add(j);
+        }
+      }
+    },
+    new Test("contains") {
+      void test(Object container) {
+        Set<integer> set = (Set<integer>)container;
+        for(int i = 0; i &lt; reps; i++)
+          for(int j = 0; j &lt; size; j++)
+            set.contains(j);
+      }
+    },
+    new Test("iterate") {
+      void test(Object container) {
+        Set<integer> set = (Set<integer>)container;
+        for(int i = 0; i &lt; reps * 10; i++) {
+          Iterator<integer> it = set.iterator();
+          while(it.hasNext())
+            it.next();
+        }
+      }
+    },
+  };
+  public static void main(String[] args) {
+    Test.setReps(args);
+    List<? extends Set<Integer>&gt; sets = Arrays.asList(
+      new TreeSet<integer>(),
+      new HashSet<integer>(),
+      new LinkedHashSet<integer>());
+    Tester.fieldWidth = 10;
+    new Tester(tests, sets).run();
+  }
+} /* Output: (Sample)
+50000 repetitions
+-------------- TreeSet --------------
+size      add       contains  iterate
+10        1.72      0.54      3.73
+100       2.49      0.95      2.95
+1000      3.73      2.13      3.09
+-------------- HashSet --------------
+size      add       contains  iterate
+10        0.95      0.46      4.72
+100       1.07      0.28      4.19
+1000      1.15      0.72      3.90
+-------------- LinkedHashSet --------------
+size      add       contains  iterate
+10        1.32      0.28      5.46
+100       1.39      0.29      3.75
+1000      1.59      0.62      3.86
+*///:~
+</integer></integer></integer></integer></integer></integer></integer></integer></integer></integer></pre>
+<p>The performance of HashSet is generally superior to TreeSet, but in particular for addition and lookup, the two most important operations. The only reason TreeSet exists is because it maintains its elements in sorted order, so you use it only when you need a sorted Set. Because of the internal structure necessary to support sorting and because iteration is something you're more likely to do, iteration is faster with a TreeSet than a HashSet.
+<p>Note that LinkedHashSet is somewhat more expensive for insertions than HashSet; this is because of the extra cost of maintaining the linked list along with the hashed container. However, traversal appears to be more expensive for LinkedHashSet.
+<h2>Choosing between Maps</h2>
+<p>This program gives an indication of the trade-off between Map implementations:
+
+<pre>
+//: containers/MapPerformance.java
+// Demonstrates performance differences in Maps.
+// {Args: 500}
+import java.util.*;
+
+public class MapPerformance {
+  private static Test[] tests = {
+    new Test("put") {
+      void test(Object container) {
+        Map<integer,integer> map =
+          (Map<integer,integer>)container;
+        for(int i = 0; i &lt; reps; i++) {
+          map.clear();
+          for(int j = 0; j &lt; size; j++)
+            map.put(j, j);
+        }
+      }
+    },
+    new Test("get") {
+      void test(Object container) {
+        Map<integer,integer> map =
+          (Map<integer,integer>)container;
+        for(int i = 0; i &lt; reps; i++)
+          for(int j = 0; j &lt; size; j++)
+            map.get(j);
+      }
+    },
+    new Test("iterate") {
+      void test(Object container) {
+        Map<integer,integer> map =
+          (Map<integer,integer>)container;
+        for(int i = 0; i &lt; reps * 10; i++) {
+          Iterator it = map.entrySet().iterator();
+          while(it.hasNext())
+            it.next();
+        }
+      }
+    },
+  };
+  public static void main(String[] args) {
+    Test.setReps(args);
+    List<? extends Map<Integer,Integer>&gt; maps =
+      Arrays.asList(
+        new TreeMap<integer,integer>(),
+        new HashMap<integer,integer>(),
+        new LinkedHashMap<integer,integer>(),
+        new IdentityHashMap<integer,integer>(),
+        new WeakHashMap<integer,integer>(),
+        new Hashtable<integer,integer>());
+    new Tester(tests, maps).run();
+  }
+} /* Output: (Sample)
+50000 repetitions
+-------------- TreeMap --------------
+size    put     get     iterate
+10      1.76    0.57    3.64
+100     2.51    0.93    3.43
+1000    3.83    1.88    3.45
+-------------- HashMap --------------
+size    put     get     iterate
+10      0.88    0.29    4.12
+100     0.87    0.26    3.69
+1000    1.26    0.56    3.64
+-------------- LinkedHashMap --------------
+size    put     get     iterate
+10      1.34    0.38    3.28
+100     1.34    0.35    2.34
+1000    1.77    0.65    2.25
+-------------- IdentityHashMap --------------
+size    put     get     iterate
+10      1.18    0.68    4.01
+100     1.02    0.62    3.43
+1000    1.69    1.19    3.12
+-------------- WeakHashMap --------------
+size    put     get     iterate
+10      1.52    0.58    7.47
+100     1.39    0.54    6.51
+1000    2.00    0.69    1.06
+-------------- Hashtable --------------
+size    put     get     iterate
+10      0.86    0.48    4.89
+100     0.78    0.64    3.86
+1000    1.14    0.66    3.69
+*///:~
+</integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></integer,integer></pre>
+<hr/>
+<h1>The generic solution</h1>
+
+Here's the new solution, which uses generics:
+
+<pre>
+//: containers/Test.java
+// Framework for performing timed tests.
+
+public abstract class Test&lt;C&gt; {
+  static int size;
+  protected static int reps = 50000;
+  private String name;
+  // Pass the command-line arguments to this
+  // method, to modify the default number of reps:
+  public static void setReps(String[] commandLineArgs) {
+    if(commandLineArgs.length &gt; 0)
+      reps = Integer.parseInt(commandLineArgs[0]);
+  }
+  public Test(String name) { this.name = name; }
+  public String toString() {
+    return String.format(Tester.stringField(), name);
+  }
+  // Override this Template Method for different tests:
+  abstract void test(C container);
+} ///:~
+
+<p>To use the framework, you create an array of Test objects and an array of container objects to be tested, and pass these to the Tester constructor. When you call run(), each test is run for each one of the container objects in your list, for three different data set sizes (given by the sizes array, which you can also change):
+//: containers/Tester.java
+// Applies Test objects to lists of different containers.
+import java.util.*;
+
+public class Tester&lt;C&gt; {
+  public static int fieldWidth = 8;
+  public int[] sizes = { 10, 100, 1000 };
+  private List&lt;Test&lt;C&gt;&gt; tests;
+  private List&lt;C&gt; containers;
+  private String alternateName;
+  static String stringField() {
+    return "%-" + fieldWidth + "s";
+  }
+  static String doubleField() {
+    return "%-" + fieldWidth + ".2f";
+  }
+  public Tester(List&lt;Test&lt;C&gt;&gt; tests, List&lt;C&gt; containers) {
+    this.tests = tests;
+    this.containers = containers;
+    System.out.println(Test.reps + " repetitions");
+  }
+  public Tester(List&lt;Test&lt;C&gt;&gt; tests, List&lt;C&gt; containers,
+      String alternateName) {
+    this(tests, containers);
+    this.alternateName = alternateName;
+  }
+  // Override this to modify pre-test initialization:
+  protected C initialize(C container) {
+    return container;
+  }
+  public void run() {
+    for(C container : containers)
+      timedTest(container);
+  }
+  private void timedTest(C container) {
+    String name = alternateName;
+    if(name == null)
+      name = container.getClass().getSimpleName();
+    System.out.println("-------------- " + name +
+      " --------------");
+    System.out.format(stringField(), "size");
+    for(Test tst : tests)
+      System.out.print(tst);
+    System.out.println();
+    for(int size : sizes) {
+      Test.size = size;
+      System.out.format(stringField(), Test.size);
+      for(Test&lt;C&gt; tst : tests) {
+        container = initialize(container);
+        long start = System.nanoTime();
+        // Call the template method:
+        tst.test(container);
+        double duration = System.nanoTime() - start;
+        duration /= Test.size; // Normalize
+        System.out.format(doubleField(), duration / 1.0e7);
+      }
+      System.out.println();
+    }
+  }
+} ///:~
+
+<p>The first constructor just uses the name of the class as the header, but if you want an alternate name, use the second constructor.
+<p>If you need to perform special initialization, override the initialize() method. This takes the container object and returns it after its been initialized. You can see in test() that the result is assigned back to the container reference, and this allows you to replace the container with a completely different initialized container.
+<p>Tester also manages the formatting of the output, so it contains a fieldWidth that you can change. This is used to produce format strings.
+<h2>Choosing between Lists</h2>
+<p>All Lists hold their elements in the sequence in which you insert those elements. This program is a performance test for the most essential of the List operations:
+//: containers/ListPerformance.java
+// Demonstrates performance differences in Lists.
+// {Args: 500} Small to keep build testing short
+import java.util.*;
+import net.mindview.util.*;
+
+public class ListPerformance {
+  static List&lt;Test&lt;List&lt;Integer&gt;&gt;&gt; tests = Arrays.asList(
+    new Test&lt;List&lt;Integer&gt;&gt;("add") {
+      void test(List&lt;Integer&gt; list) {
+        for(int i = 0; i &lt; reps; i++) {
+          list.clear();
+          for(int j = 0; j &lt; size; j++)
+            list.add(j);
+        }
+      }
+    },
+    new Test&lt;List&lt;Integer&gt;&gt;("get") {
+      void test(List&lt;Integer&gt; list) {
+        for(int i = 0; i &lt; reps; i++) {
+          for(int j = 0; j &lt; size; j++)
+            list.get(j);
+        }
+      }
+    },
+    new Test&lt;List&lt;Integer&gt;&gt;("set") {
+      void test(List&lt;Integer&gt; list) {
+        for(int i = 0; i &lt; reps; i++) {
+          for(int j = 0; j &lt; size; j++)
+            list.set(j, 1);
+        }
+      }
+    },
+    new Test&lt;List&lt;Integer&gt;&gt;("iterate") {
+      void test(List&lt;Integer&gt; list) {
+        for(int i = 0; i &lt; reps; i++) {
+          Iterator&lt;Integer&gt; it = list.iterator();
+          while(it.hasNext())
+            it.next();
+        }
+      }
+    },
+    new Test&lt;List&lt;Integer&gt;&gt;("insert") {
+      void test(List&lt;Integer&gt; list) {
+        int half = list.size() / 2;
+        for(int i = 0; i &lt; reps; i++)
+          list.add(half, 1);
+      }
+    },
+    new Test&lt;List&lt;Integer&gt;&gt;("remove") {
+      void test(List&lt;Integer&gt; list) {
+        int half = list.size() / 2;
+        while(list.size() &gt; half)
+          list.remove(0);
+      }
+    }
+  );
+  public static void main(String[] args) {
+    Test.setReps(args);
+    List&lt;List&lt;Integer&gt;&gt; dummy =
+      new ArrayList&lt;List&lt;Integer&gt;&gt;(1);
+    dummy.add(new ArrayList&lt;Integer&gt;());
+    // Can only do these three tests on an array:
+    new Tester&lt;List&lt;Integer&gt;&gt;(tests.subList(1, 4), dummy,
+      "Array as List") {
+      // This will be called before each test. The
+      // dummy container argument is replaced with
+      // a non-resizeable array-backed list:
+      @Override protected List&lt;Integer&gt; initialize(
+        List&lt;Integer&gt; container) {
+        Integer[] ia = Generated.array(Integer.class,
+          new CountingGenerator.Integer(), Test.size);
+        return Arrays.asList(ia);
+      }
+    }.run();
+    List&lt;List&lt;Integer&gt;&gt; lists =
+      Arrays.&lt;List&lt;Integer&gt;&gt;asList(
+        new ArrayList&lt;Integer&gt;(),
+        new LinkedList&lt;Integer&gt;(),
+        new Vector&lt;Integer&gt;());
+    new Tester&lt;List&lt;Integer&gt;&gt;(tests, lists).run();
+  }
+} /* Output: (Sample)
+50000 repetitions
+-------------- Array as List --------------
+size    get     set     iterate
+10      0.12    0.18    0.41
+100     0.09    0.13    0.25
+1000    0.09    0.14    0.25
+50000 repetitions
+-------------- ArrayList --------------
+size    add     get     set     iterate insert  remove
+10      0.39    0.17    0.24    0.31    18.05   13.55
+100     0.57    0.16    0.32    0.28    1.91    1.46
+1000    0.72    0.17    0.31    0.35    0.19    0.15
+-------------- LinkedList --------------
+size    add     get     set     iterate insert  remove
+10      0.80    0.35    0.35    0.37    0.16    0.05
+100     0.87    0.57    0.72    0.24    0.06    0.00
+1000    0.93    8.16    13.05   0.20    0.03    0.00
+-------------- Vector --------------
+size    add     get     set     iterate insert  remove
+10      0.48    0.15    0.27    0.40    18.36   13.43
+100     0.44    0.13    0.26    0.34    1.78    1.36
+1000    0.58    0.13    0.25    0.37    0.21    0.16
+*///:~
+
+<p>To compare array access to container access (primarily against ArrayList), a special test is created for arrays by wrapping an array as a List using Arrays.asList( ). Only three of the tests can be performed in this case, because you cannot insert or remove elements from an array. Notice that the initialize() method throws away the container argument (so that argument is a dummy object) and creates a completely new object using Generated.array() (which was defined in the Arrays chapter).
+<p>In main(), the definition of lists requires an explicit type argument specification to give a hint to the Arrays.asList() method call.
+<h2>Choosing between Sets</h2>
+<p>Depending on the behavior you desire, you can choose a TreeSet, a HashSet, or a LinkedHashSet. The following test program gives an indication of the performance trade-off between the implementations:
+//: containers/SetPerformance.java
+// {Args: 500}
+import java.util.*;
+
+public class SetPerformance {
+  static List&lt;Test&lt;Set&lt;Integer&gt;&gt;&gt; tests = Arrays.asList(
+    new Test&lt;Set&lt;Integer&gt;&gt;("add") {
+      void test(Set&lt;Integer&gt; set) {
+        for(int i = 0; i &lt; reps; i++) {
+          set.clear();
+          for(int j = 0; j &lt; size; j++)
+            set.add(j);
+        }
+      }
+    },
+    new Test&lt;Set&lt;Integer&gt;&gt;("contains") {
+      void test(Set&lt;Integer&gt; set) {
+        for(int i = 0; i &lt; reps; i++)
+          for(int j = 0; j &lt; size; j++)
+            set.contains(j);
+      }
+    },
+    new Test&lt;Set&lt;Integer&gt;&gt;("iterate") {
+      void test(Set&lt;Integer&gt; set) {
+        for(int i = 0; i &lt; reps * 10; i++) {
+          Iterator&lt;Integer&gt; it = set.iterator();
+          while(it.hasNext())
+            it.next();
+        }
+      }
+    }
+  );
+  public static void main(String[] args) {
+    Test.setReps(args);
+    List&lt;Set&lt;Integer&gt;&gt; sets = Arrays.&lt;Set&lt;Integer&gt;&gt;asList(
+      new TreeSet&lt;Integer&gt;(),
+      new HashSet&lt;Integer&gt;(),
+      new LinkedHashSet&lt;Integer&gt;());
+    Tester.fieldWidth = 10;
+    new Tester&lt;Set&lt;Integer&gt;&gt;(tests, sets).run();
+  }
+} /* Output: (Sample)
+50000 repetitions
+-------------- TreeSet --------------
+size      add       contains  iterate
+10        2.12      0.67      5.01
+100       2.97      0.97      3.32
+1000      4.60      2.48      3.40
+-------------- HashSet --------------
+size      add       contains  iterate
+10        1.01      0.32      4.36
+100       0.98      0.30      3.89
+1000      1.25      0.88      4.20
+-------------- LinkedHashSet --------------
+size      add       contains  iterate
+10        1.59      0.43      4.73
+100       1.60      0.33      3.33
+1000      1.83      0.68      3.05
+*///:~
+
+<h2>Choosing between Maps</h2>
+<p>This program gives an indication of the trade-off between Map implementations:
+//: containers/MapPerformance.java
+// Demonstrates performance differences in Maps.
+// {Args: 500}
+import java.util.*;
+
+public class MapPerformance {
+  static List&lt;Test&lt;Map&lt;Integer,Integer&gt;&gt;&gt; tests =
+    Arrays.asList(
+      new Test&lt;Map&lt;Integer,Integer&gt;&gt;("put") {
+        void test(Map&lt;Integer,Integer&gt; map) {
+          for(int i = 0; i &lt; reps; i++) {
+            map.clear();
+            for(int j = 0; j &lt; size; j++)
+              map.put(j, j);
+          }
+        }
+      },
+      new Test&lt;Map&lt;Integer,Integer&gt;&gt;("get") {
+        void test(Map&lt;Integer,Integer&gt; map) {
+          for(int i = 0; i &lt; reps; i++)
+            for(int j = 0; j &lt; size; j++)
+              map.get(j);
+        }
+      },
+      new Test&lt;Map&lt;Integer,Integer&gt;&gt;("iterate") {
+        void test(Map&lt;Integer,Integer&gt; map) {
+          for(int i = 0; i &lt; (reps * 10); i++) {
+            Iterator it = map.entrySet().iterator();
+            while(it.hasNext())
+              it.next();
+          }
+        }
+      }
+    );
+  public static void main(String[] args) {
+    Test.setReps(args);
+    List&lt;Map&lt;Integer,Integer&gt;&gt; maps = Arrays.asList(
+      new TreeMap&lt;Integer,Integer&gt;(),
+      new HashMap&lt;Integer,Integer&gt;(),
+      new LinkedHashMap&lt;Integer,Integer&gt;(),
+      new IdentityHashMap&lt;Integer,Integer&gt;(),
+      new WeakHashMap&lt;Integer,Integer&gt;(),
+      new Hashtable&lt;Integer,Integer&gt;());
+    new Tester&lt;Map&lt;Integer,Integer&gt;&gt;(tests, maps).run();
+  }
+} /* Output: (Sample)
+50000 repetitions
+-------------- TreeMap --------------
+size    put     get     iterate
+10      2.13    0.71    5.18
+100     3.11    0.95    3.16
+1000    4.34    1.94    3.43
+-------------- HashMap --------------
+size    put     get     iterate
+10      0.95    0.37    4.51
+100     0.91    0.28    3.94
+1000    1.40    0.62    4.01
+-------------- LinkedHashMap --------------
+size    put     get     iterate
+10      1.37    0.47    3.62
+100     1.32    0.38    2.45
+1000    1.98    0.75    2.50
+-------------- IdentityHashMap --------------
+size    put     get     iterate
+10      1.22    0.69    4.23
+100     1.02    0.63    3.87
+1000    2.04    1.34    3.41
+-------------- WeakHashMap --------------
+size    put     get     iterate
+10      1.60    0.59    7.45
+100     1.49    0.54    6.81
+1000    2.26    0.76    1.07
+-------------- Hashtable --------------
+size    put     get     iterate
+10      1.08    0.51    5.45
+100     0.99    0.67    4.08
+1000    1.50    0.82    3.81
+*///:~
+
+<h1>Talk Back!</h1>
+
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=120768.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=120768&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+  <a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D120768&amp;title=Generics+vs.+Dynamic+Checking&amp;bodytext=This+entry+is+a+replacement+for+%26quot%3BWhen+Generics+Fail%26quot%3B+%28which+was+deleted%29.+In+that%2C+I+began+with+casting+solution%2C+thinking+that+there+wasn%27t+a+generic+solution%2C+then+Krzysztof+Sobolewski+corrected+me.+So+instead%2C+I+will+compare+the+two+_&amp;topic=programming">
+    <img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D120768&amp;title=Generics+vs.+Dynamic+Checking">
+    <img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D120768&amp;title=Generics+vs.+Dynamic+Checking">
+    <img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>  
+</div>
+</center>
+
+<h1>About the Blogger</h1>
+
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+
+<div class="sp">This weblog entry is Copyright © 2005 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></pre></p></p></p></p></p></integer></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

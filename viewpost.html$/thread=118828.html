@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Readable Method Calls in Java</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=118828.html">Discuss</a> | 
+<a href="mailto:?subject=Readable Method Calls in Java&amp;body= %0AArtima Weblogs %0AReadable Method Calls in Java %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=118828">Email</a> | 
+<a href="../viewpostP.html$/thread=118828.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=117184.html" title="JavaOne 2005: Wrap Up">Previous</a> | 
+<a class="sl" href="thread=120669.html" title="Messaging is the Right Way to Build a Distributed System">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">Readable Method Calls in Java</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">July 13, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This article gives you a simple trick you can use to make your Java method calls more readable when the list of parameters contains booleans and numeric primitives.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Now that I've gotten myself onto the Groovy mailing list, I'm getting involved 
+  in language discussions again. I love those. The axe I generally grind in those 
+  discussions is <em>readability</em>. To me, that is an overlooked strength of 
+  the Java language that goes a long way towards explaining its popularity as 
+  a vehicle for production applications and for teaching. A recent discussion 
+  reminded me of a trick I use to make method calls more readable in Java--which 
+  can become something of a problem when the list of parameters contains booleans 
+  and numeric primitives. In this article, I share that trick with you. </p>
+<a name="primitivesProblem"></a>
+<h2>The Problem: Mysterious Primitives <a class="purpleLink" href="#primitivesProblem">#</a></h2>
+<p>You're looking through code written by someone else, or that you wrote long 
+  ago (in a galaxy far away), and you find a method call like this:</p>
+<blockquote>
+<pre>addValue(13, 47, true);</pre>
+</blockquote>
+<p>The question is, what do the parameters mean? </p>
+<p>Of course, you can search for the <tt>addValue</tt> method, navigate to it, 
+  and read it to find out what the values mean, but that means you're no longer 
+  <em>reading</em> the code, so much as <em>translating</em> it. It's as though 
+  you're reading a book written in a foreign language, with the book in one hand 
+  and a translation dictionary in the other. If you only have to do it once in 
+  a while, it's not too bad. But if you're doing it all the time, it becomes a 
+  problem.</p>
+<p>In general, code that has to be "translated" is a major headache 
+  for the hapless victim who has been tasked with modifying it--a victim who more 
+  often than not turns out to be myself, 6 months later when I have completely 
+  forgotten all of the things I had in my head when I wrote the original version. 
+  So in an effort to make things slightly simpler for my future self, I began 
+  looking for ways to make such method calls more readable.</p>
+<a name="addingVariablesSimpleSolution"></a>
+<h2>A Simple Solution: Adding Variables <a class="purpleLink" href="#addingVariablesSimpleSolution">#</a></h2>
+<p>A simple solution is to add variables that make the meaning clear:</p>
+<blockquote>
+<pre>int value = 13;
+
+int location = 47;
+boolean overwrite = true;
+addValue(value, location, overwrite);</pre>
+</blockquote>
+<p>That code is self-documenting, so it's quite a bit more readable. It does add 
+  some length, though. And the next time you invoke <tt>addValue</tt> in the same 
+  scope, the code has to change slightly to remove the variable declarations:</p>
+<blockquote>
+<pre>value = 13;
+location = 47;
+overwrite = true;
+addValue(value, location, overwrite);</pre>
+</blockquote>
+<p>It's a small thing, I know, but the code just became a little less consistent. 
+  And it's 3 lines longer every time you make that call. </p>
+<p>To shorten the code, you might be tempted to reuse a variable like <tt>overwrite</tt>, 
+  for example. The code then reduces to </p>
+<blockquote>
+<pre>value = 13;
+location = 47;
+
+addValue(value, location, overwrite);</pre>
+</blockquote>
+<p>That's shorter, but the reader has just gone back into the translation business. 
+  To make sense of the code, they have to answer the following questions: </p>
+<ul>
+<li>
+<p><em>Is <tt>overwrite</tt> a boolean or an integer?</em> <br/>
+      (To answer that, they have to find the definition.) </p>
+</li>
+<li><em>Does it have a default value? Has the value changed anywhere?</em><br/>
+    (For that, they have to inspect the code for all occurences of assignments 
+    to the variable.)</li>
+</ul>
+<p>The simple solution does improve readability to a degree, if you avoid the 
+  trap of reuse. But it turns out that there is an even better way to make your 
+  method calls readable.</p>
+<a name="namedParametersSolution"></a>
+<h2>A Better Solution: "Named Parameters" <a class="purpleLink" href="#namedParametersSolution">#</a></h2>
+<p>The solution that provides maximum readability is to declare variables without 
+  defining them, and do the assignments only when using them in a method call. 
+  The code template looks like this: </p>
+<blockquote>
+<pre>int value; int location; boolean overwrite;
+   ...
+  
+doIt(value=13, location=47, overwrite=true);</pre>
+</blockquote>
+<p>Although I usually don't declare multiple variables on a single line, I do 
+  so here to indicate that they are never intended to take a default value. </p>
+<blockquote>
+<p><strong>Note:</strong><br/>
+    Some sort of naming scheme might also make sense for that purpose. For example, 
+    a Hungarian prefix like "z" could be used to indicate a parameter-variable. 
+    It would sound like French-English for "the", and would produce 
+    variable names like <tt>zValue</tt>, <tt>zLocation</tt>, and <tt>zOverwrite</tt>. 
+    Any reference to such a variable that did not also provide a value would be 
+    considered a stylistic error. (In the ideal word, either the compiler or a 
+    lint-sytle utility would give you a warning.)</p>
+</blockquote>
+<p>With this mechanism, the method call <tt>doIt(value=13, location=47, overwrite=true)</tt> 
+  now accomplishs three goals, all at the same time, in the least possible space:</p>
+<ul>
+<li>It makes it clear that you're passing two integers and a boolean.</li>
+<li>It specifies the values you're passing.</li>
+<li>It names the values, so you know what purpose they serve. </li>
+</ul>
+<p>Finally, note that the ordering of these "named parameters" is always 
+  preserved. The names exist for semantic clarification--they do not permit you 
+  to change the order of the parameters--a facility which tends to produce readability 
+  problems of its own.</p>
+<a name="conclusion"></a>
+<h2>Conclusion <a class="purpleLink" href="#conclusion">#</a></h2>
+<p>Using "named parameters" for boolean and numeric primitives is way 
+  to go for readable method calls.<br/>
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=118828.html">30
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=118828&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D118828&amp;title=Readable+Method+Calls+in+Java&amp;bodytext=This+article+gives+you+a+simple+trick+you+can+use+to+make+your+Java+method+calls+more+readable+when+the+list+of+parameters+contains+booleans+and+numeric+primitives.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D118828&amp;title=Readable+Method+Calls+in+Java">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D118828&amp;title=Readable+Method+Calls+in+Java">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

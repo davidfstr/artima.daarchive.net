@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Client Ubiquity, Avalon, XAML, Royale, XUL - and  Java?</title>
+<meta charset="utf-8"/>
+<meta content="Sean Neville" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=psneville.html">Sean Neville's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=19461.html">Discuss</a> | 
+<a href="mailto:?subject=Client Ubiquity, Avalon, XAML, Royale, XUL - and  Java?&amp;body= %0AArtima Weblogs %0AClient Ubiquity, Avalon, XAML, Royale, XUL - and  Java? %0Aby Sean Neville %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=19461">Email</a> | 
+<a href="../viewpostP.html$/thread=19461.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=18731.html" title="Project Atom, Amazon, Mobile Web Services, and Fireflies at REST">Previous</a> | 
+<a class="sl" href="thread=21896.html" title="Royale XML syntax and services for rich apps == Macromedia Flex">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Visions and Sawdust</span><br>
+<span class="ts">Client Ubiquity, Avalon, XAML, Royale, XUL - and  Java?</span><br/>
+<span class="as">by Sean Neville</span><br/>
+<span class="pd">October 29, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Using an XML syntax to declare and generate a rich UI for service-oriented and data-driven applications is getting a lot of traction. While much of the talk is about the application model, as it should be, it's also true that approaches like XAML, Royale, and XUL all make assumptions about the ubiquity of the client containers which they target.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><b>Richness</b></p>
+<p>From Microsoft's debut of <a href="../_/http/msdn.microsoft.com/longhorn/default.aspx$/pull=/msdnmag/issues/04/01/Avalon/default.aspx.aspx">Avalon and XAML</a> to Macromedia's work with <a href="../_/http/www.macromedia.com/special/royale/index.html">Royale</a> and Flash to existing projects based on XUL, rich clients are a hot and ROI-relevant topic. There is a need to get much server-side data out to clients in a more powerful, richer way than mingling it with HTML and delivering it to a web browser that can't work very well offline, can't have relevant data pushed out to it very intelligently, and can't expose rich desktop behaviors to app developers and to users. There's a need to get beyond requiring a server roundtrip and state reconstruction for the simplest of actions; there's a need to take advantage of power available on the client rather than render all clients dumb terminals, all the time, for all use cases. But there's also a need to retain the ease of deployment, management, and other attractions of HTML-based web applications.
+
+<p><b>Rich Development Models</b></p>
+<p>There's also a need to retain familiar development models for the web tier folks who build the apps. XML and tags generally work pretty well for this sort of thing. To that end, one might use XAML to generate Direct3D-based components once Avalon is released (seems to be still three years or so away) or use a similar syntax in Royale or <a href="../_/http/www.laszlosystems.com/index.html">Laszlo</a> to generate Flash-hosted components, or use XUL/CSS to manipulate Mozilla components. Perhaps an intelligent set of JavaServer Faces renderkits will enable JSF to generate content for any of these platforms (although JSF seems to be mainly about simplifying the J2EE web app development experience rather than adding richness to client and presentation experiences, as its delegated rendering model treats client richness as sort of secondary to the framework). Others exist but the approach is generally the same: Declarative construction of a UI using existing components makes sense, as component interfaces or classes are easily addressed as elements and their properties easily addressed as attributes. Events tend to be addressed through script or similar code, data models tend to be either Schema- or RDF-compliant, and the declarative binding of services to models and UI components to models, and UI components to UI components is all fairly similar (whether XPath-based, or whatever).</p>
+<p><b>Rich Client Containers and Ubiquity</b></p>
+<p>But these approaches do not yet target a common set of client behaviors, but rather they target specific client container products. It's not as if you can use these new models to write to rich web browsers in general, and expect all the clients to interpret the content or specified behaviors roughly similarly. So in order for the model to be broadly useful, you currently need a ubiquitous client.</p>
+<p>And the issue of client ubiquity can be a little squishy in my mind. It deserves to be separated from the client development model (mentioned some of this in a response to <a href="../_/http/www.adambosworth.net/index.html">Adam's blog</a>, which always makes me think really hard).</p>
+<p>It is possible to (1) create a model that targets a specific ubiquitous client, such as Flash (being deployed on more than 90% of the world's desktops, it is the most widely distributed software product in history, or so our marketing info goes), but it is also possible to (2) create a model that targets a set of clients, where none of the clients in the set is ubiquitous but collectively they come pretty close, amounting to targeting a set of ubiquitous client behaviors; on the other end of the spectrum it's also possible to (3) target a platform like Windows in Intranets or Symbian or J2ME on phones that is very close to ubiquitous in a given niche or space.</p>
+<p>Seems to me that XAML is aiming primarily for #3. Maybe Longhorn will be ubiquitous enough for corporate development of Intranet apps. Maybe the thought is that this will eventually drive changes in the broader consumer space. Too, there is nothing stating that Royale will always and forever be at #1, targeting Flash only. One could imagine, if a reason arose for it, growing into #2 (the most difficult of the three options) and targeting Avalon or Java or whatever other rich client technology requirements dictate. It aims to be an application development model, not a client-specific set of utilities. Similarly, XAML might theoretically target Flash or other technologies (though MS will very likely not do such a thing, perhaps other ISVs would).</p>
+<p>The app development model (Royale, XAML) is certainly positioned according to relative ubiquity of specific clients (Flash, Central, Avalon), but is ultimately more dependent on the ubiquity of certain client behaviors such as compositing techniques and extensibilty of content handling than it is on the actual implementation and productization of those behaviors in one specific form. In practice mileage may vary, however. </p>
+<p><b>What about Java?</b></p>
+<p>So what do you think is Java's place in this rich client world? It is obvious that Java can be used as the basis of the development and deployment model, on the server at least. We and others are taking full advantage of this. But does Java -- realistically now -- have a place on the client as well? It was the original write-once run-... okay, nevermind. And legal battles on top of early applet technical issues caused issues. But what about now that the technology has matured?</p>
+<p>I don't think it's a matter of just getting the technology right, but rather a matter of branding and business. In order to achieve ubiquity, the technology must either <em>be</em> something that is acceptable to users everywhere -- acceptable by name, for users everywhere will not be so well-informed as to base acceptance on the quality of technology, by and large -- or be <em>embedded</em> in something that is acceptable to users everywhere. At the moment a few brands have the ability to get consumers to install products onto their systems and trust them: Yahoo because of the IM client, Macromedia, Microsoft (my many friends in the linux and mac communities are still niches in this scope, by the way), perhaps Adobe, America Online, Symantec...  not BEA, not IBM, not Sun, not Oracle, not the powerhouses of Java today.</p>
+<p>Will it take one of the companies with ubiquitous reach to either champion Java on the desktop or embed it in order for Java to make real waves there? Java is everywhere on mobile devices, thanks to OEM deals with device manufacturers -- will it take something along those lines, which Sun seems to be pursuing with Dell and HP? Is there even a good reason for this (I've already suggested there is, in as much as I seek common rich client behaviors across rich client products, but am willing to be wrong)? I'm very interested in your thoughts.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=19461.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=19461&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Sean Neville adds a new entry to <a href="../index.html$/blogger=psneville.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/psneville.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D19461&amp;title=Client+Ubiquity%2C+Avalon%2C+XAML%2C+Royale%2C+XUL+-+and++Java%3F&amp;bodytext=Using+an+XML+syntax+to+declare+and+generate+a+rich+UI+for+service-oriented+and+data-driven+applications+is+getting+a+lot+of+traction.+While+much+of+the+talk+is+about+the+application+model%2C+as+it+should+be%2C+it%27s+also+true+that+approaches+like+XAML%2C+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D19461&amp;title=Client+Ubiquity%2C+Avalon%2C+XAML%2C+Royale%2C+XUL+-+and++Java%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D19461&amp;title=Client+Ubiquity%2C+Avalon%2C+XAML%2C+Royale%2C+XUL+-+and++Java%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/seanneville.jpg"/></td><td>Sean Neville is a software architect at Macromedia where he is focused on creating the Flex platform. His previous projects include the JRun application server and Flash-related products for J2EE and .NET. His experiences include membership in the JCP Executive Committee and numerous JSR expert groups; authoring articles, contributing to books, and speaking on enterprise topics; financial services app consulting; building doomed yet fun web startups; maintaining open source projects; and half-decent fiddling of Irish jigs and reels.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Sean Neville. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

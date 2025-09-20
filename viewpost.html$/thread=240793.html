@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/8</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=240793.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/8&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/8 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=240793">Email</a> | 
+<a href="../viewpostP.html$/thread=240793.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=240781.html" title="The Adventures of a Pythonista in Schemeland/7">Previous</a> | 
+<a class="sl" href="thread=240804.html" title="The Adventures of a Pythonista in Schemeland/9">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/8</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">October 25, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this episode I will explain the meaning of the "code is data" concept. To this aim I will discuss the  quoting operation which allows to convert a code fragment into a list of symbols and primitive values - i.e. converts code into data. Then, I will discuss the issue of evaluating data as code.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="quoting" name="quoting">Quoting</a></h1>
+<p>A distinguishing feature of the Lisp family of languages is the existence
+of a quoting operator denoted with a quote <tt class="docutils literal"><span class="pre">'</span></tt> or with <tt class="docutils literal"><span class="pre">(quote</span> <span class="pre">)</span></tt>,
+the first form being syntactic sugar for the second.
+The quoting operator works as follows:</p>
+<ol class="arabic simple">
+<li>on primitive values such as numbers, literal strings, symbols, etc, it
+works as an identity operator:</li>
+</ol>
+<pre class="literal-block">
+&gt; '1
+1
+&gt; '"hello"
+"hello"
+&gt; ''a
+'a
+</pre>
+<ol class="arabic simple" start="2">
+<li>expressions are converted into lists;
+for instance <tt class="docutils literal"><span class="pre">'(display</span> <span class="pre">"hello")</span></tt> is the list</li>
+</ol>
+<pre class="literal-block">
+&gt; (list 'display '"hello")
+(display "hello")
+</pre>
+<p>whereas <tt class="docutils literal"><span class="pre">'(let</span> <span class="pre">((x</span> <span class="pre">1))</span> <span class="pre">(*</span> <span class="pre">2</span> <span class="pre">x))</span></tt> is the list</p>
+<pre class="literal-block">
+&gt; (list 'let (list (list 'x '1)) (list '* '2 'x))
+(let ((x 1)) (* 2 x))
+</pre>
+<p>et cetera.</p>
+<p>Hence every Scheme/Lisp program admits a natural representation as
+a (nested) list of symbols and primitive values: <em>code is data</em>. On
+the other hand, every nested list of symbols and primitive values
+corresponding to a syntactically valid Scheme/Lisp programs can be
+executed, both at <em>runtime</em> - with <tt class="docutils literal"><span class="pre">eval</span></tt> - or at <em>compilation time</em>
+- through macros. The consequences are fascinating: since every program
+is a list, it is possible to write programs that, by building lists,
+build other programs. Of course, you can do the same in other
+languages: for instance in Python you can generate strings
+corresponding to valid source code and you can evaluate such strings
+with various mechanisms
+(<tt class="docutils literal"><span class="pre">eval</span></tt>, <tt class="docutils literal"><span class="pre">exec</span></tt>, <tt class="docutils literal"><span class="pre">__import__</span></tt>, <tt class="docutils literal"><span class="pre">compile</span></tt>, etc). In C/C++
+you can generate a string, save it into a file and compile it to
+a dynamic library, then you can import it at runtime;
+you also have the mechanism of pre-processor macros at your disposal
+for working at compile time. The point is that there is no language where
+code generation is as convenient as in Scheme/Lisp where it is buil-in,
+thanks to <em>s</em>-expressions or, you wish, thanks to parenthesis.</p>
+</div>
+<div class="section">
+<h1><a id="quasi-quoting" name="quasi-quoting">Quasi-quoting</a></h1>
+<p>In all scripting languages there is a form of <em>string interpolation</em>;
+for instance in Python you can write</p>
+<pre class="literal-block">
+def say_hello(user):
+     return "hello, %(user)s" % locals()
+</pre>
+<p>In Scheme/Lisp, there is also a powerful form of <em>list interpolation</em>:</p>
+<pre class="literal-block">
+&gt; (define (say-hello user)
+    `("hello" ,user))
+
+&gt; (say-hello "Michele")
+   ("hello" "Michele")
+</pre>
+<p>The <em>backquote</em> or <tt class="docutils literal"><span class="pre">(quasiquote</span> <span class="pre">)</span></tt> syntax <tt class="docutils literal"><span class="pre">`</span></tt> introduces a list to be
+interpolated (<em>template</em>); it is possible to replace some
+variables within the template, by prepending to them the <em>unquoting</em>
+operator <tt class="docutils literal"><span class="pre">(unquote</span> <span class="pre">)</span></tt> or <tt class="docutils literal"><span class="pre">,</span></tt>, denotated by a comma. In
+our case we are unquoting the user name, <tt class="docutils literal"><span class="pre">,user</span></tt>.  The function
+<tt class="docutils literal"><span class="pre">say-hello</span></tt> takes the user name as a string and returns a list
+containing the string <tt class="docutils literal"><span class="pre">"hello"</span></tt> together with the username.</p>
+<p>There is another operator like <tt class="docutils literal"><span class="pre">unquote</span></tt>, called
+<tt class="docutils literal"><span class="pre">unquote-splicing</span></tt> or comma-at and written <tt class="docutils literal"><span class="pre">,@</span></tt>, which works as follows:</p>
+<pre class="literal-block">
+&gt; (let ((ls '(a b c))) `(func ,@ls))
+(func a b c)
+</pre>
+<p>In practice <tt class="docutils literal"><span class="pre">,@ls</span></tt> "unpacks" the list <tt class="docutils literal"><span class="pre">ls</span></tt> into its components: without
+the splice operator we would get:</p>
+<pre class="literal-block">
+&gt; (let ((ls '(a b c))) `(func ,ls))
+(func (a b c))
+</pre>
+<p>The power of quasiquotation stands in the code/data equivalence:
+since Scheme/Lisp code is nothing else than a list, it is easy
+to build code by interpolating a list template.
+For instance, suppose we want to evaluate a Scheme expression
+in a given context, where the contexts is given as a list of
+bindings, i.e. a list names/values:</p>
+<pre class="literal-block">
+(eval-with-context '((a 1)(b 2) (c 3))
+  '(* a  (+ b c)))
+</pre>
+<p>How can we define <tt class="docutils literal"><span class="pre">eval-with-context</span></tt>? The answer is by <tt class="docutils literal"><span class="pre">eval</span></tt>-uating
+a template:</p>
+<pre class="literal-block">
+(define (eval-with-context ctx expr)
+ (eval `(let ,ctx ,expr) (environment '(rnrs))))
+</pre>
+<p>Notice that <tt class="docutils literal"><span class="pre">eval</span></tt> requires a second argument that specifies the language
+known by the interpreter; in our case we declared that <tt class="docutils literal"><span class="pre">eval</span></tt> understands
+all the procedures and macros of the most recent RnRS standard (i.e.
+the R6RS standard). The environment specification has the same syntax
+of an <tt class="docutils literal"><span class="pre">import</span></tt>, since in practice it is the same concept: it is
+possible to specify user-defined modules as the <tt class="docutils literal"><span class="pre">eval</span></tt> environment.
+This is especially useful if you have security concerns, since you
+can run untrusted code in a stricter and safer subset of R6RS Scheme.</p>
+<p><tt class="docutils literal"><span class="pre">eval</span></tt> is extremely powerful and sometimes it is the only possible
+solution, in particular when you want to execute generic code at
+runtime, i.e. when you are writing an interpreter. However, often
+you only want to execute code known at compilation time: in this case
+the job of <tt class="docutils literal"><span class="pre">eval</span></tt> can be done more elegantly by a macro. When that
+happens, in practice you are writing a compiler.</p>
+</div>
+<div class="section">
+<h1><a id="programs-writing-programs" name="programs-writing-programs">Programs writing programs</a></h1>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/writer.jpg" class="right" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/writer.jpg">
+<p>Once you realize that code is nothing else than data, it becomes easy
+to write programs taking as input source code and generating as output
+source code, i.e. it is easy to write a compiler.
+For instance, suppose we want to convert the following code fragment</p>
+<pre class="literal-block">
+(begin
+ (define n 3)
+ (display "begin program\n")
+ (for i from 1 to n (display i)); for is not defined in R6RS
+ (display "\nend program\n"))
+</pre>
+<p>which is not a valid R6RS program into the following program, which is
+valid according to the R6RS standard:</p>
+<pre class="literal-block">
+(begin
+ (define n 3)
+ (display "begin program\n")
+ (let loop (( i 1)) ; for loop expanded into a named let
+   (unless (&gt;= i  n) (display i) (loop (add1 i))))
+   (display "\nend program\n")))
+</pre>
+<p><tt class="docutils literal"><span class="pre">begin</span></tt> is the standard Scheme syntax to group multiple expressions
+into a single expression <em>without introducing a new scope</em> (you may
+introduce a new scope with <tt class="docutils literal"><span class="pre">let</span></tt>) and <em>preserving the evaluation order</em>
+(in most functional languages the evaluation order is unspecified).</p>
+<p>More in general, we want to write a script which is able to convert</p>
+<pre class="literal-block">
+(begin                                 (begin
+  (expr1 ...)                            (expr1' ...)
+  (expr2 ...)             --&gt;            (expr2' ...)
+   ...                                    ...
+  (exprN ...))                           (exprN' ...))
+</pre>
+<p>where the expressions may be of kind <tt class="docutils literal"><span class="pre">for</span></tt> or any other kind not
+containing a subexpression of kind <tt class="docutils literal"><span class="pre">for</span></tt>.
+Such a script can be thought of as a preprocessor
+expanding source code from an high level language with a primitive
+<tt class="docutils literal"><span class="pre">for</span></tt> syntax into a low level language without a primitive
+<tt class="docutils literal"><span class="pre">for</span></tt>. Preprocessors of this kind are actually very primitive
+compilers, and Scheme syntax was basically invented to make the
+writing of compilers easy.</p>
+<p>In this case you can write a compiler expanding <tt class="docutils literal"><span class="pre">for</span></tt> expressions
+into named lets as follows:</p>
+<pre class="literal-block">
+(import (rnrs) (only (ikarus) pretty-print))
+
+;; a very low-level approach
+(define (convert-for-into-loop begin-list)
+  (assert (eq? 'begin (car begin-list)))
+  `(begin
+     ,@(map (lambda (expr)
+              (if (eq? 'for (car expr)) (apply convert-for (cdr expr)) expr))
+            (cdr begin-list))))
+
+; i1 is subject to multiple evaluations, but let's ignore the issue
+(define (convert-for i from i0 to i1 . actions)
+  ;; from must be 'from and to must be 'to
+  (assert (and (eq? 'from from) (eq? 'to to)))
+  `(let loop ((i ,i0))
+     (unless (&gt;= i ,i1) ,@actions (loop (+ i 1)))))
+
+(pretty-print
+ (convert-for-into-loop
+  '(begin
+     (define n 3)
+     (display "begin program\n")
+     (for i from 1 to n (display i))
+     (display "\nend program\n"))))
+</pre>
+<p>Running the script you will see that it replaces the <tt class="docutils literal"><span class="pre">for</span></tt> expression
+with a <em>named let</em> indeed. It is not difficult to extend the compiler
+to make it able to manage sub-expressions (the trick is to use
+recursion) and structures more general than <tt class="docutils literal"><span class="pre">begin</span></tt>: but I leave
+that as an useful exercise. In a future episode I will talk of
+<em>code-walkers</em> and I will discuss how to convert generic source code.
+In general, one can convert s-expression based source code by using
+an external compiler, as we did here, or by using the built-in mechanism
+provided by Scheme macros. Scheme macros are particularly powerful,
+since they feature extremely advanced pattern matching capabilities:
+the example I have just given, based on the primitive list operations
+<tt class="docutils literal"><span class="pre">car/cdr/map</span></tt> is absolutely primitive in comparison.</p>
+<p>The next episode will be entirely devoted to macros. Don't miss it!</p>
+</img></div>
+<div class="section">
+<h1><a id="appendix-solution-of-the-exercises" name="appendix-solution-of-the-exercises">Appendix: solution of the exercises</a></h1>
+<p>In the latest episode I asked you to write an equivalent (for
+lists) of Python built-ins <tt class="docutils literal"><span class="pre">enumerate</span></tt> and <tt class="docutils literal"><span class="pre">zip</span></tt>. Here I
+give my solutions, so you may check them with yours.</p>
+<p>Here the equivalent of Python <tt class="docutils literal"><span class="pre">enumerate</span></tt>:</p>
+<pre class="literal-block">
+(define (py-enumerate lst)
+  (let loop ((i 0) (ls lst) (acc '()))
+    (if (null? ls) (reverse acc)
+        (loop (+ 1 i) (cdr ls) (cons `(,i ,(car ls)) acc)))))
+</pre>
+<p>and here is an example of usage:</p>
+<pre class="literal-block">
+&gt; (py-enumerate '(a b c))
+  ((0 a) (1 b) (2 c))
+</pre>
+<p>Here is the equivalent of Python <tt class="docutils literal"><span class="pre">zip</span></tt>:</p>
+<pre class="literal-block">
+(define (zip . lists)
+ (apply map list lists))
+</pre>
+<p>Here is an example of usage:</p>
+<pre class="literal-block">
+&gt; (zip '(0 a) '(1 b) '(2 c))
+((0 1 2) (a b c))
+</pre>
+<p>Notice that <tt class="docutils literal"><span class="pre">zip</span></tt> works like the transposition operation
+in a matrix: given the rows, it returns the columns of the matrix.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=240793.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=240793&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240793&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F8&amp;bodytext=In+this+episode+I+will+explain+the+meaning+of+the+%26quot%3Bcode+is+data%26quot%3B+concept.+To+this+aim+I+will+discuss+the++quoting+operation+which+allows+to+convert+a+code+fragment+into+a+list+of+symbols+and+primitive+values+-+i.e.+converts+code+into+data.+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240793&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F8">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240793&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F8">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Mixins considered harmful/4</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=254507.html">Discuss</a> | 
+<a href="mailto:?subject=Mixins considered harmful/4&amp;body= %0AArtima Weblogs %0AMixins considered harmful/4 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=254507">Email</a> | 
+<a href="../viewpostP.html$/thread=254507.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=254367.html" title="Mixins considered harmful/3">Previous</a> | 
+<a class="sl" href="thread=251476.html" title="The Adventures of a Pythonista in Schemeland/19">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Mixins considered harmful/4</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">April 8, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this final installment I show a solution of the design problem posed last week, i.e. I show a possible mechanism for adding multiple interfaces to an object without polluting its namespace with mixin methods.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="a-possible-solution" name="a-possible-solution">A possible solution</a></h1>
+<p>The design problem described in the last article is clearly a problem
+of interfaces. We have an object and we want to interact with it
+through multiple interfaces (GUI, HTTP, FTP, etc.). The mixin
+solution just adds a bunch of methods for each interface, with the
+result of creating a monster object with hundreds of methods.</p>
+<p>This design is a maintenance nightmare. The human brain can manage a
+limited amount of information. An object with ten methods can be
+kept in mind easily enough, but an object with a hundred methods is
+outside the reach of the average programmer.</p>
+<p>The solution is to split the hundred methods into ten
+categories with ten methods each: at this point you can keep the ten
+categories in your mind.
+This solution scales well: if I
+need a thousand methods, I can just define ten macro-categories,
+each macro-category including ten micro-categories, and I can keep
+in mind the macro-categories.</p>
+<p>Hierarchical categories are the natural
+way to memorize information for the human mind, at least from
+<a class="reference" href="../_/http/en.wikipedia.org/wiki/Categories_(Aristotle)/index.html">Aristotle's times</a>: this is the right solution, not to have
+a hundred methods at the same level in the same namespace.</p>
+<p>We need therefore a mixin-like solution which keeps the methods
+in separate namespaces <em>explicitly</em> (usual mixins keeps the methods
+in separate namespaces but <em>implicitly</em>, without visibility to the
+use of the class).</p>
+<p>Technically this idea can be implemented by defining an
+<em>interface wrapper</em> object
+which is also an <em>attribute descriptor</em> (if you are not
+familiar with the concept of descriptors in Python, you must read
+the <a class="reference" href="../_/http/users.rcn.com/python/download/Descriptor.htm">beautiful essay by R. Hettinger</a> on the subject):</p>
+<pre class="literal-block">
+class BaseWrapper(object):
+    "Base class for interface wrappers built from mixin classes"
+    def __init__(self, obj):
+        self.__obj = obj
+    def __get__(self, obj, objcls=None):
+        if obj is None:
+            return self
+        return self.__class__(obj)
+    def __getattr__(self, name):
+        obj = self.__obj
+        if obj is None:
+            raise TypeError('Unbound wrapper %r' % self)
+        return getattr(obj, name)
+    def __repr__(self):
+        names = ', '.join(n for n in dir(self) if not n.startswith('_'))
+        msg = 'bound to %r' % self.__obj if self.__obj is not None else ''
+        return '&lt;%s {%s} %s&gt;' % (self.__class__.__name__, names, msg)
+
+def iwrapper(mixin):
+    "Convert a mixin class into an interface wrapper object"
+    # could be implemented with single-inheritance only, but why bother?
+    cls = type(mixin.__name__ + 'Wrapper', (BaseWrapper, mixin), {})
+    return cls(None)
+</pre>
+<p>Interface wrapper objects are instances of the mixin (interface) class
+but also proxies: they are intended to wrap the inner
+object, by dispatching first on the mixin methods and then to the inner
+methods. In practice, if you want to add an interface to an instance <tt class="docutils literal"><span class="pre">c</span></tt>
+of a class <tt class="docutils literal"><span class="pre">C</span></tt>, and the methods of the interface are stored into a mixin
+class <tt class="docutils literal"><span class="pre">M</span></tt>, you can just add an interface wrapper to <tt class="docutils literal"><span class="pre">C</span></tt>:</p>
+<pre class="literal-block">
+class C(object):
+    m = iwrapper(M)
+</pre>
+<p>Now <tt class="docutils literal"><span class="pre">c.m</span></tt> is an instance of <tt class="docutils literal"><span class="pre">M</span></tt> which can also be used as a fake
+<tt class="docutils literal"><span class="pre">C</span></tt> object thanks to the <tt class="docutils literal"><span class="pre">__getattr__</span></tt> trick. For simplicity I
+assuming that there are no name clashes between the names of the
+interface methods and the names of the inner methods.</p>
+<p>Here is how you would use interface wrappers in the <tt class="docutils literal"><span class="pre">PictureContainer</span></tt>
+example:</p>
+<pre class="literal-block">
+class PictureContainer(DictMixin, object):
+  # interface wrappers are instances of the corresponding mixin class;
+  # moreover they dispatch on PictureContainer objects
+  gui = iwrapper(GUI)
+  http = iwrapper(HTTP)
+  webdav = iwrapper(WEBDAV)
+  ftp = iwrapper(FTP)
+  auth = iwrapper(AUTH)
+
+  @property
+  def log(self):
+    return logging.getLogger(self.__class__.__name__)
+
+  def __init__(self, id, pictures_or_containers):
+      self.id = id
+      self.data = {}
+      for poc in pictures_or_containers:
+        # both pictures and containers must have an .id
+        self.data[poc.id] = poc
+
+  def __getitem__(self, id):
+    return self.data[id]
+
+  def __setitem__(self, id, value):
+    self.log.info('Adding or replacing %s into %s', id, self.id)
+    self.data[id] = value
+
+  def __delitem__(self, id):
+    self.log.warn('Deleting %s', id)
+    del self.data[id]
+
+  def keys(self):
+    return self.data.keys()
+</pre>
+<p>Notice that I have refactored <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> a bit.  I have
+defined the property <tt class="docutils literal"><span class="pre">log</span></tt> explicitly (before it was imported,
+<tt class="docutils literal"><span class="pre">from</span> <span class="pre">utility</span> <span class="pre">import</span> <span class="pre">log</span></tt>).  Since it takes only three lines, it
+makes sense to write them out and to avoid forcing the reader to look
+in another module. There is always a compromise between code reuse and
+spaghetti code. When in doubt, I always remind myself that
+<em>readability counts</em>.</p>
+<p>As you see, I have removed all mixin classes except <tt class="docutils literal"><span class="pre">DictMixin</span></tt>.
+After all, I have decided that a <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> <em>is</em> a dictionary,
+but it is not really also an object of type GUI, HTTP, WEBDAV, FTP, AUTH.
+Logically those are different interfaces or wrappers over the basic object.</p>
+<p>There is still multiple inheritance from <tt class="docutils literal"><span class="pre">object</span></tt>, because
+<tt class="docutils literal"><span class="pre">DictMixin</span></tt> is an <em>old-style</em> class (for backward compatibility reasons)
+whereas interface wrappers, being attribute descriptors,
+are intended to be used with <em>new-style</em>
+classes. Inheriting from <tt class="docutils literal"><span class="pre">object</span></tt> makes <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> a new style
+class. This is one of the rare cases where multiple inheritance is
+convenient, but this use case has already disappeared in Python 3.0,
+where all classes are new-style.</p>
+</div>
+<div class="section">
+<h1><a id="discussion" name="discussion">Discussion</a></h1>
+<p>Let me check if this solution to our design problem is consistent
+with the <a class="reference" href="../_/http/www.python.org/dev/peps/pep-0020/index.html">Zen di Python</a>.
+First of all, the implementation of the interface wrapper concept is simple
+- 20 lines of code - and this is already a step in the right direction
+(<em>if the implementation is hard to
+explain, it's a bad idea</em>).
+All the methods of the mixin are localized in the mixin namespace
+and they do not pollute the namespace of the original class, and
+that's good (<em>namespaces are one honking great idea -- let's do more of
+those!</em>).
+Moreover, we are following the  <em>explicit is better than implicit</em> principle.
+For instance, to access the <tt class="docutils literal"><span class="pre">POST</span></tt> method of the <tt class="docutils literal"><span class="pre">HTTP</span></tt> mixin we need
+to write <tt class="docutils literal"><span class="pre">self.http.POST</span></tt>, which is good, since the readers of our code
+will not need to guess the origin of the method
+(<em>in the face of ambiguity, refuse the temptation to guess</em>).</p>
+<p>The solution is also usable (<em>practicality beats purity</em>): you can instantiate
+a <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> object and perform some experiment from the Python
+prompt:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; pc = PictureContainer('root', [])
+</pre>
+<p>Autocompletion works pretty well:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; pc.ftp. # press TAB
+pc.ftp.RECV
+pc.ftp.SEND
+...
+</pre>
+<p>the <tt class="docutils literal"><span class="pre">help</span></tt> function does not provide excessive information</p>
+<pre class="literal-block">
+&gt;&gt;&gt; help(pc)
+Help on PictureContainer in module mixins2 object:
+class PictureContainer(UserDict.DictMixin, __builtin__.object)
+|  Method resolution order:
+|      PictureContainer
+|      UserDict.DictMixin
+|      __builtin__.object
+|
+|  Methods defined here:
+|  ...
+|
+|  auth = &lt;AUTHWrapper {is_admin ...} &gt;
+|  ftp = &lt;FTPWrapper {RECV, SEND ...} &gt;
+|  gui = &lt;GUIWrapper {draw_button, draw_buttons ...} &gt;
+|  http = &lt;HTTPWrapper {GET, POST ...} &gt;
+|  webdav = &lt;WEBDAVWrapper {GET, POST, LOCK, UNLOCK ...} &gt;
+...
+</pre>
+<p>and it is possible to introspect just the features you are interested
+in, without having everything mixed in (<em>sparse is better than dense</em>):</p>
+<pre class="literal-block">
+&gt;&gt;&gt; print dir(pc.http)
+['GET, 'POST', ...]
+</pre>
+</div>
+<div class="section">
+<h1><a id="conclusion" name="conclusion">Conclusion</a></h1>
+<p>Is the solution presented here the only solution or even the best
+solution to the problem of adding multiple interfaces to an object?
+Certainly not. I have written it down in half an hour an I am not
+even using it, since (fortunately) I am not a framework writer.</p>
+<p>The solution is intended as a suggestion
+for people which are refactoring a framework based
+on mixins and which have their methods organized in mixin
+classes. Then, the <tt class="docutils literal"><span class="pre">iwrapper</span></tt> function is able to convert
+such pre-existing classes into objects which can be used as
+class attributes, replacing multiple inheritance with composition.</p>
+<p>If you do not already have the mixin classes, you may be better
+off with a different solution. Moreover, if you are using Python 2.6
+or later, it is natural to tackle this problem in terms of
+Abstract Base Classes (<a class="reference" href="../_/http/www.python.org/dev/peps/pep-3119/index.html">ABC</a>), which I have completely ignored.</p>
+<p>The solution I have presented lists all the interfaces supported
+by an object directly (statically); however you could use a different
+design based on adapters, where the object is dynamically adapted
+with the correct interface before being passed to its consumer object.
+A solution based on adapters is fine if the list of supported
+interfaces is not know a priori.</p>
+<p>My point here was to show here that Python (at least from Python 2.2)
+makes it easy to implement solutions based on composition rather than on
+inheritance.</p>
+<p>Actually, I would say that the general trend of modern Python
+frameworks is to favor <a class="reference" href="../_/http/www.muthukadan.net/docs/zca.html">component programming</a> over
+inheritance. You should take in account this fact. Instead of my home
+made solution you may want to try out an enterprise-ready solution,
+like the component framework of Zope 3 (I personally prefer home made
+solutions to over-engineered frameworks, but YMMV).</p>
+<p>Nowadays I tend to consider multiple inheritance and mixins more of
+a hack than a legitimate design technique: they may be useful when you
+need to integrate with pre-existing code with a minimal offert, or as
+a debugging tool, when you want to instrument a third party hierarchy,
+but you if are designing an application from scratch you are often
+better off if you do not rely on mixins.  Actually I usually
+recommend to use as little as possible even single inheritance.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=254507.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=254507&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D254507&amp;title=Mixins+considered+harmful%2F4&amp;bodytext=In+this+final+installment+I+show+a+solution+of+the+design+problem+posed+last+week%2C+i.e.+I+show+a+possible+mechanism+for+adding+multiple+interfaces+to+an+object+without+polluting+its+namespace+with+mixin+methods.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D254507&amp;title=Mixins+considered+harmful%2F4">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D254507&amp;title=Mixins+considered+harmful%2F4">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/17</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=251156.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/17&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/17 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=251156">Email</a> | 
+<a href="../viewpostP.html$/thread=251156.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=250434.html" title="Testing Web Applications with Python and Twill">Previous</a> | 
+<a class="sl" href="thread=251159.html" title="The Adventures of a Pythonista in Schemeland/18">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/17</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">March 3, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This episodes explains how to implement a functional list comprehension syntax in Scheme. The difference with Python list comprehension is also explained.
+Moreover, I have decided to distribute the code create for this series as a library: http://www.phyast.pitt.edu/~micheles/scheme/aps.zip
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="the-aps-library" name="the-aps-library">The APS library</a></h1>
+<p>The R6RS standard provides a few list utilities; the <a class="reference" href="../_/http/srfi.schemers.org/srfi-1/srfi-1.html">SRFI-1</a>
+provides a few others. Nevertheless the offering is incomplete:
+in particular a list comprehension syntax is missing. Therefore
+I have decided to distribute a library providing list comprehension
+and more. Such library
+will be useful for future episodes of my <em>Adventures</em>, in particular
+for part IV, about advanced macro programming. After
+all, macro programming is nothing else than manipulation of code seen
+as a nested list of expressions.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/aps_lib_03.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/aps_lib_03.jpg">
+<p>With a remarkable lack of fantasy, I have decided to call the library
+<tt class="docutils literal"><span class="pre">list-utils</span></tt> and to put it in a package called <tt class="docutils literal"><span class="pre">aps</span></tt> (<tt class="docutils literal"><span class="pre">aps</span></tt> of
+course stands for <em>Adventures of a Pythonista in Schemeland</em> and not
+for <em>American Physical Society</em> ;).
+In this way I will be contributing to the entropy and I will be
+littering the world with yet another version of utilities that
+I would rather not write, but this cannot be helped :-(</p>
+<p>For your convenience, I have added in the library the Python-style utilities
+<tt class="docutils literal"><span class="pre">range</span></tt>, <tt class="docutils literal"><span class="pre">zip</span></tt>, <tt class="docutils literal"><span class="pre">transpose</span></tt>, <tt class="docutils literal"><span class="pre">enumerate</span></tt> I did discuss in episodes <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240781.html">7</a>
+and <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240793.html">8</a>, as well as the <tt class="docutils literal"><span class="pre">let+</span></tt> list destructuring macro I introduced
+in episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=249681.html">15</a>. I have also added the reference implementation of <a class="reference" href="../_/http/srfi.schemers.org/srfi-26/srfi-26.html">SRFI-26</a>
+i.e. the <tt class="docutils literal"><span class="pre">cut</span></tt> and <tt class="docutils literal"><span class="pre">cute</span></tt> macros described in episode _14.
+Moreover, the <tt class="docutils literal"><span class="pre">aps</span></tt> package
+contains the testing framework discussed in episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240833.html">11</a>, renamed as
+<tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">easy-test)</span></tt> and slightly improved (the improvement consists
+in the addition of <tt class="docutils literal"><span class="pre">catch-error</span></tt> macro, which captures the error
+message).
+Finally, the <tt class="docutils literal"><span class="pre">aps</span></tt> library includes a more recent version of <tt class="docutils literal"><span class="pre">sweet-macros</span></tt>
+than the one I discussed in episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240804.html">9</a>, so you should replace the
+old one if you have it.</p>
+<p>You can download the package from here: <a class="reference" href="../_/http/www.phyast.pitt.edu/~micheles/scheme/aps.zip">http://www.phyast.pitt.edu/~micheles/scheme/aps.zip</a></p>
+<p>Just unzip the archive and put the files somewhere in your path:</p>
+<pre class="literal-block">
+$ cd &lt;DIRECTORY-IN-YOUR-SCHEME-PATH&gt;
+$ unzip aps.zip
+inflating: sweet-macros.sls
+inflating: aps/cut.sls
+inflating: aps/easy-test.sls
+inflating: aps/list-utils.sls
+...
+</pre>
+<p>You can test the library as follows:</p>
+<pre class="literal-block">
+$ ikarus --r6rs-script aps/test-all.ss
+.........................
+Run 25 tests. 25 passed, 0 failed
+</pre>
+<p>Currently all the tests pass with the latest development version of Ikarus.
+They also pass with the latest development version of Ypsilon and with
+PLT Scheme version 4, except for
+the test <tt class="docutils literal"><span class="pre">zip-with-error</span></tt>:</p>
+<pre class="literal-block">
+(test "zip-with-error"
+      (catch-error (zip '(a b c) '(1 2)))
+      "length mismatch")
+</pre>
+<p>However, this is an expected failure, since the
+error messages are different between Ikarus, Ypsilon and PLT Scheme. Clearly,
+checking for an implementation-dependent error message is a bad idea and
+I could have thought of a better test, but I am lazy; moreover, I do not want
+to discuss the error management mechanism in Scheme right now, since it is
+quite advanced and it is best deferred to future episodes.</p>
+<p>Larceny Scheme is not supported since it does not support the <tt class="docutils literal"><span class="pre">.IMPL.sls</span></tt>
+convention. When it does, it could be supported as well, expecially if I
+get some help from my readers.</p>
+<p>If you are wondering about the so-called  <tt class="docutils literal"><span class="pre">.IMPL.sls</span></tt>
+convention, let me explain that it is a non-standard convention to
+enable portability about different R6RS implementations.
+In particular the <tt class="docutils literal"><span class="pre">aps</span></tt> library contains three modules
+<tt class="docutils literal"><span class="pre">compat.ikarus.sls</span></tt>,  <tt class="docutils literal"><span class="pre">compat.mzscheme.sls</span></tt> and <tt class="docutils literal"><span class="pre">compat.ypsilon.sls</span></tt>
+following the convention. When I write <tt class="docutils literal"><span class="pre">(import</span> <span class="pre">(aps</span> <span class="pre">compat))</span></tt>
+in Ikarus, the file <tt class="docutils literal"><span class="pre">compat.ikarus.sls</span></tt> is read; when I import
+<tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">compat)</span></tt> in PLT,  the file <tt class="docutils literal"><span class="pre">compat.mzscheme.sls</span></tt> is read; and finally
+for Ypsilon the file <tt class="docutils literal"><span class="pre">compat.ypsilon.sls</span></tt> is read. This mechanism
+allows for writing compatibility wrappers; for instance, here is the
+content of  <tt class="docutils literal"><span class="pre">compat.mzscheme.sls</span></tt>:</p>
+<pre class="literal-block">
+#!r6rs
+(library (aps compat)
+(export printf format gensym pretty-print)
+(import (rnrs) (only (scheme) printf format gensym pretty-print)))
+</pre>
+<p>Basically all decent Scheme implementations provide <tt class="docutils literal"><span class="pre">printf</span></tt>, <tt class="docutils literal"><span class="pre">format</span></tt>,
+<tt class="docutils literal"><span class="pre">gensym</span></tt> and <tt class="docutils literal"><span class="pre">pretty-print</span></tt> functionality, usually with these names too,
+but since they are not standard (which is absurd IMO) one is forced to recur
+to do-nothing compatibility libraries, which just import the functionality
+from the implementation-specific module and re-export it :-(</p>
+<p>You can try the <tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">list-utils)</span></tt> library as follows:</p>
+<pre class="literal-block">
+&gt; (import (aps list-utils))
+&gt; (enumerate '(a b c))
+((0 a) (1 b) (2 c))
+</pre>
+<p>Notice that you should consider the <tt class="docutils literal"><span class="pre">aps</span></tt> libraries as experimental
+and subject to changes, at least until I finish the series, in an
+indetermined and far away future ;)</p>
+</img></div>
+<div class="section">
+<h1><a id="implementing-list-comprehension" name="implementing-list-comprehension">Implementing list comprehension</a></h1>
+<p>The most important facility in the <tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">list-utils)</span></tt> library is a syntax for
+list comprehension. Perhaps list comprehension is not the greatest discovery
+in computer science since sliced bread, but I find them
+enormously more readable than <tt class="docutils literal"><span class="pre">map</span></tt> and <tt class="docutils literal"><span class="pre">filter</span></tt>,
+which I use only in the simplest case. Nowadays, a lot
+of languages offer a syntax for list comprehension, starting from Haskell
+to Python, Javascript and C#.</p>
+<p>Scheme does not provide a list comprehension syntax out of the box,
+but it is a simple exercise in macrology to implement them.
+Actually there are many available implementations of list comprehension
+in Scheme. There is even an SRFI (SRFI-42 <a class="reference" href="../_/http/srfi.schemers.org/srfi-42/srfi-42.html">Eager
+Comprehensions</a>) which however I do not like at all since
+it provides too much functionality and an ugly syntax.</p>
+<p>Therefore, here I will pursue a different approach to
+list comprehension, which is shamelessly copied from
+the work of <a class="reference" href="../_/http/schemephil.googlepages.com/index.html">Phil Bewig</a>, with minor simplifications, and
+the usage of <tt class="docutils literal"><span class="pre">let+</span></tt> instead of regular <tt class="docutils literal"><span class="pre">let</span></tt>.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/list-comprehension.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/list-comprehension.jpg">
+<p>Here is the implementation</p>
+<pre class="literal-block">
+(def-syntax list-of-aux
+  (syntax-match (in is)
+
+    (sub (list-of-aux expr acc)
+     #'(cons expr acc))
+
+    (sub (list-of-aux expr acc (var in lst) rest ...)
+     #'(let loop ((ls lst))
+         (if (null? ls) acc
+             (let+ (var (car ls))
+               (list-of-aux expr (loop (cdr ls)) rest ...)))))
+
+    (sub (list-of-aux expr acc (var is exp) rest ...)
+     #'(let+ (var exp) (list-of-aux expr acc rest ...)))
+
+    (sub (list-of-aux expr acc pred? rest ...)
+     #'(if pred? (list-of-aux expr acc rest ...) acc))
+  ))
+
+(def-syntax (list-of expr rest ...)
+  #'(list-of-aux expr '() rest ...))
+</pre>
+<p>We see here the usage of an helper macro <tt class="docutils literal"><span class="pre">list-of-aux</span></tt> and the
+usage of an accumulator <tt class="docutils literal"><span class="pre">acc</span></tt> to collect the arguments of the macro.
+You may understand how it works by judicious use of <tt class="docutils literal"><span class="pre">syntax-expand</span></tt>;
+for instance <tt class="docutils literal"><span class="pre">(list-of-aux</span> <span class="pre">(*</span> <span class="pre">2</span> <span class="pre">x)</span> <span class="pre">'()</span> <span class="pre">(x</span> <span class="pre">in</span> <span class="pre">(range</span> <span class="pre">3)))</span></tt> expands
+into</p>
+<pre class="literal-block">
+(let loop ((ls (range 3)))
+  (if (null? ls)
+      '()
+      (let+ (x (car ls))
+        (list-of-aux (* 2 x) (loop (cdr ls))))))
+</pre>
+<p>which builds the list <tt class="docutils literal"><span class="pre">(0</span> <span class="pre">2</span> <span class="pre">4)</span></tt>, since <tt class="docutils literal"><span class="pre">list-of-aux</span></tt> expands to
+the list constructor <tt class="docutils literal"><span class="pre">cons</span></tt>. Here are a few other test cases
+you may play with:</p>
+<pre class="literal-block">
+(test "double comprehension"
+      (list-of (list x y) (x in '(a b c)) (y in '(1 2)))
+      '((a 1) (a 2) (b 1) (b 2) (c 1) (c 2)))
+
+(test "double comprehension with constraint"
+      (list-of (list x y) (x in (range 3)) (y in (range 3)) (= x y))
+      '((0 0) (1 1) (2 2)))
+
+(test "comprehension plus destructuring"
+      (list-of (+ x y) ((x y) in '((1 2)(3 4))))
+      '(3 7))
+</pre>
+<p>The macro is able to define nested list comprehensions at any
+level of nesting; the rightmost variables corresponds to the inner
+loops and its is even possible to implement constraints and destructuring:
+basically, we have the same power of Python list comprehensions, except
+that that the objects in the <tt class="docutils literal"><span class="pre">in</span></tt> clause must be true lists, whereas
+in Python they can be generic iterables (including infinite ones).</p>
+</img></div>
+<div class="section">
+<h1><a id="a-tricky-point" name="a-tricky-point">A tricky point</a></h1>
+<p>On the surface, the <tt class="docutils literal"><span class="pre">list-of</span></tt> macro looks the same as Python
+list comprehension; however, there a few subtle differences under
+the hood, since the loop variables are treated differently.
+You can see the different once you consider a list comprehension
+containing closures.
+In Scheme a list comprehensions of closures works as you would expect:</p>
+<pre class="literal-block">
+&gt; (define three-thunks (list-of (lambda () i) (i in '(0 1 2))))
+&gt; (list-of (t) (t in three-thunks))
+(0 1 2)
+</pre>
+<p>In Python instead you get a surprising result (unless you really know
+how the <tt class="docutils literal"><span class="pre">for</span></tt> loop work):</p>
+<pre class="literal-block">
+&gt;&gt;&gt; three_thunks = [(lambda : i) for i in [0, 1, 2]]
+&gt;&gt;&gt; [f() for f in three_thunks]
+[2, 2, 2]
+</pre>
+<p>The reason is that Python is not really a functional language,
+so that the <tt class="docutils literal"><span class="pre">for</span></tt> loop works by <em>mutating</em> the loop variable <tt class="docutils literal"><span class="pre">i</span></tt>:
+since the thunk is called after the end at the loop, it sees the
+latest value of <tt class="docutils literal"><span class="pre">i</span></tt>, i.e. 2. The same is true in Common Lisp
+if you use the LOOP macro. In Scheme instead (and in Haskell,
+the language that invented list comprehension) there is
+<em>no mutation</em> of the loop variable: at each iteration a new
+fresh <tt class="docutils literal"><span class="pre">i</span></tt> is created. You can emulate in Python what Scheme does
+for free by using two lambdas:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; three_thunks = [(lambda x : (lambda : x))(i) for i in [0, 1, 2]]
+&gt;&gt;&gt; [f() for f in three_thunks]
+[0, 1, 2]
+</pre>
+<p>(another way of course is to use the well know default argument trick,
+<tt class="docutils literal"><span class="pre">lambda</span> <span class="pre">i=i:</span> <span class="pre">i</span></tt>, but that is not a direct translation
+of how Scheme of Haskell work by introducing a new scope at each
+iteration).</p>
+<p>On the other hand, Python wins on Scheme for what concern polymorphism:
+in Python is it possible to iterate on any iterable without any effort,
+whereas in Scheme you need to specify the data structure you are
+iterating over. For instance, if you want to iterate on vectors you
+need to define a <tt class="docutils literal"><span class="pre">vector-of</span></tt> macro for vector comprehension; if
+you want to interate on hash table you need to define an hash-table
+comprehension macro <tt class="docutils literal"><span class="pre">hash-table-of</span></tt>, and so on. Alternatively, you
+must convert you data structure into a list and use <tt class="docutils literal"><span class="pre">list-of</span></tt>.
+This is annoying. In Python on the contrary there is a common
+protocol for all iterable objects so that the same <tt class="docutils literal"><span class="pre">for</span></tt> syntax
+can be used everywhere.</p>
+<p>The list comprehension defined here only works for finite iterables;
+Python however has also a generator comprehension that works on
+potentially infinite iterables. Scheme too allows to define infinite
+iterables, the so called <em>streams</em>, which however are a functional
+data structure quite different from Python generators, which are
+imperative. Discussing streams will fill the next episode.
+For the moment, have patience!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=251156.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=251156&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D251156&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F17&amp;bodytext=This+episodes+explains+how+to+implement+a+functional+list+comprehension+syntax+in+Scheme.+The+difference+with+Python+list+comprehension+is+also+explained.%0D%0AMoreover%2C+I+have+decided+to+distribute+the+code+create+for+this+series+as+a+library%3A+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16"/>Digg
+  </a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D251156&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F17">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D251156&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F17">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

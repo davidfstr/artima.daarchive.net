@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Using Groovy Builders to Simplify Complex Object Hierarchy Creation</title>
+<meta charset="utf-8"/>
+<meta content="Jeremy Meyer" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=jeremy1.html">Jeremy Meyer's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=296081.html">Discuss</a> | 
+<a href="mailto:?subject=Using Groovy Builders to Simplify Complex Object Hierarchy Creation&amp;body= %0AArtima Weblogs %0AUsing Groovy Builders to Simplify Complex Object Hierarchy Creation %0Aby Jeremy Meyer %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=296081">Email</a> | 
+<a href="../viewpostP.html$/thread=296081.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=294361.html" title="Java 3D Fun with Groovy">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Musings on Language and Design</span><br>
+<span class="ts">Using Groovy Builders to Simplify Complex Object Hierarchy Creation</span><br/>
+<span class="as">by Jeremy Meyer</span><br/>
+<span class="pd">June 26, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A closer look at how Groovy builders help with creational code in complex API's, using the Java3d API as a fun example.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+This is not just a discussion about Java3d, it is a discussion about builders in Groovy and how they can ease our creational code.
+In my last blog, <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=294361.html"> Java 3D Fun with Groovy</a>, I showed an 
+
+example of using the Java3d libraries via Groovy. The seamless integration with Java made it easy to use all of the Java3d API 
+
+classes, but I whined that it was hard to create a 3d scene in code.
+</p>
+<p>
+Actually, I should have been more specific. It was hard to create 3d scene in <i>readable</i> code, and it was hard to get an idea 
+
+of the hierarchy of the elements of a 3d scene by looking at other people's code. This is not an unfamiliar problem, and one which 
+
+Groovy has vastly improved with its builders. I want to illustrate them here.  
+</p>
+<h3>Structure in Code</h3>
+<p>
+Even with a powerful API a lot of our time as software developers is spent just creating stuff. Data structures, domain classes, 
+
+XML, GUI Layouts, Output streams etc. A recurring theme in the creation of all of these is the creation of an objects which 
+
+contains objects.  These objects might in turn have their own nested objects and so on. The problem with this, is that your typical 
+
+programming language cannot know anything about the structure of our domain objects, and so our code looks nothing like our 
+
+hierarchy. Say a customer object has an invoice object in it, or a teacher object has many student objects, when we are 
+
+initialising our hierarchy, we invariably have to treat all of the objects as if they had the same hierarchical level.
+</p>
+<p></p>
+
+Consider:
+
+<pre style="color: rgb(0, 0, 153);">
+   Teacher t = new Teacher("Jones")
+   Student s1 = new Student("Bob")
+   Student s2 = new Student("Sue")
+   t.addStudent(s1)
+   t.addStudent(s2)
+</pre>
+<p>
+This looks a bit flat. 5 lines of code, 3 uses of the <b>new</b> keyword (which adds to the amount of text we have to read) and no 
+
+sense of the hierarchical relationship between teachers and students. This is fine in such a simple case, but in a much more 
+
+complicated case this code block would be horrible to read.
+</p>
+<p>
+Wouldn't it be nicer to be able to do something like this?:
+
+<pre style="color: rgb(0, 0, 153);">
+   teacher ("Jones") {
+      student ("Bob"){}
+      student ("Sue"){}
+   }
+</pre>
+</p>
+<p>
+This uses simple-to-read bracket notation, is much less typing and gives a sense of the hierarchy of the data. 
+</p>
+<p>
+This is what Groovy allows us to do with builders. We essentially have the capacity to create a domain specific language around the 
+
+domain of "building our domain". If this sounds complicated, it isn't. It just means that we can use the minimum amount of syntax 
+
+to specify the boiler plate tasks of creating object instances, whilst at the same time showing their parent / child relationships. 
+
+</p>
+<p>
+Groovy builders are an implementation of the GOF Builder pattern, but they are more than that. They make clever use of the powerful 
+
+syntax and dynamism of the language to give you efficient creational code, cleaner than XML and much cleaner than just using 
+
+vanilla Java code. 
+</p>
+<h3>An Example</h3>
+
+Another example of the recurring need to create structural data is XML. The Java DOM API lets us build XML documents, but the same 
+
+problem applies, for example, to create the XML below:
+
+<pre style="color: rgb(0, 0, 153);">
+   &lt;?xml version="1.0"?&gt;
+   &lt;teacher name = "Jones"&gt;
+      &lt;student name = "Bob"&gt;
+      &lt;student name = "Sue"&gt;
+   &lt;/teacher&gt;
+</pre>
+
+
+We would need something like the following fragment:
+
+<pre style="color: rgb(0, 0, 153);">
+   ..
+   Element teacher = doc.createElement("teacher");
+   teacher.setAttribute("name", "Jones");
+   Element student1 = doc.createElement("student");
+   Element student2 = doc.createElement("student");
+   student1.setAttribute("name", "Bob");
+   student2.setAttribute("name", "Sue");
+   teacher.appendChild(student1);
+   teacher.appendChild(student2);
+   ..
+</pre>
+<p>
+Yech! Very noisy and very flat. We don't get a real sense of structure of the data from looking at the code, and we are wallowing 
+
+in implementation details of the API, with method calls like <b>setAttribute</b>, <b>appendChild</b> and <b>createElement</b>.
+</p>
+<p>
+Groovy supplies a MarkupBuilder() out of the box. Let's look at how we would generate the same XML as above using Groovy.
+</p>
+<pre style="color: rgb(0, 0, 153);">
+def builder = new groovy.xml.MarkupBuilder(writer)
+   builder.teacher (name: "Jones") {
+      student (name: "Bob") {}	
+      student (name: "Sue") {}
+   }
+</pre>
+<p>
+Definitely much cleaner and neater.
+</p>
+<h3>Looks too simple to work</h3>
+<p>
+It all looks a bit too simple to work, but in fact, if you look at my blog,<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=291467.html"> Creating a Domain Specific Language with Groovy</a> , you will see how you can use method interception and closure 
+
+passing to create "pretend" methods and query their parameters, thus giving you the power to dynamically tailor behaviour. In this 
+
+case, the methods "teacher" and "student" don't actually exist, but Groovy uses the calling mechanism to create the XML on the fly, 
+
+as your code tries to call the methods. In the example above, it writes the resulting XML to the writer passed as a constructor 
+
+parameter to the builder. This gives us an elegant way of constructing a structured XML document.
+</p>
+<h3>So what Else Can Builders Do?</h3>
+<p>
+I started this blog by saying that I would demonstrate how I could make simple Java3d scenes easier to render. Let me wrap this 
+
+effort in a disclaimer from the start, by saying that the Java3d library is very complex, and I will demonstrate a simple builder 
+
+that can create scenes using a subset of the API. The idea here is not so much to build a complete layer on top of Java3d, as it is 
+
+to illustrate that with certain, complex API's, we can gain enormous power from creating thoughtful builders in Groovy. [As an 
+
+aside, though, creating a library of builders around the Java3d API seems like a really exciting and fun project, so if anyone has 
+
+knowledge of Java3d and is interested in a challenge, let me know!]
+<p>
+<h3>The Java3d 'Problem'?</h3>
+
+To create a 'Simple Universe' scene in Java 3d, we need to build a fairly rich object scene graph. The Java3d library provides us 
+
+with a rather nice "ColorCube" which is easy to work with and view, so the minimal code we need to create a simple universe, with a 
+
+visible object in it, is this:
+
+<pre style="color: rgb(0, 0, 153);">
+..
+def universe = new SimpleUniverse()
+def group = new BranchGroup()
+group.addChild(new ColorCube(0.1))
+universe.getViewingPlatform().setNominalViewingTransform()
+universe.addBranchGraph(group) 
+..
+</pre>
+<p>
+But this presents the same problem as the other examples. There is a hierarchy here, but we certainly can't see it in the code, and 
+
+we are adding children and branch graphs to groups and universes, which looks very complicated. By default, we get this: <p>
+<img <="" img="" src="../_/https/jeremymeyer.me/images/blog/Untitled.png"/>
+</p>
+
+
+Which is a little boring so we should at least rotate it, so we can see it is a cube. This means doing the following:
+
+<pre style="color: rgb(0, 0, 153);">
+   def cube = new ColorCube(0.3)
+   def universe = new SimpleUniverse()
+   def bGroup = new BranchGroup()
+   def rot = new Transform3D()
+   def trans = new Transform3D()
+   rot.rotX 0.77 
+   trans.mul rot
+   rot.rotY 0.77
+   trans.mul rot
+   def tGroup = new TransformGroup(trans)
+   bGroup.addChild(tGroup)
+   tGroup.addChild(cube)
+   universe.getViewingPlatform().setNominalViewingTransform()
+   universe.addBranchGraph(bGroup)
+</pre>
+
+This is not a Java3d tutorial, but you can see there is suddenly extra complexity here. It comes from the fact that to rotate 
+
+something in a 3d scene, we have to insert a new object into the hierarchy, a <b>TransformGroup</b>. This transform group is given 
+
+yet another object, a <b>Transform</b>, which can specify its rotation, scale and translation. It yields the slightly more 
+
+interesting image:
+</p>
+<p>
+<img <="" img="" src="../_/https/jeremymeyer.me/images/blog/rotatedcube.png"/>
+</p>
+<h3>A Solution</h3>
+<p>
+Let's look at the builder code that I can use to achieve the identical 3D scene hierarchy before I explain how I have implemented 
+
+the builder:
+
+<pre style="color: rgb(0, 0, 153);">
+   new Java3DBuilder().BranchGroup {
+      TransformGroup (scale: 0.3, rotX:0.77, rotY:0.77) {
+         ColorCube {}
+      }
+   }
+</pre>
+<p>
+That's it!!  14 lines down to 3! And look how intuitive it is by comparison. The BranchGroup clearly contains a Transform Group 
+
+which has some parameters, and that in turn contains a ColourCube. Ok, this isn't magic, there is obviously some code needed to do 
+
+this, but it is roughly <a href="../_/http/www.jeremymeyer.com/downloads/j3dgbuilder.zip">100 lines</a> and it takes the form of 
+
+extending an abstract class. The parsing logic is already there and so it really is easy to create a DSL which is intuitive to use, 
+
+clean and simple. 
+I also obtained a lot of leverage from the dynamicism of Groovy (features like dynamcic property setting, and constructor calling) 
+
+and was able to implement some powerful default behaviour which covers a lot of the Java 3d classes that I haven't specifically 
+
+considered. 
+</p>
+<h3>Implementing a Builder</h3>
+<p>
+As I mentioned earlier, implementing a builder is just a question of extending an abstract Java / Groovy class. The full source is 
+
+available <a href="../_/http/www.jeremymeyer.com/downloads/j3dgbuilder.zip">here</a>, and the full specification of 
+
+groovy.util.BuilderSupport can be found in the <a href="../_/http/groovy.codehaus.org/Make+a+builder/index.html"> Groovy documentation </a>. The 
+
+methods I was interested in are below:
+
+
+
+<pre style="color: rgb(0, 0, 153);">
+public abstract class BuilderSupport extends GroovyObjectSupport {
+   .. 
+   protected abstract void setParent(Object parent, Object child);
+   protected abstract Object createNode(Object name);
+   protected abstract Object createNode(Object name, Object value);
+   protected abstract Object createNode(Object name, Map attributes);
+   protected abstract Object createNode(Object name, Map attributes, Object value);
+   ..
+} 
+
+</pre>
+It should be fairly easy to imagine what happens here. Groovy will parse the builder code, calling the <b>createNode</b> method 
+
+when it sees a new node name, and pass in the value and/or a map of attributes that it finds in the parameter list. In the example 
+
+above, <b>TransformGroup</b> would be a new node and <b>scale: 0.3, rotX:0.77, rotY:0.77</b> would be the attributes.  When the 
+
+close curly brace is reached, the <b>setParent</b> method is called with a reference to the parent and the child.
+</p>
+<p>
+This means that when implementing these abstract methods we can decide on the creational behaviour, and build the hierarchy, which 
+
+is what makes the model so powerful. Let's look at some of the highlights. 
+
+<h4>1. Dynamic Class Creation</h4>
+
+Using a fairly standard Java classloading technique, I load the class specified in the builder. This means that the builder code 
+
+need the user to specify the proper classname (e.g. "TransformGroup") but I didn't want to have to specify the full package name. 
+
+To prevent this I chose the dynamic but slow and slightly repugnant option of appending some expected package names from the API 
+
+and trying to load each class. This is not a good use of exceptions, and not my preferred option, but for now it keeps the builder 
+
+code minimal. I have defined a list of packages in the code:
+
+<pre style="color: rgb(0, 0, 153);">
+def packages = ['com.sun.j3d.utils.universe',
+	'com.sun.j3d.utils.geometry',
+	'javax.media.j3d',
+	'javax.vecmath'] 
+</pre>
+<p>
+.. and provided the full package isn't specified (which I have allowed, to resolve any conflicting class names), I use the 
+
+following to create the class:
+</p>
+<pre style="color: rgb(0, 0, 153);">
+   for (packageName in packages) {
+      try {
+         fullName = packageName + '.' + name
+         cls = getClass().getClassLoader().loadClass(fullName)
+      }
+      catch (ClassNotFoundException e) {
+         cls = null
+      }
+      if (cls)
+         break
+   }
+</pre>
+<h4>2. Dynamic Property Setting</h4>
+<p>
+To obviate the need for huge switch statements, I can use Groovy's dymanic property setting to allow me to set attributes on the 
+
+object. This means that as long as a valid property X exists (where there is a setX on the object), I can set it with the specified 
+
+value. Since Groovy will throw an exception if the property doesn't exist, I can do a lot of the work with the code in the default 
+
+case as below, and for the most part, don't need too much domain knowledge to implement that part of the builder:
+
+<pre style="color: rgb(0, 0, 153);">
+def createNode(name, Map attributes) {
+   def node
+      switch (name.toLowerCase()) { 
+         case 'transformgroup':
+         node = buildTransformGroup(attributes)
+         break
+      default:
+         node = createNode(name)
+         attributes.each {key,val -&gt;
+            node.metaClass.setProperty(node,key,val)
+         }
+         break
+      }
+   node
+}
+</pre>
+</p>
+<p>Note the special case of the <b>TransformGroup</b>. More about that below.</p>
+<h4>3. Judicious Shortcutting, or Changing of Hierarchy</h4>
+<p>
+In general, we obviously want to use domain knowledge to ease our build effort. Here, since a TransformGroup always needs a 
+
+Transform, I have combined them in my builder so that what looks like setting a property on a TransformGroup is actually setting it 
+
+on the associated Transform. Under the covers this is creating two nodes with a parent child relationship, so what should be:
+
+<pre style="color: rgb(0, 0, 153);">
+TransformGroup () {
+   Transform3D (scale: 0.6, rotX:0.77, rotY:0.77) {
+      ColorCube {}
+}
+</pre>
+<p>
+
+Is actually more simply declared:
+</p>
+<pre style="color: rgb(0, 0, 153);">
+
+TransformGroup (scale: 0.6, rotX:0.77, rotY:0.77) {
+      ColorCube {}
+}
+</pre>
+</p>
+
+In the same vain, I have simplified the use of rotation of transforms. In Java3d, these need some vector calculation to combine 
+
+them, but it is a distracting nuisance to create (and throw away) these vector classes during initialisation. In the special case 
+
+of the TransformGroup, I used the powerful case statement in Groovy to simplify the use of rotx, roty or rotz. By default, though, 
+
+I just delegate the setting of any TransformGroup property to its child Transform:
+
+<pre style="color: rgb(0, 0, 153);">
+attributes.each {key,val -&gt;
+   switch (key.toLowerCase()) {
+   case ['rotx', 'roty', 'rotz']:
+      // invoke the method on the temp. transfrm and multiply together 
+      temp.metaClass.invokeMethod(temp,key,val)
+      transform.mul(temp)
+      break
+   default:
+      transform.metaClass.setProperty(transform,key,val)
+   break
+   }
+}
+</pre>
+<h3>Experimenting With the Results</h3>
+<p>
+So, in about 100 lines of code, we have a builder which makes it very easy to play with the basic 3d universe. Because a lot of the 
+
+build code is dynamic and generic, I can make use of many of the classes in java3d that I don't know anything about yet, so it 
+
+really is a successful domain specific language. I can now experiment with the library using much simpler code.
+</p>
+<p>
+For example, using a <b>Cone</b> is more complicated than the <b>ColorCube</b> because you need to specify a <b>material</b> for 
+
+it. Also, putting two objects into our universe can be done in such a way that they can be rotated and moved independently of each 
+
+other.  So if I want to create a cube impaled on a cone, I can experiment with a small body of code that actually gives me a clue 
+
+what it represents. Note that although this is a DSL, and looks somewhat declarative, it is in fact ordinary Groovy code, and so 
+
+any valid Groovy statements can appear in between the node declarations.
+</p>
+<pre style="color: rgb(0, 0, 153);">
+..
+builder.BranchGroup {
+   TransformGroup (scale: 0.4, rotX:0.67, rotY:0.53) {
+      ColorCube {}
+   }
+   TransformGroup (scale: 0.65, rotZ:0.22, translation: new Vector3f(0.1f,0.1f,0.1f)) {
+      def appearance = new Appearance()
+      appearance.setMaterial(new Material(green,green,green,green, 0.1f))
+      Cone(appearance: appearance) {}
+   }
+}
+..
+</pre>
+<img <="" img="" src="../_/https/jeremymeyer.me/images/blog/cubecone.png"/>
+<h3>Where to From Here?</h3>
+<p>
+There is a lot missing from this builder, but it wouldn't be very hard to add. As I said earlier, if you are interested, let me 
+
+know. In general, there is nothing to stop you creating different builders to be used together, or nesting builders to create more 
+
+complicated hierarchies. I hope I have convinced you that builders are a very important part of any API to provide, and failing 
+
+that, a very good approach to creating a layer of abstraction that simplifies the use of existing API's.
+</p>
+<h3>References:</h3>
+<p>
+Download the code <a href="../_/https/jeremymeyer.me/images/blog/j3dgbuilder.zip">here</a>.<br>
+<a href="../_/http/en.wikipedia.org/wiki/Builder_pattern/index.html">GOF Builder Pattern </a><br/>
+<a href="../_/http/groovy.codehaus.org/Make+a+builder/index.html">Groovy Builder Documentation</a><br/>
+</br></p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=296081.html">17
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=296081&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jeremy Meyer adds a new entry to <a href="../index.html$/blogger=jeremy1.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/jeremy1.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D296081&amp;title=Using+Groovy+Builders+to+Simplify+Complex+Object+Hierarchy+Creation&amp;bodytext=A+closer+look+at+how+Groovy+builders+help+with+creational+code+in+complex+API%27s%2C+using+the+Java3d+API+as+a+fun+example.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D296081&amp;title=Using+Groovy+Builders+to+Simplify+Complex+Object+Hierarchy+Creation">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D296081&amp;title=Using+Groovy+Builders+to+Simplify+Complex+Object+Hierarchy+Creation">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jeremyMeyer.jpg"/></td><td>Jeremy has been designing and developing software for over 20 years, as well as teaching its mastery. He is fascinated by all aspects of architecture, design and development, the philosophical, the psychological and the aesthetic. He currently heads up the training division at hybris Software, a fast growing and very exciting eCommerce company.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Jeremy Meyer. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

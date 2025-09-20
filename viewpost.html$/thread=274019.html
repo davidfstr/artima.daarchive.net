@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Interfaces vs Inheritance (or, watch out for Go!)</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=274019.html">Discuss</a> | 
+<a href="mailto:?subject=Interfaces vs Inheritance (or, watch out for Go!)&amp;body= %0AArtima Weblogs %0AInterfaces vs Inheritance (or, watch out for Go!) %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=274019">Email</a> | 
+<a href="../viewpostP.html$/thread=274019.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=236637.html" title="Managing Records in Python (Part 1 of 3)">Previous</a> | 
+<a class="sl" href="thread=274438.html" title="Clearing caches">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Interfaces vs Inheritance (or, watch out for Go!)</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">November 15, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Some musings about my personal history with inheritance and interfaces, solicited by the release of the Go language this week.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I am an atypical programmer, since I spent most of my career doing
+science, not programming. When I first learned about Object Oriented
+Programming, a little bit more than seven years ago, I compared it
+with my experience in Mathematics and Physics. I was puzzled. In
+Mathematics you have objects (consider for instance the elements of a
+<a class="reference" href="../_/http/en.wikipedia.org/wiki/Lie_group/index.html">Lie group</a>) but the objects themselves are not important: the
+important entities are the relations about the objects, their
+properties.  When I write <tt class="docutils literal"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></tt> in a mathematical expression I am
+not really interested in the objects: <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> may be numbers,
+or matrices, or functions, or even operators in a Hilbert space if I
+am doing Quantum Mechanics: in any case, the important thing is the
+addition operation. The <tt class="docutils literal"><span class="pre">+</span></tt> means that I am performing a commutative
+operation and therefore that the objects I am using are part of a
+commutative group and a set of well know properties are valid for
+them. Translated into programming jargon, that idea means exactly that
+the important things are the interfaces, i.e.  the set of
+operations/methods which are available to the objects, not the objects
+themselves. Actually, the details about what the objects really are
+can be disregarded as implementation artifacts and I can write generic
+code which works for all objects satisfying a known interface, just as
+in Mathematics I can write a single proof valid for the entire class
+of entities satisfying a given set of properties.</p>
+<p>This was my <em>forma mentis</em> when I begun studying object orientation. I
+was used to consider functions as the primary entities, and objects as
+inert material on top of which functions operate. Actually, it seemed
+backwards to me to attach functions to (classes of) objects.  In
+traditional (Smalltalk-inspired) OOP instead this is exactly what
+happens.  One focuses on objects: one writes <tt class="docutils literal"><span class="pre">window.create()</span></tt>, not
+<tt class="docutils literal"><span class="pre">create(window)</span></tt>. One is induced to put the focus on the window
+which owns the <tt class="docutils literal"><span class="pre">.create</span></tt> method and not on the general operation of
+creation which is meaningful for all kinds of objects.  Anyway, I kept
+studying and at the end I become acquainted with the OOP approach: I
+was no more disturbed by <tt class="docutils literal"><span class="pre">window.create()</span></tt> vs <tt class="docutils literal"><span class="pre">create(window)</span></tt>.
+It is ironic that a year later I discovered Lisp and its object system
+(<a class="reference" href="../_/http/en.wikipedia.org/wiki/CLOS/index.html">CLOS</a>) where you indeed write <tt class="docutils literal"><span class="pre">create(window)</span></tt>. It is understable
+that I immediately became a supporter of generic functions: I decided
+that I was right the first time after all ;) It is also clear why I am
+a supporter of functional programming.  Nowadays, after years of
+experience writing an maintaining large code bases, I am even more
+convinced the really important things are not the objects (or classes)
+but the interfaces.</p>
+<p>During my first six months of OOP programming I also
+had issues with another concept: <em>inheritance</em>. I remember that when I saw
+classes for the first time I said "look ma, objects are just the same as Pascal
+records and methods are just functions taking a record as first
+argument, they are not difficult at all!". It turns out I was
+wrong. Classes are very much different than Pascal records, the reason
+being <em>inheritance</em>. Inheritance makes classes quite nontrivial, and I
+had to write a paper on inheritance to understand its gory details (my
+first paper about programming, the infamous <a class="reference" href="../_/http/www.python.org/download/releases/2.3/mro/index.html">MRO</a> paper). At that point
+however I only understood the tecnical details; but a year later I was
+hired as a programmer, I started working with Zope and then I
+understood what inheritance really was in the real word. From that
+time I started looking for alternative solutions to
+inheritance. I remember that once (something like 4 or 5 years ago) I
+implemented a toy object system in Scheme without inheritance, to see
+how it was like to program without it. From that experiment I
+concluded that one cannot really avoid single inheritance (I mean, you
+can, but then you have to implement some workaround which is more or
+less equivalent to it) whereas instead you can easily throw multiple
+inheritance out of the window. A couple of years ago
+I also became interested in the language <a class="reference" href="../_/http/en.wikipedia.org/wiki/Standard_ML/index.html">SML</a> which I really liked for
+various reasons, the most important being the lack on inheritance
+and the presence of <em>interfaces</em>.</p>
+<p>It is at that moment that I decided to start a public campaign against
+inheritance and pro interfaces. Interfaces are the really important
+idea, not inheritance, but unfortunately many languages conflate the
+two concepts and make things confusing. Inheritance is a (often wrong) way
+of ensuring interface compliance, in the sense that a subclass
+satifies the same interface of its superclass, but in general two
+objects can have the same interface without having a common base
+class. After studying SML I became really convinced that there should
+be a formal way to specify that property in the language.  I also
+decided to write a set of articles about the dangers of inheritance: I
+published on Artima four papers about mixins (<a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=246341.html">1</a>, <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=246483.html">2</a>, <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=254367.html">3</a> and <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=254507.html">4</a>), a
+paper about <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=237764.html">generic functions</a> and a paper about <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=246488.html">traits</a> for people
+still emotionally attached to the Smalltalk OOP model and not wanting
+to switch to the CLOS model. I also planned to write a paper about
+interfaces, to explain how things should be done, but I never wrote
+it. The main reason is lack of time, since I was busy with <a class="reference" href="../_/http/www.phyast.pitt.edu/~micheles/scheme/TheAdventuresofaPythonistainSchemeland.pdf">The
+Adventures of a Pythonista in Schemeland</a> and other things; there is
+also a secondary reason; I needed a language with interfaces done
+right to explain what I had in mind, and I was reluctant to use SML as
+that language. I mean, SML is very nice and it does interfaces really
+well, but it is definitively not a language for the large
+public. Python has interfaces (starting from Python 2.6) which are
+acceptable but not really what I had in mind.</p>
+<p>Now finally there is <a class="reference" href="../_/http/golang.org/index.html">Go</a>. Go is a new language which was released this
+week by Google; it was designed by old-timers of the caliber of Rob
+Pike and Ken Thompson, so I decided to take it very seriously and to
+have a look at it.  It turns out that Go <a class="reference" href="../_/http/golang.org/doc/go_faq.html#inheritance">lacks inheritance</a> and it
+has something similar to <a class="reference" href="../_/http/golang.org/doc/effective_go.html#interfaces_and_types">the kind of interfaces I had in mind</a> for all this
+time. I do not need to write my paper about interfaces vs inheritance
+anymore: just look at <a class="reference" href="../_/http/golang.org/doc/go_for_cpp_programmers.html">Go documentation</a>!  I am still playing with Go
+at the moment.  As every language it has a few good things and a few
+bad things.  I particularly like two blog posts by Mark Chu-Carroll
+(<a class="reference" href="../_/http/scienceblogs.com/goodmath/2009/11/googles_new_language_go.html">this</a> and <a class="reference" href="../_/http/scienceblogs.com/goodmath/2009/11/the_go_i_forgot_concurrency_an.html">that</a>). Of course everybody is writing about Go nowadays
+and you can find tons of comments about the language on the net. There
+is also an extremely activew <a class="reference" href="../_/http/groups.google.com/group/golang-nuts/index.html">newsgroup</a>. Here I just wanted to point
+out the design choices about interfaces and inheritance.  Such ideas
+are not new and it is a shame that no popular language has followed
+such particular route in the design space. I hope Go will become
+popular; if not, I hope such ideas will finally enter in a popular
+language, we are already 10 or 20 years too late :-(</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=274019.html">21
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=274019&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D274019&amp;title=Interfaces+vs+Inheritance+%28or%2C+watch+out+for+Go%21%29&amp;bodytext=Some+musings+about+my+personal+history+with+inheritance+and+interfaces%2C+solicited+by+the+release+of+the+Go+language+this+week.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D274019&amp;title=Interfaces+vs+Inheritance+%28or%2C+watch+out+for+Go%21%29">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D274019&amp;title=Interfaces+vs+Inheritance+%28or%2C+watch+out+for+Go%21%29">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

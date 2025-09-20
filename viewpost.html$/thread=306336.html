@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2010: Upcoming Java Features</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=306336.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2010: Upcoming Java Features&amp;body= %0AArtima Weblogs %0AJavaOne 2010: Upcoming Java Features %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=306336">Email</a> | 
+<a href="../viewpostP.html$/thread=306336.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=306335.html" title="JavaOne 2010: Trials and Tribulations">Previous</a> | 
+<a class="sl" href="thread=306337.html" title="JavaOne 2010: Functional Programming, from Java to Scala">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2010: Upcoming Java Features</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">September 23, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+An overview of upcoming features in Java.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+In the Java booth, Jim Holmlund gave me an overview of upcoming
+
+features in Java. (Luckily for me, he had a copy of the speaker's
+
+slides. So it made up for the session I missed in the morning.)
+<p>
+Some of what's coming is pretty cool. Some is a bit dissapointing,
+
+compared to what I was hoping for. Here's my notes:
+</p>
+<h2><span class="mw-headline" id="Java_7">Java 7</span></h2>
+<p>Java 7 will get a variety of small language enhancements that are
+  
+  part of the <a href="../_/http/blogs.sun.com/darcy/entry/project_coin_final_five/index.html">COIN</a>
+  
+  project:</p><ul>
+<li><strong>Strings in Switch Statements<br>
+</br></strong>A long overdue addition, the switch statement will find uses outside of low-level tokenizers that switch
+    
+    on character bytes and integers. It will be possible to compare
+    
+    strings, making a "dispatch" utility that will have many uses.<br/>
+<br/>
+</li>
+<li><strong>Underscores in constants<br/>
+</strong>When you're putting 1000000 miliseconds into a constant, you'll
+        be able to make it more readable by writing
+    it as 1_000_000. The compiler will then strip out the underscores 
+    
+    to produce the  actual constant.<br/>
+<br/>
+</li>
+<li><strong>Multi-catch<br/>
+</strong>Instead of being limited to a single exception per <tt>catch</tt> clause, you'll be able to catch multiple exceptions
+    
+    in one clause, and handle them each in the same way.<br/>
+     </li>
+<li><strong>Autoclose interface<br/>
+</strong>One of Ruby's goodnesses here. If you implement the autoclose
+        interface, you can put input and output streams in a single try block
+        and, when the block ends, all of the streams are closed. It's an important
+        feature that saves you the headache of making sure that you close everything
+        when an exception disrupts the flow of processing. It will also eliminate
+        memory leaks that can accumulate when programs are terminated abnormally,
+        either externally or internally. That capability, in turn,  means that
+        a VM will be able to stay up longer before memory leaks force it to its
+        knees. <br/>
+<br/>
+</li>
+<li><b>Default methods for interfaces</b><br/> 
+    When defining an interface, it will be possible to specify a default implementation
+    for a method signature. That feature helps in two ways. First, it means that
+    implementation code which is typically written the same way can be provided
+    in one DRY location. Second, it means that an interface designer can provide
+    null implementations for features to be added at a later date. The idea is
+    that older code won't break when  new features are added to implementation
+    objects. <br/>
+<br/>
+    For example, let's say you publish a tree-processing interface.
+    Any object that implements that interface can be given to your summation
+    method, which will add up all the values in that tree. (A directory tree,
+    for example, with a count of files in each directory.) I use that summation
+    processor, and you do too. One day, you know you'll want to add up the file
+    sizes, as well. But you don't have time to implement
+    it right now. If you require tree interface to have a size() method, you
+    force me to implement it, even though it's never used. But if you don't,
+    you can't add it later without breaking my implementation. You naturally
+    don't want to do that, so you define a default size() method. Then, when
+    you get around to it, you define a diskSpace() method that takes a Tree
+    object, and you define a <tt>size()</tt> method in your DirectoryTree implementation.
+    Everything works for you. As for me, I never implement <tt>size()</tt>, but
+    I don't care: I never use that newfangled <tt>diskSpace()</tt> method
+    anyway, so the default implementation of t <tt>size()</tt> is good enough
+    for me. <br/>
+<br/>
+</li>
+<li><strong>Type "Inferencing"</strong> <br/>
+  This is one that sounded good on paper, until I found it what it actually meant.
+    I was hoping for something that
+would put an end to "viral generics". You know, when a library 
+    
+    returns a generic, and you call that API, now you have to put the
+    
+    generics on your variable to make the warning go away--and when you return
+it, everything that calls you has to have generics added. (Old languages 
+    used to have 4 pages of warnings, making it hard to spot the errors.
+    
+    To this day, I dislike warnings.)</li>
+</ul>
+<blockquote>
+<p> So my expectation for  "type inferencing" was that it would work sort
+      of like Ruby or Scala. If <tt>f(x)</tt> returns an ArrayList of String, 
+      then there would be no need to code <tt>ArrayList&lt;String&gt; list = f(x)</tt>.</p>
+<p>Instead, you would just code
+      <tt>list = f(x)</tt>, like you used to, and the compiler would
+      figure it out..</p>
+<p>No such luck. Instead of inferencing from right to left, as
+      I expected, it works the other way around. <br/>
+      Instead of specifying 
+      this:<tt> List&lt;List&lt;String&gt;&gt; list = new ArrayList&lt;List&lt;String&gt;&gt;();</tt><br/>
+    You'll be able to specify this: <tt>List&lt;List&lt;String&gt;&gt; list =
+    new ArrayList&lt;&gt;();</tt><br/>
+<br/>
+    Granted, it's an improvement. But it's a pretty small improvement. And it's
+    not even really type <i>inferencing</i>. Instead, it's type <i>deduction</i>: If
+    you tell the compiler what the type is on the left side of the 
+    assignment, it can figure out what the type has to be on the right side, a few
+    characters later. I should hope so. 
+    Pardon my disappointment, but I was looking for a lot more. </p>
+</blockquote>
+<h2>Java 8(ish)</h2>
+<ul>
+<li><strong> VM Support for Dynamic Languages:</strong><br/>
+      These features will make it 
+      possible for truly dynamic languages to be implemented without 
+      compromise. (Fully dynamic type safety for languages like JRuby 
+      comes to mind as one of the features that will probably be implemented.)<br/>
+<br/>
+</li>
+<li><strong>LambdaJ: </strong><br/>
+      This features makes functions into first-class objects 
+      so that, for example, an anonymous function can be passed as an argument 
+      to a method, using syntax like this:<tt> 
+    #{..function definition here...}</tt></li>
+</ul>
+<blockquote>
+<p>That's an important step towards functional programming 
+      capabilities, of course. But it's only one of several steps that 
+      are needed, and it's going to be a year or two before Java 8 is available.
+    (For more on that subject, see the next report.)</p>
+</blockquote>
+<p>Next: <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=306337.html">Functional Programming, from Java to Scala</a></p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=306336.html">47
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=306336&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D306336&amp;title=JavaOne+2010%3A+Upcoming+Java+Features&amp;bodytext=An+overview+of+upcoming+features+in+Java.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D306336&amp;title=JavaOne+2010%3A+Upcoming+Java+Features">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D306336&amp;title=JavaOne+2010%3A+Upcoming+Java+Features">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

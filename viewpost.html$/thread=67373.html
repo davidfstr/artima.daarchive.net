@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Pitching a Fit</title>
+<meta charset="utf-8"/>
+<meta content="Michael Feathers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=mfeathers.html">Michael Feathers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=67373.html">Discuss</a> | 
+<a href="mailto:?subject=Pitching a Fit&amp;body= %0AArtima Weblogs %0APitching a Fit %0Aby Michael Feathers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=67373">Email</a> | 
+<a href="../viewpostP.html$/thread=67373.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=43210.html" title="Frustration-Driven Language Development">Previous</a> | 
+<a class="sl" href="thread=79267.html" title="Correcting Correctness">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Let's Reconsider That</span><br>
+<span class="ts">Pitching a Fit</span><br/>
+<span class="as">by Michael Feathers</span><br/>
+<span class="pd">August 26, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Have you heard about FIT yet?  Even if you have, do you know what makes it signficantly different from other testing frameworks?  Here is a re-introduction to FIT that highlights one of its most important features.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><i>I had a weird feeling at the XP/Agile Universe conference in Calgary last week.  I was looking through the sessions and the workshops, and I noticed how prominent FIT was at the conference.  But that stood in stark contrast to what I've seen out in the field.  FIT is nowhere near as well known as, say, JUnit.  Fortunately, things are changing.  More people are hearing about FIT, but sometimes I wonder whether they are hearing the most important things about it, the things that make it clear just how different it is from other testing frameworks.  This blog entry is an attempt to introduce FIT to newcomers and put those differences in the foreground.</i></p>
+<p>FIT stands for "Framework for Integrated Tests."  It is a deceptively simple set of classes that Ward Cunningham developed to aid testing in a large variety of applications.  On reading this you might say Oh yes, well fine, why should I use it?  I can call any vendor at random and get a site-license for an automated testing tool.  Well, you can, but FIT is free.  You might reply, Sure, but I can to go to SourceForge and download any number of automated testing tools.   True, but not only is FIT free, it is also significantly more useful than most mainstream testing tools.  The reason is subtle and not widely appreciated.  Ill say more about that later, but first, here is a brief explanation of FIT for people who havent seen it before.</p>
+<h3>What FIT Does...</h3>
+<p>FIT is a testing tool, but at its core, FIT rewrites HTML documents.  If you have a typical HTML document and you pass it to FIT, it will give you an exact copy, unmodified.  The thing that makes FIT interesting is that it treats HTML tables in a special way.  If you give it HTML with an embedded  table that looks like this:</p>
+<table border="1" cellspacing="0">
+<tr><td colspan="5">MarketEvaluation</td></tr>
+<tr><td>Symbol</td> <td>Shares</td> <td>Price</td> <td>Portfolio</td> <td>Attempt Fill</td></tr>
+<tr><td>IBM</td> <td>100</td> <td>6791</td> <td>no</td> <td>yes</td></tr>
+<tr><td>PLI</td> <td>1100</td> <td>3701</td> <td>no</td> <td>yes</td></tr>
+<tr><td>EFT</td> <td>500</td> <td>793</td> <td>yes</td> <td>yes</td></tr>
+</table>
+<p>It will give you back an HTML document that looks the same, but there will be one difference: the table will look like this:</p>
+<table border="1" cellspacing="0">
+<tr><td colspan="5">MarketEvaluation</td></tr>
+<tr><td>Symbol</td> <td>Shares</td> <td>Price</td> <td>Portfolio</td> <td>Attempt Fill</td></tr>
+<tr><td>IBM</td> <td>100</td> <td>6791</td> <td>no</td> <td bgcolor="#cfffcf">yes</td></tr>
+<tr><td>PLI</td> <td>1100</td> <td>3701</td> <td>no</td> <td bgcolor="#cfffcf">yes</td></tr>
+<tr><td>EFT</td> <td>500</td> <td>793</td> <td>yes</td> <td bgcolor="#cfffcf">yes</td></tr>
+</table>
+<p>FIT interprets the first line of each table as the name of a <i>fixture</i>.  A fixture is a piece of bridging code that interprets the table and talks to your application.  It reads the table, row by row, and initiates actions against the application or passes it values; then it colors cells in the table based upon the results.  In the example above, the cells containing yes in the Attempt Fill column matched values that were returned from the application for each row.  Whenever a table value and the value returned by the application match, a cell is colored green, indicating a successful test.</p>
+<p>Here is another example:</p>
+<table border="1" cellspacing="0">
+<tr><td colspan="5">MarketEvaluation</td></tr>
+<tr><td>Symbol</td> <td>Shares</td> <td>Price</td> <td>Portfolio</td> <td>Attempt Fill</td></tr>
+<tr><td>PLI</td> <td>1100</td> <td>1560</td> <td>no</td> <td>no</td></tr>
+</table>
+<p>The table above hasnt been run yet, but when we run it we'll be able to see a bug in our software.  The table tells us that when we attempt to evaluate 1100 shares of PLI at a particular price, "Attempt Fill" should be "no."  Lets run it and see what happens:</p>
+<table border="1" cellspacing="0">
+<tr><td colspan="5">MarketEvaluation</td></tr>
+<tr><td>Symbol</td> <td>Shares</td> <td>Price</td> <td>Portfolio</td> <td>Attempt Fill</td></tr>
+<tr><td>PLI</td> <td>1100</td> <td>1560</td> <td>no</td> <td bgcolor="#ffcfcf">no <font color="#c08080" size="-1"><i>expected</i></font><hr/>yes <font color="#c08080" size="-1"><i>actual</i></font></td></tr>
+</table>
+<p>FIT shows us that the software returns "yes" instead.  FIT changes the table so that we can see both the actual and the expected values for "Attempt Fill" of PLI and it colors the error red so that we can see it easily.</p>
+<p>There is much more to FIT than what Ive described so far.  The example above only shows the use of one type of fixture.  There are many other kinds.  Some allow you to script against an API, others help you check results of database queries, etc.  You can also insert markers in your document that will be replaced with summary information about all of the tests run.  One of the key benefits of FIT is the fact that all of the text in the HTML you input is completely preserved.  This means that you can embed actual tests in project documents.  When you run them through FIT you end up with documents explain the software and actually show what it does.</p>
+<h3>What Makes FIT Powerful...</h3>
+<p>If youve read the section above or had some experience with FIT, you probably have a sense of how it compares to other automated testing tools.  Superficially, FIT looks very useful, but there is something subtle about FIT that you only notice when you compare teams that use it with teams whove attempted to use another tool:</p>
+<p><i>When you use FIT, tests are decoupled from the development process.</i></p>
+<p>Heres what I mean by that.  When you use FIT, you can write tests before the code that needs to be tested.  After you write them you dont have to rewrite them later or re-enter them when the code is ready.</p>
+<p>Is this significantly different from other testing tools?  What about scripting tools?  Couldnt we write little scripts or program against code that doesnt exist yet?  We could but there are two downsides; first of all, to do that you have to be a programmer.  FIT presents a high level interface that non-programmers can use.  Secondly, you end up tying yourself to a specific application interface.  When you use FIT, the fixture defines communication with the application.  If the interface you want to test against changes, you can modify the fixtures and leave the tests the same.  This moves FIT past the volatile interface problem that plagues GUI-based screen scraping tools.  With FIT you are decoupled.  Once business analysts or customers in your organization know how to design FIT tests, they can work on them at any point during the development process.  They can coordinate with the developers to decide on the fixtures that they need for their tests to run completely, but they can still run the tests at any time.  At some point, the tests will start to turn green.  Nobody has to rewrite them or transliterate them from a test design document.  You can write them early, in your documentation, and run them to see progress.</p>
+<p>Recently, Ive visited some teams that have run into trouble with their home-grown testing frameworks.  They took significant time to create them, gained organizational buy-in and then they discovered that they had a bottleneck: Their testers couldn't work concurrently with their developers.  They had to wait until developers solidified the user interface of the application before they could start their work.  This limited the work that testers could do until they got the software, and it also skewed the work that developers did in an iteration: they had to stabilize the UI before they did anything else.  Its unfortunate that they discovered only later that <i>decoupled testing</i> could have helped them from the beginning.</p>
+<p>You can get more information about FIT at (<a href="../_/http/fit.c2.com/index.html">http://fit.c2.com</a>) and FitNesse (a hosting environment for FIT tests) at (<a href="../_/http/fitnesse.org/index.html">http://fitnesse.org</a>).  Both sites have plenty of information, and they are well worth a look.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=67373.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=67373&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michael Feathers adds a new entry to <a href="../index.html$/blogger=mfeathers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/mfeathers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D67373&amp;title=Pitching+a+Fit&amp;bodytext=Have+you+heard+about+FIT+yet%3F++Even+if+you+have%2C+do+you+know+what+makes+it+signficantly+different+from+other+testing+frameworks%3F++Here+is+a+re-introduction+to+FIT+that+highlights+one+of+its+most+important+features.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D67373&amp;title=Pitching+a+Fit">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D67373&amp;title=Pitching+a+Fit">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/michaelfeathers.jpg"/></td><td>Michael has been active in the XP community for the past five years, balancing his time between working with, training, and coaching various teams around the world. Prior to joining Object Mentor, Michael designed a proprietary programming language and wrote a compiler for it, he also designed a large multi-platform class library and a framework for instrumentation control. When he isn't engaged with a team, he spends most of this time investigating ways of altering design over time in codebases.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Michael Feathers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

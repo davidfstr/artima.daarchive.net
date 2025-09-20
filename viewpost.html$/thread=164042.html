@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>AccessibleObject revisited: a study in immutability</title>
+<meta charset="utf-8"/>
+<meta content="Eamonn McManus" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=dichotomy.html">Eamonn McManus' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=164042.html">Discuss</a> | 
+<a href="mailto:?subject=AccessibleObject revisited: a study in immutability&amp;body= %0AArtima Weblogs %0AAccessibleObject revisited: a study in immutability %0Aby Eamonn McManus %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=164042">Email</a> | 
+<a href="../viewpostP.html$/thread=164042.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=142428.html" title="Java API Design Guidelines">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Dr. Dichotomy's Development Diary</span><br>
+<span class="ts">AccessibleObject revisited: a study in immutability</span><br/>
+<span class="as">by Eamonn McManus</span><br/>
+<span class="pd">June 12, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Looking at the Java Reflection API, we can learn some lessons about immutability.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Java Reflection Quiz: what's the value of
+      <code>Object.class.getMethod("toString") ==
+	Object.class.getMethod("toString")</code>?  In other words,
+      what does the following code fragment do?</p>
+<pre style="border: solid black 1px; padding: 10px;">
+boolean identical =
+    (Object.class.getMethod("toString") == Object.class.getMethod("toString"));
+System.out.println(identical);
+</pre>
+<ol style="list-style-type: lower-latin;">
+<li>prints <code>false</code>
+<li>prints <code>true</code>
+<li>prints <code>false</code> or <code>true</code> depending on
+	the implementation
+      <li>does not compile
+    </li></li></li></li></ol>
+<p>Go ahead, think about it.  I'll wait.</p>
+<hr/>
+<p>If you answered "does not compile", you probably remembered
+    that <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Class.html#getMethod(java.lang.String,%20java.lang.Class_)"><code>Class.getMethod</code></a>
+    has a second parameter that specifies the parameter types of the
+    method in question.  So you can distinguish between <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Object.html#wait()"><code>Object.wait()</code></a>
+    and <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Object.html#wait(long)"><code>Object.wait(long timeout)</code></a>,
+    for example.  The code fragment doesn't supply this second
+    parameter, so it doesn't compile, right?</p>
+<p>Well, that's true in versions of the J2SE platform prior to 5.0
+      (Tiger).  Tiger introduced <a href="../_/http/java.sun.com/j2se/1.5.0/docs/guide/language/varargs.html"><em>varargs</em></a>,
+      and changed the signature of several standard methods to exploit
+      them.  In particular, the signature of
+      <code>Class.getMethod</code> changed from<br/>
+<code>Class.getMethod(String name, Class<b>[]</b>
+	parameterTypes)</code><br/>
+      to<br/>
+<code>Class.getMethod(String name,
+	Class<b>...</b> parameterTypes)</code><br/>
+      So instead of writing<br/>
+<code>String.class.getMethod("indexOf", new Class[]
+	{String.class, int.class})</code><br/>
+      you can write<br/>
+<code>String.class.getMethod("indexOf", String.class,
+	int.class)</code><br/>
+      And in particular, when there are no parameters you can just
+      write <code>Object.class.getMethod("toString")</code>.</p>
+<p>If you actually went and studied the API documentation for
+      <code>Class.getMethod</code>, you probably concluded that the right answer was
+      <em>c</em>: prints <code>false</code> or <code>true</code>
+      depending on the implementation.  The specification doesn't
+      explicitly say that calling <code>Class.getMethod</code> twice
+      with the same parameters will return the same <code>Method</code>
+      object, but it doesn't rule it out either.  After all, the
+      reflected method isn't going to change by suddenly acquiring a
+      different <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/Method.html#getReturnType()">return
+	type</a> or migrating to a different <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/Method.html#getDeclaringClass()">class</a>.
+      In other words, the <code>Method</code> is logically
+      <em>immutable</em>, so it seems that implementation would be
+      within its rights to return the same <code>Method</code> object
+      always for a given reflected method.  That's one of the many <a href="../_/http/www.artima.com/intv/gosling313.html">advantages of
+      immutability</a>, after all.</p>
+<div style="border: solid black 1px; margin-left: 20%; padding: 10px;">
+<p>(Let's leave aside the question of <a href="../_/http/java.sun.com/j2se/1.5.0/docs/guide/jvmti/index.html">JVMTI</a>
+      and in particular its ability to <a href="../_/http/java.sun.com/j2se/1.5.0/docs/guide/jvmti/jvmti.html#RedefineClasses">redefine
+	classes dynamically</a>.  If JVMTI suddenly changed a method
+      from <code>final</code> to non-<code>final</code>, then we might
+      expect an existing <code>Method</code> object reflecting that
+      method to start returning a different value from its <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/Method.html#getModifiers()"><code>getModifiers()</code></a>
+      method.  I don't think JVMTI can currently do that sort of
+      thing, but even if it could we would say that
+      <code>Method</code> is <em>unmodifiable</em> rather than
+      <em>immutable</em>, i.e. its behaviour can't be changed in any
+      way by calling its methods.  Unmodifiability would still be
+      enough to allow <code>Class.getMethod</code> to return the same
+      <code>Method</code> object every time it was called with the
+      same parameters.)</p>
+</div>
+<p>So is <code>Method</code> actually immutable?  If you scan
+      through the list of methods in <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/Method.html"><code>java.lang.reflect.Method</code></a>,
+      you'll just see innocuous methods like <code>isVarargs()</code>
+      and <code>getExceptionTypes()</code>.  It all looks immutable-ish
+      enough.</p>
+<p>Then you look at the box just after the method summary:</p>
+<table border="1" cellpadding="3" cellspacing="0" summary="" width="100%">
+<tr bgcolor="#EEEEFF" class="TableSubHeadingColor">
+<th align="left"><b>Methods inherited from class java.lang.reflect.<a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/AccessibleObject.html" title="class in java.lang.reflect">AccessibleObject</a></b></th>
+</tr>
+<tr bgcolor="white" class="TableRowColor">
+<td><code><a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/java/lang/reflect/AccessibleObject.html#getAnnotations()">getAnnotations</a>, <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/java/lang/reflect/AccessibleObject.html#isAccessible()">isAccessible</a>, <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/java/lang/reflect/AccessibleObject.html#isAnnotationPresent(java.lang.Class)">isAnnotationPresent</a>, <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/java/lang/reflect/AccessibleObject.html#setAccessible(java.lang.reflect.AccessibleObject[], boolean)">setAccessible</a>, <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/java/lang/reflect/AccessibleObject.html#setAccessible(boolean)">setAccessible</a></code></td>
+</tr>
+</table>
+<p>So what on earth is <code>setAccessible</code> about?</p>
+<p>If you don't know, then the answer may shock you (if you are
+    easily shocked).  The <code>setAccessible</code> method allows you
+    to bypass the access control semantics of the Java language.  By
+    calling <code>setAccessible</code> on the <code>Method</code>
+    object for a <code>private</code> method, you can call that method
+    from outside the class it is defined in, using <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/Method.html#invoke(java.lang.Object,%20java.lang.Object_)"><code>Method.invoke</code></a>.
+    By calling <code>setAccessible</code> on the <code>Field</code>
+    object for a <code>private</code> field, you can read or write
+    that field from any other class.  As of Tiger, you can even modify
+    a <code>final</code> field in this way.</p>
+<p>You might have comfortably assumed that if you want to know who
+    the callers of a <code>private</code> method are, you don't have
+    to look further than the class it appears in; or that if a class
+    contains only <code>final</code> fields it is immutable.  In the
+    presence of reflection, these assumptions are unreliable.</p>
+<p>You can reasonably hope that there are few cases where other
+    code uses reflection to confound your expectations deliberately.
+    Untrusted code can't call <code>setAccessible</code>, for example.
+    <a href="../_/http/java.sun.com/j2se/1.5.0/docs/guide/serialization/index.html">Java
+    serialization</a> uses reflection to get at private fields so it
+    can serialize or deserialize them, and to call private methods
+    such as <a href="../_/http/java.sun.com/j2se/1.5.0/docs/guide/serialization/spec/input.html#2971"><code>readObject</code></a>,
+    but that works in well-understood ways.</p>
+<p>Anyway, the subject here is not the putatively shocking
+    semantics of <code>setAccessible</code>, but the question of
+    whether <code>Method</code> might be immutable.  Clearly, since it
+    has a setter method, the answer is no.  This single method is all
+    that stands between <code>Method</code> and the glory of
+    immutability.  In other words, <code>Class.getMethod</code>
+<em>must</em> return a new object every time it is called, just
+    for the 1% of callers who then call <code>setAccessible</code> on
+    it.</p>
+<p>Actually, if we look closer, we can see that
+    <code>AccessibleObject</code> is probably one of those classes
+    whose designers bitterly regret the inability to make incompatible
+    changes in the Java API.  (Not that I'm throwing stones here.  API
+    design is a human enterprise and therefore fallible.)  Here are
+    some of the things wrong with it:</p>
+<ul>
+<li>It is not abstract, even though there is no way to obtain an
+	instance of it and nothing that such an instance might
+	represent.
+
+      <li>It has a <code>protected</code> constructor even though its
+	only meaningful subclasses are in the same package.
+
+      <li>It is the common superclass of <code>Method</code>,
+      <code>Field</code>, and <code>Constructor</code>, so we might
+      expect it to represent some important thing that those classes
+      all are.  Being an "accessible object" (whatever that means)
+      does not seem to be such a thing.  And this superclass is
+      apparently an invitation to dump other unrelated things that
+      these three classes have in common there.  What does <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/AccessibleObject.html#getAnnotations()"><code>getAnnotations()</code></a>
+	have to do with being an "accessible object", for example?
+
+      <li>And finally, it contains a single method
+	<code>setAccessible</code> that breaks the immutability of its
+	subclasses.
+    </li></li></li></li></ul>
+<h4>How can we fix this?</h4>
+<p>The short answer is, we can't.  The Reflection API is there,
+      people use it, and we can't change it for fear of breaking
+      millions of lines of code.</p>
+<p>But let's imagine we don't have such a constraint.  How would
+      we achieve the functionality of <code>setAccessible</code> without
+      breaking immutability?</p>
+<p>Here's one suggestion.  Let's start by imagining that we remove
+      the <code>setAccessible</code> method from the <code>Method</code>
+      class, and replace it with this method:</p>
+<pre style="border: solid black 1px; padding: 10px;">
+public Method getAccessibleVersion() throws SecurityException;
+</pre>
+<p>This hypothetical method returns a <code>Method</code> object
+      that is able to ignore access controls, just as a
+      <code>Method</code> that you've called
+      <code>setAccessible(true)</code> on does today.  If you call
+      <code>m.getAccessibleVersion()</code>, then the result can be
+      <code>m</code> if the method was already accessible, because it
+      is public or because <code>m</code> was the result of a previous
+      <code>getAccessibleVersion()</code>.  Otherwise it will be a
+      different <code>Method</code> object <code>m1</code> with the
+      desired property.</p>
+<p>Both <code>m</code> and <code>m1</code> can be immutable.  This
+      implies that if you call <code>m.getAccessibleVersion()</code> a
+      second time, it can reasonably return <code>m1</code> again.
+      Likewise, <code>Class.getMethod</code> can now return the same
+      object every time it is called with the same parameters.</p>
+<p>This is a useful pattern in general to avoid losing
+      immutability.  <b>Where you might want to change the state of an
+      immutable object, arrange to return another immutable object
+      that has the changed state instead.</b></p>
+<p>Well, we haven't really provided the same functionality as
+      before, because before we had a common superclass
+      <code>AccessibleObject</code> that contained the
+      <code>setAccessible</code> method.  Some code <em>might</em> take
+      an <code>AccessibleObject</code> as a parameter and call
+      <code>setAccessible</code> on it without knowing whether it is a
+      <code>Method</code> or a <code>Field</code>.  I'm having trouble
+      imagining what such code might look like, but still.  We could
+      achieve what we want by changing the interface (and the name) of
+      <code>AccessibleObject</code> like this:</p>
+<pre style="border: solid black 1px; padding: 10px;">
+public abstract class ReflectionObject {
+    ReflectionObject() {}  // no subclasses outside this package
+    public abstract ReflectionObject getAccessibleVersion();
+    public abstract boolean isAccessible();
+    ...
+}
+
+public final class Method extends ReflectionObject {
+    ...
+    public Method getAccessibleVersion();
+    ...
+}
+</pre>
+<p>We use covariant return types to allow each subclass to declare
+      itself as the return type of <code>getAccessibleVersion</code>.
+      (To be fair, this feature wasn't available when
+      <code>setAccessible</code> was added in 1.2, so an interface based
+      on <code>getAccessibleVersion()</code> would not have been as
+      clean there.)</p>
+<div style="border: solid black 1px; margin-left: 20%; padding: 10px;">
+<p>If we were feeling extravagant, we could even express this
+    covariance explicitly in <code>ReflectionObject</code>, using the
+    same generics pattern as <a href="../_/http/java.sun.com/j2se/1.5.0/docs/api/java/lang/Enum.html"><code>Enum</code></a>:</p>
+<pre style="border: solid black 1px; padding: 10px;">
+public abstract class ReflectionObject&lt;T extends ReflectionObject&lt;T&gt;&gt; {
+    public abstract T getAccessibleVersion();
+    public abstract boolean isAccessible();
+    ...
+}
+
+public final class Method extends ReflectionObject&lt;Method&gt; {
+    ...
+    public Method getAccessibleVersion();
+    ...
+}
+</pre>
+<p>However, that rhetorical flourish doesn't really gain us
+      anything, especially since <code>Method</code> could extend
+      <code>ReflectionObject&lt;Field&gt;</code> if it was feeling
+      perverse.</p>
+</div>
+<h4>Conclusions</h4>
+<p>What can we conclude from all of this?</p>
+<ul>
+<li><p>Reflection is full of surprises.</p>
+<li><p>Be careful what you call your superclasses.</p>
+<li><p>Try to preserve immutability.  Where you might want to
+      change the state of an immutable object, arrange to return
+      another immutable object that has the changed state instead.</p>
+<li><p>The answer to the quiz is <em>a</em>, it prints <code>false</code>.</p>
+</li></li></li></li></ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=164042&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eamonn McManus adds a new entry to <a href="../index.html$/blogger=dichotomy.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/dichotomy.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D164042&amp;title=AccessibleObject+revisited%3A+a+study+in+immutability&amp;bodytext=Looking+at+the+Java+Reflection+API%2C+we+can+learn+some+lessons+about+immutability.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D164042&amp;title=AccessibleObject+revisited%3A+a+study+in+immutability">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D164042&amp;title=AccessibleObject+revisited%3A+a+study+in+immutability">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/eamonnmcmanus.jpg"/></td><td>Eamonn McManus is the technical lead of the JMX team at Sun
+Microsystems.  As such he heads the technical work on JSR 3 (JMX API)
+and JSR 160 (JMX Remote API).  In a previous life, he worked at the
+Open Software Foundation's Research Institute on the Mach microkernel
+and countless other things, including a TCP/IP stack written in Java.
+In an even previouser life, he worked on modem firmware in Z80
+assembler.  He is Irish, but lives and works in France and in French.
+His first name is pronounced Aymun (more or less) and is correctly
+written with an acute accent on the first letter, which however he
+long ago despaired of getting intact through computer systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Eamonn McManus. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

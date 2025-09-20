@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2010: Functional Programming, from Java to Scala</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=306337.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2010: Functional Programming, from Java to Scala&amp;body= %0AArtima Weblogs %0AJavaOne 2010: Functional Programming, from Java to Scala %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=306337">Email</a> | 
+<a href="../viewpostP.html$/thread=306337.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=306336.html" title="JavaOne 2010: Upcoming Java Features">Previous</a> | 
+<a class="sl" href="thread=317444.html" title="Computer About to Play Jeopardy">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2010: Functional Programming, from Java to Scala</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">September 23, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Dick Wall's talk turns out to be a treasure trove of useful tidbits, and a great introduction to Scala that whets my appetite, big time.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Dick Wall's talk was a revelation. The title was "Funky Java, 
+  Objective Scala". It sounded intriguing, but I didn't really 
+know what to expect. It turned out that his talk was a treasure trove of useful 
+tidbits that turned out to be a great introduction to Scala.</p>
+<h3>Contents</h3>
+<ul>
+<li><a href="#background">Background </a></li>
+<li><a href="#talk">Dick Wall's Talk</a>
+<ul>
+<li><a href="#situations">Situations that Call for Functional Programming</a></li>
+<li><a href="#java">Functional Programming in Java</a></li>
+<li><a href="#advantages">Advantages of Functional Programming</a></li>
+<li><a href="#testing">Testing with Scala</a>
+<ul>
+<li><a href="#scalatest">ScalaTest Your Java Code</a></li>
+</ul>
+</li>
+<li><a href="#scala">Scala Features</a></li>
+</ul>
+</li>
+<li><a href="#missing">So What's Missing in Scala?</a></li>
+<li><a href="#bottom">Bottom Line
+    </a> </li>
+<ul>
+<li><a href="#ruby">Comparing Ruby and Scala</a></li>
+</ul>
+<li><a href="#resources">Resources</a></li>
+</ul>
+<h2><a id="background" name="background"></a>Background</h2>
+<p>Fortunately, I had recently read John Hughes' seminal paper, <a href="../_/http/cs.kent.ac.uk/people/staff/dat/miranda/whyfp90.pdf">Why Functional Programming Matters</a>, originally published in<br>
+  1990. 
+  That paper did a really nice job of presenting two 
+  significant benefits of functional programming, in a slow, easy-to 
+  follow way: </br></p>
+<ul>
+<li><strong>Lazy Evaluation: </strong><br/>
+    Let's say that function <tt>e()</tt> operates on entries produced by 
+    function <tt>g()</tt>. Take a game, for example. The function <tt>g()</tt> 
+    generates moves, while function <tt>e()</tt> evaluates them. But the 
+    game allows for an infinite number of moves. Pretty darn hard 
+    to generate them all and then evaluate them. But the evaluation 
+    function <tt>e()</tt> has cutoff threshholds. It knows when a move is"good enough". Lazy evaluation  says to run <tt>e()</tt> whenever 
+    there is something to run on, and run <tt>g()</tt> one more step only 
+    when <tt>e()</tt> needs something else to process. Then you don't care 
+    if <tt>g()</tt> runs to infinite depth, because <tt>e()</tt> will find something 
+    acceptable and get back to you sometime before the end of the 
+    century. <br/>
+<br/>
+</li>
+<li><strong>Higher-Order Functions:</strong><br/>
+    We know that modularity is a good thing. And we know that 
+    functions are useful. But when functions are "first class 
+    citizens" (which means you can pass one as an argument), then 
+    whole new realms of modularity open up. For example, having 
+    written one function that operates on entries in a list, you 
+    can pass other functions to it in order to do different things 
+    with the entries in that list. The wrapper function is now a "higher order" function that can be configured with worker-functions to do different kinds of stuff.<br/>
+<br/>
+    The result is a tribute to the inductive hypothesis. Having 
+    tested that a simple function passed to the list is properly 
+    applied to the members, and having tested that the function 
+    you pass is correct, you can be sure that result of processing 
+    will be correct. (That's the inductive hypothesis. If we can 
+    prove that proposition P is true for N+1 whenever P is true for N, 
+    and we can prove that P is true for 1, then we know P is
+    true for all numbers. It's the same principle, applied to a list.)</li>
+</ul>
+<h2><a id="talk" name="talk"></a>Dick Wall's Talk</h2>
+<p>That paper turned out to be just the background I needed to fully 
+  appreciate Dick's talk. He started out by describing the advantages 
+  of functional programming and the situations in which it's helpful. 
+  Then he showed how to do functional programming in Java. That was 
+  educational in itself. But then he went a step further. He showed 
+  how much simpler the code was in Scala, and rattled off a list of 
+  Scala features that I typically associate with dynamic languages 
+like Ruby. </p>
+<p>To say I was intrigued is to put it mildly. The list of features 
+  missed a couple of incredibly powerful things that stem from  
+  fully dynamic classes, but at the same time those features can 
+  be dangerous, and they can make programs harder understand. So overall, it began to look as though Scala figured out how to strike a really useful balance between flexibility and  readability.</p>
+<h3><a id="situations" name="situations"></a>Situations that Call for Functional Programming</h3>
+<p>When I was in school, I loved the fact that programming "recipes" (algorithms) gave me ways to solve problems that weren't well-suited ot a mathematical approach. Years later, object-oriented programming turned out to be a terrific tool for dealing with even more complex problems.</p>
+<p>But as Dick pointed out, there are still many mathematical/scientific problems that are more easily expressed using combinations of mathematical functions, rather than algorithms and objects. So while objects and algorithms have been terrific for one class of problems typical of ecommerce, GUIs, and even development tools, it has been less than stellar in other arenas--arenas in which "functional decomposition" is an appropriate solution mechansim.</p>
+<p>Dick's list of situations the benefit from the functional approach included:</p>
+<ul>
+<li>
+<p><strong>Parallelism: </strong>One of the hallmarks of the functional approach is that functions have no side effects. They return a value, but internal state never changes. Because of that invariance, making things operate sequentially simply isn't as critical as it is with an algorithmic approach. And since order is close to inconsequential, many things can happen in parallel.</p>
+</li>
+<li>
+<p><strong>Science and Math Applications: </strong>As Dick pointed out, "functional composition" is second nature to mathematicians, and even to scientists. So while it seems weird to programmers at first, it's their natural way to do things. So when you are getting information on how to solve a problem, you're likely to get it functional form. And when you're describing how your program works, you're likely to be better understood if you're talking in functional terms.</p>
+</li>
+<li>
+<p><strong>Lots of nested if's, Massive for-loops, Monster methods, Flags for tracking state: </strong>These "code smells" suggest a level of complexity that doesn't break down well using the conventional object-oriented, algorithmic approach. Functional decomposition might be just the tool you need to pry the problem apart into manageable pieces.</p>
+</li>
+<li>
+<p><strong>Anything other than e-commerce: </strong>When you're doing network traffic analysis, for example, it might just be that mathematical functions are the ideal way to size up the situation and make real time routing decisions.</p>
+</li>
+</ul>
+<h3> <a id="f3" name="f"></a>Functional Programming in Java</h3>
+<p>The next set of slides showed how to do functional programming in Java. The slides were too far away to read easily, but here's the gist of things:</p>
+<ul>
+<li>A  class that holds state has private final variables. Once assigned, they're fixed. So once created, the state of that object never changes.<br/>
+   </li>
+<li>To make a "change" you make a copy of the object with state variables modified.<br/>
+   </li>
+<li>To get an instance of the class, you use a  Builder. The builder takes the state you want to set as arguments and returns an object for it.<br/>
+  [Note: 
+  For reasons that weren't quite clear, the builder had a chain of constructors, such that the first called the second, and so on, with a different state value passed as an argument in each call.]<br/>
+   </li>
+<li>Take advantage of a  variety of Java extensions:
+    <ul>
+<li><em>Guava</em> - a Java collection library that provides predicates, functions, and constraints. (Although it's missing the map <tt>reduce</tt> operation which does sophisticated list processing, Lisp style.)</li>
+<li>Typesafe <tt>Pair&lt;&gt;</tt> and <tt>Triple&lt;&gt;</tt> tuples that let you pass back multiple results from a function, which is frequently desirable with a functional approach.</li>
+<li><em>Project Lombok</em> - Which automatically adds getters and setters, as well as the <tt>equals</tt> and <tt>hashcode</tt> methods needed for comparisons and collections ordering.</li>
+<li><em>LamdaJ</em> and <em>JSR166y extras</em> - Which have <tt>map.reduce</tt>.</li>
+<li><em>Parallel Array</em> - A function that does a forks and joins under the covers to kick off a plethora of parallel processes.</li>
+</ul>
+</li>
+</ul>
+The point here is simply that it's <em>possible</em> to do functional programming in Java. (In the talk, Dick showed a simplified version of a chromosome-analyzing risk-assessment algorithm, and showed how it fell apart rather nicely using functional decomposition.)
+<h3><a id="f2" name="advantages"></a>Advantages of Functional Programming</h3>
+<p>When you're used to it, according to Dick, and using it where it's appropriate, functional programs are:</p>
+<ul>
+<li>Easier to write</li>
+<li>Easier to read</li>
+<li>Easier to debug</li>
+<li>Easier to <em>test</em></li>
+</ul>
+<p>That last one really caught my attention, because I am a testing maniac. I've coded without tests, and I've coded with them. Coding with a comprehensive collection of tests is <em>way</em> more fun. And it's safer. Programs stay up longer, and when they do crash, they tend to avoid the ultimate sin of losing user data. </p>
+<p>When Dick said that  functional programs are easier to test, it really rang a bell. Because the first thing I need to do to make code testable is typically to break it up into teeny modules that can be independently tested. Therein lies the path to coding nirvana.</p>
+<p>So right about this point in the talk, several things came together: My experience with testing, Dick's comments, and the description of higher order functions in John Hughes' paper. The paper has a marvelous series of examples where you create a list-processing function that takes other functions as an argument. One takes a "sum" function as an argument, and sums the list. Another takes a "product" function, and multiplies the  list elements together. He goes on to give several more examples--all of which are variations on the map <tt>reduce</tt> theme.</p>
+<p>The important thing, to circle back to a point made earlier, is that once you know the meta-function works properly on lists of arbitrary size, you only need to add a test for the new  function you're adding (sum or product, for example). And all you have to prove with those tests is that the "seed" of the induction hypothesis holds true. You already know that the hypothesis holds for N+1 if it holds for N. All you have to prove is that it does indeed hold for N.</p>
+<p> For example, you only need to prove that the sum function produces the correct result for two numbers. It's not hard to do that in a fairly comprehensive manner, given that the task is so small. You care what happens when there is a 1 and a null, or a null and a one, or a null and a null. Maybe half a dozen cases in all. You don't care what happens when there is a null in the beginning of a list, a null at the end, or if there are nulls scattered throughout the list. You don't have to test the list-processing code at the same time as the value-summing code. You divide and conquer.</p>
+<p>As an additional benefit, debugging becomes easier, too, because you have a large collection of teensy functions. When any function has a bug, there is only a small amount of code to inspect. If function A combines functions B &amp; C, and B and C are both known to work, then the bug has to be in the way A combines them. At any point in time, you're only looking at small amount of code, so  debugging is drastically simplified.</p>
+<h3><a id="testing" name="testing"></a>Testing Java with Scala</h3>
+<p>Highly modular programs are easier to test, and Scala's capacity to create DSLs makes it possible to define a testing language that suits the problem. That's the same sort of thing that the Ruby community has been so succesful with. But since Scala works so well with Java, Dick pointed out that Bill Venners was able to make a tidy little DSL wrapper for JUnit and TestNG called ScalaTest. </p>
+<p>So while highly functional Scala progams would be the ultimate in testability, it's possible to enjoy the goodness of Scala to make it easier to write tests for new and existing Java code--and to make those tests easier to read, as well. 
+  (see Inset: ScalaTest Your Java Code)</p>
+<blockquote>
+<table border="1" width="90%">
+<tr>
+<td bgcolor="#CCFFFF"><h3 align="center"><a id="scalatest" name="scalatest"></a>ScalaTest Your Java Code</h3>
+<p>ScalaTest is modeled after my favorite Ruby test harness, RSpec. 
+            The ability to do testing in the “Behavior Driven Development” 
+            (BDD) style that RSpec allows is important, in my view, because the 
+            resulting “specs” can be easily read and reviewed--a highly 
+            significant feature that is often overlooked when the benefits 
+            of testing are enumerated.</p>
+<ul>
+<li>
+<p><a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=294984.html">http://www.artima.com/weblogs/viewpost.jsp?thread=294984</a> <br/>
+                Reviewable, Runnable Specifications Ensure Software Quality</p>
+</li>
+<li>
+<p><a href="../_/http/www.scalatest.org/index.html">http://www.scalatest.org/</a><br/>
+                --ScalaTest can be used to test Java classes<br/>
+                --Shows a readable, runnable test/spec in the BDD style</p>
+</li>
+<li>
+<p><a href="../_/http/www.scalatest.org/quick_start/index.html">http://www.scalatest.org/quick_start </a><br/>
+                --Mentions that it works with JUnit and TestNG<br/>
+                --Mentions that the BDD style shown on the first page is a "trait" that can be enabled or disabled<br/>
+                --Mentions the ability to do functional and integration testing, as well</p>
+</li>
+</ul></td>
+</tr>
+</table>
+</blockquote>
+<h3><a id="f4" name="scala"></a>Scala Features</h3>
+<p>Having shown that functional programming is a valuable tool for a variety of problems, and having shown that it can be accomplished in Java, Dick Wall went on to show how much easier and simpler the code was in Scala. (It was too far away to read, but there was less of it!)</p>
+<p>He cited these advantages of Scala, in particular. (He didn't have time to go into them so the comments that follow them are mine.)</p>
+<ul>
+<li>
+<p><strong> Both Object-Oriented and Functional </strong><br/>
+      It's not Lisp. And it's not Java. It's a really nice blend that lets you choose the approach you need for the problem at hand.</p>
+</li>
+<li>
+<p><strong>Fully integrated with Java.</strong><br/>
+      Import Java libraries with virtually identical syntax. Use them the same way. Compile to Java classes.</p>
+</li>
+<li>
+<p><strong>Tuples</strong><br/>
+      It's a highly useful construct that is used often, most frequently to return multiple values from a function. Apparently it is so useful that NetBeans has no less than 13 different varieties of typesafe Tuples.</p>
+</li>
+<li>
+<p><strong>Pattern Matching</strong><br/>
+      Pattern matching is built in. That's handy, because it's useful. And having it built in keeps the syntax clean.</p>
+</li>
+<li>
+<p><strong>Closures</strong><br/>
+      Closures  are a marvelous thing. I got used to them in Ruby. You pass a block of code to a list,  and it gets executed on every member of the list. For example: <tt>someList.each {|item| your code here}</tt>. Forget loops. You focus on the logic you want to execute for each item in the list--not the loop-processing logic.</p>
+</li>
+<li>
+<p><strong>DSLs</strong><br/>
+      Scala makes it easy to write DSLs--both internal and external, using slightly different approaches. Any single-argument function can be used as an infix operator, functions can be named using symbols, and parentheses and dot-operators are optional. So you can write <tt>object.&gt;=('a')</tt>, or <tt>object &gt;= 'a'</tt>, where <tt>&gt;=</tt> is defined in whatever way makes sense, using the same pattern you use for other functions: <tt>def =&lt; (arg) {...}</tt></p>
+</li>
+<li>
+<p><strong>Operator overloading</strong><br/>
+      The <tt>&gt;=</tt> function can be defined using speed for sports cars, hauling capacity for trucks, and weight for Sumo wrestlers.</p>
+</li>
+<li>
+<p><strong>Traits</strong><br/>
+      A trait is like a class. It has fields and methods. But while it can't be instantiated, it can be included in any class that needs those operations.</p>
+</li>
+<li>
+<p><strong>Case Classes</strong><br/>
+      This is a  fascinating capability that I need to explore more, but early indications are that I'm going to love it. A "case class" is a class that can have multiple constructors, <em>each with a different name</em>. The processing for that class can now ask, "what type of myself am I?" and do the right thing, depending on the answer. To make it concrete, it would be possible to define a Vehicle class with constructors for car, boat, motorcycle, bicycle, and truck. Common methods like slow down and accelerate could be shared, but they could behave differently at times, too. (That is highly unlikely to be the best possible example. But it seems reasonable at the moment.)</p>
+</li>
+<li>
+<p><strong>Implicits</strong><br/>
+<ol type="a">
+<li>Scala's answer to Ruby's open classes. The ability to specify a wrapper type for a class, and automatically convert references to the original type into instantiations of your wrapper type. So if you create SuperString, all references to String s are autoconverted to SuperString(s). Too cool. Apparently, it also works when a String argument is passed to a method that specifies SuperString as the parameter type.</li>
+<li>Also: Default values for missing arguments. Another useful feature that comes in surprisingly handy when constructing DSLs.</li>
+</ol></p>
+</li>
+</ul>
+<p>And those are just the features he mentioned! Once I started looking around, I came across quite a few more:</p>
+<ul>
+<li>
+<p>Built-in <strong>XML handling</strong><br/>
+    Given the prevalence of XML for data storage and interchange, that is a way good thing.</p>
+</li>
+<li>
+<p>Built-in <strong>BNF handling</strong><br/>
+    Great for building  external DSLs.</p>
+</li>
+<li>
+<p>All the cool types: <strong>List, HashMap, TreeMap, LinkedHashMap, Queue, Set, Stack, Tuple</strong>.</p>
+</li>
+<li>
+<p>Rich <strong>Tree Processing</strong> mechansims.<br/>
+    TreeMap and Case Classes, for example, which turn out to be terrific for syntax trees.</p>
+</li>
+<li>
+<p><strong>Function "currying"</strong><br/>
+      Iif <tt>x(a,b)</tt> is a function, than <tt>x(a,b,c)</tt> must mean that <tt>x(a,b)</tt> returns a function, so apply the returned function  to <tt>c</tt>.</p>
+</li>
+<li>
+<p><strong>List comprehensions</strong><br/>
+      (Something for the Pythonistas--algorithmically generated lists. You specify the algorithm, you get a list.)</p>
+</li>
+</ul>
+<h2><a id="f5" name="missing"></a>So What's Missing in Scala?</h2>
+With all of that functionality in place, what exactly is Scala missing? So far, I've 
+  only found a few things:
+  <ul>
+<li><strong> Missing-method Handlers</strong><br/>
+    Many Ruby DSLs do a lot of their processing when you invoke a 
+    method that isn't there. You add a handler and "do the right" 
+    thing, using the name of the method as your guide, and the  
+    fact that you were able to pass a block of code as an argument--a block of code that can easily contain calls to <em>other</em> methods 
+    that aren't there.<br/>
+<br/>
+    For example, that kind of handler makes it easy to create a  "language" that generates XML. You called <tt>foo()</tt> and there is 
+    no  method by that name? That must mean you should start an XML element 
+    by that name, so output <tt>&lt;foo&gt;</tt>. Now execute the code-block  
+    that was passed to foo(), if any, and generate anything you find 
+    in there. When you're done doing all of that, generate <tt>&lt;/foo&gt;</tt>. 
+    Voila! Instant XML generation without having to pre-define
+    a method for every tag you might want to generate. <br/>
+<br/>
+</li>
+<li><strong><s>Open Classes</s></strong><br/>
+    (Not a missing feature. Covered by Scala <i>implicits</i> My thanks to the 
+    folks who clued me in.)<br/>
+<s>Open classes let you add features at runtime. 
+    That feature is kind of like a chain saw, actually. It's really  
+    powerful. But it can also rip your leg off. And it's tricky to 
+    maintain. (What is that class doing *now*?) It's the kind of 
+    thing that would be driving programmers nuts by the end 
+    of a 20-year maintenance cycle. But it's a godsend when the 
+    developers of the original library weren't prescient enough 
+  (or didn't have the time) to develop everything you need.</s><br/>
+<br/>
+</li>
+<li><strong>Pattern-Matching Operator</strong><br/>
+    Scala has a cool match/case mechanism that looks like the Java 
+    switch statement, only with regular expressions. But so far, I 
+    haven't seen the simple match operator common to Icon and Ruby.
+    In Ruby, the expression syntax is: <br/>
+<tt>someString =~ /regularExpression/</tt><br/>
+<br/>
+     The expression returns true if the string matches the regular 
+    expression, false otherwise. It's not as powerful as the match/case 
+    statement, but it's convenient and concise.</li>
+</ul>
+<blockquote>
+<p>Of course, Scala makes it pretty easy to define such an operator, 
+      and use it the way you would expect to. (Any single-argument function 
+      can be used as an infix operator, function names can be symbols, and parentheses and dot-operators are optional. So the syntax comes out exactly the way you want to see it.) </p>
+<p><strong>Definition:</strong></p>
+<pre>
+ class regexTest(String s) {
+     String local_s = s
+
+
+     def @= (regEx re) {
+         match local_s {
+             case re: true    
+             case _: false
+         }
+     }
+ }<strong></strong></pre>
+<p>Like a true functional language, the last expression to be evaluated is returned. So if the match succeeeds, <tt>true</tt> is returned. Otherwise, <tt>false</tt>.</p>
+<p><strong>Usage:</strong></p>
+<p><tt> regexTest(someString) @= /regularExpression/</tt><br/>
+</p>
+<p>You then use an "implicit SuperString" definition to make it available in every reference to the String type.</p>
+</blockquote>
+<h2><strong><a id="f6" name="bottom"></a>Bottom Line</strong></h2>
+<p>  Ok. Scala is missing a couple of Ruby's cool features. But it's not missing all that much. And it has a lot going for it. (For other takes on the subject, see the Inset.)</p>
+<blockquote>
+<table border="1" width="90%">
+<tr>
+<td bgcolor="#CCFFFF"><h3 align="center"><a id="ruby" name="ruby"></a>Comparing Ruby and Scala</h3>
+<p>In <a href="../_/http/blog.lostlake.org/index.html$/archives/27-5-Things-a-Ruby-developer-needs-to-know-about-Scala.html.html">Things a Ruby Developer Needs to Know about Scala</a>, a fellow Ruby-head waxes poetic about Scala's strengths. <br/>
+            Some highlights:</p>
+<ul>
+<li>
+<p>"10-100 times faster...(with) built-in syntactic support for XML"</p>
+</li>
+<li>
+<p>"Scala makes it easy (and intuitive) to write functional style code." <br/>
+                That's important because "Much of Ruby's beauty and productivity comes from its functional side"</p>
+</li>
+<li>
+<p>"Much better facilities for writing DSLs. Scala's syntax is more flexible and expressive that Ruby's"</p>
+</li>
+<li>
+<p>"Scala's parser library lets you have BNF-style expressions
+                right in your code"</p>
+</li>
+</ul>
+<p>See also this <a href="../[http:/debasishg.blogspot.com/2008/05/designing-internal-dsls-in-scala.html">primer on constructing internal DSLs in Scala</a>. It's a follow-on to an 
+          earlier paper that told how to write external DSLs. Highlights:</p>
+<ul>
+<li>
+<p>"Implicits are perhaps the biggest powerhouse towards designing 
+                user friendly DSLs. (They) offer a safe way to extend existing 
+                abstractions. Implicits in Scala is perhaps one of the best 
+                examples of a meaningful compromise in language design between 
+                uncontrolled open classes of Ruby and the sealed abstractions 
+                of Java...."</p>
+</li>
+<li>"...And the best part is that the entire extension...is lexically 
+            scoped and will only be available within the scope of the <br/>
+            implicit definition function."</li>
+</ul></td>
+</tr>
+</table>
+</blockquote>
+<h2><a id="f7" name="resources"></a>Resources<br/>
+</h2>
+<ul>
+<li> <a href="../_/http/scala-lang.org/docu/files/ScalaTutorial.pdf">http://scala-lang.org/docu/files/ScalaTutorial.pdf</a> <br/>
+    A clear, concise intro that builds on Java familiarity 
+    and shows off Scala's advantages. Brilliant.<br/>
+<br/>
+</li>
+<li><a href="../_/http/www.ibm.com/developerworks/java/library/j-scala06278.html#N1019D">http://www.ibm.com/developerworks/java/library/j-scala06278.html#N1019D</a><br/>
+    The busy Java developer's guide to Scala: Collection types. <br/>
+<br/>
+</li>
+<li><a href="../_/http/www.artima.com/scalazine/articles/steps.html">http://www.artima.com/scalazine/articles/steps.html</a><br/>
+    12 steps to using Scala. Lots of good info.<br/>
+<br/>
+</li>
+<li><a href="../_/http/escalatesoft.com/index.html">    http://escalatesoft.com</a><br/>
+    A venture partnered by Dick Wall and Bill Venners,  
+    devoted to teaching Scala. They have free intro sessions 
+    from time to time. (Subscribe to their RSS feed to find out
+    about them.)<br/>
+</li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=306337.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=306337&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D306337&amp;title=JavaOne+2010%3A+Functional+Programming%2C+from+Java+to+Scala&amp;bodytext=Dick+Wall%27s+talk+turns+out+to+be+a+treasure+trove+of+useful+tidbits%2C+and+a+great+introduction+to+Scala+that+whets+my+appetite%2C+big+time.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D306337&amp;title=JavaOne+2010%3A+Functional+Programming%2C+from+Java+to+Scala">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D306337&amp;title=JavaOne+2010%3A+Functional+Programming%2C+from+Java+to+Scala">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Are Long Work Hours Hazardous to Your Project?</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=161826.html">Discuss</a> | 
+<a href="mailto:?subject=Are Long Work Hours Hazardous to Your Project?&amp;body= %0AArtima Weblogs %0AAre Long Work Hours Hazardous to Your Project? %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=161826">Email</a> | 
+<a href="../viewpostP.html$/thread=161826.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=159087.html" title="Wither Those Tiers">Previous</a> | 
+<a class="sl" href="thread=172720.html" title="The Two Roads to Ajax">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Are Long Work Hours Hazardous to Your Project?</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">May 26, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In a recent blog post, Ron Jeffries extols the XP virtue of sustainable effort, including limiting a developer’s work day to eight hours. While a laudable objective, it is also unrealistic. Trusting the process and visions of success are more important for a sustainable project than shorter work hours.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>In his recent blog post, <a href="../_/http/www.xprogramming.com/xpmag/jatSustainablePace.htm">Impact of Overtime on Productivity</a>, Ron Jeffries extols the XP virtue of "sustainable effort"—the pace at which a team can produce results for longer periods of time. His notion of sustainable effort contrasts with the often stop-and-sprint stints so common in a project-based work environment. Project deadlines imply tangible deliverables - in other words, work that, really, must be completed. I have never seen a project where pressure would not mount with the approach of a deadline, leading to both increased work hours and stress. </p>
+<p>According to Jeffries, such cramming before a deadline is counterproductive, since it lowers productivity and increases defects. Instead, a project should proceed at an even pace and at a sustainable rate from start to finish. </p>
+<p>While that's a laudable objective, I think it's about as realistic as expecting smoothly flowing traffic on a Los Angeles freeway. After all, if everyone just drove at the same speed, there really would be no reason for traffic to back up other than for the occasional accident or road hazard. As a theory, however, it doesn't pan out more than a utopian theory of economics conforms to the realities of human nature. The real world is messier—people are messier and are not always rational. Hence, there will always be traffic jams, and there will always be project crunch. </p>
+<p>A more useful theory of sustainable effort should consider the messy aspects of a software project, and help us become more productive in that context. Given that there will always be project deadlines, and hence long hours required to bring a project to conclusion, how can we maintain a high level of productivity while putting in those long hours?</p>
+<p>Jeffries points to mounting pressure as a culprit in reducing productivity because, according to Jeffries, pressure causes well-established processes to break down:
+</p>
+<blockquote>
+<p>A common effect of putting teams under pressure is that they will reduce their concentration on quality and focus instead on "just banging out code". They'll hunker down, stop helping each other so much, reduce testing, reduce refactoring, and generally revert to just coding. The impact of this is completely predictable: defect injection goes way up, code quality goes way down, progress measured in terms of net working features drops substantially.</p>
+</blockquote>
+<p>While that may be true in some projects, I do not see a necessary correlation between pressure and long work hours, and a break-down of established processes. In many ways, processes become even more important when working long hours and under pressure, since fatigue can lead to absent-mindedness and hence sloppiness. The processes are there to guard against the effects of such sloppiness.</p>
+<p>This is evident in the work of emergency workers who must excel in their results under extreme pressure. That is precisely why a pilot in distress must “fly by the book,” and why ingrained automatic responses are the main objective of training firefighters, police offers, and paramedics. </p>
+<p>The work of such emergency personnel is sustainable not because they clock out after eight hours of work (just ask any emergency room doctor), but primarily because they value the processes that are there to ensure a quality outcome. Indeed, improving the effectiveness of an emergency room team—or a software team—is often a matter of improving the processes and then training the participants to respect and follow those processes. </p>
+<p>An effort becomes unsustainable if it produces unacceptable results, or if its participants burn out and quit. Poor quality results and burnout are often locked in a deadly embrace, one feeding on the other. A team that consistently produces unacceptable results will burn its members out, no matter if team members work two hours a day or twelve. On the other hand, nothing is more exhilarating than shipping a hit product—even if it demanded sixteen-hour workdays for a while. At least, after a successful product launch, team members can relax in style on the Riviera, a privilege not afforded to members of the less successful team. </p>
+<p>Sustainable effort and long work hours, therefore, are not mutually exclusive. Instead, sustainable effort requires the right processes in place, and the trust that those processes will lead to success even in the face of pressure. More than anything, team members must be confident at a deep, psychological level, that their working hours lead to success—and managers should help their team members visualize that success. Envisioning a project’s success in concrete, tangible ways more than makes up for the occasional lost sleep that that success demands.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=161826.html">24
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=161826&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D161826&amp;title=Are+Long+Work+Hours+Hazardous+to+Your+Project%3F&amp;bodytext=In+a+recent+blog+post%2C+Ron+Jeffries+extols+the+XP+virtue+of+sustainable+effort%2C+including+limiting+a+developer%E2%80%99s+work+day+to+eight+hours.+While+a+laudable+objective%2C+it+is+also+unrealistic.+Trusting+the+process+and+visions+of+success+are+more+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D161826&amp;title=Are+Long+Work+Hours+Hazardous+to+Your+Project%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D161826&amp;title=Are+Long+Work+Hours+Hazardous+to+Your+Project%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The End of the Vista Experiment</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=221497.html">Discuss</a> | 
+<a href="mailto:?subject=The End of the Vista Experiment&amp;body= %0AArtima Weblogs %0AThe End of the Vista Experiment %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=221497">Email</a> | 
+<a href="../viewpostP.html$/thread=221497.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=221098.html" title="JavaPosse Roundup 2008, March 4-7">Previous</a> | 
+<a class="sl" href="thread=221622.html" title="The Mythical 5%">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">The End of the Vista Experiment</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">December 25, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Over a year ago, I bought a new computer. This was a carefully considered decision, as I don't change computers that often and so try to get something I will be satisfied with for as long as possible.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>The machine itself is a marvel: A silent computer, completely fanless (from <a class="reference" href="../_/http/www.endpcnoise.com/index.html">http://www.endpcnoise.com</a>). It weighs a lot because it's basically a big finned heat sink, with heat pipes connecting to the motherboard. Future upgrades will definitely not be replacing this case (A TNN500AF), but just swapping out processors or boards.</p>
+<p>Years ago, in order to run concurrency experiments, I got a dual-processor machine that had so many fans it was like being at the aft end of a jet engine; I even took to wearing ear defenders while programming. Since then I have been much more aware of noise in my computers. My father even built me a special desk with an insulated cubbyhole for the computer, but the ventilation fans for that box turned out to be no quieter (the cubbyhole is now being retooled for conventional drawers). Subsequently, I discovered the fanless machine (which also has two processors, but as dual cores rather than separate boards).</p>
+<p>Whereas the agile approach would be to try out one small experiment at a time, I am prone to overreaching. I change these things so infrequently, I think, that I might as well move to the latest and greatest MS OS in the process. This was not so rash a decision as it might seem; the process of installing new software is consuming enough that not doing it twice (once for a new machine, and again later for a new OS) constitutes significant time savings.</p>
+<p>Since the old XP system was still working, the Vista experiment on the new box became a side project in which I occasionally dabbled. There were definite incompatibilities: I had to upgrade the machine's BIOS by downloading and flashing new code into an EEPROM, which was fairly straightforward but not really designed for the average computer user. Some drivers had to be chased down. There may have been a hardware incompatibility in the sound card, or the sound card may have just failed at the same time I was installing Vista; in either case the company that built the machine sent me a new one.</p>
+<p>Eventually, Vista booted. Over the past six months I've used it effectively for exactly one thing: pulling video from my camera and making DVDs. The program that does this came with my version of Vista (I don't know if it comes with all versions) and it does it quite well; in fact, the only flaw I found in the Macbook was that its video creation program didn't quite recognize my video camera (it saw the camera, just couldn't properly download the video). Leopard will probably work correctly, and in any event XP also has a DVD creation program, possibly the same one.</p>
+<p>Also about a year ago, I was setting my dad up with some new software that involved a Java applet for printing postage. His machine, which was ancient but still quite functional, took so long to load and start this applet that we thought it had hung. I decided it was time for a new one, went to Costco and bought what they had, which was a Gateway dual-core Vista machine. It was all preconfigured and preinstalled so it seemed to work fine -- but  kind of sluggish considering what a huge improvement in hardware it is over his previous machine. Dad complained about the new UI for awhile but eventually got used to it. One thing I notice is that his disk seems to be working all the time -- Vista performing mysterious tasks in the background. So yes, it works for him. It's tolerable. But it also seems like we're going in the wrong direction; progress either slowed or going slightly backwards. You don't really get a sense of any big improvement in the OS, which isn't surprising since they ripped all the interesting stuff out (the new file system, etc.). The chrome is prettier, but that wears thin fast. And in exchange, you get software compatibility problems.</p>
+<p>There will be the inevitable comments to this story saying "why don't you just quit Windows altogether?" Indeed, my experiment with the Macbook has been quite successful and I have taken to traveling with it quite happily (at first I thought I'd need to carry a Windows notebook as well, but that has yet to be an issue). And I've just installed Parallels and XP within Parallels, and that seems to work fine as much as I've tried it. So there's a lot of promise there; I could even imagine just having a desktop Mac (one of those 8 processor ones) and doing all my Windows work inside Parallels.</p>
+<p>Linux is also attractive. At Javapolis I heard talk that Acer is releasing a $300 Linux subnotebook with a Flash disk (no hard drive), and it sounds like it will have no hiccups when suspending and resuming. That will be worth buying just to play with.</p>
+<p>I'm still tied to Windows because certain software tools only work on Windows. Although OpenOffice is great, its word processor can't handle documents the size of a book (initially it would crash, now it doesn't but it runs so slowly it's unusable). MS Word is still the only word processor that can produce camera-ready documents that are book-sized (Yes, I do know about all the two-step approaches: "just write it using this one tool, and lay it out using this other one." It's only efficient when you say it like that, not in reality).</p>
+<p>Camtasia is another tool that only seems to run on Windows, and it has recently become important to me. Then there are all the programs around the edges, both payware and freeware, that have been written for the largest market and not yet ported to the other machines. I use enough of those that it's still useful to have a Windows box running. They may in fact run on a Mac, but now I have this big heavy silent machine (applying the "sunk cost" economic model).</p>
+<p>But back to Vista. I kept putting off the transition, partly because I kept hearing about problems people were having. I didn't want to try moving over to the new machine only to discover that several key pieces of software didn't work on it right in the midst of an important project. So I put it off, and eventually came up with the idea of using a Network Attached Storage (NAS) disk as a transition device. All my data files would go on the NAS disk, and if I discovered I couldn't do something on the Vista machine, I could just fire up the old XP box and work on the same files.</p>
+<p>Although I got the NAS disk, I (fortunately) didn't go through with the plan.</p>
+<p>My brother Todd is a sole proprietor who keeps small business systems up and running in San Diego and the surrounding area. He's on the ground all the time and knows what's happening with both hardware and software. He's a target for canvassing by Microsoft in their attempts to figure out how to get people to "accept" Vista. (They went as far as to try to educate him about how to "market against Linux." Todd shrugs and says "Why do I care about marketing against Linux? If Linux is better I'll install that."). So if there are problems, Todd knows about them.</p>
+<p>Vista has problems. A number of business programs require a (paid) upgrade to work on Vista; you can't just reinstall your existing programs. This is after paying for the heftier hardware and for the OS that slows it down without producing a discernible benefit. After that you don't know if you'll have to pay more to upgrade other software. Or worse, whether you'll even be able to get a version of the program <em>at all</em> that will work on Vista.</p>
+<p>Years of FUD (Fear, Uncertainty, and Doubt, generally spread by larger companies in an attempt to prevent positive changes fomented by smaller companies or sometimes just groups of people) in the computer industry have come home to roost, this time on Microsoft's doorstep. Microsoft's traditional approach has been to create something buggy in order to hold the market space, then to fix it with subsequent service packs. It's possible that Vista Service Pack 1 will arrive in time to save the day, and if that happens it will certainly be an amazing recovery. But in the meantime, Vista has become a disaster: both as a product, and even more as the once-legendary Microsoft marketing team goes down in flames.</p>
+<p>But really, what could those marketers do when the majority of consumers can easily discover that there's "no there, there?" Consider:</p>
+<ul class="simple">
+<li><a class="reference" href="../_/http/blip.tv/file/340692/index.html">http://blip.tv/file/340692</a> [It must be pretty horrible to be a marketing person when people are producing videos about how bad your product is].</li>
+<li><a class="reference" href="../_/http/news.zdnet.com/2100-9590_22-6220201.html$/tag=nl.e540.html">http://news.zdnet.com/2100-9590_22-6220201.html?tag=nl.e540</a> "Frankly, the world wasn't 100 percent ready for Windows Vista," corporate vice president Mike Sievert said ... [Desperate times, when you have to start blaming the customer, much less the whole world].</li>
+<li><a class="reference" href="../_/http/news.zdnet.com/2100-9590_22-6220201.html$/tag=nl.e540.html">http://news.zdnet.com/2100-9590_22-6220201.html?tag=nl.e540</a> "Vista, both with and without SP1, performed notably slower than XP with SP3 in the test, taking over 80 seconds to complete the test, compared to the beta SP3-enhanced XP's 35 seconds." [So it looks like Vista SP1 isn't really going to do anything about the speed problem, and we can expect less than half the performance of XP for at least another year.]</li>
+<li><a class="reference" href="../_/http/crave.cnet.co.uk/gadgets/0,39029552,49293700-10,00.htm">http://crave.cnet.co.uk/gadgets/0,39029552,49293700-10,00.htm</a> "Any operating system that provokes a campaign for its predecessor's reintroduction deserves to be classed as terrible technology. Any operating system that quietly has a downgrade-to- previous-edition option introduced for PC makers deserves to be classed as terrible technology. Any operating system that takes six years of development but is instantly hated by hordes of PC professionals and enthusiasts deserves to be classed as terrible technology."</li>
+<li><a class="reference" href="../_/http/www.news.com/8301-10784_3-9785337-7.html$/tag=nefd.only.html">http://www.news.com/8301-10784_3-9785337-7.html?tag=nefd.only</a> "While Vista was originally touted by Microsoft as the operating system savior we've all been waiting for, it has turned out to be one of the biggest blunders in technology ... Microsoft has once again lost sight of what we really want."</li>
+<li>The torrent of stories expressing disappointment with Vista only seems to grow.</li>
+</ul>
+<p>Operating systems account for 1/3 of Microsoft's income, and Office accounts for another third. Although I'm (so far) still stuck using Word, I've become very reluctant to upgrade to new versions. In the past, I would upgrade when Word started crashing too badly, but at some point it became reasonably stable. But it's as if there's no more work for the Office group to do, so instead they rearrange features in the products. One version, style sheets are fairly quick to access, the next version they completely change it around so you have to learn and remember an entirely new sequence which is not particularly intuitive. These "improvements" come from their so-called "usability lab" where they are apparently testing out new features using golden retrievers (who, in case you don't know one, are enthusiastic about everything). As a result, I resist upgrading to new versions of Office for as long as possible, because I know there will undoubtedly be a lot of hassle involved. Better to stick with what you know than risk having your time sucked up by another Microsoft experiment.</p>
+<p>What's amazing is that the only really innovative operating system that has appeared in at least 25 years was crushed, probably with a lot of help from Microsoft while at the same time they were claiming to be innovative. This was BeOS, and life would have been much better right about now if Microsoft had bought them instead, because it was designed around creating lots of processes, which would be awfully useful as multicores come online. (BeOS has been resurrected in the open-source world as <a class="reference" href="../_/http/haiku-os.org/index.html">Haiku</a> so there's still hope, although I don't have any sense of the state of that project).</p>
+<p>So does this mean all the innovation has gone out of Microsoft? No, I don't think so. For one thing, I think C# and .NET are significant improvements in programming, and what I've seen of Silverlight is quite impressive (Silverlight is included in the upcoming <a class="reference" href="../_/http/www.mindviewinc.com/Conferences/RIAJam/Index.html">RIA Jam</a> in Ann Arbor, January 14-16); if I knew that I was <em>only</em> going to live in a Microsoft world I would definitely be moving in that direction. In fact, I can only see hope for Microsoft in the OS world if they create an operating system which is basically .NET sitting on a thin layer of hardware glue. That would be a big step forward; innovative, even.</p>
+<p>And I recently made a fast pass through cell phone technology, which was largely disappointing when it comes to getting the phone to interact with your computer. In that area, it looks like Windows Mobile is a strong contender.</p>
+<p>But as far as my desktop OS, yesterday I reinstalled XP on the silent machine, and it doesn't look like I'm going to be trying Vista again until I hear some really, really good things about Service Pack 2. Basically, I'm done experimenting with Microsoft OSes for at least a year and a half.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=221497.html">28
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=221497&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D221497&amp;title=The+End+of+the+Vista+Experiment&amp;bodytext=Over+a+year+ago%2C+I+bought+a+new+computer.+This+was+a+carefully+considered+decision%2C+as+I+don%27t+change+computers+that+often+and+so+try+to+get+something+I+will+be+satisfied+with+for+as+long+as+possible.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D221497&amp;title=The+End+of+the+Vista+Experiment">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D221497&amp;title=The+End+of+the+Vista+Experiment">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

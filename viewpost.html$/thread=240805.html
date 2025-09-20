@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/10</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=240805.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/10&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/10 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=240805">Email</a> | 
+<a href="../viewpostP.html$/thread=240805.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=240804.html" title="The Adventures of a Pythonista in Schemeland/9">Previous</a> | 
+<a class="sl" href="thread=240833.html" title="The Adventures of a Pythonista in Schemeland/11">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/10</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">November 1, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Yet another episode fully devoted to macros. I will discuss introspection, guarded patterns, literal identifiers, and a couple of common beginner's mistakes.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="syntax-match-and-introspection-features-of-sweet-macros" name="syntax-match-and-introspection-features-of-sweet-macros"><tt class="docutils literal"><span class="pre">syntax-match</span></tt> and introspection features of sweet-macros</a></h1>
+<p>In the last episode I have defined a very simple <tt class="docutils literal"><span class="pre">multi-define</span></tt> macro
+by using my own <tt class="docutils literal"><span class="pre">sweet-macros</span></tt> framework. I have also claimed
+that sweet macros provides introspection facilities, but I have not shown
+them. Here I will substain my claim.</p>
+<p>First of all, let me show how you can get
+the patterns accepted by <tt class="docutils literal"><span class="pre">multi-define</span></tt>:</p>
+<pre class="literal-block">
+&gt; (multi-define &lt;patterns&gt;)
+((multi-define (name ...) (value ...)))
+</pre>
+<p>Since <tt class="docutils literal"><span class="pre">multi-define</span></tt> is a simple macro it accepts only a single pattern.
+However, it is possible to define macros with multiple patterns by relying
+on the second form of <tt class="docutils literal"><span class="pre">def-syntax</span></tt>, i.e.</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">(def-syntax</span> <span class="pre">name</span> <span class="pre">transformer)</span></tt></blockquote>
+<p>where the transformer is a procedure which is typically built on
+top of <tt class="docutils literal"><span class="pre">syntax-match</span></tt>. For instance, suppose we wanted to extend
+<tt class="docutils literal"><span class="pre">multi-define</span></tt> to work also as a replacement of <tt class="docutils literal"><span class="pre">define</span></tt>, i.e.
+suppose we want to accept the pattern <tt class="docutils literal"><span class="pre">(multi-define</span> <span class="pre">name</span> <span class="pre">value)</span></tt>
+where <tt class="docutils literal"><span class="pre">name</span></tt> is an identifier. Here is how to do that
+by using <tt class="docutils literal"><span class="pre">syntax-match</span></tt>:</p>
+<pre class="literal-block">
+(def-syntax multi-define2
+  (syntax-match ()
+   (sub (ctx (name ...) (value ...))
+     #'(begin (define name value) ...))
+   (sub (ctx name value)
+     #'(define name value))
+  ))
+</pre>
+<p><tt class="docutils literal"><span class="pre">syntax-match</span></tt> recognizes the literal identifier <tt class="docutils literal"><span class="pre">sub</span></tt> as an expected
+keyword when it appears in the right position, i.e. at the beginning
+of each clause. <tt class="docutils literal"><span class="pre">sub</span></tt> is there for two reasons:</p>
+<ol class="arabic simple">
+<li>in my opinion it makes the code more readable: you should read a clause
+<tt class="docutils literal"><span class="pre">(sub</span> <span class="pre">pattern</span> <span class="pre">skeleton)</span></tt> as "substitute a chunk of code matching the
+pattern with the code obtained by expanding the pattern variables inside
+the skeleton";</li>
+<li>it makes <tt class="docutils literal"><span class="pre">syntax-match</span></tt> look different from <tt class="docutils literal"><span class="pre">syntax-case</span></tt> and
+<tt class="docutils literal"><span class="pre">syntax-rules</span></tt>, which is fine, since <tt class="docutils literal"><span class="pre">syntax-match</span></tt> <em>is</em> a little
+different from the Scheme standard macro systems.</li>
+</ol>
+<p>The identifier <tt class="docutils literal"><span class="pre">ctx</span></tt> that you see as first element of each pattern
+denotes the context of the macro, a
+concept that I will explain in a future installment; you can use any
+valid identitier for the context, including the name of the macro
+itself - that is a common convention.  If you are not interested in
+the context (which is the usual case) you can discard it and use the
+special identifier <tt class="docutils literal"><span class="pre">_</span></tt> to make clear your intent.</p>
+<p>I leave as an
+exercise to check that if you invert the order of the clauses the
+macro does not work: you must remember to put the most specific clause
+<em>first</em>.</p>
+<p>In general you can get the source code for all the macros defined via
+<tt class="docutils literal"><span class="pre">def-syntax</span></tt> and <tt class="docutils literal"><span class="pre">syntax-match</span></tt>. For instance, the source code (of
+the transformer) of our original <tt class="docutils literal"><span class="pre">multi-define</span></tt> macro is the
+following:</p>
+<pre class="literal-block">
+&gt; (multi-define &lt;source&gt;)
+(syntax-match ()
+  (sub (multi-define (name ...) (value ...))
+    #'(begin (define name value) ...)))
+</pre>
+<p>As you see, for better readability <tt class="docutils literal"><span class="pre">def-syntax</span></tt> use the name
+of the macro for the context, but any name would do.</p>
+<p>I have not explained everything there is to know about
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt>, but we need to leave something out for
+the next episode, right?</p>
+</div>
+<div class="section">
+<h1><a id="a-couple-of-common-mistakes" name="a-couple-of-common-mistakes">A couple of common mistakes</a></h1>
+<p>If you try to write macros of your own, you will likely incur in
+mistakes. I think it is worth warning my readers
+about a couple of such common mistakes.</p>
+<p>The first one is forgetting the <tt class="docutils literal"><span class="pre">begin</span></tt> for macros expanding to
+multiple expressions. For instance, you could be tempted to write
+<tt class="docutils literal"><span class="pre">multi-define</span></tt> as follows:</p>
+<pre class="literal-block">
+&gt; (def-syntax (multi-define-wrong (name ...) (value ...))
+   #'((define name value) ...))
+</pre>
+<p>If you try to use this macro, you will get an exception:</p>
+<pre class="literal-block">
+&gt; (multi-define-wrong (a) (1))
+Unhandled exception
+Condition components:
+  1. &amp;who: define
+  2. &amp;message: "a definition was found where an expression was expected"
+  3. &amp;syntax:
+      form: (define a 1)
+      subform: #f
+</pre>
+<p>The problem is that Scheme interprets a pattern of the form
+<tt class="docutils literal"><span class="pre">(func</span> <span class="pre">arg</span> <span class="pre">...)</span></tt> as a function application, but in this case
+<tt class="docutils literal"><span class="pre">func</span></tt> is the definition <tt class="docutils literal"><span class="pre">(define</span> <span class="pre">a</span> <span class="pre">1)</span></tt> which is certainly not an
+function, it is not even an expression!</p>
+<p>Actually, R6RS Scheme distinguishes
+definitions from expressions, a little bit like in other
+languages statements are distinguished from expressions, except that
+in Scheme there are no statements other than definitions.
+You will get exactly the same error if you try to print a definition
+<tt class="docutils literal"><span class="pre">(display</span> <span class="pre">(define</span> <span class="pre">a</span> <span class="pre">1))</span></tt>: since a definition does not return anything,
+you cannot print it.</p>
+<p>A second common mistake is to forget the sharp-quote <tt class="docutils literal"><span class="pre">#'</span></tt>.
+If you forget it - for instance if
+you write <tt class="docutils literal"><span class="pre">(begin</span> <span class="pre">(define</span> <span class="pre">name</span> <span class="pre">value)</span> <span class="pre">...)</span></tt> instead of <tt class="docutils literal"><span class="pre">#'(begin</span>
+<span class="pre">(define</span> <span class="pre">name</span> <span class="pre">value)</span> <span class="pre">...)</span></tt> - you will get a strange error message:
+<em>reference to pattern variable outside a syntax form</em>. To understand
+the message, you must understand what a <em>syntax form</em> is. That
+requires a rather detailed explanation that I will leave for a future
+episode.</p>
+<p>For the moment, be content with a simplified explanation. A syntax
+form is a special type of quoted form: just as you write <tt class="docutils literal"><span class="pre">'(some</span>
+<span class="pre">expression)</span></tt> or <tt class="docutils literal"><span class="pre">(quote</span> <span class="pre">(some</span> <span class="pre">expression))</span></tt> to keep unevaluated a
+block of (valid or invalid) Scheme code, you can write <tt class="docutils literal"><span class="pre">#'(some</span>
+<span class="pre">expression)</span></tt> or <tt class="docutils literal"><span class="pre">(syntax</span> <span class="pre">(some</span> <span class="pre">expression))</span></tt> to denote a block
+of (valid or invalid) Scheme code which is intended to be used in a
+macro and contains pattern variables. Pattern variables must always be
+written inside a <tt class="docutils literal"><span class="pre">syntax</span></tt> expression, so that they can be replaced
+with their right values when the macro is expanded at compile time.</p>
+<p>Note: R6RS Scheme requires the syntax <tt class="docutils literal"><span class="pre">#'x</span></tt> to be interpreted as
+a shortcut for <tt class="docutils literal"><span class="pre">(syntax</span> <span class="pre">x)</span></tt>; however there are R5RS implementation
+that do not allow the <tt class="docutils literal"><span class="pre">#'x</span></tt> syntax or use a different meaning for it.
+In particular, that was the case for old versions of Chicken Scheme.
+If you want to be fully portable
+you should use the extended form <tt class="docutils literal"><span class="pre">(syntax</span> <span class="pre">x)</span></tt>. However, all the
+code in this series is intended to work on R6RS Schemes, therefore
+I will always use the shortcut notation <tt class="docutils literal"><span class="pre">#'</span></tt> which in my opinion
+is <em>ways</em> more readable.</p>
+</div>
+<div class="section">
+<h1><a id="guarded-patterns" name="guarded-patterns">Guarded patterns</a></h1>
+<p>There are a few things I did not explain when introducing the
+<tt class="docutils literal"><span class="pre">multi-define</span></tt> macro.  For instance, what happens if the number of
+the identifiers does not match the number of the values?  Of course,
+you get an error:</p>
+<pre class="literal-block">
+&gt; (multi-define (a b c) (1 2))
+Unhandled exception
+ Condition components:
+   1. &amp;assertion
+   2. &amp;who: ...
+   3. &amp;message: "length mismatch"
+   4. &amp;irritants: ((#&lt;syntax 1&gt; #&lt;syntax 2&gt;) (#&lt;syntax a&gt; #&lt;syntax b&gt; #&lt;syntax c&gt;))
+</pre>
+<p>The problem is that the error message is a bit scary, with all those
+<tt class="docutils literal"><span class="pre">#&lt;syntax</span> <span class="pre">&gt;</span></tt> things. How do we get an error message which is less
+scary to the newbie? Answer: by using the guarded patterns feature of
+<tt class="docutils literal"><span class="pre">sweet-macros</span></tt>!</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/carabinieri.png" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/carabinieri.png">
+<p>Here is an example:</p>
+<pre class="literal-block">
+(def-syntax (multi-define (name ...) (value ...))  ; the pattern
+  #'(begin (define name value) ...)                ; the skeleton
+  (= (length #'(name ...)) (length #'(value ...))) ; the guard
+   (syntax-violation 'multi-define
+    "Names and values do not match"
+    #'((name ...) (value ...))))
+</pre>
+<p>The line <tt class="docutils literal"><span class="pre">(=</span> <span class="pre">(length</span> <span class="pre">#'(name</span> <span class="pre">...))</span> <span class="pre">(length</span> <span class="pre">#'(value</span> <span class="pre">...)))</span></tt> is
+the guard of the pattern <tt class="docutils literal"><span class="pre">(multi-define</span> <span class="pre">(name</span> <span class="pre">...)</span> <span class="pre">(value</span> <span class="pre">...))</span></tt>.
+The macro will expand the patterns in the guard into lists
+<em>at compile time</em>, then it will check that the number of names
+matches the number of values; if the check is satified then
+the skeleton is expanded, otherwise a <tt class="docutils literal"><span class="pre">syntax-violation</span></tt>
+is raised (i.e. a <em>compile time</em> exception) with a nice
+error message:</p>
+<pre class="literal-block">
+&gt; (multi-define (a b c) (1 2))
+Unhandled exception:
+ Condition components:
+   1. &amp;who: multi-define
+   2. &amp;message: "Names and values do not match"
+   3. &amp;syntax:
+       form: ((a b c) (1 2))
+       subform: #f
+</pre>
+<p>Because of their working at compile time,
+guarded patterns are an ideal tool to check the consistency
+of our macros (remember: it is very important to check for
+errors as early as possible, and the earliest possible time is compile
+time).</p>
+</img></div>
+<div class="section">
+<h1><a id="literal-identifiers" name="literal-identifiers">Literal identifiers</a></h1>
+<p>Guarded patterns can also be (ab)used to recognize keyword-like
+identifiers in a macro.  For instance, here is how you could implement
+the semantics of the <tt class="docutils literal"><span class="pre">for</span></tt> loop discussed in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240793.html">episode #8</a> with a macro
+(notice how all the funny characters <tt class="docutils literal"><span class="pre">',@`</span></tt> disappeared):</p>
+<pre class="literal-block">
+(def-syntax (for i from i0 to i1 action ...)
+  #'(let loop ((i i0))
+      (unless (&gt;= i i1) action ... (loop (+ i 1))))
+ (and (eq? (syntax-&gt;datum #'from) 'from) (eq? (syntax-&gt;datum #'to) 'to)))
+</pre>
+<p>Here the R6RS primitive <tt class="docutils literal"><span class="pre">syntax-&gt;datum</span></tt> is used to convert the
+syntax objects <tt class="docutils literal"><span class="pre">#'from</span></tt> and <tt class="docutils literal"><span class="pre">#'to</span></tt> into regular Scheme objects
+so that they can be compared for equality
+with the literal identifiers <tt class="docutils literal"><span class="pre">'from</span></tt> and <tt class="docutils literal"><span class="pre">'to</span></tt>.</p>
+<p>You can check that the macro works by trying to use a wrong syntax.
+For install if you mispell <tt class="docutils literal"><span class="pre">from</span></tt> as <tt class="docutils literal"><span class="pre">fro</span></tt> you will get a syntax
+error <em>at compilation time</em>:</p>
+<pre class="literal-block">
+&gt; (for i fro 1 to 5 (display i))
+Unhandled exception:
+ Condition components:
+   1. &amp;message: "invalid syntax"
+   2. &amp;syntax:
+       form: (for i fro 1 to 5 (display i))
+       subform: #f
+</pre>
+<p>Notice that this is an abuse of
+guarded patterns, since <tt class="docutils literal"><span class="pre">syntax-match</span></tt> provides a built-in
+mechanism just for that purpose. Moreover this macro is
+subject to the multiple evaluation problem which I will discuss
+in the next episode: thus I do not recommend it as an example
+of good style when writing macros. Still, I have written it here
+to compare it with the approach in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240793.html">episode #8</a>:
+with this macro I have been able to
+extend the Scheme compiler for within, with just a few lines of
+code: that is much simpler than writing an external compiler
+as a preprocessor, as I planned to do before.</p>
+<p>As I said, <tt class="docutils literal"><span class="pre">syntax-match</span></tt> has the built-in capability of recognizing literal
+identifiers in the patterns as if they were keywords. This is what
+the empty parenthesis are for. If you write <tt class="docutils literal"><span class="pre">(syntax-match</span> <span class="pre">(lit</span> <span class="pre">...)</span>
+<span class="pre">clause</span> <span class="pre">...)</span></tt> the identifiers listed in <tt class="docutils literal"><span class="pre">(lit</span> <span class="pre">...)</span></tt> will be treated
+as literal identifiers in the macro scope. Literal identifiers can be
+used to enhance readability, or to define complex macros.  For
+instance our <tt class="docutils literal"><span class="pre">for</span></tt> macro can be written without need for guarded
+patterns as:</p>
+<pre class="literal-block">
+(def-syntax for
+  (syntax-match (from to)
+    (sub (for i from i0 to i1 action ...)
+       #'(let loop ((i i0))
+           (unless (&gt;= i i1) action ... (loop (+ i 1)))))))
+</pre>
+<p>You can even introspect the literal identifiers recognized by <tt class="docutils literal"><span class="pre">syntax-match</span></tt>:</p>
+<pre class="literal-block">
+&gt; (for &lt;literals&gt;)
+(from to)
+</pre>
+<p>Let me close this paragraph by suggesting an exercise in macrology.
+Try to implement a Python-like <tt class="docutils literal"><span class="pre">for</span></tt> loop working as in the
+following examples:</p>
+<pre class="literal-block">
+&gt; (for x in '(1 2 3)
+    (display x))
+123
+&gt; (for (x y) in '((a b) (A B) (1 2))
+    (display x) (display y))
+abAB12
+</pre>
+<p>Clearly it should work for a generic number of arguments and <tt class="docutils literal"><span class="pre">in</span></tt>
+should be treated as a literal identifier. I will give the solution
+in episode 12, so you will have some time to play. Have fun!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=240805.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=240805&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240805&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F10&amp;bodytext=Yet+another+episode+fully+devoted+to+macros.+I+will+discuss+introspection%2C+guarded+patterns%2C+literal+identifiers%2C+and+a+couple+of+common+beginner%27s+mistakes.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240805&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F10">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D240805&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F10">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

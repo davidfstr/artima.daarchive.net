@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Towards A Formal Specification of Reified Lambda Functions</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=278567.html">Discuss</a> | 
+<a href="mailto:?subject=Towards A Formal Specification of Reified Lambda Functions&amp;body= %0AArtima Weblogs %0ATowards A Formal Specification of Reified Lambda Functions %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=278567">Email</a> | 
+<a href="../viewpostP.html$/thread=278567.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=277879.html" title="Reified Lambda Functions">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Towards A Formal Specification of Reified Lambda Functions</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">January 7, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In a previous weblog a suggestion for reifying lambda types was given. The previous weblog give examples but no formal description of the process. This weblog gives a more formal description.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="introduction" name="introduction">1. Introduction</a></h1>
+<p>In a previous weblog a proposal for reified lambdas was given, <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=277879.html">http://www.artima.com/weblogs/viewpost.jsp?thread=277879</a>. This weblog builds on the previous weblog and assumes familiarity with the previous weblog. Where the details present in this weblog contradict details in the previous weblog, this one supersedes the previous. In effect this weblog is an improved version of the previous.</p>
+<p>Expanding on the previous weblog was suggested by Neal Gafter (<a class="reference" href="../_/http/mail.openjdk.java.net/pipermail/lambda-dev/2010-January/000218.html">http://mail.openjdk.java.net/pipermail/lambda-dev/2010-January/000218.html</a>). This weblog is deliberately written in a 'dry' style and doesn't introduce lambdas or justify reification of them, other than section 1.1 (See previous weblog for an 'easier' read and discussions of these topics.)</p>
+<p>The writing style is not saying 'we could do X', instead it says 'do X', this is purely a writing convenience and is not meant to imply that this is in any way an accepted proposal. The proposal is simply a proposal and has no formal backing from Sun (or anyone else for that matter).</p>
+<p>The text below is not strictly a formal description of the processes, but it is hoped that it is sufficiently detailed to tease out any problems. Since the aim of this post is to tease out problems, feedback is most welcome.</p>
+<div class="section">
+<h2><a id="motivation" name="motivation">1.1. Motivation</a></h2>
+<p>The following source:</p>
+<pre class="literal-block">
+static double reduce(final double[] ds, double initial, final #double(double, double) reducer) {
+  for (final double d : ds) { initial = reducer.callPrimitive(initial, d); }
+  return initial;
+}
+
+static &lt;T&gt; T reduce(final T[] ts, T initial, final #T(T, T) reducer) {
+  for (final T t : ts) { initial = reducer.call(initial, t); }
+  return initial;
+}
+
+static &lt;T&gt; void time(final #T() c) {
+  final long start = System.currentTimeMillis();
+  final T result = c.call();
+  final long finish = System.currentTimeMillis();
+  System.out.println(c + " took " + (finish - start) + " ms and returned " + result);
+}
+
+static void timeTest() {
+  final int size = 1024 * 1024;
+  final double[] ds = new double[size];
+  final Double[] ts = new Double[size];
+  for (int i = 0; i &lt; size; i++) { ts[i] = ds[i] = i; }
+  final #double(double, double) sumDs = #double(final double a1, final double a2) { return a1 + a2; };
+  time(new #double() { // Not supported in this proposal as yet
+    @Override public double callPrimitive() { return reduce(ds, 0, sumDs); }
+    @Override public String toString() { return "double[] test"; }
+  });
+  final #Double(Double, Double) sumTs = new #Double(final Double a1, final Double a2) { return a1 + a2; };
+  time(new #Double() { // Not supported in this proposal as yet
+    @Override public Double call() { return reduce(ts, 0.0, sumTs); } // note 0.0 - annoying inference bug!
+    @Override public String toString() { return "Double[] test"; }
+  });
+}
+</pre>
+<p>Is translated to:</p>
+<pre class="literal-block">
+static double reduce(final double[] ds, double initial, final _Callable_double_double_double reducer) {
+  for (final double d : ds) { initial = reducer.callPrimitive(initial, d); }
+  return initial;
+}
+
+static &lt;T&gt; T reduce(final T[] ts, T initial, final _Callable_2&lt;? extends T, ? super T, ? super T&gt; reducer) {
+  for (final T t : ts) { initial = reducer.call(initial, t); }
+  return initial;
+}
+
+static &lt;T&gt; void time(final _Callable_0&lt;T&gt; c) {
+  final long start = System.currentTimeMillis();
+  final T result = c.call();
+  final long finish = System.currentTimeMillis();
+  System.out.println(c + " took " + (finish - start) + " ms and returned " + result);
+}
+
+static void timeTest() {
+  final int size = 1024 * 1024;
+  final double[] ds = new double[size];
+  final Double[] ts = new Double[size];
+  for (int i = 0; i &lt; size; i++) { ts[i] = ds[i] = i; }
+  final _Callable_double_double_double sumDs = new _Callable_double_double_double() {
+    @Override public double callPrimitive(final double a1, final double a2) { return a1 + a2; }
+  };
+  time(new _Callable_double() {
+    @Override public double callPrimitive() { return reduce(ds, 0, sumDs); }
+    @Override public String toString() { return "double[] test"; }
+  });
+  final _Callable_Dble_Dble_Dble sumTs = new _Callable_Dble_Dble_Dble() { // Compiler bug! Should be Double not Dble
+    @Override public Double call(final Double a1, final Double a2) { return a1 + a2; }
+  };
+  time(new _Callable_Dble() { // Compiler bug! Should be Double not Dble
+    @Override public Double call() { return reduce(ts, 0.0, sumTs); } // note 0.0 - annoying inference bug!
+    @Override public String toString() { return "Double[] test"; }
+  });
+}
+</pre>
+<p>And when run on my laptop gives:</p>
+<pre class="literal-block">
+double[] test took 20 ms and returned 5.497552896E11
+Double[] test took 588 ms and returned 5.497552896E11
+</pre>
+<p>Which demonstrates the considerable performance increase reified lambdas offer (erased lambdas would perform similarly to the Double case above).</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="not-addressed" name="not-addressed">2. Not addressed</a></h1>
+<p>At this point in time the following issues are not addressed, they are open issues, and a brief note about there status given. These open issues are put into three groups of ones that are specific to this specification, ones that might influence the choice of one implementation over another, and ones that are largely orthogonal to the implementation. This categorization is open to interpretation and you could argue about the placement of an issue within in a particular group.</p>
+<div class="section">
+<h2><a id="issues-specific-to-this-specification" name="issues-specific-to-this-specification">2.1. Issues specific to this specification</a></h2>
+<dl class="docutils">
+<dt>Type name mangling</dt>
+<dd>In this weblog simple type names are used, e.g. <tt class="docutils literal"><span class="pre">Integer</span></tt>, in practice a fully
+qualified
+name is required, e.g. <tt class="docutils literal"><span class="pre">java.lang.Integer</span></tt>. Unfortunately you cannot have '<tt class="docutils literal"><span class="pre">.</span></tt>'
+in a type name, therefore <tt class="docutils literal"><span class="pre">java\,lang\,Integer</span></tt> could be used instead.
+Similarly array types need to be specified and '<tt class="docutils literal"><span class="pre">[</span></tt>' and '<tt class="docutils literal"><span class="pre">]</span></tt>' are also
+problematic in type names and therefore <tt class="docutils literal"><span class="pre">int[]</span></tt> could become <tt class="docutils literal"><span class="pre">int\{\}</span></tt>.
+These character translations, and more, are suggested by John Rose
+(<a class="reference" href="../_/http/blogs.sun.com/jrose/entry/symbolic_freedom_in_the_vm/index.html">http://blogs.sun.com/jrose/entry/symbolic_freedom_in_the_vm</a>).
+'<tt class="docutils literal"><span class="pre">_</span></tt>', which I have used to separate parts of type names, is not
+appropriate because it is already used for inner classes; in practice you could
+use '<tt class="docutils literal"><span class="pre">+</span></tt>' instead (to indicate an automatically generated/added type).
+Thanks to Maurizio Cimadamore
+(<a class="reference" href="../_/http/mail.openjdk.java.net/pipermail/lambda-dev/2010-January/000258.html">http://mail.openjdk.java.net/pipermail/lambda-dev/2010-January/000258.html</a>)
+for reminding me of the NextGen compiler that uses a similar
+solution and to Alex Blewitt (private email) for specifically pin pointing the problem.</dd>
+<dt>Contravariantly-overriding wrapping</dt>
+<dd>To support type safe operations like <tt class="docutils literal"><span class="pre">#Object(String)</span> <span class="pre">sO</span> <span class="pre">=</span> <span class="pre">#String(Object</span> <span class="pre">s)</span> <span class="pre">(s.toString());</span></tt>
+lambdas are automatically wrapped (also see below but one for a separate use of contravariantly-overriding wrapping).
+However Java doesn't ordinarily support contravariantly-overriding, e.g.
+<tt class="docutils literal"><span class="pre">interface</span> <span class="pre">OS</span> <span class="pre">{</span> <span class="pre">Object</span> <span class="pre">m(String</span> <span class="pre">s);</span> <span class="pre">}</span> <span class="pre">...</span> <span class="pre">interface</span> <span class="pre">SO</span> <span class="pre">extends</span> <span class="pre">I</span> <span class="pre">{</span> <span class="pre">@Override</span> <span class="pre">String</span> <span class="pre">m(Object</span> <span class="pre">o);</span> <span class="pre">}</span></tt>
+is illegal. Should contravariant-overriding be supported?</dd>
+<dt>Contravariantly-overriding arrays of lambdas</dt>
+<dd>As the specification stands you can write
+<tt class="docutils literal"><span class="pre">#Object(String)[]</span> <span class="pre">sOs</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">#String()[]</span> <span class="pre">{#String(Object</span> <span class="pre">s)</span> <span class="pre">(s.toString())};</span></tt>.
+However in Java you can't say <tt class="docutils literal"><span class="pre">long[]</span> <span class="pre">ls</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">int[]</span> <span class="pre">{1};</span></tt>. Should this be allowed for lambdas?</dd>
+<dt>Lambda cast</dt>
+<dd>The contravariantly-overriding wrapping is also used in a similar manner to promoting-conversions applied automatically
+to primitives, e.g. promoting <tt class="docutils literal"><span class="pre">int</span></tt> to <tt class="docutils literal"><span class="pre">long</span></tt>. For primitives there is also a reverse operation via a down-cast, e.g.
+<tt class="docutils literal"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">(int)l;</span></tt>. Currently there is no equivalent down-cast, there should be!</dd>
+</dl>
+</div>
+<div class="section">
+<h2><a id="issues-that-might-influence-implementation-choice" name="issues-that-might-influence-implementation-choice">2.2. Issues that might influence implementation choice</a></h2>
+<dl class="docutils">
+<dt>Serialization</dt>
+<dd>Cannot serialize a lambda, use a named-inner class.
+(Serialization is hard to do for something anonymous and therefore best not supported.)</dd>
+<dt>Class implementing a lambda or extending a lambda</dt>
+<dd>Cannot write <tt class="docutils literal"><span class="pre">class</span> <span class="pre">CI</span> <span class="pre">implements</span> <span class="pre">#int(int)</span></tt> or <tt class="docutils literal"><span class="pre">class</span> <span class="pre">CE</span> <span class="pre">extends</span> <span class="pre">#int(int)</span></tt>.
+(This is closely related to the next point, SAMs, and can <em>probably</em> be handled
+by the same mechanism.)</dd>
+<dt>Single abstract method (SAM)</dt>
+<dd>Cannot write <tt class="docutils literal"><span class="pre">Comparable&lt;Integer&gt;</span> <span class="pre">cI</span> <span class="pre">=</span> <span class="pre">#int(int</span> <span class="pre">other)</span> <span class="pre">(...);</span></tt>.
+(I <em>think</em> the <tt class="docutils literal"><span class="pre">From</span></tt> mechanism, described below, can probably be adapted for SAMs.
+It is desirable that a lambda can be wrapped as a SAM and it is desirable that it can
+be unwrapped, not supporting unwrapping is like boxing without unboxing!)</dd>
+</dl>
+</div>
+<div class="section">
+<h2><a id="issues-that-are-largely-orthogonal-to-implementation" name="issues-that-are-largely-orthogonal-to-implementation">2.3. Issues that are largely orthogonal to implementation</a></h2>
+<dl class="docutils">
+<dt>Short lambda-call syntax</dt>
+<dd>It would be nice if a lambda could be called like a method, e.g. <tt class="docutils literal"><span class="pre">lambda(...)</span></tt>;
+in this proposal no short-syntax is discussed and the example would be
+<tt class="docutils literal"><span class="pre">lambda.call(...)</span></tt> for a non-primitive lambda and <tt class="docutils literal"><span class="pre">lambda.callPrimitive(...)</span></tt>
+for a primitive-lambda.
+(This may well be the final solution, since a method of calling lambdas
+with short syntax has yet to be found that does not have undesirable side-effects.)</dd>
+<dt>Lambda syntax</dt>
+<dd>The strawman syntax without type inference is used throughout this specification.</dd>
+<dt>Optimizing lambda creation</dt>
+<dd>If a lambda is used in an inner scope it is natural to define it in an inner scope,
+however this can be sub-optimal. For example if the lambda does not capture local
+variables or instance fields it could be defined statically. The compiler could,
+'promote', the lambda to an outer-scope static automatically.
+(Probably OK to leave as is at the moment, since the same comments apply to
+inner classes and it is up to the programmer to do the 'promoting'.)</dd>
+<dt>Shared writable variables</dt>
+<dd>The strawman discusses the possibility of having shared writable variables,
+this proposal does not address this issue since it is orthogonal to the implementation.
+(Could use the <tt class="docutils literal"><span class="pre">Wrapper</span></tt> mechanism described below to allow the variables
+to be shared, which would require the <tt class="docutils literal"><span class="pre">Wrapper</span></tt> interface to be generic (which
+is not a problem).)</dd>
+<dt>Exception transparency</dt>
+<dd>Cannot be used, must wrap in an unchecked exception.
+(Probably OK to leave this out - i.e. it is OK to wrap checked exceptions in
+an unchecked exception.)</dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<h1><a id="support-types" name="support-types">3. Support types</a></h1>
+<p>To <tt class="docutils literal"><span class="pre">java.lang</span></tt> add:</p>
+<pre class="literal-block">
+public interface Wrapper { Object getWrappee(); }
+
+public static final class Wrappers {
+  private Wrappers() {}
+  public static Object unWrap(Object from) {
+    if (from == null) { return null; }
+    while (from instanceof Wrapper) { from = ((Wrapper)from).getWrappee(); }
+    return from;
+  }
+  public static boolean equals(final Object lhs, final Object rhs) { return unWrap(lhs) == unWrap(rhs); }
+}
+
+public static abstract class AbstractCallable {
+  @Override public final boolean equals(final Object other) { return Wrappers.equals(this, other); }
+}
+</pre>
+</div>
+<div class="section">
+<h1><a id="dynamically-created-types" name="dynamically-created-types">4. Dynamically created types</a></h1>
+<p>The following types are added by the class loader to <tt class="docutils literal"><span class="pre">java.lang</span></tt> as needed (the compiler internally also generates these classes but does not emit these classes). The reason these classes are dynamically generated by the class loader is twofold:</p>
+<ol class="arabic simple">
+<li>To prevent an 'explosion' of types that results from reifying lambdas. (If lambdas are erased then only the generic interfaces are needed and up to 5 arguments, say, could be supported directly as public interfaces <tt class="docutils literal"><span class="pre">java.lang</span></tt> and hence dynamic generation would be unnecessary.)</li>
+<li>To ensure that all lambdas share the same underlying classes and are hence interoperable. (If the compiler emitted the types then each compilation unit would have its own lambda types and hence not interoperate.)</li>
+</ol>
+<p>I haven't spelled out how the loader (or compiler) generates the required classes in detail, but two short paragraphs are given in the next two sub-sections on this topic. The reasons for not spelling this out is to save space (it is reasonably obvious what to do). The processes is to generate the type from its name, the name encodes all the information needed to generate the type.</p>
+<div class="section">
+<h2><a id="generic-callable-interfaces" name="generic-callable-interfaces">4.1. Generic <tt class="docutils literal"><span class="pre">Callable</span></tt> interfaces</a></h2>
+<p>Generic interfaces are used when any types involved are generic and as a base type for the reified types. These interfaces are interfaces that define a generic-abstract <tt class="docutils literal"><span class="pre">call</span></tt> method with <em>n</em> arguments and follow the naming convention <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em>, e.g.:</p>
+<pre class="literal-block">
+public interface _Callable_0&lt;R&gt; { R call(); }
+
+public interface _Callable_1&lt;R, A1&gt; { R call(A1 a1); }
+</pre>
+<p>When the loader sees in a class file the interface <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> it first checks to see if it already has this interface and if not generates the appropriate interface. The name <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> gives the loader all the information it requires (which is simply <em>n</em>, the number of arguments). The name <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> is unique, since other <tt class="docutils literal"><span class="pre">_Callable_</span></tt> types (described below) do not contain the integer <em>n</em> since an integer is not a valid type name.</p>
+</div>
+<div class="section">
+<h2><a id="reified-abstract-callable-classes" name="reified-abstract-callable-classes">4.2. Reified abstract <tt class="docutils literal"><span class="pre">Callable</span></tt> classes</a></h2>
+<p>The following description of dynamic classes uses '...' to indicate part of a name that is dependent upon the type of the lambda, e.g. <tt class="docutils literal"><span class="pre">#Object(String)</span></tt> has types <tt class="docutils literal"><span class="pre">Object</span></tt> and <tt class="docutils literal"><span class="pre">String</span></tt> and '...' is replaced by <tt class="docutils literal"><span class="pre">Object_String</span></tt>.</p>
+<p>When the loader sees in a class file the class <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... it first checks to see if it already has this class and if not generates the appropriate abstract class. The name <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... gives the loader all the information it requires (in particular the '...' part encodes the reified types needed). The reified <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... names are distinguished from generic <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> because <em>n</em> (an integer) is not a type name.</p>
+<div class="section">
+<h3><a id="reified-non-primitive-abstract-callable-classes" name="reified-non-primitive-abstract-callable-classes">4.2.1. Reified, non-primitive, abstract <tt class="docutils literal"><span class="pre">Callable</span></tt> classes</a></h3>
+<p>Reified, non-primitive, abstract classes are used when there are no generic types and no primitive types. These classes are abstract classes that define a reified-abstract <tt class="docutils literal"><span class="pre">call</span></tt> method via implementing the equivalent generic <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> classes with the following naming convention <tt class="docutils literal"><span class="pre">_Callable_</span></tt>..., e.g.:</p>
+<pre class="literal-block">
+public abstract class _Callable_String extends AbstractCallable implements _Callable_0&lt;String&gt; {}
+
+public abstract class _Callable_Object_String extends AbstractCallable implements _Callable_1&lt;Object, String&gt; {}
+</pre>
+<p>Note the extension of <tt class="docutils literal"><span class="pre">AbstractCallable</span></tt> class which defines an <tt class="docutils literal"><span class="pre">equals</span></tt> method, the reason for this is that some of the lambdas get wrapped for type conversion purposes (see below for more details).</p>
+</div>
+<div class="section">
+<h3><a id="reified-primitive-abstract-callable-classes" name="reified-primitive-abstract-callable-classes">4.2.2. Reified, primitive, abstract <tt class="docutils literal"><span class="pre">Callable</span></tt> classes</a></h3>
+<p>Reified, primitive, abstract classes are used when there are no generic types and some primitive types. These classes are abstract classes that define an reified-abstract <tt class="docutils literal"><span class="pre">callPrimitive</span></tt> method via extending the equivalent non-primitive <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... classes with the same naming convention as non-primitive (<tt class="docutils literal"><span class="pre">_Callable_</span></tt>...), e.g.:</p>
+<pre class="literal-block">
+public abstract class _Callable_int extends _Callable_Integer {
+  @Override public final Integer call() { return callPrimitive(); }
+  public abstract int callPrimitive();
+}
+
+public abstract class _Callable_int_String extends _Callable_Integer_String {
+  @Override public final Integer call(String a1) { return callPrimitive(a1); }
+  public abstract int callPrimitive(String a1);
+}
+
+public abstract class _Callable_int_int extends _Callable_Integer_Integer {
+  @Override public final Integer call(Integer a1) { return callPrimitive(a1); }
+  public abstract int callPrimitive(int a1);
+}
+</pre>
+<p>Note that the <tt class="docutils literal"><span class="pre">call</span></tt> method is defined to call the <tt class="docutils literal"><span class="pre">callPrimitive</span></tt> method.</p>
+</div>
+</div>
+<div class="section">
+<h2><a id="from-classes" name="from-classes">4.3. <tt class="docutils literal"><span class="pre">From</span></tt> classes</a></h2>
+<p>There are two variations of <tt class="docutils literal"><span class="pre">From</span></tt> class and the purpose of both these <tt class="docutils literal"><span class="pre">From</span></tt> classes is to 'convert' one lambda into another. Typically this conversion is achieved by wrapping the first lambda inside itself, but it could in the case of a wrapping and then unwrapping just give back the original lambda. Whether a <tt class="docutils literal"><span class="pre">From</span></tt>... class or a <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... class (the original lambda) results, it is always reified lambda that results from a <tt class="docutils literal"><span class="pre">From</span></tt> conversion.</p>
+<p>The reified <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... abstract classes implement the equivalent generic <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> interface and therefore no 'cast' is needed from a reified lambda to a generic lambda.</p>
+<p>The first of the two variations of the <tt class="docutils literal"><span class="pre">From</span></tt> classes are those that go in the reverse direction to their inheritance hierarchy, i.e. from a generic <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> interface to a the equivalent reified <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... class (reifying <tt class="docutils literal"><span class="pre">From</span></tt>). The second variation of <tt class="docutils literal"><span class="pre">From</span></tt> class is for contravariant overriding of lambdas.</p>
+<p>All <tt class="docutils literal"><span class="pre">From</span></tt> classes follow a naming convention: <tt class="docutils literal"><span class="pre">_From_...__To_...</span></tt> where the first '...' are as used in the 'from' <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... and the second '...' are as used in the 'to' <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... names. If the 'from' <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... is a generic interface then the '...' include the <tt class="docutils literal"><span class="pre">_</span></tt> <em>n</em> as well as the type names.</p>
+<div class="section">
+<h3><a id="reifying-from-classes" name="reifying-from-classes">4.3.1. Reifying <tt class="docutils literal"><span class="pre">From</span></tt> classes</a></h3>
+<p>These classes convert a generic <tt class="docutils literal"><span class="pre">_Callable_</span></tt> <em>n</em> interface to a the equivalent reified <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... class, i.e. they reify the generic class, e.g.:</p>
+<pre class="literal-block">
+public final class _From_0_Integer__To_int extends _Callable_int implements Wrapper {
+  private final _Callable_0&lt;? extends Integer&gt; f;
+  private _From_0_Integer__To_int(final _Callable_0&lt;? extends Integer&gt; f) { this.f = f; }
+  public static _Callable_int instance(final _Callable_0&lt;? extends Integer&gt; from) {
+    if (from == null) { return null; }
+    final _Callable_0&lt;? extends Integer&gt; f = (_Callable_0&lt;? extends Integer&gt;)Wrappers.unWrap(from);
+    if (f instanceof _Callable_int) { return (_Callable_int)f; }
+    return new _From_0_Integer__To_int(f);
+  }
+  @Override public int callPrimitive() { return f.call(); }
+  @Override public Object getWrappee() { return f; }
+  @Override public int hashCode() { return f.hashCode(); }
+}
+</pre>
+<p>Note use of <tt class="docutils literal"><span class="pre">callPrimitive</span></tt>; because the resultant, 'to', class is a primitive <tt class="docutils literal"><span class="pre">_Callable_</span></tt>..., if 'to' is a non-primitive <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... then method <tt class="docutils literal"><span class="pre">call</span></tt> is defined instead.</p>
+</div>
+<div class="section">
+<h3><a id="contravariant-overriding-from-classes" name="contravariant-overriding-from-classes">4.3.2. Contravariant-overriding <tt class="docutils literal"><span class="pre">From</span></tt> classes</a></h3>
+<p>These classes convert a reified <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... class to another, contravariantly overriding, reified <tt class="docutils literal"><span class="pre">_Callable_</span></tt>... class.</p>
+<p>Primitive types have an implicit conversion mechanism in Java, e.g. an <tt class="docutils literal"><span class="pre">int</span></tt> is automatically converted to a <tt class="docutils literal"><span class="pre">long</span></tt>. It is necessary to simulate this implicit conversion for lambdas that have primitive and/or primitive wrappers. The term "implicit conversion" is used below to indicate when such a non-inheritance based type conversion is required.</p>
+<p>If going from the 'from' to the 'to' lambda types does not involve "implicit conversion" then the dynamically created class is for example:</p>
+<pre class="literal-block">
+public final class _From_String_Object__To_Object_String extends _Callable_Object_String implements Wrapper {
+  private final _Callable_String_Object f;
+  private _From_String_Object__To_Object_String(final _Callable_String_Object f) { this.f = f; }
+  public _From_String_Object__To_Object_String instance(final _Callable_String_Object from) {
+    if (from == null) { return null; }
+    final _Callable_String_Object f = (_Callable_String_Object)Wrappers.unWrap(from);
+    return new _From_String_Object__To_Object_String(f);
+  }
+  @Override public Object call(final String a1) { return f.call(a1); }
+  @Override public Object getWrappee() { return f; }
+  @Override public int hashCode() { return f.hashCode(); }
+}
+</pre>
+<p>Note if the 'from' lambda is primitive then use <tt class="docutils literal"><span class="pre">f.callPrimitive(a1)</span></tt> and if the 'to' lambda is primitive define method <tt class="docutils literal"><span class="pre">callPrimitive</span></tt>.</p>
+<p>If "implicit conversion" is required then there are a number of cases to be covered.</p>
+<p>Primitive-wrapper to primitive-wrapper for example:</p>
+<pre class="literal-block">
+public final class _From_Integer_Long__To_Long_Integer extends _Callable_Long_Integer implements Wrapper {
+  private final _Callable_Integer_Long f;
+  private _From_Integer_Long__To_Long_Integer(final _Callable_Integer_Long f) { this.f = f; }
+  public _From_Integer_Long__To_Long_Integer instance(final _Callable_Integer_Long from) {
+    if (from == null) { return null; }
+    final _Callable_Integer_Long f = (_Callable_Integer_Long)Wrappers.unWrap(from);
+    return new _From_Integer_Long__To_Long_Integer(f);
+  }
+  @Override public Long call(final Integer a1) { return f.call(a1.longValue()).longValue(); }
+  @Override public Object getWrappee() { return f; }
+  @Override public int hashCode() { return f.hashCode(); }
+}
+</pre>
+<p>Primitive-wrapper to primitive for example:</p>
+<pre class="literal-block">
+public final class _From_Integer_Long__To_long_int extends _Callable_long_int implements Wrapper {
+  private final _Callable_Integer_Long f;
+  private _From_Integer_Long__To_long_int(final _Callable_Integer_Long f) { this.f = f; }
+  public _From_Integer_Long__To_long_int instance(final _Callable_Integer_Long from) {
+    if (from == null) { return null; }
+    final _Callable_Integer_Long f = (_Callable_Integer_Long)Wrappers.unWrap(from);
+    return new _From_Integer_Long__To_long_int(f);
+  }
+  @Override public long callPrimitive(final int a1) { return f.call(Long.valueOf(a1)); }
+  @Override public Object getWrappee() { return f; }
+  @Override public int hashCode() { return f.hashCode(); }
+}
+</pre>
+<p>Primitive to primitive-wrapper for example:</p>
+<pre class="literal-block">
+public final static class _From_int_long__To_Long_Integer extends _Callable_Long_Integer implements Wrapper {
+  private final _Callable_int_long f;
+  private _From_int_long__To_Long_Integer(final _Callable_int_long f) { this.f = f; }
+  public _From_int_long__To_Long_Integer instance(final _Callable_int_long from) {
+    if (from == null) { return null; }
+    final _Callable_int_long f = (_Callable_int_long)Wrappers.unWrap(from);
+    return new _From_int_long__To_Long_Integer(f);
+  }
+  @Override public Long call(final Integer a1) { return Long.valueOf(f.callPrimitive(a1)); }
+  @Override public Object getWrappee() { return f; }
+  @Override public int hashCode() { return f.hashCode(); }
+}
+</pre>
+<p>Primitive to primitive (which is the same as the no "implicit conversion" case since Java automatically converts primitives) for example:</p>
+<pre class="literal-block">
+public final static class _From_int_long__To_long_int extends _Callable_long_int implements Wrapper {
+  private final _Callable_int_long f;
+  private _From_int_long__To_long_int(final _Callable_int_long f) { this.f = f; }
+  public _From_int_long__To_long_int instance(final _Callable_int_long from) {
+    if (from == null) { return null; }
+    final _Callable_int_long f = (_Callable_int_long)Wrappers.unWrap(from);
+    return new _From_int_long__To_long_int(f);
+  }
+  @Override public long callPrimitive(final int a1) { return f.callPrimitive(a1); }
+  @Override public Object getWrappee() { return f; }
+  @Override public int hashCode() { return f.hashCode(); }
+}
+</pre>
+</div>
+</div>
+<div class="section">
+<h2><a id="array-from-classes" name="array-from-classes">4.4. <tt class="docutils literal"><span class="pre">Array_From</span></tt> classes</a></h2>
+<p>These classes provide the same functionality as the <tt class="docutils literal"><span class="pre">_From</span></tt> classes above do for individual lambdas but instead operate on arrays of lambdas. All the <tt class="docutils literal"><span class="pre">_Array_From</span></tt> classes create a new array, for the 'to', and convert each element of 'from'. The name of the <tt class="docutils literal"><span class="pre">_Array_From</span></tt> class is the same as the name of the appropriate <tt class="docutils literal"><span class="pre">_From</span></tt> class with '<tt class="docutils literal"><span class="pre">_Array</span></tt>' prepended, e.g:</p>
+<pre class="literal-block">
+public final class _Array_From_0_String__To_String {
+  public static _Callable_String[] instance(final _Callable_0&lt;? extends String&gt;[] from) {
+    if (from == null) { return null; }
+    final _Callable_String[] to = new _Callable_String[from.length];
+    for (int i = 0; i &lt; from.length; i++) { to[i] = _From_0_String__To_String.instance(from[i]); }
+    return to;
+  }
+}
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a id="translating-source-code" name="translating-source-code">5. Translating source code</a></h1>
+<p>To keep the weblog shorter I will limit the explanation to lambdas that have a return value and one argument, it is straightforward to extrapolate to a void lambda and down to zero or up to <em>n</em> arguments. The strawman proposal allows the return type of the lambda to be implied. Inferring the return type is a separate issue to how to implement lambdas and therefore the explanations assume the types are specified (similarly the proposed diamond operator is ignored). There are two basic constructs in lambdas:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">#$R$($A$)</span></tt></dt>
+<dd>Which declares a lambda type</dd>
+<dt><tt class="docutils literal"><span class="pre">#$R$($A$</span> <span class="pre">$N$)</span> <span class="pre">($E$)</span></tt></dt>
+<dd>Which creates a new lambda instance</dd>
+</dl>
+<p>There is a second new-lambda-instance construct in the strawman that allows statements, however it is easy to extrapolate to multiple statements from a single expression and therefore this form is not described.</p>
+<p>In the above:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">$R$</span></tt></dt>
+<dd>The return type of the lambda which can be any type: primitive, class, interface,
+or generic type. $R$ may not be a wildcard-generic type.</dd>
+<dt><tt class="docutils literal"><span class="pre">$A$</span></tt></dt>
+<dd>The argument type of the lambda which can be any type: primitive, class, interface,
+or generic type. $A$ may not be a wildcard-generic type.
+$A$ may include a <tt class="docutils literal"><span class="pre">final</span></tt> modifier in addition to the type.</dd>
+<dt><tt class="docutils literal"><span class="pre">$N$</span></tt></dt>
+<dd>Is the name of the argument.</dd>
+<dt><tt class="docutils literal"><span class="pre">$E$</span></tt></dt>
+<dd>The expression that is executed when the lambda is called.</dd>
+</dl>
+<p>Generic types in lambdas do not include wildcards, i.e. no <tt class="docutils literal"><span class="pre">?</span></tt>, <tt class="docutils literal"><span class="pre">?</span> <span class="pre">extends</span> <span class="pre">$type$</span></tt>, or <tt class="docutils literal"><span class="pre">?</span> <span class="pre">super</span> <span class="pre">$type$</span></tt>. If wildards are used as part of the lambda syntax, then it is an error.</p>
+<p>From time to time, when explaining the expansion of lambda syntax, other textual place markers are introduced between dollars, e.g. <tt class="docutils literal"><span class="pre">$type$</span></tt> as used above. If more than one $A$, for example, is needed then an additional letter is added to clarify which $A$ is referred to, e.g. $AL$ might be used to indicate the $A$ on the left hand side of an assignment.</p>
+<div class="section">
+<h2><a id="lambda-instances" name="lambda-instances">5.1. Lambda instances</a></h2>
+<p>New lambdas are created by the expression <tt class="docutils literal"><span class="pre">#$R$($A$</span> <span class="pre">$N$)</span> <span class="pre">($E$)</span></tt>.</p>
+<p>If either <tt class="docutils literal"><span class="pre">$R$</span></tt> or <tt class="docutils literal"><span class="pre">$A$</span></tt> are generic types then if either <tt class="docutils literal"><span class="pre">$R$</span></tt> or <tt class="docutils literal"><span class="pre">$A$</span></tt> are primitive they are converted to the equivalent primitive-wrapper classes and the expansion is:</p>
+<pre class="literal-block">
+new _Callable_1&lt;$R$, $A$&gt;() {
+  @Overload public final $R$ call($A$ $N$) { return $E$; }
+}
+</pre>
+<p>Else the expansion is:</p>
+<pre class="literal-block">
+new _Callable_$R$_$A$() {
+  @Overload public final $R$ call($A$ $N$) { return $E$; }
+}
+</pre>
+</div>
+<div class="section">
+<h2><a id="lambda-types" name="lambda-types">5.2. Lambda types</a></h2>
+<p>The type of a lambda is given by <tt class="docutils literal"><span class="pre">#$R$($A$)</span></tt> and this may occur in different contexts as listed below.</p>
+<div class="section">
+<h3><a id="field-variable-argument-definition" name="field-variable-argument-definition">5.2.1. Field, variable, argument definition</a></h3>
+<p>EG <tt class="docutils literal"><span class="pre">#$R$($A$)</span> <span class="pre">lambda</span> <span class="pre">=</span> <span class="pre">...;</span></tt>.</p>
+<p>If either <tt class="docutils literal"><span class="pre">$R$</span></tt> or <tt class="docutils literal"><span class="pre">$A$</span></tt> are generic types then the expansion is:</p>
+<pre class="literal-block">
+_Callable_1&lt;? extends $R$, ? super $A$&gt;
+</pre>
+<p>Else the expansion is:</p>
+<pre class="literal-block">
+_Callable_$R$_$A$
+</pre>
+</div>
+<div class="section">
+<h3><a id="field-variable-argument-array-definition" name="field-variable-argument-array-definition">5.2.2. Field, variable, argument array-definition</a></h3>
+<p>EG #$R$($A$)[] $name$ = new #$R$($A$)[$size$];, the LHS is treated like a definition and the RHS like an instance, except that the RHS has special treatment for the generics case.</p>
+<p>If either $R$ or $A$ are generic types then an unchecked warning is given, because you cannot create type-safe-generic arrays. The expansion is:</p>
+<pre class="literal-block">
+_Callable_1&lt;? extends $R$, ? super $A$&gt;[] $name$ = (_Callable_1&lt;? extends $R$, ? super $A$&gt;[]) new _Callable_1[$size$];
+</pre>
+<p>(There is no syntax in the strawman for a raw-type lambda, hence the need for this special expansion.)</p>
+<p>Else the expansion is:</p>
+<pre class="literal-block">
+_Callable_$R$_$A$[] $name$ = new _Callable_$R$_$A$[$size$];
+</pre>
+</div>
+<div class="section">
+<h3><a id="class-literals" name="class-literals">5.2.3. Class literals</a></h3>
+<p>EG <tt class="docutils literal"><span class="pre">#$R$($A$).class</span></tt>.</p>
+<p>If either <tt class="docutils literal"><span class="pre">$R$</span></tt> or <tt class="docutils literal"><span class="pre">$A$</span></tt> are generic types then an error is reported, because you cannot have class literals of generic types.</p>
+<p>Else the expansion is:</p>
+<pre class="literal-block">
+_Callable_$R$_$A$.class
+</pre>
+</div>
+<div class="section">
+<h3><a id="cast" name="cast">5.2.4. Cast</a></h3>
+<p>EG <tt class="docutils literal"><span class="pre">(#$R$($A$))</span></tt>.</p>
+<p>If either <tt class="docutils literal"><span class="pre">$R$</span></tt> or <tt class="docutils literal"><span class="pre">$A$</span></tt> are generic types then an unchecked cast warning is given, because you cannot check generic casts at compile time, but the expansion proceeds and is:</p>
+<pre class="literal-block">
+(_Callable_1&lt;$R$, $A$&gt;)
+</pre>
+<p>Else the expansion is:</p>
+<pre class="literal-block">
+(_Callable_$R$_$A$)
+</pre>
+</div>
+<div class="section">
+<h3><a id="instanceof-tests" name="instanceof-tests">5.2.5. <tt class="docutils literal"><span class="pre">instanceof</span></tt> tests</a></h3>
+<p>EG <tt class="docutils literal"><span class="pre">$expression$</span> <span class="pre">instanceof</span> <span class="pre">#$R$($A$)</span></tt>.</p>
+<p>If either <tt class="docutils literal"><span class="pre">$R$</span></tt> or <tt class="docutils literal"><span class="pre">$A$</span></tt> are generic types then an error is reported, because you cannot have <tt class="docutils literal"><span class="pre">instanceof</span></tt> tests of generic types.</p>
+<p>Else the expansion is:</p>
+<pre class="literal-block">
+$expression$ instanceof _Callable_$R$_$A$
+</pre>
+</div>
+<div class="section">
+<h3><a id="as-a-generic-type" name="as-a-generic-type">5.2.6. As a generic type</a></h3>
+<p>EG <tt class="docutils literal"><span class="pre">$genericType$&lt;$optionalWildcardSyntax$</span> <span class="pre">#$R$($A$)&gt;</span></tt> is treated like the LHS of a variable declaration and is always generic and is therefore expanded to:</p>
+<pre class="literal-block">
+$genericType$&lt;$optionalWildcardSyntax$ Callable$1&lt;? extends $R$, ? super $A$&gt;&gt;
+</pre>
+</div>
+</div>
+<div class="section">
+<h2><a id="assignments-and-initializations" name="assignments-and-initializations">5.3. Assignments and initializations</a></h2>
+<p>To facilitate reifying generic lambdas and contravariant-overriding, 'safe' automatic-conversion via loader-generated <tt class="docutils literal"><span class="pre">From</span></tt> classes are supported for assignment and initialization of variables, method parameters, and array elements (for arrays see next section).</p>
+<p>A running example is used below:</p>
+<pre class="literal-block">
+$lValue$ = $rExpression$
+</pre>
+<p>Where the type, after expansion, of <tt class="docutils literal"><span class="pre">$lValue$</span></tt> is <tt class="docutils literal"><span class="pre">_Callable_$RL$_$AL$</span></tt> and the expanded-type of <tt class="docutils literal"><span class="pre">$rExpression$</span></tt> is either <tt class="docutils literal"><span class="pre">_Callable_1&lt;?</span> <span class="pre">extends</span> <span class="pre">$RR$,</span> <span class="pre">?</span> <span class="pre">super</span> <span class="pre">$AR$&gt;</span></tt> or <tt class="docutils literal"><span class="pre">_Callable_$RR$_$AR$</span></tt> depending on if it is reified or not. Note <tt class="docutils literal"><span class="pre">$lValue$</span></tt> is reified else no 'conversion' is added by the compiler (it is not an error or a warning for <tt class="docutils literal"><span class="pre">$lValue$</span></tt> to be generic, it just means that the compiler does not need to add a 'conversion').</p>
+<p>In the description below the phrase $R$ "is convertible to" $L$ is used to indicate that $R$ has is the same as $L$, $R$ is a subtype of $L$, or $R$ is a primitive or primitive-wrapper that can be converted to $L$ which is also a primitive or primitive-wrapper. The automatic conversion of primitives and primitive-wrappers is usual in Java, e.g. <tt class="docutils literal"><span class="pre">int</span></tt> to <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+<p>In summary, the possible actions are:</p>
+<ol class="arabic simple">
+<li>If the type of <tt class="docutils literal"><span class="pre">$lValue$</span></tt> is generic, do nothing.</li>
+<li>If the type of <tt class="docutils literal"><span class="pre">$rExpression$</span></tt> is exactly the same as the type of <tt class="docutils literal"><span class="pre">$lValue$</span></tt>,
+do nothing.</li>
+<li>If the type of <tt class="docutils literal"><span class="pre">$rExpression$</span></tt> is generic, possibly insert a reifying conversion
+(see section 5.3.1).</li>
+<li>If the type of <tt class="docutils literal"><span class="pre">$rExpression$</span></tt> is reified, possibly insert a
+contravariant-overriding conversion (see section 5.3.2).</li>
+</ol>
+<div class="section">
+<h3><a id="reifying-conversion" name="reifying-conversion">5.3.1. Reifying conversion</a></h3>
+<p>If the the expanded type of <tt class="docutils literal"><span class="pre">$rExpression$</span></tt> is <tt class="docutils literal"><span class="pre">_Callable_1&lt;?</span> <span class="pre">extends</span> <span class="pre">$RR$,</span> <span class="pre">?</span> <span class="pre">super</span> <span class="pre">$AR$&gt;</span></tt> (i.e. it is generic) then a reifying cast is applicable (and as described above <tt class="docutils literal"><span class="pre">lValue</span></tt> should be reified).</p>
+<p>If <tt class="docutils literal"><span class="pre">$RR$</span></tt> or <tt class="docutils literal"><span class="pre">$AR$</span></tt> are generic-parameter names rather than specific-type names then report an unchecked cast warning and substitute the limits of the parameters into <tt class="docutils literal"><span class="pre">$RR$</span></tt> and <tt class="docutils literal"><span class="pre">$AR$</span></tt> respectively, instead of the parameter names, and continue as below.</p>
+<p>If <tt class="docutils literal"><span class="pre">$RR$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$RL$</span></tt> and if <tt class="docutils literal"><span class="pre">$AL$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$AR$</span></tt> then the expansion is:</p>
+<pre class="literal-block">
+lValue = _From_1_$RR$_$AR$__To_$RL$_$AL$.instance(rExpression);
+</pre>
+<p>Else there is a type error that should be reported.</p>
+</div>
+<div class="section">
+<h3><a id="contravariant-overriding-conversion" name="contravariant-overriding-conversion">5.3.2. Contravariant-overriding conversion</a></h3>
+<p>If the the expanded type of <tt class="docutils literal"><span class="pre">$rExpression$</span></tt> is <tt class="docutils literal"><span class="pre">_Callable_$RR$_$AR$</span></tt> (i.e. it is reified) then a reified-to-reified cast is applicable (and as described above <tt class="docutils literal"><span class="pre">lValue</span></tt> should be reified).</p>
+<p>If <tt class="docutils literal"><span class="pre">$RR$</span></tt> is the same type as <tt class="docutils literal"><span class="pre">$RL$</span></tt> and if <tt class="docutils literal"><span class="pre">$AL$</span></tt> is the same type as <tt class="docutils literal"><span class="pre">$AR$</span></tt> then  do nothing (no cast necessary).</p>
+<p>If <tt class="docutils literal"><span class="pre">$RR$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$RL$</span></tt> and if <tt class="docutils literal"><span class="pre">$AL$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$AR$</span></tt> then the expansion is:</p>
+<pre class="literal-block">
+lValue = _From_$RR$_$AR$__To_$RL$_$AL$.instance(rExpression);
+</pre>
+<p>Else there is a type error that should be reported.</p>
+</div>
+</div>
+<div class="section">
+<h2><a id="array-assignments-and-initializations" name="array-assignments-and-initializations">5.4. Array assignments and initializations</a></h2>
+<p>To facilitate reifying arrays of generic-lambdas and contravariant-overriding of lambda arrays, 'safe' automatic-conversion via loader-generated <tt class="docutils literal"><span class="pre">Array_From</span></tt> classes are supported for assignment and initialization of array variables, method parameters, and array-array elements (for none arrays see previous section).</p>
+<p>In the following:</p>
+<pre class="literal-block">
+$lValue$ = $rExpression$
+</pre>
+<p>The expanded type of:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">$lValue$</span></tt></dt>
+<dd>Is <tt class="docutils literal"><span class="pre">_Callable_1_$RL$_$AL$[]</span></tt> (generic) or <tt class="docutils literal"><span class="pre">_Callable_$RL$_$AL$[]</span></tt> (reified)</dd>
+<dt><tt class="docutils literal"><span class="pre">$rExpression</span> <span class="pre">$</span></tt></dt>
+<dd>Is <tt class="docutils literal"><span class="pre">_Callable_1_$RR$_$AR$[]</span></tt> (generic) or <tt class="docutils literal"><span class="pre">_Callable_$RR$_$AR$[]</span></tt> (reified)</dd>
+</dl>
+<p>If <tt class="docutils literal"><span class="pre">$RR$</span></tt> is <tt class="docutils literal"><span class="pre">$RL$</span></tt> and if <tt class="docutils literal"><span class="pre">$AR$</span></tt> is <tt class="docutils literal"><span class="pre">$AL$</span></tt> then no expansion is necessary.</p>
+<p>Else if <tt class="docutils literal"><span class="pre">$lValue$</span></tt> generic and <tt class="docutils literal"><span class="pre">$RL$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$RR$</span></tt> and if <tt class="docutils literal"><span class="pre">$AR$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$AL$</span></tt> then no expansion is necessary.</p>
+<p>Else if (<tt class="docutils literal"><span class="pre">$RR$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$RL$</span></tt> and if <tt class="docutils literal"><span class="pre">$AL$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$AR$</span></tt>) or
+(<tt class="docutils literal"><span class="pre">$RL$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$RR$</span></tt> and if <tt class="docutils literal"><span class="pre">$AR$</span></tt> "is convertible to" <tt class="docutils literal"><span class="pre">$AL$</span></tt>) then the expansion is one of:</p>
+<p>Both <tt class="docutils literal"><span class="pre">$lValue$</span></tt> and <tt class="docutils literal"><span class="pre">$rExpression</span> <span class="pre">$</span></tt> generic:</p>
+<pre class="literal-block">
+lValue = Array_From_1_$RR$_$AR$__To_1_$RL$_$AL$.instance(rExpression);
+</pre>
+<p>Generic <tt class="docutils literal"><span class="pre">$lValue$</span></tt> and reified <tt class="docutils literal"><span class="pre">$rExpression</span> <span class="pre">$</span></tt>:</p>
+<pre class="literal-block">
+lValue = Array_From_1_$RR$_$AR$__To_$RL$_$AL$.instance(rExpression);
+</pre>
+<p>Reified <tt class="docutils literal"><span class="pre">$lValue$</span></tt> and generic <tt class="docutils literal"><span class="pre">$rExpression</span> <span class="pre">$</span></tt>:</p>
+<pre class="literal-block">
+lValue = Array_From_$RR$_$AR$__To_1_$RL$_$AL$.instance(rExpression);
+</pre>
+<p>Both <tt class="docutils literal"><span class="pre">$lValue$</span></tt> and <tt class="docutils literal"><span class="pre">$rExpression</span> <span class="pre">$</span></tt> reified:</p>
+<pre class="literal-block">
+lValue = Array_From_$RR$_$AR$__To_$RL$_$AL$.instance(rExpression);
+</pre>
+<p>Else there is a type error that should be reported.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="conclusions" name="conclusions">6. Conclusions</a></h1>
+<p>Reifying lambdas is not particularly straightforward, however it offers improved performance over some erased lambdas schemes and a smoother joining of lambdas to the rest of Java. A high-performance lambda implementation, e.g. reified lambdas, makes <tt class="docutils literal"><span class="pre">ParallelArray</span></tt> worth while. Without supporting high-performance lambdas you might well argue that provide a series of generic <tt class="docutils literal"><span class="pre">Callable</span></tt> interfaces and a short inner-class syntax is sufficient.</p>
+<p>Are there any use cases were the above proposal is not ideal? (Other than the already justified, in previous weblog, wrapping for contravariant-overriding conversions.)</p>
+<p><strong>Are there any bugs?</strong></p>
+<p>Feedback would be greatly appreciated!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=278567.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=278567&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D278567&amp;title=Towards+A+Formal+Specification+of+Reified+Lambda+Functions&amp;bodytext=In+a+previous+weblog+a+suggestion+for+reifying+lambda+types+was+given.+The+previous+weblog+give+examples+but+no+formal+description+of+the+process.+This+weblog+gives+a+more+formal+description.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D278567&amp;title=Towards+A+Formal+Specification+of+Reified+Lambda+Functions">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D278567&amp;title=Towards+A+Formal+Specification+of+Reified+Lambda+Functions">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

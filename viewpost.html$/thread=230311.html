@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2008, Day Two: JRuby, Rails, and NetBeans</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230311.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2008, Day Two: JRuby, Rails, and NetBeans&amp;body= %0AArtima Weblogs %0AJavaOne 2008, Day Two: JRuby, Rails, and NetBeans %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=230311">Email</a> | 
+<a href="../viewpostP.html$/thread=230311.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=230227.html" title="JavaOne 2008, Day One: Conference 2.0 and JRuby Notes">Previous</a> | 
+<a class="sl" href="thread=230361.html" title="JavaOne 2008, Day Three: Riding the Rails">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2008, Day Two: JRuby, Rails, and NetBeans</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 8, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Why you want Rails for your web app, why you want
+JRuby on Rails for deployment, and why you want NetBeans
+for Rails development.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>The dietary emergency has passed, and I'm back at full
+strength. This post focuses on the "why". Tomorrow's
+will focus a bit more on the "how".</p>
+<div class="section">
+<h1><a id="why-you-want-rails" name="why-you-want-rails">Why You Want Rails</a></h1>
+<p>Several sessions have been devoted to Rails at JavaOne 2008.
+The nice thing is that have invariably used the same example:
+a simple blog app that Rails creates in seconds.</p>
+<p>Whether by accident or design, that confluence has worked out
+well. It has made it possible to see the same application from
+multiple different vantage points. So far, I've seen it
+constructed from the command line and from NetBeans, worked
+with it in an interactive lab, and seen a walk-through of the
+process that explained what was going on and discussed various
+options along the way.</p>
+<p>At this point, I've got enough familiarity with it that I could
+reach in and do something with it--and the high-level understanding
+of the architecture I've gained will make it easier to come up to
+speed when I'm looking at someone else's app. Most importantly,
+though, design thoughts are swimming in my head, along with
+experiments I want to try. So this convention has been unexpectedly
+good for learning about Rails.</p>
+<p>There are good reasons for wanting to know about Rails, too, if
+there are any web apps in your future:</p>
+<blockquote>
+<ul class="simple">
+<li>You can create a running app in seconds, with a couple of
+commands. You won't spend hours just to get Hello World to
+run.</li>
+<li>Less Rails code than Java application configuration
+(which should pretty well end the discussion).</li>
+<li>Rails uses Rake for builds--and Rake is a hecka-fun build
+language.</li>
+</ul>
+</blockquote>
+<p>But perhaps most importantly, Rails lets you do agile development,
+primarliy due to the fact that Ruby is interpreted:</p>
+<blockquote>
+<ul class="simple">
+<li>You can do true "test first" development: You can create your
+test and watch it fail before you begin writing the code that
+will make it succeed. The RSpec framework even distinguishes
+between code that fails (red) and code that hasn't been developed
+yet (yellow). (Were it a compiled language, the tests wouldn't
+compile until the application classes and interfaces had been
+written.)</li>
+<li>You make a change and run it. There is no need to recompile,
+redeploy, and restart. That makes the process a lot more fun.
+(Some changes require you to run a new instance of the
+application--database changes, if memory serves. But for most
+changes, you just refresh the browser!)</li>
+</ul>
+</blockquote>
+<p>Rails apps are also more maintainable, due to:</p>
+<blockquote>
+<ul class="simple">
+<li>A "database create" task that is useful for testing.</li>
+<li>A "database migrate" task that's helpful when you're
+debugging a problem in a previous version of the
+application.</li>
+<li>A fixed directory structure, so developers have
+an easier time coming up to speed on new applications.</li>
+<li>A "convention over configuration" mantra that also
+makes it easy for new developers, so there are fewer
+configuration connections to understand before you
+can make sense of the app. In addition, the skills
+developed on one project translate readily to the
+next. (For example, if you see a data class called
+"Tractor", you will expect to find a "tractors"
+table in the database.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="why-you-want-jruby" name="why-you-want-jruby">Why You Want JRuby</a></h1>
+<p>According to Ola Bini, a core JRuby developer from Thoughtworks,
+"JRuby on Rails is taking the world by storm". Bini, the author
+of <em>Practical JRuby on Rails</em>, went on to show a lengthening
+list of companies that are using it.</p>
+<p>There are a variety of reasons that JRuby is popular for Rails
+apps:</p>
+<blockquote>
+<ul>
+<li><p class="first">Database connections are made through JDBC, which provides
+broader, more scalable database support.</p>
+</li>
+<li><p class="first">On average JRuby, runs 2 and a half times faster than Ruby,
+except at startup. (That time is inconsequential for
+production, but does slow down development cycles a tad.
+Fortunately, the JRuby guys have found a simple library
+trick that will shorten the current startup time of 1.5
+seconds, bringing it down to .5 seconds.)</p>
+</li>
+<li><p class="first">In addition to native threads, JRuby supports Unicode
+natively.</p>
+</li>
+<li><p class="first">There is a whole team at work on performance and garbage
+collecting on the JVM, so there is that much less for
+the JRuby implementors to worry about.</p>
+</li>
+<li><p class="first">Code can be fully compiled ahead of time or just in time.
+(For performance, you need to experiment to find out which
+works best. Hotspot can do a pretty amazing job of runtime
+optimization. But pre-compiling has another advantage:
+protection of source for a commercial application.)</p>
+</li>
+<li><p class="first">A JRuby on Rails application can be packaged into a WAR, and
+then deployed onto any compliant server. There tend to be a
+lot of those in the IT world, these days, so you can deploy
+your Rails app without asking your IT department to support
+a whole different server with unknown security vulnerabilities.
+(The packaging can be done with Goldspike, or with the new
+kid on the block: Warbler. More on that tomorrow.)</p>
+</li>
+<li><p class="first">Glassfish--the Java web app server that scales well--is
+available as a JRuby gem. (Right now, there is a bit of
+configuration to do to make everything work. But glassfish v3
+will have direct support for Rails, so you just develop and run.)</p>
+</li>
+<li><p class="first">A Ruby on Rails app can scale, but it does so at the cost
+of one process per connection. A large application like
+Twitter was running 180 processes, at last count. Each
+process consumes system resources, and context switching
+adds latency, so minimizing the process count is a good
+thing for scaling. Glassfish gives you multiple listener
+threads, while JRoR gives you multiple processing threads.
+Result: Big performance, vanishingly small process count
+(on the order of, like, one).</p>
+</li>
+<li><p class="first">With JRuby you get the best of both worlds: Ruby applications
+and libraries, <em>plus</em> Java libraries. And you can access those
+libraries with Ruby syntax (or Java syntax, if you want).</p>
+</li>
+<li><p class="first">JRuby provides a plethora of language features that are
+missing in Java--features that tend to make programming more fun.
+Some, like closures, are under consideration for addition
+to Java, but simple things like Ruby's literal syntax for
+hashmaps make code easier to read and write:</p>
+<pre class="literal-block">
+require 'java';
+import java.util.HashMap
+h = hashmap.new
+access with ruby syntax: h["foo"] = "bar"
+h.key.sort { |key| ...do something here... }
+</pre>
+</li>
+</ul>
+</blockquote>
+<p>One JRuby on Rails application worth examining will be Mingle,
+Bini's tool for project collaboration. It's the first JRuby on
+Rails application, and it does some selective pre-compilation
+to protect internal sources. (The pricing is interesting,
+though. The first 5 licenses are always free. After that, you
+spend anywhere from $300 for a six-month license to $1000 for
+a perpetual license.)</p>
+</div>
+<div class="section">
+<h1><a id="why-you-want-netbeans" name="why-you-want-netbeans">Why You Want NetBeans</a></h1>
+<p>I'm a huge fan of interactive development environments (IDEs). In general,
+I subscribe to the philosophy that the computer ought to be doing
+everything and anything it <em>can</em> do, leaving me to take care of the
+rest. IDEs do a great job of off-loading development work, and for
+Ruby and JRuby on Rails, NetBeans does a pretty decent job.</p>
+<blockquote>
+<strong>Note:</strong>
+Eclipse developers will use RDT or Aptana/RadRails, but this
+post is about NetBeans.)</blockquote>
+<p>To start, NetBeans provides a bunch of conveniences that save time:</p>
+<blockquote>
+<ul class="simple">
+<li>Ctrl+click to jump to a declaration</li>
+<li>Right click to move between model, controller, and view.</li>
+<li>Auto-recognition of camel case in the search menu, so
+so "AC" gives you a list of ActionController entries.</li>
+<li>Ctrl+Shift+Space for code completion (you get a list of
+possible completions, with API documentation showing in
+a separate pane when an entry is highlighted.</li>
+<li>Ctrl+Shift+Space in a comment to preview the RDoc HTML
+that will be generated (either to check your code or to
+view the comments in a more readable way).</li>
+<li>Indented code in a comment is automatically pre-formatted
+(so you don't have to add &lt;pre&gt; tags. When displayed, the
+code is syntax highlighted (making it easier to read).</li>
+</ul>
+</blockquote>
+<p>NetBeans also adds useful functionality:</p>
+<blockquote>
+<ul class="simple">
+<li>Refactoring support. For example, when you select code and
+extract it to a separate method, NetBeans automatically
+sets up the parameter-passing and multi-value returns
+necessary for the refactoring to work. (And of course there
+is renaming, which helps to keep code readable and maintainable.)</li>
+<li>Testing support. You can interactively go to tests and run
+them, whether you're using the standard unit testing framework
+or RSpec. (RSpec is geared more for behavioral testing. It
+also has more readable syntax, and gives you a yellow bar for
+unimplemented code in addition to the red bar for a failed test.</li>
+<li>Warnings for code that will be incompatible with Rails 2.0</li>
+<li>Support for javascript as well as rhtml in erb files, so you
+get code completion, and refactoring. You also get a visual
+display that shows how things will appear as your formatting
+rules are applied.</li>
+<li>The ability to run a single test out of a suite, so you can
+zero in on the code you're working on.</li>
+<li>Interactive debugging, which helps you see how things work
+together.</li>
+<li>The ability to debug template files as well as code.</li>
+<li>When you add a WAR-producing plugin like Goldspike, the
+Rake tasks they add are available in the NetBeans menu.
+You select that task to create the WAR, then copy it
+into the Glassfish autodeploy directory to run it--all
+without leaving the IDE.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="resources" name="resources">Resources</a></h1>
+<blockquote>
+<ul>
+<li><p class="first"><strong>Mingle</strong></p>
+<blockquote>
+<p><a class="reference" href="../_/http/studios.thoughtworks.com/2007/5/7/mingle-to-run-on-jruby/index.html">http://studios.thoughtworks.com/2007/5/7/mingle-to-run-on-jruby</a>
+<a class="reference" href="../_/http/www.thoughtworks.com/press-releases/Mingle-JRuby-Release.html">http://www.thoughtworks.com/press-releases/Mingle-JRuby-Release.html</a>
+<a class="reference" href="../_/http/studios.thoughtworks.com/mingle-project-intelligence/pricing-and-license/index.html">http://studios.thoughtworks.com/mingle-project-intelligence/pricing-and-license</a></p>
+</blockquote>
+</li>
+<li><p class="first"><strong>Glassfish</strong></p>
+<blockquote>
+<p><a class="reference" href="../_/https/glassfish.dev.java.net/index.html">https://glassfish.dev.java.net/</a></p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=230311&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230311&amp;title=JavaOne+2008%2C+Day+Two%3A+JRuby%2C+Rails%2C+and+NetBeans&amp;bodytext=Why+you+want+Rails+for+your+web+app%2C+why+you+want%0D%0AJRuby+on+Rails+for+deployment%2C+and+why+you+want+NetBeans%0D%0Afor+Rails+development.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230311&amp;title=JavaOne+2008%2C+Day+Two%3A+JRuby%2C+Rails%2C+and+NetBeans">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230311&amp;title=JavaOne+2008%2C+Day+Two%3A+JRuby%2C+Rails%2C+and+NetBeans">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

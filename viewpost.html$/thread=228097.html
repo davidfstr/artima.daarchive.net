@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Hiring the Rowing-Forward 30%</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=228097.html">Discuss</a> | 
+<a href="mailto:?subject=Hiring the Rowing-Forward 30%&amp;body= %0AArtima Weblogs %0AHiring the Rowing-Forward 30% %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=228097">Email</a> | 
+<a href="../viewpostP.html$/thread=228097.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=227728.html" title="Will Closures Make Java Less Verbose?">Previous</a> | 
+<a class="sl" href="thread=229109.html" title="Speaking in Albuquerque">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Hiring the Rowing-Forward 30%</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">April 16, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A business owner at a workshop I held made the very disturbing comment that he thought that 70% of programmers were "rowing backward," doing things that you had to fix in order to keep the boat moving in the forward direction.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>This person had created a software tool company of about 25 people that he later sold to a much larger company. Based on his descriptions of his company before it sold, I guess he is referring to his after-sale experience with the much larger company. Or it could just be his experiences with customers using his tools.
+
+<p>His anecdotal "70% Rowing Backwards" sounds roughly right to me, and it bothers me a lot. Studies show that programmers derive their primary satisfaction by being productive, so such an environment sounds downright depressing. But managers obviously don't want this kind of thing to happen either. It's wasteful and costly. Of course, if you believe that you're a productive programmer you may think that you're rowing in the right direction when you're not (actually, I <i>know</i> I've gone in the wrong direction while thinking I've done the right thing, and I think we can discount the small percentage of people who are intentionally causing trouble as being mentally unbalanced). If you're a manager, presumably you are getting information that makes you believe you're making the best decisions given the situation.
+
+<p>And still, we are only fractionally productive compared to what we know we can do. How did we get here? (Jerry Weinberg says: "one logical step at a time.") Why do we stay here? (Because we think we're doing the best we can in the given situation, and change is hard.)
+Is there some way we can change things?
+
+<h1><a href="../_/http/www.mindviewinc.com/Conferences/JavaPosseRoundup/index.html">Java Posse Roundup</a> Session</h1>
+
+Instead of holding a session that discussed the problem, I decided to go out on a limb and hold a session to try to come up with an answer. My fantasy would be to come up with something like Open Spaces, where the solution is so topsy-turvy that you have a hard time believing it works, but when it does work (because it relies on everyone acting in their own self-interest), it works better than anything else you've seen before. And requires minimal leadership and structure.
+
+<p>I believe such an organization can be created, but I haven't imagined it yet. When it became clear that we weren't going to get very far in the session, I suggested that we go around and describe the best job we've ever had. This turned out to provide great insight.
+
+<p>To a person, everyone described the best team they'd ever been on. The actual state of the company was unimportant; it could be falling down around their ears and if the team was great, they were very happy.
+
+<h1>Six Hiring Points</h1>
+
+Later, at one of the meals (these are not formalized during the JPR, but happen in various and sundry different ways), the discussion turned to the most important factors in hiring. The hiring process in most companies amazes me because it seems to be a short courtship for such an important choice. I suppose this happens because "hire a database programmer" becomes a to-do item that someone would really, really like to cross off. Everything is being held up, and if we could "just" fill that position we can move forward. Thus it becomes a short-term urgency, and the thought of both the short- and long-term damage that the wrong choice can cause is pushed to the background.
+
+<p>Our group came up with six things that you should test for when hiring someone, each of which is critical for the well-rounded programmer that everyone wants to have on their team. 
+
+<ol>
+<li> <b>Technical Knowledge</b>. This is the easiest thing to test for, and it's what most companies fall back on. It's ingrained from our own decades of schooling. However, technical knowledge is a relatively small part of the picture, and only for the short term. Even though it's what is typically tested, the remaining points on this list are the truly important ones.<br/><br/>
+<li> <b>Critical Thinking</b>. This industry is full of new technologies that promise to solve all your problems. Architects like to think they have it all under control, and hand out a system design to be consumed without question. When the programmer encounters a real system, are they capable of expressing doubt and asking the right questions?<br/><br/>
+<li> <b>Can You Solve Problems?</b> The college teaching system trains people to learn for tests that have one right answer. A system like this often produces people who believe that programming is a bunch of rules that you simply apply. What does the candidate do when they encounter a real problem where the answer is not clear and balancing tradeoffs is necessary?<br/><br/>
+<li> <b>Can You Learn?</b> A hire that self-teaches is very valuable. This is less about classroom situations than it is about learning from other outside influences. Can you learn on your own, and more importantly, do you want to? What have you learned recently, under your own motivation?<br/><br/>
+<li> <b>Can You Change Based on Environment and Evidence?</b> Which means: Are you open to a better way of doing things? However, not every single "better" way of doing things that comes along. This requires a balance between the ability to see and adopt a change when that change is truly an improvement, but at the same time having a highly developed sense of skepticism and a good BS detector.<br/><br/>
+<li> <b>Are You Toxic?</b> The worst person to hire is the one that passes tests 1-5, but turn out to have some kind of quirk or imbalance that causes destructive behavior. There's nothing worse than dropping a toxic person into a team.
+
+</li></li></li></li></li></li></ol>
+
+When you see these in a list, they may seem fairly obvious. Of course everyone wants to know about these things in an interview. Why doesn't everyone find out about these things? It's because they're harder to test for, sometimes <i>much</i> harder to test for, than technical knowledge alone. Even though you know hiring the wrong person is like accumulating credit-card debt (easy to get into, but costly to carry and hard to get rid of), the temptation is great to just hire the person, check that task off the list, and hope that they will work out. But as I learned from some workshop, "Hope is not a strategy."
+
+<h1>Testing for the Six Points</h1>
+<p>The success of a new employee is going to depend far more on points 2-6 than point one. So to become more successful as an employer, you really do need tests for those points, and you need to apply them on every single candidate, or else you're going to end up with a lot of employees that are rowing in the wrong direction.
+
+<ol>
+<li> <b>Technical Knowledge</b>.Of course you need to know what level of technical knowledge a candidate has; the problem is <i>only</i> testing for technical knowledge. And consider this: someone with a hard technical background, such as physics or chemistry or engineering, may be a much better candidate because they can learn faster and tackle harder problems, even if they have relatively little formal training in programming. So they might not know how to write an insertion sort from memory, but they also might be more valuable than someone who does. Remember that code reviews are an incredibly valuable way to discover problems. So show them some code and have them review it, and see what kinds of problems they can discover and improvements they can make. That's likely to be far more revealing than whether they have something memorized. A good programmer looks things up anyway, so memorization is not a skill you really want to test for.<br/><br/>
+<li> <b>Critical Thinking</b>. Ask the candidate to compare two technologies that they know about (EJB vs. Hibernate/Spring, for example), or to talk about the applicability of a tool (what aspects of UML are commonly useful, and which are rarely used?). If they know more than one language, ask where one language might be more appropriate than another. Show them a design or an architecture and ask if they see problems and how they might improve it.<br/><br/>
+<li> <b>Can You Solve Problems?</b> You want to see problem-solving in action, so give them a problem and watch. Two that I like (I think I heard them from the same person) are: "make an object model of a chicken" and "design an online monopoly game." I think it's important that such problems be open-ended, because that adds an extra dimension to the problem-solving experience. Challenges that involve back-of-the-envelope calculations or estimates are good, because software design is an inexact art and if someone cannot move forward unless they have an exact right answer they may not be a match for your team. Another thing to notice is whether they ask questions during the process; this gives an indication of whether they consider software a team sport or if they are a "lone wolf" developer.<br/><br/>
+<li> <b>Can You Learn?</b> Ask the candidate what kinds of things they have done to enhance (if they were in school) or continue (if they were working) their education. User group meetings are a good indicator, as are conferences, workshops, and seminars. What books have they read? Have they learned new languages or technologies? If these are self-taught this is a very good sign.<br/><br/>
+<li> <b>Can You Change Based on Environment and Evidence?</b> For a programmer, the most telling fact may be the editor they use. If a programmer is hardwired to only use emacs or vi (for example) and could never consider using anything else, they may also fight any efforts to do unit testing or use version control or your build system. Or to use any other tool that might improve productivity. Ask what kind of editors and development environments they have used; ask them to create something with that tool. If you really want to see them in action, walk them through the development environment that your team is using.<br/><br/>
+<li> <b>Are You Toxic?</b> Testing for toxicity is the trickiest and most difficult of these tests, primarily because bad behavior doesn't show up until a person perceives that they are in a position of adequate power, which is to say, after they've been hired and very often after they've been working at a place long enough to know what they can get away with. There are three approaches I can see to the problem: 
+<ol type="A">
+<li> Follow up on references -- former employers tend to be very careful because they fear lawsuits, but if you give the former employers lots of room, they might say things between the lines that allow you to pick up important clues. If there are gaps in employment, find out about those. If an employer won't speak to you at all, that's an important clue.
+<li>A simulation of some common activity where the toxic individual is likely to lose themselves and expose a problem. For a programmer, pair programming with someone on the team may show certain kinds of behaviors. 
+<li>There must be a probationary period where, if the new hire turns out to be toxic they are dismissed. Yes, this is painful because you have to go back through the hiring process (although you may be lucky enough to tap your second or third choices from the original process), but if you don't do it you will either greatly reduce the productivity of your team or destroy it altogether. 
+</li></li></li></ol>
+<a href="../_/http/www.amazon.com/gp/product/0446526568/ref=ase_bruceeckelA/index.html">The No-Asshole Rule</a> is a book that was highly recommended by a friend, though I have yet to read it myself. It may or may not help here.
+
+</li></li></li></li></li></li></ol>
+<p>How would you test for these points? Are there other points you consider important during an interview?
+
+<h1>Further Reading</h1>
+<p>I found <a href="../_/http/www.amazon.com/gp/product/0787960756/ref=ase_bruceeckelA/index.html">The Five Dysfunctions of a Team</a> to be a very insightful and helpful book for understanding what a team needs to do in order to work well, and the numerous ways that a group can fail to be a team. The dysfunctions and their effects are:
+Absence of trust, which causes "invulnerability" in each individual; Fear of conflict, which produces "artificial harmony"; Lack of commitment, creating ambiguity in the team's goals; Avoidance of accountability, leading to low standards; and inattention to overall results, which causes individuals to pursue results for themselves, increasing their status and feeding their ego. The book also had a great definition for "politics": "Politics is when people choose their words and actions based on how they want others to react rather than based on what they really think." Also, there are supplements to the book, including a workbook showing how to administer the team-fixing process.
+
+<p>I skimmed through <a href="../_/http/www.amazon.com/gp/product/1590598385/ref=ase_bruceeckelA/index.html">
+Joel Spolsky's latest book on hiring technical talent</a>. He brings up a lot of good ideas there. I think it's worth reading whether you're trying to hire someone or if you're looking for a job.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=228097.html">54
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=228097&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D228097&amp;title=Hiring+the+Rowing-Forward+30%25&amp;bodytext=A+business+owner+at+a+workshop+I+held+made+the+very+disturbing+comment+that+he+thought+that+70%25+of+programmers+were+%26quot%3Browing+backward%2C%26quot%3B+doing+things+that+you+had+to+fix+in+order+to+keep+the+boat+moving+in+the+forward+direction.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D228097&amp;title=Hiring+the+Rowing-Forward+30%25">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D228097&amp;title=Hiring+the+Rowing-Forward+30%25">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

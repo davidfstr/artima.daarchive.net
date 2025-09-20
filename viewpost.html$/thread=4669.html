@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Can Static and Dynamic Languages Live in Harmony?</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4669.html">Discuss</a> | 
+<a href="mailto:?subject=Can Static and Dynamic Languages Live in Harmony?&amp;body= %0AArtima Weblogs %0ACan Static and Dynamic Languages Live in Harmony? %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=4669">Email</a> | 
+<a href="../viewpostP.html$/thread=4669.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=4654.html" title="What Would You Ask James Gosling?">Previous</a> | 
+<a class="sl" href="thread=5601.html" title="Calling All Bloggers: Join the Buzz!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">Can Static and Dynamic Languages Live in Harmony?</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">May 2, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Musings on the reasons people like me prefer static type checking for building systems.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>In his weblog entry, <a class="sl" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=4639.html">Are Dynamic Languages Going to Replace Static Languages?</a>, Uncle Bob Martin asks whether test-driven development makes static type checking redundant. This is an interesting question, one I've heard pop up a lot the past couple years. This debate is often phrased in either-or terms, but I would like to steer the discussion more towards asking which kinds of programming language are a good fit for which kind of programming problems.
+
+<h1>A Dual Personality</h1>
+<p>The two languages I currently use most in my day to day work are Java and Python. I use them for different kinds of tasks. Even though I too have experienced that I am much faster at coding things up in Python than in Java, when I need to build a larger industrial strength system, I still prefer Java. Even though Java's static type checking does slow me down in the ways dynamic typing proponents claim, I feel the compiler is helping me. On the other hand, when I'm doing what I call scripts, I use Python. In those kind of situations I feel Java's static type checking and other restrictions would be in my way.
+
+<p>Let me give another example of my dual personality. When I'm logged in as root on the Linux server that served up this very page to you, the <code>rm</code> command is aliased to <code>rm -i</code>. That means that any time I try and remove a file while logged in as root, the <code>rm</code> command asks me whether I really want to delete each file I listed on the command line.
+
+<p>Now, I don't remember the last time I said no to one of those <code>rm</code> command prompts. I try to be very careful when logged in as root, and so I almost always mean what I say. Let's say I only say no once out of every 10,000 remove commands on average. This extra verification step slows me down every time I try to do a remove, and it only catches one error every 10,000 checks. And it doesn't catch every kind of error. I could, for example, still say yes and only later realize I really didn't want to delete that file after all. Is all that slow down worth it? 
+
+<p>For me personally, when I'm logged in as root I prefer having <code>rm</code> ask me "Are you sure?" each time I use it. The extra step slows me down, giving me another chance to think about what I really want to do. And when I'm logged in as root, I feel like it's helping me.
+
+<p>On the other hand, when I'm simply logged in as bv, I don't alias the <code>rm</code> command. I do a lot more removing as bv than root, and as bv I have less power to remove really important files. So in that situation, I would feel the extra "Are you sure?" check would be in my way.
+
+<p>For me, the amount of checking I want, whether I'm writing software or removing files, depends on the situation.
+
+<h1>More Than Checking</h1>
+<p>The other thing that has been bothering me about the static/dynamic debate is all the focus on static  compiler's catching of type errors as the reason for static type checking. I honestly don't think that the catching of static type errors is the main thing that attracts me to static languages for building systems. I think it is the formalism.
+
+<p>The languages we use, both human and programming, influence how we think. I like to think about building systems by partitioning them into APIs, and then designing the types and methods of those APIs in terms of contracts. And for me, I want to specify parameter types as part of the contract. In addition, I want to specify other restrictions on the input, such as a passed integer must be greater than or equal to zero. When I implement a method, I want to check to make sure the pre-conditions were met. I suspect I'll want to do that kind of thing when I'm building a system, no matter what language I'm using. It is how I think.
+
+<p>I try to be open minded. I see around me a lot of people whose opinions I respect excited about the productivity they feel building systems in a dynamically typed language. I want eventually to try building something more system-like, and less script-like, in a dynamic language, to see for myself. In the meantime, I just can't figure out what I would do about my cherished notion of designing systems in terms of designing contracts when using a dynamic language.
+
+<p>There's a whole installment of my interview with Guido van Rossum dealing with this question, <a class="sl" href="../_/http/www.artima.com/intv/pycontract.html">Contracts in Python</a>. Even after talking to Guido about it, I still don't think I quite get it, though I suspect what would be required is not that I figure out how to do contract-like design in Python. I suspect I would need to adopt a different way of thinking about building systems that fits the tool I'm using. Is it possible that this new way of thinking is what people find so freeing about building systems in a dynamic language? 
+
+<p>Perhaps when I actually try building a system in a dynamic language I'll see the light. But perhaps I won't. I have observed that different programmers have different development personalities. It may just be that I am a contracts static type checking kind of guy. 
+
+<h1>Where Do You Draw the Line?</h1>
+
+So here's my question: How many of you out there, like me, prefer to use both a static and dynamic language in your day to day work? For what kinds of programming tasks do you tend to use each kind of language, and why?
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4669.html">19
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=4669&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4669&amp;title=Can+Static+and+Dynamic+Languages+Live+in+Harmony%3F&amp;bodytext=Musings+on+the+reasons+people+like+me+prefer+static+type+checking+for+building+systems.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4669&amp;title=Can+Static+and+Dynamic+Languages+Live+in+Harmony%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4669&amp;title=Can+Static+and+Dynamic+Languages+Live+in+Harmony%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Seventh Jini Community Meeting III</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=40585.html">Discuss</a> | 
+<a href="mailto:?subject=The Seventh Jini Community Meeting III&amp;body= %0AArtima Weblogs %0AThe Seventh Jini Community Meeting III %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=40585">Email</a> | 
+<a href="../viewpostP.html$/thread=40585.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=40383.html" title="Jini Community Meeting - Part II">Previous</a> | 
+<a class="sl" href="thread=41021.html" title="The Seventh Jini Community Meeting (Final)">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">The Seventh Jini Community Meeting III</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">March 24, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the third of a set of blogs 
+from the Seventh Jini Community Meeting
+held in Cambridge, Massachusetts March 23-25, 2004.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h2>The Seventh Jini Community Meeting III</h2>
+<p>
+This is the third of a set of blogs 
+from the Seventh Jini Community Meeting
+held in Cambridge, Massachusetts March 23-25, 2004.
+</p>
+<p>
+<b>caveat</b>: I should remind everybody that these are
+my observations and thoughts and not necessarily of those 
+of my employer, any other member of the Jini community, 
+or indeed anyone else on the planet. I'm a member of the
+Jini development team so these next few blogs will be
+"a little closer to home" than the essays I've done for
+Artima previously. Well, consider yourself warned! <grin>
+</grin></p>
+<h2>The First Day Wrap-up</h2>
+<p>
+I posted some notes from yesterday's Community Meeting
+last night as I was leaving the Charles Hotel here in Cambridge.
+The good folks in the Business Services office let me grab
+one of their loose CAT5 cables and hook up without asking
+me to reach for my wallet (thanks, guys!). Here are some 
+additional observations from that first day.
+</p>
+<p>
+The Charles Hotel in Cambridge provided a lovely venue
+for this event. The space allocated to us was located 
+in an isolated part of the hotel, which was ideal. Two 
+meeting rooms, one large, one a bit smaller, were 
+equipped with comfortable chairs and excellent AV
+facilities. Everybody could see, could hear, and sat
+comfortably while they did it. [Sad as it sounds, 
+I've been to several seminars where this could not be
+said.]
+</p>
+<p>
+Upon arrival early Tuesday morning I was met by Joan
+MacEachern and Susan Snyder (who worked with Jim
+Hurley and Jennifer Kotzen to organize the event) who
+gave me the standard kit of goodies one gets at such
+a meeting: agenda, survey, etc. 
+</p>
+<p>
+I'd not had a chance to look at the preliminary 
+agenda published on Jini.org before arriving. The
+agenda was <i>beefy</i>! The larger room held the
+entire group and was used for the keynote by Ken
+Arnold and would also be used for about half of 
+the "breakout" sessions. The other breakout
+sessions were held in the smaller, adjacent room.
+The first set of breakout sessions presented my
+first headache: which session should I go to?
+</p>
+<p>
+<b>Jini Service Container Specification, Implementation
+and Usage</b> with Mark Brouwer and Igor Fisl was certainly
+going to be interesting. I'd actually followed some of
+what they had been doing and would have loved to have
+see their talk. But, the other breakout session in
+the next room was <b>Jini and .NET</b> by the 
+Alexander Krapf of Codemesh also sounded very interesting!
+Which one should I attend?!
+</p>
+<p>
+I then had a thought that was both good and horrible:
+what if this was going to happen for the entire conference?
+I started scanning down the list and it was clear this 
+problem wasn't going to get better. The very next two
+breakout sessions (same time, different rooms, you've
+got to choose!) were <b>Experiences and Successes in
+Moving Jini Lookup Services to Embedded Devices</b> by
+Cameron Roe of Psinaptic, and <b>Driving Jini Adoption
+- A Developer's Perspective</b> by Dan Creswell of
+Lone Crusader Ltd. (and the Blitz project). Drat!
+Both sounded good!
+</p>
+<p>
+I did choose, as did everybody else. At lunch, after
+having navigated another dilemma between <b>Jini
+Inside: The Canadian Virtual Observatory</b> with
+Patrick Dowler of the National Research Council of
+Canada and <b>Jini and Web Services: Judy Project
+Overview</b> by Dale Asberry, I talked with a number
+of other attendees about the problem and discovered
+I wasn't the only one struggling with these choices. 
+</p>
+<p>
+I don't want to sound like I'm complaining! This is
+a great problem to have! The meeting was going to last
+about two-and-a-half days and there was no way I was
+going to be able to see it all. Too many good speakers
+and interesting topics; too few slots to put them in.
+</p>
+<p>
+I was thankful that some of the biggest draws were 
+to be presented "unopposed". <b>Jini Technology at Orbitz</b>
+by Steve Hoffman, Chhaya Dave, and Warren Nisley (discussed
+in one of yesterday's blogs) was one such example. It
+would have almost been unfair to any speaker to pit them
+against this presentation. Most of the Jini community has
+yet to come down from all the good press we got at the recent
+developer's conference here in Boston where the keynote
+speaker from Orbitz put Jini's role in their success 
+front-and-center. 
+</p>
+<p>
+After the last presentation, several of us 
+(OK, more like 25 of us) trundled off to John
+Harvard's for dinner and a cold drink. 
+So, as you can see, I was faced with yet 
+another set of choices: <b>Drink beer, Eat</b> with
+25 of my closest Jini friends, or <b>Edit and Grammar
+Check my Blog</b> done in isolation and loneliness.
+Hey, I'm a nerd... but not <i>that</i> much of a nerd!
+As I said, I stopped by the Business Center, uploaded
+my typing, and headed for the exit. And so it goes for
+day one.
+</p>
+<h2>Waldo - Starting Day 2</h2>
+<p>
+After a few introductory remarks by Jim Hurley, the 
+second full day of the Community Meeting began in 
+earnest with a talk by Jim Waldo entitled <b>Challenges
+in Building an Infrastructure for Medical Sensing Networks</b>.
+For those of you who didn't get the memo, Jim Waldo, one
+of the inventors of Jini Technology, transferred out of
+the Jini group in Sun and returned to Sun Labs where I 
+assume he hopes to use some of this cool technology we've
+created to solve interesting problems. This talk 
+discusses one of those problems.
+</p>
+<p>
+At first,there was a small problem with X11 not wanting to 
+understand the shape of the world that prevented his
+slides from successfully appearing on the big screen
+in the front of the room. No matter, that just freed
+Jim to begin talking off-the-cuff (which is more informative
+and more entertaining than almost anyone's carefully 
+prepared remarks). Finally, after a bit of fiddling by
+yours truly, the AV problem was solved and Jim was off
+and running.
+</p>
+<p>
+Jim's description of the problem to be solved was 
+sobering--and not just from a technical point-of-view.
+It has become increasingly clear that the medical
+infrastructure in this country cannot keep up with
+the demands that will be put upon it by the aging and
+retiring baby-boomer generation. This is no small
+shortfall, either. He kept using terms like "order
+of magnitude" and "factor of 40" to describe the
+kinds of shortfalls likely to be in store for all
+of us (at least in my age group). So, what's the
+answer?
+</p>
+<p>
+One observation is that a great deal of energy is
+spent on monitoring a given patient, even when 
+the analysis after the monitoring is "you're fine."
+Another observation is that some folks go into
+denial just about the time they have a major health
+event such as a heart attack. Some people who
+aren't having a heart attack think they <i>are</i>
+having one; others who actually <i>are</i> having
+a heart attack aren't so sure. Being sure helps
+both patients.
+</p>
+<p>
+What more could be done here? Well, besides avoiding
+unnecessary trips to the hospital for those patients
+who are fine there are other options for those who 
+have had the heart attack such as calling an 
+ambulance (GPS linkage), triggering medication, 
+notification, etc. Instrumenting patients, though, 
+is only half the problem. How do you get all that
+data from the patient to someplace that can make
+use of it?
+</p>
+<p>
+Well, Jini addresses some of this... but not all of
+it. There are some very hard problems here including
+privacy, scalability, reliability, storage management,
+data channel throughput considerations, analysis tools, etc. 
+This is a big, wide-open problem. Just the kind of
+problem Jim likes to think about. 
+</p>
+<p>
+I can't possibly do justice to what Jim discussed here.
+So, I encourage you to follow his progress. I'm sure it
+will be interesting.
+</p>
+<h2>Wall Street</h2>
+<p>
+It is difficult to imagine an arena more competitive and
+environment more harsh for a product than Wall Street. I danced
+around the fact in my last blog that Jini has now been used
+in production systems that have money associated with it. In
+this blog, I'd like to tell you about an initiative undertaken
+by INVESCO. 
+</p>
+<p>
+Van Simmons of INVESCO talked to the entire group with
+his presentation <b>Wall Street, Grid Computing and Jini -
+Large scale deployment of computational resources in a 
+hosted environment</b>. That's a mouthful for sure, but
+the talk was interesting.
+</p>
+<p>
+Using the standard compute-server model typically deployed
+with a JavaSpaces(TM) service, INVESCO was able to automate
+the evaluation and risk assessment for their portfolio. They
+also had a number of important, and funny, observations 
+along the way. 
+</p>
+<p>
+If you have an opportunity to do so, try to locate the slides
+and even the audio program recorded from this session to get
+the full effect. Like I said in yesterday's blog, you know a
+technology is mature once people begin putting money through 
+it. This couldn't be more true here. This is Jini on Wall
+Street!
+</p>
+<h2>Just One More Day</h2>
+<p>
+I'm typing this in Dan Cresswell's (Blitz project/Lone Crusader, Ltd.)
+talk on <b>A Blueprint for Constructing Resilient Stateful Jini
+Services</b>. Again, like so many of the other presentations, we were
+treated to more smart people tackling hard problems.
+</p>
+<p>
+Now, all that's left today is the Jini Licensing discussion and that 
+long train ride home. Thursday, the last day, is only scheduled to
+be a half day but still promised to be busy. I'll try to report one
+last time at the conclusion of these festivities.
+</p>
+<blockquote>
+-- Scott
+</blockquote>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h3>Resources</h3>
+<ul>
+<li>The <a href="../_/http/www.jini.org/index.html">jini.org</a> web site.
+  </li>
+<li><b>The Structure of Scientific Revolutions</b>, Thomas S. Kuhn
+  	<br/>
+  	Referred to repeatedly in Jim Waldo's talk. I've not read it yet but
+  	it has come highly recommended by Jim.
+  </li>
+<li><b>The Innovator's Dilemma</b>, Clayton M. Christensen
+  	<br/>
+  	Excellent, although occasionally frightening, work describing how
+  	innovation is managed, and bungled, by companies. I recommend this book.
+  </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=40585&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40585&amp;title=The+Seventh+Jini+Community+Meeting+III&amp;bodytext=This+is+the+third+of+a+set+of+blogs+%0D%0Afrom+the+Seventh+Jini+Community+Meeting%0D%0Aheld+in+Cambridge%2C+Massachusetts+March+23-25%2C+2004.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40585&amp;title=The+Seventh+Jini+Community+Meeting+III">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40585&amp;title=The+Seventh+Jini+Community+Meeting+III">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

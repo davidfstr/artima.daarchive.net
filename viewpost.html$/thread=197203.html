@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>PyCon 2007 Review</title>
+<meta charset="utf-8"/>
+<meta content="Guido van van Rossum" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#AACCFF" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=guido.html">Guido van van Rossum's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=197203.html">Discuss</a> | 
+<a href="mailto:?subject=PyCon 2007 Review&amp;body= %0AArtima Weblogs %0APyCon 2007 Review %0Aby Guido van van Rossum %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=197203">Email</a> | 
+<a href="../viewpostP.html$/thread=197203.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=196889.html" title="New Python 3000 Video and Slides">Previous</a> | 
+<a class="sl" href="thread=208549.html" title="Python 3000 Status Update (Long!)">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">All Things Pythonic</span><br>
+<span class="ts">PyCon 2007 Review</span><br/>
+<span class="as">by Guido van van Rossum</span><br/>
+<span class="pd">February 28, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+My impressions of the Python Conference 2007 in Dallas, Texas, written up on the plane home while it was still fresh in my mind.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I'm writing this on the plane back home from Pycon.  I'm exhausted,
+but it's been a great week.  The conference exceeded all my (and
+everybody else's) expectations, with a 40% attendance increase,
+excellent keynotes, and an incredible "buzz".</p>
+<p>Apart from the keynotes I didn't see many presentations, but I heard
+that there were many great ones.  Pretty much the only talk I attended
+was Jim Hugunin's talk where he showed the progress of the IronPython
+project.  (Ironpython is Jim's Python implementation for Microsoft's
+CLR platform, which he created as an open source project before he
+joined Microsoft, and is now developing with a small team as one of
+the few open source projects at Microsoft.)  The wizard Merlin was
+thankfully absent; his place was taken by a much more interesting
+demo, where Jim controlled a Lego robot via a Python script.
+IronPython 1.1 beta has been released; it features Python 2.4
+compatibility, plus partial 2.5 compatibility enabled by a
+command-line switch.</p>
+<p>Friday morning's keynote speaker Ivan Krstic gave an overview of the
+non-profit One Laptop Per Child project, which aims to produce a
+hundred million laptops at a cost of $100 a piece, to be distributed
+to children ages 6 and up in poor countries (with the cooperation and
+at the expense of participating countries).  The first laptops (for
+relatively small trial projects in places like Brazil and I believe
+Thailand) are expected to ship this August.  The project, started at
+MIT and with many industry partners (including Google), combines
+existing and custom hardware and software components into an
+educational platform, dubbed the XO.  While some of the XO's hardware
+is proprietary, all the software is open source -- the basis is formed
+by a stripped down version of Linux (based on Red Hat's Fedora), on
+top of which they are developing a new GUI and window manager written
+in Python, and educational applications also written in Python.  The
+XO's hardware design focuses on extreme ruggedness, reliability, and
+low power consumption; the expectation is that there will be no
+realistic way to service the laptops in the field, and the environment
+will often be harsh: temperatures up to 50 degrees Celcius, and
+irregular (and often absent) power sources.</p>
+<p>Krstic gave away a few computers (the result of an early production
+test run), and I was one of the lucky recipients.  I'll probably frame
+it and hang it on the wall; a bug in the mouse pad firmware causing it
+to omit some "up" packets makes it pretty hard to use (this will be
+fixed in the next production run of course).  It's definitely no
+competition for today's commercially available laptops (which are 10x
+the price).  Almost everything about it is small: the keys (just right
+for children's little fingers), the screen (plenty of resolution
+though, and dual-mode for viewing in bright daylight), the memory (120
+MB on my copy, half that for the final product), and the flash disk
+(500 MB).  The processor runs at less than 400 MHz.  On the plus side,
+it runs a full Linux kernel with many utilities available, has
+self-configuring WiFi wireless, three USB slots, a camera, microphone,
+stereo speakers, audio in/out ports, and (once they tune the power
+management) it is expected to run for 22 hours on one battery charge.
+It weights less than a kilo!</p>
+<p>The software is far from finished.  An early version of the GUI and
+window manager are available, and a few small demo applications: chat,
+video, two games, and a web browser, and that's about it!  The plan is
+to write all applications in Python (except for the web browser), and
+a "view source" button should show the Python source for the currently
+running application.  In the tradition of Smalltalk (Alan Kay is on
+the OLPC board, and has endorsed the project's use of Python) the user
+should be able to edit any part of a "live" aplication and see the
+effects of the change immediately in the application's behavior.  (A
+versioned document store will make it possible to roll back disastrous
+changes.)  This is where Krstic wants my help: he hopes I can work
+magic and implement this feature for Python.  I got started right away
+during the conference, with a reimplementation of python's reload()
+function that can patch classes and functions in place.  Even this
+small component still has a long way to go; a checkpoint of the work
+in progress is checked into subversion as part of the Py3k standard
+library.  That's not where the rest of my OLPC work will show up; they
+use GIT for source control, so I will get to learn that.</p>
+<p>The keynotes had a strong educational theme: on Saturday morning Adele
+Goldberg gave a passionate plea for improvements to the USA's
+educational system.  40 years ago, US education was #1 in the world;
+today it is #19.  The public school system is stuck in a complete
+political gridlock; changes are nearly impossible to make due to the
+many constraints imposed on schools by federal regulations, fearful
+and litigious parents, bullying, lack of funds, and many other
+depressing factors.  It also seems that most uses of computers in the
+classroom have turned into disasters: the well-meaning geeks behind
+many school computer experiments don't understand the situation in the
+average classroom.  For example, computers show up without sufficient
+power, are likely to be stolen, or locked up in a safe rather than
+being used!  Schools are in total fear of the internet, which is seen
+as a source of pornography and influences of the devil.  I hope Adele
+will put her slides on line, there was much interesting data.</p>
+<p>On Sunday morning Robert Lefkowitz entertained us with a literate
+history of literacy throughout the ages, and (as is his habit) more
+questions than answers.</p>
+<p>For me personally, this conference signified the coming together of the
+Python 3000 project (a.k.a. Py3k or Python 3.0).  While in last year's
+keynote about this topic I mostly presented proposals, process, and
+plans, this year I could reveal many finished (as well as some
+unfinished or controversial) features, a concrete timeline with an
+alpha and a final release date (June 2007 and 2008, respectively),
+and, most importantly, a well-defined migration strategy.  Migration
+was also the topic of several heated discussions I had at the
+conference, for example with a group of Twisted developers (lead by
+Glyph Lefkowitz and moderated by Steve Holden) about the best way to
+approach the transition for a project like Twisted, which is bound to
+support several different Python releases (currently 2.3, 2.4 and
+2.5).  The best strategy will be to start by adding 2.6 to the list of
+supported versions when it comes out, and then gradually drop support
+for older releases and add support for 3.0.  Using 2.6 (to be release
+around April 2008, i.e. <em>before</em> 3.0) will be key for this strategy.</p>
+<p>Python 2.6 will contain various compatibility features, such as
+optional run-time warnings when a feature is used that will be dropped
+or changed in 3.0, as well as the ability to import certain 3.0
+features from the future (e.g. from __future__ import dict_views,
+which Thomas Wouters has already implemented in a branch).  Once a
+program is warning-free in 2.6, a source-to-source translator that
+recognizes syntactic constructs but doesn't do type inferencing or
+data flow analysis can be used to translate it to 3.0 syntax, and
+there will be a good chance that it runs correctly under 3.0, although
+still not quite as good as when moving code unchanged between 2.x and
+2.(x+1).  The recommended development mode is then to develop under
+2.6, and on a regular basis do the automatic conversion to 3.0 syntax
+and test under 3.0.  When problems are found under 3.0, it should be
+possible to change the <em>input</em> to the conversion tool in order to help
+it make the correct tranlation.</p>
+<p>I'll blog more about this in future episodes.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=197203.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=197203&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Guido van van Rossum adds a new entry to <a href="../index.html$/blogger=guido.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/guido.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D197203&amp;title=PyCon+2007+Review&amp;bodytext=My+impressions+of+the+Python+Conference+2007+in+Dallas%2C+Texas%2C+written+up+on+the+plane+home+while+it+was+still+fresh+in+my+mind.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D197203&amp;title=PyCon+2007+Review">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D197203&amp;title=PyCon+2007+Review">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/guido.jpg"/></td><td>Guido van Rossum is the creator of Python, one of the major
+programming languages on and off the web. The Python community refers to him as the BDFL (Benevolent Dictator For Life), a title straight
+from a Monty Python skit. He moved from the Netherlands to the USA in
+1995, where he met his wife. Until July 2003 they lived in the
+northern Virginia suburbs of Washington, DC with their son Orlijn, who
+was born in 2001. They then moved to Silicon Valley where Guido now works for Google
+(spending 50% of his time on Python!).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Guido van van Rossum. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

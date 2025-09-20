@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Python Sprint Report</title>
+<meta charset="utf-8"/>
+<meta content="Guido van van Rossum" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#AACCFF" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=guido.html">Guido van van Rossum's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=173453.html">Discuss</a> | 
+<a href="mailto:?subject=Python Sprint Report&amp;body= %0AArtima Weblogs %0APython Sprint Report %0Aby Guido van van Rossum %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=173453">Email</a> | 
+<a href="../viewpostP.html$/thread=173453.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=172054.html" title="Python in Google Code Jam">Previous</a> | 
+<a class="sl" href="thread=191001.html" title="Come join me at PyCon 2007!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">All Things Pythonic</span><br>
+<span class="ts">Python Sprint Report</span><br/>
+<span class="as">by Guido van van Rossum</span><br/>
+<span class="pd">August 25, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This week, a number of Python developers (core and otherwise) and some Googlers got together in Mountain View and New York for a four-day Python and Python-3000 (Py3k) development sprint.  Here's what we've done.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>For reference, here are the URLs for the sprint's <a class="reference" href="../_/http/wiki.python.org/moin/GoogleSprint/index.html">wiki page</a> and the <a class="reference" href="../_/http/wiki.python.org/moin/GoogleSprintPy3k/index.html">py3k wiki page</a>.</p>
+<div class="section">
+<h1><a id="python-3000-sprint-results" name="python-3000-sprint-results">Python 3000 Sprint Results</a></h1>
+<p>I'll start with the results of the Py3k part of the sprint, since I was most directly involved in it.</p>
+<div class="section">
+<h2><a id="warming-up" name="warming-up">Warming Up</a></h2>
+<p>In the weeks before the sprint, I had made a number of pervasive changes to the interpreter, such as completely removing classic classes, and mostly removing has_key().  This had some fall-out; a half dozen or so unit tests were failing as the sprint started.  Three of these failures were attacked by several sprinters and quickly fixed.</p>
+<p>As another warm-up exercise, Alex Martelli and I tackled the problem of __hash__ overloading.  The issue is too subtle to explain here in much detail.  The problem is that object.__hash__ exists while e.g. list.__hash__ should ideally not exist; the solution is to set __hash__ to None in the metaclass whenever a class overrides comparison without also defining __hash__.  We were quickly victorious; we probably spent more time reading the old code trying to understand it, and discussing the various alternative ways to fix the problem, than we spent actually implementing it.</p>
+<p>At this point (late the first day) all unit tests were passing in the py3k branch.  This was an important milestone: we could now trust that any new test failures were introduced by recent changes, and insist that developers make all tests pass before checking in changes.</p>
+<p>Anna Ravenscroft went through the standard library looking for places where file() is called to construct a file object -- the most future-proof, and hence recommended, practice is to call open(), not file().  After getting through the modules starting with 'a' through 'g' without finding a single occurrence of file(), she asked me if I was playing a cruel joke on her.  But no, it just turned out that all the offending calls occurred much later in the alphabet!  (I wonder if someone else did the same for the 2.5 library and gave up after fixing the first half of the alphabet?)</p>
+</div>
+<div class="section">
+<h2><a id="int-long-unification" name="int-long-unification">Int/Long Unification</a></h2>
+<p>Martin von Löwis decided to tackle the unification of int and long.  He did this in a separate <a class="reference" href="../_/http/svn.python.org/view/python/branches/int_unification/index.html">branch</a>, which was probably a good idea from a software development point of view, but got him a bit of unnecessary attention from core developers who aren't on the Python 3000 mailing list but <em>are</em> on the python checkins list, and started criticizing Martin's unfinished work without understanding the plan or its context.</p>
+<p>As of this writing, Martin's  work is not yet completed.  Allocating of a unified int object (which at this point is essentially a Python 2.5 long, i.e. an arbitrary precision integer) takes about 2 times as long as allocating a Python 2.5 "short" int (which can only hold a C long, i.e. 32 or 64 bits depending on the platform).  Martin isn't sure how to speed things up further.  Pystone dropped by about 10%, which isn't so bad.  See also <a class="reference" href="../_/http/mail.python.org/pipermail/python-3000/2006-August/003185.html">Martin's complete report</a>.</p>
+</div>
+<div class="section">
+<h2><a id="reinventing-comparison" name="reinventing-comparison">Reinventing Comparison</a></h2>
+<p>Neal Norwitz continued for a while on a project on which he had embarked before the sprint started: ripping out the last remains of coerce().  He nearly completed this, and then ran into a snag: a call to PyNumber_CoerceEx() deep down in the implementation of comparisons which caused everything to fall down if removed.  So he checked in his work up to that point (leaving that one crucial call in) and passed the baton to me.  Looking at the issue, I realized that the only way to fix this would be to implement the revision of comparisons that I had been planning for Py3k.</p>
+<p>So I ended up spending at least two days, with Alex helping on and off, reworking the guts of comparisons, making them comply with my vision for comparisons in Python 3000.  This turned out to be a real can of worms!  The plan has two parts: (a) no default mixed-type orderings, so e.g. 'a'&lt;1 would raise a TypeError (but 'a'==1 should return False); and (b) don't use __cmp__ as a fallback for rich comparisons.</p>
+<p>I started by implementing a super-strict interpretation of these rules, which also removed falling back on rich comparisons when __cmp__ was requested.  Once it compiled, it wouldn't even start up, because some code in site.py was broken as a result.  It turned out that ints and longs didn't implement rich comparisons!  That was quickly fixed, and now we could at least start the interpreter.  But running the test suite would always eventually end with a segfault.  Much later, I discovered that this was due to a failing error check on a dict lookup call in the bytecode compiler (quickly fixed the next day by Jeremy) which was triggered by code objects not having a proper comparison any more.  Removing all comparison code from the code object made it default to the default comparison (and hash) implementation, which was good enough to stop the compiler from malfunctioning.</p>
+<p>At this point we had about 70 failing unit tests.  I spent about a day fixing these, one by one.  Fairly early during this process I realized that if neither object knows how to compare itself to the other, for == and !=, we shouldn't fail, but return the default (pointer) comparison instead.  A bit later I decided that there were too many uses of cmp() in the library and the test suite to rip out, so I had to compromise: when cmp doesn't find a tp_compare implementation, it falls back to using the tp_richcompare implementation.  But (and this is still a big departure from 2.5) not the other way around!</p>
+<p>Slowly but surely more and more unit tests got fixed.  I checked in a checkpoint with only four failing tests.  Two of these expected to compare code objects by value, and I eventually implemented this again (but no ordering on code objects!).  The last two failing tests required a consultation with Tim Peters: datetime had some extrelemy convoluted code to avoid hitting the default ordering, which no longer is a problem in Py3k, and so got ripped out; and the last hold-out was test_mutants.py.  After Tim explained why it was there and how to fix it, it discovered a reference counting bug!  That is its job, but the interesting part was that the same reference counting bug also exists in 2.5 and wasn't found there, because in 2.5 test_mutants only exercises three-way comparison but not rich comparison (and 2.5 dictionaries implement both separately!).</p>
+<p>This was fun (in some extreme geek way :) but meant I didn't get to the project I had really wanted to do: the new I/O library.  A few people (especially Charles Merriam and Hasan Diwan) looked into the design issues there but not all that much concrete work was done.</p>
+</div>
+<div class="section">
+<h2><a id="miscellaneous-projects" name="miscellaneous-projects">Miscellaneous Projects</a></h2>
+<p>Hasan Diwan undertook the transformation of find() calls to index() calls.  This received quite a bit of criticism from the python-3000 list.  Some of the criticism was correct, because Hasan hadn't been aware of partition(), which is a much better API for finding substrings than index() in many cases.  At this time, Hasan is working on a revised patch that incorporates this idea.  I still think that find() is a dangerous API -- I have seen many bugs caused by misinterpreting its negative return value to indicate failure.</p>
+<p>Some other results: John Reese and Jaques Frechet ripped out reduce().  Only a handful of uses were found throughout the standard library.  They then went to remove the remaining uses of has_key() from idlelib -- since there are no unit tests for idlelib, I had missed these when I ripped out has_key() last week.  (IDLE still doesn't work, but the problem seems shallow -- it is using old-style relative imports which don't work in py3k.)</p>
+<p>Neal also tackled another project: rewriting xrange() to support long integers.  This could also benefit Python 2.6.  He did two versions: one in C, one in Python.  There's an open debate about whether it's even worth doing this in C, given that the Python code is so much shorter and easier to understand and maintain.</p>
+<p>Thomas Wouters also worked on ripping out slicing -- no, don't worry, the slice syntax will stay, but various "optimizations" for slice operations that are more of an API hindrance than a help are slated for removal, making the API simpler.  This was done in <a class="reference" href="../_/http/svn.python.org/view/python/branches/p3yk-noslice/index.html">another branch</a> and Thomas wrote up <a class="reference" href="../_/http/mail.python.org/pipermail/python-3000/2006-August/003182.html">a nice report</a>.</p>
+<p>Brett Cannon (with Jiwon Seo) wrote <a class="reference" href="../_/http/www.python.org/dev/peps/pep-0362/index.html">PEP 362</a> specifying the Function Signature Object (which may find its way into Python 2.6 first); Brett went on to write a prototype implementation while Jiwon continued on his project to implement <a class="reference" href="../_/http/www.python.org/dev/peps/pep-3102/index.html">PEP 3102</a>, keyword-only arguments.  Brett also started removing backticks from the library (in favor of repr()) -- he found only very few occurrences so this was a quick job!</p>
+<p>Brian Holmes wrote <a class="reference" href="../_/http/www.python.org/sf/1546297/index.html">a patch</a> to implement zip as an iterator in C.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="python-2-5-2-6-sprint-results" name="python-2-5-2-6-sprint-results">Python 2.5/2.6 Sprint Results</a></h1>
+<p>Here I have to defer to snippets mailed to me by others.</p>
+<p>Thomas Wouters spent the first day of the sprint working on a bigmem test for unicode, testing unicode objects larger than 1&lt;&lt;31 characters (not bytes; 2 and 4 times that in bytes -- tested with both unicode widths). It wasn't a completely comprehensive test (skipped encoding/decoding) but it found no bugs what so ever. The existing bigmem tests for bytestrings, tuples and lists also found no bugs.</p>
+<p>Neal Norwitz spent a day on Python 2.5 bug triage (in addition to his xrange work above).</p>
+<p>Brett Cannon drafted developer guidelines for bug reporting and patch submission.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=173453.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=173453&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Guido van van Rossum adds a new entry to <a href="../index.html$/blogger=guido.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/guido.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D173453&amp;title=Python+Sprint+Report&amp;bodytext=This+week%2C+a+number+of+Python+developers+%28core+and+otherwise%29+and+some+Googlers+got+together+in+Mountain+View+and+New+York+for+a+four-day+Python+and+Python-3000+%28Py3k%29+development+sprint.++Here%27s+what+we%27ve+done.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D173453&amp;title=Python+Sprint+Report">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D173453&amp;title=Python+Sprint+Report">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/guido.jpg"/></td><td>Guido van Rossum is the creator of Python, one of the major
+programming languages on and off the web. The Python community refers to him as the BDFL (Benevolent Dictator For Life), a title straight
+from a Monty Python skit. He moved from the Netherlands to the USA in
+1995, where he met his wife. Until July 2003 they lived in the
+northern Virginia suburbs of Washington, DC with their son Orlijn, who
+was born in 2001. They then moved to Silicon Valley where Guido now works for Google
+(spending 50% of his time on Python!).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Guido van van Rossum. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

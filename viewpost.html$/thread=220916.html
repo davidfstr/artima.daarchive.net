@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Traits for Java</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=220916.html">Discuss</a> | 
+<a href="mailto:?subject=Traits for Java&amp;body= %0AArtima Weblogs %0ATraits for Java %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=220916">Email</a> | 
+<a href="../viewpostP.html$/thread=220916.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=220783.html" title="Extension Methods and Chained Invocations">Previous</a> | 
+<a class="sl" href="thread=220920.html" title="An Alternative to Closure Conversion and to Restricted Closures">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Traits for Java</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">December 16, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+There is a lot of interest currently in the ability to extend a class (or something close to class extension) without requiring recompilation or source changes, Traits offer a viable method of achieving this.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>What are Traits?</h1>
+<p>Traits are like interfaces, but can have a method body and a class that implements a Trait inherits the method body. In many ways Traits are similar to abstract classes, but they don't have constructors, don't have initializers, don't have fields, can be multiply inherited (like an interface), and <code>super</code> does not refer to a method in an inherited trait, instead of <code>super</code> you have to qualify the intended name <code>[TraitName].[methodName]( ... )</code>.</p>
+<p>By way of example consider current best practice: you write an interface, e.g. <code>List</code>, write a useful abstract class to make writing lists easier, <code>AbstractList</code>, and then implement some lists, e.g. <code>ArrayList</code>. This is all well and good, but suppose you now want to add some extra methods to <code>List</code>, e.g. <code>sort</code>. You can't because every class that implements <code>List</code> would need to add a <code>sort</code> method and you don't have control over all the source that uses <code>List</code>. So instead you use a helper class, <code>Collections</code>, and add <code>sort</code> as a static method. The user then calls <code>sort( list )</code> (assuming a static import is used). A better technique is a Trait, with a trait you modify <code>List</code>:</p>
+<pre>
+    public interface List extends Collection {
+      ...
+      void sort() { ... } // same syntax as an interface but allows method bodies
+    }
+</pre>
+<p><code>ArrayList</code> now automatically pick up <code>sort</code> and the user does not need a special import, instead just like any other instance method the user writes <code>list.sort()</code>.
+
+
+<h2>Details</h2>
+<p>With Traits, if there is a conflict due to multiple inheritance then you have to resolve this conflict (this is a key difference from Mixins - see below). E.G.:</p>
+<pre>
+    interface X { int m() { return 1; } }
+    interface Y { int m() { return 2; } }
+    interface Z extends X { int m() { return 3; } }
+    class XY implements X, Y { // conflict - 2 m's
+      public int m() { return X.m(); } // resolve conflict
+    }
+    class XZ implements X, Z {} // no conflict - Z's m overrides X's
+</pre>
+<h2>Note on Mixins</h2>
+<p>The difference between a Trait and a Mixin is that order is important. In the class <code>XY</code> example given above, with a Trait you have to explicitly say which <code>m</code> you want. With a Mixin the order in which the interfaces are mixed in determines what happens. <code>class XY implements X, Y {}</code> is read as first mixing in <code>X</code> then mixing in <code>Y</code>; hence the <code>m</code> from <code>Y</code> overrides the <code>m</code> from <code>X</code>, since it is mixed in afterwards.</p>
+<h2>Note on Extension Methods</h2>
+<p>An alternative way of adding methods to a class is Extension Methods, these are proposed for Java 7, but have a number of <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=220783.html">problems</a>.</p>
+<h1>Extending existing classes</h1>
+<p>To be able to add methods to an interface without recompiling, all clients of the interface, the class loader has to be extended to automatically add in the extra methods if they are not present and to flag an error if an unresolved conflict exists. Currently the class loader flags a missing method, the required extra action would be to see if the missing method is in an implemented interface and if it can be added without conflict.</p>
+<h1>As an alternative to abstract classes</h1>
+<p>Traits would be a viable alternative to abstract classes in many cases, for example the methods in <code>AbstractCollection</code> could be moved to <code>Collection</code> and no one would need to use <code>AbstractCollection</code> in the future. But a Trait cannot have any fields, therefore some abstract classes, e.g. <code>AbstractList</code> (it contains a field) would still be needed, although some methods may be moved to an interface.</p>
+<h1>Conclusions</h1>
+<p>I think Traits would be a useful addition to Java, what do others think?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=220916.html">20
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=220916&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D220916&amp;title=Traits+for+Java&amp;bodytext=There+is+a+lot+of+interest+currently+in+the+ability+to+extend+a+class+%28or+something+close+to+class+extension%29+without+requiring+recompilation+or+source+changes%2C+Traits+offer+a+viable+method+of+achieving+this.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D220916&amp;title=Traits+for+Java">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D220916&amp;title=Traits+for+Java">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

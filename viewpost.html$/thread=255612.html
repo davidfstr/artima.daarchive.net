@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/21</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=255612.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/21&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/21 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=255612">Email</a> | 
+<a href="../viewpostP.html$/thread=255612.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=255303.html" title="The Adventures of a Pythonista in Schemeland/20">Previous</a> | 
+<a class="sl" href="thread=257325.html" title="Should I use a netbook as my main development platform?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/21</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">April 30, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this episode I introduce the concepts of implicit phasing,
+explicit phasing and multiple instantiation of modules. Moreover, I discuss various portability issues of the R6RS module system related to the different phase separation concepts.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">The different meanings of phase separation</h1>
+<p>We saw in the latest episode that Scheme programs
+exhibit phase separation, i.e. some parts of the program are
+executed at expand time (import declarations, macro definitions and
+macro expansions) and some other parts are executed at runtime
+(regular definitions and expressions).</p>
+<p>However, things are more complicated than that.  There are actually
+<em>three</em> different concepts of phase separation for R6RS-conforming
+implementations. I will call the three concepts <em>weak</em>, <em>strong</em> and
+<em>extra-strong</em> phase separation respectively.  The difference is in
+how modules are imported - <em>instantiated</em> is the more correct term -
+and in how variables enter in the namespace.</p>
+<p>Ikarus, Ypsilon, IronScheme and MoshScheme have a weak form of phase
+separation (also called <em>implicit phasing</em>): there is a
+distinction between expand-time and runtime, but it is not possible to
+import variables in the runtime phase only or in the expand time phase
+only: variables are imported simultaneously for all phases.</p>
+<p>Larceny has a stronger form of phase separation (<em>explicit phasing</em>):
+it can import variables in a specific phase and not in another,
+depending on the import syntax used.  However, if you instantiate a
+module in more than one phase - for instance both at run-time and at
+expand-time - only one instance of the module is created and variables
+are shared.</p>
+<p>PLT Scheme has an extra-strong form of phase separation in which
+phases are completely separated: if you instantiate a module both at
+run-time and at expand-time, there are two <em>different and independent
+instances</em> of the module.</p>
+<p>In this episode I will show the simplest consequences
+of phase separation. In the next episodes I will show less obvious
+consequences, such as the tower of metalevels associated
+to strong phase separation and the multiple instantiation semantics
+associated to extra-strong phase separation.</p>
+<div class="section">
+<h1><a id="compile-time-run-time-and-optimization-time" name="compile-time-run-time-and-optimization-time">Compile-time, run-time and optimization-time</a></h1>
+<p>Before discussing strong phase separation, I want to point out that
+phase separation, even in its weakest form, has consequences that may be
+surprising at first. For instance, Scheme compilers
+(but also the Python compiler) cannot recognize obvious errors like
+a zero division error in the right hand side of a top level
+definition, as I have shown in episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=251476.html">19</a>.</p>
+<p>I asked for clarifications on the Ikarus mailing list. It turns out
+that Scheme compilers are not stupid: they can recognize the zero
+division error, but they cannot signal it since it is forbidden by the
+Scheme specification. For instance, Llewellyn Pritchard (Leppie), the
+implementor of IronScheme wrote:</p>
+<blockquote class="epigraph">
+<em>In IronScheme, if I can detect there is an issue at compile
+time, I simply defer the computation to the runtime, or could even
+just convert it into a closure that will return an error. This is only
+one of the things that make Scheme quite hard to implement on a statically
+typed runtime such as the CLR, as it forces me to box values at method
+boundries and plenty type checking at runtime.</em></blockquote>
+<p>whereas Abdul Aziz Ghuloum wrote:</p>
+<blockquote class="epigraph">
+<em>Actually, Ikarus does some type checking, and it does
+detect the division by 0.  It however cannot do anything
+about it in this case since Scheme requires that the
+exception be raised when the division operation is
+performed at run time.</em></blockquote>
+<p>Aziz went further and explained that Ikarus is able to evaluate
+expressions like</p>
+<pre class="literal-block">
+(define x 5)
+(define y (+ x 1))
+(define z (* x y))
+</pre>
+<p>both in top level definitions in and internal definitions; however, it
+does so in the optimization phase, <em>after</em> the expansion phase,
+i.e. too late to make the definitions available to macros. It could
+however at least report a syntax warning (take it as a feature request,
+Aziz! ;-)</p>
+<p>Aziz also brought up an argument in favor of the current
+specification. First of all, it is pretty clear that we want
+expressions like</p>
+<pre class="literal-block">
+(define thunk (lambda () (/ 1 0)))
+</pre>
+<p>to be compilable, because it is useful to have functions that can
+raise predictable errors, especially when writing test cases.</p>
+<p>Now, a module is not really different from a giant thunk; importing a
+module calls the thunk (this is essentially what <em>module instantiation</em> is)
+and possibly raises errors at runtime, but the module per se must be
+compilable even if contains errors which are detectable at compile
+time.</p>
+<p>The two-phases compilation strategy has the advantage of keeping the
+compiler conceptually simple, working as a traditional preprocessor
+integrated in the language: we know that the compiler will manage the
+macros, but will not perform any evaluation.</p>
+<p>Actually, there are strong arguments against having the compiler evaluating
+generic top level or internal definitions; consider for instance the
+case when you are reading some data from standard input (<tt class="docutils literal"><span class="pre">(define</span>
+<span class="pre">date</span> <span class="pre">(read)</span></tt>): if the definition were evaluated at compile-time, the
+compiler would stop during compilation to read the data.</p>
+<p>Then, some time later, at execution time, the program would stop again
+to read potentially different data, so that macros would use the
+compilation time data and the rest of the program the runtime data!</p>
+<p>That would be madness. Clearly it makes no sense to evaluate at
+compile-time definitions depending on run-time values, except possibly
+at the REPL, where everything happens at run-time and the phases are
+intermingled.</p>
+<p>Finally, the two-phases enable <a class="reference" href="../_/http/en.wikipedia.org/wiki/Cross_compilation/index.html">cross compilation</a>: macros will be expanded
+independently from the architecture, whereas the
+runtime structures will be compiled and linked differently depending on the
+architecture of the target processor.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/compiler-crosscompiler.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/compiler-crosscompiler.jpg">
+<!-- cross compilation: http://chicken.wiki.br/cross-compilation -->
+</img></div>
+<div class="section">
+<h1><a id="strong-vs-weak-phase-separation" name="strong-vs-weak-phase-separation">Strong vs weak phase separation</a></h1>
+<p>To explain the practical difference between strong and weak phase
+separation let me go back to the example of the <tt class="docutils literal"><span class="pre">assert-distinct</span></tt> macro of
+episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=255303.html">20</a>.  I have put the helper function (<tt class="docutils literal"><span class="pre">distinct?</span></tt>) in the
+<tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">list-utils)</span></tt> module, so that you can import it.  This is
+enough for Ikarus, but it is not enough for PLT Scheme or Larceny.  In other
+words, in Ikarus (but also IronScheme, MoshScheme and all the
+systems using the <a class="reference" href="../_/http/ikarus-scheme.org/r6rs-libraries/index.html">psyntax</a> module system) the following script</p>
+<pre class="literal-block">
+(import (rnrs) (sweet-macros) (only (aps list-utils) distinct?))
+
+(def-syntax (assert-distinct arg ...)
+  #'(#f)
+  (distinct? bound-identifier=? #'(arg ...))
+  (syntax-violation 'assert-distinct "Duplicate name" #'(arg ...)))
+</pre>
+<p>is correct, since the import form instantiates the module
+<tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">list-utils)</span></tt> both at run-time and expand-time,
+but in PLT Scheme and Larceny it raises an error:</p>
+<pre class="literal-block">
+$ plt-r6rs assert-distinct.ss
+assert-distinct.ss:5:3: compile: unbound variable in module
+(transformer environment) in: distinct?
+</pre>
+<p>The problem is that PLT Scheme and Larceny have strong phase
+separation and require <em>phase specification</em>: by default names defined
+in external modules are imported <em>only</em> at runtime, <em>not</em> at compile
+time. In a sense this is absurd since names defined in an external
+pre-compiled modules are of course known at compile time (this is why
+Ikarus has no trouble importing them); nevertheless PLT Scheme (and
+Larceny) forces you to specify at which phase the functions must be
+imported.</p>
+<p>In particular, if you want to import <tt class="docutils literal"><span class="pre">distinct?</span></tt> at expand time you
+must use the <tt class="docutils literal"><span class="pre">(for</span> <span class="pre">expand)</span></tt> form:</p>
+<p><tt class="docutils literal"><span class="pre">(import</span> <span class="pre">(for</span> <span class="pre">(only</span> <span class="pre">(aps</span> <span class="pre">list-utils)</span> <span class="pre">distinct?)</span> <span class="pre">expand))</span></tt></p>
+<p>With this import form, the script is portable in all R6RS implementations,
+but its meaning is different: in the <a class="reference" href="../_/http/ikarus-scheme.org/r6rs-libraries/index.html">psyntax</a> based implementations the
+name <tt class="docutils literal"><span class="pre">distinct?</span></tt> is imported both at runtime and at expand-time,
+whereas in PLT and Larceny it is imported only at expand time.</p>
+<p>Notice that there are portability issues associated with phase
+separation. Not using the phase specification syntax results in
+non-portable code, therefore if you care about portability
+you must use phase specification even if your
+implementation does not use it :-(</p>
+<p>For instance in systems based on <a class="reference" href="../_/http/ikarus-scheme.org/r6rs-libraries/index.html">psyntax</a> and in Ypsilon -
+which is not based on psyntax - this program</p>
+<pre class="literal-block">
+(import (rnrs) (for (only (aps list-utils) distinct?) expand))
+(display distinct?)
+</pre>
+<p>will run, but in PLT Scheme and Larceny it will not even compile.</p>
+<p>In a sense, implementation with strong phase separation are more
+powerful than implementations with weak phase separation, since with
+implicit phasing it is <em>impossible</em> to import the name <tt class="docutils literal"><span class="pre">distinct?</span></tt>
+at expand time and not at runtime - notice however that more powerful
+does not mean necessarily better and the implementations with weak phase
+separation are easier to use.</p>
+<p>The situation for people coming from implementations with strong
+phase separation is no nice either. For instance the program</p>
+<pre class="literal-block">
+(import (rnrs) (for (only (aps list-utils) distinct?) run))
+(display distinct?)
+</pre>
+<p>will run on all implementations, but you cannot rely on the fact
+that the named <tt class="docutils literal"><span class="pre">distinct?</span></tt> will be imported only at run-time
+and not at expand-time.</p>
+<p>The point however is moot since the R6RS forbids the same name to be
+used with different bindings in different phases (see section 7.1,
+page 23).  In particular, if you import the name <tt class="docutils literal"><span class="pre">distinct?</span></tt> at
+run-time the compiler will reserve the name for all phases: it cannot
+be reused at expand time, unless it has the same binding.</p>
+<p>In other words, the namespaces in the different phases are separated
+but <em>not completely independend</em>, which in my opinion undermines the
+concept of strong phase separation.  I believe PLT Scheme in non-R6RS
+mode has fully independent namespaces for different phases, but this
+again is not portable.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/salvador-dali-clock.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/salvador-dali-clock.jpg">
+</img></div>
+<div class="section">
+<h1><a id="a-note-about-politics" name="a-note-about-politics">A note about politics</a></h1>
+<p>The reason for such limitations and inconsistencies can be inferred from
+this extract from R6RS editors mailing list (from the answer to
+<a class="reference" href="../_/http/www.r6rs.org/formal-comments/comment-92.txt">formal comment 92</a>):</p>
+<blockquote>
+<p><em>A precise specification of the library system
+remains elusive, partly because different
+implementors still have different ideas about how
+the library system should work....</em></p>
+<p><em>The different opinions are supported by two
+different reference implementations of R6RS
+libraries: one by Van Tonder and one by Ghuloum and
+Dybvig.  In addition, PLT Scheme implements a
+library system...</em></p>
+<p><em>Despite the differences in the reference
+implementations, it appears that many programs will
+run the same in both variants of the library system.
+The overlap appears to be large enough to support
+practical portability between the variants.</em></p>
+<p><em>Under the assumption that the overlap is useful, and
+given the lack of consensus and relative lack of
+experience with the two prominent variants of draft
+R6RS libraries, the R6RS specification of libraries
+should be designed to admit both of the reference
+implementations.  As a design process, this
+implementation-driven approach leaves something to
+be desired, but it seems to be the surest way forward.</em></p>
+</blockquote>
+<p>Basically, the R6RS standard is the result of a compromise between the
+partisans of explicit phasing - people wanting to control in
+which phases names are imported - and the partisan of implicit
+phasing - people wanting to import names at all phases, always.</p>
+<p>A compromise was reached to make unhappy both parties.</p>
+<p>The same kind of compromise was reached on the subject of multiple
+instantiation: all behaviors are accepted by the R6RS standard, so
+you cannot rely on the number the times a library is instantiated.</p>
+<p>For instance, consider a simple do nothing library like the
+following:</p>
+<pre class="literal-block">
+#!r6rs
+(library (x)
+(export)
+(import (rnrs))
+(display "instantiated x!\n")
+)
+</pre>
+<p>If you now run the following script</p>
+<pre class="literal-block">
+$ cat script.ss
+(import (for (x) expand run))
+</pre>
+<p>the message <tt class="docutils literal"><span class="pre">instantiated</span> <span class="pre">x!</span></tt> will be printed only <em>once</em> by Larceny, but
+<em>twice</em> by PLT Scheme. For comparison, Ypsilon prints the message only
+once (it has single instantiation semantics) and Ikarus does not print
+any message at all (!), since the module is not used (it would print
+the message only once if the module were used).</p>
+<p>In other words, authors of portable libraries cannot rely on multiple
+instantiation, nor on single instantiation.</p>
+<p>The final outcome for the R6RS module system is certainly unhappy, but I guess
+it was the best that the R6RS editors could obtain, given the
+pre-existing situation. Another point in favor of languages designed by
+(benevolent) dictators!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=255612.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=255612&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255612&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F21&amp;bodytext=In+this+episode+I+introduce+the+concepts+of+implicit+phasing%2C%0D%0Aexplicit+phasing+and+multiple+instantiation+of+modules.+Moreover%2C+I+discuss+various+portability+issues+of+the+R6RS+module+system+related+to+the+different+phase+separation+concepts.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16"/>Digg
+  </a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255612&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F21">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255612&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F21">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

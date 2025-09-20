@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Creating an Interactive JRuby Console for the Eclipse Environment</title>
+<meta charset="utf-8"/>
+<meta content="Jeremy Meyer" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=jeremy1.html">Jeremy Meyer's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=227935.html">Discuss</a> | 
+<a href="mailto:?subject=Creating an Interactive JRuby Console for the Eclipse Environment&amp;body= %0AArtima Weblogs %0ACreating an Interactive JRuby Console for the Eclipse Environment %0Aby Jeremy Meyer %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=227935">Email</a> | 
+<a href="../viewpostP.html$/thread=227935.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+<a class="sl" href="thread=232401.html" title="Why it's better to be lazy">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Musings on Language and Design</span><br>
+<span class="ts">Creating an Interactive JRuby Console for the Eclipse Environment</span><br/>
+<span class="as">by Jeremy Meyer</span><br/>
+<span class="pd">April 4, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Excited by the possibilities afforded by JRuby and the ability to plug it into various different Java environments, I decided to try implementing a JRuby interactive console in Eclipse.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1>Plugging in JRuby</h1>
+<p> Like so many others my
+imagination has been captured by Ruby. Perhaps it is because of the steep rise
+in its awareness the software development community has undergone since Rails,
+perhaps it is a combination of its quirky constructs, enthusiastic (and often
+surreal) proponents, and the fact that DSLs are
+gaining respect and momentum. At the
+same time, the JVM is becoming an obvious platform choice and Java itself is
+starting to look a little tired and lost as a language.</p>
+<p>Perhaps Java is reaching its
+sell-by date, after all, there do seem to be natural universal laws about these things; and
+they apply to a great many domains. Fashion, empires and programming languages
+are three that I can think of which adhere to these rules. They rise, dominate
+and fall. Sometimes they come back, (like flared trousers and interpreters) but
+even if they die, they always leave their legacy, like the Roman
+ Empire, or Cobol.
+
+<p>Anyway, it is obvious that however long it stays in vogue, one such mark that will be left by Java is the JVM as a platform, and fascinated as I am by Ruby, I think that JRuby is
+(together with Rails) what will really keep it on the map. I find myself more
+and more regularly explaining to colleagues and clients (partly to prevent them
+rolling their eyes as one does when faced with a religious fanatic, or a pushy
+salesperson) that I only really love Ruby and crowbar it into every discussion
+I can, <b>because</b> compiled languages like
+Java exist. JRuby makes using Ruby sensible (and
+cool). </p>
+<p>Why is this cool? Because
+like so many consultants, it is my job it is to help people come up with general,
+repeatable solutions to their problems, so I am always on the lookout for some
+sort of lazy reuse idea. Since all clients want those three very simple and clearly
+mutually exclusive features that constantly haunt us, i.e. good, fast and
+cheap, I find myself drawn to the model of leveraging powerful application
+libraries with <i>glue code</i> or something minimal, scriptable and clever.
+JRuby fits that bill quite nicely. </p>
+<h1>No Silver Bullet</h1>
+
+I wouldn’t propose anything
+as a silver bullet, but I have seen so many projects fail for the same reasons, that
+I am tempted by anything that can cut out some of the badness. </p>
+
+This means doing all sorts of things, ranging from trying to improve communication of requirements down to proposing
+better techniques of project management (so agile methodologies are always a
+popular choice). But anything that helps to cut out as many middle-men as
+possible, and allows the people with more domain knowledge to get closer to the engineering of the solutions  has to be a good thing.</p>
+<p>
+Or does it? Isn’t this falling into the old trap of trying getting non-programmers to write programs? Haven’t previous attempts at this
+failed?   Languages like BPEL and Visual
+Basic and even (looking back a bit further)  Cobol have
+all, in their own way, in their own domains tried to make programming easy.
+These have all ended up producing horrible languages. In the case of the latter
+two they have also produced code bases huge and prevalent by virtue of their
+easy proliferation, not their suitability for solving the problem. Not popular
+with OO purists and lovers of aesthetically pleasing languages!</p>
+<p>
+
+Well now we have more languages
+like JRuby(and Jython and
+Groovy etc.) which allow us pleasing constructs, great power and efficient
+syntax together with access to Java libraries and access to any platform which
+has a JVM implementation. More importantly, perhaps, is that this translates into access to any Java middleware. Excellent! This means that
+the powerful application stuff can be written by the software engineers and the
+business logic can be written (at least initially) by the domain experts, using
+a domain specific language (or domain specific flavour, if language isn't subtle enough).
+This should mean that we can give an expert in the domain of feet enough power to shoot
+themselves in the foot with a homing missile, and they wouldn't have to be a rocket scientist. </p>
+<p>What is doubly pleasing of course, is the fact that Ruby by its nature is dynamic (as are some of the other languages which have JVM
+implementations), and building a domain specific
+language to solve a problem can be implemented quite elegantly. So helping
+prevent our domain experts from getting in too much trouble is a bit easier. We can expose the important bits to them and shield the complexity from them. Very importantly though, they will always have the full power of
+the language at their finger tips should they need it.</p>
+<p>
+Triply pleasing perhaps, is
+the fact that you can do all of this in an interactive shell (<b>jirb</b> in JRuby) if you want to, which is a great and agile way to
+wire up existing domain libraries, or produce "glue code".
+ You can embark on a learning adventure with a
+framework, or library and produce a solution that can form the basis of
+something permanent.   For example, you
+can experiment with the creation of swing applications using
+JRuby from the interactive shell. This is so easy that even
+a sock puppet could do it (<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=220459.html">and did, see
+here!</a>). </p>
+<h1>Scripting in an Eclipse Environment</h1>
+<p>
+I got to thinking that one
+of the environments it would be great to play with was the Eclipse
+environment. It is
+a mature, fairly solid platform, with a sound plugin model
+and some very powerful development tools available in it. What would be great,
+I thought, would be if you could script in it, or create macros, even. Creating
+an interactive shell would give you access to any plugins
+you liked. Certainly it seemed it would be a worthwhile effort plugging in an
+interactive shell to see what would happen. As a self-confessed
+non-expert-but-fascinated wannabe Ruby-ist, I thought
+I could kill two birds with one (precious) stone, i.e. learn more about the language
+and learn more about the Eclipse platform at the same time.</p>
+<p>How did I do this? Some of
+the highlights follow below.  If you
+really can’t bear the thought of looking through code, or want to see
+everything in its entirety, then download this zip which has the Eclipse
+plugin and the full source <a href="../_/http/www.jeremymeyer.com/downloads/RubyConsoleJeremyMeyerBlog.zip">included</a>:
+</p>
+<p>The obvious place to start looking
+at how to do this was <b>jirb</b>,
+the interactive Ruby shell written for JRuby. Of
+course, I thought, this would be a Java console that read in a line of text and
+passed it to the Ruby interpreter for evaluation, so it couldn’t be too hard to
+re-implement this in an Eclipse app.  </p>
+<br/>
+Turns out I was slightly wrong. The <b>jirb</b> command, it seems, is just a batch file that runs
+JRuby and points it to <b>irb</b>. So <b>irb</b>, the interactive Ruby shell,
+is just a Ruby program and <b>jirb</b> ,
+ the interactive JRuby
+shell is just <b>irb</b>
+running in JRuby. 
+<h1>The Ruby Code</h1>
+<p>
+
+After some head scratching,
+I realised that this was very cunning and would actually help make my life
+easier. I did some investigation into the <b style="mso-bidi-font-weight:normal;">irb</b> code, and with help from a good
+(albeit old) <a href="../_/http/www.onlamp.com/pub/a/onlamp/2006/09/07/unit-testing-docs.html$/page=1.html">article
+by Leonard Richardson</a> about unit testing the Ruby Cookbook source code, I
+discovered that redirecting <b>irb</b> input and output is fairly straightforward. Turns out that
+all you need to do is extend the Ruby Irb class and
+get it to use our own input and output streams. The Irb
+class implements the strategy pattern to read from its input stream using an
+InputMethod. Creating an Input Method is as simple as
+providing a Ruby class which has a gets operation and a prompt= setter method. The
+prompt= setter method is necessary, because <b>irb</b> will throw exceptions
+without it, (although I admit I am stumped as to why it is there, it doesn’t
+seem to do anything other than pass in an empty string.)</p>
+<p>I needed to customise my prompt,
+and get the line of text typed, so:</p>
+
+<font color="#550000">
+<pre>
+class EclipseConsoleInputMethod
+  # echo the prompt and get a line of input.
+  def gets
+	$stdout.print 'eIrb:&gt; '
+	$stdin.gets
+  end
+
+  def prompt=(x)
+  end
+end
+</pre>
+</font>
+<p>
+And now, I could minimally extend
+the Ruby Irb class to give me a custom
+Irb class, which has the right context and some useful
+configurations: </p>
+<font color="#550000">
+<pre>
+class EclipseConsoleIrb &lt; IRB::Irb
+
+  def initialize(ec_inputmethod)
+    IRB.setup(__FILE__)
+    IRB.conf[:VERBOSE] = false
+    super(nil, ec_inputmethod)
+  end
+
+  def run
+    IRB.conf[:MAIN_CONTEXT] = self.context
+    eval_input
+  end
+end
+</pre>
+</font>
+<p>Not too hard at all!
+  Now what I needed to do was get an Eclipse
+console to provide said input and output streams and pass the typed Ruby code into
+the former and echo the results into the latter.</p>
+<h1>The Java Code</h1>
+<p>Eclipse’s IO Console does that
+job very well, it displays in the normal Eclipse Console area, provides and
+input stream for you, and can have multiple output streams directed to it, perfect.
+(You can even set colours for the different streams!)</p>
+
+I created a simple Eclipse
+Plugin application using the basic Eclipse "new project" wizard.
+All I had to do was create a subclass of an IOConsole
+that had an instance of the RubyInterpreter class in
+it ..
+<p>Highlights below:</p>
+<font color="#000055">
+<pre>
+import org.jruby.Ruby;
+
+public class RubyConsole  extends IOConsole implements Runnable {
+
+   public void run() {
+      ..
+      RubyInstanceConfig conf = new RubyInstanceConfig() {
+         public InputStream getInput() {return in;}
+         public PrintStream getOutput() {return out;}
+         public PrintStream getError() {return err;}
+         ..
+      }
+      ..
+      try {
+         Ruby rubyRuntime = Ruby.newInstance(conf);
+         String jRubyHome = System.getProperty("jruby.home");
+         String jRubyVersion = System.getProperty("jruby.version");
+         rubyRuntime.evalScriptlet("$:.insert(0,"+jRubyHome+"\\lib\\ruby\\"+jRubyVersion+"')");
+         rubyRuntime.evalScriptlet("$:.insert(0,'"+jRubyHome+"\\lib')");
+         rubyRuntime.evalScriptlet("require 'jruby';");
+         rubyRuntime.evalScriptlet("require 'eclipse_console_irb';");
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+}
+
+</pre>
+</font>
+I got the input output and
+error streams from the superclass IOConsole,
+and used them to create an inner config class of type
+RubyInstanceConfig. I then used that to make the Ruby
+Interpreter.   You will notice that once I
+create the new interpreter I call the evalScriptlet
+method with some Ruby script code. First I add the paths to the Ruby load path
+by inserting into the special Ruby array <b>$: </b>. I then
+issue two require statements.  One to start
+JRuby and one to load up my Eclipse console Ruby script,
+which contains the Ruby code already shown above. 
+<p>The Console can be added to
+the GUI by a very simple piece of code. I chose to add it by creating an action
+that creates a new Console, so I have a new  menu
+  entitled <code>Ruby Console</code></p>
+
+Highlights below:
+<font color="#000055">
+<pre>
+..
+static RubyConsole ruby = new RubyConsole();
+..
+ConsolePlugin.getDefault().
+   getConsoleManager().addConsoles(new IConsole[]{ ruby });
+ConsolePlugin.getDefault().getConsoleManager().showConsoleView(ruby);
+..
+</pre></font>
+
+And that is it.
+  There really wasn’t much more to it than
+that, so when I say <i>highlights</i> I actually mean almost everything. Most of
+what I have left out is the Eclipse plugin library
+code. All the Ruby code I needed is shown above.
+<p>
+After I build the
+plugin from my project, and deploy it, I get the rather
+pleasing result of a Ruby console in my Eclipse workbench with
+a <b><code>eIrb&gt;:</code></b> prompt at the
+console, and the interpreter’s results shown as I type in commands. It even has
+nice colours.  Shown here:
+<br/>
+<br/>
+<img align="center" border="0" src="../_/http/www.jeremymeyer.com/downloads/blog1image1.JPG">
+<br/>
+</img></p>
+<h1>The Result</h1>
+<p>What can you do with this
+though?   Well anything you like (within
+reason) but provided your plugin has added upstream
+plugins to its dependency list, you can load any Java
+classes you like from that plugin and work with them.
+For example, I have added the “org.eclipse.core.resources”
+to my RubyConsole plugin’s
+dependency list, and so I can access the Eclipse Workspace by typing:
+</p>
+<pre>
+eIrb:&gt; include_class 'org.eclipse.core.resources.ResourcesPlugin'
+
+</pre>
+
+irb responds with:
+
+<pre>
+=&gt; ["org.eclipse.core.resources.ResourcesPlugin"]
+
+</pre>
+
+Indicating that I have loaded up the class..
+
+<pre>
+eIrb:&gt; workspace = ResourcesPlugin.get_workspace
+
+</pre>
+
+Yields:
+
+<pre>
+=&gt; #&lt;Java::OrgEclipseCoreInternalResources::Workspace:0x25abb1 @java_object=org.eclipse.core.internal.resources.Workspace@12605d&gt;
+</pre>
+
+So I now have the workspace object stored in <code>workspace</code>. The great thing about this environment of course, is that should I feel I can’t be bothered to look in the Javadocs for the methods available on the Eclipse Workspace class, I can make use of Ruby’s reflection by just typing:
+
+<pre>
+eIrb:&gt; workspace.methods
+
+</pre>
+
+Which returns a huge array of all the methods (too big to list here). I can then experiment with the sensible looking ones, and soon discover that:
+
+<pre>
+eIrb:&gt; projects = workspace.get_root.get_projects
+eIrb:&gt; projects.each { |p|
+eIrb:&gt; 	puts p.get_name
+eIrb:&gt; }
+
+</pre>
+
+..will list all of the names of the projects in my Eclipse workspace, while:
+
+<pre>
+eIrb:&gt; projects[0].build(0,nil)
+
+</pre>
+
+..will force the first project in the workspace to build.
+
+<pre>
+eIrb:&gt; projects[0].close(0,nil)
+
+</pre>
+
+..will close the project, while:
+
+<pre>
+eIrb:&gt; workspace.get_root.get_project('project1').open nil
+</pre>
+
+.. would open a project in my workspace called ‘project1’. Of course this is not good coding style at all, and if you didn’t have a project with this name, you would get a Java exception reported at the Ruby prompt, but you get the idea.
+
+All in all, this is a really agile way to develop and a great way to test and experiment with libraries and middleware. Of course, once you have a piece of Ruby code that does something useful, you can save it in a <code>.rb</code> file and use the Ruby’s <code>require</code> statement at the prompt to load it up. You would then be able to continue typing interactively.
+
+<pre>
+eIrb:&gt; require 'useful.rb'
+</pre>
+
+I hope you have fun playing around with this. Enjoy!  <img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<a name="resources"> <h1>Resources</h1> </a>
+<p>The plugin with sourcecode. All version info, etc. in the readme.txt:<br/>
+<a href="../_/http/www.jeremymeyer.com/downloads/RubyConsoleJeremyMeyerBlog.zip">    RubyConsoleJeremyMeyerBlog.zip<a>
+</a></a></p>
+<p>Puppets Do JRuby: <br/>
+<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=220459.html">
+   http://www.artima.com/weblogs/viewpost.jsp?thread=220459
+</a>
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=227935.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=227935&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jeremy Meyer adds a new entry to <a href="../index.html$/blogger=jeremy1.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/jeremy1.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D227935&amp;title=Creating+an+Interactive+JRuby+Console+for+the+Eclipse+Environment&amp;bodytext=Excited+by+the+possibilities+afforded+by+JRuby+and+the+ability+to+plug+it+into+various+different+Java+environments%2C+I+decided+to+try+implementing+a+JRuby+interactive+console+in+Eclipse.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D227935&amp;title=Creating+an+Interactive+JRuby+Console+for+the+Eclipse+Environment">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D227935&amp;title=Creating+an+Interactive+JRuby+Console+for+the+Eclipse+Environment">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jeremyMeyer.jpg"/></td><td>Jeremy has been designing and developing software for over 20 years, as well as teaching its mastery. He is fascinated by all aspects of architecture, design and development, the philosophical, the psychological and the aesthetic. He currently heads up the training division at hybris Software, a fast growing and very exciting eCommerce company.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Jeremy Meyer. All rights reserved.</div>
+</p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

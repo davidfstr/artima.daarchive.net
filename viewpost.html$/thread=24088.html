@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Designing Programs to Accomodate Graphic Interfaces</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=24088.html">Discuss</a> | 
+<a href="mailto:?subject=Designing Programs to Accomodate Graphic Interfaces&amp;body= %0AArtima Weblogs %0ADesigning Programs to Accomodate Graphic Interfaces %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=24088">Email</a> | 
+<a href="../viewpostP.html$/thread=24088.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=24087.html" title="Designing Graphic Interfaces">Previous</a> | 
+<a class="sl" href="thread=86089.html" title="Threaded RSS feeds">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">Designing Programs to Accomodate Graphic Interfaces</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">April 6, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A GUI program can rapidly become an unholy mess of 
+object interactions that is difficult to get working
+properly, and even more difficult to test. But with
+the right architecture, it should be possible to 
+solve those problems.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+In <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=24087.html">
+Designing Graphic Interfaces</a>, I described RADICAL's intriguing potential
+for interactively designing a GUI interface. I ended that
+article by listing three concepts that promise to improve
+the design of the program that uses the GUI:
+<ul>
+<li>GUI classes poke the model, but never query it
+  <li>GUI interactions are managed in a separate layer
+  <li>GUI builders are passed to application objects
+</li></li></li></ul>
+
+In this post, I'll examine each of those concepts in detail,
+and see how those concepts can be combined using a good
+collection of APIs.
+
+<h3>GUI classes poke the model, but never query it</h3>
+This concept comes from the JUnit mailing list. It's an
+inversion of the standard model/view paradigm that makes
+unit testing more manageable. The idea is that when a
+GUI even happens, it invokes a set() method in the model,
+but it <i>never</i> invokes a get() method to get data.
+Instead, the GUI defines set() methods that model uses
+to drive the GUI.
+<p>
+It is of course very difficult to test a GUI program,
+especially in the kind of automated way that JUnit is
+all about. It takes a special testing harness that's
+generally difficult to use and either expensive or hard
+to understand, or both.
+<p>
+But if the model drives the GUI, then a "false front"
+can be created that has the same API as the GUI, but 
+which simply stores the data values it receives so they
+can be inspected. The test program can then poke the 
+model and examine the results to make sure they're correct. 
+<p>
+The benefit, of course, is the model can be tested 
+normally (and completely) so that any bugs which are
+found in the GUI are guaranteed to be shallow (existing
+only in the GUI code, rather than in the model).
+
+<h3>GUI interactions are managed in a separate layer</h3>
+This is another interesting concept that came from the 
+JUnit mailing list. I'm not quite sure how to combine it
+with the previous concept, but it makes sense, so it's
+an area I want to explore.
+<p>
+The idea is to put all GUI interections into a separate
+class (or possibly a combination of them), which encapsulates
+all of the interactions between components. For example,
+pushing the play button may cause the button to change
+it's appearance so that it's depressed, change the appearance
+of the stop button so it's raised, and enable some animated
+image that blinks or waves or whatever.
+<p>
+The underlying model doesn't need to know what kinds of GUI
+components exist, or how they interact. But adding those kinds
+of interactions to the GUI layer itself has two problems:
+the GUI code is more complex, and there's no good way to test
+it.
+<p>
+Putting the interactions in a separate class creates a GUI
+interaction layer that can be tested. An object that has the
+GUI program's API can then be used to verify that the appropriate
+interactions occur. After that extraction, what remains in the
+GUI class is simply components and their set() methods -- in
+other words, something so simple enough that testing isn't 
+really required. (About the only thing that could go wrong 
+would be failing to poke the model when a GUI event transpires,
+and that kind of problem is easily observed and fixed.)
+<p>
+For testing, it seems clear that the GUI needs two interfaces,
+one that the underlying model uses to poke data into the GUI, 
+and one that the interaction model uses to drive component
+states. (There may actually be a set of interfaces for each
+purpose, but in theory those are the two main classifications.)
+The test program can then create objects that implement the
+interfaces to check the model or the interactions.
+<p>
+What isn't quite clear at this juncture is how the interaction
+model works with the underlying model, when both concepts are
+implemented simultaneously. The three possible arrangements
+are 1) interaction model delegates to underlying model,
+2) underlying model delegates to interaction model, 3) both
+models are independent, and the GUI code pokes both models
+when an event occurs.
+<p>
+Of the three, option #1 seems the most intuitively appealing.
+There are still two choices, though. Either the underlying
+model has to be configured with the GUI object so that it can 
+drive the GUI, or else the interaction model has to delegate
+both ways -- to the model when GUI events happen, and to the
+GUI when the model makes changes.
+<p>
+I'm of two minds here. The second option is far more complex.
+On the other hand, it means that the interaction model can
+respond to the underlying model, as well as the GUI. Whether
+that's a useful benefit, or additional complexity without
+much use, I'm not sure. (I look forward from hearing from
+others about their experiences.) 
+
+<h3>GUI builders are passed to application objects</h3>
+Finally, there is the notion of using GUI "builders". This
+notion comes to me by way of Allen Holub, who creates and
+advocates extremely "pure" object oriented designs. 
+<p>
+With the methodolgy he advocates, every object in the system
+knows how to display itself. Of course, putting actual GUI
+code in the object generally isn't a great idea, so the
+object is instead passed a "builder" object which has an
+interface the object uses to pass data to the GUI component.
+<p>
+That methodology makes it possible to make radical changes
+to an object's implementation (for example, adding the notion
+of "currency" to a money class) but at the same time restricting
+the changes to the class and it's builder -- because everything
+about "money", including how it's created and displayed -- is
+encapsulated in one place.
+<p>
+Testability improves, as well, because the builders can be 
+objects that the test program inspects to make sure the results
+are correct. Different sorts of inputs and outputs are more
+easily accomodated, as well, for the same reason -- adding a
+different builder with the same API lets you change from 
+graphic to HTML or XML output, to braille or programmatic input.
+<p>
+So it's clearly a great concept that deserves wider application.
+(The key appears to be the elimination of get() methods in the
+design, they indicate the kind of data-coupling that produces
+unwanted dependencies.)
+<p>
+But what's not totally clear to me is how that concept dovetails
+with the notion of a GUI layer that you can develop interactively,
+and with an interaction layer that manages component states. It
+may be that the notions are fundamentally at odds. Or maybe
+there is a way they can work together...
+<p>
+I suspect that the answer is to balkanize the GUI's API interface
+into a collection of interfaces, one per object. So if there
+is a Money class, there is a MoneyBuilder interface, for example.
+Then, when you create the GUI class with a program like RADICAL,
+you subclass it and implement all of the interfaces for the
+object APIs in the subclass -- most likely by defining some
+mega-interface that combines all of the object builder interfaces
+into a single monolith, and then implementing that.
+
+<h3>Conclusion</h3>
+In theory, then, a good GUI program will have:
+<ul>
+<li>An interactively constructed GUI class</li>
+<li>A subclass of it that implements: 
+    <ul>
+<li>An interaction interface</li>
+<li>A major builder interface, composed of separate builders
+        for each object in the data model</li>
+</ul>
+</li>
+<li>An underlying model that uses the builder interfaces</li>
+<li>An interaction model that uses the interaction interface
+      and which delegates to the underlying model.</li>
+</ul>
+<p>
+The program that uses this architecture will be testable, flexible, 
+and maintainable -- or at least, that's the theory. I'm looking 
+forward to seeing what happens in practice, and to hearing
+from others who can report the results of their experiments.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=24088.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=24088&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D24088&amp;title=Designing+Programs+to+Accomodate+Graphic+Interfaces&amp;bodytext=A+GUI+program+can+rapidly+become+an+unholy+mess+of+%0D%0Aobject+interactions+that+is+difficult+to+get+working%0D%0Aproperly%2C+and+even+more+difficult+to+test.+But+with%0D%0Athe+right+architecture%2C+it+should+be+possible+to+%0D%0Asolve+those+problems.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D24088&amp;title=Designing+Programs+to+Accomodate+Graphic+Interfaces">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D24088&amp;title=Designing+Programs+to+Accomodate+Graphic+Interfaces">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Hybridizing HTML</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=213902.html">Discuss</a> | 
+<a href="mailto:?subject=Hybridizing HTML&amp;body= %0AArtima Weblogs %0AHybridizing HTML %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=213902">Email</a> | 
+<a href="../viewpostP.html$/thread=213902.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=217931.html" title="Eclipse Plugin for Thinking in Java 4e">Previous</a> | 
+<a class="sl" href="thread=220459.html" title="Puppets Do JRuby">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Hybridizing HTML</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">November 8, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+How to create Flex forms within HTML pages to easily achieve cross-browser and cross-platform functionality.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I see more and more web sites with unreadable, overlaid text and components that get hidden or don't work. I don't know if this is primarily due to an over-belief in the validity of AJAX components, CSS not living up to its cross-platform promises, or both.</p>
+<p><a href="../_/http/www.pcmag.com/article2/0,2704,2193063,00.asp">John Dvorak recently went on a rant</a> -- in fairly significant detail -- where he decided that it's AJAX that makes web apps sucky. He wasn't really talking about AJAX (as his readers were quick to point out) but rather the CSS/JavaScript/DHTML UI on many AJAX components. It appears that a lot of AJAX component libraries focus more on the underlying technology and not enough on getting the presentation details right. Basically, it's the CSS and JavaScript that the AJAX component libraries use that isn't working right, but the result is that AJAX is getting a black eye.</p>
+<p>His basic argument holds, however: anyone can add some cute stuff to a web page, but how hard is it to make that work all the time (regardless of screen resolution), everywhere (no matter what OS/Browser), and actually be useful? The path of least resistance with AJAX is not to get it working right.</p>
+<p>I don't have Dvorak's certainty, but the increase in the use of AJAX and the proliferation of unusable sites seems to coincide. What I do know is that developers are not taking the time to test their sites in different browsers -- apparently they're assuming that if they use AJAX and CSS and it looks OK in IE, then it will work elsewhere. Even the mighty GMail recently introduced a bug that caused overlapping text with FireFox on my machine.</p>
+<p>It seems like every travel site I go to (airlines, hotels, general travel) is usable only with Internet Explorer (IE). If I start with Firefox and go to these sites I find that date choosers (almost certainly AJAX components) may be invisible, or when they pop up not all the information is visible. The rest of the components may or may not be visible, but by that time I've remembered that I have to switch to IE.</p>
+<p>These sites are created by professional developers. Perhaps they all went to a conference for people who write travel site software and there were lots of talks about how AJAX components will solve all their problems without testing on multiple configurations, and they believed it.</p>
+<p>I don't blame them at all. <i>I</i> certainly don't want to take the time to verify everything under all browsers. I want to "write once, run everywhere," which I know has become a joke because of Java's claims but the idea is still worth trying for, otherwise we're all doomed to a nightmare of testing. The result will be a narrowing of scope in what we're willing to attempt on the web.</p>
+<p>It's clearly not impossible to write sites that work across platforms, because there are many sites which are complex on the same order that a travel site is complex but they work fine under Firefox, and by implication on other non-IE browsers. Google applications, Wells Fargo, Amazon all seem to work. Sites like TigerDirect appear to solve the problem by avoiding AJAX components and sticking with HTML.</p>
+<p>My solution on my own site is to be ultra-conservative and mostly very simple. I stay far away from the edge of what's possible, and I try to make all pages use the same simple layout and CSS. Even then I've had to work to try to get that simple format to behave the same way everywhere, and it certainly hasn't been as easy as CSS promised. As an incremental step (separating content from layout) CSS moves in the right direction, but in the big picture it's a failure. And poorly-designed, at that -- why can't I just create and use my own simple tags? Why do I have to have DIVs and classes and all that everywhere? And why do I have to go to PHP or another system just to include a standard header and footer? If they were going to "fix" it, why couldn't they have made it simple and functional?</p>
+<p>I've read about how great CSS is supposed to be, and I've struggled with the reality. Until something better comes along I'm going to say it doesn't solve the problem and that we'll have to come up with a better solution ourselves.</p>
+<p>And whenever I criticize the state of the web, CSS, AJAX, whatever, people come out of the woodwork saying "you're just not doing it right" or "you just don't understand." Without any acknowledgment that it seems like NO one is getting it right. Dvorak goes further and says: "Except for a precious few exceptions, AJAX is <i>inherently</i> bad." And although he appears to misunderstand the technology issues, he's still connected the dots.</p>
+<p>Many people assert that it's not any of these technologies that are at fault, but rather those technologies in the hands of incompetent programmers (who, apparently, create AJAX libraries that are widely distributed and used). I've seen this argument many times before: a technology is labeled "good" simply because it's <i>possible</i> to use that technology properly (acutally, many discussions seem to come down to this assertion). The problem with this argument is that the real issue is not about possibility, it's about ease. If a technology is relatively easy to use and get right, then more people will be able to quickly acquire and use that technology. If it's not easy to get right, then there will be a proliferation of bad examples, which will either cause it to be fixed or cause people to look elsewhere.</p>
+<p>I suspect the bad ecommerce website experience comes from a combination of CSS either not being standardized or being misused, along with developers trusting that AJAX components (which typically use CSS and JavaScript for display) do what they claim and can just be thrown into the mix without testing the result across browsers.</p>
+<p>The basic problem is this: How do we get things to display consistently without wasting enormous amounts of time? This issue seems to be most problematic where forms are concerned; text and graphics seem to work OK (what a relief, since this was originally the only thing that the web was supposed to do, back when it was created).</p>
+<h1>Forms in Flex</h1>
+<p>The Flex designers have gone to a lot of trouble to make it easy to create forms in Flex -- easier, in fact, than creating their equivalent in HTML. And because the cross-platform issues are solved by the Flash VM, you aren't left wondering whether the forms will render correctly across browsers. In this article I will show the power of forms and form components in Flex, and how easy it is to combine Flex forms with HTML. Once you see this you'll think twice the next time you want to create a form, especially a complex one, using CSS/JavaScript/AJAX.</p>
+<p>There are three approaches to creating any UI with Flex:</p>
+<ol class="arabic simple">
+<p><li>Hand-code everything. For this, you're best off starting with the <a href="../_/http/labs.adobe.com/technologies/flex/index.html">free trial of FlexBuilder</a> to generate the basic template which you can then duplicate by hand or with an automation script.</li>
+<p><li>Use the GUI builder in FlexBuilder. This allows you to create the UI by dragging and dropping components. It's common for people to start this way, and then switch to:</li>
+<p><li>Hand-code the interface within FlexBuilder (which provides context help and completion). The MXML layout language includes directives for making form layout easy, so that it's actually less code than laying out a form in HTML.</li>
+</p></p></p></ol>
+<p>In addition, FlexBuilder generates the code for detecting the Flash player (and allowing the user to install it if it's not there, or upgrade it if the version is too old). As you'll see later, we'll instead use a JavaScript library to solve that particular problem.</p>
+<h1>Creating the Form</h1>
+<p>Because many of my negative experiences with CSS/JavaScript/AJAX forms have involved date choosers that are difficult or impossible to use, and many of those have occurred on travel sites, let's create a simple form that finds out your departure and return dates, your first and last name and your email address.</p>
+<p>But let's go a step further and validate the inputs on the client side, before they can be submitted to the server. Because this eliminates a lot of tedious back-and-forth for the user, various sites have tried to do it with AJAX and JavaScript, but it's hard and doesn't always seem to work. However, Flex provides built-in <b>Validator</b> objects to do the work for you, quite easily. It's also straightforward to create your own <b>Validator</b> subtypes for special cases, as you'll see. Basically, we can guarantee that all the input data is correct <i>before</i> the form is submitted, but without the effort and uncertainty that comes when trying to do it in browser JavaScript.</p>
+<p>This form lays out the components using the MXML <b>Form</b> component, which holds <b>FormItems</b>, each of which has a label and holds some other type of component. What you'll notice is that the label and the component are neatly organized -- something you'd ordinarily do with more code using an HTML <b>table</b>.</p>
+<p>I've provided a general introduction to MXML in <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=208528.html">this article</a>. Here's the code, which I'll explain afterward. Everything within the <b>&lt;Form&gt;</b> tags is the form labels and components; everything afterwards is validation and submission to the server. Much of this code is generated automatically by FlexBuilder via context-completion:</p>
+<b><pre class="literal-block">
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+    xmlns:validators="validators.*" applicationComplete="validator()"&gt;
+    &lt;mx:Style&gt; global { font-size: 15;    } &lt;/mx:Style&gt;
+    &lt;mx:Form&gt;
+        &lt;mx:FormItem label="Departure Date" required="true"&gt;
+            &lt;mx:DateField id="departureDate" change="departureChanged()"
+                selectedDate="{new Date()}" /&gt;
+        &lt;/mx:FormItem&gt;
+        &lt;mx:FormItem label="Return Date" required="true"&gt;
+            &lt;mx:DateField id="returnDate" change="validator()"
+                selectedDate="{new Date(new Date().time + validators.ReturnDateValidator.ONEDAY)}" /&gt;
+        &lt;/mx:FormItem&gt;
+        &lt;mx:FormItem label="Traveler Last Name" required="true"&gt;
+            &lt;mx:TextInput id="lastName" change="validator()"/&gt;
+        &lt;/mx:FormItem&gt;
+        &lt;mx:FormItem label="Traveler First Name" required="true"&gt;
+            &lt;mx:TextInput id="firstName" change="validator()"/&gt;
+        &lt;/mx:FormItem&gt;
+        &lt;mx:FormItem label="Traveler's Email" required="true"&gt;
+            &lt;mx:TextInput id="email" change="validator()"/&gt;
+        &lt;/mx:FormItem&gt;
+        &lt;mx:FormItem&gt;
+            &lt;mx:Button id="submitButton" label="Submit" click="submit()"/&gt;
+        &lt;/mx:FormItem&gt;
+    &lt;/mx:Form&gt;
+    &lt;mx:Validator id="requireLastName" required="true" source="{lastName}" property="text" /&gt;
+    &lt;mx:Validator id="requireFirstName" required="true" source="{firstName}" property="text" /&gt;
+    &lt;mx:EmailValidator id="validateEmail" required="true" source="{email}"  property="text" /&gt;
+    &lt;validators:ReturnDateValidator id="validateReturnDate"
+        source="{returnDate}" property="selectedDate" departureDate="{departureDate}"/&gt;
+    &lt;mx:Script&gt; &lt;![CDATA[
+    private function departureChanged():void {
+        const ONEDAY:int = validators.ReturnDateValidator.ONEDAY;
+        if(returnDate.selectedDate.time &gt;= departureDate.selectedDate.time + ONEDAY) return;
+        returnDate.selectedDate = new Date(departureDate.selectedDate.getTime() + ONEDAY);
+        validator();
+    }
+    private function validator():void {
+        submitButton.enabled = Validator.validateAll(
+            [requireLastName, requireFirstName, validateEmail, validateReturnDate]).length == 0;
+    }
+    private function submit():void {
+        var args:URLVariables = new URLVariables();
+        args.FirstName = firstName.text;
+        args.LastName = lastName.text;
+        args.Email = email.text;
+        args.DepartureDate = departureDate.selectedDate.toDateString();
+        args.ReturnDate = returnDate.selectedDate.toDateString();
+        var url:URLRequest = new URLRequest("http://www.mindviewinc.com/demos/flex/trip.php");
+        url.method = "POST";
+        url.data = args;
+        navigateToURL(url,"_blank");
+    }
+    ]]&gt; &lt;/mx:Script&gt;
+&lt;/mx:Application&gt;
+
+</pre></b>
+<p>It's very easy to adjust styles globally. Here, I've set the font size to 15 for everything on the form by using the <b>&lt;Style&gt;</b> component.</p>
+<p>You can see that each <b>FormItem</b> has <b>required</b> set to <b>true</b>. This flag is slightly misleading because it doesn't force the user to fill the form; all it does is put a red asterisk next to the component to tell the user that the field is required. In order to programmatically force the field to be required, we'll use validation as you'll see later.</p>
+<p>A <b>DateField</b> is a built-in Flex component that pops up a calendar when you want to choose a date. So it's very much like the AJAX components that you see used, except that it always works, across all platforms and configurations. In the <b>departureDate</b>, <b>selectedDate</b> is set to the current date using a <i>binding expression</i> (the curly braces). The <b>returnDate</b> is initialized to the current date plus one day.</p>
+<p>The rest of the <b>FormItem</b>s are <b>TextInput</b>s, and finally there's a submit button. This button will only be enabled when all the inputs are correct, and when you press it the data will be submitted to the server.</p>
+<p>Note that each of the input components on the form set the <b>change</b> property to a method. These methods perform the validation.</p>
+<h1>Validating the Form Data</h1>
+<p>After the <b>&lt;Form&gt;</b> you can see four <b>Validator</b> components: three that are part of the standard Flex library and one that I've written. The first two just ensure that there is something in the <b>lastName</b> and <b>firstName</b> <b>TextInput</b>s, the third one also requires that the contents of the <b>email</b> <b>TextInput</b> follows the pattern of an email address (because it's a tried-and-tested standard Flex component, you never have to reinvent it). The custom <b>ReturnDateValidator</b> verifies that the return date occurs after the departure date.</p>
+<p>Each <b>Validator</b> must be told where to find the data to validate by setting both its <b>source</b> (the component to validate; note the binding expression) and its <b>property</b> field (the property to test within that component). The <b>ReturnDateValidator</b> must also know the <b>departureDate</b> to compare to.</p>
+<p>The easiest way to validate the whole form is to call the <b>static validateAll()</b> method, as you can see in the <b>validator()</b> method within the <b>&lt;Script&gt;</b> block. <b>validateAll()</b> takes an array of <b>Validator</b> objects and tests each one, returning an array of results. Because any result indicates a failed validation, if the array <b>length</b> is nonzero the form's validation has failed (and the submit button will not be enabled).</p>
+<p>This is a slightly more complex form because we don't just want to validate the inputs; we also want to constrain the dates so that the return from the trip always happens at least one day after the departure. If the user is selecting the departure date, it seems reasonable to automatically initialize the return date to one day after the departure, which is why the <b>departureDate DateField</b> calls <b>departureChanged()</b> (rather than just <b>validator()</b> like the rest do). You can see that <b>departureChanged()</b> forces the return date to be at least one day after the departure -- and then it also calls <b>validator()</b>.</p>
+<p>On the other hand, if the user is selecting the return date, we can't really assume anything about the departure date; all we can do is tell the user why the field is invalid. This is where the custom <b>ReturnDateValidator</b> comes in.</p>
+<h1>A Custom Validator</h1>
+<p>A custom <b>Validator</b> is just another kind of custom component, which I introduced <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=212818.html">here</a>. When you subclass <b>Validator</b>, the only method you must override is <b>doValidation()</b>. During validation, this method is automatically handed an argument based on the <b>source</b> and <b>property</b> that were provided in the <b>Validator</b>'s MXML declaration.</p>
+<b><pre class="literal-block">
+package validators {
+    import mx.controls.DateField;
+    import mx.validators.ValidationResult;
+    import mx.validators.Validator;
+
+    public class ReturnDateValidator extends Validator {
+        private var departure:DateField;
+        public static const ONEDAY:int = 1000 * 60 * 60 * 24; // In milliseconds
+        public function set departureDate(depart:DateField):void {
+            departure = depart;
+        }
+        protected override function doValidation(value:Object):Array {
+            var results:Array = super.doValidation(value);
+            if(results.length &gt; 0)
+                return results;
+            if(value.time &lt; departure.selectedDate.time + ONEDAY)
+                 results.push(new ValidationResult(true, null, "returnBeforeDeparture",
+                     "Return date must happen after departure date"));
+            return results;
+        }
+    }
+}
+
+</pre></b>
+<p>This <b>Validator</b> is slightly different than the average because it validates using two UI components whereas most <b>Validator</b>s just focus on a single component. To connect to the second component (the other <b>DateField</b>), I introduce a property called <b>departureDate</b> which stores into a field called <b>departure</b> via a <b>set</b> method.</p>
+<p>I stumbled a bit when dealing with the slightly odd design of the <b>Validator</b>. I first overrode the <b>validate()</b> method instead, and that worked fine, even with <b>validateAll()</b>. However, the docs say that you <i>must</i> override <b>doValidation()</b> and that you should not override <b>validate()</b>. When I did this, I got a runtime error because both <b>source</b> and <b>property</b> must be configured when the <b>Validator</b> object is created, and the <b>value</b> argument is handed to <b>doValidation()</b> by the framework by combining <b>source</b> and <b>property</b>. I had originally thought I should only have to use <b>source</b>, but to satisfy the framework I had to set it up to use both. This is the nature of defining your own <b>Validator</b>; the reasons for the design are not intuitively obvious to me but those are the hoops you must jump through to make it work.</p>
+<p>In <b>ReturnDateValidator</b>, the <b>value</b> that's passed as the argument is from the <b>source</b> (the <b>DateField</b>) combined with the <b>property</b> (the <b>selectedDate</b>). So we just say <b>value.time</b> to get the number of seconds after 1970 for the <b>returnDate</b>, but we have to say <b>departure.selectedDate.time</b> to get the number of seconds for <b>departureDate</b>. Again, the design can catch you at first but it's not intolerable.</p>
+<p>In <b>doValidation()</b>, you typically first call the base-class <b>doValidation()</b> method, which returns an array. If the array is empty then the base-class validation succeeded. In this case the base-class call is probably redundant because it only ensures that something is in the field, and with <b>DateField</b>s I think something is always there so the call will always succeed. In any event this code shows the ordinary form when creating as custom <b>Validator</b>.</p>
+<p>If the return date is not at least a day after departure, there's a problem so we append a <b>ValidationResult</b> to the <b>results</b> array. This notifies anyone interested that the validation failed, but more importantly it allows us to pass a message back to tell the user what the problem is. This message appears when the user moves their mouse over the input box (which will have a red line around it if it's invalid).</p>
+<p>That's really the essence of <b>Validator</b>s; it's not hard to create custom versions whenever you have special form constraints.</p>
+<h1>Submitting the Form Data to the Server</h1>
+<p>The <b>submit()</b> function in the main application is called when the user presses the submit button (which is only possible when validation succeeds). Many Flex application examples you'll see take the more sophisticated approach of talking to the server using an <b>HTTPRequest</b> object. This kind of Flex UI carries on a conversation with the server and modifies itself in response (which is also what AJAX does), so the user doesn't have the usual experience of going from page to page.</p>
+<p>That's a good way to do it, but in this example I'm going to provide a transition path, so you could take an existing web page and just change the input form, but leave everything else the same. It's a bit of a throwback but it is easy to understand since it uses the old model of the web.</p>
+<p>As such, the data in the form needs to be passed to the server in a call to that server's URL. You can use a <b>GET</b> to do this, but in this example we'll use <b>POST</b>. Flex provides the facility to make the call and to transfer to the page returned by the server using the <b>navigateToURL()</b> function.</p>
+<p>To use this function, you must pass it a <b>URLRequest</b> object which contains the target URL and may have data attached in the form of a <b>URLVariables</b> object. So the first thing that <b>submit()</b> does is create and populate the <b>URLVariables</b> object, then attach it to the <b>URLRequest</b>, which is the first argument to <b>navigateToURL()</b>; the second tells it how to display the resulting web page in the browser; typically you'll use either "_blank" to open a new browser window or "_self" to use the current window. Because of security issues on this weblog platform I couldn't use "_self" so you'll have to allow the popup window to see the results.</p>
+<h1>The Server Side</h1>
+<p>For simplicity's sake, let's assume you're just going to replace typical forms in web pages with the equivalent Flex forms. This means we'll only have one form and submit button on a page, although with Flex this doesn't have to be the case at all, since the Flex component can easily morph according to the information it gets back from the browser in response to the submission. Basically, you can do what you can do with AJAX, but nicer.</p>
+<p>In our scenario, when the user presses the <i>submit</i> button, the Flex form will submit its data just as an HTML form would, so you can use any back-end technology you'd like on the server: Python, Perl, Java, Ruby, etc. My site makes very basic use of PHP (I drop into Python for anything even slightly complex) so I'll use that. Here's the code for the target page:</p>
+<b><pre class="literal-block">
+&lt;?php include "standard.php"; head("Trip Information from Flex Form"); ?&gt;
+
+&lt;h1&gt;Trip Information&lt;br&gt;from Flex Form&lt;/h1&gt;
+
+&lt;table cellspacing="20"&gt;
+&lt;?php
+foreach($_POST as $key =&gt; $val)
+    printf("&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;\n", $key, $val);
+?&gt;
+&lt;/table&gt;
+
+&lt;?php foot(); ?&gt;
+
+</pre></b>
+<p>The first and last lines are my own creation and appear on all the pages on the site (the new site, that is; I'm in the process of moving everything over so you'll still see plenty of pages that don't conform). These establish standard header and footer information along with style sheets that can be changed centrally and reflected throughout the site.</p>
+<p>The table is created by producing basic HTML using PHP; most of the code should look familiar to a C programmer except the <b>foreach</b>, which in this case takes each key-value pair from the "POST" data and divides it into <b>$key</b> and <b>$value</b> pieces, respectively.</p>
+<p>The point is that this is the same code you'd write for any CGI request, whether it comes from a regular HTML form or our Flex form. Which means that you can evolve your site towards using Flex, picking and choosing when to use HTML forms and when to use Flex forms as the need arises.</p>
+<h1>Embedding Flash within HTML</h1>
+<p>Years ago I embedded a little Flash animation in my home page. The first thing I discovered was that it was amazingly hard to get it right, and in fact I didn't. I assumed this was because I was inexperienced with Flash, which was true. But it turns out that properly embedding Flash within HTML has been a surprisingly messy business that runs full-on into browser bugs and incompatibilities.</p>
+<p><a href="../_/http/www.alistapart.com/articles/flashembedcagematch/index.html">Here is the best article I've seen</a>, which summarizes the situation and also describes the development of the solution, which has itself gone through significant evolution.</p>
+<p>The best approach appears to be the use of a JavaScript library which contains all the tests and solutions necessary to deal with cross-platform and cross-browser issues. Conveniently, someone else has solved the problem in a once-and-only-once fashion so you can ignore the messy issues and "do the simplest thing that could possibly work."</p>
+<p>The above article details the evolution of the JavaScript library; in short there was one called SWFObject, another called UFO, then the two unified into SWFFix, which has been renamed SWFObject. This makes it a little confusing; <a href="../_/http/blog.deconcept.com/swfobject/#howitworks/index.html">SWFObject 1.5</a> is the last version of the project that originally went by that name, and <a href="../_/http/www.swffix.org/devblog/index.html">SWFObject 2.0</a> is in beta 6 as of this writing. You can <a href="../_/http/code.google.com/p/swfobject/index.html">download it here</a>.</p>
+<p>Even though it's in beta, the simplicity of SWFObject's <a href="../_/http/code.google.com/p/swfobject/wiki/SWFObject_2_0_documentation/index.html">Option 2</a> is exceptionally compelling so I'll use that. You just include <b>swfobject.js</b>, then call <b>swfobject.embedSWF()</b>, where you provide as arguments the SWF file and the <b>div id</b> where the SWF will be placed in the page, along with the width, height and minimum required Flash VM version. Within that target <b>div</b>, you place the alternative content; if the SWF is unable to load the alternative will be shown.</p>
+<p>Here's what I used to embed the form into this page:</p>
+<b><pre class="literal-block">
+
+&lt;script type="text/javascript" src="http://www.mindviewinc.com/demos/flex/swfobject.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+swfobject.embedSWF("http://www.mindviewinc.com/demos/flex/Traveler.swf", "myContent", "500", "300", "9.0.0");
+&lt;/script&gt;
+
+&lt;div id="myContent"&gt;
+  &lt;p&gt;The Flex form should appear here.&lt;/p&gt;
+&lt;/div&gt;
+
+</pre></b>
+<p>Details of how to use <b>swfobject</b> can be found at that site.
+
+<p>If someone has JavaScript turned off they don't get any of the benefits, but if someone has JavaScript turned off AJAX won't work either; in both cases these are probably not the visitors that are going to do interesting things like make online purchases.</p>
+<h1>The Form</h1>
+<p>Here it is, live. Notice that the empty fields have red lines around them; hover your mouse over those fields and you'll see the error message. If you set the return date earlier than the departure, that will produce an error message, too.</p>
+<p>If you fill it out properly the <b>submit</b> button will be enabled, and you can see the resulting web page. (You'll have to allow the popup window).</p>
+<script src="../_/http/www.mindviewinc.com/demos/flex/swfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+swfobject.embedSWF("../_/http/www.mindviewinc.com/demos/flex/Traveler.swf", "myContent", "500", "300", "9.0.0");
+</script>
+<div id="myContent">
+<p>The Flex form should appear here.</p>
+</div>
+<h1>Conclusion</h1>
+<p>Notice the beautiful simplicity of the result. Not only is the Flex code itself typically easier to write than the HTML that is otherwise required, you:</p>
+<ul>
+<li>Get the built-in functionality of the Flex components, which seems typically nicer than the AJAX alternatives.</li>
+<li>Can do all your validation and constraint logic on the client side to give the user a better experience. This logic is much easier to write and reuse than JavaScript.</li>
+<li>Automatically get cross platform behavior <i>without testing</i> (lots of time and suffering saved)</li>
+<li>Can create your own components to add to the mix and get the same benefits.</li>
+</ul>
+<p>There's another significant improvement over HTML: robots can't detect your submit forms, so you greatly reduce spam submissions.</p>
+<p>Personally, I will still "do the simplest thing" and have plain links and HTML forms when that level of simplicity works. However, I've avoided including things on my site that are as simple as calendar popup AJAX components because my own experience as a consumer has been so bad that I don't want to risk it. With the reliability and consistency of Flex components, however, I'll be bolder when considering richer web user interfaces, because I know the Flex approach will work without the pain and suffering.</p>
+<p><i>Thanks to James Ward for his technical assistance on this article.</i></p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=213902.html">27
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=213902&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D213902&amp;title=Hybridizing+HTML&amp;bodytext=How+to+create+Flex+forms+within+HTML+pages+to+easily+achieve+cross-browser+and+cross-platform+functionality.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D213902&amp;title=Hybridizing+HTML">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D213902&amp;title=Hybridizing+HTML">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

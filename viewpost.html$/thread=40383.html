@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Jini Community Meeting - Part II</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=40383.html">Discuss</a> | 
+<a href="mailto:?subject=Jini Community Meeting - Part II&amp;body= %0AArtima Weblogs %0AJini Community Meeting - Part II %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=40383">Email</a> | 
+<a href="../viewpostP.html$/thread=40383.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=40382.html" title="Jini Community Meeting - part I">Previous</a> | 
+<a class="sl" href="thread=40585.html" title="The Seventh Jini Community Meeting III">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">Jini Community Meeting - Part II</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">March 23, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the second of a set of blogs 
+from the Seventh Jini Community Meeting
+held in Cambridge, Massachusetts March 23-25, 2004.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h2>The Seventh Jini Community Meeting II</h2>
+<p>
+This is the second of a set of blogs 
+from the Seventh Jini Community Meeting
+held in Cambridge, Massachusetts March 23-25, 2004.
+</p>
+<p>
+<b>caveat</b>: I should remind everybody that these are
+my observations and thoughts and not necessarily of those 
+of my employer, any other member of the Jini community, 
+or indeed anyone else on the planet. I'm a member of the
+Jini development team so these next few blogs will be
+"a little closer to home" than the essays I've done for
+Artima previously. Well, consider yourself warned! &lt;grin&gt;
+</p>
+<h3>Coming of Age</h3>
+<p>
+Here are some observations from the afternoon sessions
+which backs up my views that Jini has <i>come of age</i>.
+</p>
+<h3>Orbitz</h3>
+<p>
+Orbiz has gained a foothold in its market as the third largest travel web site
+in roughly the last three years. They are also a monsterously large Jini shop.
+With over 1300 Jini-based services running in approximately 300 VMs, it is
+likely the largest Jini-based application <i>you</i> will use. That's right,
+<i>you</i>. Every time you buy an airline ticket, book a hotel room, reserve a
+car, or uses any of the other services sported by Orbitz, a hand-full of
+Jini-based services are employed. 
+</p>
+<p>
+You might think that the presentation by Orbitz to a audience full
+of Jini developers would concentrate on the general architecture
+and specific uses of Jini in the system. Nope. And that's a good
+thing. The Jini apsect of the system architecture is reasonably 
+straightforward and was described easily in the first part of the
+presentation. The remainder of the time, and the thrust of the
+talk, was on the <i>monitoring</i> aspects of a large scale distributed
+system with Jini-based services.
+</p>
+<p>
+It was subtle, but the message I got from this was clear: Jini
+is just another great technology used to construct high-value
+solutions... now let's talk about how to manage the deployment.
+Consider the alternative views: Jini is new, Jini is risky, 
+Jini is obscure, Jini isn't ready for prime time. The presenters
+from Orbitz skipped right by any of those doubts and went
+directly to we created a great solution with Jini and now
+we're working to make it easier to manage.
+</p>
+<p>
+The Orbitz folks had the same asperations I've had when
+I have built large systems. They wanted to create a system
+that would actively assess the health and efficacy of the
+distributed system components and be able to take 
+preemptive actions to avoid customer-visible failures.
+One of the terms the presentation team (the presentation
+was done tag-team style with three engineers) put forth
+to describe their goals was <i>autonomic computing</i>--
+a term that I know I heard kicked around the Jini group
+at least a year before it began appearing in IBM
+advertisements. Regardless of the genesis of the term,
+the meaning is clear: automation of management, provisioning, and
+error-recovery is critical to availability of a complex
+distributed system. The Orbitz team has a good idea of
+what the next steps will be for their system.
+</p>
+<p>
+At the conclusion of the prepared remark, one audience
+member asked what many of us were wondering:
+why didn't they just use J2EE? (Or, more appropriately,
+how did you get away with <i>not</i> using J2EE for all
+this?) Their answer was thus: when they first looked
+at Jini, they couldn't help but notice that its <i>cool</i>. But,
+besides that, their first impressions of J2EE were that it
+was expensive and heavyweight. They do use some J2EE--but
+its wrapped behind a Jini-based service(!). In the end, 
+the extra machinery, and cost, of a J2EE-based solution 
+was a strong disincentive. But, such a statement probably
+"damns with faint praise" their view of Jini Technology.
+</p>
+<p>
+The Jini Way(TM) was the best approach based
+on the Orbitz engineering team's understanding of the
+problem. The problems they were left with, that of 
+monitoring the health of the constituent parts of the 
+system and responding to problems, is the class of
+problems that you'd need to solve for any production
+web site. 
+</p>
+<p>
+Again, my impressions from the talk (other than the
+Orbitz folks are pretty smart) were this: Jini technology
+is a killer technology that's come of age.
+</p>
+<h3>Countrywide Group</h3>
+<p>
+Taking something new and carving out a solution from
+whole cloth is one thing; taking an existing company
+and an existing codebase and converting portions of
+a large application suite to use Jini is quite 
+another. Countrywide Group, a large insurance provider in
+the United Kingdom, had such a challenge and found
+Jini's benefits to outweigh any transistion costs.
+Their view of Jini and its alternatives were captured
+in one sentence near the beginning of their presentation:
+</p>
+<blockquote>
+"Jini was the only way we could maintain all our
+generic requirements and our enterprise requirements in a
+cost-effective manner."
+</blockquote>
+<p>
+Like the Orbitz presentation, there was a question
+that was going to be asked about J2EE. Calum Shaw-MacKay,
+the presenter from Countrywide, anticipated the question
+and had this early in the presentation:
+</p>
+<blockquote>
+"Why didn't we choose J2EE? Of the vendors we talked to, no vendor 
+understood what we wanted to do. They kept talking about XML and
+web services but that wasn't what we were trying to do. They
+were more helpful in sell us a product than helping us with our
+solution."
+</blockquote>
+<p>
+They went so far as to <i>drop</i> an existing J2EE effort
+in favor of Jini. That's right: they had J2EE and threw it
+out. Why? I'm guessing they were looking for the lesser of two evils:
+</p>
+<ul>
+<li>Changing horses in mid-stream (from J2EE to Jini), or
+   </li>
+<li>Riding a dead horse that wasn't going to get you there anyway (J2EE)
+   </li>
+</ul>
+<p>
+This isn't meant to be an indictment of J2EE. Quite the contrary,
+J2EE is a fine technology that has its place. But, no technology
+is a perfect solution to all problems. Jini happens to provide a
+reasonable set of tools for the problems that Countrywide had as
+highlighted by this notion found later in the presentation.
+</p>
+<blockquote>
+"We have not yet come across an intergration
+problem that cannot be solved using Jini and JDK.
+Jini isn't just 'cool', and it <i>is</i>
+suitable for enterprise environments. Jini lends itself
+to more solutions than J2EE... but is compatible with J2EE."
+</blockquote>
+<p>
+Jini isn't a one-size-fits-all solution any more than J2EE is.
+However, the ability to use only those pieces of Jini appropriate
+to your problem was also an attractive attribute of Jini technology.
+J2EE, somewhat monolithic and indivisible, doesn't provide the same
+kind of granularity that a Jini-based service architecture provides.
+</p>
+<h3>Money on the Table</h3>
+<p>
+Did you notice something about both of these applications? They
+were both dealing with <i>real money</i>. There is money on the
+table with both of these applications. Failure of these applications
+will result in losses that can be traced directly to the bottom
+line. 
+</p>
+<p>
+While there are many metrics that can be employed to assess the
+maturity of a technology, here's one that I think is irrefutable:
+if folks with use the technology to manage money, it is a mature
+technology. To that end, I think the jury is in: Jini has come of age.
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h3>Resources</h3>
+<ul>
+<li>The <a href="../_/http/www.jini.org/index.html">jini.org</a> web site.
+  </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=40383.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=40383&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40383&amp;title=Jini+Community+Meeting+-+Part+II&amp;bodytext=This+is+the+second+of+a+set+of+blogs+%0D%0Afrom+the+Seventh+Jini+Community+Meeting%0D%0Aheld+in+Cambridge%2C+Massachusetts+March+23-25%2C+2004.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40383&amp;title=Jini+Community+Meeting+-+Part+II">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40383&amp;title=Jini+Community+Meeting+-+Part+II">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

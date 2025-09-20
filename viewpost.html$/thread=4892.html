@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Why Standards, Part Deux</title>
+<meta charset="utf-8"/>
+<meta content="Jim Waldo" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=waldo.html">Jim Waldo's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4892.html">Discuss</a> | 
+<a href="mailto:?subject=Why Standards, Part Deux&amp;body= %0AArtima Weblogs %0AWhy Standards, Part Deux %0Aby Jim Waldo %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=4892">Email</a> | 
+<a href="../viewpostP.html$/thread=4892.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=4840.html" title="Why Standards?">Previous</a> | 
+<a class="sl" href="thread=7600.html" title="Software Engineering and the Art of Design">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Objects, Networks, and Making Things Work</span><br>
+<span class="ts">Why Standards, Part Deux</span><br/>
+<span class="as">by Jim Waldo</span><br/>
+<span class="pd">May 25, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Having whacked the hornet's nest once, I take another swing, trying to clarify what I was trying to say originally. Is that a buzzing I hear?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>When I posted my last entry, I realized that I might be stirring up a
+  hornet's nest. Indeed, I could hear the buzzing just before I pressed
+  the <i>submit</i> button, and almost decided against it. Such good sense
+  has never been my hallmark in the past, however, nor did it overcome my
+  hope that I wouldn't regret the posting. While I don't regret it, it has
+  been instructive to listen to the replies. Some have been well-thought out,
+  others not so much. But the replies did make me realize that I had posted
+  in haste in one respect, since the main points I was trying to make have
+  not seemed to have come through clearly.
+
+  <p>So I'll try again. I'm hoping that the second time will be the
+  charm. Either I will make my points more clearly, or I'll realize that they
+  can't be made. So here goes...
+
+  <p><b>Point one: Just because something is called a standard doesn't
+  make it open; and something that isn't a standard is not, because of that,
+  proprietary.</b> The standard/non-standard and open/proprietary
+  dimensions are orthogonal. Certainly, there are lots of technologies that
+  are standards and are also open, but there is no causal connection between the
+  two properties. Just look at the controversy in a number of standards groups right now
+  as to the granting of intellectual property when contributing to a
+  standard. If being a standard made something open, there would be no such
+  controversy. In the same way, there are things that aren't standards that
+  are quite open...look at most of the open or community software that hasn't
+  been formally standardized. The source code is free for the taking; the
+  reuse of that code is determined by more or less restrictive licenses. There
+  are plenty that are very open, even though they are not standard.
+
+  <p>The real point here is that whether something is open or proprietary
+  depends on things like the licensing model, the intellectual property
+  grants, and other sorts of legal notions around the technology. Whether or
+  not something is a standard depends on acceptance by some standards
+  group. Barring some connection between the two (which, by the way, a number
+  of standards groups are trying to construct), there is no connection
+  between the two. A simple point, but one that often gets lost.
+
+  <p><b>Point two: A standards body is often a lousy place in which to
+  invent a technology.</b> This is the essence of what I was trying to get
+  at by distinguishing between <i>de facto</i> and <i>de jure</i>
+  standards. Technology, I would claim, is best invented or designed by one
+  person or a small group of people, working together for a common goal that
+  all of them understand and agree to. While there can be a standards group
+  that meets this description, it is rarely the case that standards groups
+  do. More generally, such groups are made up of a rather large group, each
+  member of which is pushing for the good of his or her own company or
+  interest group. Such a group can actually be a good thing if you are trying
+  to determine which of a group of existing technologies will get the widest
+  adoption, but they tend to be bad at creating a coherent, efficient, and
+  elegant design from whole cloth.
+
+  <p>This doesn't mean that such a group can't ever produce a good
+  technology. There is no logical impossibility that is meant to be implied
+  here. And while I would be surprised, I could be convinced that a good
+  technology had actually been created by such a diverse group. But I don't
+  personally know of any examples.
+
+  <p>Notice, by the way, that there can be a small group of people with a
+  common goal who work together towards an understood and agreed to end that
+  calls itself a standards group. Many of the IETF's early working groups
+  were just such organizations. But once a standard is seen as commercially
+  important, it is much less likely that the standards group will be made up
+  of such technologists. Again, this is a personal observation, not a logical
+  truth. 
+
+  <p><b>Point three: The previous posting was not a veiled (thinly or
+  otherwise) attack on any particular standards group or collection of
+  standards groups.</b> I was not trying to pick on J2EE, or XML, or SOAP,
+  or W3C, or IETF, or... I actually don't watch the standards groups closely
+  enough these days to want to pick on any particular group. There is blame
+  enough to go around in this area. I do remember, about a year ago, when I
+  was paying enough attention to notice that there was a new standards effort
+  starting up on average of once a week, and a new standards organization
+  starting up on average of once a month. Many of these groups and
+  organizations were trying to standardize the same activities. Which leads
+  me to...
+
+  <p><b>Point four: If there are multiple groups competing to write a
+  standard for the same thing, it is probably a safe bet that the technology
+  being standardized isn't ready for standardization.</b> This is the
+  point I was really trying to make, but didn't state explicitly. But this is
+  the one that I think is important for all of us who are trying to produce
+  and use technology to understand.
+
+  <p>It is unfortunate that many technology businesses have decided that it
+  is a good competitive strategy to declare their own solution to some
+  problem a standard, and label other approaches to that problem
+  proprietary. Often this is done by creating a standards group which will
+  give that company (or some small set of companies) enough cover that they
+  can claim that the standard is in fact independent. Recently, this has gone
+  even a step further, as companies start us standards groups
+  to <i>create</i> a standard technology.
+
+  <p>There is no one company that is doing this sort of thing; indeed, this is
+    another area where there is plenty of blame to go around. But it doesn't
+    matter what company or group of companies is doing it; it is a bad thing
+    for innovation. The whole point of this exercise is to try to pre-empt
+    any innovation in an area, and instead negotiate some solution that will
+    advantage the founding companies in an attempt to force the industry into
+    adopting that solution. The adoption is driven not by the technical
+    excellence of the approach, but because it is a <i>standard</i>. This
+    is the sort of thing that I find objectionable, and the sort of thing
+    that I believe hurts the industry. 
+
+  <p>Once again (re-read point three), I'm not trying to single out any
+  particular standardization effort. If you are involved in some standards
+  group and think I'm talking about you, then perhaps I am, but not about you
+  only. There are lots of examples, and when I'm writing this I really don't
+  have any particular example that I am talking about.
+
+  <p>What I'm really talking about, I'm afraid, is an industry that has lost
+  the courage to actually innovate on the belief that a better solution will
+  win in the marketplace. Instead we now have an industry that seems driven by
+  the hope that the marketing noise made around establishing a fake standard
+  will make our customers forget that there is little of value that we are
+  providing. Such an industry is ripe for harvesting by some company (probably
+  a small one) taking over by introducing something that is really
+  innovative. We can all think of examples of where this happened in the
+  past. I don't think things have changed so much that it won't happen again
+  in the future.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4892.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=4892&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jim Waldo adds a new entry to <a href="../index.html$/blogger=waldo.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/waldo.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4892&amp;title=Why+Standards%2C+Part+Deux&amp;bodytext=Having+whacked+the+hornet%27s+nest+once%2C+I+take+another+swing%2C+trying+to+clarify+what+I+was+trying+to+say+originally.+Is+that+a+buzzing+I+hear%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4892&amp;title=Why+Standards%2C+Part+Deux">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4892&amp;title=Why+Standards%2C+Part+Deux">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jimwaldo.jpg"/></td><td>Jim Waldo is a Distinguished Engineer with Sun Microsystems, where he is the lead architect for Jini, a distributed programming system based on Java. Prior to Jini, Jim worked in JavaSoft and Sun Microsystems Laboratories, where he did research in the areas of object-oriented programming and systems, distributed computing, and user environments. Before joining Sun, Jim spent eight years at Apollo Computer and Hewlett Packard working in the areas of distributed object systems, user interfaces, class libraries, text and internationalization. While at HP, he led the design and development of the first Object Request Broker, and was instrumental in getting that technology incorporated into the first OMG CORBA specification.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Jim Waldo. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

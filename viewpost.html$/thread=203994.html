@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Way of Testivus - Unit Testing Wisdom From An Ancient Software Start-up</title>
+<meta charset="utf-8"/>
+<meta content="Alberto Savoia" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=agitator.html">Alberto Savoia's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=203994.html">Discuss</a> | 
+<a href="mailto:?subject=The Way of Testivus - Unit Testing Wisdom From An Ancient Software Start-up&amp;body= %0AArtima Weblogs %0AThe Way of Testivus - Unit Testing Wisdom From An Ancient Software Start-up %0Aby Alberto Savoia %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=203994">Email</a> | 
+<a href="../viewpostP.html$/thread=203994.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=200725.html" title="Fun With Automated Characterization Test Generation">Previous</a> | 
+<a class="sl" href="thread=204677.html" title="How Much Unit Test Coverage Do You Need? - The Testivus Answer">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Agitating Thoughts &amp; Ideas</span><br>
+<span class="ts">The Way of Testivus - Unit Testing Wisdom From An Ancient Software Start-up</span><br/>
+<span class="as">by Alberto Savoia</span><br/>
+<span class="pd">April 26, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Some good advice on developer and unit testing, packaged as cryptic bits of ancient Eastern wisdom in the hope of getting your attention.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Please note: for a nicely formatted, easy to read, and perfect for printing, copy of this material in PDF (complete with antique looking papyrus) you can go to:</p>
+<p><a class="reference" href="../_/http/www.agitar.com/downloads/TheWayOfTestivus.pdf">http://www.agitar.com/downloads/TheWayOfTestivus.pdf</a></p>
+<div class="section">
+<h1><a id="the-way-of-testivus" name="the-way-of-testivus">The Way of Testivus</a></h1>
+<p><strong>Less unit testing dogma. More unit testing karma.</strong></p>
+<p><em>Translated by Alberto Savoia</em></p>
+</div>
+<div class="section">
+<h1><a id="translator-s-introduction" name="translator-s-introduction">Translator’s Introduction</a></h1>
+<p>In May 2006, an ill-prepared international expedition to the Himalayas lost its way. After two weeks of wondering around, hungry, thirsty, and smelling like inexperienced expeditioners who got lost for two weeks, they stumbled upon the entrance to an ancient cave.</p>
+<p>Once inside, they saw a maze of ancient, and messy, cubicles. Each cubicle had a wooden desk, an ergonomically correct bamboo chair, a Dilbert™ calendar, and a strange computer-like mechanical device. In one corner of the office they found barrels of dark liquid which they later identified as early examples of carbonated and highly caffeinated drink and a ping-pong table. They realized that the cave was an ancient software start-up. The oldest one on record. Older even than Netscape.</p>
+<p>Among the many things they discovered inside the cave was a note left by one of the programmers. The expedition’s guide, while not very good at guiding, knew how to read the ancient language and translated the note for them:</p>
+<blockquote>
+<strong>We have finished the release ahead of schedule – again. All the tests pass, so we are taking the rest of the week off. We are going sailing. Since it’s a team building exercise, we hope we can get reimbursed for it.</strong></blockquote>
+<p>The explorers looked at each other in astonishment. Not only had they discovered the oldest software start-up in history, they had also discovered a team of programmers who, apparently, completed their code ahead of schedule ... on a regular basis!</p>
+<p>What was the secret of these ancient programmers?</p>
+<p>And what had happened to them?</p>
+<p>The expeditioners searched each cubicle for clues and found two mysterious booklets. One of them was called "Learn To Sail In 30 Minutes”, which explained the fate of the programmers. You are holding in your hands a translation of the other booklet: “The Way of Testivus”.</p>
+<p>Who wrote this mysterious booklet? What is Testivus? Only Google™ knows for sure.</p>
+<p>Is the content of this text responsible for these ancient programmers being able to complete projects ahead of schedule?</p>
+<p>We can’t be sure, but we believe that the amazing prowess of these programmers was probably due to a combination of the Testivus philosophy, and the consumption of large amounts of the dark caffeinated liquid found in the cave.</p>
+<p>Read the booklet and draw your own conclusions.</p>
+<p><em>Alberto Savoia, April 2007, Mountain View, Ca</em></p>
+</div>
+<div class="section">
+<h1><a id="id1" name="id1">The Way of Testivus</a></h1>
+<div class="section">
+<h2><a id="if-you-write-code-write-tests" name="if-you-write-code-write-tests">If you write code, write tests</a></h2>
+<p>The pupil asked the master programmer:</p>
+<blockquote>
+“When can I stop writing tests?”</blockquote>
+<p>The master answered:</p>
+<blockquote>
+“When you stop writing code.”</blockquote>
+<p>The pupil asked:</p>
+<blockquote>
+“When do I stop writing code?”</blockquote>
+<p>The master answered:</p>
+<blockquote>
+“When you become a manager.”</blockquote>
+<p>The pupil trembled and asked:</p>
+<blockquote>
+“When do I become a manager?”</blockquote>
+<p>The master answered:</p>
+<blockquote>
+“When you stop writing tests.”</blockquote>
+<p>The pupil rushed to write some tests.
+He left skid marks.</p>
+<p><strong>If the code deserves to be written, it deserves to have tests.</strong></p>
+</div>
+<div class="section">
+<h2><a id="don-t-get-stuck-on-unit-testing-dogma" name="don-t-get-stuck-on-unit-testing-dogma">Don’t get stuck on unit testing dogma</a></h2>
+<p>Dogma says:</p>
+<blockquote>
+<p>”Do this.</p>
+<p>Do only this.</p>
+<p>Do it only this way.</p>
+<p>And do it because I tell you.”</p>
+</blockquote>
+<p>Dogma is inflexible. Testing needs flexibility.</p>
+<p>Dogma kills creativity. Testing needs creativity.</p>
+</div>
+<div class="section">
+<h2><a id="embrace-unit-testing-karma" name="embrace-unit-testing-karma">Embrace unit testing karma</a></h2>
+<p>Karma says:</p>
+<blockquote>
+<p>“Do good things and good things will happen to you.</p>
+<p>Do them the way you know.</p>
+<p>Do them the way you like.”</p>
+</blockquote>
+<p>Karma is flexible. Testing needs flexibility.</p>
+<p>Karma thrives on creativity. Testing needs creativity.</p>
+</div>
+<div class="section">
+<h2><a id="think-of-code-and-test-as-one" name="think-of-code-and-test-as-one">Think of code and test as one</a></h2>
+<p>When writing the code, think of the test.</p>
+<p>When writing the test, think of the code.</p>
+<p>When you think of code and test as one,
+testing is easy and code is beautiful.</p>
+</div>
+<div class="section">
+<h2><a id="the-test-is-more-important-than-the-unit" name="the-test-is-more-important-than-the-unit">The test is more important than the unit</a></h2>
+<p>The pupil asked the great master programmer Flying Feathers:</p>
+<blockquote>
+“What makes a test a unit test?”</blockquote>
+<p>This great master programmer answered:</p>
+<blockquote>
+<p>“If it talks to the database, it is not a unit test.</p>
+<p>If it communicates across the network, it is not a unit test.</p>
+<p>If it touches the file system, it is not a unit test.</p>
+<p>If it can’t run at the same time as any other unit tests, it is not a unit test.</p>
+<p>If you have to do special things to your environment to run it, it is not a unit test.”</p>
+</blockquote>
+<p>Other master programmers, hearing this conversation, jumped in with dissenting opinions and started to argue loudly.</p>
+<p>“Sorry I asked”, said the pupil said the pupil as he left.
+Later that night, he received a note from the great grand master programmer:</p>
+<blockquote>
+“The answer from the great master Flying Feathers is an excellent guide.
+If you follow it most of the time you will do well. But don’t get stuck
+on any dogma. Write the test that needs to be written.”</blockquote>
+<p>The pupil slept well.
+The other masters continued to argue long into the night.</p>
+</div>
+<div class="section">
+<h2><a id="the-best-time-to-test-is-when-the-code-is-fresh" name="the-best-time-to-test-is-when-the-code-is-fresh">The best time to test is when the code is fresh</a></h2>
+<blockquote>
+<p>Your code is like clay.
+When it’s fresh, it’s soft and malleable.
+As it ages, it becomes hard and brittle.</p>
+<p>If you write tests when the code is fresh
+and easy to change, testing will be easy,
+and both the code and the tests will be strong.</p>
+<p>If you write the tests when the code is old
+and hard to change, testing will be hard
+and both the tests and the code will be brittle.</p>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="tests-not-run-waste-away" name="tests-not-run-waste-away">Tests not run waste away</a></h2>
+<blockquote>
+<p>Run your tests often.</p>
+<p>Don’t let them get stale.</p>
+<p>Rejoice when they pass.</p>
+<p>Rejoice when they fail.</p>
+</blockquote>
+</div>
+<div class="section">
+<h2><a id="an-imperfect-test-today-is-better-than-a-perfect-test-someday" name="an-imperfect-test-today-is-better-than-a-perfect-test-someday">An imperfect test today is better than a perfect test someday</a></h2>
+<p>The perfect is the enemy of the good.</p>
+<p>Don’t wait for best to do better.</p>
+<p>Don’t wait for better to do good.</p>
+<p>Write the test you can today.</p>
+</div>
+<div class="section">
+<h2><a id="an-ugly-test-is-better-than-no-test" name="an-ugly-test-is-better-than-no-test">An ugly test is better than no test</a></h2>
+<p>When the code is ugly, the tests may be ugly.</p>
+<p>You don’t like to write ugly tests,
+but ugly code needs testing the most.</p>
+<p>Don’t let ugly code stop you from writing tests,
+but let ugly code stop you from writing more of it.</p>
+</div>
+<div class="section">
+<h2><a id="sometimes-the-test-justifies-the-means" name="sometimes-the-test-justifies-the-means">Sometimes, the test justifies the means</a></h2>
+<p>The pupil asked two master programmers:</p>
+<blockquote>
+“I cannot test this code without mocking and violating encapsulation.
+What should I do?”</blockquote>
+<p>One master programmer answered:</p>
+<blockquote>
+<dl class="docutils">
+<dt>“Mocking is bad, and you should never violate encapsulation.</dt>
+<dd>Rewrite the code so you can test it properly.”</dd>
+</dl>
+</blockquote>
+<p>The other master programmer answered:</p>
+<blockquote>
+“Mocking is good and testing trumps encapsulation.”</blockquote>
+<p>The pupil, confused, went out for a beer.</p>
+<p>At the local watering hole he saw the great grand master
+programmer drinking beer and eating buffalo wings.</p>
+<blockquote>
+<dl class="docutils">
+<dt>“Great grand master,” said the pupil, “I thought you did not drink.</dt>
+<dd>And aren’t you a vegetarian?”</dd>
+</dl>
+</blockquote>
+<p>The great grand master smiled and replied:</p>
+<blockquote>
+“Sometimes your thirst is best quenched by beer and your hunger by buffalo wings.”</blockquote>
+<p>The pupil was no longer confused.</p>
+</div>
+<div class="section">
+<h2><a id="only-fools-use-no-tools" name="only-fools-use-no-tools">Only fools use no tools</a></h2>
+<p>The farmer who does not use a plow is not a good farmer.</p>
+<p>The accountant that does not use an abacus is not a good accountant.</p>
+<p>Some tasks are best done with bare hands.</p>
+<p>Other tasks are best done with tools.</p>
+<p>It is not noble to do by hand what can be done better with a tool.</p>
+<p>It is not wise to use your head when your head is not needed.</p>
+</div>
+<div class="section">
+<h2><a id="good-tests-fail" name="good-tests-fail">Good tests fail</a></h2>
+<p>The pupil went to the master programmer and said:</p>
+<blockquote>
+“All my tests pass all the time. Don’t I deserve a raise?”</blockquote>
+<p>The master slapped the pupil and replied:</p>
+<blockquote>
+“If all your tests pass, all the time, you need to write better tests.”</blockquote>
+<p>With a red cheek, the pupil went to HR to complain.</p>
+<p>But that’s another story.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="id2" name="id2">The Way of Testivus</a></h1>
+<ul class="simple">
+<li>If you write code, write tests.</li>
+<li>Don’t get stuck on unit testing dogma.</li>
+<li>Embrace unit testing karma.</li>
+<li>Think of code and test as one.</li>
+<li>The test is more important than the unit.</li>
+<li>The best time to test is when the code is fresh.</li>
+<li>Tests not run waste away.</li>
+<li>An imperfect test today is better than a perfect test someday.</li>
+<li>An ugly test is better than no test.</li>
+<li>Sometimes, the test justifies the means.</li>
+<li>Only fools use no tools.</li>
+<li>Good tests fail.</li>
+</ul>
+<p><em>I hope you enjoyed reading "The Way of Testivus".  Let's finish what these ancient programmers started, feel free to send in your suggestions for more Testivus wisdom.</em></p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=203994.html">20
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=203994&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Alberto Savoia adds a new entry to <a href="../index.html$/blogger=agitator.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/agitator.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D203994&amp;title=The+Way+of+Testivus+-+Unit+Testing+Wisdom+From+An+Ancient+Software+Start-up&amp;bodytext=Some+good+advice+on+developer+and+unit+testing%2C+packaged+as+cryptic+bits+of+ancient+Eastern+wisdom+in+the+hope+of+getting+your+attention.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D203994&amp;title=The+Way+of+Testivus+-+Unit+Testing+Wisdom+From+An+Ancient+Software+Start-up">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D203994&amp;title=The+Way+of+Testivus+-+Unit+Testing+Wisdom+From+An+Ancient+Software+Start-up">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/albertosavoia.jpg"/></td><td>Alberto Savoia is founder and CTO at Agitar Software, and he has been life-long agitator and innovator in the area of software development and testing tools and technology.  Alberto's software products have won a number of awards including: the JavaOne's Duke Award, Software Development Magazine's Productivity Award, Java Developer Journal's World Class Award, and Java World Editor's Choice Award.  His current mission is to make developer unit testing a broadly adopted and standar industry practice rather than a rare exception.  Before Agitar, Alberto worked at Google as the engineering executive in charge of the highly successful and profitable ads group. In October 1998, he cofounded and became CTO of Velogic/Keynote (NASD:KEYN), the pioneer and leading innovator in Internet performance and scalability testing. Prior to Velogic, Alberto had 13-year career at Sun Microsystems where his most recent positions were Founder and General Manager of the SunTest business unit, and Director of Software Technology Research at Sun Microsystems Laboratories.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Alberto Savoia. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

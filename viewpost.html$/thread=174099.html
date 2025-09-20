@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Memory debugging in Python -- fighting the GC</title>
+<meta charset="utf-8"/>
+<meta content="Barry Warsaw" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=pumpichank.html">Barry Warsaw's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=174099.html">Discuss</a> | 
+<a href="mailto:?subject=Memory debugging in Python -- fighting the GC&amp;body= %0AArtima Weblogs %0AMemory debugging in Python -- fighting the GC %0Aby Barry Warsaw %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=174099">Email</a> | 
+<a href="../viewpostP.html$/thread=174099.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=173477.html" title="Requiem for an operator">Previous</a> | 
+<a class="sl" href="thread=234982.html" title="Open source saves another marriage">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software Jam Sessions</span><br>
+<span class="ts">Memory debugging in Python -- fighting the GC</span><br/>
+<span class="as">by Barry Warsaw</span><br/>
+<span class="pd">October 13, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Debugging memory use in a Python program is hard, and sometimes you have to fight the garbage collector.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I work on a big embedded Python app which contains lots of extension types.  The application normally runs in two phases: phase 1 builds up a big static model of the world based on the input data.  This can create a lot of objects but the number of objects is fairly well bounded.  However, these phase 1 objects contain reference cycles that they will live until the end of the phase 2.  After phase 2, we want those objects to get collected (through decref or gc) because we may go back to a new phase 1 run.  We'll see below why this can be a huge problem.</p>
+<p>Phase 2 is less well-bounded.  Lots of objects are created and destroyed, and lots of those objects participate in cycles.  We definitely want Python's cyclic gc to run over these objects periodically to collect whatever trash exists.  For most input data, our app is pretty well behaved memory-wise, but some input data can trigger very long phase two runs, and some of those long phase two runs can result in out-of-memory crashes.  So, how do you debug and fix this, and are there any tools available to help?</p>
+<p>Let me explain how we've tuned Python's gc.  By default, we set the generation 0, 1, and 2 thresholds to 30000, 5, and 100000.  The huge gen2 threshold effectively means we never collect gen2 cyclic trash.  This seems bad at first, but it was implemented to try to fix another nasty problem.</p>
+<p>As I mentioned above, our phase 1 can create lots and lots of objects and lots of cycles.  Now, we definitely want gc to collect these objects, but we also know that they won't be collected until phase 2 is complete.  The problem is that Python's gc traverses all the objects in a generation when it collects that generation.  If you've got millions of gen2 objects that you know won't be collected this time through, you're paying a significant performance penalty for no gain.  Our initial solution was to crank up the gen2 threshold so that we don't needlessly traverse all those millions of objects when we know they won't get collected until the end of phase 2.</p>
+<p>But that causes another problem of course: many objects that could be collected during phase 2 end up in gen2 because they (correctly) survive the gen0 and gen1 collections.  What it seems like we really want is a way to segregate the phase 1 objects so that we don't traverse them until after phase 2 is complete, but then let the normal gc process collect cycle trash quickly and effectively.  More on this later.</p>
+<p>Let me backtrack a bit.  So, we're basically running out of memory sometimes, but why?  The first step is to try to see if there's an obvious memory leak.  Having been here before, we've instrumented debug builds of the app so that on program exit, it iterates through every Python object in existence, checking the object's reference count against what (through experience) we've come to expect.  We see no regressions here in either the pathological cases (at least the ones that do eventually exit) or the non-pathological cases.  This covers many of our's and Python's extension types, but not everything, and it doesn't address most pure-Python objects either.  But it's a pretty good first-line-of-defense against stupid coding errors.</p>
+<p>It is at this point that I start diving into memory analysis tools.</p>
+<p>I develop on the Mac primarily, and there are several very good tools on that platform, which I'm just starting to learn.  Shark is excellent, and between it and Activity Monitor, I can watch pathological cases grow very large in about an hour's time.  One thing I've learned about Shark though is that if the process dies with an out of memory error before you stop collecting samples, Shark will throw up an error dialog and you've just lost all your data.  I've submitted an Apple bug on this issue.</p>
+<p>Unfortunately, while Shark provided some good clues, it didn't provide any definitive answers.  On reason is that our app is highly recursive, and the stack traces can get unreadable.  I decided to look at a few other OSX tools to see what information they could provide.  Next up MallocDebug.app.</p>
+<p>Unfortunately, I didn't get very far with this because of an underlying configuration problem.  MallocDebug.app relies on lower level malloc(3) debugging support, such as the environment variables MallocStackLogging.  You can actually run some decent malloc debugging from the shell, but I quickly learned that doing so crashes Python in such a way as to corrupt the stack, even when running in gdb.  After much pain and single-stepping, I discovered that we were linking Python's _ssl module against OpenDarwin's OpenSSL 0.9.8b instead of Apple's default openssl 0.9.7i.  If you turn on malloc debugging with the OpenDarwin version of openssl, it crashes too.  I've opened a bug in the OpenDarwin project on this.</p>
+<p>Still, with a bit of dilligent work (along with spending some quality time in valgrind on Linux), I was able to learn where a lot of our memory was going.  There was one particular subsystem that was creating a lot of objects during phase 2; these objects contained cycles, but we know that these objects too will survive until the end of phase 2.  I rewrote this subsystem to save the data in a database instead of keeping alive a big tree of Python objects, and that helped our app considerably.  Instead of crashing w/oom on a particular app after say, an hour or two, the same app could run for almost 24 hours before running out of memory.  Because the rewrite also allowed us to get intermediate results, it was a huge improvement.</p>
+<p>But the question still remains, in the really pathological cases, where are all those objects coming from and why aren't they getting destroyed?  In my next post, I'll talk about some of the modifications I've made to Python's gc to provide better diagnostics, and what some of that data tells me.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=174099.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=174099&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Barry Warsaw adds a new entry to <a href="../index.html$/blogger=pumpichank.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/pumpichank.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D174099&amp;title=Memory+debugging+in+Python+--+fighting+the+GC&amp;bodytext=Debugging+memory+use+in+a+Python+program+is+hard%2C+and+sometimes+you+have+to+fight+the+garbage+collector.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D174099&amp;title=Memory+debugging+in+Python+--+fighting+the+GC">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D174099&amp;title=Memory+debugging+in+Python+--+fighting+the+GC">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Barry Warsaw has been developing software and playing music for more than 25 years.  Since 1995 he has worked in Guido van Rossum's Pythonlabs team.  He has been the lead developer of the JPython system, and is now the lead developer of GNU Mailman, a mailing list management system written primarily in Python.  He's also a semi-professional musician.  Python and the bass are his main axes.  Music and software are both at their best when enjoyed, participated in, and shared by their enthusiastic fans and creators.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Barry Warsaw. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

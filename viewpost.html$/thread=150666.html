@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>After Seven Years, Are Devices Ready for Jini?</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=150666.html">Discuss</a> | 
+<a href="mailto:?subject=After Seven Years, Are Devices Ready for Jini?&amp;body= %0AArtima Weblogs %0AAfter Seven Years, Are Devices Ready for Jini? %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=150666">Email</a> | 
+<a href="../viewpostP.html$/thread=150666.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=150111.html" title="Sorry About the Downtime">Previous</a> | 
+<a class="sl" href="thread=152273.html" title="Code Generation: The Real Lesson of Rails">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">After Seven Years, Are Devices Ready for Jini?</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">March 4, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Sun's original marketing message that positioned Jini as a technology for devices backfired in 1999, because at that time many barriers existed that prevented the vision from becoming reality. Seven years later, how many of these barriers remain?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+In January of 1999, Sun announced Jini technology and enthusiastically positioned it as a way for devices to spontaneously find and interact with other nearby devices. I believe this approach to explaining Jini was taken in part because J2EE was successfully being marketed as Java for the enterprise, and they didn't want to confuse that message by talking about Jini in an enterprise context. Additionally, showing devices spontaneously connecting to each other seemed a good way to explain what Jini did. In retrospect, however, this approach was a mistake because everyone got the message that Jini was about devices, and that use case didn't materialize. As a result, most developers seemed to conclude that Jini had failed and didn't give it any further consideration.
+
+<p>
+Despite its initial device-oriented marketing, Jini did find a home in other kinds of applications, mostly in enterprise settings. Although the applications have been varied, one theme has been constant: Jini has been used in situations where the developers using Jini controlled the entire Jini network. At a minimum, Jini requires a lookup service to be present on the network to enable Jini services to advertise themselves and Jini clients to find them. It was once imagined that such Jini infrastructure might become commonplace in public spaces, facilitating spontaneous networking among devices communicating via standard interfaces. As neither a ubiquitous public infrastructure, nor many standards for Jini service interfaces, emerged, it has made sense to use Jini only if you provided the whole system—clients, services, interfaces, and infrastructure—yourself. 
+
+<p>
+Another common theme among deployed Jini solutions is that Jini has primarily been used to facilitate dynamic networking of software running on servers and, in some cases, desktop computers. This highlights one of the big problems with Sun's original marketing strategy for Jini: Jini runs on J2SE. If you downloaded Jini from Sun in 1999, it required J2SE. If you download the Jini Starter Kit from Sun today, it requires J2SE. Claiming that Jini would be "ubiquitous" on devices within a year, as a Sun executive did during its splashy launch in 1999, ignored the major issue that not only did vast numbers of devices not run Java, those that did ran J2ME, not J2SE.
+
+<p>
+A few years back at a Jini Community meeting in Boston, however, a fellow named Cameron Roe from a small Canadian company called <a href="../_/http/www.psinaptic.com/index.html">PsiNaptic</a> showed a tiny chip offering Jini services and <a href="../_/http/www.artima.com/jini/serviceui/index.html">ServiceUIs</a> to a nearby PDA over a Bluetooth connection. I found three things amazing in this demo. First, Cameron had found a way around the problem of needing to find a lookup service to offer services in a world without a ubiquitous public Jini infrastructure. The device provided its own lookup service for the purpose of offering its services to the rest of the network. Second, the chip was sending ServiceUIs across the Bluetooth connection to the PDA, which meant that software I wrote was running in the demo, which was cool. Third, not only did the tiny chip offering these services through its own lookup service not run J2SE, it didn't run J2ME or Java of any flavor. This lookup service was written in C.
+
+<p>
+I had never imagined a Jini lookup service could have been written in C, but it turns out that a lookup service never needs to deserialize the Java objects sent to it. It only needs to store them in serialized form, perform matches on those serialized images, and return them during lookups. The lookup service does need to serialize and send its own <code>ServiceRegistar</code> proxy to clients that request it, but this can be accomplished through minor (though technically tricky) manipulations of a static serialized image, such as inserting the current IP address of the device in the appropriate places. In one innovative engineering gesture, Cameron and his team had lept over two of the major hurdles to that original <a href="../_/http/www.artima.com/jini/jiniology/vision.html">Jini vision</a>: lack of a public Jini infrastructure and Jini's dependency on J2SE.
+
+<p>
+To be a client of these services, you still need to be able to deserialize unknown classes. So on the client side, the J2SE requirement still holds. I spoke with Cameron yesterday, and as he put it, "If the device can offer services, it gets you a long way towards the Jini vision. They don't necessarily have to <i>consume</i> services." Cameron described a scenario in which you take your iPod (or PDA or cell phone) into your car, and over a Bluetooth IP connection the device can offer MP3 services to the car. In this case, the car would be running J2SE.
+
+<p>
+Last week I received a press release that PsiNaptic had put a Jini lookup service on top of J2ME on a Nokia 9500 cell phone. This lookup service (called JMatos) is written in Java. What occurred to me when thinking about PsiNaptic's latest announcement was that many of the problems that blocked Jini's adoption on devices in 1999 have since been removed:
+
+<ul>
+<li>Today devices can offer Jini services via embedded lookup services even if they don't run Java.
+<li>Jini clients still generally need to run J2SE, but in many cases this will be practical, for example, in point of sale terminals, PDAs, and car dashboards.
+<li>Although Jini in 1999 offered no security beyond Java's inherent security model, Jini now comes with a comprehensive network security model.
+<li>Whereas in 1999 Sun licensed Jini under a somewhat complicated SCSL license, which initially required payment to Sun for deployed Jini-enabled devices, the Jini Starter Kit from Sun is now free as in both free speech and free beer. It is available under the Apache 2.0 License, and costs nothing to use.
+</li></li></li></li></ul>
+<p>
+The main hurdle that I see remaining is the chicken and egg problem of if no one else uses Jini on devices, there's no point to me using it, because my devices won't be able to connect to anything else. Nevertheless, I think it makes sense to consider Jini on devices today in contexts where you (or you and your partners) control all parties to an interaction. I've spoken with quite a few people who have deployed Jini in enterprise contexts, and one common theme among all of these conversations was that Jini helped the developers move faster because it solved hard problems inherent in distributed systems design, such as how to discover services on the network, detect failure, and dynamically adjust to compensate for failure and other forms of change. Similar to the way people have deployed Jini in enterprise contexts by providing and managing all Jini clients, services, and infrastructure, if your devices form a closed system, you may be able to use Jini to help deal with the hard problems of building distributed systems.
+
+<p>
+What do you think of Jini's chances on devices now that times have changed? Is it too late, or could Jini have a second coming in the device space? See <em>Talk Back!</em> below for a link to the discussion for this post.
+
+<h1>Resources</h1>
+<p>
+Here's a zip file containing a wmv video of a demo similar to the one that knocked my socks off in Boston. I believe this version was made for James Gosling, but you can watch it too:<br>
+<a href="../_/http/www.psinaptic.com/download/CMatosforBluecore2DemonstrationVideoWindows.zip">http://www.psinaptic.com/download/CMatosforBluecore2DemonstrationVideoWindows.zip </a>
+<p>
+Jini Community website:<br/>
+<a href="../_/http/www.jini.org/index.html">http://www.jini.org/</a>
+<p>
+PsiNaptic's Developer Community site<bv></bv>
+<a href="../_/http/www.psinaptic.com/dev_community.html">http://www.psinaptic.com/dev_community.jsp</a>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=150666.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=150666&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D150666&amp;title=After+Seven+Years%2C+Are+Devices+Ready+for+Jini%3F&amp;bodytext=Sun%27s+original+marketing+message+that+positioned+Jini+as+a+technology+for+devices+backfired+in+1999%2C+because+at+that+time+many+barriers+existed+that+prevented+the+vision+from+becoming+reality.+Seven+years+later%2C+how+many+of+these+barriers+remain%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D150666&amp;title=After+Seven+Years%2C+Are+Devices+Ready+for+Jini%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D150666&amp;title=After+Seven+Years%2C+Are+Devices+Ready+for+Jini%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></p></br></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

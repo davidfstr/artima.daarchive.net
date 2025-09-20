@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Scala 2.8.0 + Lift 2.1 + IntelliJ: First Step(s)</title>
+<meta charset="utf-8"/>
+<meta content="Vlad Patryshev" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=patryshev.html">Vlad Patryshev's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=310031.html">Discuss</a> | 
+<a href="mailto:?subject=Scala 2.8.0 + Lift 2.1 + IntelliJ: First Step(s)&amp;body= %0AArtima Weblogs %0AScala 2.8.0 + Lift 2.1 + IntelliJ: First Step(s) %0Aby Vlad Patryshev %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=310031">Email</a> | 
+<a href="../viewpostP.html$/thread=310031.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=310081.html" title="Practical Scala/Java interoperability by small examples">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Categorist's Notes</span><br>
+<span class="ts">Scala 2.8.0 + Lift 2.1 + IntelliJ: First Step(s)</span><br/>
+<span class="as">by Vlad Patryshev</span><br/>
+<span class="pd">November 9, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Transition to Scala 2.8 and Lift 2.1 turned the usual beginner trails impenetrable. It took me more than a week to figure out how to start with Lift on IntelliJ if you use Scala 2.8. Here's my experience.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+First, I have to thank <a href="../_/http/twitter.com/#!/sim4life/index.html">Sim</a> for <a href="../_/http/schahzad.wordpress.com/2010/07/12/scala-lift-simple-build-tool-sbt-cheat-sheet/index.html">scala/lift/sbt cheatsheet</a> for the Scala 2.7.7 version.
+
+So, what is the problem? Scala 2.8.0 is too new, and if you just started learning Scala Lift, and you do not want to go back to 2.7.7, you discover yourself in murky waters of undocumented failures, just because you <i>have to</i> figure out where exactly you should find the new code, how to run sbt, what to do with maven, and, most importantly, how can you start developing anything - probably in IntelliJ, which has the most mature Scala plugin at the time of this writing.
+
+I did carefully read (many times) the "sbt cheatsheet" referenced above, and, well, it is good, but the problem is, it is no good with Scala 2.8.0.
+
+So this is my story.
+
+<h1>The Goal</h1>
+
+You are familiar with Scala; you use IntelliJ for development; you are aware of the magic of <a href="../_/http/code.google.com/p/simple-build-tool/index.html">sbt</a>; now you want to try Lift for your experimental web app.
+
+You just bought a Scala Lift book, or you go to Lift <a href="../_/http/www.assembla.com/wiki/show/liftweb/Getting_Started/index.html">Getting Started</a> page, or to another Lift <a href="../_/http/liftweb.net/getting_started/index.html">Getting Started</a> page, and you encounter two problems: 
+<ul>
+<li>You do not know where to start;</li>
+<li>When you follow the hints, some important steps are missing;</li>
+<li>Or you succeed, but you wind up with older versions of Scala, Lift, prototype code.</li>
+</ul>
+
+We have to fix this.
+
+<h1>Prerequisites</h1>
+
+You probably already have the following installed:
+<ul>
+<li><a href="../_/http/www.scala-lang.org/downloads/index.html">Scala 2.8.x</a></li>
+<li><a href="../_/http/www.jetbrains.com/idea/download/index.html">IntelliJ 9.x</a></li>
+<li><a href="../_/http/confluence.jetbrains.net/display/SCA/Getting+Started+with+IntelliJ+IDEA+Scala+Plugin/index.html">IntelliJ Scala plugin</a></li>
+<li><a href="../_/http/git-scm.com/download/index.html">git</a></li>
+</ul>
+
+You will need the following:
+<ul>
+<li><a href="../_/http/maven.apache.org/download.html">Apache Maven</a></li>
+<li><a href="../_/http/code.google.com/p/simple-build-tool/index.html">sbt</a></li>
+</ul>
+
+Create a script for running <code>sbt</code>, something like
+<pre>
+java -Xmx512M -jar \home\yourname\scala\sbt-launch-0.7.4.jar 
+</pre>
+<h1>Getting the Sample, Making It Run</h1>
+
+First, create a directory where we will have our sample code, and check the code out from lift repository:
+
+<pre>
+mkdir oursample
+cd oursample
+git clone git://github.com/lift/lift_21_sbt.git
+</pre>
+
+Since we want to work in IntelliJ, let's run maven to generate an "archetype" from which we'll build IntelliJ project:
+
+<pre>
+mvn archetype:generate -U -DarchetypeGroupId=net.liftweb -DarchetypeArtifactId=lift-archetype-basic -DarchetypeVersion=2.0-scala280-SNAPSHOT -DarchetypeRepository=http://scala-tools.org/repo-snapshots -DremoteRepositories=http://scala-tools.org/repo-snapshots -DgroupId=myFirstLiftApp -DartifactId=lift_21_sbt
+</pre>
+
+See that <code>lift_21_sbt</code> contains the maven file <code>pom.xml</code>.
+
+You can already run the sample application via <code>sbt</code>:
+<pre>
+cd lift_21_sbt
+../../sbt
+</pre>
+
+At prompt, enter
+<pre>
+update
+</pre>
+and then enter
+<pre>
+jetty-run
+</pre>
+
+In a minute or two you will have jetty run the sample app; just check out <a href="../_/http/localhost:8080/index.html">http://localhost:8080</a>.
+<p>
+But this is not our goal; we want a project for IntelliJ.
+</p>
+<h1>Preparing IntelliJ Project</h1>
+<h2>Plugins</h2>
+
+You already have Scala plugin. You will need <code>sbt</code> and <code>maven</code> plugins installed and <i>enabled</i>. <code>File</code>→<code>Settings</code>→<code>Plugins</code> is where you find this.
+
+After installing <code>sbt</code> plugin, go to <code>Settings</code>→<code>SBT</code> and set the right location of <code>sbt.jar</code>
+<h2>New Project</h2>
+<code>File</code>→<code>New Project...</code>→<code>Import project from external model</code>
+
+As a <code>root</code>, select the directory <code>.../lift_21_sbt</code> where you have the newly-generated <code>pom.xml</code> file.
+
+IntelliJ will discover <code>myFirstLiftApp:lift_21_sbt:1.0-SNAPSHOT</code>; click through <code>Next</code> and <code>Finish</code>. In a minute or two you will see a project created; you could compile it... 
+
+You are all set. Tweak the code ad libitum, compile... 
+
+You may want to fix run configuration for scala console:
+<code>Run</code> -&gt; <code>Edit Configurations</code> -&gt; <code>Edit Defaults</code>; go to the <code>Before launch</code> options, uncheck <code>Make</code> and choose <code>Run SBT Action / jetty-run</code>.
+
+Then, when you have your code open, run it; sbt will launch jetty while you have scala console; here I am at loss on why do we need this console. But jetty works!
+<h1>Creating Deployment War</h1>
+
+You are still running <code>sbt, right? type <code>package</code> - and very soon you can find in <code>.../lift_21_sbt/target/scala_2.8.0</code> a war file (with a weird name). You can deploy this file in Tomcat or Jetty, on your server - it runs the sample Lift app when launched.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=310031.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=310031&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Vlad Patryshev adds a new entry to <a href="../index.html$/blogger=patryshev.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/patryshev.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D310031&amp;title=Scala+2.8.0+%2B+Lift+2.1+%2B+IntelliJ%3A+First+Step%28s%29&amp;bodytext=Transition+to+Scala+2.8+and+Lift+2.1+turned+the+usual+beginner+trails+impenetrable.+It+took+me+more+than+a+week+to+figure+out+how+to+start+with+Lift+on+IntelliJ+if+you+use+Scala+2.8.+Here%27s+my+experience.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D310031&amp;title=Scala+2.8.0+%2B+Lift+2.1+%2B+IntelliJ%3A+First+Step%28s%29">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D310031&amp;title=Scala+2.8.0+%2B+Lift+2.1+%2B+IntelliJ%3A+First+Step%28s%29">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Vlad Patryshev was born in Russia, graduated from Leningrad University, majoring in Algebra; His studies combined practical programming with interests in category and topos theory. He spent 7 years at Borland, 3.5 years at Google, and is now at Telenav, investigating the brave new mobile world.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Vlad Patryshev. All rights reserved.</div>
+</p></p></p></p></code></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Object Design</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=115101.html">Discuss</a> | 
+<a href="mailto:?subject=Object Design&amp;body= %0AArtima Weblogs %0AObject Design %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=115101">Email</a> | 
+<a href="../viewpostP.html$/thread=115101.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=113330.html" title="We Need A New Information-Sharing Model for the Internet">Previous</a> | 
+<a class="sl" href="thread=117200.html" title="Generics">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Object Design</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">June 15, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I recently returned from an intense, one-month marathon consulting tour to three different companies. I came away with a sense of satisfaction that everyone had benefitted significantly from the experience -- including me.
+The common sticking point was understanding the process of object-oriented design.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>There were many side issues surrounding that idea, but everything always came back to objects and design. Over the years I've studied most of the OO design methods (and the procedural methods before the advent of OO) and have selected pieces to add to my own slowly-amalgamating method. However, this tour produced a number of ephiphanies about OO design.</p>
+<p>First, it's really, really important that a design method be simple. Any bit of complexity that doesn't produce big results in the design process makes the method fuzzy and hard to remember. I believe you need to be able to hold the method in your head, which means that it must conform to the "seven plus-or-minus two" rule, regarding the number of things that humans can keep in their head at one time.</p>
+<p>There are people that will argue with this, saying that it's generally a good idea but that because of this or that special case we must add these extra steps or that complexity (a big argument is: "so that the method will scale" -- this produces a method that promises to scale but that doesn't get used because it's too complex). In my experience this falls into the same trap as premature optimization or any other form of mixing abstraction levels that we, as programmers, are prone to.</p>
+<p>This is the second point: people have a very difficult time separating abstraction levels. We are drawn to the complexity that we know. Once we conquer a particular bit of complexity, I believe we enjoy revisiting it to renew the sense of satisfaction. That's why it's so hard to give it up in order to step back and say: "but that isn't relevant here; we're trying to get the big picture right now."</p>
+<p>As a result, attempts to develop the domain model end up in arguments about whether to use stored database procedures, or how to optimize a particular aspect of the system, or invent yet another framework in an attempt to create reusable code rather than just solving the problem at hand. Much of my coaching during this trip involved gentle prodding to help people stay at the right level of abstraction. There are a million ways to fall off the razor's edge, which is why it's so essential that a design method be simple.</p>
+<p>The third big issue was about the UML. Everywhere I went, people were struggling with it, and I think the repetition of that confusion finally made me take a hard look at it. The UML is not only too complex, it seems to be incomplete (or at the very least, it takes far too many kinds of diagrams to express the design).</p>
+<p>The reason for the complexity of the UML is, ironically, inappropriate mixing of abstraction levels. I'm certain this happened because, back when Rational was a viable company (before too many people asked "if Rational is supposed to teach us how to create good software, how come Rose is such a bad piece of software" and the company imploded, being "saved," if you can call it that, only because IBM bought them as they were spiraling down the drain), and they brought Booch, Jacobsen and Rumbaugh together so they would stop fighting and create a "Unified" model (the creation of peace was the reason for the "U", for those of you new to the story). When this happened, agendas inevitably got mixed together, and I suspect that Rational had its own agendas which got into the mix, design-by-committee style. At the time, C++ was king of the OO languages so you see a lot of C++-isms in the UML, which introduced innapropriate details. At least one player appeared to have grand ideas of taking this abstraction tool and giving it enough detail to produce code. Of course, we see this in most of the modeling tools, which can spit out framework code from the UML, but in recent years the spectre of Model-Driven Architecture (MDA) has appeared, which was probably inevitable given the implied promise that someday UML would be the one ring that binds them all. Fortunately, the MDA experiments seem to be happening in the open-source world, so we can discover (again) that programming-by-drawing-pictures is Goedel-incomplete, without having to pay hundreds of thousands for tools that don't work hawked by vendors selling faith-based solutions, as has been the case for every "revolution" that has popped up in the past.</p>
+<p>Because of all these misdirections, it's no wonder people get confused about what to do with the UML. Is it for modeling, or is it for detailed design? My guess is that forces within Rational wanted it to be everything to everyone, but this goes back to my original point: a method must be really, really simple in order for people to use it without getting lost.</p>
+<p>Two things became clear about the UML on this trip. First, when walking through use cases/user stories, the static structure diagram is what appears. This is not a revelation; CRC cards or simply hunting for nouns and verbs produce the same results. However, we found that a very simple form of structure diagram would suffice, and this seemed to be very helpful for people because they could see that it was only intended to capture the domain model, and not express every possible detail about the code. Without this guidance, people can waste a lot of time filling in all the methods, arguments and fields and lose sight of the big picture.</p>
+<p>The second thing that became clear was that a UML structure chart is a very helpful step in expressing the domain model, but it lacks an essential ingredient: mechanism. The structure chart only expresses the relationships between classes, not how they interact. Sometimes this relationship is enough, along with some words and hand-waving, to understand how the system will work. But, I began to see, that is only in the case where the mechanism is so obvious that everyone can see it. (I am aware that the UML has a various number of different diagrams that show different aspects of mechanism, but none of them are able to sum it up.)</p>
+<p>On the other hand, expressing mechanism down to the nuts and bolts is precisely the pitfall we are trying to avoid by using a model. What's needed is the <em>essence</em> of mechanism, just enough so that we can see how something should work without getting lost in detail.</p>
+<p>Could this essence be design patterns? Might we be able to see the most obvious designs because we have been schooled in the most basic of patterns so effectively that we don't even consider them patterns, but just fundamental ways of doing things, and don't even have names for them? But when we have more complex interactions, we need a pattern to describe it?</p>
+<p>During one session, I began to see the possibility of annotating a structure chart with the mechanisms that drove the program, and this seemed to work in some situations. However, in the following consulting session the idea of a separate diagram began to appear. I started calling this a "flow diagram" because it showed the flow of objects and messages through the system of objects. This diagram does not show composition and inheritance, but rather the relationship of higher-level objects and the way they accomplish their tasks. It also seems to show threading in the system. In general, it seems to focus on the way that objects are wired together to build a system and the dynamic of that system, rather than just examining the inheritance and composition relationships (which are certainly important, but are clearly only a step in the design process). I don't have a "finished" approach for flow diagrams, but the idea continues to reappear and evolve.</p>
+<p>Finally, it has become quite clear to me that the software design process involves incomplete information at every stage. This can be a point of contention, one that appears to be rooted in your belief system about the world. Suggest that you don't ever really know everything about a system to someone who really wants things to be deterministic from beginning to end, and you'll get a response ranging from "huh?" to downright hostile, depending on how threatening the idea is (we could probably carry this same argument into the realms of the static/dynamic language debate, exceptions, developer testing, etc.). But my experience is that, if you insist that complete information must be available at every stage, you rapidly converge on analysis paralysis on the project level, and the waterfall approach on the method level.</p>
+<p>On the other hand, accepting that information is incomplete allows a project to become remarkably nimble. At each stage you know you will only be able to mine some of the information about the project, and when a vein begins to dry up you move on rather than wasting time trying to pry out every possible nugget. From experience, you know that you'll move forward a lot faster by moving on, into a design pass, or even by pseudocoding your design (in a couple of instances we used Python to try out a design; this worked remarkably well in producing new insights about that design). In addition, you can "backfill" user stories and design details as you uncover new factors, so you don't need to feel like an incomplete design must hold you back. The experience I had was very rapid and liberating; we could often punch through into designs and insights that had been holding people back for significant periods.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=115101.html">37
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=115101&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D115101&amp;title=Object+Design&amp;bodytext=I+recently+returned+from+an+intense%2C+one-month+marathon+consulting+tour+to+three+different+companies.+I+came+away+with+a+sense+of+satisfaction+that+everyone+had+benefitted+significantly+from+the+experience+--+including+me.%0D%0AThe+common+sticking+point+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D115101&amp;title=Object+Design">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D115101&amp;title=Object+Design">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Testing Genes, Test-Infection, and the Future of Developer Testing</title>
+<meta charset="utf-8"/>
+<meta content="Alberto Savoia" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=agitator.html">Alberto Savoia's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=192781.html">Discuss</a> | 
+<a href="mailto:?subject=Testing Genes, Test-Infection, and the Future of Developer Testing&amp;body= %0AArtima Weblogs %0ATesting Genes, Test-Infection, and the Future of Developer Testing %0Aby Alberto Savoia %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=192781">Email</a> | 
+<a href="../viewpostP.html$/thread=192781.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=67492.html" title="On Java Lava Lamps and Other eXtreme Feedback Devices">Previous</a> | 
+<a class="sl" href="thread=194506.html" title="Testivus - Testing For The Rest Of Us">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Agitating Thoughts &amp; Ideas</span><br>
+<span class="ts">Testing Genes, Test-Infection, and the Future of Developer Testing</span><br/>
+<span class="as">by Alberto Savoia</span><br/>
+<span class="pd">January 24, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Some developers are easily test-infected - they take to unit testing like a duck to water. Others need some time and encouragement, but eventually "get it". A third group appears to have immunity to test infection.  I invent a test-gene model to categorize these groups and look at its implications for the future of developer/unit testing.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Developer testing is the simple, but logical, idea that developers should take responsibility for playing an active role in testing their own code.  We are nearing the 10th anniversary of JUnit - the unit testing framework that kick-started the developer testing revolution. But, despite its obvious benefits and broad agreement that "it's the right thing to do", developer testing is still only practiced by a minority of developers in a minority of organizations.</p>
+<p>I gave talks on JUnit and the developer testing revolution at two
+JavaOne conferences (2004 and 2006) where I talked about the three
+possible outcomes for the future of developer/unit testing:</p>
+<p><strong>Long-Term Defeat</strong>: The idea of developer testing was a noble, notable,
+but ultimately short-lived blip in the history of software development.
+Almost all developers went back to the old way of thinking: testing
+is for QA.</p>
+<p><strong>Minor Victory</strong>: Developer testing does not disappear, but it remains a
+niche activity. Practiced only by a devout minority of test-infected
+developers.</p>
+<p><strong>Major Victory</strong>: Developer testing becomes a standard software development
+practice. The rule, instead of the exception. Releasing software without
+unit/developer testing is as unthinkable as releasing software without
+QA.</p>
+<p>I am rooting, of course, for the major victory, but I am starting to
+have my doubts, and wondering why progress is so slow. Below is my
+analysis of what I believe is happening and I'd be very interested in
+your opinion.</p>
+<div class="section">
+<h1><a id="the-developer-testing-gene" name="the-developer-testing-gene">The Developer Testing Gene</a></h1>
+<p>In the past few years, I've noticed that some developers are easily
+"test-infected", others require longer exposure and some encouragement
+but eventually "get it" , and one group seems to have a built-in
+immunity.</p>
+<p>It's as if there are 3 basic types of test genes:</p>
+<p><strong>T1</strong> - Very susceptible to test infection. Show them a single JUnit
+example and they get it immediately - and start using it regularly and
+with great fervor. When time pressure hits, they fight hard for enough
+time to test and would rather quit than produce code without tests.
+They often have framed pictures of Kent Beck on their desk :-).</p>
+<p><strong>T2</strong> - Somewhat susceptible to test infection. Show them how to use
+JUnit/TDD, give them some encouragement and time to appreciate the
+benefits and rewards; eventually they will become regular users. When
+time pressure hits, however, they often revert to no-test mode without
+too much kicking and screaming.</p>
+<p><strong>T3</strong> - Immune to test infection. There's no amount of showing and
+convincing that will get them to practice developer testing on their own
+with any regularity - if at all. Many of them would rather quit than
+have to write tests on a regular basis.</p>
+<p>I would love to be able to say that these genes are somewhat evenly
+distributed. A rough Gaussian distribution. Something like this:</p>
+<p>T1: 30%
+T2: 40%
+T3: 30%</p>
+<p>But my experience is that developers with the T3 gene outnumber the
+combined number of those with T2 and T1 gene.</p>
+<p>This spells trouble because I have also found that when developers
+become managers they bring with them their attitudes toward developer
+testing. And a T3 manager is not going to provide an environment where
+the T2 (the ones that require some time and encouragement) can become
+test infected. And this might explain why developer testing is still
+practiced by a minority of developers in a minority of organizations.</p>
+<p>What do you think?  Am I too pessimistic?  Is predisposition to testing more a matter or nature or nurture?</p>
+<p>Alberto</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=192781.html">30
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=192781&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Alberto Savoia adds a new entry to <a href="../index.html$/blogger=agitator.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/agitator.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D192781&amp;title=Testing+Genes%2C+Test-Infection%2C+and+the+Future+of+Developer+Testing&amp;bodytext=Some+developers+are+easily+test-infected+-+they+take+to+unit+testing+like+a+duck+to+water.+Others+need+some+time+and+encouragement%2C+but+eventually+%26quot%3Bget+it%26quot%3B.+A+third+group+appears+to+have+immunity+to+test+infection.++I+invent+a+test-gene+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D192781&amp;title=Testing+Genes%2C+Test-Infection%2C+and+the+Future+of+Developer+Testing">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D192781&amp;title=Testing+Genes%2C+Test-Infection%2C+and+the+Future+of+Developer+Testing">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/albertosavoia.jpg"/></td><td>Alberto Savoia is founder and CTO at Agitar Software, and he has been life-long agitator and innovator in the area of software development and testing tools and technology.  Alberto's software products have won a number of awards including: the JavaOne's Duke Award, Software Development Magazine's Productivity Award, Java Developer Journal's World Class Award, and Java World Editor's Choice Award.  His current mission is to make developer unit testing a broadly adopted and standar industry practice rather than a rare exception.  Before Agitar, Alberto worked at Google as the engineering executive in charge of the highly successful and profitable ads group. In October 1998, he cofounded and became CTO of Velogic/Keynote (NASD:KEYN), the pioneer and leading innovator in Internet performance and scalability testing. Prior to Velogic, Alberto had 13-year career at Sun Microsystems where his most recent positions were Founder and General Manager of the SunTest business unit, and Director of Software Technology Research at Sun Microsystems Laboratories.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Alberto Savoia. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

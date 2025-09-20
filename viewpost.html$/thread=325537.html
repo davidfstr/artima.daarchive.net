@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>ScalaTest PropSpec and FreeSpec Preview</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=325537.html">Discuss</a> | 
+<a href="mailto:?subject=ScalaTest PropSpec and FreeSpec Preview&amp;body= %0AArtima Weblogs %0AScalaTest PropSpec and FreeSpec Preview %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=325537">Email</a> | 
+<a href="../viewpostP.html$/thread=325537.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=323644.html" title="ScalaTest Property Checks Preview">Previous</a> | 
+<a class="sl" href="thread=326389.html" title="Introducing the ScalaTest Shell: a DSL for the Scala Interpreter">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">ScalaTest PropSpec and FreeSpec Preview</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">April 25, 2011</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Today I released a new ScalaTest-1.5 snapshot release that contains several enhancements, including formatted output for TDD-style traits, indented output for nested style traits, and two new style traits, PropSpec and FreeSpec.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+Today I released an updated ScalaTest-1.5-SNAPSHOT that includes several enhancements, including two new style traits, <code>PropSpec</code> and <code>FreeSpec</code>. The snapshot works with Scala 2.8. You can download the snapshot release via the scala-tools.org Maven repository with:
+</p>
+<ul>
+<li>group id: org.scalatest</li>
+<li>artifact id: scalatest</li>
+<li>version: 1.5-SNAPSHOT</li>
+</ul>
+<p>
+Or you can just grab the jar file from:
+</p>
+<p>
+<a href="../_/http/www.scala-tools.org/repo-snapshots/org/scalatest/scalatest/1.5-SNAPSHOT/scalatest-1.5-SNAPSHOT.jar">http://www.scala-tools.org/repo-snapshots/org/scalatest/scalatest/1.5-SNAPSHOT/scalatest-1.5-SNAPSHOT.jar</a>
+</p>
+<p>
+I put the Scaladoc for this snapshot release up here:
+</p>
+<p>
+<a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/index.html">http://www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/</a>
+</p>
+</p>
+<h1>The <code>PropSpec</code> trait</h1>
+<p>
+<a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/PropSpec.html"><code>PropSpec</code></a> allows you to create a suite of property-based tests. It works the same as a <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/FunSuite.html"><code>FunSuite</code></a>, but instead of <code>test</code> you write <code>property</code>, and instead of <code>testsFor</code> you write <code>propertiesFor</code>.
+</p>
+<p>
+<code>PropSpec</code> supports both ScalaCheck and ScalaTest property styles (as well as any other property style you may wish to use it with.) If you want to write properties in the ScalaCheck style, mix <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/prop/Checkers.html"><code>Checkers</code></a> into your <code>PropSpec</code>. If you want to write them in the ScalaTest style, mix in <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/prop/PropertyChecks.html"><code>PropertyChecks</code></a>. Here's an example that uses both generator- and table-driven property checks:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="vem">import</span> org.scalatest.PropSpec
+  <span class="vem">import</span> org.scalatest.prop.PropertyChecks
+  <span class="vem">import</span> org.scalatest.matchers.ShouldMatchers
+
+  <span class="vem">class</span> <span class="typename">FractionSpec</span> <span class="vem">extends</span> <span class="typename">PropSpec</span> <span class="vem">with</span> <span class="typename">PropertyChecks</span> <span class="vem">with</span> <span class="typename">ShouldMatchers</span> {
+  <br>    property(<span class="quotedstring">"Fraction constructor normalizes numerator and denominator"</span>) {
+  <br/>      forAll { (n: <span class="typename">Int</span>, d: <span class="typename">Int</span>) =&gt;
+        whenever (d != <span class="literal">0</span> &amp;&amp; d != Integer.MIN_VALUE
+            &amp;&amp; n != Integer.MIN_VALUE) {
+  <br/>          <span class="vem">val</span> f = <span class="vem">new</span> <span class="typename">Fraction</span>(n, d)
+  <br/>          <span class="vem">if</span> (n &lt; <span class="literal">0</span> &amp;&amp; d &lt; <span class="literal">0</span> || n &gt; <span class="literal">0</span> &amp;&amp; d &gt; <span class="literal">0</span>)
+            f.numer should be &gt; <span class="literal">0</span>
+          <span class="vem">else</span> <span class="vem">if</span> (n != <span class="literal">0</span>)
+            f.numer should be &lt; <span class="literal">0</span>
+          <span class="vem">else</span>
+            f.numer should be === <span class="literal">0</span>
+  <br/>          f.denom should be &gt; <span class="literal">0</span>
+        }
+      }
+    }
+  <br/>    property(<span class="quotedstring">"Fraction constructor throws IAE on bad data."</span>) {
+  <br/>      <span class="vem">val</span> invalidCombos =
+        <span class="typename">Table</span>(
+          (<span class="quotedstring">"n"</span>,               <span class="quotedstring">"d"</span>),
+          (Integer.MIN_VALUE, Integer.MIN_VALUE),
+          (<span class="literal">1</span>,                 Integer.MIN_VALUE),
+          (Integer.MIN_VALUE, <span class="literal">1</span>),
+          (Integer.MIN_VALUE, <span class="literal">0</span>),
+          (<span class="literal">1</span>,                 <span class="literal">0</span>)
+        )
+  <br/>      forAll (invalidCombos) { (n: <span class="typename">Int</span>, d: <span class="typename">Int</span>) =&gt;
+        evaluating {
+          <span class="vem">new</span> <span class="typename">Fraction</span>(n, d)
+        } should produce [<span class="typename">IllegalArgumentException</span>]
+      }
+    }
+  }
+</br></pre><!-- -->
+<p>
+For more information, see the Scaladoc documentation for <code>PropSpec</code> and my earlier post, <a href="thread=325537.html">ScalaTest Property Checks Preview</a>. Trait <code>PropSpec</code> is the last piece of ScalaTest's new support for property-based testing described in that previous post.
+</p>
+<p>
+<em>Note: Trait PropSpec is in part inspired by class org.scalacheck.Properties, designed by Rickard Nilsson for the <a href="../_/http/code.google.com/p/scalacheck/index.html">ScalaCheck test framework.</a></em>
+</p>
+<h1>The <code>FreeSpec</code> trait</h1>
+<p>
+The other new style trait introduced in today's snapshot release is <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/FreeSpec.html"><code>FreeSpec</code></a>. Whereas ScalaTest's other specification-style traits facilitate writing text with certain grammatical structures using words like "when," "should," and "can," <code>FreeSpec</code> allows you to structure the text of your specification however you wish. You write a test in a <code>FreeSpec</code> with a string followed by <code>in</code> and a block of test code, just as you do in <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/WordSpec.html"><code>WordSpec</code></a> and <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/FlatSpec.html"><code>FlatSpec</code></a>:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="quotedstring">"should pop values in last-in-first-out order"</span> in {
+    <span class="comment">// ...</span>
+  }
+</pre><!-- -->
+<p>
+You can surround tests with description clauses composed of a string, a dash character (<code>-</code>), and a block. Here's an example:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="quotedstring">"A Stack"</span> - {
+    <span class="quotedstring">"should pop values in last-in-first-out order"</span> in {
+      <span class="comment">// ...</span>
+    }
+  }
+</pre><!-- -->
+<p>
+You can nest description clauses inside description clauses to any number of levels. Here's an example:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="vem">import</span> org.scalatest.FreeSpec
+
+  <span class="vem">class</span> <span class="typename">StackSpec</span> <span class="vem">extends</span> <span class="typename">FreeSpec</span> {
+    <span class="quotedstring">"A Stack"</span> - {
+      <span class="quotedstring">"whenever it is empty"</span> - {
+        <span class="quotedstring">"certainly ought to"</span> - {
+          <span class="quotedstring">"be empty"</span> in {
+            <span class="comment">// ...</span>
+          }
+          <span class="quotedstring">"complain on peek"</span> in {
+            <span class="comment">// ...</span>
+          }
+          <span class="quotedstring">"complain on pop"</span> in {
+            <span class="comment">// ...</span>
+          }
+        }
+      }
+      <span class="quotedstring">"but when full, by contrast, must"</span> - {
+        <span class="quotedstring">"be full"</span> in {
+          <span class="comment">// ...</span>
+        }
+        <span class="quotedstring">"complain on push"</span> in {
+          <span class="comment">// ...</span>
+        }
+      }
+    }
+  }
+</pre><!-- -->
+<p>
+When run in the interpreter, you'd see:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new StackSpec).execute()</span>
+<span style="color: 00cc00;">StackSpec:
+A Stack
+  whenever it is empty
+    certainly ought to
+    - be empty
+    - complain on peek
+    - complain on pop
+  but when full, by contrast, must
+  - be full
+  - complain on push</span>
+</pre>
+<p>
+Another use case for <code>FreeSpec</code> is writing specification-style test suites in a language other than English, as demonstrated here:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="vem">import</span> org.scalatest.FreeSpec
+  <br/>  <span class="vem">class</span> <span class="typename">ComputerRoomRulesSpec</span> <span class="vem">extends</span> <span class="typename">FreeSpec</span> {
+    <span class="quotedstring">"Achtung!"</span> - {
+      <span class="quotedstring">"Alle touristen und non-technischen lookenpeepers!"</span> - {
+        <span class="quotedstring">"Das machine is nicht fuer fingerpoken und mittengrabben."</span> in {
+          <span class="comment">// ...</span>
+        }
+        <span class="quotedstring">"Is easy"</span> - {
+          <span class="quotedstring">"schnappen der springenwerk"</span> in {
+            <span class="comment">// ...</span>
+          }
+          <span class="quotedstring">"blowenfusen"</span> in {
+            <span class="comment">// ...</span>
+          }
+          <span class="quotedstring">"und poppencorken mit spitzen sparken."</span> in {
+            <span class="comment">// ...</span>
+          }
+        }
+        <span class="quotedstring">"Das machine is diggen by experten only."</span> in {
+          <span class="comment">// ...</span>
+        }
+        <span class="quotedstring">"Is nicht fuer gerwerken by das dummkopfen."</span> in {
+          <span class="comment">// ...</span>
+        }
+        <span class="quotedstring">"Das rubbernecken sightseeren keepen das cottenpicken hands in das pockets."</span> in {
+          <span class="comment">// ...</span>
+        }
+        <span class="quotedstring">"Relaxen und watchen das blinkenlights."</span> in {
+          <span class="comment">// ...</span>
+        }
+      }
+    }
+  }
+</pre><!-- -->
+
+
+Running the above <code>ComputerRoomRulesSpec</code> in the Scala interpreter would give you:
+
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new ComputerRoomRulesSpec).execute()</span>
+<span style="color: 00cc00;">ComputerRoomRulesSpec:
+Achtung!
+  Alle touristen und non-technischen lookenpeepers!
+  - Das machine is nicht fuer fingerpoken und mittengrabben.
+    Is easy
+    - schnappen der springenwerk
+    - blowenfusen
+    - und poppencorken mit spitzen sparken.
+  - Das machine is diggen by experten only.
+  - Is nicht fuer gerwerken by das dummkopfen.
+  - Das rubbernecken sightseeren keepen das cottenpicken hands in das pockets.
+  - Relaxen und watchen das blinkenlights.</span>
+</pre>
+<p>
+The <code>FreeSpec</code> concept first saw light of day way back in ScalaTest 0.9.4 under the name <code>SpecDasher</code>. I released it already deprecated with a warning that I would remove it in 0.9.5, which I did. I only released it because I'd shown it in <em>Programming in Scala</em>, which had already gone to the printer. I wanted all the code in the book to work for the version of ScalaTest mentioned in the book. I removed it in 0.9.5 because I wasn't convinced I had figured out the best way to do it, and even if I figured that out, I only planned to add it if users actually convinced me it would be useful to them. 
+</p>
+<p>
+Eric Torreborre's <a href="../_/http/code.google.com/p/specs/index.html">specs framework</a> always had a <code>&gt;&gt;</code> operator that provided a similar nesting ability to <code>FreeSpec</code>'s dash character, but in the specs case <code>&gt;&gt;</code> was an alias for <code>in</code>, which meant tests (called "examples" in specs) were being nested not specification text (and you still could put a <code>should</code> on top). The <a href="../_/https/github.com/orfjackal/specsy/index.html">specsy project</a> by Esko Luontola came closer to the concept, and in fact Esko wrote a blog post about the troubles with pre-defined words, <a href="../_/http/blog.orfjackal.net/2010/05/choice-of-words-in-testing-frameworks.html">Choice of Words in Testing Frameworks</a>. Over time I did get input from users that they would find value in this kind of trait, for example, in this <a href="../_/http/groups.google.com/group/scalatest-users/browse_thread/thread/41e10273a11fb1b/420a53da4a2ad06e$/lnk=gst&amp;q=FreeSpec#420a53da4a2ad06e/index.html">scalatest-users discussion</a> started by Sukant Hajra. And I got the opposite feedback, in a way, of seeing someone use trait  <code>Spec</code> and completely ignoring the guiding structure. So now <code>FreeSpec</code> is here.
+</p>
+<a name="formattingIndentation"></a><h1>Formatting and indentation</h1>
+<p>
+Another user feedback that I got over time is that users really liked the formatted output of the BDD-style (Behavior-Driven-Development-style) traits, and wanted to see the same thing in the TDD-style (Test-Driven-Development-style) traits. I did things that way originally because making the output of running a test suite a more useful artifact was a push from the BDD folks. But the users gave me this feedback, so now even when you run a <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/Suite.html"><code>Suite</code></a>, <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/FunSuite.html"><code>FunSuite</code></a>, <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/junit/JUnitSuite.html"><code>JUnitSuite</code></a>, <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/junit/JUnit3Suite.html"> <code>JUnit3Suite</code></a>, or a <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/testng/TestNGSuite.html"><code>TestNGSuite</code></a>, you get nicely formatted output. For example, given this <code>FunSuite</code>:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="vem">import</span> org.scalatest.FunSuite
+  <br/>  <span class="vem">class</span> <span class="typename">MySuite</span> <span class="vem">extends</span> <span class="typename">FunSuite</span> {
+  <br/>    test(<span class="quotedstring">"addition"</span>) {
+      <span class="vem">val</span> sum = <span class="literal">1</span> + <span class="literal">1</span>
+      assert(sum === <span class="literal">2</span>)
+      assert(sum + <span class="literal">2</span> === <span class="literal">4</span>)
+    }
+  <br/>    test(<span class="quotedstring">"subtraction"</span>) {
+      <span class="vem">val</span> diff = <span class="literal">4</span> - <span class="literal">1</span>
+      assert(diff === <span class="literal">3</span>)
+      assert(diff - <span class="literal">2</span> === <span class="literal">1</span>)
+    }
+  }
+</pre><!-- -->
+<p>
+Running from the interpreter in ScalaTest 1.3 gives you:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new MySuite).execute()</span>
+<span style="color: 00cc00;">Test Starting - MySuite: addition
+Test Succeeded - MySuite: addition
+Test Starting - MySuite: subtraction
+Test Succeeded - MySuite: subtraction</span>
+</pre>
+<p>
+But as of the latest ScalaTest 1.5 snapshot release will give you:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new MySuite).execute()</span>
+<span style="color: 00cc00;">MySuite:
+- addition
+- subtraction</span>
+</pre>
+<p>
+<a name="nestedIndentation">Another</a> bit of user feedback was that people preferred to see the nested levels in the test class echoed in indentation levels in the output. ScalaTest has supported arbitrary levels of indentation since 1.0 in its event hierarchy, but didn't fire indentation of more than one level from any ScalaTest trait, not even from <code>Spec</code>, which allowed arbitrarily deep levels of nesting. My thought was that most often people wouldn't actually nest more deeply than two levels, and I felt that it was more readable to flatten two levels to one. Also I observated Ruby's RSpec tool, which inspired <code>Spec</code>'s <code>describe</code>/<code>it</code> syntax, at the time flattened everything to one level. I wasn't sure which way to go, so I followed RSpec initially. Meanwhile Eric Torreborre indented specs output to match the input, and I observed that led some specs users to nest text more deeply, and even RSpec now indents its output this way. The ScalaTest users I asked about this for the most part indicated they would like the indented output. So now given this <a href="../_/http/www.artima.com/docs-scalatest-1.5-SNAPSHOT-25-Apr-2011/org/scalatest/Spec.html"><code>Spec</code></a>:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="vem">import</span> org.scalatest.Spec
+  <br/>  <span class="vem">class</span> <span class="typename">MySpec</span> <span class="vem">extends</span> <span class="typename">Spec</span> {
+    describe(<span class="quotedstring">"A Stack"</span>) {
+      describe(<span class="quotedstring">"(when empty)"</span>) {
+        it(<span class="quotedstring">"should be empty"</span>) (pending)
+        it(<span class="quotedstring">"should complain on peek"</span>) (pending)
+        it(<span class="quotedstring">"should complain on pop"</span>) (pending)
+      }
+      describe(<span class="quotedstring">"(when full)"</span>) {
+        it(<span class="quotedstring">"should be full"</span>) (pending)
+        it(<span class="quotedstring">"should complain on a push"</span>) (pending)
+      }
+    }
+  }
+</pre><!-- -->
+<p>
+Instead of getting the output you get with ScalaTest 1.3:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new MySpec).execute()</span>
+<span style="color: 00cc00;">A Stack (when empty)</span> 
+<span style="color: cfc923;">- should be empty (pending)
+- should complain on peek (pending)
+- should complain on pop (pending)</span>
+<span style="color: 00cc00;">A Stack (when full)</span>
+<span style="color: cfc923;">- should be full (pending)
+- should complain on a push (pending)</span>
+</pre>
+<p>
+As of the latest ScalaTest 1.5 snapshot, you will get:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new MySpec).execute()</span>
+<span style="color: 00cc00;">MySpec:
+A Stack 
+  (when empty)</span> 
+  <span style="color: cfc923;">- should be empty (pending)
+  - should complain on peek (pending)
+  - should complain on pop (pending)</span>
+  <span style="color: 00cc00;">(when full)</span>
+  <span style="color: cfc923;">- should be full (pending)
+  - should complain on a push (pending)</span>
+</pre>
+<p>
+For two levels of indentation, it isn't necessarily an improvement in readability, but at more levels it is more clearly a readability win. For example, given this <code>WordSpec</code>:
+</p>
+<pre style="background-color: #eeeeee; padding: 10px;">
+  <span class="vem">import</span> org.scalatest.WordSpec
+
+  <span class="vem">class</span> <span class="typename">ScalaTestGUISpec</span> <span class="vem">extends</span> <span class="typename">WordSpec</span> {
+  <br/>    <span class="vem">def</span> theUser = afterWord(<span class="quotedstring">"the user"</span>)
+    <span class="vem">def</span> display = afterWord(<span class="quotedstring">"display"</span>)
+    <span class="vem">def</span> is = afterWord(<span class="quotedstring">"is"</span>)
+  <br/>    <span class="quotedstring">"The ScalaTest GUI"</span> when theUser {
+      <span class="quotedstring">"clicks on an event report in the list box"</span> should display {
+        <span class="quotedstring">"a blue background in the clicked-on row in the list box"</span> in {}
+        <span class="quotedstring">"the details for the event in the details area"</span> in {}
+        <span class="quotedstring">"a rerun button"</span> that is {
+          <span class="quotedstring">"enabled if the clicked-on event is rerunnable"</span> in {}
+          <span class="quotedstring">"disabled if the clicked-on event is not rerunnable"</span> in {}
+        }
+      }
+    }
+  }
+</pre><!-- -->
+<p>
+Instead of the ScalaTest 1.3 output of:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new ScalaTestGUISpec).execute()</span>
+<span style="color: 00cc00;">The ScalaTest GUI (when the user clicks on an event report in the list box)
+- should display a blue background in the clicked-on row in the list box
+- should display the details for the event in the details area
+- should display a rerun button that is enabled if the clicked-on event is rerunnable
+- should display a rerun button that is disabled if the clicked-on event is not rerunnable</span>
+</pre>
+<p>
+As of the latest ScalaTest 1.5 snapshot, you'll get:
+</p>
+<pre style="background-color: #2c415c; padding: 10px;">
+<span style="color: white;">scala&gt; (new ScalaTestGUISpec).execute()</span>
+<span style="color: 00cc00;">ScalaTestGUISpec:
+The ScalaTest GUI 
+  when the user clicks on an event report in the list box 
+    should display 
+    - a blue background in the clicked-on row in the list box
+    - the details for the event in the details area
+      a rerun button that is 
+      - enabled if the clicked-on event is rerunnable
+      - disabled if the clicked-on event is not rerunnable</span>
+</pre>
+<h1>Give it a try</h1>
+<p>
+These enhancements will be released as part of ScalaTest 1.5 within the next few weeks. I'm posting this preview now because I want to get feedback in general on the API and find if there are any bugs to fix or any code-breakages. (I expect no source code to break with any of these enhancements, so let me know if you have a problem.) So please give it a try and either post feedback to the discussion for for this blog post, or email the <a href="../_/http/groups.google.com/group/scalatest-users/index.html">scalatest-users mailing list</a>.
+</p>
+<table align="center">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<div style="font-size: 0.8em;">
+<table>
+<tr>
+<td>
+<a href="../_/http/www.escalatesoft.com/index.html"><img align="left" alt="Escalate Logo" border="0" src="../_/http/www.escalatesoft.com/images/escalateLogo.gif" style="background-color: #fff;"/></a>
+</td>
+<td>
+<b>Next Scala training course:<br/>
+<table border="0" style="font-size: 0.8em;">
+<tr><td align="left"><span class="seminarDates"><em><strong>Applied and Advanced Scala:</strong></em></span></td><td align="right"><span class="seminarDates">August 8th - 12th, 2011</span></td></tr>
+<tr><td colspan="2"><span class="seminarDates">in San Francisco, CA.
+<a href="../_/http/www.artima.com/shop/stairway_to_scala/index.html">Find out more</a></span></td></tr>
+</table>
+</b>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=325537&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D325537&amp;title=ScalaTest+PropSpec+and+FreeSpec+Preview&amp;bodytext=Today+I+released+a+new+ScalaTest-1.5+snapshot+release+that+contains+several+enhancements%2C+including+formatted+output+for+TDD-style+traits%2C+indented+output+for+nested+style+traits%2C+and+two+new+style+traits%2C+PropSpec+and+FreeSpec.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D325537&amp;title=ScalaTest+PropSpec+and+FreeSpec+Preview">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D325537&amp;title=ScalaTest+PropSpec+and+FreeSpec+Preview">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2011 Bill Venners. All rights reserved.</div>
+</p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

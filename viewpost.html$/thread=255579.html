@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Seven Steps to Disaster</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=255579.html">Discuss</a> | 
+<a href="mailto:?subject=Seven Steps to Disaster&amp;body= %0AArtima Weblogs %0ASeven Steps to Disaster %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=255579">Email</a> | 
+<a href="../viewpostP.html$/thread=255579.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=254969.html" title="What I learned at Java Posse Roundup '09">Previous</a> | 
+<a class="sl" href="thread=255655.html" title="Google Fail: Commission Ads and E-Commerce">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Seven Steps to Disaster</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">April 17, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Retrospectives allow you to analyze what worked and what didn't about a project so you can do better in the future. How often, though, do people have either the resources or the wherewithall to do a retrospective on a complete disaster -- arguably where we'll learn the most?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I'm reading <a href="../_/http/www.amazon.com/gp/product/0316017922$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0316017922/index.html">Outliers: The Story of Success</a><img alt="" border="0" height="1" src="../_/http/www.assoc-amazon.com/e/ir$/t=bruceeckel&amp;l=as2&amp;o=1&amp;a=0316017922/index.html" style="border:none !important; margin:0px !important;" width="1">
+ by Malcom Gladwell, which is yet
+another of his <i>the-world-is-not-how-you've-always-thought-it-was</i>
+books. I love these kinds of insights not just because it makes the
+world fresher with possibility, but because it's possible that, by
+destroying some of my assumptions, I might discover a new way of doing
+things.
+
+<p>This isn't how I came upon <a href="../_/http/www.mindviewinc.com/Conferences/OpenSpaces.html">Open Spaces conferences</a>, for example. The
+structure was already there, and we (myself and Martin Fowler -- primarily,
+of course, stimulated by Martin's bigger way of thinking about things)
+only had to do the experiment. But this was a scary thing to try -- as
+anyone who has organized an open spaces event knows, thinking that
+everyone is just going to show up and put up interesting discussions
+on the board, and that all will go well ... it's an act of faith.
+
+<p>If you take the leap, the result of Open Spaces is nothing short of
+magical. It goes against everything you know, and yet it's better than
+any conference you've ever experienced.
+
+<p>After doing something like this, you begin to wonder "what other
+assumptions am I carrying around, thinking they are hard facts, that
+might be disassembled to produce equally astounding (and satisfying)
+results?" Which is why I find Gladwell and similar new-thinkers to be
+so intriguing. The high concept of <i>Outliers</i> is buried in a
+paragraph towards the back of the book: "<i>The world could be so much
+richer than the one we have settled for</i>."
+
+<p>In chapter seven (page 184), he makes a fascinating observation
+about disasters, in the context of airliner crashes:
+
+<blockquote><i>
+The typical accident involves seven consecutive human errors. One of
+the pilots does something wrong that by itself is not a problem. Then
+one of them makes another error on top of that, which combined with
+the first error still does not amount to catastrophe. But then they
+make a third error on top of that, and then another and another and
+another and another, and it is the combination of all those errors
+that leads to disaster.
+
+<p>These seven errors, furthermore, are rarely problems of knowledge
+or flying skill. It's not that the pilot has to negotiate some
+critical technical maneuver and fails. The kinds of errors that cause
+plane crashes are invariably errors of teamwork and communication. One
+pilot knows something important and somehow doesn't tell the other
+pilot. One pilot does something wrong, and the other pilot doesn't
+catch the error. A tricky situation needs to be resolved through a
+complex series of steps -- and somehow the pilots fail to coordinate
+and miss one of them.
+</p></i></blockquote>
+<p>Doesn't this sound like software development disasters? Indeed, one of
+the maxim's of Gerald Weinberg's <a href="../_/http/www.amazon.com/gp/product/0932633013$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0932633013/index.html">Secrets of Consulting</a><img alt="" border="0" height="1" src="../_/http/www.assoc-amazon.com/e/ir$/t=bruceeckel&amp;l=as2&amp;o=1&amp;a=0932633013/index.html" style="border:none !important; margin:0px !important;" width="1">
+ is <i>Things are the way they are because they got
+that way ... one logical step at a time</i>. By themselves, each
+individual decision seems logical and reasonable, within the small
+context in which it was made. Each decision by itself doesn't cause
+the disaster. It's the accumulation of errors that does it.
+
+<p>Not just the accumulation of errors, but the lack of review that might
+notice that there's a problem. This is a different kind of faith than
+the one required to try Open Spaces. This kind of faith says: 
+
+<blockquote><i>
+Let's
+not waste time looking for problems (that's negative thinking, after
+all). Let's just plow forward and hope that, <i>this time</i>,
+everything will come out OK all by itself. Even though we have no
+historical experience that this can happen, let's just hope that it
+will. After all, if it does magically go that way, we'll have saved
+all that time and money we would have otherwise wasted doing reviews
+and pair programming and any of the other processes designed to
+evaluate our work.
+</i></blockquote>
+<p>When I began writing, I had this same kind of ideal in mind. I would
+sit down and the words would just magically flow from my fingertips,
+and lay themselves onto the page in wonderful order. I believed, hard,
+in the idea of inspired creativity. Moreso, I felt that anything else
+was rather corrupt -- if you weren't in the the creative flow, then
+there was something wrong with the result.
+
+<p>There are certainly periods of creative flow, and the results
+are inspired. Or at least, while you're writing, it seems that
+way. After it's rested for awhile and you look at it
+again, you find places where it can be improved. With
+experience, you discover that everything can always be improved, and
+even that it's never that good until you've gone over it a few
+times. As many writers are fond of saying "writing is rewriting."
+
+<p>Yet the myth persists of the inspired flow of words: Jack Kerouac
+writing "On the Road" in 24 hours. We seem drawn to the
+apparently magical overnight successes -- everyone fixates on Bill
+Gates doing a quick deal to produce MSDOS and not on all the time and
+effort he put in before and after that moment.
+
+<p>That's a fundamental point that Gladwell makes in <i>Outliers</i>: People
+who are really good at something, who seem to have "overnight
+success," in fact have put in about 10,000 hours of deep immersion in
+the topic that has apparently produced this miracle. It's not
+a miracle at all, but rather something that has come as a result of a
+tremendous amount of focused effort.
+
+<p>I think the problem is that software is infused with magical
+properties. Look at what we can create with it -- magical worlds
+(games) that make more money than the movie industry (the previous
+king of magical worlds). Killer apps that make the creators fortunes,
+apparently overnight. This is our mythology, so when we start trying
+to build a piece of software, it's natural that we want to assume that
+such magic will apply to us (even if, as Gladwell shows, this magic
+doesn't exist), and that we don't need to use any silly review
+practices. Such (costly, time-consuming) things are for negative
+thinkers, not success-oriented go-getters.
+
+<p>An especially damaging aspect of this approach is that review is
+not part of the culture of an organization. In the worst cases,
+everyone is taught to believe that each piece of code "belongs to" the
+person who wrote it, and it's not OK at all to make comments about
+other people's work. This is a perfect setup for disaster, because
+you'll never know until after the fact that anything is wrong. At
+least airline cockpit crews are supposed to make suggestions when
+things are going wrong -- if you have a corporate culture that says "each
+programmer is an isolated silo" then you'll guarantee that there will
+be no clues before or after the project is toppling.
+
+<p>I've <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=228097.html">talked
+before</a> about the negative characteristics that a team member can
+have. Indeed, it's tricky just to put together a neutral team, one
+without any toxic characteristics. But even harder is creating a
+positive team, and I would say the one feature that determines whether
+a team is "positive" is that vague, overused word "communication."
+This doesn't mean documentation (although that, done right, is
+important), or having meetings or sending out memos. It means the way
+that people are able to talk to each other. In short, does pointing
+out a potential flaw constitute a disastrous breach of protocol, or is
+it just part of a conversation? Gladwell introduces the concept of the
+<i>Power-Distance Index</i> (PDI) when talking about plane crashes --
+if the cockpit crew comes from a culture where there is a high PDI, it
+means that it is very hard for a subordinate to question the pilot or
+suggest that something is wrong. This causes accidents.
+
+<p>The knife-edge in the software world is intelligence. In a negative
+software culture, the designers and architects are gods who cannot be
+questioned -- here we have a high PDI, and questions are seen as
+challenges to authority and power, and are thus actively discouraged. The
+assumption is that the "leaders" are so smart they don't make mistakes
+(an idea promoted by those same "leaders"), and so we don't need to look for
+mistakes -- indeed, it's a waste of time and resources to do so.
+
+<p>In a positive software culture with a low PDI, everyone's input is valid.
+From the most experienced to the least experienced, everyone makes
+mistakes, so the question is not whether mistakes exist, but how do we
+discover and minimize them? We know disasters happen so we are on
+the lookout to capture and record risk factors. And the leaders put
+their effort not into showing how infallible they are, but in
+appreciating input that helps them continue to learn and
+understand. This culture not only produces software more reliably, it
+develops better software engineers and better leaders.
+
+<p>"Communication" in a positive software culture means that everyone
+knows that anyone can make a mistake (so it's not a terrible thing)
+and anyone kind find a mistake (so it's not a big deal). Most
+importantly, there's no way to prevent mistakes; they are just part of
+the world of software development. So we can't just hope they don't
+happen, we have to actively work with the knowledge that they are
+always there. We must track and test against them, and every time we
+learn something, everyone on the team learns that thing and we all get
+better because of it.
+
+<p>This brings up two important questions:
+
+<ol>
+<li>Is it possible to convert a team with a negative software culture
+into one with a positive software culture?<br/><br/>
+<li>If so, how?
+</li></li></ol>
+<p>Seven weeks ago I broke my leg skiing. In prior weeks, I had
+been thinking that it was time to take another few lessons, to learn
+to ski in better control. That is, to get some review and direction in
+my skiing style. I <i>knew</i> I was skiing out of control, but it
+just seemed like I could go a bit faster, and even a little bit
+faster, etc. I had enough control to be able to fly down the mountain
+and I seemed to be able to do that and get away with it.
+
+<p>The failure, when it happened, was a series of minor incidents,
+ones that I had survived unscathed many times before. But
+this time, combined with the fact that I had become used to skiing
+slightly out of control, these incidents caused a small disaster that I shall
+continue recovering from in weeks to come. Although I was a functional
+skier, on my path of slightly-out-of-control behiavior, it was
+statistically likely that I would eventually combine the wrong
+mistakes and have a disaster. I "only" broke a bone (didn't tear
+anything) so I can learn from my mistake without suffering too much
+from it.
+
+<p>Do people only change after trauma? The answer seems to be "yes,
+mostly." It's also possible to change through inspiration, but that appears
+to be the rare exception. Usually you have to get bashed about before
+you'll think about changing.
+
+<p>I've had two types of consulting clients. The first, and most
+common, appears when something is starting to go wrong, or has already
+gone wrong. Project failures seem to go through the "stages of grief"
+(hilariously depicted <a href="../_/http/www.youtube.com/watch$/v=XCoaBN6iOu0/index.html">here</a>), usually
+getting stuck at "denial." Bringing a consultant into a failing
+project is typically either a last-ditch attempt to save the project
+(by imagining that the consultant has magical powers) or the beginning
+of the process of assigning blame. Neither case is much fun.
+
+<p>But sometimes a client will be smart enough to
+understand how bad the odds of success are, and attempt to inject
+goodness into the project early on, while there's still a chance of it
+making a positive difference. These are the good consulting jobs.
+
+<p>And the very best jobs are when the client has already taken steps
+towards success (for example, by choosing a powerful, dynamic language
+like Python) and you're brought in to amplify those steps (rather than
+trying to motivate them in the first place). This is where the fun
+happens. This is where I want to live.
+
+<p>All these questions I keep asking are really the same: "Is change
+possible?" The answer, of course, is "Yes... but it's unlikely." Even
+the traumatized would prefer to think of it as a bad dream, and to go
+back to the way things were, blissfully thinking that everything is
+working OK. To quote Weinberg again: "People hate change. They really,
+really hate change."
+
+<p>Look at the structure of stories. The main character is pushed out
+of their comfort zone by the "inciting incident" (whatever happens to
+get the story rolling). But the only logical thing for that
+character to do is to try to return to their original comfort
+zone. Otherwise the character is unbelievable -- obviously they weren't
+comfortable if they didn't try to return to that zone, so why weren't
+they already trying to change? Doesn't make sense.
+
+<p>Except in the world, it does. You may hate your cubicle, but you
+keep going back to it. If you get kicked out, you try to get back to
+it or to another cubicle somewhere else. Cubicles are the devil you
+know, and that culture collects other people who are equally willing
+to resist change to keep out the uncertainty of the unknown. It's our
+nature to keep to certainty, and put up with rather a lot of pain to
+do so.
+
+<p>In the face of human propensity towards sameness, how do we
+introduce change?
+
+<ol>
+<li><b> The change must fit the ability of the team to deal with change.</b>
+A consultant that shows up and says "you need to adopt (my favorite
+flavor) of Agile" does not fit my definition of a consultant. That's
+really more what a trainer does, so the client has already made the
+hard decision. But a good trainer figures out how much of the training
+the team is ready for. Trying to shove a one-size-fits-all seminar
+into a team regardless of what they can handle is a recipe for
+unhappiness (I learned this the hard way). It it better to introduce
+something small that makes a difference.<br/><br/>
+<li><b> The change must be introduced subtly, so as not to engage the
+limbic system.</b> Years ago, I took a workshop on <a href="../_/http/www.amazon.com/gp/product/0761129235$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0761129235/index.html">Kaizen
+with Robert Maurer</a><img alt="" border="0" height="1" src="../_/http/www.assoc-amazon.com/e/ir$/t=bruceeckel&amp;l=as2&amp;o=1&amp;a=0761129235/index.html" style="border:none !important;
+margin:0px !important;" width="1"/>. This is "personal kaizen" rather
+than what you'll normally find about industrial process improvement,
+but because of that it seems a better fit for software teams. My
+biggest takeaway from the workshop was this: your "primitive brain" is
+easily frightened and always scanning for changes (Maurer used the
+example of monkeys fleeing for the trees when a leopard jumps
+out). The main trick of "personal kaizen" is to introduce changes that
+are so un-threatening that your primitive brain laughs. For example, I
+was having trouble flossing. Saying "I'm going to floss three times a
+day" was a big, frightening change, so the primitive brain goes into
+flight mode. But I could safely commit to "I'm going to floss once a
+month" without causing any reaction (the dentist in our group was
+thrilled). And each time I did floss, it turned out not to be such a
+big deal, so over time I became a much more frequent flosser.<br/><br/>
+<li><b> The force for change must be steady, to overcome the natural
+tendency to return to the original resting state.</b> As noted
+earlier, our impulse when disturbed is to return to our comfort zone
+(even if it's not really comfortable, but only familiar). So if a
+consultant shows up and introduces a new technique and then leaves, it
+seems interesting in theory "but we have work to do" and so it's just
+too easy to return to what you always do. Even if the consultant helps
+you restructure your project for the new technique, the minute there's
+some pressure and you don't know what to do, you'll fall back into
+your old ways. Some consulting firms solve this by providing
+consultants nonstop for the duration of the project -- while probably
+effective, this seems like expensive overkill (and a common pattern
+seems to start with primary consultants, later substituted with
+secondary consultants at the same fee). A more moderate and
+economic solution is repeated consulting visits to provide regular
+course corrections. This has the added benefit that you're more likely
+to be able to work with the same primary consultant for each visit,
+which provides better continuity.<br/><br/>
+</li></li></li></ol>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=255579.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=255579&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255579&amp;title=Seven+Steps+to+Disaster&amp;bodytext=Retrospectives+allow+you+to+analyze+what+worked+and+what+didn%27t+about+a+project+so+you+can+do+better+in+the+future.+How+often%2C+though%2C+do+people+have+either+the+resources+or+the+wherewithall+to+do+a+retrospective+on+a+complete+disaster+--+arguably+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16"/>Digg
+  </a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255579&amp;title=Seven+Steps+to+Disaster">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255579&amp;title=Seven+Steps+to+Disaster">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></img></p></p></p></p></p></img></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

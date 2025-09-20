@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Has JavaFX Hurt Client-Side Java?</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=242077.html">Discuss</a> | 
+<a href="mailto:?subject=Has JavaFX Hurt Client-Side Java?&amp;body= %0AArtima Weblogs %0AHas JavaFX Hurt Client-Side Java? %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=242077">Email</a> | 
+<a href="../viewpostP.html$/thread=242077.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=235970.html" title="Jeff Atwood on Quality versus Quantity">Previous</a> | 
+<a class="sl" href="thread=269155.html" title="Database Constraints: Use Them or Lose Them?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Has JavaFX Hurt Client-Side Java?</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">November 6, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Sun's focus on JavaFX has resulted in less progress on improving Swing development productivity. Has the shift of focus to JavaFX from Swing hurt the cause of client-side Java?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>For almost two years now, Sun has been promoting JavaFX, the centerpiece of its vision for Java as a viable rich-client technology, and an alternative to Adobe's Flex and Microsoft's Silverlight. At heart, JavaFX is a JVM-based domain language for constructing rich user interfaces, as well as a set of APIs for that language.</p>
+<p>While JavaFX can work well with Java code, it does not jive particularly well with its more mature Java UI cousin, Swing: If you have experience developing Swing applications or applets, you will need to learn a different programming model, API, and even different tools, to program in JavaFX. In addition, as far as I understand it, existing Swing components, such as JTable or JXTable, don't work out of the box in a JavaFX application, but need to be wrapped inside special JavaFX code. In other words, while JavaFX and Swing can work together, they are really two separate technologies for Java user interface development.</p>
+<p>Swing has been around for a decade now, and there are thousands of Swing-based applications in enterprises, the context where Java is most ubiquitous. Its potential downsides notwithstanding, Swing has been an excellent choice as a user interface API for an enterprise application. The fine-grained, event-based programming model that recently became popular in the browser, has existed in Swing since Java 1.1. Swing-based components are, in general, easier to work with than Ajax-based ones, perform better in the presence of large amounts of data, and can take advantage of the JVM's multithreading ability as well as the full JDK APIs. </p>
+<p>In recent years, Swing has started to show its age, especially since the advent of more recent UI toolkits, such as Flex. The Swing community, and Sun in particular, addressed some of Swing's wants with a new set of proposed API standards, open-source API projects, and by promoting how existing Java APIs, especially Java 2D, can make Swing applications look on par with Flex or Silverlight UIs.</p>
+<p>Alas, many of those efforts have by now abated.</p>
+<h1>Swing 2.0</h1>
+<p>Several of the proposed new APIs aimed to standardize practices that the Swing community already had solutions for, such as data binding (see Artima's <a href="../_/http/www.artima.com/lejava/articles/beans_binding.html">interview</a> with Shannon Hickey, spec lead of JSR 295, Beans Binding). Other APIs addressed the general lack of clear guidelines for developing Swing applications. Foremost of these was JSR 296, Swing Application Framework (see Artima's <a href="../_/http/www.artima.com/lejava/articles/swingframework.html">interview</a> with Hans Muller, past JSR 296 spec lead).</p>
+<p>The <a href="../_/http/www.swinglabs.org/index.html">SwingLabs</a> project, aka. SwingX, is perhaps the most significant open-source project aimed to extend the standard Swing components and to provide new ones. Sponsored by Sun, many Sun developers contributed components to SwingX, such as an alternate Swing table component, a login framework, and painter and animation libraries, to mention a few. And many Swing-related projects sprung up outside Sun, too, such as <a href="../_/http/www.jgoodies.com/index.html">JGoodies</a> (led by Karsten Lentzsch), or the <a href="../_/https/substance.dev.java.net/index.html">Substance Look and Feel</a> (led by Kirill Grouchnikov).</p>
+<h1>The Sun Setting on Swing?</h1>
+<p>In spite of a thriving Swing community, and despite Swing's large user base, Sun has re-focused its efforts around JavaFX over the past year-and-a-half, at the expense of Swing development. The most visible aspects of that change in focus is that many of the most experienced Swing developers <a href="../_/http/graphics-geek.blogspot.com/2008/02/what-hello-world.html">left the company</a>, such as Chet Haase (see Artima's <a href="../_/http/www.artima.com/lejava/articles/state_of_swing.html">interview</a> with Chet Haase), Hans Muller, or Scott Violet. The important Swing-related JSRs have also been stale for a long time now: the latest JSR 295 and 296 updates occurred in June, 2006, according to the JCP's Web site.</p>
+<p>Most recently, SwingX contributor Jeanette Winzenburg <a href="../_/http/forums.java.net/jive/thread.jspa$/threadID=52665&amp;tstart=0.jspa">wrote</a> on the project's online forum that Sun all but abandoned its support for SwingX, because its engineers are busy working on JavaFX:</p>
+<blockquote>
+<p>... the official terminus is "frozen" - but as that happened already in July and everybody in the core team is well over their ears into FX it looks rather permanent to me...</p>
+<p>I think it quite funny that [Sun engineer Richard Bair argues] in favour of that support/evolution mainly by stating that nobody (definitely not the experienced engineers/architects) at Sun has any time for it - because you all are wasting it it on FX (biased me again <g>) Fancy demos - especially in a language unrelated to the project at the center of this forum's topic - are just that: fancy demos. They don't solve any real world problems. Chet's termed the effort to produce them so cutely as CDD - Conference Driven Design.</g></p>
+</blockquote>
+<p>Winzenburg's note seems to echo the sentiment of many experienced Swing developers. JGoodies' Karsten Lentzsch <a href="../_/http/almaer.com/blog/sun-is-bleeding-more-engineers-leave-as-javafx-is-pimped/index.html">noted</a>, for example, that:</p>
+<blockquote>
+<p>I’m worried that Scott Violet, Chet Haase, and now Hans Muller left Sun. AFAIK Jeff Dinkins isn’t working on Swing anymore, and Amy Fowler has changed her focus too.</p>
+<p>None of my Java customers is interested in JavaFX. They want to get their Swing UIs running. They are looking for Java desktop blueprints, for a cook book that explains how to address the everyday Swing task. My customers were excited about the JSR 296 (Swing app framework) and 295 (beans binding). But now it’s unclear what’ll happen to these projects. I don’t see Sun’s Swing strategy.</p>
+<p>If you look at the JavaOne 2006, 2007 and now 2008 what have we got for Swing, or in other words for the Java deskop *now*? A cool demo (Aerith) in 2006, more cool demos in 2007, and JavaFX in 2008. All my customers do the “boring” stuff: editors, forms, navigation, buffering, data binding, layout. That’s how they make money. Who cares about them? They need a framework, better components, not animated 3D flipping images.</p>
+</blockquote>
+<p>And Kirill Grouchnikov recently <a href="../_/http/weblogs.java.net/blog/kirillcool/archive/2008/11/sun_setting_dow.html">wrote</a> that:</p>
+<blockquote>
+<p>I don’t know what the future holds for JavaFX. Sun is heavily betting on it... All I know is that JavaFX has effectively halted all core Swing development. Over the last 18 months, we have seen significant architectural initiatives (JSR 295 and JSR 296) changing leads and frozen. All client-facing improvements in Java2D, AWT and Swing in Java 6 Update 10 are completely driven by the requirements of JavaFX.</p>
+</blockquote>
+<h1>The 80/20 Insight</h1>
+<p>Over the past year, I developed a rather extensive enterprise application with a Flex user interface. Prior to that, I worked on an even more feature-filled Swing application. Both are customer-facing applications, with strict usability requirements. Based on these experiences, I can second Lentzsch' sentiment that,</p>
+<blockquote>
+<p>All my customers do the "boring" stuff: editors, forms, navigation, buffering, data binding, layout... They need a framework, better components, not animated 3D flipping images.</p>
+</blockquote>
+<p>To me, Flex has proven more productive than Swing, mainly because of the "boring stuff:" data binding, validation, UI layout, and integration with a Java-based backend are very easy in Flex. In addition, you can express UI states in Flex quite explicitly, a feature that turns out to be very practical. It is also trivial to deploy a Flex application in the browser or, with AIR, on the desktop. Although Flex has a plethora of features for doing fancy animations and "effects," I found those features unneeded, and even distracting, in a business application.</p>
+<p>To stay competitive, developers need to seek constant productivity improvements. That's especially true for the enterprise environment, where not only is Java the most prevalent, but also where most Java developers work. The Swing initiatives that now appear dormant aimed to, in effect, bring Swing development productivity on par with Flex development. Except for UI layout (for which Flex has a domain-specific XML language), the Swing-related JSRs and open-source projects I referenced above would have resulted in Swing matching almost every productivity element in Flex. And the latest <a href="../_/http/www.artima.com/forums/flat.html$/forum=270&amp;thread=241080.html">JDK update</a> does solve the Java deployment issue.</p>
+<p>It seems to me that keeping Pareto's oft-quoted 80/20 principle in mind would have benefited client-side Java development more than the features developed in JavaFX could ever do. Enterprise Java has long favored the "boring" stuff over niches, and it would have been wise for client-side Java to follow a similar path.</p>
+<p>Do you agree that Sun's recent focus on JavaFX has hurt the cause of client-side Java?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=242077.html">34
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=242077&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D242077&amp;title=Has+JavaFX+Hurt+Client-Side+Java%3F&amp;bodytext=Sun%27s+focus+on+JavaFX+has+resulted+in+less+progress+on+improving+Swing+development+productivity.+Has+the+shift+of+focus+to+JavaFX+from+Swing+hurt+the+cause+of+client-side+Java%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D242077&amp;title=Has+JavaFX+Hurt+Client-Side+Java%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D242077&amp;title=Has+JavaFX+Hurt+Client-Side+Java%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

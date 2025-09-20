@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Programming as Typing</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=167501.html">Discuss</a> | 
+<a href="mailto:?subject=Programming as Typing&amp;body= %0AArtima Weblogs %0AProgramming as Typing %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=167501">Email</a> | 
+<a href="../viewpostP.html$/thread=167501.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=167363.html" title="Testing vs. Reviews">Previous</a> | 
+<a class="sl" href="thread=167850.html" title="Hidden Variables">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Programming as Typing</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">July 6, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+How can we see the problems that we face when building software through new eyes?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>(This started as a reply to John Camara in the previous blog entry, then took on a life of its own.)
+
+<blockquote><i>
+I believe by now it is safe to assume that the majority of software developers and managers of software projects have come to accept the importance of testing so I feel it's unnecessary to comment on testing.
+</i></blockquote>
+<p>I've learned not to trust the fact that there's a lot of noise about something. It usually doesn't correlate to reality. A friend works for a company that's just now learning about unit testing, and apparently testing in general. I've consulted with companies where testing is still a new thing. My guess is that the majority of software developers have not yet accepted the importance of testing, and that it's only the noisemakers on the leading edge who have been learning and talking about it, and thus giving the impression that it's now well accepted.
+
+<p>Another example of noise vs. reality: people are always saying that there are still more COBOL and FORTRAN programmers out there than any other kind. But when was the last time you saw one, much less talked to one? By that metric, they don't exist. But apparently there are tons of them.
+
+<blockquote><i>
+Now as important as it may be to have a second pair of eyes on a problem I feel it's not the most important benefit of code reviews. I feel that code reviews provide a means of mentoring each other.
+</i></blockquote>
+<p>Yes, it's one thing to show my examples and talk about how you would, in theory, use a particular language feature properly. But when you work with code that someone actually have a vested interest in, then it becomes real and important. (I create toy examples in books out of necessity only).
+
+<p>I think that the more abstract the concept, the more important it is to work with a project that people are actually trying to build, to take it out of the realm of ideas. For example, when teaching OO design (which is more abstract than programming), I encourage people to bring their own designs, so we can work on them together. This not only brings the importance up, but it also makes better use of the training or consulting time, because people can actually gain forward motion on their projects.
+
+<blockquote><i>
+This form of mentoring is likely to be the only form of mentoring that the majority of developers experience these days. After all, mentoring has lost most, if not all, priority in these sad times of ever decreasing costs at all costs. We have simply forgotten how important it is to pass collective experiences from generation to generation.
+</i></blockquote>
+<p>This may come from (perceived) efficiency considerations. Mentoring on a regular basis may appear to be just a cost for a project -- interference with getting things done. Whereas carving out a week for training between projects is a discrete chunk of time, you do it and you're done and then people can get back to slinging code as fast as they can. Or any number of other scenarios.
+
+<p>I think the problem is that while many programmers understand that programming happens in the mind, and the code itself is just an artifact of the process, outside the field, the code looks like it's what you're doing. (An understandable perception, since the code is the core deliverable). So if it's about the code and not the mental process behind the code, it makes sense that you would do whatever you can to produce the code as fast and as cheaply as possible, and to discard anything that appears to hinder the creation of code. From this follows the logical ideas that coding is typing, so you want to see people typing all the time, and that 10 people can type faster than one person so if you can hire ten Indians cheaper than one US programmer, you're going to get a lot more typing done, so you'll get big economic leverage.
+
+<p>In reality, study after study indicates that success comes from who you hire. This suggests that programming is not a mass-production activity where programmers are replaceable components.
+
+<p>I think a good analogy is writing a novel. Suppose you want to create a Stephen King novel (I'm not much of a fan, but this is exactly the kind of book that publishers stay up nights trying to figure out how to mass produce). You could say, "A book is made up of words, and words are created by typing, so to create a book we need to get a bunch of people typing. The more people we can get typing, the faster we'll create a book. And the cheaper the typist, the cheaper it will be to create books."
+
+<p>It's hard to argue with that logic. After all, a book <i>is</i> made up of words. And words <i>are</i> created by typing, etc. But anyone who reads novels knows that there must be a fundamental flaw in the logic, because there are authors whom you like and others whom you can't stand. The <i>choice</i> of words and the <i>structure</i> of the book is what makes the difference, and that is based on the person writing the book. We know you can't replace one author with 10 lesser writers and get anything like what the author could produce, or anything you'd want to read.
+
+<p>Another example is a house. Like software, it's comprised of subsystems that fit together. Like software, you have a bunch of people working on it, and it's even true that <i>some</i> of those people are replaceable. It doesn't really matter who is nailing up the wallboard. But you really notice the design of the house, and you notice how well it was put together, and those things are determined by the architect and the builder.
+
+<p>I've been struggling with this general problem for a long time. That is, the "logical" arguments that are very hard to refute, like "software is created by typing." True on the surface, but not really the essence of the issue. But if you keep the argument on those terms, you can't really get anywhere, because the logic is irrefutable. Even if that logic completely misses the real issue.
+
+<p>This is probably why I keep fighting with the static-dynamic language debate, because it has the same feel to me. You can come up with all kinds of reasons that static checking is a good thing, until you have an experience programming in a dynamic language where you are vastly more productive than with a static language. But that experience defies the logic used to back up the reasoning behind static languages.
+
+<p>Here's another one. I believe that "details matter," and that noise really does wear you down (studies show that noise makes you tired). What I'm talking about here is visual and complexity noise. So I was disappointed when, for example, Ruby turned out to have begin and end statements, and that it uses "new" to create objects. These are all noise artifacts from previous languages, required to support their compilers. If your language creates all objects on the heap, you don't need to say "new" to distinguish between heap and stack objects (like you do in C++, which was mindlessly mimicked by Java). And everyone always indents their code, so you can use indentation to establish scope. Besides the fact that I'm justifying the design minimalism of Python here, when I put these ideas out I will probably get a lot of perfectly reasonable rationalizations about why this is the best way of doing things. And without questioning the fundamental principles upon which those arguments are founded, those arguments will be pretty airtight, even if they really come down to "I'm used to that and I don't want to think differently about it."
+
+<p>Java has always required a lot of extra typing. But the fact that Eclipse and other IDEs generate code for you seems to justify enormous amounts of visual noise, and for those in the midst of it, that's OK, and even desirable. "It's clearer because it's more explicit" (Python even has a maxim "Explicit is better than implicit"). This is even taken to extremes with the idea, supported by a surprising number of folks, that every class should have an associated interface, which to my mind makes the code far more complicated and confusing. Which IMO costs money, because everyone who works with that code must wade through all those extra layers of complication. 
+
+<p>All of this detail costs time and money, even if you have a tool generating a lot of code for you. But if you're in the middle of it, it's all you can see and it makes sense because it seems to work. And of course, if you compare one Java project to another, you aren't questioning the cost of using the language.
+
+<p>In contrast, when I teach OO design, my favorite approach is to (A) work on a project that the client is actually working on and (B) move quickly through the design process and model the result in a dynamic language (Python is what I know best). In most cases, the client doesn't know Python, but that doesn't matter. We still very quickly get a model of the system up and running, and in the process we discover problems that our initial design pass didn't see. So because of the speed and agility of a dynamic language, design issues appear early and quickly and we can refine the design before recasting it in a heavyweight language.
+
+<p>And I would argue that if the initial code is done in the heavyweight language instead, then (A) There is resistance to putting the design into code because it is much more work intensive; it isn't a lightweight activity, and (B) There is resistance to making changes to the design for the same reason.
+
+<p>And yet, I will probably get any number of perfectly reasonable arguments to the effect that this approach doesn't make sense. I usually find that these arguments are not based on experience, but on logic that follows from fundamental assumptions about the world of programming.
+
+<p>It may not even be possible to prove things logically when it comes to programming. So many of the conclusions that we draw this way appear to be wrong. This is what I like about the book "Peopleware," and also "Software Conflict 2.0" that I'm now reading. These books point out places where we operate based on what seems perfectly logical, and yet is wrong (one of my favorite studies in "Peopleware" shows that, of all forms of estimation, the most productive approach is when no estimate at all is made).
+
+<p>The story that I heard about the Greek Natural Philosophers (what we call physicists today) is that they were more interested in the arguments about how something worked than they were about how that thing actually worked. So they didn't drop small and large stones in order to find out if one fell faster than they other, they argued based on their assumptions. 
+
+<p>It seems to me that we're in the same situation when we try to argue about programming. A large part of the Enlightenment came from the move to the scientific method, which seems like a small, simple step but turned out to be very big, and to have a very big impact. To wit, you can argue about how you think something will happen, but then you have to go out and actually do the experiment. If the experiment disagrees with your argument, then you have to change your argument and try another experiment.
+
+<p>The key is in doing the experiment, and in paying attention to the results, rather than starting with belief and trying to wrestle the world into line with that belief. Even after some 500 years, human society is still trying to come to terms with the age of reason.
+
+<p>I think the essence of what the agilists are doing is a perfect analogy to the discovery of the scientific method. Instead of making stuff up -- and if you look back at all the "solutions" we've invented to solve software complexity problems, that's primarily what they are -- you do an experiment and see what happens. And if the experiment denies the arguments you've used in the past, you can't discard the results of the experiment. You have to change something about your argument.
+
+<p>Of course, you aren't <i>forced</i> to change your argument. But even if it doesn't happen overnight, those that look at the experiments and realize that something is different than the way they thought it was, those people will move past you and forge into new territory. Territory that your company may not be able to enter if they refuse to change their ideas.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=167501.html">57
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=167501&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167501&amp;title=Programming+as+Typing&amp;bodytext=How+can+we+see+the+problems+that+we+face+when+building+software+through+new+eyes%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167501&amp;title=Programming+as+Typing">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167501&amp;title=Programming+as+Typing">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

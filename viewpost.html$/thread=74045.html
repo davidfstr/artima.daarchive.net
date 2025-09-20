@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Building J2SE5.0-enabled Jini services in a mixed VM environment</title>
+<meta charset="utf-8"/>
+<meta content="Calum Shaw-Mackay" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#ADD8E6" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=calum.html">Calum Shaw-Mackay's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=74045.html">Discuss</a> | 
+<a href="mailto:?subject=Building J2SE5.0-enabled Jini services in a mixed VM environment&amp;body= %0AArtima Weblogs %0ABuilding J2SE5.0-enabled Jini services in a mixed VM environment %0Aby Calum Shaw-Mackay %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=74045">Email</a> | 
+<a href="../viewpostP.html$/thread=74045.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=71607.html" title="Hungry Disks: Storage but no files!">Previous</a> | 
+<a class="sl" href="thread=77621.html" title="Comparative Studies  the rods we hit each other with?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Turn, and Face the Strange</span><br>
+<span class="ts">Building J2SE5.0-enabled Jini services in a mixed VM environment</span><br/>
+<span class="as">by Calum Shaw-Mackay</span><br/>
+<span class="pd">October 6, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Yes, J2SE 5.0 is out, and as much as we all would like to use it, we know that there are some things that just won't happen over night - such as mass adoption by Appserver vendors,etc. But if you are willing to make a small compromise you can use J2SE5.0 in the guts of your code, but also let it play nicely with your 1.4 environment.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<font size="+4">S</font>o, what is the problem? To put it technically, this is the problem; <i>'javac
+-source 1.5 -target 1.4 does not work'</i>. Originally, Sun believed that parts
+of the new languages features of J2SE5.0 would be backwards compatible with
+1.4, since many of them are syntactic in nature, examples being enhanced
+'for', and enums (Potentially some generics, and even varags, could have
+been compatible). Although a laudible goal, it didn't come to pass, and the
+nearest we get to it is....
+<pre>
+#javac -target 1.4 -source 1.5 showProps.java
+javac: source release 1.5 requires target release 1.5
+</pre>
+Incidentally showProps.java has absolutely no new 1.5 features; it just
+dumps System.getProperties to a console. So from this we can deduce the
+following things; 1) The compiler does not 'evaluate' the code it is
+compiling for compliancy of 1.4 or 1.5 and adjust the -source parameter
+accordingly; and 2) backtargeting will not be allowed under any
+circumstances - the compiler refuses.<br>
+<br/>
+So what does all this mean to us programmers. It means many different
+things to different people. Here's a few of the more 'standardised'
+thoughts on this.<br/>
+"I won't move to J2SE5.0 because....<br/>
+<ul>
+<li>it doesn't play well with 1.4</li>
+<li>my appserver vendor doesn't support it and won't for the next X months</li>
+<li>I don't like any of the new stuff anyway so neeeerrrhhhh!"</li>
+<li>Classes that are 1.4 compatible, compiled under 1.5 don't work with 1.4</li>
+</ul>
+Some of these are based on real fears about the extent of change between 1.4 and 5.0</br>
+<br/>
+Lets look at them in turn<br/>
+<br/>
+<b>It doesn't play well with 1.4</b><br/>
+Yes you have the '-target 1.4 -source 1.4' combination, but the issue goes much
+deeper than this. In a distributed environment which can use java objects,
+such as RMI or JINI, or indeed any serializable object sent down a socket can cause a major concern; if everything uses the '-target/source 1.4', then the parts of J2SE5.0
+that you do want to use (the new concurrency package, for instance) are
+potentially out of reach.<br/>
+<br/>
+<b>My Appserver vendor......</b><br/>
+This is a big issue, and is not only technical, but political as well. And
+it's not only appserver vendors, any java-based product your company has
+invested in, will have developers going through exactly the same issues as
+you, and you won't be able to fully make a move to 5.0 until they do.
+Some people will get worried, if you suddenly start running a J2EE server
+on 5.0, because your support may be invalidated. Even if worries of
+significant differences in operation between 1.4 and 5.0 are unfounded,
+many companies and IT departments will not take the risk. And this is
+completely understandable. My point is rather than thinking about what the
+appserver is running under, if you have external programs that interface to
+it, you may be able to run those under 5.0 , yet you need to maintain
+compatability with the 1.4 appserver (because of reduction of risk). This
+gives you a possible path to move into 5.0 development, whilst not
+tampering with the operational environment of your appserver.<br/>
+<br/>
+<b>I don't like all the new stuff anyway......</b><br/>
+Fair enough, but it'll catch up with you in the end, whether you like it or
+not.<br/>
+<br/>
+<b>Classes that are 1.4 compatible, but compiled under 5.0 don't work under 1.4</b><br/>
+<br/>
+This is simply the class versioning problem.<br/>
+<pre>
+Exception in thread "main" java.lang.UnsupportedClassVersionError:
+my/service/ServiceStartup (Unsupported major.minor version 49.0)
+</pre>
+And there is very,very little you can do about this.<br/>
+<br/>
+<h2>Possible solutions</h2>
+
+Really, this requires some thought on your part, a fair bit of grunt work
+with Ant, and a little bit of compromise.<br/>
+<br/>
+The first key thing about using J2SE5.0 in a predominately 1.4VM
+distributed environment, is knowing how much the outside environment needs
+to know about your service.<br/>
+The second key thing to remember, is that J2SE5.0 can load 1.4 classes -
+completely obvious I know, but it is very important to this discussion.<br/>
+<br/>
+For Jini and RMI programmers, most distributed interactions occur through
+interfaces and proxies and you can quickly get a fair idea of which classes
+are required to be known about at compile-time (and if using mobile code,
+run-time) by a 1.4VM. It is these classes and library files that must be
+compiled with '-target 1.4 -source 1.4'. So these files must not contain
+any 5.0 specific constructs- no annotations, generics, enums, vararg
+declarations, static imports, and of course no new package references. Once
+you've done this you're nearly there. So let's move onto the Ant builds<br/>
+<br/>
+
+My 1.4 builds generally consisted of a javac "*" approach, <br/>
+<b>Note:</b> Angle brackets replaced with square brackets.
+<pre>
+	[javac srcdir="${src}" destdir="${build}"]
+		[classpath refid="project.class.path" /]
+	[/javac]
+</pre>
+Then I jar'ed up my interface and code download jars from the 'build'
+directory and voila, job done. For a mixed environment, it's a bit more
+fiddly. I decided to go for three separate compilation steps.<br/>
+<pre>
+	[target name="compile" depends="init"]
+		[echo message="Compiling J2SE 5.0 base build....." /]
+		[javac srcdir="${src}" destdir="${classes}"]
+			[exclude name="**/*Test.java" /]
+			[classpath refid="project.class.path" /]
+			[classpath refid="jaxbpath" /]
+		[/javac]
+		[echo message="Compiling interface classes for 1.4 VMs" /]
+                [javac destdir="${classes14intf}" source="1.4" target="1.4" srcdir="${src}"]
+			[include name="my/service/ServiceDef.java" /]
+			[include name="my/service/MyServiceException.java" /]
+			....
+			....
+			[exclude name="**/*Test.java" /]
+			[classpath refid="project.class.path" /]
+			[classpath refid="jaxbpath" /]
+		[/javac]
+		[echo message="Compiling dl classes for 1.4 VMs" /]
+                [javac destdir="${classes14dl}" source="1.4" target="1.4" srcdir="${src}"]
+			[include name="**/*Stub.class" /]
+			[include name="my/service/ServiceDef.java" /]
+			....
+			....
+			[classpath refid="project.class.path" /]
+			[classpath refid="jaxbpath" /]
+		[/javac]
+	[/target]
+
+</pre>
+I already knew what files to compile for the 1.4 jars, because I was
+specifying them in the <b>[jar]</b> task. For safety's sake, I decided to
+compile the classes for each part into separate directories, so that
+versions would not get overwritten. I then jar'ed each individual directory
+up into the proper jar files.<br/>
+i.e.<br/>
+${classes} =&gt; myService.jar; ${classes14intf}=&gt; myService-intf.jar;
+${classes14dl} =&gt;myService-dl.jar.<br/>
+<br/>
+I then moved my test clients to another project and compiled those for 1.4
+(using the source and target flags). I made a small change to my service,
+which at the time was still completely 1.4 compatible, a very simple change
+- ArrayList<string> stringlist = new ArrayList<string>();<br/>
+<br/>
+Just to be sure, I got both the client and the service to output the
+content of "java.vm.version". Once everything was compiled, I decided to
+give it a try, and it worked!<br/>
+<br/>
+My 1.4 client was happily communicating with my service running under 5.0
+without any problems. Of course, this isn't completely conclusive, but I
+can't see many problems beyond moving a few classes into the 1.4 builds.<br/>
+<br/>
+Of course there is a downside - no interfaces, or dependent classes can use
+5.0 stuff; your ant builds start to get a bit bloated; you have to be more
+diligent when you change stuff - you can't just think "hey, I'm on 5.0",
+and go adding things in everywhere. But for all these compromises you need
+to make, at least it can be done. And I think they are only small
+compromises.<br/>
+<br/>
+You may also want to look at reorganising your Ant build.xml so that you
+compile your 1.4 stuff, create a 1.4 library jar, and then exclude any
+classes in that jar from being built with 5.0, but use this library jar in
+the 5.0 build. So in effect you build two/three partial builds that
+together create your application<br/>
+<br/>
+So if I can get a Jini2.0 service with all it's distributed object finery working in
+a mixed VM environment, then there's hope for anyone, regardless of what
+you're working with, be it J2EE or any other distributed environment.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=74045&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Calum Shaw-Mackay adds a new entry to <a href="../index.html$/blogger=calum.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/calum.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D74045&amp;title=Building+J2SE5.0-enabled+Jini+services+in+a+mixed+VM+environment&amp;bodytext=Yes%2C+J2SE+5.0+is+out%2C+and+as+much+as+we+all+would+like+to+use+it%2C+we+know+that+there+are+some+things+that+just+won%27t+happen+over+night+-+such+as+mass+adoption+by+Appserver+vendors%2Cetc.+But+if+you+are+willing+to+make+a+small+compromise+you+can+use+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D74045&amp;title=Building+J2SE5.0-enabled+Jini+services+in+a+mixed+VM+environment">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D74045&amp;title=Building+J2SE5.0-enabled+Jini+services+in+a+mixed+VM+environment">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/calumshawmackay.jpg"/></td><td>Calum Shaw-Mackay is an architect on Java and Jini systems, working in the UK. His interests lie in distributed computing, adaptability, and abstraction. Calum has been using Jini for longer than he would care to mention. His main area for taking the blame (some people would call it 'expertise') is systems integration and distributed frameworks, and is an advocate of using Jini's unique strengths to build adaptable enterprise systems. His opinions are his own. He's tried to get other people to take his opinions off him, but they just won't.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Calum Shaw-Mackay. All rights reserved.</div>
+</p></p></p></p></string></string></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

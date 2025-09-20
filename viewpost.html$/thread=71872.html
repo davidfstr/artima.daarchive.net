@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Java and coolness, a discussion</title>
+<meta charset="utf-8"/>
+<meta content="Jack Shirazi" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=jacksjpt.html">Jack Shirazi's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=71872.html">Discuss</a> | 
+<a href="mailto:?subject=Java and coolness, a discussion&amp;body= %0AArtima Weblogs %0AJava and coolness, a discussion %0Aby Jack Shirazi %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=71872">Email</a> | 
+<a href="../viewpostP.html$/thread=71872.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=67523.html" title="Java IDE comparison">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Java Performance</span><br>
+<span class="ts">Java and coolness, a discussion</span><br/>
+<span class="as">by Jack Shirazi</span><br/>
+<span class="pd">September 22, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+My discussion with an experienced but disillusioned Java programmer
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+In my <a href="../_/http/www.javaperformancetuning.com/news/news045.shtml" target="_blank">last newsletter</a>, I laid into those who criticise Java for what I see as simple jealousy.  That lead to the following discussion with one of my readers, who I call "B" (I'm the "J" correspondent in the following discussion). 
+<p>
+B. I've been a J2EE programmer for 3 years now, and a Java programmer for 6. But, I only use them to pay the bills. Never under any circumstances have I written a personal application in Java. I feel I fall into the category of one who thinks Java is woefully uncool, and knows intimately why.
+<p>
+J. Okay, I've been one for 9 years, and written dozens of personal Java apps. And enjoy it all the time. But let's hear what you have to say.
+<p>
+B Firstly, you said 'In I.T. it seems, only new or unsuccessful niche things are cool'. Well UNIX is still cool... as is C... and they are both older and more popular and more successful than Java. You can't hop online at all these days without using both of those technologies... the same cannot be said about Java.
+<p>
+J. I'd hardly call Thompson and Ritchie's Unix cool. Or BSD. Maybe you mean Linux? Or do you throw in those early ones and the whole of HP/UX, Solaris, RS/UX, to mention but a few? Linux isn't so much cool as a stand against M$.
+<p>
+J. And C is cool? I think you are living in the past. C is a workhorse, but cool? To say that a 35 year old language that is still going is more successful than a 10 year old language that is still going is a truism. And Fortran is even more successful than both on that basis - there is still more scientific computing using Fortran than C or Java. Though my experience is that Java is finally weaning them off Fortran. But I don't understand your point about hopping online. Mosaic and IE were written before Java was released, and all commercial browsers are derivatives of these, so that is hardly surprising. Are you suggesting that if Java is a better language, then everyone should quickly move onto a Java based browser? Why? Technology that works should be used until it no longer works - our industry has a woeful inability to eliminate bugs rapidly, so the older the product the less buggy.
+<p>
+B. Most of the folks I talk to think C is 'cool' (along with BSD), mainly because coding it gives you the bare-metal feel demanded by hard-core programmers. Its not great for consultants, because of the learning curve, and you have to reinvent the wheel sometimes. But Perl and Python can save you there, with even less code than Java.
+<p>
+J. Okay, I guess we'll have to disagree on this one. I just cannot see C or BSD as cool. For "bare-metal" feel, Perl is way nicer, you can hit any sys call in a very flexible way, and it is way more dynamic. I used to do that kind of thing. But nowadays that's real boring. The action for me is a "bare-web" feel. And if you want to hack around the web, Java is perfect.
+<p>
+B. Okay, we'll agree to disagree. Let's move on to your 'J2EE is in a thousand successful commercial applications and cannot be considered acedemic'. But you didn't really address the question there. J2EE is woefully academic - they focus far too much on what is RIGHT, as opposed to what makes sense from a practical standpoint. Alas, the most popular piece of the J2EE framework is JSPs, and almost didn't make it into the spec. Its popular in large part because it is INCORRECT. There is no MVC, barely any seperation of components, its all one big mess. Its the most popular piece of J2EE because its least academic, and most like those horrible ASP/PHP frameworks... and nobody at Sun has bothered to understand why.
+<p>
+J. But JSP is J2EE. And so is JDBC. And JMS. And Servlets. I suspect you mean EJBs when you are talking about academic. But EJB shortcomings are well known in the Java community. Personally I normally recommend not to use them unless you know why you need them. Why tarnish the whole of J2EE because of EJB? You might as well say Linux is a failure because it has fragmented into multiple versions. You can always find things to pick at in anything.
+<p>
+B. Okay, I'll make this point: if J2EE worked as well as other frameworks did, then what would be the purpose of your site? Why on earth would so many people be begging you for performance tuning advice, or tips and tricks for avoiding J2EE pitfalls?
+<p>
+J. You've got this backwards. Java made my site possible because there are so many tools for Java and capabilities in the JVM. Kirk and I made the site a success by working damn hard. There are plenty of other tuning sites for different things - like linux, just about every database, C, C++, and much more. When I was researching for my book, I gathered together a whole list of C tuning stuff - and found half a dozen books with one or more chapters on tuning C programs. And I found many C programmers bemoaning that lack of tuning information available for C. I just wasn't interested in writing a 'C tuning' book. There isn't a language that doesn't need tuning, because of human programmer inefficiencies, and because of the number of possible contention points in any complex program - especially concurrent request handling distributed applications.
+<p>
+B. Let's move back to the core gripe. I like Java... I just dont like the direction its been heading for the past 3 years, and I dont think it has much of a future. And I'm not alone. Half the Java programmers I know feel the same way... the rest either dont know any other languages better, or have faith that eventually Sun will make things work well.
+<p>
+J. Chuckle. Well I guess I'm betting my career that you are wrong. I'm sure there are better things than Java. But not at the moment, at least nothing mainstream is in my opinion - not C, C++, C#, VB, Perl, PHP, Delphi, Python, SQL, Javascript. Which are the next 10 most popular languages nowadays. Of these, Perl is nice, and I still use it for lots of things. But back when I was a full time Perl programmer, we tried to build large scale projects with Perl and found it impossible, the stuff was just unmaintainable no matter how rigorously you tried to follow a set of coding standards. A 7,000 class project in Perl would never be feasible. A 7,000 class project in Java is commonplace.
+<p>
+
+B. My main gripe is that Java peaked in 'coolness' around about Java 1.1.  Since then very little work has been done on the 'guts' of Java, and instead they kept focusing on bigger, more academic, and more bloated features. Java 1.2 added 'Swing', the academically correct yet ultimately useless GUI toolkit. J2EE brought us lots of things very few people need (like EJBs, JNDI, and RMI in general), as well as old concepts from people outside the J2EE group entirely (Servlets, JSPs, JDBC, JMS, etc.)  Even today, some of the 'coolest' Java work these days is being done by IBM, not Sun.
+<p>
+J. I think this is called "making it a success".
+<p>
+B. In the minds of hard-core developers, allowing the branching of Java is the only way to ensure it can evolve into a better language. In the minds of consultants and project managers, branching is ALWAYS a nightmare, so it should be stopped. Problem.
+<p>
+J. Again, I guess we'll disagree. I see Linux fracturing as one of its really big problems. It would be significantly more successful if there was one guaranteed version rather than a free for all. And that's exactly the reason Windows beat out the other Unix's - MS guaranteed a single reference point compared to the Unix vendors who fought each other into a lose-lose situation. Saying you support Java branching is the same to me as you saying you want .NET to become the monopoly developer environment.
+<p>
+B. The most insightful comment I saw on this subject was on Slashdot, where somebody said with all sincerity, that Java will be the next COBOL. Not that Java isn't a better language, but it will be what a lot of overly complex business apps will be written in, for better or worse... and they'll always need to be maintained. Good news - you'll probably always be able to find work if your speciality is J2EE.
+<p>
+J. LOL. Everything is the next COBOL. I didn't find that insightful the first time I saw it in the 90's, and you probably saw the millionth incarnation of "X is the next COBOL".
+<p>
+B. When the hard-core programmers stop thinking Java is 'cool', they stop making those so-called niche programs that extend it. And where would you be today without those crazy guys? Without Servlets, without JMS, without JDBC, without JBOSS, without STRUTS, without OSCache, and without Log4J. You should be VERY worried that they are leaving Java in droves, while Sun is tightening its grip... because now you have to rely on Sun alone to save Java.
+<p>
+J. Except there seem to be more and more projects in Java every day. And no, I'm not in the least worried, because I don't see people leaving Java in droves, I see them coming all the time. I guess we just move in very different circles. When Perl was becoming popular and CPAN was being set up in the mid-90's, I was in there helping do some (a very tiny bit mind you) of the core. The excitement was fantastic, and the result was a set of supporting modules which surpassed anything I ever believed possible. More comprehensive and extensive than anything any other language had. And Java has surpassed that as far as I'm concerned. Only recently mind you. But that's not surprising, its only just beginning to mature.
+<p>
+B. "I guess we just move in very different circles.". Bingo... the people you know and trust think Java is 'cool,' whereas the people I know and trust think its 'uncool.'  Therefore, I see people leaving in droves, whereas you see people coming. So the question boils down to, which group is more reliable in making that judgement? Probably neither... but I'm still going to rant a bit more.
+<p>
+B. I generally attend O'Reilly conferences, since all the other ones are too full of marketing fluff for my tastes. 5 years ago, people were all excited about Java. I talked with a lot of the guys making Tomcat, and the guys who literally 'wrote the book' on a lot of the killer Java technologies, and J2EE. But recently, the people excited about doing work in Java are few and far between. Most of those guys have moved on to new projects, many of which do not use Java. And even those who do still work with Java criticise Sun and Java regularly because they are too focused on bloat, and not on functionality. A lot of them are closet Python or Objective-C bigots. Its really really rare for me to find somebody excited about using Java. And I also see no 'converts' anymore. Nobody who was using Perl or PHP or C who finds Java and says 'now THATS the way to do it!' It used to happen, but not in the past few years. How about you?
+<p>
+B. Without those crazy hackers (O'Reilly lamely dubbed them 'alpha geeks') thinking Java is cool and extending it... well... I'm concerned that Java will cease being innovative. Because Sun certainly doesn't get it. Maybe being closer to the Java pulse you know about some cool projects that I dont... but Ive been looking... and everything at java-source.net and sourceforge.com is just the same thing over and over. Extensions of old ideas, or ports of applications from other languages. Nothing new...
+<p>
+J. It's those different circles. I see lots of great creative projects hitting exactly the sweet spot for me. Standardized APIs to expert systems, fuzzy logic additions, internet spidering, better data structures, CRM projects, Java games, all the stuff I can use to do the things I want. Again, I guess we'll agree to disagree.
+<p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=71872.html">12
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=71872&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jack Shirazi adds a new entry to <a href="../index.html$/blogger=jacksjpt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/jacksjpt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D71872&amp;title=Java+and+coolness%2C+a+discussion&amp;bodytext=My+discussion+with+an+experienced+but+disillusioned+Java+programmer&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D71872&amp;title=Java+and+coolness%2C+a+discussion">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D71872&amp;title=Java+and+coolness%2C+a+discussion">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Jack Shirazi is the author of O'Reilly's "Java Performance Tuning" and director of the popular website <a href="../_/http/www.JavaPerformanceTuning.com/index.html">JavaPerformanceTuning.com/</a>, the world's premier site for Java performance information. Jack writes articles for many magazines, usually about Java performance related matters. He also oversees the output at JavaPerformanceTuning.com, publishing around 1 000 performance tips a year as well as many articles about performance tools, discussion groups, and much more. In his earlier life Jack also published work on protein structure prediction and black hole thermodynamics, and contributed to some Perl5 core modules "back when he had more time".</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Jack Shirazi. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

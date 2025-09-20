@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Web Standards: Only Less of a Mess</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=204711.html">Discuss</a> | 
+<a href="mailto:?subject=Web Standards: Only Less of a Mess&amp;body= %0AArtima Weblogs %0AWeb Standards: Only Less of a Mess %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=204711">Email</a> | 
+<a href="../viewpostP.html$/thread=204711.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=204059.html" title="Automatically Synchronize Your Site">Previous</a> | 
+<a class="sl" href="thread=205107.html" title="Java One, Day One">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Web Standards: Only Less of a Mess</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">May 4, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I've just finished reading Jeffrey Zeldman's book "Designing with Web Standards" (New Riders 2003), and it has answered a number of questions and dashed a fair number of my hopes for actual standard standards in the near future.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>The book was recommended by one of the attendees of the <a href="../_/http/www.mindview.net/Conferences/ProgrammingTheNewWeb/index.html">Programming the New Web</a> conference. The promise of web standards seems to be this: you give the right XML tag to force the browser into "Standards compliance mode" mode, then use CSS, and your pages will look the same across all browsers.
+
+<p>This lovely idea got me very excited when I first heard it at the conference, and I have had <i>some</i> success creating pages this way. But I've also found that the promise is far from fulfilled, and achieving pages that just work <i>reasonably</i> across browsers doesn't happen just by adopting XHTML and CSS. Far from it.
+
+<p>Let me first say that I'm mostly amateur when it comes to building web pages. I've created all the pages and markup on my own site, but I don't do it day-in, day-out as a job. In addition, I am empowered to make decisions like "it's too hard to make this layout work across browsers, so I'll change the layout to something that will work more reasonably." Whereas the professional site builder will probably have to make the layout work rather than changing the layout, which could mean some heavy-duty head banging.
+
+<p>Also, I've found the use of CSS to be an interesting and diverting challenge, kind of like doing a jigsaw puzzle is for some people. So I end up spending far too much time just playing with a single page in order to understand the CSS issues and make it come out decently. In my own mind I don't consider this time to be lost, because I can chalk it up to "research," and I believe that what I learn will continue to pay for itself in one form or another over the years.
+
+<p>The upshot is that, with XHTML and CSS, it's now <i>possible</i> to produce documents that work reasonably well across browsers without having to embed all kinds of messy browser-specific code. But the result is a bit like Java: the promise was "write once, run everywhere" and the reality was "write once, test everywhere." And to get things to actually work across browsers, you have to learn the tactics that work the best, and this learning process appears to happen on an individual, trial-and-error level.
+
+<p>I would go further and say that the whole web is a mess. CSS and XHTML are great but it's still "write once, test everywhere" at best. Plus now we have the IE "protected content" issue which makes the visitor click 3 times every time they go to a page that has Javascript on it. So the web is still a mess, but less of a mess -- we've seen definite improvements.
+
+<p>Sometimes it's hard to tell whether it's worse, on a complex layout, to struggle with styles or to use old HTML and try to force everything into place. Because of this, I'd say that web standards haven't lived up to their promise yet. If they ever do, then it should be unquestionably obvious that you should always use XHTML and CSS on all projects.
+
+<p>On that note, despite the CSS goal of eliminating table-based markup, it appears that there are still times when resorting to tables is the best solution, albeit in concert with CSS. One example I encountered was in creating radio buttons with button descriptions that were long enough to wrap. In order to get the descriptions to left-align, I ended up using a table. Despite that, it's clear that the results of occasionally using tables are far cleaner than the old way of using tables everywhere.
+
+<p>Unfortunately, CSS, as I shall describe below, is a mish-mash that requires you to remember lots of special cases. Even though it's significantly less bad than old HTML, it's really unfortunate that they couldn't have gotten in right this time.
+
+<h1>The Book</h1>
+<p>First, some comments about Zeldman's book.
+
+<p>Roughly the first 1/3 of the book is almost a guide for selling web standards to your non-technical manager. If you already buy into the idea of web standards, this can be safely skipped in favor of the second 1/3, which introduces the meat of the issues and how to use the technology -- and how the technology is <i>supposed</i> to work. The last 1/3 of the book goes into all the gotchas about how the technology <i>really</i> works, and a number of workarounds that may be obsolete by now.
+
+<p>Although <i>Designing with Web Standards</i> is an excellent book from the standpoint of content, historical perspective and practical information, it is somewhat dated in the browsers it talks about, but this doesn't really diminish the experience of the book.
+
+<p>What <i>does</i> diminish the experience is an excess of what I'll call the "I'm clever and funny" syndrome that I see in far too many technical books these days (even, unfortunately, in a lot of the newer O'Reilly books). I think it arose from books that were trying to gently prod beginners into learning frightening new technologies, and in those books it served a purpose.
+
+<p>But when you write a book that people want to read for information and you decide that they also want to help you try out your stand-up comedy routines, you are treading on dangerous ground. I would have appreciated a smaller book (believe me, I hope I never publish a <a href="../_/http/mindview.net/Books/TIJ4/index.html">1482 page volume</a> again) that didn't force me to scan for information ("is he saying something useful here, or is he just vamping?"). There are times when Zeldman will go on for a paragraph or two with attempted comical banter that adds absolutely no information, and the reader eventually learns to skip forward when these occur. But it does not serve the reader to force them hunt for information among non-information.
+
+<p>At one point, Zeldman seems to start becoming conscious of this. On page 308: "Gosh, that was quite a sentence. (Must. Delete. Overwrought. Sentence. Before. Manuscript.)" But alas, he and his editor both thought this was so hilarious that they left it in, along with the overwrought sentence. In fact, 5/6th of that whole paragraph was wasted time. (Please. Stop. Drivel.) Because of this, I would guess that the book might lose 1/4 of its pages in the next edition, especially with a better and more aggressive editor, and go from "good with annoyances" to "great."
+
+<p>Many of the browser discussions are dated and he talks a lot about browsers that are probably not used anymore. And although CSS can really reduce the bandwidth needed by your site, he goes a bit far in his zeal for smallness, to the point of making short unreadable URLs (often to load gif files that overwhelm the difference of a few characters in a URL), while at the same time making long, more readable names for styles -- which will be used at least twice, and sometimes many more times. Sometimes his lack of technological understanding shows in other ways; at one point he asserts that Javascript embedded in a page will "run on the user's hard disk."
+
+<p>Even though it (really) needs an update, and you have to wade through a lot of stuff that is no longer relevant along with a lot of mindless drivel that the author and editor should have removed, this is still a valuable book to read. A lot of things became clearer to me, especially about CSS, that the other CSS references I have couldn't seem to convey. And the overall understanding of the issues and the big picture of the state of web standards is invaluable.
+
+<h1>CSS Has Plenty of Quirks</h1>
+<p>Possibly the biggest problem is that CSS features don't apply orthogonally. That is, you can learn a feature that works in one situation, and then assume it should work in another situation, but it doesn't. For example, changing the text size seems like it should apply in all situations, but if you try it in a <b>a:hover</b> style, the text size doesn't change when you hover the mouse over a link. There's nothing like seemingly straightforward rules with lots of exceptions to make an apparently simple system ver complicated.
+
+<p>Not to mention the whole testability issue. No one was thinking about testing when they created HTML, and they didn't seem to think any more about it with CSS.
+
+<p>I'd still like really basic things, like some standard way to include other HTML files, and ways to create the equivalent of functions.
+
+<p>Div and span can produce different behaviors under IE and Firefox -- if you start changing DIVs to SPANs you can find elements jumping to different parts of the pages depending on which browser you're using.
+
+<p>And here's a huge question: why do I have to use DIV and SPAN to delimit styles? Why can I create &lt;MYOWN&gt; tags?
+
+<p>CSSZen Garden pages don't all work with Firefox, and I suspect they don't all work with IE.
+
+<p>The <b>&lt;q&gt;</b> quote tag works with Firefox but not with IE. This produces typographic ("round") quotes.
+
+<p>You can center text, but as far as I can tell there's no CSS way to center any other components. The best I could find is to add 'align="center"' as an attribute of the div tag. If so, it's odd, because you're supposed to be able to do everything with CSS that you formerly used HTML markup for.
+
+<p>In Firefox, you can go to the "Tools" menu and select "Page Info" to see what mode a particular page is rendered in. As far as I know, there's no way to do this in IE.
+
+<p>The CSS2 "Content" tag -- a very good idea, and why did it take them until CSS2 to figure it out? -- is not supported yet in IE. So it's basically useless because they didn't think of it until CSS2.
+
+<p>I've had borders that disappear when going from web view to print. Usually the solution is to add more margin, but you'd think that if it shows up in the browser, it ought to print as well.
+
+<p>I've also had borders appear when some unrelated change happened. I would end up spending a lot of time tracking down where the problem was (in one case it appeared to be a browser bug), and I had to then figure out some workaround, in one case by changing the border so that it was attached to a different style tag.
+
+<p>The real problem I see here is that behavior is not consistent, and often not associated with the style that I change. The application of styles ought to be logical, and yet they aren't because of odd behaviors. And what's worse, it's very difficult to tell whether I'm misusing the styles or whether there's a bug in a browser, or worse -- both.
+
+<p>Here's another one: if you define a style id for the HR tag and give it a left margin and width, it behaves differently between FireFox and IE; it's in noticeably different positions. But if you use a plain HR tag and surround it with a style that has a left margin and width, it behaves the same in both browers. I've been running into issues like this all the time, and I've yet to stumble across any writing about "practices that work." Everyone just seems to treat all approaches as if they will produce the same results.
+
+<p>Positioning can be done in a myriad number of ways, kind of like Perl: "there's more than one way to do it," so you're left wondering what the best way is. Well, for some kinds of positioning you get radically different behaviors between IE and Firefox. The positioned elements will appear in completely different parts of the page.
+
+<p>I ended up having the most success when trying to arrange text blocks across a row by using "align:float" and setting the left-margin for each element. That produced very consistent results between IE and Firefox. But I only got to this by trial and error; all the docs and books that I looked at (except Zeldman's) gave the impression that you could achieve the same results regardless of what technique you used, and none that I saw suggested that "align:float" would give consistent results for positioning.
+
+<p>I'm guessing that, because of the mess of early HTML days, everyone who learns to build pages just goes through this process and figures out the necessary bag of tricks, and so the authors of the books that I perused never thought of saying "here's what it would appear you can do with any technique, but here's the technique that works best." Admittedly that would take a lot more work, and I know whereof I speak when I say I understand how someone would back away from such a task. It's easy to get started on a book, then discover how much work it's really going to be, then look at how much you're really likely to get and decide that it's not worth the extra effort. (Which is why you should never write a book for the money you'll get from the publisher -- in this equation, only the publisher has figured out how to make books a profitable business).
+
+<p>Firefox handles fonts very differently than IE; one example is sizes. You can't make a font any smaller in FireFox than its standard size. So it ignores font sizes like 75% and 0.75em. It also ignores the font size keywords <b>xx-small</b>, <b>x-small</b> and <b>small</b>.
+
+<p>I wonder about web editing systems, such as DreamWeaver and the like. Do they generate web standard code? It seems like it would be much, much easier to create a web editing system that used standards, because the code generation seems like it might be much easer.
+
+<h1>Nonetheless, I'm Not Going Back</h1>
+<p>So the best you can do, without making a complete mess of things trying to make it look identical across browsers, is to get it to look tolerable in multiple browsers. This will often require some compromises.
+
+<p>It's possible to design around issues, usually by simplifying your design (assuming you are in a position to make that choice). However, if I get into a situation that requires anything fancy, at this point I'm not going to try to jump through all the browser hoops; instead I'll build it with Flash using Flex.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=204711.html">14
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=204711&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204711&amp;title=Web+Standards%3A+Only+Less+of+a+Mess&amp;bodytext=I%27ve+just+finished+reading+Jeffrey+Zeldman%27s+book+%26quot%3BDesigning+with+Web+Standards%26quot%3B+%28New+Riders+2003%29%2C+and+it+has+answered+a+number+of+questions+and+dashed+a+fair+number+of+my+hopes+for+actual+standard+standards+in+the+near+future.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204711&amp;title=Web+Standards%3A+Only+Less+of+a+Mess">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204711&amp;title=Web+Standards%3A+Only+Less+of+a+Mess">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Open source saves another marriage</title>
+<meta charset="utf-8"/>
+<meta content="Barry Warsaw" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=pumpichank.html">Barry Warsaw's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=234982.html">Discuss</a> | 
+<a href="mailto:?subject=Open source saves another marriage&amp;body= %0AArtima Weblogs %0AOpen source saves another marriage %0Aby Barry Warsaw %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=234982">Email</a> | 
+<a href="../viewpostP.html$/thread=234982.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=174099.html" title="Memory debugging in Python -- fighting the GC">Previous</a> | 
+<a class="sl" href="thread=251755.html" title="Stupid datetime testing">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software Jam Sessions</span><br>
+<span class="ts">Open source saves another marriage</span><br/>
+<span class="as">by Barry Warsaw</span><br/>
+<span class="pd">July 19, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+My wife saved two important SD cards from her camera to a faulty USB disk I'd given her.  The images got corrupted and she'd deleted the files from her cards.  Could Open Source come to the rescue?  Let's hope so because divorces are expensive!
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">Barry Gets In Trouble</h1>
+<p>My wife recently went on a trip with her sisters to <a class="reference" href="../_/http/en.wikipedia.org/wiki/Nicaragua/index.html">Nicaragua</a>, and took lots
+of great pictures with her <a class="reference" href="../_/http/en.wikipedia.org/wiki/Digital_SLR/index.html">digital SLR</a> camera.  The hard drive on her Mac
+had filled up so I gave her a USB external drive that I'd used several times
+before, confident that she could export her images onto it instead.</p>
+<p>Well, apparently there was something wrong with the disk because all the
+images exported from the card got corrupted.  To make matters worse, she'd
+deleted the images from the cards.  Needless to say, she was very discouraged
+at the loss of these pictures, and I started to fluff up the <a class="reference" href="../_/http/images.cafepress.com/jitcrunch.aspx$/bG9hZD1ibGFuayxibGFuazoxMjVfRi5qcGd8bG9hZD1MMCxodHRwOi8vaW1hZ2VzLmNhZmVwcmVzcy5jb20vaW1hZ2UvMjIwNzYwNDdfNDAweDQwMC5qcGd8fHNjYWxlPUwwLDMxOSwzMTksV2hpdGV8Y29tcG9zZT1ibGFuayxMMCxBZGQsODMsODF8Y3A9cmVzdWx0LGJsYW5rfHNjYWxlPXJlc3VsdCwwLDQ4MCxXaGl0ZXxjb21wcmVzc2lvbj05NXw=.aspx">throw pillows</a>
+on the couch.</p>
+<blockquote>
+</blockquote>
+<div class="section">
+<h1><a id="barry-uses-the-googles" name="barry-uses-the-googles">Barry Uses The Googles</a></h1>
+<p>Like any caring and mortally afraid husband, I reassured my wife that I could
+fix things, so I took the cards and her camera and retreated to my cave, er,
+office.  Knowing almost nothing about <a class="reference" href="../_/http/en.wikipedia.org/wiki/Secure_Digital_card/index.html">SD cards</a>, I immediate typed in the
+first brilliant search that came to mind: "recover SD card images".  This lead
+me to lots of commercial software products, almost all of which ran
+exclusively on Windows.  Of course, we're a Windows-free home, so I prepared
+for a long stay on that very uncomfortable couch.</p>
+<blockquote>
+</blockquote>
+<p>Motivated by the phantom twinges prickling my <a class="reference" href="../_/http/www.triggerpointbook.com/gluteus1.gif">lower back</a>, I did a clever
+thing: I went to Wikipedia and looked up SD cards.  As most of you probably
+know, SD cards for digital cameras are usually formatted with FAT16 or FAT32
+file systems.  This ancient crufty file system was actually an advantage for me
+in this case, because deleted files don't actually get deleted, they
+essentially get hidden by being renamed.  I'd never trust my company data to
+such an insecure file system, but now I was glad for it, and I was beginning to
+smell the <a class="reference" href="../_/http/www.worldonaplate.org/photos/uncategorized/2007/04/09/browine_testa.jpg">brownie points</a> baking.</p>
+<blockquote>
+</blockquote>
+<p>Sharpening up my Google-fu led me to this great page:</p>
+<p><a class="reference" href="../_/http/lists.slug.org.au/archives/slug/2006/05/msg00002.html">http://lists.slug.org.au/archives/slug/2006/05/msg00002.html</a></p>
+<p>Here, there's lots of good advice on using <cite>dd</cite> and <cite>fsck</cite> to try to recover the
+files.  The <cite>dd</cite> command was particularly useful as I could experiment on a copy
+of the SD card's image and not directly on the card.  Unfortunately, I
+couldn't make much headway with <cite>fsck.vfat</cite>.  I hoped the dog would welcome some
+(purely platonic!) <a class="reference" href="../_/http/growabrain.typepad.com/photos/uncategorized/sleeping_dog_1.jpg">company tonight</a>.</p>
+<blockquote>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="open-source-to-the-rescue" name="open-source-to-the-rescue">Open Source to the Rescue</a></h1>
+<p>More googlin' finally led me to this page:</p>
+<p><a class="reference" href="../_/http/www.cgsecurity.org/wiki/PhotoRec/index.html">http://www.cgsecurity.org/wiki/PhotoRec</a></p>
+<p>PhotoRec is an open source digital image recovery program that ignores the
+underlying file system (now known to be hosed) and goes right after the image
+data.  Hmm, I wonder if it was available on my Ubuntu machine:</p>
+<pre class="literal-block">
+% apt-cache search photorec
+testdisk - Partition scanner and disk recovery tool
+% sudo apt-get install testdisk
+</pre>
+<p>(PhotoRec uses testdisk and the <cite>photorec</cite> binary is provided with that
+package.)</p>
+<p>Now, the only thing left was to thoroughly read the manual, and carefully,
+non-destructively, and systematically experimenting on the image files.  I
+noticed that it was getting pretty dark outside, and my wife was refilling her
+wine glass, so I threw caution to the wind and invoked
+<a class="reference" href="../_/http/barry.warsaw.us/software/laws.html">Warsaw's Fourth Law</a>:</p>
+<pre class="literal-block">
+% sudo photorec sdcard.bad1
+</pre>
+<p>The curses u/i was a bit clunky, but fairly easy to navigate, and my clueless
+guesses at some of the options yielded almost immediate results.  PhotoRec
+quickly recovered about 300 pictures off the first bad card!  I ran
+downstairs, tore the half-completed divorce papers from my wife's shaking
+hands, and dragged her upstairs to show her the pictures imported into
+F-Spot.  Having done almost nothing more than a bit of web searching, a
+package installation, and a shot-in-the-dark program execution, I now looked
+like a hero.  Thanks Google, Ubuntu, and Christophe GRENIER (the author of
+PhotoRec).</p>
+<blockquote>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="my-one-complaint" name="my-one-complaint">My One Complaint</a></h1>
+<p>This basic scenario has played itself out countless times in my open source
+career.  There's usually some very cool little program that does almost
+exactly what you need, but if there's a recurring theme, it's that such
+nuggets can be quite difficult to find.  You're faced with a problem, you
+suspect there's a solution Out There, but getting from problem to solution is
+a mysterious path.  How many such problems go unsolved just because their
+existing solution isn't easily found?</p>
+<p>I don't have any great ideas to make this path from problem to solution less
+windy and rocky.  I welcome your comments.  But right now, it's bed time.  Oh
+honey...</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=234982.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=234982&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Barry Warsaw adds a new entry to <a href="../index.html$/blogger=pumpichank.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/pumpichank.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D234982&amp;title=Open+source+saves+another+marriage&amp;bodytext=My+wife+saved+two+important+SD+cards+from+her+camera+to+a+faulty+USB+disk+I%27d+given+her.++The+images+got+corrupted+and+she%27d+deleted+the+files+from+her+cards.++Could+Open+Source+come+to+the+rescue%3F++Let%27s+hope+so+because+divorces+are+expensive%21&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D234982&amp;title=Open+source+saves+another+marriage">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D234982&amp;title=Open+source+saves+another+marriage">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Barry Warsaw has been developing software and playing music for more than 25 years.  Since 1995 he has worked in Guido van Rossum's Pythonlabs team.  He has been the lead developer of the JPython system, and is now the lead developer of GNU Mailman, a mailing list management system written primarily in Python.  He's also a semi-professional musician.  Python and the bass are his main axes.  Music and software are both at their best when enjoyed, participated in, and shared by their enthusiastic fans and creators.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Barry Warsaw. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

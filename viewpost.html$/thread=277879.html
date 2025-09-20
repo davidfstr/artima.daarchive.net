@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Reified Lambda Functions</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=277879.html">Discuss</a> | 
+<a href="mailto:?subject=Reified Lambda Functions&amp;body= %0AArtima Weblogs %0AReified Lambda Functions %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=277879">Email</a> | 
+<a href="../viewpostP.html$/thread=277879.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=240412.html" title="New Control Structures for Java">Previous</a> | 
+<a class="sl" href="thread=278567.html" title="Towards A Formal Specification of Reified Lambda Functions">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Reified Lambda Functions</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">December 29, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Recently, at Devoxx, it was announced that Java would get lambda functions (a.k.a. anonymous functions or closures). There are many ways of implementing these on the JVM. This post proposes that reifying lambdas is a good choice.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="reified-lambda-functions" name="reified-lambda-functions">Reified Lambda Functions</a></h1>
+<p>Lambda functions are anonymous functions that can be defined using short syntax and in many cases offer a more concise alternative to inner classes. It was recently decided to add lambdas to Java (<a class="reference" href="../_/http/blogs.sun.com/mr/entry/closures_qa/index.html">http://blogs.sun.com/mr/entry/closures_qa</a>) and a 'strawman' proposal was later given (<a class="reference" href="../_/http/cr.openjdk.java.net/~mr/lambda/straw-man/index.html">http://cr.openjdk.java.net/~mr/lambda/straw-man/</a>) for discussion on a discussion group (<a class="reference" href="../_/http/mail.openjdk.java.net/pipermail/lambda-dev/2009-December/thread.html#start">http://mail.openjdk.java.net/pipermail/lambda-dev/2009-December/thread.html#start</a>).</p>
+<p>There are many ways to implement Lambdas on the JVM, one possibility is to erase their actual types and use signatures in class files (much like generics at present). Neal Gafter has given an example (<a class="reference" href="../_/http/mail.openjdk.java.net/pipermail/lambda-dev/2009-December/000192.html">http://mail.openjdk.java.net/pipermail/lambda-dev/2009-December/000192.html</a>) that is difficult to do without erasing the types:</p>
+<pre class="literal-block">
+&lt;T&gt; #T() constant(T t) { return #() (t); }
+</pre>
+<p>The syntax used is from the referenced strawman:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">#T()</span></tt></dt>
+<dd>Means a lambda that returns a <tt class="docutils literal"><span class="pre">T</span></tt> when called and has no arguments.</dd>
+<dt><tt class="docutils literal"><span class="pre">#()</span> <span class="pre">(t)</span></tt></dt>
+<dd>Means create a new lambda that returns <tt class="docutils literal"><span class="pre">t</span></tt>, the type <tt class="docutils literal"><span class="pre">T</span></tt> is inferred and the
+expression could be written <tt class="docutils literal"><span class="pre">#T()</span> <span class="pre">(t)</span></tt>.</dd>
+</dl>
+<p>The above 'constant' example will be used as a running example below.</p>
+<p>Like generics the erasure option has problems, e.g.:</p>
+<blockquote>
+<p>1. Can't, with some erasures proposals, have two methods of the same name only
+distinguished by lambda
+type, e.g. <tt class="docutils literal"><span class="pre">filter(</span> <span class="pre">#boolean(int)</span> <span class="pre">)</span></tt> and <tt class="docutils literal"><span class="pre">filter(</span> <span class="pre">#boolean(float)</span> <span class="pre">)</span></tt> illegal
+if both in same class</p>
+<p>2. Can't have arrays of lambdas that are type safe, e.g.
+<tt class="docutils literal"><span class="pre">new</span> <span class="pre">#int()[n];</span> <span class="pre">//</span> <span class="pre">Illegal</span></tt></p>
+<p>3. Can't have <tt class="docutils literal"><span class="pre">instanceof</span></tt> tests or class references, e.g.
+<tt class="docutils literal"><span class="pre">#int().class;</span> <span class="pre">//</span> <span class="pre">Illegal</span></tt></p>
+</blockquote>
+<p>This post proposes an alternative technique that doesn't erase type information except when used in conjunction with generics.</p>
+</div>
+<div class="section">
+<h1><a id="reification" name="reification">Reification</a></h1>
+<p>You could overcome the limitations of erasure given above in many cases if you had reified lambdas (i.e. lambdas that didn't erase the type). For example supose that:</p>
+<pre class="literal-block">
+#String() constant(String t) { return #() (t); }
+</pre>
+<p>Was translated to:</p>
+<pre class="literal-block">
+Callable$String constant(String t) {
+  return new Callable$String() {
+    @Override public String call() { return t; }
+  };
+}
+</pre>
+<p>Where:</p>
+<pre class="literal-block">
+public interface Callable$0&lt;R&gt; { R call(); }
+
+public interface Callable$String extends Callable$0&lt;String&gt; {}
+</pre>
+<p>The types <tt class="docutils literal"><span class="pre">Callable$...</span></tt> are created as needed by the class loader (they are not emitted by the compiler, but for typing purposes they are known internally to the compiler).</p>
+<p>The case of primitives is more complicated because you want to avoid boxing, e.g:</p>
+<pre class="literal-block">
+#int() constant(int t) { return #() (t); }
+</pre>
+<p>Becomes:</p>
+<pre class="literal-block">
+Callable$int constant(int t) {
+  return new Callable$int() {
+    @Override public int call_int() { return t; }
+  };
+}
+</pre>
+<p>Where:</p>
+<pre class="literal-block">
+public interface Callable$Integer extends Callable$0&lt;Integer&gt; {}
+
+public abstract class Callable$int implements Callable$Integer {
+  @Override public final Integer call() { return call_int(); }
+  public abstract int call_int();
+}
+</pre>
+<p>And in the generic's case (the original example) you would erase the type (because it is already erased):</p>
+<pre class="literal-block">
+&lt;T&gt; #T() constant(T t) { return #() (t); }
+</pre>
+<p>Is:</p>
+<pre class="literal-block">
+&lt;T&gt; Callable$0&lt;T&gt; constant(T t) {
+  return new Callable$0&lt;T&gt;() {
+    @Override public T call() { return t; }
+  };
+}
+</pre>
+<p>You would use the most specific type when a function type is given, e.g.:</p>
+<pre class="literal-block">
+class StringLambda extends #String() { ... }
+#String() stringLambda = ...;
+</pre>
+<p>Become:</p>
+<pre class="literal-block">
+class StringLambda extends Callable$String { ... }
+Callable$String stringLambda = ...;
+</pre>
+<p>Except when generics are used, in which case wild-cards and a <tt class="docutils literal"><span class="pre">Callable$*n*</span></tt> interface used:</p>
+<pre class="literal-block">
+#T(S) tSLambda = ...;
+</pre>
+<p>Becomes:</p>
+<pre class="literal-block">
+Callable$1&lt;? extends T, ? super S&gt; tSLambda = ...;
+</pre>
+<p>Where:</p>
+<pre class="literal-block">
+public interface Callable$1&lt;R, A1&gt; { R call(A1 a); }
+</pre>
+</div>
+<div class="section">
+<h1><a id="difficult-cases" name="difficult-cases">Difficult Cases!</a></h1>
+<p>The cases:</p>
+<pre class="literal-block">
+#Object(String) oS;
+#String(Object) sO = #String(Object o) (o.toString());
+oS = sO;
+#Object(String)[] oSs = new #Object(String)[] {oS, sO};
+#O(S) gOS = oS; // S = String, O = Object
+boolean test = gOS instanceof #Object(String)
+List&lt;? extends #Object(String)&gt; lOS;
+List&lt;? extends #String(Object)&gt; lSO = new ArrayList&lt;#String(Object)&gt;();
+lOS = lSO;
+List&lt;#int()&gt; lI = new ArrayList&lt;#int()&gt;();
+for (int ii = 0; ii &lt; 3; ii++) { lI.add(constant(ii)); }
+#int() i = lI.get(0);
+</pre>
+<p>Are translate to:</p>
+<pre class="literal-block">
+Callable$Object$String oS;
+Callable$String$Object sO = new Callable$String$Object() {
+  @Override public String call(final Object o) { return o.toString(); }
+};
+oS = From$1$String$Object$$To$Object$String.cast(sO);
+Callable$Object$String[] oSs =
+    new Callable$Object$String[] {oS, From$1$String$Object$$To$Object$String.cast(sO)};
+Callable$1&lt;Object,String&gt; gOS = oS;
+boolean test = gOS instanceof Callable$Object$String;
+List&lt;? extends Callable$1&lt;? extends Object, ? super String&gt;&gt; lOS;
+List&lt;? extends Callable$1&lt;? extends String, ? super Object&gt;&gt; lSO =
+    new ArrayList&lt;Callable$1&lt;? extends String, ? super Object&gt;&gt;();
+lOS = lSO;
+List&lt;Callable$0&lt;? extends Integer&gt;&gt; lI = new ArrayList&lt;Callable$0&lt;? extends Integer&gt;&gt;();
+for (int ii = 0; ii &lt; 3; ii++) { lI.add(constant(ii)); }
+Callable$int i = From$0$Integer$$To$int.cast(lI.get(0));
+</pre>
+<p>Where:</p>
+<pre class="literal-block">
+public interface Callable$Object$String extends Callable$1&lt;Object, String&gt; {}
+
+public interface Wrapper { Object getWrapee(); }
+
+public static final class Wrappers {
+  private Wrappers() {}
+  public static Object unWrap(final Wrapper from) {
+    Object wrapee = from.getWrapee();
+    while (wrapee instanceof Wrapper) { wrapee = ((Wrapper)wrapee).getWrapee(); }
+    return wrapee;
+  }
+  public static boolean equals(final Wrapper self, final Object other) {
+    if (self == other) { return true; }
+    if (other == null) { return false; }
+    final Object o = (other instanceof Wrapper) ? unWrap((Wrapper)other) : other;
+    final Object s = unWrap(self);
+    return o == s;
+  }
+}
+
+public interface Wrapper$Object$String extends Callable$Object$String, Wrapper {}
+
+public interface Callable$String$Object extends Callable$1&lt;String, Object&gt; {}
+
+public final static class From$1$String$Object$$To$Object$String {
+  private From$1$String$Object$$To$Object$String() {}
+  public static Callable$Object$String cast(final Callable$1&lt;? extends String, ? super Object&gt; from) {
+    return new Wrapper$Object$String() {
+      @Override public Object call(final String s) { return from.call(s); }
+      @Override public Object getWrapee() { return from; }
+      @Override public boolean equals(final Object other) { return Wrappers.equals(this, other); }
+      @Override public int hashCode() { return Wrappers.unWrap(this).hashCode(); }
+    };
+  }
+}
+
+public static abstract class Wrapper$int extends Callable$int implements Wrapper {}
+
+public final static class From$0$Integer$$To$int {
+  private From$0$Integer$$To$int() {}
+  public static Callable$int cast(final Callable$0&lt;? extends Integer&gt; from) {
+    if (from instanceof Callable$int) { return (Callable$int)from; }
+    if (from instanceof Wrapper) {
+      final Object wrapee = Wrappers.unWrap((Wrapper)from);
+      if (wrapee instanceof Callable$int) { return (Callable$int)wrapee; }
+    }
+    return new Wrapper$int() {
+      @Override public int call_int() { return from.call(); }
+      @Override public Object getWrapee() { return from; }
+      @Override public boolean equals(final Object other) { return Wrappers.equals(this, other); }
+      @Override public int hashCode() { return Wrappers.unWrap(this).hashCode(); }
+    };
+  }
+}
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">cast</span></tt> methods create a new object; which is wasteful, but on the other hand they aren't needed often (see next section). The erasure schemes don't require 'cast' objects and therefore avoid this overhead, but on the other hand the erasure versions have similar limitations to erased generics. For the generic cases the use of wild-cards avoid the need for the cast methods (since the generics have already erased the types). The <tt class="docutils literal"><span class="pre">From$...$$To$...</span></tt> classes, like the <tt class="docutils literal"><span class="pre">Callable$...</span></tt> classes, are generated by the class loader on demand and not written by the compiler (but for typing purposes are known to the compiler).</p>
+</div>
+<div class="section">
+<h1><a id="contravariance" name="contravariance">Contravariance</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">cast</span></tt> methods above are used 'mainly' for contravariant overriding. Most OO languages do not support contravariant overriding (except for generics), but for a moment suppose that Java did allow ontravariant overriding:</p>
+<pre class="literal-block">
+abstract class Base { abstract Object m(String s); }
+
+class Derived extends Base {
+  @Override String m(Object o) { return o.toString(); } // Illegal arg should be String
+}
+</pre>
+<p>The above is type safe because the arguments to <tt class="docutils literal"><span class="pre">m</span></tt> vary contravariantly and the return types vary covariantly. The argument of <tt class="docutils literal"><span class="pre">m</span></tt> varies contravariantly in the <em>derived</em> class, <tt class="docutils literal"><span class="pre">Derived</span> <span class="pre">extends</span> <span class="pre">Base</span></tt>, but <tt class="docutils literal"><span class="pre">m</span></tt>'s argument is <tt class="docutils literal"><span class="pre">Object</span></tt> and <tt class="docutils literal"><span class="pre">Object</span></tt> is the <em>super</em> type of <tt class="docutils literal"><span class="pre">String</span></tt> (which is <tt class="docutils literal"><span class="pre">m</span></tt>'s argument type in <tt class="docutils literal"><span class="pre">Base</span></tt>). As <tt class="docutils literal"><span class="pre">m</span></tt>'s enclosing classes go down the hierarchy, <tt class="docutils literal"><span class="pre">Base</span></tt> to <tt class="docutils literal"><span class="pre">Derived</span></tt>, its arguments go in the contra direction (up), from <tt class="docutils literal"><span class="pre">String</span></tt> to <tt class="docutils literal"><span class="pre">Object</span></tt>.</p>
+<p>The above example shows that this can be useful, and that is the main purpose of providing
+'cast' methods. However the above ability is not really missed in Java and is not provided by most of the common OO languages; therefore I infer that contravariance is not that common a requirement and hence the method suggested above is the best solution. In particular, since contravariance is not common, it makes sense to make that the expensive operation and make more common operations fast.</p>
+</div>
+<div class="section">
+<h1><a id="conclusions" name="conclusions">Conclusions</a></h1>
+<p>Reifying lambdas makes them easier to use them since they behave like normal Java objects, but on the other hand the implementation is harder. The implementation is harder because you essentially have an erased and a reified version.</p>
+<p>How valuable is reifying lambdas?</p>
+<p>(Updated 2 Jan 10 in  response to comments from Neal Gafter and Zdenek Tronicek and updated 3 Jan 10 in response to comments from Zdenek Tronicek - Thanks.)</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=277879.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=277879&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D277879&amp;title=Reified+Lambda+Functions&amp;bodytext=Recently%2C+at+Devoxx%2C+it+was+announced+that+Java+would+get+lambda+functions+%28a.k.a.+anonymous+functions+or+closures%29.+There+are+many+ways+of+implementing+these+on+the+JVM.+This+post+proposes+that+reifying+lambdas+is+a+good+choice.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D277879&amp;title=Reified+Lambda+Functions">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D277879&amp;title=Reified+Lambda+Functions">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

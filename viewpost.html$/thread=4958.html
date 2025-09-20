@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Recoverable Remote Exceptions with Jini</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4958.html">Discuss</a> | 
+<a href="mailto:?subject=Recoverable Remote Exceptions with Jini&amp;body= %0AArtima Weblogs %0ARecoverable Remote Exceptions with Jini %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=4958">Email</a> | 
+<a href="../viewpostP.html$/thread=4958.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+<a class="sl" href="thread=46687.html" title="At the network's edge, is software a service business?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Recoverable Remote Exceptions with Jini</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">May 29, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Jini must be one of the most misunderstood technologies out there today. In these Weblogs, I'll try to post a couple of brief essays from my experience using Jini in an enterprise application. This first essay talks about recovering from network-induced exceptions.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><b>Abstract: </b>Remote exceptions indicate failures induced by the presence of a network in a distributed system. That same network, however, might also help recover from such failure conditions. This article presents a simple design technique to push remote exception handling inside a Jini service's proxy, hiding exception handling and recovery from that service's clients. With that method, service providers register exception handlers in Jini lookup services, and their service proxies dynamically discover and download those handlers when encountering remote exceptions.
+<br/>
+<br/>
+<p>
+To differentiate between local and remote method invocations, Java's remote object semantics require that a remote object implement the <code>java.rmi.Remote</code> interface, and that its methods declare <code>java.rmi.RemoteException</code>. If you are writing a remotely accessible service, that requirement is easy to meet. But what is a client to do when it encounters a remote exception?
+
+<p>
+I recently pondered that question while reviewing some of my code invoking remote objects. I noticed myself obediently following the remote object semantics, declaring RemoteExceptions in my service objects, and catching all the exceptions inside the client code. The problem was that once I caught those <code>RemoteException</code>s, I didn't do much with them: My client code simply trickled them up the exception chain, until they either manifested as an error message warning the user that a service was unavailable or, worse, I just left their catch clauses blank. Because my clients made poor use of remote exceptions, they gained no real benefit from knowing that those method calls were remote, not local.
+
+<p>
+The obvious benefit of catching and handling an exception is that it gives a program a chance to possibly recover from failure conditions. If properly handled, exceptions directly contribute to system reliability. Indeed, operating systems routinely "trap" exceptional conditions, and then attempt to resolve the failures by dynamically loading exception handlers based on the exception's type into their microkernels (or an exception handler layer above the microkernel, as with Windows NT's Executive layer). Dynamic exception handler loading allows an OS to start up with a minimal overhead: It only has to know where to look for handlers when it encounters an exception.
+
+<p>
+A similar process might benefit a Jini service's reliability: When a service's client catches a remote exception, it could dynamically load an exception handler corresponding to the exception's type from the network. Since the service's proxy generates a remote exception, it is likely that the service provider has the necessary knowledge to guide the client in recovering from a remote exception.
+
+<p>
+For instance, suppose that a Jini service proxy must connect to a remote object implementation to perform a Java RMI call. For some reason, the remote object is not available, and the Jini proxy raises a <code>RemoteException</code>. At that point the client really doesn't know how to proceed. A conscientious client might follow a voodoo-like process in its desperate attempts at recovery: "Try this invocation three times, if it still doesn't succeed, then try to contact this other server. If that doesn't work either, then discover a new service proxy. If that still doesn't work, just give up."
+
+<p>
+If a client's developer decided to implement such an elaborate process, coding up those heuristics would involve a lot of extra work. Even with all that effort, the client's chances of connecting to the remote service would basically depend on luck.
+
+<p>
+A friendlier service provider would build that sort of process into a smart proxy, hiding the cumbersome recovery attempts from a client. For instance, the service provider might decide to operate a backup server for the remote object. The service's smart proxy would perform failover to that secondary server when invoking the first server failed.
+
+<p>
+While the second approach lightens the burden on the client's developer, it still poses problems in long-running, dynamic Jini systems. Consider the following sequence of events: The service provider embeds a reference to the secondary server's address inside the smart proxy prior to registering that proxy in lookup services. Some time later, a client obtains a copy of that proxy, and starts using the service. After a further passage of time, the service provider decides to relocate the secondary server to a new network address. Finally, the primary server crashes, and the client is presented with a remote exception as a result.
+
+<p>
+At that point, the client's reference to the backup server points to that server's old address, since the backup server was relocated after the client retrieved the proxy from a lookup service. One way of mitigating that problem is for the service provider to expire the leases on the old service proxies' lookup service registrations, and register a fresh service proxy pointing to the correct backup server address. As the client realizes that neither the primary nor the backup works, it must then discover a new instance of the service's proxy object.
+
+<p>
+While that solution certainly works, it still burdens the client's developer with the responsibility to discard the old proxy and discover a new one. A more client-friendly service provider would try harder to ensure that his service's proxy seldom failed: He would push the dynamic failure recovery inside the proxy.
+
+<p>
+When the call to the initial remote object failed, the proxy would intercept ("trap") the remote exception. Based on that exception's type, the proxy would discover an exception handler from Jini lookup services. That handler, in turn, would have the necessary information for the proxy to contact a secondary, backup server.
+
+<p>
+What that mechanism, the code for the exception handler downloads dynamically into the service proxy. Therefore, the service provider does not have to provide all the possible exception handling routines at the time of deploying a service: Instead, he can add exception handlers to the network from time to time, making his service increasingly reliable.
+
+<p>
+Remote exceptions for which handlers possibly exist on the network would extend a "recoverable" remote exception type, <code>RecoverableRemoteException</code>. That exception object would define a single method, <code>getHandlerType()</code>, producing the interface type suitable for recovering from the specific <code>RecoverableRemoteException</code> subtype. Thus, you might have a recoverable remote exception <code>AcmeServerConnectionException</code>. Invoking that object's <code>getHandlerType()</code> would produce the interface, <code>AcmeServerConnectionExceptionHandler</code>. Acme service's proxy would then discover objects implementing that interface from Jini lookup services.
+
+<p>
+Each of those objects would implement the <code>RecoverableExceptionHandler</code> interface, and its single method, <code>handle(Object ctx)</code>. handle() consumes an object representing some context specific to the exception, and produces an object that presents a "solution" to the problem embedded in that context. For instance, if the exception's context represented the failed attempts at connecting to the Acme server, the handler would produce an object corresponding to an acceptable alternate network connection. Note that a handler might be implemented locally or remotely.
+
+<p>
+The primary benefit of the dynamically downloaded exception handler approach is that it allows a Jini service's proxy itself to take advantage of Jini technology's dynamic service discovery capability. Therefore, it adds a recursive layer to a Jini system, isolating a service's clients from certain types of failures.
+
+<p>
+Of course, some remote exceptions are not possible to recover from - for instance, when all network connections from a client are unavailable. As those situations illustrate, luck and voodoo are still important elements in distributed systems. 
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<p><i>This essay first appeared in the May, 2003, issue of the <a href="../_/http/www.jini.org/Newsletter/2003-05-21.html">Jini Newsletter</a>.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=4958&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4958&amp;title=Recoverable+Remote+Exceptions+with+Jini&amp;bodytext=Jini+must+be+one+of+the+most+misunderstood+technologies+out+there+today.+In+these+Weblogs%2C+I%27ll+try+to+post+a+couple+of+brief+essays+from+my+experience+using+Jini+in+an+enterprise+application.+This+first+essay+talks+about+recovering+from+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4958&amp;title=Recoverable+Remote+Exceptions+with+Jini">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4958&amp;title=Recoverable+Remote+Exceptions+with+Jini">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></i></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

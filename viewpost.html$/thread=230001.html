@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Concurrency with Python, Twisted, and Flex</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230001.html">Discuss</a> | 
+<a href="mailto:?subject=Concurrency with Python, Twisted, and Flex&amp;body= %0AArtima Weblogs %0AConcurrency with Python, Twisted, and Flex %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=230001">Email</a> | 
+<a href="../viewpostP.html$/thread=230001.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=229109.html" title="Speaking in Albuquerque">Previous</a> | 
+<a class="sl" href="thread=231388.html" title="Amazing Newsreader Written in ActionScript">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Concurrency with Python, Twisted, and Flex</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">May 3, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+An example of parallel programming using all the CPUs on your computer or cluster. Also shows how to add a Flex user interface.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>For the past few years I've been consulting with a group at Parsons-Brinkerhoff, led by Rick Donnelly, which specializes in traffic analysis. The numerical models for this analysis are extremely detailed and a model can require days to run. I've been helping them develop concurrent systems to solve these problems more quickly. Some of this consulting is knowledge transfer and some is software development. This article is based on some of the work we've done, which came together last week with the help of Michail Xyntarakis, one of the Parsons-Brinkerhoff engineers.</p>
+<p>This article shows a basic framework for putting a subprocess on each CPU in your system. Each subprocess is a worker that solves part of the problem. The example works on a single machine, but it can easily be modified to work with a cluster.</p>
+<p>The system you see here is only a framework for creating concurrent programs. There are various ways to implement your particular solution, but what I show here solves all the hard problems of wiring things up.</p>
+<div class="section">
+<h1><a id="dividing-your-problem-into-subprocesses" name="dividing-your-problem-into-subprocesses">Dividing Your Problem into Subprocesses</a></h1>
+<p>This is the tricky part, from both a math and a programming standpoint. Somehow, your problem must be divisible into pieces that can run independently of each other. In the simplest case, the so-called "embarrassingly parallel" scenario, the pieces of a problem are inherently independent. Here, you just divide up the work and parcel it out to the different processes. Balancing the work across processors so that progress is optimized is relatively easy in this case.</p>
+<p>If your problem is <em>not</em> embarrassingly parallel you'll need to guess and experiment with different tasks in your program, trying to estimate which parts of the problem can be solved independently. Very often you'll need to use multiple steps, waiting for all the parts to catch up before moving onto the next step.</p>
+<p>The framework shown here can be used for embarrassingly parallel problems, but it also shows multiple steps and uses a "barrier" tool to automatically let all the pieces finish at each step.</p>
+</div>
+<div class="section">
+<h1><a id="using-easy-install" name="using-easy-install">Using <strong>easy_install</strong></a></h1>
+<p><strong>easy_install</strong> is a system that belongs in the standard Python library, and I'm sure it will get there once Phillip Eby finishes working on it (hint, hint). In the meantime, <a class="reference" href="../_/http/peak.telecommunity.com/DevCenter/EasyInstall#installing-easy-install/index.html">download it here</a>. It's a single script that takes care of its own installation.</p>
+<p><strong>easy_install</strong> dramatically simplifies the process of installing Python libraries, basically down to the point where you can say <strong>easy_install somepackage</strong> and it will hunt through the internet, find the right library and install it. It will also check to see if you have the right dependencies, and install those -- including the correct versions -- if you don't. If necessary, it will build code by running compilers.</p>
+<p>The dependency and version checking and fixing is especially nice for software installations for end-users.</p>
+</div>
+<div class="section">
+<h1><a id="understanding-the-twisted-library" name="understanding-the-twisted-library">Understanding the Twisted Library</a></h1>
+<p>I've written an earlier <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=156396.html">article on the basics of Twisted</a>. And <a class="reference" href="../_/http/www.python.org/workshops/2002-02/papers/09/index.htm">this article by the creators of Twisted</a> gives a broad overview of the library.</p>
+<p>It might seem strange that a networking library is the solution to concurrency, but once you divide your task into subprocesses, the next problem is to communicate with these subprocesses. Some platforms have specific solutions (like pipes in Unix), but to create a universal solution we need something that is cross platform.</p>
+<p>Before wading into the world of Twisted, you should be forewarned. Twisted contains lots of libraries to do all kinds of things, and this abundance can be overwhelming. They use weird naming conventions, often making things up even though there are accepted names for things, so names are often nonsensical. The documentation sucks -- badly. You usually have to thrash around quite a bit to figure out what you need, and even then it requires luck (but the newsgroup tends to be helpful). There <em>is</em> an O'Reilly book on Twisted, but it's not great -- you get it anyway because that's the only book there is.</p>
+<p>Normally, caveats like that might send you away from an open-source project. Despite the issues, Twisted is worth it because the code is very good, and it solves your problem. The project <em>is</em> very actively maintained, but it's by people who are good at writing (and testing) code, and not so good at documentation. It's definitely worth using, but you should be ready to roll up your sleeves. However, if you can fit your project within what I'm showing in this article, things should go easily.</p>
+<p>Go to <a class="reference" href="../_/http/twistedmatrix.com/trac/index.html">TwistedMatrix.com</a> to install Twisted. If you're on Windows or OSX you should use the specific installers; for Linux <strong>easy_install</strong> should work.</p>
+<div class="section">
+<h2><a id="what-is-asynchronous-programming" name="what-is-asynchronous-programming">What is Asynchronous Programming?</a></h2>
+<p>One of the many problems with threading is that it has multiple meanings. There are three basic uses for threads:</p>
+<ol class="arabic simple">
+<li><strong>Code organization.</strong> Here, the use of threads don't increase the performance of an application but instead make the code easier to create and maintain.</li>
+<li><strong>Long Calls.</strong> While you're waiting on disk or network IO, for example, you might be able to do something useful. By attaching a thread to the IO call, the main execution path of the program can continue (watching for user input, for example, to keep the UI responsive). This type of threading can easily be done with a single CPU, and it's basically a variation of #1, because you could write your code to periodically go back and check on the IO. This checking code is effectively what's being done for you when you use threads.</li>
+</ol>
+<p>Both Ruby and Python can only use #1 and #2. Because of the global interpreter lock in both languages, neither can use more than one CPU.</p>
+<ol class="arabic simple" start="3">
+<li><strong>Parallelism.</strong> Although #2 makes better use of a single CPU, to make use of more than one CPU we need true parallelism, where multiple CPUs are working on the problem at the same time. To accomplish this in Python in this article, we create multiple operating system processes, one for each solver (worker) (The master only requires occasional CPU cycles and it shares the CPUs to do this). A separate Python interpreter is started in each process, and each process has its own memory so there is no possibility of collision as there is with threads, which makes multi-process parallelism much easier and safer than thread programming.</li>
+</ol>
+<p>Asynchronous programming is similar to case #2 in that it allows you to make a call without waiting for that call to complete. But instead of using threads to accomplish this, it uses callbacks. Callbacks are typically much faster than threads because there is no overhead for context switching, and you also don't have the cost of periodically visiting threads to see if something has changed. You simply set up callbacks and when something changes your functions get called.</p>
+<p>The downside to asynchronous programming is that you must always be aware that you're doing it (with threads, you have the illusion that you can ignore the issue, although this is often a mistake). Every time you make an asynchronous call, you must hook up the "success" callback function and the "failure" callback function. Initially this can be a little distracting, but I've found that it's not that much of a bother. And in the end, when you make an asynchronous call you really don't know how long it's going to take or whether it will fail, so an asynchronous model is often more useful than a pretend-synchronous approach like XML-RPC, where if a call takes a long time you must set up your own asynchronous approach, which is usually polling.</p>
+</div>
+<div class="section">
+<h2><a id="the-reactor-pattern" name="the-reactor-pattern">The Reactor Pattern</a></h2>
+<p>In a regular program, the program makes things happen. In an event-driven system like Twisted (and Flex), the program sits and waits for things (events) to happen, and then it responds to them. Thus, you don't write a typical <strong>main()</strong> that drives things; instead, you hand over control to something that watches for events.</p>
+<p>Because there's only a single thread running everything, it's essential that incoming events be guaranteed to be handled. Twisted uses the <em>reactor</em> pattern to accomplish this. The reactor is part of Twisted, and you just attach things to it and run it to achieve your goals.</p>
+<p>Anytime an event occurs, it's the reactor that makes sure that it is routed to the right place. When an event happens, the reactor stores it on a queue, then goes back to watching for events. The events in the queue are handled in the background, while the reactor is constantly vigilant for new events.</p>
+<p>Twisted has a single global object called <strong>reactor</strong> which becomes the main loop for your program, so you simply attach your event handlers to the <strong>reactor</strong> and start it up.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="the-solver-worker-process" name="the-solver-worker-process">The Solver/Worker Process</a></h1>
+<p>Each <strong>Solver</strong> (a.k.a. <em>worker</em>) runs in its own OS process and works on its own portion of the divided labor:</p>
+<pre class="literal-block">
+"""
+solver.py
+Solves one portion of a problem, in a separate process on a separate CPU
+"""
+import sys, random, math
+from twisted.spread import pb
+from twisted.internet import reactor
+
+class Solver(pb.Root):
+
+    def __init__(self, id):
+        self.id = id
+
+    def __str__(self): # String representation
+        return "Solver %s" % self.id
+
+    def remote_initialize(self, initArg):
+        return "%s initialized" % self
+
+    def step(self, arg):
+        "Simulate work and return result"
+        result = 0
+        for i in range(random.randint(1000000, 3000000)):
+            angle = math.radians(random.randint(0, 45))
+            result += math.tanh(angle)/math.cosh(angle)
+        return "%s, %s, result: %.2f" % (self, str(arg), result)
+
+    # Alias methods, for demonstration version:
+    remote_step1 = step
+    remote_step2 = step
+    remote_step3 = step
+
+    def remote_status(self):
+        return "%s operational" % self
+
+    def remote_terminate(self):
+        reactor.callLater(0.5, reactor.stop)
+        return "%s terminating..." % self
+
+if __name__ == "__main__":
+    port = int(sys.argv[1])
+    reactor.listenTCP(port, pb.PBServerFactory(Solver(sys.argv[1])))
+    reactor.run()
+</pre>
+<p><strong>Solver</strong> looks like any other class except that it inherits from <strong>pb.Root</strong> and I've used an aliasing trick to create the "remote_step" methods from the single <strong>step()</strong>.</p>
+<p>The <strong>remote_</strong> tells Twisted that this is a remote method, to be visible on the network. However, you do not include the <strong>remote_</strong> part when you're making a network call to the method.</p>
+<p><strong>main</strong> sets up the reactor to listen at the port provided on the command line, and runs the <strong>reactor</strong>, which takes control of the program. When the <strong>reactor</strong> stops, the program terminates.</p>
+<p>The <strong>step()</strong> method is important. The calculation loop simulates the work that the <strong>Solver</strong> is doing. In a normal program, the <strong>step()</strong> method would not return until all the work of the method completes, but in Twisted, a remote call to any of the "step" functions will return right away -- but not with the result (which it's still working on), but with a <strong>Deferred</strong> object. You'll see when the controller runs that the calls actually do return right away, while the <strong>Solver</strong> <strong>step()</strong> method itself goes on working. This magic is taken care of automatically by Twisted.</p>
+<p>The <strong>remote_status()</strong> method will show that the <strong>Solver</strong> can still receive new messages even while <strong>step()</strong> is working. Even though <strong>step()</strong> immediately starts into an intensive calculation -- apparently <em>not</em> returning control to the <strong>reactor</strong> -- you can still make requests to the solver, which is what the following program, <tt class="docutils literal"><span class="pre">controller.py</span></tt>, does. These requests won't be answered right away, but neither will they be lost just because <strong>step()</strong> happens to be in the midst of its work. The requests are enqueued and will eventually be answered.</p>
+<p>So although Twisted does include modules to support thread programming, it's typically not necessary. You get most of the same effect just by letting the reactor manage things.</p>
+<p>Notice that <strong>remote_terminate()</strong> calls <strong>reactor.callLater()</strong>. The <strong>callLater()</strong> method inserts a request into the reactor's own queue, and you can tell it how long to wait before making the call. The second argument is the address of the function to call after waiting, which in this case is the reactor's own <strong>stop()</strong> method. You cannot just call <strong>reactor.stop()</strong> directly because once the reactor stops, the program is done which means that <strong>remote_terminate()</strong> would never properly exit, and that causes a failure in the remote call to <strong>remote_terminate()</strong>. So instead, you tell the <strong>reactor</strong> to stop a little later, then return from the method and clean things up before the <strong>Solver</strong> quits.</p>
+</div>
+<div class="section">
+<h1><a id="the-controller" name="the-controller">The Controller</a></h1>
+<p>The <strong>Controller</strong> object discovers the number of CPUs on your system, then starts a <strong>Solver</strong> process for each one, creating and storing a long-term network connection to each <strong>Solver</strong>. At the same time, it provides a server for the Flex user interface to communicate with:</p>
+<pre class="literal-block">
+"""
+Controller.py
+Starts and manages solvers in separate processes for parallel processing.
+Provides an interface to the Flex UI.
+"""
+startIP = 8800
+FlexControlPanelPort = 8050
+import os, sys
+from subprocess import Popen
+from twisted.spread import pb
+from twisted.internet import reactor, defer
+from twisted.web import server, resource
+from pyamf.remoting.gateway.twisted import TwistedGateway
+
+class Controller(object):
+
+    # Utilities:
+    def broadcastCommand(self, remoteMethodName, arguments, nextStep, failureMessage):
+        "Send a command with arguments to all solvers"
+        print "broadcasting ...",
+        deferreds = [solver.callRemote(remoteMethodName, arguments) for solver in self.solvers.values()]
+        print "broadcasted"
+        reactor.callLater(3, self.checkStatus)
+        # Use a barrier to wait for all to finish before nextStep:
+        defer.DeferredList(deferreds, consumeErrors=True).addCallbacks(nextStep,
+            self.failed, errbackArgs=(failureMessage))
+
+    def checkStatus(self):
+        "Show that solvers can still receive messages"
+        for solver in self.solvers.values():
+            solver.callRemote("status").addCallbacks(lambda r: sys.stdout.write(r + "\n"),
+                self.failed, errbackArgs=("Status Check Failed"))
+        print "Status calls made"
+
+    def failed(self, results, failureMessage="Call Failed"):
+        for (success, returnValue), (address, port) in zip(results, self.solvers):
+            if not success:
+                raise Exception("address: %s port: %d %s" % (address, port, failureMessage))
+
+    def __init__(self):
+        cores = detectCPUs()
+        print "Cores:", cores
+        # Solver connections will be indexed by (ip, port):
+        self.solvers = dict.fromkeys([("localhost", i) for i in range(startIP, startIP + cores)])
+        # Start a subprocess on a core for each solver:
+        self.pids = [Popen(["python", "solver.py", str(port)]).pid for ip, port in self.solvers]
+        print "PIDs:", self.pids
+        self.connected = False
+        reactor.callLater(1, self.connect) # Give the solvers time to start
+
+    def connect(self):
+        "Begin the connection process"
+        connections = []
+        for address, port in self.solvers:
+            factory = pb.PBClientFactory()
+            reactor.connectTCP(address, port, factory)
+            connections.append(factory.getRootObject())
+        defer.DeferredList(connections, consumeErrors=True).addCallbacks(
+            self.storeConnections, self.failed, errbackArgs=("Failed to Connect"))
+
+    def storeConnections(self, results):
+        for (success, solver), (address, port) in zip(results, self.solvers):
+            self.solvers[address, port] = solver
+        print "Connected; self.solvers:", self.solvers
+        self.connected = True
+
+    def start(self):
+        "Begin the solving process"
+        if not self.connected:
+            return reactor.callLater(0.5, self.start)
+        self.broadcastCommand("step1", ("step 1"), self.step2, "Failed Step 1")
+
+    def step2(self, results):
+        print "step 1 results:", results
+        self.broadcastCommand("step2", ("step 2"), self.step3, "Failed Step 2")
+
+    def step3(self, results):
+        print "step 2 results:", results
+        self.broadcastCommand("step3", ("step 3"), self.collectResults, "Failed Step 3")
+
+    def collectResults(self, results):
+        print "step 3 results:", results
+
+def detectCPUs():
+    """
+    Detects the number of CPUs on a system. Cribbed from pp.
+    """
+    # Linux, Unix and MacOS:
+    if hasattr(os, "sysconf"):
+        if os.sysconf_names.has_key("SC_NPROCESSORS_ONLN"):
+            # Linux &amp; Unix:
+            ncpus = os.sysconf("SC_NPROCESSORS_ONLN")
+            if isinstance(ncpus, int) and ncpus &gt; 0:
+                return ncpus
+        else: # OSX:
+            return int(os.popen2("sysctl -n hw.ncpu")[1].read())
+    # Windows:
+    if os.environ.has_key("NUMBER_OF_PROCESSORS"):
+            ncpus = int(os.environ["NUMBER_OF_PROCESSORS"]);
+            if ncpus &gt; 0:
+                return ncpus
+    return 1 # Default
+
+class FlexInterface(pb.Root):
+    """
+    Interface to Flex control panel (Make sure you have at least PyAMF 0.3.1)
+    """
+    def __init__(self, controller):
+        self.controller = controller
+
+    def start(self, _):
+        self.controller.start()
+        return "Starting parallel jobs"
+
+    def terminate(self, _):
+        for solver in controller.solvers.values():
+            solver.callRemote("terminate").addErrback(self.controller.failed, "Termination Failed")
+        reactor.callLater(1, reactor.stop)
+        return "Terminating remote solvers"
+
+if __name__ == "__main__":
+    controller = Controller()
+    # Place the namespace mapping into a TwistedGateway:
+    gateway = TwistedGateway({ "controller": FlexInterface(controller) })
+    # Publish the PyAMF gateway at the root URL:
+    root = resource.Resource()
+    root.putChild("", gateway)
+    # Tell the twisted reactor to listen:
+    reactor.listenTCP(FlexControlPanelPort, server.Site(root))
+    # One reactor runs all servers and clients:
+    reactor.run()
+</pre>
+<p>The <strong>Controller</strong> class begins with some utilities. <strong>broadcastCommand()</strong> performs all the operations necessary to make a complete network call and to deal with the consequences. In a list comprehension, the remote call is made to all <strong>Solver</strong> objects; the result of each call is a <strong>Deferred</strong> object which is stored in the list. Note the print statements before and after so you can see how fast these calls happen. The <strong>callLater()</strong> sets up a call for three seconds later -- when each <strong>Solver</strong> is hard at work -- so that status calls are made to each solver, and you'll see that these also return immediately. Even though each <strong>Solver</strong> is in the midst of heavy math computations, the network calls are still captured and eventually handled.</p>
+<p>In many parallel processing systems, you need to finish one step completely before moving to the next one. Twisted's <strong>DeferredList</strong> is another case of odd naming, because elsewhere in the concurrency world this object would be called a "barrier." A <strong>DeferredList</strong> simply waits for every <strong>Deferred</strong> in the <strong>deferreds</strong> list to finish, at which point it calls <strong>nextStep</strong>. If an error occurs it calls the subsequent method <strong>failed()</strong>, passing it <strong>errbackArgs</strong>.</p>
+<p>This system automatically uses all available CPUs, which the constructor detects automatically using the <strong>detectCPUs()</strong> function, adapted from the <strong>pp</strong> project.</p>
+<p>Each connection is described by an IP address and a port number, so this pair becomes the key into the <strong>solvers</strong> dictionary, whose values will eventually be the proxy objects representing the actual network connections. Note the use of the static <strong>dict.fromkeys()</strong> function to populate the keys in a dictionary using a list. The values will be inserted later once the connections have been made.</p>
+<p>The subprocesses are created using <strong>subprocess.Popen()</strong> inside yet another list comprehension. Each process takes a bit of time to start up, so <strong>callLater()</strong> causes a one-second wait before going to <strong>connect()</strong>, which begins the connection process to each one of the <strong>Solver</strong> objects. Note the use of a <strong>DeferredList</strong> to wait until all the connections complete, at which point we move to <strong>storeConnections()</strong> where all the connection references are placed into the <strong>solvers</strong> dictionary.</p>
+<p>Now nothing happens until <strong>start()</strong> is called, but this doesn't occur automatically; the event must come from outside the system, normally from the Flex user interface.</p>
+<p>When <strong>start()</strong> is called, the system becomes a state machine, moving from one state to the next each time all the solvers have completed their tasks. You'll notice that the initialization process, starting with the constructor, is also a separate state machine; because initialization may not be complete when <strong>start()</strong> is called, the <strong>connected</strong> flag is checked and, if it's false, <strong>start()</strong> is re-called one half-second later. Once <strong>collectResults()</strong> is reached the state machine stops, at which point either <strong>start()</strong> can be called again or the system can be shut down.</p>
+<p>PyAMF (described next) provides the <strong>RemotingService</strong>, which is convenient for talking to servers, and provides a useful sanity check:</p>
+<pre class="literal-block">
+"""
+PyamfClientTest.py
+Test the FlexInterface using the PyAMF client
+"""
+from pyamf.remoting.client import RemotingService
+
+gw = RemotingService('http://localhost:8050/')
+service = gw.getService('controller')
+print service.start()
+</pre>
+</div>
+<div class="section">
+<h1><a id="adding-a-flex-user-interface" name="adding-a-flex-user-interface">Adding a Flex User Interface</a></h1>
+<p>After a brief demo of Flex, and after the manager drew a sketch of the UI on the whiteboard which I threw together in a few minutes using Flex Builder's design mode, everyone was sold on creating the UI with Flex.</p>
+<p>It's important to note that because we are using Twisted, we can't just paste some other server onto the Python system. For example, we can't use the built-in Python XML-RPC library to act as a server to the Flex UI, because that would interfere with the Twisted reactor (also, the <strong>SimpleXMLRPCServer</strong> is not designed for industrial use). Fortunately, Twisted supports XML-RPC among many other protocols, so we can just add another server into the Twisted system and interact with Flex that way. And Twisted's servers <em>are</em> industrial-strength.</p>
+<p>Initially we tried using XML-RPC on the Flex end, as found in my <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=208528.html">earlier article</a>. Unfortunately, there were some issues with the <a class="reference" href="../_/http/code.google.com/p/as3-rpclib/wiki/Resources/index.html">open-source Flex XML-RPC library</a>, which might be fixed by the time you read this. After struggling with it a bit, we decided to use PyAMF, which I had experimented with during the <a class="reference" href="../_/http/www.mindviewinc.com/Conferences/FlexTGJam/Index.html">Flex-TurboGears Jam</a> (You can see the results of our experiments in <a class="reference" href="../_/http/docs.turbogears.org/2.0/TGandPyAMF/index.html">this tutorial</a>).</p>
+<p>AMF (Action Message Format) is the Flex native format for network communication. This means you can use the <strong>RemoteObject</strong> class which comes with Flex (and more importantly, is supported). There are a number of open-source projects for using AMF with various languages -- there's a Ruby AMF, and for our case, there's PyAMF for Python. Quite conveniently, PyAMF directly supports Twisted, so you can tie it right in with the reactor.</p>
+<p>To install PyAMF, just say <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">pyamf</span></tt>. It's important that you get version 0.3.1 or greater in order for this example to work; during the development of this article I found a small bug in PyAMF which they promptly fixed (speed of bug fixes is always a good test of the vibrancy of an open-source project; PyAMF also supports the new <a class="reference" href="../_/http/pyamf.org/wiki/GoogleAppEngine/index.html">Google App Engine</a>).</p>
+<div class="section">
+<h2><a id="the-pyamf-interface" name="the-pyamf-interface">The PyAMF Interface</a></h2>
+<p>The <strong>FlexInterface</strong> class was created to manage the methods that are exposed to the Flex client. This class is for organization; you can also expose standalone functions. Note that <strong>FlexInterface</strong> just forwards calls to the <strong>Master</strong> object.</p>
+<p>The <strong>terminate()</strong> method tells all the solvers to terminate, then it sets the reactor to stop after 1 second. Just like with the solvers, this is necessary because stopping the reactor terminates the program. By delaying this, the <strong>terminate()</strong> method can return properly, so the Flex client doesn't receive an exception.</p>
+<p>The code in <strong>main</strong> can just be considered voodoo necessary to start the PyAMF server within Twisted. Note that a single reactor handles all clients and servers within your system.</p>
+</div>
+<div class="section">
+<h2><a id="the-flex-client" name="the-flex-client">The Flex Client</a></h2>
+<p>The Flash and AIR players are single threaded. For responsiveness, they use asynchronous calls tied to callbacks, just like Twisted does.</p>
+<p>What I've created here is just a simple demonstration with two buttons and a <strong>TextArea</strong> for output. However, this provides you with the basics necessary to set up communication with the Python client; any additional operations you add can follow the same format. Because we are using AMF for communication, we can just use the built-in Flex <strong>RemoteObject</strong> class for communication with the Python server:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="left"&gt;
+&lt;mx:RemoteObject id="remote" endpoint="http://localhost:8050" destination="controller"
+    result="display(event)" fault="display(event)"/&gt;
+&lt;mx:Button label="Start" click="remote.start()" /&gt;
+&lt;mx:Button label="Terminate" click="remote.terminate()" /&gt;
+&lt;mx:TextArea id="output" width="100%" height="100%"/&gt;
+&lt;mx:Script&gt;
+&lt;![CDATA[
+private function display(result:*): void {
+    output.text += result.message.body + "\n"
+    // For more details:
+    // output.text += result.toString() + "\n"
+}
+]]&gt;
+&lt;/mx:Script&gt;
+&lt;/mx:WindowedApplicat
+</pre>
+<p>Here, I've used a single function <strong>display()</strong> to show results and errors, and I've configured the <strong>RemoteObject</strong> with this method, so the asynchronous calls made in both buttons report back to this single function. Normally you'll provide separate functions for both results and errors, and also you'll probably need different result functions for each different call.</p>
+<p>I've also cheated a bit by using AIR instead of a web application (note the <strong>WindowedApplication</strong> tag). A web application requires a cross-domain policy file to allow it to communicate. You can find out about this in <a class="reference" href="../_/http/www.adobe.com/devnet/flashplayer/articles/socket_policy_files.html">this article</a>.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="further-explorations" name="further-explorations">Further Explorations</a></h1>
+<p>It was great fun to start up our program (which solved the traveling salesman problem) on an 8-core machine and watch it peg all 8 cores to 100% usage. Note the example shown here runs on a single machine with multiple cores, but the code was written to support machine clusters by including the IP address everywhere. It will still require additional adaptation for clusters, and you'll also need a small boot program written with Twisted running on each machine in the cluster in order to start the solvers on the remote machines.</p>
+<p>Even though the program was "only written in Python" it produced very impressive performance. For further speed, we experimented a little with ctypes, which is a Python 2.5 library for making easy connections from Python to a shared library (DLL) written in a language like C or Fortran. This is an amazing tool, but it is limited to what you can do with library function calls. <a class="reference" href="../_/http/www.boost.org/doc/libs/1_35_0/libs/python/doc/index.html">Boost.python</a> allows you to create C++ objects that maintain their state, and this looks quite powerful. Both approaches provide excellent speed optimizations so you can do rapid development in Python, then profile your solution and easily optimize the bottlenecks in C or C++ (but this is a subject for another article).</p>
+<p>Before going to Twisted, we tried the parallelization library <strong>pp</strong>, but this turned out to have more overhead than Twisted; the latter was noticeably faster (<strong>pp</strong> just does the creation and distribution of tasks for you, so perhaps if it was re-implemented using Twisted it would be faster).</p>
+<p>Adobe's open-source Blaze provides AMF for Java, so you could add Twisted support to talk from Python to Java modules. However, Blaze is designed for creating web applications and requires you to host your Java on an application server, so the setup can seem to be overkill on a single machine or cluster. XML-RPC is often a better choice to talk to Java modules for this scenario, because the Apache project provides good support for Java XML-RPC, and XML-RPC is generally more universal. Twisted also has good XML-RPC support so it's easy to talk to Java from Python this way.</p>
+<p>Because the new Google App Engine is based on Python programming, this framework might be a good way to put all those CPUs to work -- but I don't know the constraints of the App Engine so I can't be sure (for example, do they have Twisted on it or can you install it?).</p>
+</div>
+<div class="section">
+<h1><a id="consulting" name="consulting">Consulting</a></h1>
+<p>The speed of development in Python is deeply satisfying; in just a few days it's possible to get something working that would require weeks or months in other languages. This is also true when building user interfaces in Flex -- one can rapidly build the UI using Flex Builder and quickly wire it into your Python application using Twisted. The parallelism shown here, along with the availability of ctypes and Boost.python means you can easily get the performance you need without sacrificing Python's development speed.</p>
+<p>I'd like to do more work like this; if you're interested you can <a class="reference" href="../_/http/www.mindviewinc.com/Consulting/Index.html">contact me</a>.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230001.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=230001&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230001&amp;title=Concurrency+with+Python%2C+Twisted%2C+and+Flex&amp;bodytext=An+example+of+parallel+programming+using+all+the+CPUs+on+your+computer+or+cluster.+Also+shows+how+to+add+a+Flex+user+interface.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230001&amp;title=Concurrency+with+Python%2C+Twisted%2C+and+Flex">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230001&amp;title=Concurrency+with+Python%2C+Twisted%2C+and+Flex">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

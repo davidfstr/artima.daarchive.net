@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Super Type Tokens</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=206350.html">Discuss</a> | 
+<a href="mailto:?subject=Super Type Tokens&amp;body= %0AArtima Weblogs %0ASuper Type Tokens %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=206350">Email</a> | 
+<a href="../viewpostP.html$/thread=206350.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=202004.html" title="Comparing Inner Class/Closure Proposals">Previous</a> | 
+<a class="sl" href="thread=206734.html" title="Lexical Scope of Java Inner Classes and Closures">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Super Type Tokens</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">May 22, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Neil Gafter has proposed Super Type Tokens and also noted their limitations. Alternatives include reify generics and providing generic factories. Super Type Tokens are a means of remembering the erased type using a token, which is an instance of TypeRef in the example.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<html>
+<head>
+<title>Super Type Tokens</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<p>Neil Gafter has proposed <a href="../_/http/gafter.blogspot.com/2006/12/super-type-tokens.html">Super
+  Type Tokens</a> and also noted their <a href="../_/http/gafter.blogspot.com/2007/05/limitation-of-super-type-tokens.html">limitations</a>.
+  Alternatives include 
+  <a href="../_/http/gafter.blogspot.com/2006/11/reified-generics-for-java.html">reify
+  generics</a> and providing generic factories. Super
+  Type Tokens are a means of remembering the erased type using a token, which is
+an instance of TypeRef in the example. Neil gives an example of its use:</p>
+<pre>
+<span style="background: #e9e8e2;"> 7</span> <b><font face="Monospaced"><font color="#000099">abstract</font></font></b> <b><font face="Monospaced"><font color="#000099">class</font></font></b> TypeRef&lt;T&gt; {
+<span style="background: #e9e8e2;"> 8</span>     <b><font face="Monospaced"><font color="#000099">private</font></font></b> <b><font face="Monospaced"><font color="#000099">final</font></font></b> Type type;
+<span style="background: #e9e8e2;"> 9</span>     <b><font face="Monospaced"><font color="#000099">protected</font></font></b> <b><font face="Monospaced">TypeRef</font></b>() {
+<span style="background: #e9e8e2;">10</span>         ParameterizedType superclass = (ParameterizedType)
+<span style="background: #e9e8e2;">11</span>             <b><font face="Monospaced">getClass</font></b>().<b><font face="Monospaced">getGenericSuperclass</font></b>();
+<span style="background: #e9e8e2;">12</span>         type = superclass.<b><font face="Monospaced">getActualTypeArguments</font></b>()[<font color="#780000">0</font>];
+<span style="background: #e9e8e2;">13</span>         System.out.<b><font face="Monospaced">println</font></b>(<font color="#99006b">"type = "</font>+type);
+<span style="background: #e9e8e2;">14</span>     }
+<span style="background: #e9e8e2;">15</span>     <font color="#006f00">@</font>Override <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">boolean</font></font></b> <b><font face="Monospaced">equals</font></b> (Object o) {
+<span style="background: #e9e8e2;">16</span>         <b><font face="Monospaced"><font color="#000099">return</font></font></b> o <b><font face="Monospaced"><font color="#000099">instanceof</font></font></b> TypeRef &amp;&amp;
+<span style="background: #e9e8e2;">17</span>             ((TypeRef)o).type.<b><font face="Monospaced">equals</font></b>(type);
+<span style="background: #e9e8e2;">18</span>     }
+<span style="background: #e9e8e2;">19</span>     <font color="#006f00">@</font>Override <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">int</font></font></b> <b><font face="Monospaced">hashCode</font></b>() {
+<span style="background: #e9e8e2;">20</span>         <b><font face="Monospaced"><font color="#000099">return</font></font></b> type.<b><font face="Monospaced">hashCode</font></b>();
+<span style="background: #e9e8e2;">21</span>     }
+<span style="background: #e9e8e2;">22</span> }
+<span style="background: #e9e8e2;">23</span> 
+<span style="background: #e9e8e2;">24</span> <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">class</font></font></b> Favorites {
+<span style="background: #e9e8e2;">25</span>     <b><font face="Monospaced"><font color="#000099">private</font></font></b> Map&lt;TypeRef&lt;?&gt;, Object&gt; favorites =
+<span style="background: #e9e8e2;">26</span>         <b><font face="Monospaced"><font color="#000099">new</font></font></b> HashMap&lt; TypeRef&lt;?&gt; , Object&gt;();
+<span style="background: #e9e8e2;">27</span>     <b><font face="Monospaced"><font color="#000099">public</font></font></b> &lt;T&gt; <b><font face="Monospaced"><font color="#000099">void</font></font></b> <b><font face="Monospaced">setFavorite</font></b>(TypeRef&lt;T&gt; type, T thing) {
+<span style="background: #e9e8e2;">28</span>         favorites.<b><font face="Monospaced">put</font></b>(type, thing);
+<span style="background: #e9e8e2;">29</span>     }
+<span style="background: #e9e8e2;">30</span>     <font color="#006f00">@</font>SuppressWarnings(<font color="#99006b">"unchecked"</font>)
+<span style="background: #e9e8e2;">31</span>     <b><font face="Monospaced"><font color="#000099">public</font></font></b> &lt;T&gt; T <b><font face="Monospaced">getFavorite</font></b>(TypeRef&lt;T&gt; type) {
+<span style="background: #e9e8e2;">32</span>         <b><font face="Monospaced"><font color="#000099">return</font></font></b> (T) favorites.<b><font face="Monospaced">get</font></b>(type);
+<span style="background: #e9e8e2;">33</span>     }
+<span style="background: #e9e8e2;">34</span>     <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">static</font></font></b> <b><font face="Monospaced"><font color="#000099">void</font></font></b> <b><font face="Monospaced">main</font></b>(String[] args) {
+<span style="background: #e9e8e2;">35</span>         Favorites f = <b><font face="Monospaced"><font color="#000099">new</font></font></b> <b><font face="Monospaced">Favorites</font></b>();
+<span style="background: #e9e8e2;">36</span>         List&lt;String&gt; stooges = Arrays.<b><font face="Monospaced">asList</font></b>(
+<span style="background: #e9e8e2;">37</span>             <font color="#99006b">"Larry"</font>, <font color="#99006b">"Moe"</font>, <font color="#99006b">"Curly"</font>);
+<span style="background: #e9e8e2;">38</span>         f.<b><font face="Monospaced">setFavorite</font></b>(<b><font face="Monospaced"><font color="#000099">new</font></font></b> TypeRef&lt;List&lt;String&gt;&gt;(){}, stooges);
+<span style="background: #e9e8e2;">39</span>         List&lt;String&gt; ls = f.<b><font face="Monospaced">getFavorite</font></b>(
+<span style="background: #e9e8e2;">40</span>             <b><font face="Monospaced"><font color="#000099">new</font></font></b> TypeRef&lt;List&lt;String&gt;&gt;(){});
+<span style="background: #e9e8e2;">41</span>     }
+<span style="background: #e9e8e2;">42</span> }
+</pre>
+<p>The code for TypeRef is a little obscure and the Javadoc for Type etc. are
+  of no use! Since TypeRef is generic and abstract the supertype of an instance
+  of type TypeRef must be generic and hence the cast to ParameterizedType won't
+  fail (line 10). One you have a ParameterizedType you can ask for its type parmeters,
+  in this case it has one. Now you can use an instance of TypeRef as a genric
+  token because its equals and hashCode methods look at the generic type. </p>
+<p>The usage example is a store of favourites that are accessed via generic type
+  tokens. However the cast on line 32 that is ignored (line 30) circumvents the
+  type checking and if two layers of generics are used, e.g. a generic list
+  is the generic parameter to TypeRef, it fails, as shown below. </p>
+<pre>
+<span style="background: #e9e8e2;"> 6</span> <b><font face="Monospaced"><font color="#000099">class</font></font></b> Oops {
+<span style="background: #e9e8e2;"> 7</span>     <b><font face="Monospaced"><font color="#000099">static</font></font></b> Favorites f = <b><font face="Monospaced"><font color="#000099">new</font></font></b> <b><font face="Monospaced">Favorites</font></b>();
+<span style="background: #e9e8e2;"> 8</span> 
+<span style="background: #e9e8e2;"> 9</span>     <b><font face="Monospaced"><font color="#000099">static</font></font></b> &lt;T&gt; List&lt;T&gt; <b><font face="Monospaced">favoriteList</font></b>() {
+<span style="background: #e9e8e2;">10</span>         TypeRef&lt;List&lt;T&gt;&gt; ref = <b><font face="Monospaced"><font color="#000099">new</font></font></b> TypeRef&lt;List&lt;T&gt;&gt;(){};
+<span style="background: #e9e8e2;">11</span>         List&lt;T&gt; result = f.<b><font face="Monospaced">getFavorite</font></b>(ref);
+<span style="background: #e9e8e2;">12</span>         <b><font face="Monospaced"><font color="#000099">if</font></font></b> (result == <b><font face="Monospaced"><font color="#000099">null</font></font></b>) {
+<span style="background: #e9e8e2;">13</span>             result = <b><font face="Monospaced"><font color="#000099">new</font></font></b> ArrayList&lt;T&gt;();
+<span style="background: #e9e8e2;">14</span>             f.<b><font face="Monospaced">setFavorite</font></b>(ref, result);
+<span style="background: #e9e8e2;">15</span>         }
+<span style="background: #e9e8e2;">16</span>         <b><font face="Monospaced"><font color="#000099">return</font></font></b> result;
+<span style="background: #e9e8e2;">17</span>     }
+<span style="background: #e9e8e2;">18</span> 
+<span style="background: #e9e8e2;">19</span>     <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">static</font></font></b> <b><font face="Monospaced"><font color="#000099">void</font></font></b> <b><font face="Monospaced">main</font></b>(String[] args) {
+<span style="background: #e9e8e2;">20</span>         List&lt;String&gt; ls = <b><font face="Monospaced">favoriteList</font></b>();
+<span style="background: #e9e8e2;">21</span>         List&lt;Integer&gt; li = <b><font face="Monospaced">favoriteList</font></b>();
+<span style="background: #e9e8e2;">22</span>         li.<b><font face="Monospaced">add</font></b>(<font color="#780000">1</font>);
+<span style="background: #e9e8e2;">23</span>         <b><font face="Monospaced"><font color="#000099">for</font></font></b> (String s : ls) System.out.<b><font face="Monospaced">println</font></b>(s);
+<span style="background: #e9e8e2;">24</span>     }
+<span style="background: #e9e8e2;">25</span> }
+</pre>
+<p>The problem is that when the token is created (line 10) for both List&lt;String&gt;
+  (line 20) and List&lt;Integer&gt; (line 21) the same token is created, one
+  for a java.util.List&lt;T&gt;, in both cases. Thus the call to favoriteList
+  on both lines 20 and 21 returns the same list and therefore when run you get
+  a type error when you attempt the read this list as a String (line 23), because
+  you have already put an Integer in (line 22). The type system did detect a
+  potential problem but the warning was supressed and hence a runtime error.</p>
+<p>One solution is to reify generics, 
+
+
+ i.e.“<a href="../_/http/www.artima.com/forums/flat.html$/forum=121&amp;thread=192309.html">erase
+erasure</a>”, this is my prefered option, via adding a <a href="../_/http/bugs.sun.com/bugdatabase/view_bug.do$/bug_id=6519124.do">source</a> statement
+so that backward compatibility isn't broken. A source statment identifies the
+version of Java in use, e.g. source 7;, states that it is Java 7. This way generics
+can be reified in 7 and erased in pre-7. Note the idea of a source statement
+was my suggestion. </p>
+<p>Another possibility is to use factories instead of tokens, e.g.:</p>
+<pre>
+<span style="background: #e9e8e2;"> 8</span> <b><font face="Monospaced"><font color="#000099">interface</font></font></b> Factory&lt; T &gt; {
+<span style="background: #e9e8e2;"> 9</span>   T <b><font face="Monospaced">create</font></b>();
+<span style="background: #e9e8e2;">10</span> }
+<span style="background: #e9e8e2;">11</span> 
+<span style="background: #e9e8e2;">12</span> <b><font face="Monospaced"><font color="#000099">enum</font></font></b> FactoryListString <b><font face="Monospaced"><font color="#000099">implements</font></font></b> Factory&lt; List&lt; String &gt; &gt; {
+<span style="background: #e9e8e2;">13</span>   INSTANCE {
+<span style="background: #e9e8e2;">14</span>     <b><font face="Monospaced"><font color="#000099">public</font></font></b> List&lt; String &gt; <b><font face="Monospaced">create</font></b>() { <b><font face="Monospaced"><font color="#000099">return</font></font></b> <b><font face="Monospaced"><font color="#000099">new</font></font></b> ArrayList&lt; String &gt;(); }
+<span style="background: #e9e8e2;">15</span>   }
+<span style="background: #e9e8e2;">16</span> }
+<span style="background: #e9e8e2;">17</span> 
+<span style="background: #e9e8e2;">18</span> <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">class</font></font></b> Favorites2 {
+<span style="background: #e9e8e2;">19</span>   <b><font face="Monospaced"><font color="#000099">private</font></font></b> <b><font face="Monospaced"><font color="#000099">final</font></font></b> Map&lt; Factory&lt; ? &gt;, Object &gt; favorites =
+<span style="background: #e9e8e2;">20</span>     <b><font face="Monospaced"><font color="#000099">new</font></font></b> HashMap&lt; Factory&lt; ? &gt;, Object &gt;();
+<span style="background: #e9e8e2;">21</span>   
+<span style="background: #e9e8e2;">22</span>   <b><font face="Monospaced"><font color="#000099">public</font></font></b> &lt; T &gt; <b><font face="Monospaced"><font color="#000099">void</font></font></b> <b><font face="Monospaced">setFavorite</font></b>( Factory&lt; T &gt; type, T thing ) {
+<span style="background: #e9e8e2;">23</span>     favorites.<b><font face="Monospaced">put</font></b>( type, thing );
+<span style="background: #e9e8e2;">24</span>   }
+<span style="background: #e9e8e2;">25</span> 
+<span style="background: #e9e8e2;">26</span>   <font color="#006f00">@</font>SuppressWarnings( <font color="#99006b">"unchecked"</font> )
+<span style="background: #e9e8e2;">27</span>   <b><font face="Monospaced"><font color="#000099">public</font></font></b> &lt; T &gt; T <b><font face="Monospaced">getFavorite</font></b>( Factory&lt; T &gt; type ) {
+<span style="background: #e9e8e2;">28</span>     <b><font face="Monospaced"><font color="#000099">return</font></font></b> (T) favorites.<b><font face="Monospaced">get</font></b>( type );
+<span style="background: #e9e8e2;">29</span>   }
+<span style="background: #e9e8e2;">30</span> 
+<span style="background: #e9e8e2;">31</span>   <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">static</font></font></b> <b><font face="Monospaced"><font color="#000099">void</font></font></b> <b><font face="Monospaced">main</font></b>( <b><font face="Monospaced"><font color="#000099">final</font></font></b> String[] notUsed ) {
+<span style="background: #e9e8e2;">32</span>     <b><font face="Monospaced"><font color="#000099">final</font></font></b> Favorites2 f = <b><font face="Monospaced"><font color="#000099">new</font></font></b> <b><font face="Monospaced">Favorites2</font></b>();
+<span style="background: #e9e8e2;">33</span>     f.<b><font face="Monospaced">setFavorite</font></b>( FactoryListString.INSTANCE,
+<span style="background: #e9e8e2;">34</span>                     <b><font face="Monospaced">asList</font></b>( <font color="#99006b">"Larry"</font>, <font color="#99006b">"Moe"</font>, <font color="#99006b">"Curly"</font> ) );
+<span style="background: #e9e8e2;">35</span>     out.<b><font face="Monospaced">println</font></b>( f.<b><font face="Monospaced">getFavorite</font></b>( FactoryListString.INSTANCE ) );
+<span style="background: #e9e8e2;">36</span>   }
+<span style="background: #e9e8e2;">37</span> }
+</pre>
+<p>The code is straightforward to anyone familiar with the factory design pattern.
+  Factories are typically singletons and in this case an enum is used to make
+  a singleton factory. A feature of using a factory instead of a token is that
+  you would not have an expectation that something made by a different factory
+  was the same sort of object even if the structural type of the object was the
+  same. I.E. two List&lt;String&gt; would be different types if made by different
+  factories, i.e. no structural matching of types just matching based on factories.
+  The resulting example of using favorites that cause a problem before is now
+  OK:</p>
+<pre>
+<span style="background: #e9e8e2;"> 7</span> <b><font face="Monospaced"><font color="#000099">enum</font></font></b> FactoryListInteger <b><font face="Monospaced"><font color="#000099">implements</font></font></b> Factory&lt; List&lt; Integer &gt; &gt; {
+<span style="background: #e9e8e2;"> 8</span>   INSTANCE {
+<span style="background: #e9e8e2;"> 9</span>     <b><font face="Monospaced"><font color="#000099">public</font></font></b> List&lt; Integer &gt; <b><font face="Monospaced">create</font></b>() { <b><font face="Monospaced"><font color="#000099">return</font></font></b> <b><font face="Monospaced"><font color="#000099">new</font></font></b> ArrayList&lt; Integer &gt;(); }
+<span style="background: #e9e8e2;">10</span>   }
+<span style="background: #e9e8e2;">11</span> }
+<span style="background: #e9e8e2;">12</span> 
+<span style="background: #e9e8e2;">13</span> <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">class</font></font></b> Oops2 {
+<span style="background: #e9e8e2;">14</span>   <b><font face="Monospaced"><font color="#000099">final</font></font></b> <b><font face="Monospaced"><font color="#000099">static</font></font></b> Favorites2 f = <b><font face="Monospaced"><font color="#000099">new</font></font></b> <b><font face="Monospaced">Favorites2</font></b>();
+<span style="background: #e9e8e2;">15</span> 
+<span style="background: #e9e8e2;">16</span>   <b><font face="Monospaced"><font color="#000099">static</font></font></b> &lt; T &gt; List&lt; T &gt; <b><font face="Monospaced">favoriteList</font></b>( <b><font face="Monospaced"><font color="#000099">final</font></font></b> Factory&lt; List&lt; T &gt; &gt; factory ) {
+<span style="background: #e9e8e2;">17</span>     List&lt; T &gt; result = f.<b><font face="Monospaced">getFavorite</font></b>( factory );
+<span style="background: #e9e8e2;">18</span>     <b><font face="Monospaced"><font color="#000099">if</font></font></b> ( result == <b><font face="Monospaced"><font color="#000099">null</font></font></b> ) {
+<span style="background: #e9e8e2;">19</span>       result = <b><font face="Monospaced"><font color="#000099">new</font></font></b> ArrayList&lt; T &gt;();
+<span style="background: #e9e8e2;">20</span>       f.<b><font face="Monospaced">setFavorite</font></b>( factory, result );
+<span style="background: #e9e8e2;">21</span>     }
+<span style="background: #e9e8e2;">22</span>     <b><font face="Monospaced"><font color="#000099">return</font></font></b> result;
+<span style="background: #e9e8e2;">23</span>   }
+<span style="background: #e9e8e2;">24</span> 
+<span style="background: #e9e8e2;">25</span>   <b><font face="Monospaced"><font color="#000099">public</font></font></b> <b><font face="Monospaced"><font color="#000099">static</font></font></b> <b><font face="Monospaced"><font color="#000099">void</font></font></b> <b><font face="Monospaced">main</font></b>( <b><font face="Monospaced"><font color="#000099">final</font></font></b> String[] notUsed ) {
+<span style="background: #e9e8e2;">26</span>     <b><font face="Monospaced"><font color="#000099">final</font></font></b> List&lt; String &gt; ls = <b><font face="Monospaced">favoriteList</font></b>( FactoryListString.INSTANCE );
+<span style="background: #e9e8e2;">27</span>     <b><font face="Monospaced"><font color="#000099">final</font></font></b> List&lt; Integer &gt; li = <b><font face="Monospaced">favoriteList</font></b>( FactoryListInteger.INSTANCE );
+<span style="background: #e9e8e2;">28</span>     li.<b><font face="Monospaced">add</font></b>( <font color="#780000">1</font> );
+<span style="background: #e9e8e2;">29</span>     <b><font face="Monospaced"><font color="#000099">for</font></font></b> ( <b><font face="Monospaced"><font color="#000099">final</font></font></b> String s : ls ) {
+<span style="background: #e9e8e2;">30</span>       out.<b><font face="Monospaced">println</font></b>( s );
+<span style="background: #e9e8e2;">31</span>     }
+<span style="background: #e9e8e2;">32</span>     <b><font face="Monospaced"><font color="#000099">for</font></font></b> ( <b><font face="Monospaced"><font color="#000099">final</font></font></b> Integer i : li ) {
+<span style="background: #e9e8e2;">33</span>       out.<b><font face="Monospaced">println</font></b>( i );
+<span style="background: #e9e8e2;">34</span>     }
+<span style="background: #e9e8e2;">35</span>   }
+<span style="background: #e9e8e2;">36</span> }
+</pre>
+<p>The above code works as expected because the factories are singletons and
+  are therefore passed to favoriteList rather than being new objects with an
+  erased  second level type. As noted above the TypeRef version
+  in both cases is of type List&lt;T&gt;, whereas with the factories the types are
+  List&lt; String &gt; and List&lt; Integer &gt;. </p>
+<p>In the case of Neil's example neither the
+    type token nor the factory are used for anything other than undoing the effects
+    of erasure. However both techniques can do much more, in particular they
+  can make instances of generic objects. </p>
+<a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=206350.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=206350&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D206350&amp;title=Super+Type+Tokens&amp;bodytext=Neil+Gafter+has+proposed+Super+Type+Tokens+and+also+noted+their+limitations.+Alternatives+include+reify+generics+and+providing+generic+factories.+Super+Type+Tokens+are+a+means+of+remembering+the+erased+type+using+a+token%2C+which+is+an+instance+of+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D206350&amp;title=Super+Type+Tokens">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D206350&amp;title=Super+Type+Tokens">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></body>
+</html>

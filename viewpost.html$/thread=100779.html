@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Introducing Neon</title>
+<meta charset="utf-8"/>
+<meta content="Calum Shaw-Mackay" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#ADD8E6" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=calum.html">Calum Shaw-Mackay's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=100779.html">Discuss</a> | 
+<a href="mailto:?subject=Introducing Neon&amp;body= %0AArtima Weblogs %0AIntroducing Neon %0Aby Calum Shaw-Mackay %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=100779">Email</a> | 
+<a href="../viewpostP.html$/thread=100779.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=97589.html" title="J2EE, Enlightenment and the way forward">Previous</a> | 
+<a class="sl" href="thread=124505.html" title="Dependency Injection and Jini Configurations">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Turn, and Face the Strange</span><br>
+<span class="ts">Introducing Neon</span><br/>
+<span class="as">by Calum Shaw-Mackay</span><br/>
+<span class="pd">March 24, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+So here's my pitch. I've been working on a grid system using Jini and mobile agents, for about 12-18 months, and now I'm nearly ready to release it as a Jini.org project. 
+Here's a bit of an overview to Neon's features and capabilities.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<a href="../_/http/neon.jini.org/index.html">Neon</a> is a framework for hosting mobile, collaborative objects. These objects
+are modeled as agents; not agents in the JMX way, but mobile autonomous
+agents.
+<br/>
+Here are the main features of Neon, and I'll go through each of them in
+turn, to give you a quick overview<br/>
+<ul>
+<li>Deploy your business objects into Neon</li>
+<li>Multiple agent types</li>
+<li>Partitioning and Domains</li>
+<li>Deployment Suitability and runtime configurations</li>
+<li>Manages life cycle of agents.</li>
+<li>Provides a grid 'fabric' to your network</li>
+<li>Provides automatic recovery, migration and agent transfer
+facilities</li>
+<li>Simplified Jini Distributed transaction support</li>
+<li>Secure calling on context-provided agents</li>
+<li>Run your Tomcat instance internally, with access to the grid.</li>
+</ul>
+<br/>
+<h3>Deploy your business objects into Neon</h3>
+By modeling core parts of  your logic as agents, you can deploy your code
+into the system, and have it managed by Neon. You can allow the various
+different parts of your application to work with each other through
+their collaborative interfaces, even though they may exist on different
+machines, or even change which machine they are on between one call and the
+next.<br/>
+<br/>
+<h3>Multiple Agent types</h3>
+Neon provides a number of core agent interfaces, that you can implement, or
+that mark out an agent in a particular way. By 'tagging' your agents with
+different interfaces, and if required implementing the methods, your agent
+can react to Neon in different ways.<br/>
+<br/>
+The main agent types that we'll discuss here are:<br/>
+<ul>
+<li>Agent and AbstractAgent</li>
+<li>LocalAgent</li>
+<li>NonContinuousAgent</li>
+<li>SensorAgent</li>
+<li>TransactionalAgent</li>
+</ul>
+The Agent interface is the interface that makes your class an Agent in the
+eyes of Neon, all agents must implement this interface, and unfortunately
+there are a substantial amount of methods that need to be implemented; many
+of these deal with lifecycle, identity and configuration. Most of the time,
+however, you can probably make do with extending AbstractAgent. If you
+extend Abstract Agent, you will have to only implement two methods, init()
+and start().<br/>
+<br/>
+<em>LocalAgent</em> marks an agent as being locally bound and therefore not
+persistable at shutdown time, man of the utility agents such as ServiceAgent
+are Local, and new instances are created through the normal bootstrapping
+procedure.<br/>
+<br/>
+<em>NonContinuousAgent</em> is there to mark your agents as departing from the normal
+lifecycle of agents. In general, an Agent calls init(), then start(), and
+even if start() returns straightaway, the agent remains registered and
+maintained by the system, even though it's own execution thread has
+completed, i.e. The agent is waiting to be told to do something or to be
+notified of something. So in effect all agents are temporally continuous,
+they will exist indefinitely, and if checkpointed regularly will exist even
+beyond complete system failure (such as somebody pulling the power lead),
+except in two cases i) Local agent, these agents are designed, as noted
+above, to be run for the duration of the container, and no longer, and ii)
+NonContinuousAgents are deregistered and removed from the system once
+start() has completed.<br/>
+<br/>
+<em>SensorAgent</em>s allow other agents to have listeners registered on them and
+will fire EventMessages to the registered parties, for instance, if a File
+arrives in a directory that is being polled by an agent, making this Agent a
+sensor will allow it to tell other agents about it, thus decoupling the
+processing of the file, from the recognition that the file has arrived.<br/>
+<br/>
+<em>TransactionalAgent</em>s add two-phase commit semantics to your agent, thus you
+need to implement commit(), abort() and prepare(). Transactions within Neon
+are explained more fully below.<br/>
+<br/>
+<h3>Partitioning and Domains</h3>
+Neon provides logical partitioning of the system (but not a more rigid
+partitioning via different classloaders, for example; Partitions do not set
+their own classloaders). A partition is defined at startup, but as Neon
+makes its way towards a 1.0 release, partition management will be required,
+and even now is a fairly high priority. Partitions are logical groupings of
+agents under a single category, how you define these categories is up to
+you, they could be based on different applications you run (Orde
+Processing), your departments (Accounts, HR), or even different needs of
+your application (Persistence, Legacy Integration,etc). Partitions can talk
+to each other if they are configured to do so. Each partition in a Neon
+instance (or host) must have a unique name, although the same name may be
+used in different instances, all the partitions across the network that
+share the same name define a Domain.<br/>
+<br/>
+<h3>Deployment Suitability</h3>
+Before sending an agent into the system at runtime, you may want to specify
+certain criteria about the instance that need to be met in order to deploy
+the agent into it. This is not just about maintaining a level of service for
+the agent, but also about limiting the effect of runtime errors that may
+occur such as ClassNotFoundException, and in the case of deployment time
+considerations such as COM integration or native libraries, ensuring that
+the application you want is actually available on that machine etc. Agents
+can specify some of their classes that need to be available to the instance,
+what operating system the agent may need to run on, and free memory
+requirements etc. Agents that don't meet their constraints don't get
+deployed.
+<br/>Each agent is also capable of having a Jini configuration attached to it
+that it can then access at runtime, this can be anything from a URL, to a
+configuration file stored with in a download jar.<br/>
+<br/>
+<h3>Manages lifecycle</h3>
+Neon can put agents into different states based upon what is happening to
+them  or user defined policies, or whether the agent is in a transaction,
+etc. There are a number of Agent states, from Busy or Locked right up to
+Hibernated and Death. Different states will effect your ability to
+collaborate with an agent or even effect the physical location of an agent
+at that point in time.<br/>
+<br/>
+<h3>Provides a grid fabric</h3>
+All Neon instances in a group can work together. The secret is in how the
+methods on other agents are called from your agent. Neon forgoes the normal
+view of using a conventional callstack for calling from one object to
+another, and instead replaces it with a set of dynamic proxies, and a
+messaging system called Zenith. Each message bus is dynamic allowing
+channels to be added and removed at runtime, as agents join and leave the
+partition. On the network is a message broker that is informed of each
+addition and removal in the channel set by each message bus.<br/>The broker, in
+turn, tells each and every other Neon instance in the group about the
+channel, and which message bus service holds that channel. Thus when Neon
+needs to call out of it's process, it simply looks up in its own table and
+looks for the channel name it wants, and picks a corresponding service id to
+route the message through.<br/>
+<br/>
+<h3>Recovery, Migration and Transfer</h3>
+As alluded to above, Neon is able to transfer objects from one instance to
+another, however, there is another time when agents need to move - when
+the instance is being shutdown. When you Ctrl-C an instance of Neon,
+shutdown hooks are called, and all Non-local agents are stopped and
+persisted to a JavaSpace, when the service is deregistered from the Jini
+group, an agent is called on every other Neon instance, this agent is the
+RecoveryAgent. The RecoveryAgent is woken up whenever an AgentService is
+removed, when this happens, it starts to try to deploy and restart any
+agents that were persisted during the shutdown phase. In the case, where
+upon restarting the shutdown instance, agents that were stored into the
+space are still there, these will be redeployed (subject to constraints, of
+course)<br/>
+<br/>
+<h3>Simplified Distributed Transaction support</h3>
+I'll explain this with a bit of an example.<br/>
+Normal Jini transaction
+<pre>try{
+       JavaSpace mySpace = (JavaSpace) regs[0].lookup(salesJSpaceTmp);
+       TransactionManager txnMgr = (TransactionManager)
+regs[0].lookup(txnMgrTmp);
+       Transaction.Created txf = TransactionFactory.create(txnMgr, 20000);
+       Transaction tx = txf.transaction;
+       lrm.renewFor(txf.lease, Lease.FOREVER, null);
+       EmployeeEntry template = new EmployeeEntry("Bottomless Pete",
+"Natures cruelest mistake");
+       mySpace.write(entry, tx,
+3*com.sun.jini.constants.TimeConstants.MINUTES);
+       tx.commit();
+} catch (Exception ex){
+       System.err.println("Caught Exception: "+ ex.getClass().getName() +
+"; Msg: " + ex.getMessage());
+       ex.printStackTrace();
+}</pre>
+With Neon we can use two agents to simplify this - TransactionAgent and
+JavaSpaceOps<br>
+<pre>
+try{
+       TransactionIntf txn = (TransactionIntf)
+context.getAgent("neon.Transaction");
+       txn.createTransaction();
+       JavaSpaceOps ops = (JavaSpaceOps) context.getAgent("JavaSpaceOps");
+       EmployeeEntry entr = new EmployeeEntry("Captain McCallister",
+"G'arr");
+       ops.write(entr, 3*com.sun.jini.constants.TimeConstants.MINUTES);
+txn.commit();
+}catch(Exception ex){
+       System.err.println("Caught Exception: "+ ex.getClass().getName() +
+"; Msg: " + ex.getMessage());
+       ex.printStackTrace();
+}
+</pre>
+The first thing you'll notice is that we ask the TransactionAgent to create our transaction, however, we don't actually reference it, and then we don't use it to pass to the JavaSpaceOps agent .... but things are still written to the JavaSpace under a distributed transaction. Neon hides a lot of transaction processing, and assigns it's own txnID to the Jini Distributed Transaction Uuid, and it is possible to build agents that have 2PC methods that are called when the transaction is actioned. Agents that require access to the real distributed transaction, like JavaSpaceOps, can do so and then use that transaction to pass on to another service. All agents are capable of running under a Transaction (there is an exception - have your class implement NonTransactionalResource), but may not react to the transaction semantics (commit, abort, etc). Any agent running under a transaction will have it's state changed to LOCKED. Transactions are automatically propagated between agents and instances of Neon.<br/>
+<br/>
+<h3>Secure calling on Agents</h3>
+When you call context.getAgent(), you don't actually receive a reference to
+the agent, you actually receive a dynamic proxy that dispatches method calls
+as messages, this dynamic proxy only implements any interfaces that you mark
+as being Collaborative, but importantly, it does not choose to implement the
+Agent interface, thus you cannot do the following<br>
+<pre>
+Agent agent = (Agent) context.getAgent("my.important.business.agent");
+agent.setState(AgentState.LOCKED) </pre>
+or<pre>
+agent.complete();
+</pre>
+<h3>Run your Tomcat instance internally</h3>
+Neon is capable of taking your existing Tomcat installation and running it
+internally with the Neon process. Once this is done you can access the Neon
+system and obtain agents from servlets and JSP's. Also Neon provides a
+RenderAgent as one of it's Stock agents. Render Agent allows agents to
+register a presentation (currently XSL stylesheets) for themselves, and the
+Render Agent can then call back on the agent when required to get any data
+that it wishes to present. The render agent then runs the data against XSL
+stylesheet and can then return that to the caller-Neon comes with a very
+small JSP that calls render on a provided agent ID and shows the results
+back to the browser. An advantage of this approach is that this kind of
+rendering can utilise the grid and potentially render pages on different
+hosts, alleviating pressure on the Tomcat instance.<br/>
+<br/>
+Well that's the introduction out of the way, once I've got the code and
+binaries available, and out there for people to have a look at, I hope to
+blog more on what Neon can do. Of course Neon is not going to do everything
+for everyone - being a framework, certain compromises have to be made and
+therefore, like every other framework, it's not a perfect fit for all
+scenarios. Still, I hope some people like the sound of it and at least
+have a look, and as with all projects - <em>'all help is gratefully received'</em>. Most updates will appear on the Neon project page @ <a href="../_/http/neon.jini.org/index.html">neon.jini.org</a>.<br/>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=100779.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=100779&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Calum Shaw-Mackay adds a new entry to <a href="../index.html$/blogger=calum.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/calum.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D100779&amp;title=Introducing+Neon&amp;bodytext=So+here%27s+my+pitch.+I%27ve+been+working+on+a+grid+system+using+Jini+and+mobile+agents%2C+for+about+12-18+months%2C+and+now+I%27m+nearly+ready+to+release+it+as+a+Jini.org+project.+%0D%0AHere%27s+a+bit+of+an+overview+to+Neon%27s+features+and+capabilities.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D100779&amp;title=Introducing+Neon">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D100779&amp;title=Introducing+Neon">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/calumshawmackay.jpg"/></td><td>Calum Shaw-Mackay is an architect on Java and Jini systems, working in the UK. His interests lie in distributed computing, adaptability, and abstraction. Calum has been using Jini for longer than he would care to mention. His main area for taking the blame (some people would call it 'expertise') is systems integration and distributed frameworks, and is an advocate of using Jini's unique strengths to build adaptable enterprise systems. His opinions are his own. He's tried to get other people to take his opinions off him, but they just won't.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Calum Shaw-Mackay. All rights reserved.</div>
+</p></p></p></p></br></br></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

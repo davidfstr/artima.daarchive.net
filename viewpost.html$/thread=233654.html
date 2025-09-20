@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Rich Internet Applications: VM Runtimes or Browser Standards?</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=233654.html">Discuss</a> | 
+<a href="mailto:?subject=Rich Internet Applications: VM Runtimes or Browser Standards?&amp;body= %0AArtima Weblogs %0ARich Internet Applications: VM Runtimes or Browser Standards? %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=233654">Email</a> | 
+<a href="../viewpostP.html$/thread=233654.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=230557.html" title="Open Standards vs Open Source?">Previous</a> | 
+<a class="sl" href="thread=233945.html" title="The Simplest Thing That Could Possibly Work?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Rich Internet Applications: VM Runtimes or Browser Standards?</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">June 27, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A great deal of commentary followed Apple's announcement that it would use the Sproutcore JavaScript framework for its upcoming online offerings. Most of the debate centers around the question of whether a virtual machine-based environment or reliance on browser standards are preferable when developing rich Web apps.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Many server-side applications are now written to target a virtual machine, be that the Java VM or Microsoft's .NET environment. Virtual machines not only alleviate many hardware differences from an application's point of view, but also add benefits not available to applications that explicitly target the native host.</p>
+<p>One example is just-in-time compilation: A JIT compiler has access to runtime information that a static compiler doesn't, and can, potentially, use that data to affect application performance. Another benefit of VMs can be seen in the rise of polyglot programming, as most modern VMs facilitate some interaction between code written in different source languages. But the biggest benefit of targeting a virtual machine is that it provides a homogeneous environment that can be be expected to work similarly in otherwise disparate hardware and OS environments. </p>
+<p>Could a virtual machine-based approach provide similar benefits on the client as well? In many ways, the state of client-side development is akin to a situation that existed for server-side applications prior to the rise of the major VMs: Although there are standards that many environment vendors claim to follow, browsers are far from homogeneous.</p>
+<p>As with server-side development some ten years ago, developers have taken two primary approaches to making things easier on the client: using libraries that mask some of the environment differences, such as Prototype, script.aculo.us, or Dojo, or using clever compilers that can emit highly optimized code for various targets, such as Google GWT.</p>
+<p>While those two approaches consume a fair amount of developer mind share, Microsoft, Sun, and Adobe seem to think that the future of client-side development bliss lies in virtual machines. With Silverlight, Microsoft aims to provide a multilanguage development paradigm for client-side applications, similar to what it has done on the server, and Sun's renewed interest in applets and the client offers the JVM as the target environment for rich-client applications. Meanwhile, Adobe's Flex, which targets the Flash VM, has reached its third iteration, has been available for a while under an open-source license, and now with BlazeDS has a compelling server-side integration story as well.</p>
+<p>When Apple announced last month that it would be using Sproutcore, a nascent open-source Ajax framework, for its upcoming online offerings, some speculated that with this move Apple aims to throw its weight, and considerable number of followers, behind the cross-browser library-based approach to rich clients. RoughlyDrafted's Daniel Eran Dilger went so far as to consider, in <a href="../_/http/www.roughlydrafted.com/2008/06/14/cocoa-for-windows-flash-killer-sproutcore/index.html">Cocoa for Windows + Flash Killer = SproutCore</a>, much broader possible implications of Apple's move:</p>
+<blockquote>
+<p>Apple is refining Cocoa for deployment within the web browser to enable developers to build those so called “Rich Internet Applications” that Adobe wants users to build in Flash/Flex/AIR, Microsoft in Silverlight, Sun in Java, and so on...</p>
+<p>Many of the most popular rich web apps today are from Google, including Maps, Reader, Docs, and Sheets. Google’s rich web apps take on Microsoft Office desktop apps without even needing Flash, Silverlight, or Java. Instead, Google simply uses open web standards: HTML, JavaScript, and CSS. If Google’s leading rich web apps avoid using those proprietary plugins, why should anyone else resort to using Flash or something similar?</p>
+<p>Google’s frequent partner Apple has been thinking along the same lines, scrubbing its website of all unnecessary Flash elements and building everything in those same open web standards: HTML, JavaScript, and CSS.</p>
+<p>Indirect strategies explain why both Google and Apple share the same strong affinity for an open web, in contrast to more short sighted developers would would blindly shackle themselves to Flash or Silverlight simply because those tools might help them accomplish their immediate objectives without too much effort.</p>
+</blockquote>
+<p>For server-side applications, many developers have been more than willing to "shackle themselves" to VMs, precisely because VMs have helped them to "accomplish their immediate objectives without too much effort," i.e., to develop and deploy applications consistently across multiple platforms. And on the client, too, developers using Flex, for instance, have been experiencing similar benefits.</p>
+<p>Although cross-browser Ajax libraries are getting better all the time, Tim Anderson <a href="../_/http/www.itwriting.com/blog/680-the-ria-dilemma-open-vs-predictable.html">pointed out</a> that even Sproutcore, in its current stages, has a rough time supporting the major browsers:</p>
+<blockquote>
+<p>I tried the sample controls demo in IE7 but it didn’t work quite right. For example, the Picker pane opened but would not close. Tried again in Firefox 3.0 and everything was fine... I’ve got no idea what the problem is with IE7; it is probably because of weak standards support in IE. However, it illustrates the advantages of a plug-in like Flash, Silverlight or Java. With these platforms, the application is largely insulated from differences between browsers.</p>
+</blockquote>
+<p>Even beyond the cross-browser capability, VMs offer advantages that the Ajax/browser-based approach can't. According to Adobe's John Dowdell, who may be biased given his company's commitment to Flash and Flex, <a href="../_/http/blogs.adobe.com/jd/2008/06/what_sproutcore_might_represen.html">writes</a> that:</p>
+<blockquote>
+<p>Frameworks promise developmental ease, and hope to reduce testing time. But they don't add capabilities to the audience's machines. Runtimes do that. Targeting the intersection of various runtimes (as with HTML/JS/CSS) costs more than targeting a single universal runtime (Flash), whether in testing, support, or (critically) range of supported functionality...</p>
+</blockquote>
+<p>In other words, VM runtimes, such as the JVM, .NET, and Flash, can add benefits to rich-client applications in similar ways that VMs on the server add benefits to server-side applications. </p>
+<p>Targeting a VM-based client environment also renders browser vendors' adherence to standards less important for developers. That may be a good thing with the upcoming release of JavaScript 2: Although Mozilla has committed to supporting the much improved version of JavaScript, Brendan Eich, JavaScript's creator and CTO of Mozilla, did not express great hopes for Internet Explorer supporting JavaScript 2 any time soon. This is not only a question of libraries or browser idiosyncrasies: Without wide support for JavaScript 2, developers would either be forced to write in earlier JavaScript versions, never really taking advantage of features in JavaScript 2, write two versions of JavaScript applications, or rely on a compiler that can "downgrade" JavaScript 2 code for browsers not yet supporting that language.</p>
+<p>Interestingly, Eich <a href="../_/http/www.infoworld.com/article/08/06/23/eich-javascript-interview_6.html">noted</a> in a recent interview that developers may be able to use JavaScript 2 in IE through a plug-in, ScreamingMonkey, that Mozilla and Adobe jointly co-sponsored. ScreamingMonkey does this by relying on the Flash player, whose compiler, Tamarin, already supports the latest JavaScript draft standard: </p>
+<blockquote>
+<p>It’s possible that if you’re a developer and you get this [ScreamingMonkey plugin], or if Adobe were to distribute this active scripting glue that Mark [Hammond] wrote, that IE would be able to support JavaScript through the Flash Player. It wouldn’t need to have native support for JavaScript 2, it would get it just for free because Flash is widely distributed. Now I don’t know if Adobe will do that. It’d be good if they did, in case Microsoft does not ever get around to supporting JavaScript 2.</p>
+</blockquote>
+<p>Personally, I'm not sure one has to make an absolute decision about the VM-based approach vs the browser/standards-based approach to rich-client development. For individual projects, however, one does have to make a choice about technology. My personal experience is that using a VM on the client offers benefits that one just can't get even with the best Ajax libraries, such as YUI or Dojo. For example the Flash VM provides highly sophisticated debugging and profiling support, and can offer JIT compilation for running Flex applications.</p>
+<p>Where do <em>you</em> stand in the debate about VM-based vs. browser standards-based approaches to rich-client development?
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=233654.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=233654&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D233654&amp;title=Rich+Internet+Applications%3A+VM+Runtimes+or+Browser+Standards%3F&amp;bodytext=A+great+deal+of+commentary+followed+Apple%27s+announcement+that+it+would+use+the+Sproutcore+JavaScript+framework+for+its+upcoming+online+offerings.+Most+of+the+debate+centers+around+the+question+of+whether+a+virtual+machine-based+environment+or+reliance+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D233654&amp;title=Rich+Internet+Applications%3A+VM+Runtimes+or+Browser+Standards%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D233654&amp;title=Rich+Internet+Applications%3A+VM+Runtimes+or+Browser+Standards%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

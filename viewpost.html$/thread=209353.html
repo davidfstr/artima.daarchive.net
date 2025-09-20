@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Programming with "Duh" Typing</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=209353.html">Discuss</a> | 
+<a "duh"="" %0a%0ahttps:="" %0aby="" %0aprogramming="" bill="" duh"="" href="mailto:?subject=Programming with " typing="" typing&body="%0AArtima" venners="" viewpost.jsp?thread='209353"' weblogs="" with="" www.artima.com="">Email</a> | 
+<a href="../viewpostP.html$/thread=209353.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=197511.html" title="What Are Your C# Pain Points, Really?">Previous</a> | 
+<a class="sl" href="thread=210268.html" title="What's the Most Effective Code Style Policy?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">Programming with "Duh" Typing</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">July 7, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+To what extent does the productivity of dynamic languages come from the lack of typed variables versus the reduction in "finger typing" required when you don't have to declare the types? The technique of type inferencing in static languages may shed new light on this old debate.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+Over the years here at Artima we've had a number of debates and discussions about static versus dynamic typing. Here are a few:
+</p>
+<ul>
+<li>
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=4639.html">Are Dynamic Languages  Going to Replace Static Languages?</a>, discussion of a weblog post by Robert C. Martin.
+</li>
+<li>
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=7590.html">Typing: Strong vs. Weak, Static vs. Dynamic</a>, discussion of a weblog post by Aahz.
+</li>
+<li>
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=32&amp;thread=3572.html">Strong versus Weak Typing</a>, discussion of an interview with Python's creator Guido van Rossum.
+</li>
+<li>
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=127941&amp;msRange=15.html">Implicit versus Explicit Dynamic Typing</a>, discussion of a weblog post by Christopher Diggins.
+</li>
+<li>
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=36525.html">To type or not to type</a>, discussion of a weblog post by Jim Waldo,
+</li>
+<li>
+<a href="../_/http/www.artima.com/forums/flat.html$/forum=32&amp;thread=3856.html">Use the Best Tool for the Job</a>, discussion of a short article by a younger me.
+</li>
+</ul>
+<h1>The accepted wisdom</h1>
+<p>
+Throughout all these discussions, I heard some common themes that informed my own opinions on the matter. For example, Java creator James Gosling said this in <a href="../_/http/www.artima.com/intv/gosling319.html">an interview</a>:
+</p>
+<blockquote>
+It's funny how some of these things like performance and reliability actually fit hand in hand with developer productivity. There's a folk theorem out there that systems with very loose typing are very easy to build prototypes with. That may be true. But the leap from a prototype built that way to a real industrial strength system is pretty vast.
+</blockquote>
+<p>
+Guido van Rossum, creator of Python, said this in <a href="../_/http/www.artima.com/intv/strongweak.html">his interview</a>:
+</p>
+<blockquote>
+Strong typing is one reason that languages like C++ and Java require more finger typing. You have to declare all your variables and you have to do a lot of work just to make the compiler happy. An old saying from Unix developers goes something like, "If only your programs would be correct if you simply typed them three times." You'd gladly do that if typing your programs three times was enough to make them work correctly, but unfortunately it doesn't work that way.
+</blockquote>
+<p>
+And Ruby creator Yukihiro Matsumoto (or Matz) said in <a href="../_/http/www.artima.com/intv/tuesday.html">his interview</a>:
+</p>
+<blockquote>
+<p>
+...Programs written in dynamic languages are very easy to run and check. So for day-to-day programs that aren't not as serious as enterprise systems, you don't have to be as robust. It's not worth the cost of declaring types, for example. And because there are so many dynamic checks in dynamic languages, in most cases something very terrible usually does not happen. For example, Ruby checks array boundaries, so you don't have buffer overwrites. Ruby doesn't provide direct address manipulations, so you can't crash the stack space. Therefore in Ruby, I want to enable programmers to get a program ready to test in a short time by making programmers productive.
+</p>
+</blockquote>
+<p>
+My take away from all these debates is captured in this quote from my <a href="../_/http/www.artima.com/commentary/langtool.html">Use the Best Tool for the Job</a> article:
+</p>
+<blockquote>
+Python tries hard to get out of your way while you're coding, so you can quickly complete the functionality and start testing the program. Java, by contrast, actually tries to slow you down a bit while you're coding—for your own good—so that when you reach the system-testing phase, you already have a more robust system. Python enthusiasts believe they can achieve sufficient robustness through testing, and that they have more time to test because they finish the functionality so much sooner. Java enthusiasts feel that strict compile-time checking will ultimately yield a more robust system, despite taking longer to reach the testing phase.
+</blockquote>
+<h1>The rise of "duck" typing</h1>
+<p>
+One of the points Guido van Rossum made to me during <a href="../_/http/www.artima.com/intv/strongweak2.html">our interview</a>, and others in subsequent discussions, is that I was not accurate when I described the typing of Python as "weak typing." Guido suggested the term <em>runtime typing</em>: 
+</p>
+<blockquote>
+Weak typing is not really a fair description of what's going on in Python. It's really runtime typing because every object is labeled with a type.
+</blockquote>
+<p>
+I later heard the term <em>dynamic typing</em> used more frequently than runtime typing. For example, Aahz wrote in his <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=7590.html">his weblog</a>:
+
+<blockquote>
+It's very clear that Python has only dynamic typing; any target may hold a binding to any kind of object."
+</blockquote>
+<p>
+More recently I began to hear this style of typing called "Duck Typing," and this seems to be the most popular term nowadays. As Alex Martelli put it many years back in a <a href="../_/http/groups.google.com/group/comp.lang.python/msg/e230ca916be58835$/hl=en&amp;/index.html">post to comp.lang.python</a>:
+</p>
+<blockquote>
+...Don't check whether it IS-a duck: check whether it QUACKS-like-a duck, WALKS-like-a duck, etc, etc, depending on exactly what subset of duck-like behaviour you need...
+</blockquote>
+<p>
+The basic idea is that in dynamically typed languages, variables can hold references to any type of object. In code you can invoke any method. At runtime, if the method exists on the object, it will be invoked. Otherwise you'll get an exception. Here's an example in the Python interpreter:
+</p>
+<pre class="indent">
+<span style="color: #777777;">&gt;&gt;&gt;</span> v = ["Hi ", "there!"]
+<span style="color: #777777;">&gt;&gt;&gt;</span> v = v[1]
+<span style="color: #777777;">&gt;&gt;&gt;</span> v.upper()
+<span style="color: #777777;">'THERE!'
+</span></pre>
+<p>
+In the first line of this example, I initialize a variable <code>v</code> to the list <code>["Hi ", "there!"]</code>. The <code>v</code> variable has no type. It can hold onto any type of object, including a list, which is what it holds initially. In the second line, I extract the first element of the (zero-based) list with <code>v[1]</code>, which returns the string <code>"there!"</code>. I then place a reference to that string back into the <code>v</code> variable. So although <code>v</code> initially refered to a list, it now refers to a string. In the third line I call the <code>upper</code> method on <code>v</code>. This succeeds because strings in Python do indeed have a method named <code>upper</code>, which returns a new string with the same value as the passed string, except with all lowercase characters converted to uppercase. The interpreter shows that the result is <code>'THERE!'</code>.
+</p>
+<p>
+Similar code works in Ruby and Groovy. Here a Ruby version:
+
+<pre class="indent">
+<span style="color: #777777;">irb(main):001:0&gt;</span> v = ["Hi ", "there!"]
+<span style="color: #777777;">=&gt; ["Hi ", "there!"]</span>
+<span style="color: #777777;">irb(main):002:0&gt;</span> v = v[1]
+<span style="color: #777777;">=&gt; "there!"</span>
+<span style="color: #777777;">irb(main):003:0&gt;</span> v.upcase
+<span style="color: #777777;">=&gt; "THERE!"</span>
+</pre>
+<p>
+And here's a Groovy version:
+</p>
+<pre class="indent">
+v = ["Hi ", "there!"]
+v = v[1]
+<span style="color: #777777;">println</span> v.toUpperCase()
+</pre>
+<p>
+In Java, such an effort would be more verbose:
+</p>
+<pre class="indent">
+<span style="color: #777777;">import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+class Example {
+
+    public static void main(String args[]) {</span>
+        List&lt;String&gt; v = new ArrayList&lt;String&gt;(Arrays.asList("Hi ", "there!"));
+        String s = v.get(1);
+        <span style="color: #777777;">System.out.println(</span>s.toUpperCase()<span style="color: #777777;">);
+    }
+}</span>
+</pre>
+<p>
+Some of the verbosity comes from the need to indicate the type of the variable, and the verbosity only grows the more you use generics. <code>List&lt;String&gt;</code> may not seem so bad, but things start really feeling verbose when you want to say <code>List&lt;Map&lt;String,List&lt;Boolean&gt;&gt;&gt;</code>. You often need to say it twice, once on the left of the equals sign, and again on the right. For example, in this case, I said <code>List&lt;String&gt;</code> to the left of the equals sign on the first line of the <code>main</code> method, and <code>ArrayList&lt;String&gt;</code> to the right.
+</p>
+<h1>The advent of "duh" typing</h1>
+<p>
+Lately I have been starting to use Scala more and more for real work. Although it is a statically typed language like Java, Scala uses local type inference to <em>infer</em> types from the context. The upshot is that even though variables have types in Scala, as in Java, I need not specify the types as often in Scala code as I do in Java code. Here's what the example looks like in Scala:
+</p>
+<pre class="indent">
+<span style="color: #777777;">scala&gt;</span> val v = List("Hi ", "there!")
+<span style="color: #777777;">v: List[java.lang.String] = List(Hi , there!)</span>
+
+<span style="color: #777777;">scala&gt;</span> val s = v(1)
+<span style="color: #777777;">s: java.lang.String = there!</span>
+
+<span style="color: #777777;">scala&gt;</span> s.toUpperCase
+<span style="color: #777777;">unnamed0: java.lang.String = THERE!</span>
+</pre>
+<p>
+In the first line, I call a factory method named <code>List</code>, passing in two <code>String</code>s. The Scala compiler knows this factory method will, in this case, return an object whose type is <code>List[String]</code>. (Scala uses square brackets for generics rather than angle brackets as in Java.) Since I didn't explicitly specify in the code a type for <code>v</code>, the Scala compiler infers that <code>v</code>'s type is <code>List[String]</code>, the type of the object with which it is initialized.
+</p>
+<p>
+As in the Java example, I am unable to reuse the <code>v</code> variable. (Actually, in the Scala example <code>v</code> is not a variable. It's a <em>value</em>, which is like a final variable in Java.) In both the Scala and Java case, I need to come up with a new variable to hold the <code>String</code> I extract from the <code>List</code>. But whereas I had to explicitly specify that the type of this variable is <code>String</code> in the Java code...
+</p>
+<pre class="indent">
+String s = v.get(1);
+</pre>
+<p>
+...the word <code>String</code> does not appear in the corresponding line in the Scala code:
+</p>
+<pre class="indent">
+val s = v(1)
+</pre>
+<p>
+The Scala compiler infers the type of <code>s</code> to be <code>String</code>, because that's the type of the expression <code>v(1)</code>, with which it is initialized.
+</p>
+<p>
+About two months ago I gave a talk on little languages and code generation to the SD Forum, and afterwards went out for a beer with a few of the attendees. We ended up talking about type inference in Scala at one point, and the fellow next to me, Randy Kerber, said, "That's duh typing." I said, "No, it's not duck typing." He said, "Not duck typing, <em>duh</em> typing." As in: Knowing that the expression initializing <code>s</code> is a <code>String</code>, the compiler says, "Well, duh! The type of <code>s</code> is <code>String</code>."
+</p>
+<h1>Feels like Python</h1>
+<p>
+One of the surprises I encountered when starting to use Scala was the realization that I had underestimated the extent to which reduced finger typing contributes to the feeling of productivity enjoyed when programming in dynamic languages. It wasn't as much that variables lacked types in the dynamic languages, but that I didn't have to explicitly "finger type" the types in the code. Scala is statically typed like Java, but it feels a bit like Python to me when I program in it, because it is so much more concise than Java.
+<p>
+<p>
+Do you think type inference will change the dynamics of the static versus dynamic typing debate? Please <a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=209353.html">post in the forum</a>.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=209353.html">370
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=209353&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D209353&amp;title=Programming+with+%22Duh%22+Typing&amp;bodytext=To+what+extent+does+the+productivity+of+dynamic+languages+come+from+the+lack+of+typed+variables+versus+the+reduction+in+%26quot%3Bfinger+typing%26quot%3B+required+when+you+don%27t+have+to+declare+the+types%3F+The+technique+of+type+inferencing+in+static+languages+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D209353&amp;title=Programming+with+%22Duh%22+Typing">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D209353&amp;title=Programming+with+%22Duh%22+Typing">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

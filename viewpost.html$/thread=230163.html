@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2008, Day Zero: Community Day, Development Tools</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230163.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2008, Day Zero: Community Day, Development Tools&amp;body= %0AArtima Weblogs %0AJavaOne 2008, Day Zero: Community Day, Development Tools %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=230163">Email</a> | 
+<a href="../viewpostP.html$/thread=230163.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=230089.html" title="JavaOne 2008, Day Minus One: Non-Profit Networking &amp; Horrible Hotel">Previous</a> | 
+<a class="sl" href="thread=230227.html" title="JavaOne 2008, Day One: Conference 2.0 and JRuby Notes">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2008, Day Zero: Community Day, Development Tools</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 6, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A better hotel, collaboration tools, and development tools.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I'm now firmly ensconced in a motel a few blocks further
+from the convention center. It costs about the same, but
+I'm reveling in the luxurious surroundings and modern
+appliances. The furnishings are little space-age--which
+means they're designed more for looks than comfort, but
+the huge bed, digital TV, and heat lamp in the bathroom
+moe than compensate for that, along with all the other
+amenities, including a wireless connection that works.</p>
+<p>Highlights were a talk on open source development
+tools that I'll be summarizing today, and a panel on
+JRuby. I'll combine my notes from that with a similar
+session tomorrow, and give you an update. There's some
+good stuff to tell.</p>
+<p>Also, I'll be looking for the Network.com booth in Sun's
+section of the show. I've been waiting for quite a while
+to blog about that effort--a suite of Ruby-based tools
+for distributed project collaboration that includes a Wiki,
+bug reporting, source code versioning, and web site management.
+I know it as project Kenai ("keen-eye", or "key-nigh").</p>
+<p>Here's what the web site has to say about it:</p>
+<blockquote>
+Network.com provides wide range of easy to use Internet
+services for developers to create, deploy and manage their
+next generation applications. Cloud computing is the next
+disruptive force on the horizon and Network.com enables
+developers to ride the cloud wave to quickly build and
+deploy cloud based applications.</blockquote>
+<p>Here's what I know: Its a flexible, well-architechted, and
+highly functional, highly usable, and extensible open
+source effort that is worth a serious look.</p>
+<p>In the meantime, here's a summary of the talk on
+open source development tools given by John Smart of
+Wakaleo Consulting:</p>
+<p>To do things right, you'll want tools for:</p>
+<blockquote>
+<ul class="simple">
+<li>Automated builds</li>
+<li>Automated testing</li>
+<li>Source code management</li>
+<li>Continuous integration</li>
+<li>Automated Code Checking</li>
+<li>Automated Documentation</li>
+</ul>
+</blockquote>
+<div class="section">
+<h1><a id="build-tools" name="build-tools">Build Tools</a></h1>
+<p>ANT and Maven were mentioned, but not Rake. That put
+me off a bit, because I happen to love Rake. This was
+a Java talk, but even so, plenty of folks are using
+Rake for Java builds.</p>
+<p>So Rake is a clear winner for me over Ant and Make.
+But I confess that I had no clear idea understanding
+of Maven's capabilities prior to this talk.</p>
+<p>Maven 2 is a pluggable build framework, with many plugins.
+It also lets you do some scripting when scripting, but
+your build configuration is mostly declarative. And it
+chants the "convention over configuration" mantra that
+makes Ruby on Rails powerful without being painful.</p>
+<p>Maven 2 also allows for declarative dependency management,
+which solves the problem of JAR files that contain
+different versions of the classes you need.</p>
+<p>Ivy solves that problem for ANT, meanwhile. And there are
+Maven tasks that do the same thing--which suggests to me
+that running Rake in JRuby makes sense, in order to take
+advantage of the Maven tasks, and other tasks built for
+ANT.</p>
+<blockquote>
+<strong>Note:</strong>
+Fellow attendee Steve Davidson mentioned that Hibernate
+and most of the Apache projects use Maven, and they love
+it.</blockquote>
+</div>
+<div class="section">
+<h1><a id="automated-testing" name="automated-testing">Automated Testing</a></h1>
+<p>For testing, John mentioned JUnit 4.4 and TestNG, but only
+went into detail on JUnit. (Ruby's RSpec wasn't mentioned,
+but it was interesting to see Java's unit test harnesses
+moving in that direction.)</p>
+<p>With JUnit 4.4, any class can contain tests, which makes it
+easier to do behavioral testing, because your test classes
+no longer have to match up with applciation classes. The
+tests can also contain annotations like @before and @after
+for setup and teardown code.</p>
+<p>JUnit 4.4 also allows for timeouts, tests to make sure the
+right exceptions are thrown, and parameterized tests.</p>
+<p>One of it's more interesting features is "Hamcrest asserts".
+Those asserts read more English, so instead of seeing:</p>
+<pre class="literal-block">
+assertEquals(x, calulated(y));
+</pre>
+<p>You get:</p>
+<pre class="literal-block">
+assertThat(calculated(y), is(expectedValue));
+</pre>
+<p>Or:</p>
+<pre class="literal-block">
+assertThat(color, is("blue");
+assertThat(color, Not(isIn(colors))));
+</pre>
+<p>You also get more readable error messages:</p>
+<pre class="literal-block">
+"Expected "blue", got "red"
+</pre>
+<p>That's all a vast improvment, but it's still nowhere near as
+readable as RSpec--a Ruby-based vehicle for unit testing that
+was designed from the ground up for behavioral testing, and
+which takes advantage of Ruby's language-constructing
+capabilities to create tests that are <em>truly</em> readable, but
+they're all steps in the right direction.</p>
+<blockquote>
+<strong>Note:</strong>
+Another tip from Steve Davidson: For database testing, he
+uses HSQLDB--a standards-compliant database with a version
+that runs totally in memory, for lightning fast testing.
+(To be sure he testing against the latest schema, he runs
+the setup scripts the Q/A team is using.)</blockquote>
+<p>Finally, for test coverage, developers will want to take
+advantage of IDE-level tools to guage the effectiveness of
+tests for the code they're writing, and the team as a whole
+will want a project-wide coverage tool that provides useful
+reports.</p>
+<p>For IDE tests, there is the tool built into NetBeans, the
+EclEmma plugin for Eclipse, and an experimental Crap4j tool.
+For project-wide coverage, there is Cobertura.</p>
+<p>(On a related front, there are test frameworks like Selenium
+and HtmlUnit for Web apps.)</p>
+</div>
+<div class="section">
+<h1><a id="continuous-integration" name="continuous-integration">Continuous Integration</a></h1>
+<p>If you don't have automated testing, continuuous integration
+doesn't help you much. And if you don't have automated builds,
+it's not possible. But if you have both, and you're using any
+kind of source control system (cvs, subversion, etc.) then
+continuuous integration is the next most important step you
+can take to ensure success.</p>
+<blockquote>
+<strong>Note:</strong>
+StarTeam was also mentioned for source control. That could
+be worth a look.</blockquote>
+<p>With continuuous integration, you identify integration issues
+sooner, rather than later. Like unit testing, it lets you find
+bugs closer to when you created them, which makes them easier
+to diagnose. It also means that, two weeks before you're supposed
+to ship, you don't suddenly discover significant problems that
+require a massive design change.</p>
+<p>Continuous integration allows lets you do frequent releases,
+which is important for any kind of agile development cycle.</p>
+<p>To do it, you need a continuous build tool. Open source systems
+include CruiseControl, Hudson, Continuum, and LuntBuild. There
+are also commercial systems like TeamCity, Bamboo, and Pulse,
+but according to Smart, the open source tools do pretty much
+what you need (as of today, anyway).</p>
+</div>
+<div class="section">
+<h1><a id="automated-code-checks" name="automated-code-checks">Automated Code Checks</a></h1>
+<p>Automated checking of source codes helps to ensure quality,
+but if nothing else it ensures consistency, which improves
+maintainability -- and maintenance can be as much of 90% of
+the cost of any sustained application effort. (And with
+automated checks, developers train themselves!)</p>
+<p>Tools for automated code checks include:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Checkstyle</strong> (for naming conventions, formatting)</li>
+<li><strong>PMD</strong> (helps to ensure best practices)</li>
+<li><strong>findBugs</strong> (identifies potential bugs, e.g null ptr exceptions)</li>
+<li><strong>crap4j</strong> (an experimental tool that finds overly complex and
+untested classes, when it is used for unit-testing)</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="automated-documentation" name="automated-documentation">Automated Documentation</a></h1>
+<p>You still need to put together high-level architecture docs,
+but these tools let you generate details automatically:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>JavaDoc</strong>  (for APis)</li>
+<li><strong>UmlGraph</strong> (for class hierarchy)</li>
+<li><strong>SchemaSpy</strong> (for a graphic rendition of the database model)</li>
+</ul>
+</blockquote>
+<p>Missing from the list was object interaction diagrams--A UML
+model that tend to vastly more informative than class hierarchy
+diagrams for understanding how a system works but which, like
+high level architecture docs, need to be created with a selective
+focus and high-level understanding.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=230163&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230163&amp;title=JavaOne+2008%2C+Day+Zero%3A+Community+Day%2C+Development+Tools&amp;bodytext=A+better+hotel%2C+collaboration+tools%2C+and+development+tools.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230163&amp;title=JavaOne+2008%2C+Day+Zero%3A+Community+Day%2C+Development+Tools">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230163&amp;title=JavaOne+2008%2C+Day+Zero%3A+Community+Day%2C+Development+Tools">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

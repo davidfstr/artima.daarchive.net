@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Great String versus Numeric URL Key Shootout</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=192686.html">Discuss</a> | 
+<a href="mailto:?subject=The Great String versus Numeric URL Key Shootout&amp;body= %0AArtima Weblogs %0AThe Great String versus Numeric URL Key Shootout %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=192686">Email</a> | 
+<a href="../viewpostP.html$/thread=192686.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=191686.html" title="What's Your ShouldNeverHappenException?">Previous</a> | 
+<a class="sl" href="thread=194961.html" title="What Are Your Java Pain Points, Really?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">The Great String versus Numeric URL Key Shootout</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">January 24, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In his RailConf keynote, Rails creator David Heinemeier Hansson explained his reasoning for preferring numeric entity IDs in URLs as opposed strings. What's your opinion?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+In his <a href="../_/http/www.scribemedia.org/2006/07/09/dhh/index.html">RailsConf keynote</a> address,
+Ruby on Rails creator David Heinemeier Hansson discussed the issue of whether to
+use numbers corresponding to database keys in URLs (as in <code>/people/1</code>) versus using string keys that may have
+some semantic meaning to users of the web application (as in <code>/people/bob</code>).
+</p>
+<blockquote>
+<p>
+We're expecting you'll want to use auto-incrementing IDs for things.  And I expect that will be as
+controversial a point as auto-incrementing IDs and saying that that's the way you should do it
+was with databases. Because most people have this notion that you should have friendlier URLs.
+It is funny how I have not heard too many people spot that obvious comparison.
+</p>
+<p>
+People say we want to have the title of the blog posting in the URL.
+You want real keys? You want those keys that burned on the stake in the database design back in your URLs? Why?
+The exact same arguments apply. I fell under the exact same thing.
+In basecamp, we used to have something like <code>/client/37signals</code>. Well what would happen when people changed their
+firm name? They would now call themselves 38signals. It broke. You have broken URLs. You have exactly the same problems
+that you had in the database world. Not very nice.
+</p>
+<p>
+So what I've come to realize is that it's just not worth it. It's just not worth describing these
+comcrete logical things in the URLs because you get the same mess when we tried that in the database world.
+</p>
+</blockquote>
+<p>
+The counter argument is that URIs are part of the user interface of a web application, at least if the application
+is designed for human consumption.  (Hansson's comments at RailsConf were in the context of describing
+ideas about ActiveResource, a work-in-progress API intended to make it easy to write web service clients, but
+the conventions he described are intended for human users as well.) Jakob Nielsen gives his take on this
+issue in <a href="../_/http/www.useit.com/alertbox/990321.html">URL as UI</a>, suggesting that a usable site requires:
+</p>
+<ul>
+<li>a domain name that is easy to remember and easy to spell</li>
+<li>short URLs</li>
+<li>easy-to-type URLs</li>
+<li>URLs that visualize the site structure</li>
+<li>URLs that are "hackable" to allow users to move to higher levels of the information architecture by hacking off the end of the URL</li>
+<li>persistent URLs that don't change</li>
+</ul>
+<p>
+Similarly, the W3C document, <a href="../_/http/www.w3.org/2001/tag/doc/metaDataInURI-31#guessing/index.html">The Use of Metadata in URIs</a>, contains a section of
+the usability benefit of guessable URLs.
+</p>
+<blockquote>
+<p>
+Bob is walking down a street, and he sees an advertisement on the side of a bus:
+</p>
+<blockquote>
+"For the best Chicago Weather information on the Web, visit http://example.org/weather/Chicago."
+</blockquote>
+<p>
+Bob goes home and types the URI into his browser, which does indeed display for him a Chicago weather forecast. Bob then
+realizes that he'll be visiting Boston, and he guesses that a Boston weather page might be available at a similar
+URI: http://example.org/weather/Boston. He types that into his browser and reads the response that comes back.
+</p>
+<p>
+Bob is using the original URI for more than its intended purpose, which is to identify the Chicago weather page. Instead,
+he's inferring from it information about the structure of a Web site that, he guesses, might use a uniform naming convention for
+the weather in lots of cities. So, when Bob tries the Boston URI, he has to be prepared for the possibility that his guess will prove
+wrong: Web architecture does not guarantee that the retrieved page, if there is one, has the weather for Boston, or indeed that it
+contains any weather report at all. Even if it does, there is no assurance that it is current weather, that it is intended for reliable
+use by consumers, etc. Bob has seen an advertisement listing just the Chicago URI, and that is the only one that the URI authority
+has warranted will be a useful weather report.
+</p>
+<p>
+Still, the ability to explore the Web informally and experimentally is very valuable, and Web users act on such guesses about URIs
+all the time. Many authorities facilitate such flexible use of the Web by assigning URIs in an orderly and predictable manner. Nonetheless,
+in the example above, Bob is responsible for determining whether the information returned is indeed what he needs.
+</p>
+</blockquote>
+<p>
+Notably, Jakob Nielsen mentions "persistent URLs that don't change," in his list of requirements for usable websites, the very example
+that David Heinemeier Hansson mentioned as a problem when using string keys in URLs. The importance of persistent URLs, and suggestions
+for how to achieve them in URL design, is given in the W3C document, <a href="../_/http/www.w3.org/Provider/Style/URI/index.html">Cool URIs Don't Change</a>.
+It is indeed important to think hard about URL design before publishing a URL, because changing it later is difficult.
+</p>
+<p>
+But the truth is
+that Real URIs Do Change, and the web is flexible enough to accomodate that change. It takes a little more work on the web site developer's part, because you have to
+redirect requests from old versions of the URI to the new one. But that does work. If <code>/client/37signals</code> changes its name to 38signals, then
+it could have its client page moved to <code>/client/38signals</code>, and <code>/client/37signals</code> could perform a 301 redirect to <code>/client/38signals</code>. In such
+a situation, neither the web application nor the <code>/client/37signals</code> URL is broken—but it does make life more complicated for the provider
+of the service.  Ruby on Rails is very strong on making things simple for the developer, and that's a great thing, but the tradeoff in
+this case may be a small subtraction in the usability of the site. It may be worth it, because gaining access to the application sooner
+in the first place, which Rails may facilitate, is a big usability plus. But there is a tradeoff being made.
+</p>
+<p>
+In my interview with Ken Arnold, <a href="../_/http/www.artima.com/intv/perfect4.html">Perfection and Simplicity</a>, he suggested thinking from the user in
+rather than from the implementation out:
+</p>
+<blockquote>
+It takes a lot more work to understand the other person than it takes to understand you. You might say, "I have these two things together so I will
+let the user—the person using the API—manipulate them." But that user didn't say, "Hey, I want to manipulate these two data structures!" Often
+the user is saying, "I want to get this result." If users could get a result without manipulating the data structures, they'd be happy as clams. If you
+can make it more natural for them to get that result, the fact that you have to go through 10 times as much work to access those data structures is good;
+it means you are providing value. Many people are much more likely to think about what they have in hand and what they can do. They think from the
+implementation out, instead of thinking from the user in.
+</blockquote>
+<p>
+What is your opinion on this issue? To what extent is a string key in a URL actually more user-friendly than a numeric one? To what extent
+does that usability boost matter? In short, when do you think it is worth the extra effort on the part of developers, and when not?
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=192686.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=192686&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D192686&amp;title=The+Great+String+versus+Numeric+URL+Key+Shootout&amp;bodytext=In+his+RailConf+keynote%2C+Rails+creator+David+Heinemeier+Hansson+explained+his+reasoning+for+preferring+numeric+entity+IDs+in+URLs+as+opposed+strings.+What%27s+your+opinion%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D192686&amp;title=The+Great+String+versus+Numeric+URL+Key+Shootout">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D192686&amp;title=The+Great+String+versus+Numeric+URL+Key+Shootout">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

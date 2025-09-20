@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Thoughts on Scaling Without a Database</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=201960.html">Discuss</a> | 
+<a href="mailto:?subject=Thoughts on Scaling Without a Database&amp;body= %0AArtima Weblogs %0AThoughts on Scaling Without a Database %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=201960">Email</a> | 
+<a href="../viewpostP.html$/thread=201960.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=201528.html" title="A First Look at Apollo">Previous</a> | 
+<a class="sl" href="thread=205707.html" title="What Are Your Java ME Pain Points, Really?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Thoughts on Scaling Without a Database</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">April 10, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Robert McIntosh wrote a thought-provoking piece on designing a scalable Web application without a database. I share three reasons why such a notion deserves some merit.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>In questioning widely shared wisdom about building data-driven Web sites, Robert McIntosh penned a thought-provoking, albeit controversial, piece in <a href="../_/http/thebull.macsimumweb.com/2007/04/04/building-a-high-volume-app-without-a-rdms-or-domain-objects/index.html">Building a high volume app without a RDMS or Domain objects</a>. </p>
+<p>McIntosh's basic thesis is centered around three observations. The first one is that true scalability can best be achieved in a shared-nothing architecture. Not all applications can be designed in a completely shared-nothing fashion—for instance, most consumer-facing Web sites that need the sort of scaling McIntosh envisions require access to a centralized user database (unless a single sign-on solution is used). But a surprising number of sites could be partitioned into sections with little shared data between the various site areas.</p>
+<p>McIntosh's second observation is that a new class of ready-to-use infrastructures are becoming available that make horizontal scaling an economically feasible option. While amassing an array of lightly-used servers would have been considered a waste of resources just a few years ago, OS-level virtualization techniques turned such seeming waste into an economic advantage: instead of having to architect, configure, develop, and maintain a scalable software architecture, one can possibly build out, or use, a scalable (virtual) hardware architecture. The conceptual difference is merely that scaling is pushed into a lower infrastructure layer.</p>
+<p>The example he mentions is Amazon's EC2 compute cloud:</p>
+<blockquote>
+<p>The hardware architecture would be very similar and based on Amazon’s Elastic Cloud and S3 services. The idea being that the data would reside in S3 in a text format (we’ll use XML for sake of argument), with the actual site work running off of Elastic Cloud instances.</p>
+</blockquote>
+<p>McIntosh's final observation is that although modern Web frameworks speed up development already, a new level of rapid development can possibly be reached by managing data in plain files, such as XML:</p>
+<blockquote>
+<p>Rapid development. Isn’t that why we have Ruby on Rails, Grails and other frameworks like these? True, but how valuable are the domain driven OO frameworks that have dumb domain objects? I will concede that with some applications, working with the data is easier using objects that say a tabular model as the data is naturally hierarchal in nature. Then again, that is where the XML/JSON data models can fit. Also, frameworks like Ruby on Rails, Grails and ORMs like Hibernate, JPA, entity beans, etc. are most valuable when you need a full CRUD application. While both of these scenarios have CRUD operations, they aren’t data entry CRUD apps in the traditional sense.</p>
+</blockquote>
+<p>McIntosh then outlines a system architecture that relies on possibly many server instances serving up and managing plain files, most likely in some structured format, such as XML or JSON. The system does not have a domain objects layer—instead, the controller layer presumably translates incoming requests to some file-related operation, such as reading a file or changing the contents of a file. And the outgoing operations are simply a matter of transforming file-bound data to a format needed by the presentation layer, such as XML, XHTML or, again, JSON.</p>
+<p>McIntosh's suggestion could be quickly dismissed as simplistic, ignoring many decades of data management and application development wisdom, but for three reasons:</p>
+<p>First, scalable data management has increasingly come to mean in-memory databases. Oracle's recent purchase of Tangosol, a leading distributed cache vendor, and earlier purchase of another in-memory database shop, TimesTen, are but two indications that in-memory data management is here to say. With falling RAM prices, it's possible to load several GB of data into main memory. Once that data is in memory, it is perhaps less important whether the data is accessed via a relational database layer or by application-level code that co-habits the same memory space. Tangosol's Coherence product, for instance, provides its own API for accessing cache-resident data. Other in-memory databases provide SQL or some other data-access API.</p>
+<p>If an application can de-cluster its data across many server nodes, each node can load portions of the data into main memory and manipulate that data with application-specific code. To be sure, one of the key benefits of the relational model is exactly that it abstracts data storage and access away from application code. Yet, many applications, instead of providing direct database access, expose their data through an API, as in service-oriented architectures. Indeed, shared database access (when one database is shared by several applications) is increasingly the exception. </p>
+<p>Another reason to entertain some of McIntosh's notions is that quick access to large amounts of data occurs through indexes—be those indexes managed by a relational database or indexes created <em>ex</em>-database, such as with Lucene. An application relying on, say, XML-based files for data storage could generate the exact indexes it needs in order to provide query execution capabilities over the files. And, in general, <em>ex</em>-database indexes have proven more scalable than database-specific indexes: Not only can such indexes be maintained in a distributed fashion, they can also be custom-tailored to the exact retrieval patterns of an application.</p>
+<p>The final reason to ponder some of McIntosh's thoughts is that next to short access times, the most important requirement for a data-driven site is data availability. As more business-style applications migrate to the Web, the ability to keep data alive at all times is sure to become a central concern of enterprise application development. There is but one sure way to ensure high data availability, and that is via replication. But replicating data whose identity is tied in some way to a database management system, such as by database-specific IDs, for instance, makes replication harder. Many database products provide replication solutions, but none equal the scalability of simply copying files around a vast distributed filesystem, such as Amazon's S3. If data represented by such files have globally-unique identifiers, then, theoretically, any node could take over management of such files (keeping in mind some cardinal <a href="../_/http/research.microsoft.com/research/pubs/view.aspx$/msr_tr_id=P115.aspx">rules of replication</a>, though). </p>
+<p>I don't agree with many of McIntosh's ideas, but merely find them interesting, especially as we are confronting new challenges (e.g., the mandate to keep data alive at all times) and presented with new opportunities (Amazon's EC2, inexpensive RAM, in-memory databases). At some point, application architecture will have to change to take into account those new realities. I'm not sure McIntosh is right that file-based shared-nothing design is the path to the future, but real-world data management practices have greatly evolved from the days of the classic, centralized relational database and three-tier application design, and his ideas deserve some merit.</p>
+<p>What do you think of McIntosh's notions of scaling a Web site without a database? If you don't agree with his ideas, then how would <em>you</em> scale an application to the extent the biggest consumer-facing sites require?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=201960.html">16
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=201960&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D201960&amp;title=Thoughts+on+Scaling+Without+a+Database&amp;bodytext=Robert+McIntosh+wrote+a+thought-provoking+piece+on+designing+a+scalable+Web+application+without+a+database.+I+share+three+reasons+why+such+a+notion+deserves+some+merit.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D201960&amp;title=Thoughts+on+Scaling+Without+a+Database">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D201960&amp;title=Thoughts+on+Scaling+Without+a+Database">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

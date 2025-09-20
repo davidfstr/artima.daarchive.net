@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Search for Requirements</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=5446.html">Discuss</a> | 
+<a href="mailto:?subject=The Search for Requirements&amp;body= %0AArtima Weblogs %0AThe Search for Requirements %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=5446">Email</a> | 
+<a href="../viewpostP.html$/thread=5446.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=5414.html" title="What is Guerrilla Development?">Previous</a> | 
+<a class="sl" href="thread=6820.html" title="The Second Time Around">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">The Search for Requirements</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">June 23, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Read most any software engineering text book and
+you'll be told that requirements gathering
+is key to successful projects. Yet, many projects in
+start-up companies never develop such a document or,
+perhaps worse, have useless, sketchy documents that
+serve only political needs. What's going on here?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<blockquote>
+"The best way to perpetuate a bad system is to work around it."
+<br/>
+-- Anonymous.
+</blockquote>
+<h2>The Search for Requirements</h2>
+<p>
+Read most any software engineering text book and
+you'll be told that requirements gathering and an
+accurate software requirements specification (SRS)
+is key to successful projects. Yet, many projects in
+start-up companies never develop such a document or,
+perhaps worse, have useless, sketchy documents that
+serve only political needs. What's going on here?
+</p>
+<p>
+In this weblog, I'll relate some of my experiences
+with requirements gathering in small companies and
+start-ups. I'll also explain why I believe this is
+one aspect of the software crisis that shouldn't be
+blamed on developers.
+</p>
+<h2>That Vision Thing</h2>
+<p>
+Who owns the vision for the product? In the early
+days of most start-ups the answer is clear: the 
+engineers who started the company. Soon thereafter,
+however, it becomes less clear. The accepted thinking
+is that engineers, while adept at building things,
+aren't in touch with customer's needs to
+create solutions usable by <i>normal</i> people. 
+Further, it isn't just Human-Computer Interface (HCI)
+concerns that worry management. 
+Product road maps should account for sales cycles,
+competitive analysis, marketing initiatives, market
+trends, and other factors outside of engineering
+considerations. So, there are plenty of reasons
+why the nerds shouldn't unilaterally declare what 
+product is built. That should fall to the
+<b>product management</b> function, a person or
+persons responsible for specifying the product's
+features and appearance, burdened with making 
+the hard choices, and charged with having the
+vision for the product and instilling that
+vision into others.
+</p>
+<p>
+In the small companies I've worked for, this is a fairy tale. 
+When I hear the words "effective product management" I think 
+"Unicorn". I've heard lots of things about both; I've seen neither.
+Let's forget for a moment most of the things I've listed above.
+Forget about the market analysis, the bold leadership, and the
+ability to make difficult choices. Let's concentrate on the
+<i>vision thing</i> and the ability to instill that vision
+into others. An SRS would be an ideal vehicle for this. Yet,
+I've never seen a product manager produce such a document.
+Nor have I seen anywhere close to the amount of detail such
+a document would need in <b>any</b> of the meager writings a
+product manager has produced. 
+</p>
+<h2>The Devil is in the Details</h2>
+<p>
+I believe the problem here can be neatly summed up in with
+just a couple of points:
+</p>
+<ol>
+<li><b>Most people don't write well.</b>
+<br/>
+      Communicating in writing is not easy and most
+      people don't do it well. It can be grueling, time consuming,
+      and unglamorous.
+  </li>
+<br/>
+<li><b>Writing requires courage most don't have.</b>
+<br/>
+      Even if you can write well, it takes a certain amount of courage
+      to make a tough decision and the put it to paper with your name
+      on it. In a politically charged organization (and which ones are
+      not?), such a document can hang like the proverbial albatross 
+      around the author's neck. It is much safer to "not go on the record."
+  </li>
+<br/>
+<li><b>Product managers are not usually schooled in software.</b>
+<br/>
+      Say that you've found somebody courageous and articulate, chances
+      are good that they are not schooled in software engineering, HCI,
+      or other related fields. An effective SRS should be clear, unambiguous,
+      and useful for its intended audience: the software development team.
+      All writing speaks to an audience. If you don't know your audience, you'll
+      likely fall short in your writing.
+  </li>
+</ol>
+<p>
+I've struggled within companies where a product management function was
+mandated by top management and the results were, without exception, either
+embarrassing, disastrous, or both. Here are a couple of stories to illustrate
+my point.
+</p>
+<h3>Story #1</h3>
+<p>
+I worked for a company in the early 1990's that made systems that went
+into restaurants and resorts. When I first arrived, engineering was creating
+a new product to replace the aging, existing product. The head of software
+development tried to solicit requirements (or at least ideas for the product's
+features and its interface) from the part of the organization responsible
+for product management, but failed on each attempt. It was especially important,
+argued the software development manager, to get input and advice regarding
+the HCI aspects of the system. It wasn't at all obvious how a restaurant
+manager, for example, would wish to view the configurations of their terminals,
+or enter data about their staff. 
+</p>
+<p>
+As time passed, the development team created
+their own interface so testing could proceed. 
+In the end, it was that interface, the one created by the
+engineers for their own testing, that shipped with the product. 
+It was not loved. 
+</p>
+<p>
+Product management was quick to claim that 
+engineering hadn't listened to them. Of course, there wasn't a single
+sheet of paper, not one document, not one memo, indicating product management's
+wishes or demands. Nevertheless, upper management sided with product management
+on the issue and chastised the cowboys in engineering for running off and
+creating something without due guidance. The nasty cold war didn't last long,
+though, as bankruptcy soon obliterated upper management, product management,
+and nearly all of engineering.
+</p>
+<p>
+I was one of the three nerds left in engineering in the new, reconstituted
+company that emerged from the bankrupt original. It wasn't long before the
+development manager quit and I was promoted to lead engineering. In the next few months
+I rebuilt the team and we fixed as many bugs as we could, as quickly as
+we could.
+</p>
+<p>
+The new management team, brought in to turn around the company, again
+demanded that a product management function be established. The new
+product manager, a nice enough fellow, seemed unwilling or unable to 
+put any thoughts on paper. I had many ideas that I wanted to explore
+to move the product forward, but each time I'd broach the topic, the
+company President would insist that such things were the product
+manager's role and not mine.
+</p>
+<p>
+I encouraged the product manager, I cajoled, and I pleaded, and offered
+to write if he would only read and approve. I would do all the work, if
+he liked, and he could take all the credit. Yet, we were still at a stalemate.
+I understood his reticence. The new senior management team was ruthless
+and unforgiving of mistakes. Writing something that wasn't received
+well by these cutthroats might well lead to his dismissal. 
+He wanted to keep his job; I was at a point where I no longer cared.
+</p>
+<p>
+Finally, the Board of Directors (representing the new investors)
+wished to see our product plan. I wrote a 25 page "vision" document
+that was passed up as our long term product plan. To my knowledge,
+no mention was ever made that it originated from the me, the VP
+of Engineering, and not the product manager. Yet, that vision stuck,
+which is all I cared about. I left not long afterwards.
+</p>
+<p>
+Engineering was forced to run the entire project, from the moments after 
+conception, up until the day I left, with guerrilla tactics. A product
+was made that eventually became good enough to fuel the resurrection 
+of the company after bankruptcy, but the cost was high.
+It was impossible to get buy-in from a product management function
+or upper management before, or even during, development. There were
+no leaders, only <i>art critics</i>, happy to 
+distance themselves from any controversy, and yet thankful that a
+product existed to enable sales and their own paychecks.
+</p>
+<h3>Story #2</h3>
+<p>
+A friend related a story where the engineers wrote the requirements
+so "the product manager would know what we were doing". Help me 
+understand what value the product manager had if he (a) didn't
+lead, (b) simply watched the engineers do his job, (c) and required
+the engineers to spoon feed him the plan (in the unlikely event that
+somebody might ask him about it, I suppose).
+</p>
+<h3>Story #3</h3>
+<p>
+I think I saw a glimpse of this problem from the outside at 
+the recent JavaONE conference in San Francisco. Scott McNealy, 
+President and CEO of Sun Microsystems was the keynote speaker on Friday,
+June 13<sup>th</sup> and he brought up several guests including
+Verizon's chief information officer 
+Shaygan Kheradpir. Kheradpir demonstrated Verizon's Digital 
+Companion,  a product that provides
+dynamic rerouting to and from various
+numbers, interception of urgent calls, and so on.
+You can read more about it
+<a href="../_/http/javaoneonline.mentorware.net/servlet/mware.servlets.StudentServlet$/mt=1056316886069&amp;mwaction=generic&amp;subsysid=2000&amp;file=janice_heiss3.StudentServlet">
+here</a>.
+</p>
+<p>
+At the end of the crowd pleasing demo, McNealy asked
+Kheradpir why this project had originated in engineering
+instead of marketing (or product management). The first
+answer provided by Kheradpir was a joke, "well, we're smarter than
+they are", but he quickly followed with the stock, politically
+correct answer, "we listen to our customers, blah, blah, blah."
+</p>
+<p>
+How did McNealy know that the project was done "skunk works style"
+and not through regular product management channels? More 
+importantly, why was it that nobody appeared surprised by the revelation?
+Could it be that even big companies have this product management vacuum?
+</p>
+<h2>Perpetuating a Bad System</h2>
+<p>
+This is not a software problem. Read that bit again. This is not a software problem.
+The problem, simply stated, is this:
+</p>
+<blockquote>
+The requirements gathering phase, one of the most important phases of a project,
+according to the literature, is heavily dependent upon untrained people who are only
+marginally interested in doing the work. Further, upper management is likely
+to insist that those who <i>might</i> be trained stay out of the process.
+Since so few examples of good requirements documents exist, it is easy for
+these untrained, unmotivated, product managers to pass off sparse, terse,
+useless documents as an SRS. Upper management is unlikely to assess or understand 
+the SRS's importance or quality, if, indeed, such a document is ever produced.
+</blockquote>
+<p>
+The best way to perpetuate a bad system is to work around it. This
+is a bad system and software departments are forced to work around
+it. When we do, we win: we ship product. Guerrilla tactics of working
+around, or behind, or in spite of, an inept product management
+function can still lead to a successful product. But at what cost?
+</p>
+<p>
+Engineers are fond of their ability to drive to root cause for a
+given problem. When it is a technical problem, we're very good at
+quickly isolating the root cause. This problem, with the myth of 
+product management, isn't a technical
+problem; it is a social problem. Oddly enough, engineers aren't very
+good at dealing with social problems. So, what do we do?
+</p>
+<p>
+I don't think the role of "product manager" is going away. 
+Our only chance is to try to encourage the right kinds of people,
+folks who have a keen sense of the appropriate technology,
+good communication skills, and an attention for detail, to fill
+those positions. We also need to get business schools and management
+degree programs to recognize that this is part of their world, too.
+If management is going to fill these positions with MBAs, then
+we need to make sure that these people get the education they need
+to do the job correctly.
+</p>
+<p>
+This might be a book opportunity as well. Instead of writing
+every software requirements book as though an EE is going to
+read it, perhaps there should be a few assuming a well meaning,
+hard working MBA is going to read it. 
+</p>
+<p>
+I do believe that continuing down the road we're on now, continuing
+to work around the bad system we have, will only make things worse.
+Applications and environments are getting too complex to have
+these kinds of distractions. Guerrilla tactics or no, there
+will be a breaking point when even clever development managers
+can no longer circumvent the system.
+</p>
+<h2>What Do You Think?</h2>
+<p>
+This is a bit more lengthy than I expected but it is an important
+topic. I'm interested in your views. You can write me directly or
+post your comments here on Artima.com.
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h3>Resources</h3>
+<ul>
+<li><b>Software Verification and Validation for Practitioners and Managers, Second Edition</b>,
+       by Steven R. Rakitin. See the description and my review on
+       <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/1580532969/002-6436643-0453616/index.html">
+       amazon.com</a>.
+  </li>
+<li><b>Lockheed Martin's Skunk Works</b>, by Jay Mille. Read the description on
+      <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/1857800370/002-6436643-0453616/index.html">
+      amazon.com</a>.
+  </li>
+<li><b>The Little Red Hen</b>,
+      <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0590411454/002-6436643-0453616/index.html">
+      (Easy-To-Read Folktales) by Lucinda McQueen (Illustrator)</a>.
+  </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=5446.html">12
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=5446&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D5446&amp;title=The+Search+for+Requirements&amp;bodytext=Read+most+any+software+engineering+text+book+and%0D%0Ayou%27ll+be+told+that+requirements+gathering%0D%0Ais+key+to+successful+projects.+Yet%2C+many+projects+in%0D%0Astart-up+companies+never+develop+such+a+document+or%2C%0D%0Aperhaps+worse%2C+have+useless%2C+sketchy+documents+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D5446&amp;title=The+Search+for+Requirements">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D5446&amp;title=The+Search+for+Requirements">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

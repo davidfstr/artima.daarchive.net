@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Mythical 5%</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=221622.html">Discuss</a> | 
+<a href="mailto:?subject=The Mythical 5%&amp;body= %0AArtima Weblogs %0AThe Mythical 5% %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=221622">Email</a> | 
+<a href="../viewpostP.html$/thread=221622.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=221497.html" title="The End of the Vista Experiment">Previous</a> | 
+<a class="sl" href="thread=221903.html" title="Java: Evolutionary Dead End">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">The Mythical 5%</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">December 28, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In November, I gave the commencement address for Neumont University, a school in Salt Lake City dedicated to teaching computer science where my coauthor lectures. This is that speech.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>So here you are, about to be unleashed upon the world. This is a lot like taking someone and teaching them all the parts of English speech and then saying "go out and write stories," but it's probably all any school can do.  And a more theoretical background wouldn't help; this is not to say theory is bad because you'll need some eventually but there's a recent movement that preaches "practice before theory" and I, apparently like Neumont, find that knowing how to do something is very helpful when trying to understand the theory behind it -- for me, the theory takes a lot longer to grasp and it's very useful to be able to be functional while my brain is catching up.</p>
+<p>There's only so much you can learn in school, and it's only tenuously connected with what you will end up doing in your work. So I'm going to try to soften the blow a little, and arm you with a few insights that will help when you crash into the actual world of software development.</p>
+<p>You've come from very structured learning. We even call it a science. It promises that there will be the same kind of structure and activities in the world. More importantly, you've come to expect a certain high level of success, similar to what you've experienced with your projects and assignments. But the world will not behave.</p>
+<p>The statistics are sobering: 50-80% of programming projects fail. These numbers are so broad because people don't brag about their failures, so we have to guess. In any event, this makes the world sound pretty unreliable. Engineering gets better results, mostly because it has to. Bad software usually just annoys people but bad engineering can kill.</p>
+<p>An even more fascinating metric is this: 5% of programmers are 20x more productive than the other 95%. If this were a science, like it claims, we could figure out how to get everyone to the same level.</p>
+<p>Let's say that this follows the 80-20 rule. Roughly 80% of programmers don't read books, don't go to conferences, don't continue learning, don't do anything but what they covered in college. Maybe they've gotten a job in a big company where they can do the same thing over and over. The other 20% struggle with their profession: they read, try to learn things, listen to podcasts, go to user group meetings and sometimes a conference. 80% of this 20% are not very successful yet; they're still beginning, still trying. The other 20% of this 20% -- that's about 5% of the whole who are 20x more productive.</p>
+<p>So how do you become one of these mythical 5%?</p>
+<p>These people are not those who can remember all the moves and have fingers that fly over the keyboard erupting system commands. In my experience those in the 5% must struggle to get there, and struggle to stay there, and it's the process of continuous learning that makes the difference.</p>
+<p>Because of what I do, I've met more than my share of these people. They read a lot, and are always ready to tackle a new concept if it looks worthwhile. I think if they do go to conferences they're very selective about it.  Most of their time is spent being productive, figuring things out.</p>
+<p>The big issue is knowing that you're going after that 20x productivity increase. Which means getting leverage on everything you do. Never just "bashing something out," but using the best tools, techniques, and ideas at your disposal. Always doing your best.</p>
+<p>And deeper than that, understanding that the leverage point doesn't always come from the obvious thing, or from what we've been told, or the commonly-held belief about what works. Being able to analyze and understand a situation and discover the hinge points of a problem is essential; this takes a clear mind and detached perspective. For example, sometimes the choice of programming language makes a huge difference, but often, it's relatively unimportant. Regardless, people will still spend all their time on one decision while something else might actually have a far greater influence. Architectural decisions, for example.</p>
+<p>So you must learn continuously and teach yourself new technologies, but it's not that simple. It's definitely good to learn more about programming, but you can't <em>just</em> learn more about programming. For example, just in the world of code, here are two of the biggest pain points:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Code is read much more than it is written. If people can't read your story, they can't improve it or fix it. Unreadable code has a real cost, and we call it "technical debt."</li>
+<li>Code reviews are the most effective ways to find software defects, and yet we usually "don't have time for them."</li>
+</ol>
+</blockquote>
+<p>Coming from the world of ones and zeroes we'd like to believe that things are deterministic, that we can provide a set of inputs and get the same outputs every time. I know because I believed this for a long time, and it took some hard knocks when I was a physics undergraduate to begin -- only to begin -- to wake me up. Many years later I was in a workshop and one of the other attendees told me what I had been learning all those years; she said "All models are wrong. Some are useful."</p>
+<p>We are in a young business. Primitive, really -- we don't know much about what works, and we keep thinking we've found the silver bullet that solves all problems. As a result, we go through these multi-year boom and bust cycles as new ideas come in, take off, exceed their grasp, then run out of steam. But some ideas seem to have staying power. For example, a lot of the ideas in agile methodologies seem to be making some real impacts in productivity and quality. This is because they focus more on the issues of people working together and less on technologies.</p>
+<p>A man I've learned much from, Gerald Weinberg, wrote his first couple of books on the technology of programming. Then he switched, and wrote or coauthored 50 more on the process of programming, and he is most famous for saying "no matter what they tell you, it's always a people problem."</p>
+<p>Usually the things that make or break a project are process and people issues. The way that you work on a day-to-day basis. <em>Who</em> your architects are, <em>who</em> your managers are, and who you are working with on the programming team. How you communicate, and most importantly how you solve process and people problems when they come up. The fastest way to get stuck is to think that it's all about the technology and to believe that you can ram your way through the other things. Those other things are the most likely ones to stop you cold.</p>
+<p>In my first jobs, I saw lots of managers making stupid decisions, and so, logically, I came to the conclusion that managers and management was stupid. It's a commonly held belief in our profession: if you're not smart enough to deal with the technology, you go into management. Over time I very slowly learned that the task of management wasn't stupid, it's just very, very hard. That's why all those stupid decisions are <em>still</em> being made; management is much harder than technology because it involves virtually no deterministic factors. It's all guesswork, so if you don't have good intuition you'll probably make stupid decisions. Napoleon wanted lucky generals rather than smart ones.</p>
+<p>Here's an example: some companies have adopted a policy where at the end of some predetermined period each team evaluates everyone and drops the bottom 10% or 20%. In response to this policy, a smart manager who has a good team hires extra people who can be thrown overboard without damaging the team. I think I know someone to whom this happened at Novell. It's not a good policy; in fact it's abusive and eats away at company morale from within. But it's one of the things you probably didn't learn here, and yet the kind of thing you need to know, even if it seems to have nothing directly to do with programming.</p>
+<p>Here's another example: People are going to ask you the shortest possible time it takes to accomplish a particular task. You'll do your best to guess what that is, and they'll assume you can actually do it. What you need to tell them for an estimate like this, and for all your estimates, is that there's a 0% probability that you will actually get it done in that period of time, that such a guess is only the beginning of the probability curve. Each guess needs to be accompanied by such a probability curve, so that all the probabilities combined produce a real curve indicating when the project might likely be done. You can learn more about this by reading a small book called <em>Waltzing with Bears</em>.</p>
+<p>You need to pay attention to economics and business, both of which are far-from-exact sciences. Listen to books and lectures on tape while you commute. Understanding the underlying business issues may allow you to detect the fortunes of the company you're working for and take action early. When I first started working I looked askance at people who paid attention to business issues -- that was suit stuff, not real technology. But those people were the smart ones.</p>
+<p>A great new source of information is podcasts. Anyone can do these so many of them are bad, but there are some real gems out there, podcasts that specifically cover topics in our profession. I learn a lot from these, and they help me stay current.</p>
+<p>Here's another thing you probably didn't learn here. Both the world of business and the world of programming is legendary for flailing about with fads that promise to get things done better. The easy fads are patently ridiculous, or become so in short order. The harder ones to spot contain some reason or truth that prevents you from quickly dismissing them. Sometimes you need to pick out the good stuff and throw the rest away, and to do this you need to exercise critical thinking.</p>
+<p>I saw a grocery bag that said "studies show children and teens who eat dinner with their families at least 5 times a week are 50% less likely to use alcohol." The bag's conclusion was to start eating dinner together and that will prevent alcoholism. Is eating dinner together the dominant factor? Or is there something else that causes <em>both</em> eating dinner together and reduced alcoholism?</p>
+<p>Here are some more which many people have seriously believed:</p>
+<ul class="simple">
+<li>Companies don't have to make a profit anymore. It's the new economy.</li>
+<li>Real estate always goes up, even if salaries don't.</li>
+<li>Or even: A university must be a traditional campus and not an office building.</li>
+</ul>
+<p>It's even harder when you come from the world of ones and zeros where we really, really want to believe that everything can be deterministic. It's harder than that when you understand that adding people into the mix and scaling up a system changes the dominant factors, while everyone around you still believes it should all be deterministic.</p>
+<p>There's a book that uses studies to debunk beliefs about managing people and projects; it happens to be software-based but the thinking could be applied almost everywhere. This book is called <em>Peopleware</em>; it's small and fun to read and I recommend it to almost everyone. Alas, it really isn't a book of answers, it just firmly destroys many closely-held ideas about how people work in business situations that involve programming. The best thing about it is that it reminds you how easy it is to take a wrong idea and build a bad world around it. It helps you ask questions.</p>
+<p>So when you go into your new job with your head filled with technical knowledge from the last couple of years, and you add what I've told you today, you may be tempted to assume that everyone at the company has foolishly gotten themselves trapped with bad ideas. But there's one more very important maxim from Gerald Weinberg which doesn't really answer anything as much as gives you a way to understand what happens. He says: "Things are the way they are because they got that way ... one logical step at a time." It's the legendary frog in the saucepan. So from your fresh new perspective things might look ridiculous, but remember that each decision on the way was made by someone weighing the issues and making what seemed like the best choice at the time. This viewpoint doesn't solve the problem but it can make you more compassionate about the people who are stuck there.</p>
+<p>You'll need to make a lot of mistakes in order to figure things out. So be humble, and keep asking questions.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=221622.html">29
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=221622&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D221622&amp;title=The+Mythical+5%25&amp;bodytext=In+November%2C+I+gave+the+commencement+address+for+Neumont+University%2C+a+school+in+Salt+Lake+City+dedicated+to+teaching+computer+science+where+my+coauthor+lectures.+This+is+that+speech.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D221622&amp;title=The+Mythical+5%25">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D221622&amp;title=The+Mythical+5%25">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

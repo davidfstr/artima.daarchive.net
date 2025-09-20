@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2008, Day One: Conference 2.0 and JRuby Notes</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230227.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2008, Day One: Conference 2.0 and JRuby Notes&amp;body= %0AArtima Weblogs %0AJavaOne 2008, Day One: Conference 2.0 and JRuby Notes %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=230227">Email</a> | 
+<a href="../viewpostP.html$/thread=230227.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=230163.html" title="JavaOne 2008, Day Zero: Community Day, Development Tools">Previous</a> | 
+<a class="sl" href="thread=230311.html" title="JavaOne 2008, Day Two: JRuby, Rails, and NetBeans">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2008, Day One: Conference 2.0 and JRuby Notes</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 7, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The need for a "Conference 2.0" format and a collection of
+JRuby notes.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>My new hotel is nice, but the eatery around the corner
+isn't (sigh). So I'm convalescing today after a rough
+night. But here's what I got from the first official
+day of JavaOne 2008.</p>
+<div class="section">
+<h1><a id="conference-2-0" name="conference-2-0">"Conference 2.0"</a></h1>
+<p>After nearly half a week at the conference (even though it is
+only "day one", it's the same old story: Sessions I'm interested
+in that are scheduled at the same, interspersed with long
+stretches of time where there is nothing much of interest.</p>
+<p>Not that I should complain too much about that. As a blogger,
+the down time gives me time to file my stories and recharge
+the batteries in my laptop. But I know I'm not getting as much
+out of conference as I <em>could</em> be getting.</p>
+<p>At the same time, I'm getting a lot of exercise as I walk from
+one end of the venue to the next for one session, only to walk
+all the way back for the next. (Again, I shouldn't complain.
+I can use the exercise. But I'm not about to let a little thing
+like that stop me!)</p>
+<p>It seems to me that it's time for a "Conference 2.0" format.
+After all, Web 2.0 is all about customizing your web experience.
+Why not have the same thing for the conference?</p>
+<p>Right now, there is an online schedule-builder that lets you
+select the sessions you want to go to and then print out your
+itinerary. That's terrific. But let's take things one step
+further. How about a system where you go the web site and
+select /all/ the things you're interested in (maybe with
+priorities of 1, 2 and 3 for things you're highly interested in,
+somewhat interested in, and "possibly" interested in.</p>
+<p>A week before the conference, the numbers from all the attendees
+could be crunched--maybe by one of those massively parallel
+machines that Sun builds, and a schedule could be created
+that minimizes both scheduling conflicts and distance between
+sessions!</p>
+<p>After all, I really don't care whether a session I want to go is
+at 10 in the morning or 3 in the afternoon. I just need to know where
+to go and when to be there when I show up.</p>
+<p>We do have the technology, after all. Wouldn't that be cool?</p>
+</div>
+<div class="section">
+<h1><a id="jruby-notes" name="jruby-notes">JRuby Notes</a></h1>
+<p>Interesting stuff from multiple sessions.</p>
+<p>From a panel on JRuby introduced by Tim Bray and moderated by
+Mark Driver, including Tom Enebo, David Koontz, Rich Manalang,
+Sarah Mei, and Charles Nutter:</p>
+<blockquote>
+<ul class="simple">
+<li>Rails is the killer app for JRuby right now, given its ability
+to scale. The JVM provides native threads, performance
+optimizations, and the results of years of effort that have
+gone into debugging and optimizing garbage collection so
+that things "just work", for the most part--and they work
+pretty much the same no matter what platform you're running on.</li>
+<li>There is even a Glassfish gem for JRuby. Glassfish is a server
+for Java apps that JRuby can take advantage of, and the gem
+makes it easy to install and use. So the JRuby community may
+begin moving away from Mongrel (the Ruby standard for scaling
+a Rails app).</li>
+<li>But the next wave of killer apps may well come from metaprogramming
+Rubyists who provide easy-to-use languages that wrap Java's
+extensive libraries. Those libraries provide a ton of raw power.
+Ruby provides a way to make the simple things really and truly
+simple.</li>
+<li>Many good Ruby libraries are platform-specific, which fragments
+the programming space, but the JVM is a unifying framework. For
+example, Swing is a cross-platform library that mostly just works.
+It has no real equivalent in the Ruby world. A Ruby DSL that wraps
+it can create new syntax and have huge potential. Similarly for
+other libraries.</li>
+<li>In fact, there are already several Swing-library wrappers for
+JRuby,  including Cheri, Profligacy, and MonkeyBars.</li>
+<li>Ruby also makes a great way to try out a Java library and see
+how it works. There's no setup work to do. You just call into it.</li>
+</ul>
+</blockquote>
+<p>Some differences between Ruby and Java:</p>
+<blockquote>
+<ul class="simple">
+<li>Ruby is more flexible and easier to write, but that can make it
+harder to maintain. But when you consider that Java is, in effect,
+providing the platform that JRuby runs on--one that manages the
+threads, does the garbage collection, and various I/O channels--
+then Java makes sense for that. You want the platform to be robust
+and solid. But you want your development language to be elegant
+let you do more with less work--which equates to having more fun.</li>
+<li>Deployment is more of a problem with Ruby. The process is not as
+well worked out as it has been in Java land.</li>
+<li>Ruby tools are generally not as mature as those for Java. And Java's
+strict types genrally let the tools do more for you. (But NetBeans
+is doing such a good job in that area that developers are leaving
+their text editors.)</li>
+<li>The test-first mantra is part of Ruby culture, because you can write
+your test and watch it fail before creating <em>any</em> of the source code
+to make it succeed. In Java, you can't even compile your test until
+the interfaces and classes have been constructed. So while the idea
+of test-first coding is admired, it doesn't tend to happen as much
+in Java.</li>
+</ul>
+</blockquote>
+<p>From the Charlie Nutter and Tom Enebo's JRuby session:</p>
+<blockquote>
+<ul class="simple">
+<li>The "Processing" library lets you do lots of pretty graphics in
+few lines of code. One demo showed glowing globes sailing around
+the screen, moving away from another and then flocking together.
+The whole thing took 800 lines of code.</li>
+<li>Ruby on Rails books are are outselling Perl books, these days.</li>
+<li>In Rails, there tends to be less code in the whole app than
+there are in the configuration files for a Java server app.</li>
+<li>The ActiveResource library in Rails takes care of exposing them
+in a RESTful way (i.e. using http protocols for get, put, etc.)</li>
+<li>The ActiveSupport library has become indispensible for Rails
+developers. It provides Unicode, json (property-style data
+marshalling), and a variety of helpers.</li>
+</ul>
+</blockquote>
+<p>From a JRuby on Rails lab:</p>
+<blockquote>
+<ul class="simple">
+<li>Prototype and Script.actulo.us are two libraries that let
+you code a little Ruby and deliver many lines of Javascript.</li>
+<li>You get both of them when you include the javascript libraries
+in Rails.</li>
+<li>Prototype transmit XML to and from the server. A Rails form
+will look the same, but the client is doing more locally.</li>
+<li>Script.aculo.us creates nice effects with minimal code. For
+example, giving a pale yellow background to a whole block of
+text is as simple as specifying ":highlight".</li>
+</ul>
+</blockquote>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=230227&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230227&amp;title=JavaOne+2008%2C+Day+One%3A+Conference+2.0+and+JRuby+Notes&amp;bodytext=The+need+for+a+%26quot%3BConference+2.0%26quot%3B+format+and+a+collection+of%0D%0AJRuby+notes.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230227&amp;title=JavaOne+2008%2C+Day+One%3A+Conference+2.0+and+JRuby+Notes">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230227&amp;title=JavaOne+2008%2C+Day+One%3A+Conference+2.0+and+JRuby+Notes">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

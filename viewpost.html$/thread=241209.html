@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Python Decorators III: A Decorator-Based Build System</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=241209.html">Discuss</a> | 
+<a href="mailto:?subject=Python Decorators III: A Decorator-Based Build System&amp;body= %0AArtima Weblogs %0APython Decorators III: A Decorator-Based Build System %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=241209">Email</a> | 
+<a href="../viewpostP.html$/thread=241209.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=241140.html" title="The Demise of the Headhunter">Previous</a> | 
+<a class="sl" href="thread=242122.html" title="JavaPosse Roundup 2009 Dates Set">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Python Decorators III: A Decorator-Based Build System</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">October 26, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Most build systems start out with dependencies, then realize they need language features and eventually discover they should have started with language design.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I've used <strong>make</strong> for many years. I only used <strong>ant</strong> because it produced faster Java builds. But both build systems started out thinking the problem was simple, and only later discovered that you really need a programming language to solve the build problem. By then it was too late. As a result you have to jump through annoying hoops to get things done.</p>
+<p>There have been efforts to create build systems on top of languages. <strong>Rake</strong> is a fairly successful <em>domain-specific language</em> (DSL) built atop Ruby. And a number of projects have been created with Python.</p>
+<p>For years I've wanted a system that was just a thin veneer on Python, so you get some support for dependencies but effectively everything else is Python. This way, you don't need to shift back and forth between Python and some language other than Python; it's less of a mental distraction.</p>
+<p>It turns out that decorators are perfect for this purpose. The design I present here is just a first cut, but it's easy to add new features and I've already started using it as the build system for <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=239183.html">The Python Book</a>, so I'll probably need to add more features. Most importantly, I know I'll be able to do anything that I want, which is not always true with <strong>make</strong> or <strong>ant</strong> (yes, you can extend <strong>ant</strong> but the cost of entry is often not worth the benefit).</p>
+<p>While the rest of the book has a <a class="reference" href="../_/http/creativecommons.org/licenses/by-sa/3.0/index.html">Creative Commons Attribution-Share Alike license</a>, this program only has a <a class="reference" href="../_/http/creativecommons.org/licenses/by/3.0/index.html">Creative Commons Attribution</a> license, because I'd like people to be able to use it under any circumstances. Obviously, it would be ideal if you make any improvements that you'd contribute them back to the project, but this is not a prerequisite for using or modifying the code.</p>
+<div class="section">
+<h1><a id="syntax" name="syntax">Syntax</a></h1>
+<p>The most important and convenient thing provided by a build system is dependencies. You tell it what depends on what, and how to update those dependencies. Taken together, this is called a <em>rule</em>, so the decorator will also be called <strong>rule</strong>. The first argument of the decorator is the <em>target</em> (the thing that needs to be updated) and the remaining arguments are the <em>dependencies</em>. If the target is out of date with the dependencies, the function code is run to bring it up to date.</p>
+<p>Here's a simple example that shows the basic syntax:</p>
+<pre class="literal-block">
+@rule("file1.txt")
+def file1():
+    "File doesn't exist; run rule"
+    file("file1.txt", 'w')
+</pre>
+<p>The name of the rule is <strong>file1</strong> because that's the function name. In this case, the target is "file1.txt" and there are no dependencies, so the rule only checks to see whether <tt class="docutils literal"><span class="pre">file1.txt</span></tt> exists, and if it doesn't it runs the function code, which brings it up to date.</p>
+<p>Note the use of the docstring; this is captured by the build system and describes the rule on the command line when you say <strong>build help</strong> (or anything else the builder doesn't understand).</p>
+<p>The <strong>@rule</strong> decorators only affect the functions they are attached to, so you can easily mix regular code with rules in the same build file. Here's a function that updates the date stamp on a file, or creates the file if it doesn't exist:</p>
+<pre class="literal-block">
+def touchOrCreate(f): # Ordinary function
+    "Bring file up to date; creates it if it doesn't exist"
+    if os.path.exists(f):
+        os.utime(f, None)
+    else:
+        file(f, 'w')
+</pre>
+<p>A more typical rule is one that associates a target file with one or more dependent files:</p>
+<pre class="literal-block">
+@rule("target1.txt","dependency1.txt","dependency2.txt","dependency3.txt")
+def target1():
+    "Brings target1.txt up to date with its dependencies"
+    touchOrCreate("target1.txt")
+</pre>
+<p>This build system also allows multiple targets, by putting the targets in a list:</p>
+<pre class="literal-block">
+@rule(["target1.txt", "target2.txt"], "dependency1.txt", "dependency2.txt")
+def multipleBoth():
+    "Multiple targets and dependencies"
+    [touchOrCreate(f) for f in ["target1.txt", "target2.txt"]]
+</pre>
+<p>If there is no target or dependencies, the rule is always executed:</p>
+<pre class="literal-block">
+@rule()
+def clean():
+    "Remove all created files"
+    [os.remove(f) for f in allFiles if os.path.exists(f)]
+</pre>
+<p>The <strong>alFiles</strong> array is seen in the example, shown later.</p>
+<p>You can write rules that depend on other rules:</p>
+<pre class="literal-block">
+@rule(None, target1, target2)
+def target3():
+    "Always brings target1 and target2 up to date"
+    print target3
+</pre>
+<p>Since <strong>None</strong> is the target, there's nothing to compare to but in the process of checking the rules <strong>target1</strong> and <strong>target2</strong>, those are both brought up to date. This is especially useful when writing "all" rules, as you will see in the example.</p>
+</div>
+<div class="section">
+<h1><a id="builder-code" name="builder-code">Builder Code</a></h1>
+<p>By using decorators and a few appropriate design patterns, the code becomes quite succinct. Note that the <strong>__main__</strong> code creates an example <strong>build.py</strong> file (containing the examples that you see above and more), and the first time you run a build it creates a <strong>build.bat</strong> file for Windows and a <strong>build</strong> command file for Unix/Linux/Cygwin. A complete explanation follows the code:</p>
+<pre class="literal-block">
+# builder.py
+import sys, os, stat
+"""
+Adds build rules atop Python, to replace make, etc.
+by Bruce Eckel
+License: Creative Commons with Attribution.
+"""
+
+def reportError(msg):
+    print &gt;&gt; sys.stderr, "Error:", msg
+    sys.exit(1)
+
+class Dependency(object):
+    "Created by the decorator to represent a single dependency relation"
+
+    changed = True
+    unchanged = False
+
+    @staticmethod
+    def show(flag):
+        if flag: return "Updated"
+        return "Unchanged"
+
+    def __init__(self, target, dependency):
+        self.target = target
+        self.dependency = dependency
+
+    def __str__(self):
+        return "target: %s, dependency: %s" % (self.target, self.dependency)
+
+    @staticmethod
+    def create(target, dependency): # Simple Factory
+        if target == None:
+            return NoTarget(dependency)
+        if type(target) == str: # String means file name
+            if dependency == None:
+                return FileToNone(target, None)
+            if type(dependency) == str:
+                return FileToFile(target, dependency)
+            if type(dependency) == Dependency:
+                return FileToDependency(target, dependency)
+        reportError("No match found in create() for target: %s, dependency: %s"
+            % (target,  dependency))
+
+    def updated(self):
+        """
+        Call to determine whether this is up to date.
+        Returns 'changed' if it had to update itself.
+        """
+        assert False, "Must override Dependency.updated() in derived class"
+
+class NoTarget(Dependency): # Always call updated() on dependency
+    def __init__(self, dependency):
+        Dependency.__init__(self, None, dependency)
+    def updated(self):
+        if not self.dependency:
+            return Dependency.changed # (None, None) -&gt; always run rule
+        return self.dependency.updated() # Must be a Dependency or subclass
+
+class FileToNone(Dependency): # Run rule if file doesn't exist
+    def updated(self):
+        if not os.path.exists(self.target):
+            return Dependency.changed
+        return Dependency.unchanged
+
+class FileToFile(Dependency): # Compare file datestamps
+    def updated(self):
+        if not os.path.exists(self.dependency):
+            reportError("%s does not exist" % self.dependency)
+        if not os.path.exists(self.target):
+            return Dependency.changed # If it doesn't exist it needs to be made
+        if os.path.getmtime(self.dependency) &gt; os.path.getmtime(self.target):
+            return Dependency.changed
+        return Dependency.unchanged
+
+class FileToDependency(Dependency): # Update if dependency object has changed
+    def updated(self):
+        if self.dependency.updated():
+            return Dependency.changed
+        if not os.path.exists(self.target):
+            return Dependency.changed # If it doesn't exist it needs to be made
+        return Dependency.unchanged
+
+class rule(object):
+    """
+    Decorator that turns a function into a build rule. First file or object in
+    decorator arglist is the target, remainder are dependencies.
+    """
+    rules = []
+    default = None
+
+    class _Rule(object):
+        """
+        Command pattern. name, dependencies, ruleUpdater and description are
+        all injected by class rule.
+        """
+
+        def updated(self):
+            if Dependency.changed in [d.updated() for d in self.dependencies]:
+                self.ruleUpdater()
+                return Dependency.changed
+            return Dependency.unchanged
+
+        def __str__(self): return self.description
+
+    def __init__(self, *decoratorArgs):
+        """
+        This constructor is called first when the decorated function is
+        defined, and captures the arguments passed to the decorator itself.
+        (Note Builder pattern)
+        """
+        self._rule = rule._Rule()
+        decoratorArgs = list(decoratorArgs)
+        if decoratorArgs:
+            if len(decoratorArgs) == 1:
+                decoratorArgs.append(None)
+            target = decoratorArgs.pop(0)
+            if type(target) != list:
+                target = [target]
+            self._rule.dependencies = [Dependency.create(targ, dep)
+                for targ in target for dep in decoratorArgs]
+        else: # No arguments
+            self._rule.dependencies = [Dependency.create(None, None)]
+
+    def __call__(self, func):
+        """
+        This is called right after the constructor, and is passed the function
+        object being decorated. The returned _rule object replaces the original
+        function.
+        """
+        if func.__name__ in [r.name for r in rule.rules]:
+            reportError("@rule name %s must be unique" % func.__name__)
+        self._rule.name = func.__name__
+        self._rule.description = func.__doc__ or ""
+        self._rule.ruleUpdater = func
+        rule.rules.append(self._rule)
+        return self._rule # This is substituted as the decorated function
+
+    @staticmethod
+    def update(x):
+        if x == 0:
+            if rule.default:
+                return rule.default.updated()
+            else:
+                return rule.rules[0].updated()
+        # Look up by name
+        for r in rule.rules:
+            if x == r.name:
+                return r.updated()
+        raise KeyError
+
+    @staticmethod
+    def main():
+        """
+        Produce command-line behavior
+        """
+        if len(sys.argv) == 1:
+            print Dependency.show(rule.update(0))
+        try:
+            for arg in sys.argv[1:]:
+                print Dependency.show(rule.update(arg))
+        except KeyError:
+            print "Available rules are:\n"
+            for r in rule.rules:
+                if r == rule.default:
+                    newline = " (Default if no rule is specified)\n"
+                else:
+                    newline = "\n"
+                print "%s:%s\t%s\n" % (r.name, newline, r)
+            print "(Multiple targets will be updated in order)"
+        # Create "build" commands for Windows and Unix:
+        if not os.path.exists("build.bat"):
+            file("build.bat", 'w').write("python build.py %1 %2 %3 %4 %5 %6 %7")
+        if not os.path.exists("build"):
+            # Unless you can detect cygwin independently of Windows
+            file("build", 'w').write("python build.py $*")
+            os.chmod("build", stat.S_IEXEC)
+
+############### Test/Usage Examples ###############
+
+if __name__ == "__main__":
+    if not os.path.exists("build.py"):
+        file("build.py", 'w').write('''\
+# Use cases: both test code and usage examples
+from builder import rule
+import os
+
+@rule("file1.txt")
+def file1():
+    "File doesn't exist; run rule"
+    file("file1.txt", 'w')
+
+def touchOrCreate(f): # Ordinary function
+    "Bring file up to date; creates it if it doesn't exist"
+    if os.path.exists(f):
+        os.utime(f, None)
+    else:
+        file(f, 'w')
+
+dependencies = ["dependency1.txt", "dependency2.txt",
+                "dependency3.txt", "dependency4.txt"]
+
+targets = ["file1.txt", "target1.txt", "target2.txt"]
+
+allFiles = targets + dependencies
+
+@rule(allFiles)
+def multipleTargets():
+    "Multiple files don't exist; run rule"
+    [file(f, 'w') for f in allFiles if not os.path.exists(f)]
+
+@rule(["target1.txt", "target2.txt"], "dependency1.txt", "dependency2.txt")
+def multipleBoth():
+    "Multiple targets and dependencies"
+    [touchOrCreate(f) for f in ["target1.txt", "target2.txt"]]
+
+@rule("target1.txt","dependency1.txt","dependency2.txt","dependency3.txt")
+def target1():
+    "Brings target1.txt up to date with its dependencies"
+    touchOrCreate("target1.txt")
+
+@rule()
+def updateDependency():
+    "Updates the timestamp on all dependency.* files"
+    [touchOrCreate(f) for f in allFiles if f.startswith("dependency")]
+
+@rule()
+def clean():
+    "Remove all created files"
+    [os.remove(f) for f in allFiles if os.path.exists(f)]
+
+@rule()
+def cleanTargets():
+    "Remove all target files"
+    [os.remove(f) for f in targets if os.path.exists(f)]
+
+@rule("target2.txt", "dependency2.txt", "dependency4.txt")
+def target2():
+    "Brings target2.txt up to date with its dependencies, or creates it"
+    touchOrCreate("target2.txt")
+
+@rule(None, target1, target2)
+def target3():
+    "Always brings target1 and target2 up to date"
+    print target3
+
+@rule(None, clean, file1, multipleTargets, multipleBoth, target1,
+      updateDependency, target2, target3)
+def all():
+    "Brings everything up to date"
+    print all
+
+rule.default = all
+rule.main() # Does the build, handles command-line arguments
+''')
+</pre>
+<p>The first group of classes manage dependencies between different types of objects. The base class contains some common code, including the constructor which you'll note is automatically called if it is not explicitly redefined in a derived class (a nice, code-saving feature in Python).</p>
+<p>Classes derived from <strong>Dependency</strong> manage particular types of dependency relationships, and redefine the <strong>updated()</strong> method to decide whether the target should be brought up to date with the dependent. This is an example of the <em>Template Method</em> design pattern, where <strong>updated()</strong> is the template method and <strong>_Rule</strong> is the <em>context</em>.</p>
+<p>If you want to create a new type of dependency -- say, the addition of wildcards on dependencies and/or targets -- you define new <strong>Dependency</strong> subclasses. You'll see that the rest of the code doesn't require changes, which is a positive indicator for the design (future changes are isolated).</p>
+<p><strong>Dependency.create()</strong> is what I call a <em>Simple Factory Method</em>, because all it does is localize the creation of all the subtypes of <strong>Dependency</strong>. Note that forward referencing is not a problem here as it is in some languages, so using the full implementation of <em>Factory Method</em> given in GoF is not necessary and also more complex (this doesn't mean there aren't cases that justify the full-fledged <em>Factory Method</em>).</p>
+<p>Note that in <strong>FileToDependency</strong> we <em>could</em> assert that <strong>self.dependency</strong> is a subtype of <strong>Dependency</strong>, but this type check happens (in effect) when <strong>updated()</strong> is called.</p>
+<div class="section">
+<h2><a id="the-rule-decorator" name="the-rule-decorator">The <strong>rule</strong> Decorator</a></h2>
+<p>The <strong>rule</strong> decorator uses the <em>Builder</em> design pattern, which makes sense because the creation of a rule happens in two steps: the constructor captures the decorator arguments, and the <strong>__call__()</strong> method captures the function.</p>
+<p>The <em>Builder</em> product is a <strong>_Rule</strong> object, which, like the <strong>Dependency</strong> classes, contains an <strong>updated()</strong> method. Each <strong>_Rule</strong> object contains a list of <strong>dependencies</strong> and a <strong>ruleUpdater()</strong> method which is called if any of the dependencies is out of date. The <strong>_Rule</strong> also contains a <strong>name</strong> (which is the decorated function name) and a <strong>description</strong> (the decorated function's docstring). (The <strong>_Rule</strong> object is an example of the <em>Command</em> pattern).</p>
+<p>What's unusual about <strong>_Rule</strong> is that you don't see any code in the class which initializes <strong>dependencies</strong>, <strong>ruleUpdater()</strong>, <strong>name</strong>, and <strong>description</strong>. These are initialized by <strong>rule</strong> during the <em>Builder</em> process, using <em>Injection.</em> The typical alternative to this is to create setter methods, but since <strong>_Rule</strong> is nested inside <strong>rule</strong>, <strong>rule</strong> effectively "owns" <strong>_Rule</strong> and <em>Injection</em> seems much more straightforward.</p>
+<p>The <strong>rule</strong> constructor first creates the product <strong>_Rule</strong> object, then handles the decorator arguments. It converts <strong>decoratorArgs</strong> to a <strong>list</strong> because we need it to be modifiable, and <strong>decoratorArgs</strong> comes in as a tuple. If there is only one argument it means the user has only specified the target and no dependencies. Because <strong>Dependency.create()</strong> requires two arguments, we append <strong>None</strong> to the list.</p>
+<p>The target is always the first argument, so <strong>pop(0)</strong> pulls it off and the remainder of the list is dependencies. To accommodate the possibility that the target is a list, single targets are turned into lists.</p>
+<p>Now <strong>Dependency.create()</strong> is called for each possible target-dependency combination, and the resulting list is injected into the <strong>_Rule</strong> object. For the special case when there are no arguments, a <strong>None</strong> to <strong>None</strong> <strong>Dependency</strong> is created.</p>
+<p>Notice that the only thing the <strong>rule</strong> constructor does is sort out the arguments; it has no knowledge of particular relationships. This keeps special knowledge within the <strong>Dependency</strong> hierarchy, so adding a new <strong>Dependency</strong> is isolated within that hierarchy.</p>
+<p>A similar guideline is followed for the <strong>__call__()</strong> method, which captures the decorated function. We keep the <strong>_Rule</strong> object in a static list called <strong>rules</strong>, and the first thing to check is whether any of the rule names are duplicated. Then we capture and inject the name, documentation string, and the function itself.</p>
+<p>Note that the <em>Builder</em> "product", the <strong>_Rule</strong> object, is returned as the result of <strong>rule.__call__()</strong>, which means that this object -- which doesn't have a <strong>__call__()</strong> method -- is substituted for the decorated function. This is a slightly unusual use of decorators; normally the decorated function is called directly, but in this case the decorated function is never called directly, but only via the <strong>_Rule</strong> object.</p>
+</div>
+</div>
+<div class="section">
+<h1><a id="running-a-build" name="running-a-build">Running a Build</a></h1>
+<p>The static method <strong>main()</strong> in <strong>rule</strong> manages the build process, using the helper method <strong>update()</strong>. If you provide no command-line arguments, <strong>main()</strong> passes <tt class="docutils literal"><span class="pre">0</span></tt> to <strong>update()</strong>, which calls the default rule if one has been set, otherwise it calls the first rule that was defined. If you provide command-line arguments, it passes each one (in order) to <strong>update()</strong>.</p>
+<p>If you give it an incorrect argument (typically <strong>help</strong> is reserved for this), it prints each of the rules along with their docstrings.</p>
+<p>Finally, it checks to see that a <strong>build.bat</strong> and <strong>build</strong> command file exists, and creates them if it doesn't.</p>
+<p>The <strong>build.py</strong> produced when you run <strong>builder.py</strong> the first time can act as a starting point for your build file.</p>
+</div>
+<div class="section">
+<h1><a id="improvements" name="improvements">Improvements</a></h1>
+<p>As it stands, this system only satisfies the basic needs; it doesn't have, for example, all the features that <strong>make</strong> does when it comes to manipulating dependencies. On the other hand, because it's built atop a full-powered programming language, you can do anything else you need quite easily. If you find yourself writing the same code over and over, you can modify <strong>rule()</strong> to reduce the duplicated effort. If you have permission, please submit such modifications back for possible inclusion.</p>
+</div>
+<div class="section">
+<h1><a id="next" name="next">Next</a></h1>
+<p>In the last installment of this series (chapter), we'll look at class decorators and whether you can decorate an object.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=241209.html">19
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=241209&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D241209&amp;title=Python+Decorators+III%3A+A+Decorator-Based+Build+System&amp;bodytext=Most+build+systems+start+out+with+dependencies%2C+then+realize+they+need+language+features+and+eventually+discover+they+should+have+started+with+language+design.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D241209&amp;title=Python+Decorators+III%3A+A+Decorator-Based+Build+System">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D241209&amp;title=Python+Decorators+III%3A+A+Decorator-Based+Build+System">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

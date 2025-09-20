@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Creating a Domain Specific Language with Groovy</title>
+<meta charset="utf-8"/>
+<meta content="Jeremy Meyer" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=jeremy1.html">Jeremy Meyer's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=291467.html">Discuss</a> | 
+<a href="mailto:?subject=Creating a Domain Specific Language with Groovy&amp;body= %0AArtima Weblogs %0ACreating a Domain Specific Language with Groovy %0Aby Jeremy Meyer %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=291467">Email</a> | 
+<a href="../viewpostP.html$/thread=291467.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=274909.html" title="Groovy AI Tic tac toe">Previous</a> | 
+<a class="sl" href="thread=294361.html" title="Java 3D Fun with Groovy">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Musings on Language and Design</span><br>
+<span class="ts">Creating a Domain Specific Language with Groovy</span><br/>
+<span class="as">by Jeremy Meyer</span><br/>
+<span class="pd">May 8, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+An simple example of how easy it is to make a fairly powerful DSL using the dynamic features and powerful sytax of Groovy
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<html>
+<head>
+<title>DSLs with Groovy</title>
+</head>
+<body>
+<h1>Creating Domain Specific Languages with Groovy</h1>
+In my last blog I talked about some of the differences between Groovy
+and Java syntax and argued that anyone making a paradigm shift from
+Java to dynamic languages and DSLs (domain specific languages) would
+actually have a fairly easy time of it with Groovy because of its
+seamless integration with Java. The road to discovering all of Groovy's
+powerful and "cool" features has the soft grassy verge of Java
+compatibility. This means that (whilst not ideal) you can experiment
+and take a bit of a risk with the new language without blowing project
+deadlines or running into feature deprivation. The worst case scenario
+is that you can do things in the Java way, until you can refactor to
+Groovy paradigms.
+<br/>
+<br/>
+I also said that Groovy syntax, cool features and operators (like the
+spread operator) are not necessarily the real reason you should start
+using Groovy, but the dynamism and the ability to make DSLs <i>is</i>. I want
+to demonstrate what that dynamism means, and how one might create a
+tiny DSL (using a Grails-like feature as an example). <br/>
+<br/>
+To make a DSL useful, we want to end up with a syntax that is functional enough, simple to read and simple to write. Let's look at how
+Grails does this with a validation DSL in its domain classes. Don't worry if you don't
+use or know anything about Grails, this is an elegantly simple example and speaks for itself. <br/>
+<br/>
+<pre style="color: rgb(0, 0, 153);">class Customer {
+   int age
+   String name
+   static constraints = {
+      age(size:18..65)
+      name(size:3..20, blank:false)
+   }
+}</pre>
+Without thinking about what language it is written in, try
+and intuit what it might mean. We have a Customer class with two
+properties, age and name, and some sort of named block, "constraints"
+with matching age and name listed. Each property name is followed by
+brackets, inside of which are some descriptions of constraints for
+those properties. This is very intuitive. It is pretty obvious that the
+age should be between 18 and 65 and the name should be between 3 and 20
+characters and shouldn't be blank. Provided someone gave you a list of
+allowable constraints (size, blank, zero, date etc.) you would be able
+to quickly and easily create your own class with defined validation.<br/>
+<h3>But is this Groovy? </h3>
+
+The answer is yes and no. It is actually valid Groovy syntax, but as it
+stands, it is somewhat meaningless and somewhat useless. Right now,
+syntactically, we have a class definition which has two properties, and
+a static closure. The closure contains calls to two fictitious methods,
+age() and name() which both take maps as parameters. What do I mean by
+fictitious methods? Simply that syntactically we have two method calls,
+but to methods which don't exist. If we were to run that closure, we
+would just get the following error:
+<br/>
+<br/>
+<pre style="color: rgb(204, 0, 0);">groovy.lang.MissingMethodException:<br> No signature of method: Customer$__clinit__closure1.age() is applicable for argument types:<br> (java.util.LinkedHashMap) values: [[size:18..65]]</br></br></pre>
+<br/>
+By the way, understanding closures is fundamental to using Groovy
+effectively. There is a lot of information about them available online.
+If you are unsure about them, a few web searches will put you straight.
+Otherwise, just think of them as blocks of code which can be passed
+around in parameters and run when required. I will talk about them a
+bit more below.
+<br/>
+<br/>
+So what good is this phoney code? Well, the syntax looks clean and tidy
+and has clear affordance, i.e. it shows you intuitively what it should
+do. Groovy's friendly map syntax (using comma seperated key/value pairs) gives us neat looking parameter lists. This makes it an effective DSL. It is a language-within-a-language which kind of has its own syntax and structure based in the domain of
+constraining values. That makes programming with constraints very easy;
+easy to remember, easy to code, easy to read and understand.<br/>
+<br/>
+But.. it doesn't do anything yet, and since we have a closure
+with method calls we can't really use, some clever work needs to be
+done to make this DSL work for us. Let's look at some of the main
+Groovy mechanisms we need.
+<br/>
+<h3>Method Interception
+</h3>
+
+One of the dynamic features of Groovy is that it can intercept methods.
+The simplest way to do this is to override the <span style="font-style: italic;">invokeMethod</span> method
+on your class. In its simplest usage, every time you call a
+non-existent method on your object, <span style="font-style: italic;">invokeMethod</span> will
+be called first, and passed the method name and the parameter list. The
+example below just prints the name of the method being called.
+<br/>
+<br/>
+<pre style="color: rgb(0, 0, 153);">class Worker {
+</pre>
+<pre style="color: rgb(0, 0, 153);">   Object invokeMethod(String name, Object args) {</pre>
+<pre style="color: rgb(0, 0, 153);">      println “${name} method called.”
+</pre>
+<pre style="color: rgb(0, 0, 153);">   }</pre>
+<pre style="color: rgb(0, 0, 153);">   ..
+</pre>
+<pre><span style="color: rgb(0, 0, 153);">}</span> </pre>
+Using this simple technique, if a method actually does exist, that
+method will be called, and the <span style="font-style: italic;">invokeMethod</span>
+will not. See the <span style="font-style: italic;">GroovyInterceptable</span>
+interface for details of how to implement more complex
+behaviour.<br/>
+<br/>
+<h3>Dynamic Invocation
+</h3>
+
+As a corollary to Method Interception, Groovy can call methods and get
+and set properties dynamically. You can call a method by calling the <span style="font-style: italic;">invokeMethod</span> method
+directly, and you can set and get properties by using <span style="font-style: italic;">setProperty</span>, as in <span style="font-style: italic;">clown.setProperty(“nose”, “red”)</span>,
+the dynamic equivalent of<span style="font-style: italic;">
+clown.setNose(“red”)</span>. Doing this in a language like Java
+would require much more code.
+<br/>
+<br/>
+<h3>Closures and Delegates
+</h3>
+
+Since a closure is a defined block of code that is not actually run at
+the time it is defined, it needs to be able to keep track of its
+definition-time state. The Groovy mechanism for this is the delegate.
+When you define a closure, it keeps a reference to this, its “birthday”
+context in its delegate property. A method call in a closure, will
+resolve to the closure's delegate by default. If you want your closure
+to call a method on an object other than the one which defined it, you
+have to set the delegate of your closure to point to that object. <br/>
+<br/>
+<h3>Putting them together
+</h3>
+<br/>
+Lets look at the code for a simple validator:<br/>
+<pre><span style="color: rgb(0, 0, 153);">class Validator {<br/>   def subject<br/>   public void validate(def o) {<br/>      subject = o<br/>      o.constraints.setDelegate(this)<br/>      o.constraints.call()<br/>      println "Validation complete."<br/>   }</span><br style="color: rgb(0, 0, 153);"/><br style="color: rgb(0, 0, 153);"/><span style="color: rgb(0, 0, 153);">   Object invokeMethod(String name, Object args) {<br/>      def val = subject.getProperty(name)<br/>      args[0].each {<br/>         switch(val?.class) {<br/>            case null: if (it.key =="blank" &amp;&amp; !val)<br/>               println "failed: property '${name}' is null."<br/>            break<br/>            case Integer :<br/>               if (it.key == "size" &amp;&amp; !(it.value.contains(val)))<br/>               println "failed: Integer property '${name}' has value '${val}' not in range '${it.value.inspect()}'."<br/>            break<br/>            case String: if (it.key =="size" &amp;&amp; !it.value?.contains(val.length()))<br/>               println "failed: String property '${name}' has value '${val}' not in length range '${it.value.inspect()}'."<br/>            break<br/>            default:<br/>            break<br/>         }<br/>      } </span><br style="color: rgb(0, 0, 153);"/><span style="color: rgb(0, 0, 153);">   }<br/></span>}<br/></pre>
+<br/>
+The validate method references the object's constraints closure, sets
+the delegate of the closure to point to itself and then runs the
+closure. This is where the interesting stuff happens. The closure calls
+the two methods "age" and "name". These are called on the validator
+object (which is the new delegate of the closure). Since the methods do
+not exist on the validator object, the <i>invokeMethod</i> handler is called, which is
+where the validation actually takes place.
+<br/>
+<br/>
+In invokeMethod, we can find out from the parameters the name of the method that was
+attempting to be called and get the value of the property with that name, in the line:
+<br/>
+<br/>
+<pre style="color: rgb(0, 0, 153);">def val = subject.getProperty(name)
+</pre>
+<br/>
+
+This is where the "language" comes into play. We are using bogus method names to point us to properties which need validating. 
+
+We can use Groovy's default exception behaviour here to handle the case
+where the method name in the constraint closure doesn't match a
+property name. If the property is not found, Groovy will throw a <span style="font-style: italic;">groovy.lang.MissingPropertyException</span>.
+Once we have the property value, we look at the other arguments, the
+maps, which were passed to our bogus method call. They contain the
+key/value pairs "size:<range>" and "blank:<boolean>". We
+can make good use of Groovy's range syntax here for easy validation:
+<br/>
+<br/>
+</boolean></range>
+<pre style="color: rgb(0, 0, 153);"><range><boolean>it.value.contains(val)
+</boolean></range></pre>
+<range><boolean>In the switch statement we can check the
+actual property value for its type and so allow for different
+validation behaviour (i.e. size for a String means something different
+from size for an Integer). Note that we can use the safe navigation
+operator, <b>"?."</b> to ensure that if the value is null, we will catch it in
+the switch statement in the null case, rather than throw a null pointer
+exception:
+<pre>
+<span style="color: rgb(0, 0, 153);">
+switch(val?.class)
+</span>
+</pre>
+</boolean></range>
+<h3><range>That's It!
+</range></h3>
+<range><boolean><br/>
+About 30 lines of code later, we have a (somewhat primitive) validator,
+but one which allows us to use a Domain Specific Language approach to
+define our constraints. Groovy's closures, powerful operators and
+syntax and its easy introspection have made it a fairly simple task.<br/>
+
+To use our validator, we create a Customer, create a Validator and call the validate method. Note that you are more likely to want a static validation method on the Validator class if you want to use this for production code, but this demonstrates the point.
+
+<pre><span style="color: rgb(0, 0, 153);">
+c = new Customer(age: 2, name:null)
+v = new Validator()
+v.validate(c)
+</span></pre>
+
+If we run this we get:
+
+<pre>
+size validation failed: Integer property 'age' has value '2' not in range '18..65'.
+blank validation failed: property 'name' is null.
+Validation complete.
+</pre>
+
+Simple!
+
+<br/>
+<h1><range><boolean>References
+</boolean></range></h1>
+<range><boolean><a href="../_/http/groovy.codehaus.org/Writing+Domain-Specific+Languages/index.html">http://groovy.codehaus.org/Writing+Domain-Specific+Languages</a>
+<br/>
+<a href="../_/http/www.martinfowler.com/bliki/DomainSpecificLanguage.html">http://www.martinfowler.com/bliki/DomainSpecificLanguage.html</a>
+</boolean></range>
+</boolean></range><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=291467.html">9
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=291467&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jeremy Meyer adds a new entry to <a href="../index.html$/blogger=jeremy1.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/jeremy1.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D291467&amp;title=Creating+a+Domain+Specific+Language+with+Groovy&amp;bodytext=An+simple+example+of+how+easy+it+is+to+make+a+fairly+powerful+DSL+using+the+dynamic+features+and+powerful+sytax+of+Groovy&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D291467&amp;title=Creating+a+Domain+Specific+Language+with+Groovy">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D291467&amp;title=Creating+a+Domain+Specific+Language+with+Groovy">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jeremyMeyer.jpg"/></td><td>Jeremy has been designing and developing software for over 20 years, as well as teaching its mastery. He is fascinated by all aspects of architecture, design and development, the philosophical, the psychological and the aesthetic. He currently heads up the training division at hybris Software, a fast growing and very exciting eCommerce company.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Jeremy Meyer. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr></body>
+</html>

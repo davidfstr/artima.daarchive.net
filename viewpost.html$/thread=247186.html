@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Resuscitating a Seven Year Old Laptop</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=247186.html">Discuss</a> | 
+<a href="mailto:?subject=Resuscitating a Seven Year Old Laptop&amp;body= %0AArtima Weblogs %0AResuscitating a Seven Year Old Laptop %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=247186">Email</a> | 
+<a href="../viewpostP.html$/thread=247186.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=246488.html" title="Setting Multiple Inheritance Straight">Previous</a> | 
+<a class="sl" href="thread=248953.html" title="The Adventures of a Pythonista in Schemeland/13">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Resuscitating a Seven Year Old Laptop</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">January 13, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+You may be interested in this post if you have an obsolete computer you don't want to throw away. The recipe to recover it is to install a lightweight window manager: you will see that your old box come back to new life.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Recently, I have spent some time trying to recover a very old Compaq
+laptop, which I have been neglecting for years (actually my wife was using
+it, by now she has her <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240841.html">new Eeepc</a>).</p>
+<p>The laptop is seven years old, and it shows:</p>
+<ul class="simple">
+<li>there are only 256 M of RAM (actually 240 M + 16 M for the video card);</li>
+<li>the hard disk has 20 G, and it is pretty slow as compared to modern ones;</li>
+<li>the video card is pretty poor, you can forget about installing compiz on it.</li>
+</ul>
+<p>Moreover, the laptop is in a pretty bad shape:</p>
+<ul class="simple">
+<li>the Athlon processor heats a lot and under heavy load the machine
+is likely to freeze;</li>
+<li>the builtin Ethernet interface does not work, as an aftermath of a
+lightning storm of 4 years ago;</li>
+<li>the builtin CD Writer/DVD Reader stopped working 5 years ago;</li>
+<li>the external DVD Writer I bought 3 years go does not work either;</li>
+<li>the BIOS is unable to boot from the two USB ports which
+only support the prehistoric USB 1.1 protocol.</li>
+</ul>
+<p>It was clearly difficult to install some usable operating
+system on it, to replace Windows XP. I did not want to buy another external
+DVD Writer, since nowadays I have no need for it (I use an external USB
+drive for my backups, it is cheeper than buying DVDs).
+Luckily, by googling on the net, I discovered the Smart Boot Manager
+project: if you have a system which is unable to boot from an USB pen
+or an USB drive, but has a floppy reader, you can boot from the
+floppy and then dispatch to the real boot media.
+I made a smart boot floppy and I was able to install
+Ubuntu 8.10 on my laptop from a pen drive.</p>
+<p>I have a wireless USB kit - bought a few weeks ago since it was
+really cheap, something like 14 Euros - and I used that to replace
+the wired connection. The wireless card was recognized out of the box
+by Ubuntu, without need of any external driver, whereas on XP I had
+to download the custom drivers from the producer site.
+That was a happy discovery, so I decided that resuscitating
+the laptop was a worthy project.</p>
+<p>As I said, I installed the standard
+Ubuntu distribution, but the performance was not spectacular.
+Actually, the system was quite slow, and with Firefox open my memory
+occupation was dangerously close to the top limit of 240 M.
+It was clear that I should give up Gnome if I wanted to get a
+snappier machine. So, I tried to install Xubuntu, which comes with
+the lightweight XFCE desktop environment. With that configuration
+the memory occupation was reduced and the machine was indeed faster,
+but still too slow for my taste. I decided then
+to go back to the good old Ice Window Manager (<a class="reference" href="../_/http/www.icewm.org/index.html">IceWM</a>) which I had
+used in the past with an even older machine with only 128M of
+memory. IceWM did the job: the memory occupation dropped down
+to 70 M (so says <a class="reference" href="../_/http/sourceforge.net/projects/htop/index.html">htop</a>) and the machine is much more responsive.</p>
+<p>I did install the <a class="reference" href="../_/http/roscidus.com/desktop/index.html">ROX File Manager</a> instead of
+Nautilus, and <a class="reference" href="../_/http/links.twibright.com/index.html">links</a> instead of Firefox: with those little
+changes the laptop has become very much usable. I discovered
+in the process that now links features a very neat graphic mode:
+the trick is to install links2 (<tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">links2</span></tt>)
+and to start it with the <tt class="docutils literal"><span class="pre">-g</span></tt> option (<tt class="docutils literal"><span class="pre">links2</span> <span class="pre">-g</span></tt>).</p>
+<p>I put this line in the <tt class="docutils literal"><span class="pre">.icewm/toolbar</span></tt> file:</p>
+<pre class="literal-block">
+prog XTerm xterm x-terminal-emulator
+prog links /usr/share/app-install/icons/wsjt.png links2 -g
+prog nm-applet /usr/share/app-install/icons/wlassistant.xpm nm-applet
+</pre>
+<p>The format of the configuration file is pretty simple: every line
+in it has the form <tt class="docutils literal"><span class="pre">prog</span> <span class="pre">alt</span> <span class="pre">icon</span> <span class="pre">app</span></tt> were <tt class="docutils literal"><span class="pre">app</span></tt> is the
+executable application, <tt class="docutils literal"><span class="pre">icon</span></tt> is a path to an icon that will
+appear on the toolbar and <tt class="docutils literal"><span class="pre">alt</span></tt> is the text which appears
+when you hover the mouse over the icon, or the text which replaces
+the images if the icon is missing.</p>
+<p>With this trick a little icon for the Network Manager Applet appears
+on my toolbar and I can connect to the wireless simply by clicking on
+it. The applet is relatively resource hungry (around 10 Megabytes) and
+there are slimmer alternative out there, but for the moment I am
+keeping it, since I am familiar with it and I can afford it.</p>
+<p>Generally speaking, IceWM seems to work well with Gnome applications:
+in particular all the Gnome applications I have tried with an applet
+in the task bar works under IceWM, and the applet appears
+in the system tray.</p>
+<p>One advantage of Gnome is the automount mechanism, so that removable
+devices are automatically recognized and mounted. With a bit of googling,
+I found out a couple of programs to do the same job, <a class="reference" href="../_/http/ivman.sourceforge.net/index.html">ivman</a> (to monitor
+the HAL daemon) and <a class="reference" href="../_/http/pmount.alioth.debian.org/index.html">pmount</a> (to mount the removable device).</p>
+<p>Moreover, I removed the gnome-terminal, using the good old xterm instead.
+An advantage of xterm with respect to gnome-terminal is that it
+does not intercept the function keys, so it play better with programs
+like <a class="reference" href="../_/http/sourceforge.net/projects/htop/index.html">htop</a> or the Midnight Commander. Also, I have found out that
+xterm used together with screen makes a good replacement for
+heavy applications like the gnome-terminal or the KDE Konsole.
+Plus, the scrolling is blazzing fast.</p>
+<p>Since I always want to use a terminal with screen, it makes sense to
+open it at startup. So, I wrote the following .icewm/startup file:</p>
+<pre class="literal-block">
+#!/bin/sh
+ivman -s # volume manager daemon
+xterm -e screen &amp;
+</pre>
+<p>(notice that the startup file must be executable to be run). The first
+line starts the volume manager daemon, thats mounts and unmounts
+automatically the removable drives when I attach and detach them
+(apparently there is a bug in recent versions of the Linux kernel
+so I had to list the allowable drives in the file <tt class="docutils literal"><span class="pre">/etc/pmount.allow</span></tt>
+to get <tt class="docutils literal"><span class="pre">pmount</span></tt> working). The second line open an xterm with screen.</p>
+<p>I have been using this configuration for a week or so, and so far it
+seems to work fine. The only issue I had is that I needed some time to
+adjust to links: it is definitely less convenient than Firefox.
+On the other hand, its memory occupation is order of magnitudes smaller,
+and that makes it usable. I had to renounce to Firefox since it
+was eating all of my memory and making all of my system sluggish.</p>
+<p>Now I plan to use the old laptop as my main box for a while - I have
+already installed subversion, postgresql, g++ and lots of other stuff -
+and I will keep you posted with my findings. If you want to share some
+good tips for people with an obsolete machine, please do so!</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=247186.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=247186&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D247186&amp;title=Resuscitating+a+Seven+Year+Old+Laptop&amp;bodytext=You+may+be+interested+in+this+post+if+you+have+an+obsolete+computer+you+don%27t+want+to+throw+away.+The+recipe+to+recover+it+is+to+install+a+lightweight+window+manager%3A+you+will+see+that+your+old+box+come+back+to+new+life.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D247186&amp;title=Resuscitating+a+Seven+Year+Old+Laptop">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D247186&amp;title=Resuscitating+a+Seven+Year+Old+Laptop">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

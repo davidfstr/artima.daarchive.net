@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/28</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=260195.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/28&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/28 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=260195">Email</a> | 
+<a href="../viewpostP.html$/thread=260195.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=260182.html" title="The Adventures of a Pythonista in Schemeland/27">Previous</a> | 
+<a class="sl" href="thread=261363.html" title="The Adventures of a Pythonista in Schemeland/29">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/28</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">June 20, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+If there is a topic which is likely to engender a flame war between Schemers and Lispers, that topic is hygienic macros.
+It is the time to face it, and to explain what people mean when they allude to the "hygiene problem".
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">Hygienic macros</h1>
+<p>In episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240804.html">9</a> I noted that Scheme provides three
+major macro systems (<tt class="docutils literal"><span class="pre">syntax-rules</span></tt>, <tt class="docutils literal"><span class="pre">syntax-case</span></tt> and
+<tt class="docutils literal"><span class="pre">define-macro</span></tt>), yet I went on to discuss
+my own personal macro system, <tt class="docutils literal"><span class="pre">sweet-macros</span></tt>.
+The decision was motivated by various reasons.
+First of all, I did not want
+to confuse my readers by describing too many macro systems
+at the same time. Secondly, I wanted to make macros
+easier and more debuggable. Finally, <tt class="docutils literal"><span class="pre">sweet-macros</span></tt> are
+slightly more powerful than the other macro systems, with a better
+support for guarded patterns and with a few extensibility features
+which I have not shown yet (but I like to keep some trick under my
+sleeve ;).</p>
+<p>After 19 episodes about macros, I can safely assume that my
+readers are not beginners anymore. It is time to have a look at the
+larger Scheme world and to compare/contrast <tt class="docutils literal"><span class="pre">sweet-macros</span></tt> with the
+other macro systems.  I do not want to discuss all the macro
+systems in existence here, therefore I will skip a few interesting systems
+such as syntactic closures and explicit renaming macros. However,
+readers interested in alternative macro systems for Scheme should have
+a look at this excellent <a class="reference" href="../_/http/lists.gnu.org/archive/html/chicken-users/2008-04/msg00013.html">post by Alex Shinn</a> which summarizes the
+current situation better than I could do. Notice that Alex is
+strongly biased against <tt class="docutils literal"><span class="pre">syntax-case</span></tt> and very much in favor of
+explicit renaming macros. The two
+systems are not incompatible though, and actually Larceny provides a
+<tt class="docutils literal"><span class="pre">syntax-case</span></tt> implementation built on top of explicit renaming
+macros (see also <a class="reference" href="../_/http/srfi.schemers.org/srfi-72/srfi-72.html">SRFI-72</a>).</p>
+<div class="section">
+<h1><a id="syntax-match-vs-syntax-rules" name="syntax-match-vs-syntax-rules"><tt class="docutils literal"><span class="pre">syntax-match</span></tt> vs <tt class="docutils literal"><span class="pre">syntax-rules</span></tt></a></h1>
+<p><tt class="docutils literal"><span class="pre">syntax-rules</span></tt> can be quite trivially defined in terms of
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt>:</p>
+<pre class="literal-block">
+(def-syntax (syntax-rules (literal ...) (patt templ) ...)
+  #'(syntax-match (literal ...) (sub patt #'templ) ...))
+</pre>
+<p>As you see, the main difference between <tt class="docutils literal"><span class="pre">syntax-rules</span></tt> (apart for a
+missing <tt class="docutils literal"><span class="pre">sub</span></tt>) is that <tt class="docutils literal"><span class="pre">syntax-rules</span></tt> automatically
+adds the syntax-quote <tt class="docutils literal"><span class="pre">#'</span></tt> operator to you templates. That means
+that you cannot use quasisyntax tricks and that <tt class="docutils literal"><span class="pre">syntax-rules</span></tt> is
+strictly less powerful than <tt class="docutils literal"><span class="pre">syntax-match</span></tt>. The other difference is
+that <tt class="docutils literal"><span class="pre">syntax-rules</span></tt> macros do not have guarded patterns; the most direct
+consequence is that providing good error messages for incorrect syntax
+is more difficult. You may learn everything you ever wanted to know
+about <tt class="docutils literal"><span class="pre">syntax-rules</span></tt> in the <a class="reference" href="../_/http/groups.google.com/group/comp.lang.scheme/browse_frm/thread/86c338837de3a020/eb6cc6e11775b619#eb6cc6e11775b619/index.html">Syntax-Rules Primer for the Mildly Insane</a>
+by Al Petrofsky.</p>
+</div>
+<div class="section">
+<h1><a id="syntax-match-vs-syntax-case" name="syntax-match-vs-syntax-case"><tt class="docutils literal"><span class="pre">syntax-match</span></tt> vs <tt class="docutils literal"><span class="pre">syntax-case</span></tt></a></h1>
+<p>In principle, <tt class="docutils literal"><span class="pre">syntax-case</span></tt> could be defined in terms of <tt class="docutils literal"><span class="pre">syntax-match</span></tt> as
+follows:</p>
+<pre class="literal-block">
+(def-syntax syntax-case
+  (syntax-match ()
+   (sub (syntax-case x (literal ...) (patt guard skel) ...)
+    #'(syntax-match x (literal ...) (sub patt skel guard) ...))
+   (sub (syntax-case x (literal ...) (patt skel) ...)
+    #'(syntax-match x (literal ...) (sub patt skel) ...))
+ ))
+</pre>
+<p>In reality, <tt class="docutils literal"><span class="pre">syntax-case</span></tt> is a Scheme primitive and
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt> is defined on top of it. So, <tt class="docutils literal"><span class="pre">syntax-case</span></tt> has
+theoretically the same power as <tt class="docutils literal"><span class="pre">syntax-match</span></tt>, but in practice
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt> is more convenient to use.</p>
+<p>The major syntactic difference
+is the position of the guard, which in <tt class="docutils literal"><span class="pre">syntax-case</span></tt> is positioned <em>before</em>
+the skeleton, whereas in <tt class="docutils literal"><span class="pre">syntax-match</span></tt> is positioned <em>after</em> the skeleton
+I did spent a lot of time thinking about the right position for the guard:
+I hate gratuitous breaking, but I convinced myself that the position of the
+guard in <tt class="docutils literal"><span class="pre">syntax-case</span></tt> is really broken, so I had to <em>fix</em> the issue.
+The problem with <tt class="docutils literal"><span class="pre">syntax-case</span></tt> is that while the pattern is always
+in the first position, you never know what is in the
+second position: it could be the guard <em>or</em> the template; in order
+to distinguish the possibilities you have to check if there is
+a third expression in the clause and that is annoying,</p>
+<p>In <tt class="docutils literal"><span class="pre">syntax-match</span></tt> the template
+is <em>always</em> in the second position; if there is something in the
+third position, it is always a guard; moreover, there could be
+another expression in the clause (in the fourth position) which is
+used as alternative template if the guard is not satisfied.
+The advantage of having fixed positions is that it is easier to
+write higher order macros expanding to <tt class="docutils literal"><span class="pre">syntax-match</span></tt> transformers
+(<tt class="docutils literal"><span class="pre">syntax-match</span></tt> itself is implemented in terms of <tt class="docutils literal"><span class="pre">syntax-case</span></tt>
+where the template are not in fixed position and I had to make the
+implementation more complex just to cope with that).</p>
+<p>You may learn (nearly) everything there is to know
+about <tt class="docutils literal"><span class="pre">syntax-case</span></tt> in the the book
+<a class="reference" href="../_/http/www.scheme.com/tspl3/index.html">The Scheme Programming Language</a> by Kent Dybvig.</p>
+</div>
+<div class="section">
+<h1><a id="syntax-match-versus-define-macro" name="syntax-match-versus-define-macro"><tt class="docutils literal"><span class="pre">syntax-match</span></tt> versus <tt class="docutils literal"><span class="pre">define-macro</span></tt></a></h1>
+<p>Nowadays macros based on <tt class="docutils literal"><span class="pre">define-macro</span></tt> are much less used than in
+past because macro systems based on pattern matching are much more
+powerful, easier and safer to use. The R6RS specification made
+<tt class="docutils literal"><span class="pre">syntax-case</span></tt> enter in the standard and it is the preferred macro
+system for most implementation.</p>
+<p>Nowadays, there is a good chance that your Scheme implementation does
+not provide <tt class="docutils literal"><span class="pre">define-macro</span></tt> out of the box, therefore you need to
+implement it in term of <tt class="docutils literal"><span class="pre">syntax-case</span></tt> (or <tt class="docutils literal"><span class="pre">syntax-match</span></tt>). Here is
+an example of such an implementation:</p>
+<pre class="literal-block">
+(def-syntax define-macro
+  (syntax-match ()
+     (sub (define-macro (name . params) body1 body2 ...)
+       #'(define-macro name (lambda params body1 body2 ...)))
+     (sub (define-macro name expander)
+       #'(def-syntax (name . args)
+          (datum-&gt;syntax #'name (apply expander (syntax-&gt;datum #'args)))))
+     ))
+</pre>
+<p>The code should be clear: the arguments of the macro are converted into
+a regular list which is then transformed with the expander, and converted
+back into a syntax object in the context of the macro.
+<tt class="docutils literal"><span class="pre">define-macro</span></tt> macros are based on simple list manipulations and
+are very easy to explain and to understand: unfortunately, they
+are affected by the hygiene problem.</p>
+<p>You can find examples of use
+of <tt class="docutils literal"><span class="pre">define-macro</span></tt> in many references; I learned it from
+<a class="reference" href="../_/http/www.ccs.neu.edu/home/dorai/t-y-scheme/t-y-scheme-Z-H-1.html">Teach Yourself Scheme in Fixnum Days</a> by Dorai Sitaram.</p>
+</div>
+<div class="section">
+<h1><a id="the-hygiene-problem" name="the-hygiene-problem">The hygiene problem</a></h1>
+<p>If you have experience in Common Lisp or other Lisp dialects, you will
+have heard about the problem of hygiene in macros, a.k.a. the problem
+of <em>variable capture</em>.  As Paul Graham puts it,
+<em>errors caused by variable capture are rare, but what they lack
+in frequency they make up in viciousness</em>.
+The hygiene problem is the main reason why <tt class="docutils literal"><span class="pre">define-macro</span></tt> is becoming
+less and less used in the Scheme world. PLT Scheme has being
+deprecating it for years and nowadays even Chicken Scheme, which
+traditionally used <tt class="docutils literal"><span class="pre">define-macro</span></tt>, has removed it from the
+core, by using hygienic macros instead: this is the reason why the
+current Chicken (Chicken 4) is called "hygienic Chicken".</p>
+<p>You can find good discussions of the hygiene problem in Common Lisp in
+many places; I am familiar with Paul Graham's book <a class="reference" href="../_/http/www.paulgraham.com/onlisp.html">On Lisp</a> which I
+definitively recommend: chapter 9 on variable capture
+has influenced this section. Another good
+reference is the <a class="reference" href="../_/http/www.cs.indiana.edu/~dyb/pubs/bc-syntax-case.pdf">chapter about syntax-case</a> - by Kent Dybvig - in
+the book <a class="reference" href="../_/http/oreilly.com/catalog/9780596510046/index.html">Beautiful Code</a>.  Here I will give just a short example
+exhibiting the problem, for the sake of the readers unfamiliar with
+it.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/hygienic-paper-small.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/hygienic-paper-small.jpg">
+<p>Consider this "dirty" definition of the <tt class="docutils literal"><span class="pre">for</span></tt> loop:</p>
+<pre class="literal-block">
+(define-macro (dirty-for i i1 i2 . body)
+  `(let ((start ,i1) (stop ,i2))
+     (let loop ((,i start))
+       (unless (&gt;= ,i stop) ,@body (loop (+ 1 ,i))))))
+</pre>
+<p>Superficially <tt class="docutils literal"><span class="pre">define-macro</span></tt> looks quite similar to <tt class="docutils literal"><span class="pre">def-syntax</span></tt>,
+except that in the macro body you need to a add a comma in front of
+each macro argument argument. Internally, however, macros based on
+<tt class="docutils literal"><span class="pre">define-macro</span></tt> are completely different. In particular, they are not
+safe under variable capture and that may cause surprises.
+For instance, code such as</p>
+<pre class="literal-block">
+&gt; (let ((start 42))
+   (dirty-for i 1 3 (display start) (newline)))
+1
+1
+</pre>
+<p>prints the number 1 (twice) and not the number 42!</p>
+<p>The reason is clear if you expand the macro (notice
+the if you implement <tt class="docutils literal"><span class="pre">define-macro</span></tt> in terms of
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt> then <tt class="docutils literal"><span class="pre">syntax-expand</span></tt> still works):</p>
+<pre class="literal-block">
+&gt; (syntax-expand (dirty-for i 1 3 (display start) (newline)))
+(let ((start 1) (stop 3))
+  (let loop ((i start))
+    (unless (&gt;= i stop) (display start) (newline)
+      (loop (+ 1 i)))))
+</pre>
+<p>Since the inner variable <tt class="docutils literal"><span class="pre">start</span></tt> is shadowing the outer variable <tt class="docutils literal"><span class="pre">start</span></tt>,
+the number 1 is printed instead of the number 42.
+The problem can be solved by introducing unique identifiers in the
+macro by means of <tt class="docutils literal"><span class="pre">gensym</span></tt>
+(<tt class="docutils literal"><span class="pre">gensym</span></tt> is not in the R6RS standard, but in practice every Scheme
+implementation has it; for convenience I have included it in my
+<tt class="docutils literal"><span class="pre">(aps</span> <span class="pre">compat)</span></tt> compatibility library).</p>
+<p>The <tt class="docutils literal"><span class="pre">dirty-for</span></tt> macro
+can be improved to use <tt class="docutils literal"><span class="pre">gensym</span></tt> for every variable which is internally
+defined (and it is not a macro argument):</p>
+<pre class="literal-block">
+(define-macro (less-dirty-for i i1 i2 . body)
+  (let ((start (gensym)) (stop (gensym)) (loop (gensym)))
+   `(let ((,start ,i1) (,stop ,i2))
+      (let ,loop ((,i ,start))
+        (unless (&gt;= ,i ,stop) ,@body (,loop (+ 1 ,i)))))))
+</pre>
+<pre class="literal-block">
+&gt; (let ((start 42))
+   (less-dirty-for i 1 3 (display start) (newline)))
+42
+42
+</pre>
+<p><tt class="docutils literal"><span class="pre">less-dirty-for</span></tt> works because all internal variables have now
+unique names that cannot collide with existing identifiers by
+construction.  You can see the names used internally by invoking
+<tt class="docutils literal"><span class="pre">syntax-expand</span></tt> (notice that by construction such names change every
+time you expand the macro):</p>
+<pre class="literal-block">
+&gt; (syntax-expand (less-dirty-for i 1 3 (display i))); in Ikarus
+(let ((#{g0 |K!ZoUGmIIl%SrMfI|} 1) (#{g1 |qecoGeEAOv0R8$%0|} 3))
+  (let #{g2 |kD?xfov61j0$G1=M|} ((i #{g0 |K!ZoUGmIIl%SrMfI|}))
+    (unless (&gt;= i #{g1 |qecoGeEAOv0R8$%0|}) (display i)
+     (#{g2 |kD?xfov61j0$G1=M|} (+ 1 i)))))
+</pre>
+<p>Unfortunately <tt class="docutils literal"><span class="pre">less-dirty-for</span></tt> is not really clean.
+<tt class="docutils literal"><span class="pre">gensym</span></tt> cannot do anything to solve the <em>free-symbol capture</em>
+problem (I am using Paul Graham's terminology here).</p>
+<p>The problem is that identifiers used (but not defined) in the macro
+have the scope of expanded code, not the scope of the original macro:
+in particular, if the outer scope in expanded code redefines the meaning of an
+identifier used internally, the macro will not work as you would expect.
+Consider for instance the following expression:</p>
+<pre class="literal-block">
+&gt; (let ((unless 'unless))
+   (less-dirty-for i 1 3 (display i)))
+</pre>
+<p>If you try to run this, your system will go into an infinite loop!</p>
+<p>The problem here is that shadowing <tt class="docutils literal"><span class="pre">unless</span></tt> in the outer scope
+affects the inner working of the macro (I leave as an exercise to
+understand what exactly is going on).
+As you can easily see, this
+kind of problem is pretty tricky to debug: in practice, it
+means that the macro user is forced to know all the identifiers
+that are used internally by the macro.</p>
+<p>On the other hand,
+if you use hygienic macros, all the subtle
+problems I described before simply disappear and
+you can write a clean for loop just as it should be written:</p>
+<pre class="literal-block">
+(def-syntax (clean-for i i1 i2 body1 body2 ...)
+  #'(let ((start i1) (stop i2))
+     (let loop ((i start))
+       (unless (&gt;= i stop) body1 body2 ... (loop (+ 1 i))))))
+</pre>
+<p>Everything works fine with this definition, and the macro looks
+even better, with less commas and splices ;-)</p>
+<p>That's all for today. The next episode will discuss how to break
+hygiene on purpose, don't miss it!</p>
+</img></div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=260195.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=260195&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260195&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F28&amp;bodytext=If+there+is+a+topic+which+is+likely+to+engender+a+flame+war+between+Schemers+and+Lispers%2C+that+topic+is+hygienic+macros.%0D%0AIt+is+the+time+to+face+it%2C+and+to+explain+what+people+mean+when+they+allude+to+the+%26quot%3Bhygiene+problem%26quot%3B.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260195&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F28">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D260195&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F28">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Half Sisters</title>
+<meta charset="utf-8"/>
+<meta content="Ward Cunningham" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=ward.html">Ward Cunningham's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4615.html">Discuss</a> | 
+<a href="mailto:?subject=Half Sisters&amp;body= %0AArtima Weblogs %0AHalf Sisters %0Aby Ward Cunningham %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=4615">Email</a> | 
+<a href="../viewpostP.html$/thread=4615.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=4486.html" title="A is for Apple">Previous</a> | 
+<a class="sl" href="thread=81963.html" title="Spoken Log">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Ward Says, Don't Try This at Home</span><br>
+<span class="ts">Half Sisters</span><br/>
+<span class="as">by Ward Cunningham</span><br/>
+<span class="pd">April 24, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Two wiki sites are sisters if they join their namespace in such a way that happy collisions occur. Here are excerpts from a conversation as two quite different wiki implementations are joined by this technology.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+Bob -- Can you point me to a url that lists all of <a href="../_/http/fitnesse.org/index.html">fitnesse.org's</a> wiki pages, one per line, text/plain? If you do then I can make it a sister site of <a href="../_/http/fit.c2.com/index.html">fit.c2.com</a>. You will have to give me leaf names only. You can write a second cgi that redirects to unique leafs or offers a choice when your leaf names clash. (Sister sites are all about happy name clashes.) -- Ward
+<br/>
+<hr/>
+<p>
+Ward -- That sounds like a great idea.  We can easily set up a url that provides what you need.  Something like fitnesse.org/names. 
+<p>
+Fitnesse is a hierarchical wiki, which means that each page can be the
+parent of a flat wiki.  We use the hierarchy to organize different
+classpaths and variables for different test suites.
+<p>
+What this means is that the names of pages on fitnesse can have dots in
+them, like: FitNesse.MyProject.MyFirstTestSuite.EditTests
+<p>
+What do you think is the best way to map such names into a "sister" site.
+Should we use only the final name of the page (i.e. EditTests)?  
+<p>
+Another possibility is that sisterhood could be granted to individual
+branches of the hierarchy, since each branch is an independent flat wiki.
+That way we could select certain branches to be sisters, and others to be
+"private". -- Bob
+
+<br/><hr/>
+<p>
+Bob -- Yes. Selected branches sounds like the way to go. How ever you decide to do this you will present a flat model to me through cooperating scripts (one that provides flat names and one that redirects to the proper url(s) for that flat name.)
+<p>
+One approach would be to support only one flat branch of fitnesse.org for the moment. You can change your implementation of the interface to do more at any time. -- Ward
+
+<br/><hr/>
+<p>
+
+Bob -- I like Fitnesse and the fitness.org site a lot. And I'm sure the hierarchy is an asset, especially when in a classroom environment where many people are doing the same thing and need to keep their work separate. I love hierarchy and find the discovery of effective hierarchy (as in classes or directories) rewarding.
+
+<blockquote>
+[That's one motivation.  Another is teams that have multiple projects and
+need to keep their classpaths separate.  We wanted a mechanism whereby we
+could create a suite of tests that had one classpath, and another suite of
+tests that had another. -- Bob]
+</blockquote>
+<p>I thought I'd mention why I don't do hierarchy on my wiki.
+
+<p>I see wiki as a place where people work out the names of things that they will say. Since our spoken vocabulary is small, we must struggle to find words that carry value commensurate with the space they consume in our brains. Where works collide in wiki they will also collide in our thoughts. Usually that is a happy circumstance. 
+
+<p>Still, we often establish the context of a conversation so as to avoid or at least disambiguate many of these collisions. And we have to note the context switches we make in conversation. The analogy of context switching I've chosen for wiki is SisterSites. Two sites are candidates to be sisters if the collisions in their vocabulary are likely to be useful. The reader, like the listener, has to decide where to take the switch. 
+
+<p>As a sister, you should feel just the right amount of pressure to call thing that we share by the same names. It is a subtle thing, but very powerful when scaled. -- Ward
+
+<br/><hr/>
+<p>
+<i>Bob, by the way, is Uncle Bob Martin, the founder of Object Mentor and host, with Micah Martin, of the Fitnesse site. I quote this conversation as a message to wiki site operators everywhere. Sister sites are easy and they scale. I've written a memo that describes my <a href="../_/https/c2.com/doc/TipsForSisterSites/sisters.pdf">tips for implementing sister sites</a> (pdf). There are a lot of wiki sites out there. Let's get 'em hooked together.</i>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4615.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=4615&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Ward Cunningham adds a new entry to <a href="../index.html$/blogger=ward.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/ward.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4615&amp;title=Half+Sisters&amp;bodytext=Two+wiki+sites+are+sisters+if+they+join+their+namespace+in+such+a+way+that+happy+collisions+occur.+Here+are+excerpts+from+a+conversation+as+two+quite+different+wiki+implementations+are+joined+by+this+technology.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4615&amp;title=Half+Sisters">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4615&amp;title=Half+Sisters">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ward.jpg"/></td><td>Ward Cunningham is a founder of Cunningham &amp; Cunningham, Inc. He has served as Director of R&amp;D at Wyatt Software and as Principle   Engineer in the Tektronix Computer Research Laboratory. Ward is well known for his contributions to the developing practice of object-oriented programming, the variation called Extreme Programming, and   the communities hosted by his WikiWikiWeb. He is active with the Hillside Group and has served as program chair of the Pattern Languages of Programs conference which it sponsors. Ward created the CRC design method which helps teams find objects. Ward has written for PLoP, JOOP   and OOPSLA on Patterns, Objects, CRC and related topics.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Ward Cunningham. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

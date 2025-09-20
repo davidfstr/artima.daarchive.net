@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Pardon My French, But This Code Is C.R.A.P.</title>
+<meta charset="utf-8"/>
+<meta content="Alberto Savoia" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=agitator.html">Alberto Savoia's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=210434.html">Discuss</a> | 
+<a href="mailto:?subject=Pardon My French, But This Code Is C.R.A.P.&amp;body= %0AArtima Weblogs %0APardon My French, But This Code Is C.R.A.P. %0Aby Alberto Savoia %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=210434">Email</a> | 
+<a href="../viewpostP.html$/thread=210434.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=204677.html" title="How Much Unit Test Coverage Do You Need? - The Testivus Answer">Previous</a> | 
+<a class="sl" href="thread=210575.html" title="Pardon My French, But This Code Is C.R.A.P. (2)">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Agitating Thoughts &amp; Ideas</span><br>
+<span class="ts">Pardon My French, But This Code Is C.R.A.P.</span><br/>
+<span class="as">by Alberto Savoia</span><br/>
+<span class="pd">July 17, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Part I - Beauty and The Beast. I begin my exploration of ugliness in code with some background and an overview of what most people consider to be crappy code.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><strong>90% of everything is crap.</strong> - <em>Sturgeon’s Law (one of many variants)</em></p>
+<p><strong>When applied to software, Sturgeon’s Law is hopelessly optimistic.</strong> - <em>Savoia’s Corollary to Sturgeon’s Law</em></p>
+<p>O’Reilly just released a book called: <em>Beautiful Code – Leading Programmers Explain How They Think</em>.  And, while I am probably not worthy of having my words and code share the same book spine as the work of CS legends such as Brian Kernighan or Jon Bentley, I am quite proud to have contributed a chapter entitled “Beautiful Tests.”</p>
+<p>You should definitely get a copy of <em>Beautiful Code</em>; it’s 500+ pages of great insights into the thinking process of some great programmers (plus me).  And, on top of that, all the royalties from the book will go to <em>Amnesty International</em>.</p>
+<p>But this blog is not about <em>beautiful</em> code; it’s about its evil twin: nasty, ugly, convoluted, and hard-to-understand code.  It’s usually the kind of code that other people have written – and you inherit because they left the company.  It’s the kind of code that elicits a common reaction when it shows up on your IDE’s <em>doorstep</em>: “Crap!” – pardon my French. Or: “Merde!” – pardon my English.  It’s the kind of code that, in some parts of the world, gets you fired – not the lame HR firings we have in the US, but the ones that involve a firing squad and bullets, and rescue calls to <em>Amnesty International</em>.</p>
+<p><strong>Hell is other people.</strong> - <em>J. P. Sartre</em></p>
+<p><strong>Hell is other people’s code.</strong> - <em>T-Shirt seen recently in Mountain View, CA</em></p>
+<p>While I was writing my chapter of <em>Beautiful Code</em>, and reviewing some of the other chapters, I was forced to think beyond code functionality and efficiency.  I had to think about beauty in code. And thinking about what makes a particular piece of code <em>beautiful</em> also made me think about the complementary question: <em>What makes a particular piece of code crappy?</em></p>
+<p>In the last few months, this question has led to heated conversations with colleagues, friends in the business, and random software engineers sitting next to me at the local coffee house. It would be naïve to expect programmers to unanimously agree on <em>anything</em>, but on the subject of crappy code most people I talked with agreed on a few of things:</p>
+<blockquote>
+<p><strong>First.</strong> There’s a lot of ugly code out there.  Most of the underlying code in the software that runs our world is at the opposite end of beautiful. It's important to note that bad code does not necessarily imply crappy, useless, software applications. There’s a big difference between software and code.  Software is the finished working product; it’s what the end user sees and experiences.  Code is the guts of software; it’s what the programmer sees and experiences. It’s not only possible to have very useful software that’s built on crappy code – it’s the norm.</p>
+<p><strong>Second.</strong> Most programmers have a pretty high tolerance for working with ugly code – as long as they were the ones who wrote it.  That’s either because they think their code is beautiful – in the same way every parent thinks their children are beautiful, or because it’s ugly in a way that they are familiar with.  But their tolerance level drops dramatically when they have to deal with someone else’s code: <em>Crap is other programmers’ code.</em></p>
+<p><strong>Third.</strong> Most software organizations don’t seem to care much about how bad the underlying code is – as long as the software does what it’s supposed to and the people who wrote it stick around to maintain it.  If they did care they would have better measures to prevent ugly code from contaminating key components of their precious applications. A quick glance at the code in most software will show you that that’s not the case.  There’s crappy code everywhere.</p>
+<p>At some point or other, however, some key developers decide to leave the company – often because they can no longer stand to work with the mess of code they have created. That’s when bad code rears its ugly head and has to be dealt with.  That’s when the search for victims to inherit the crappy code base begins.</p>
+</blockquote>
+<p>Which leads us to the big question:</p>
+<blockquote>
+Most people agree that there is a lot of ugly code out there, but most developers  are not able to see their own code as bad.  <strong>Can we come up with an objective and easy-to-calculate measure of code crappiness, based on unassailable research and experimentation, that everyone could agree on?</strong></blockquote>
+<p>The answer – unless you are hopelessly optimistic and painfully naïve – is a definite no.</p>
+<p>But we can come up with a somewhat-objective measure of code crappiness based on previous research, some hard-earned experience, and, yes, some personal beliefs and preferences.</p>
+<p>But this blog entry is already a bit too long so you’ll have to wait a couple of days for that.  In the meantime, you might want to think how <strong>you</strong> would go about measuring code crappiness?</p>
+<p><strong>Summary of Part I</strong> <em>(for people with really bad short-term memory)</em></p>
+<p>Writing for the book Beautiful Code, made me think about the opposite of beautiful code – ugly code.  By talking to a bunch of software people I have come to the conclusion that most developers associate crappy code with other people’s code – especially other people’s code that they have inherited and will have to maintain and work with.  I have also come to the conclusion that – as long as the software works – most software organizations don’t really care about how bad their own code is … until the programmers who created it are no longer around.  And by then it’s too late.</p>
+<p><strong>Preview of Part II</strong> <em>(for people who are wondering if it’s worth coming back for more abuse)</em></p>
+<p>By now, I have probably offended, insulted, or antagonized most of the readers – and this is only Part I.  In Part II things are going to get even more fun because I will introduce a new software metric: the C.R.A.P. index.  Yes, you heard me right.  This is just what the software industry needs: another metric.</p>
+<p>C.R.A.P. stands for Change Risk Analysis and Predictions. As the (mildly offensive, but hopefully memorable) name implies, the C.R.A.P. index is designed to analyze and predict the risk and effort associated in changing (maintaining and enhancing) an existing body of code – particularly (but not necessarily) by developers other than the original developers.  It should be fun, hope to see you back for Part II.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=210434.html">61
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=210434&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Alberto Savoia adds a new entry to <a href="../index.html$/blogger=agitator.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/agitator.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D210434&amp;title=Pardon+My+French%2C+But+This+Code+Is+C.R.A.P.&amp;bodytext=Part+I+-+Beauty+and+The+Beast.+I+begin+my+exploration+of+ugliness+in+code+with+some+background+and+an+overview+of+what+most+people+consider+to+be+crappy+code.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D210434&amp;title=Pardon+My+French%2C+But+This+Code+Is+C.R.A.P.">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D210434&amp;title=Pardon+My+French%2C+But+This+Code+Is+C.R.A.P.">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/albertosavoia.jpg"/></td><td>Alberto Savoia is founder and CTO at Agitar Software, and he has been life-long agitator and innovator in the area of software development and testing tools and technology.  Alberto's software products have won a number of awards including: the JavaOne's Duke Award, Software Development Magazine's Productivity Award, Java Developer Journal's World Class Award, and Java World Editor's Choice Award.  His current mission is to make developer unit testing a broadly adopted and standar industry practice rather than a rare exception.  Before Agitar, Alberto worked at Google as the engineering executive in charge of the highly successful and profitable ads group. In October 1998, he cofounded and became CTO of Velogic/Keynote (NASD:KEYN), the pioneer and leading innovator in Internet performance and scalability testing. Prior to Velogic, Alberto had 13-year career at Sun Microsystems where his most recent positions were Founder and General Manager of the SunTest business unit, and Director of Software Technology Research at Sun Microsystems Laboratories.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Alberto Savoia. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

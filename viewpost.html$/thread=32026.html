@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Bob Martin's Agile Programming book</title>
+<meta charset="utf-8"/>
+<meta content="Guido van van Rossum" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#AACCFF" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=guido.html">Guido van van Rossum's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=32026.html">Discuss</a> | 
+<a href="mailto:?subject=Bob Martin's Agile Programming book&amp;body= %0AArtima Weblogs %0ABob Martin's Agile Programming book %0Aby Guido van van Rossum %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=32026">Email</a> | 
+<a href="../viewpostP.html$/thread=32026.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=7589.html" title="OSCON 2003 Impressions">Previous</a> | 
+<a class="sl" href="thread=85551.html" title="Adding Optional Static Typing to Python">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">All Things Pythonic</span><br>
+<span class="ts">Bob Martin's Agile Programming book</span><br/>
+<span class="as">by Guido van van Rossum</span><br/>
+<span class="pd">February 3, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Half book review, half Python-vs-static-languages musings
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I wrote this half a year ago, planning to go back to the book for
+some fact checking before posting it.  Then I accepted a new job,
+the book got packed, and I was too busy to blog.  
+
+<p>I'm accepting the status quo: I'm still too busy, the book is in
+a box that I still haven't unpacked, so I'm just posting this unfinished.
+I'm sure commenters will correct my facts if they need correcting. ;-)
+
+<p> 
+
+<p>I enjoyed reading Bob Martin's "Agile Programming".  I haven't
+quite finished it, but I'm confident I can start writing this review
+now, while I have a few moments to myself.  There's no Internet above
+the Atlantic Ocean yet to distract me with email, and my family is
+sadly remaining at home.  And I'm procrastinating writing my keynote
+for EuroPython :).  (The second pass of this text was done on a plane
+from Portland to San Francisco, returning from OSCON 2003 -- see my
+previous blog entry.)
+
+<p>I really liked the book, although it was very different from what I
+had expected.  Well, what <i>had</i> I expected?  Maybe more formal
+writing; Bob's writing (this may come as no surprise to his fans) is
+incredibly informal, despite the many footnotes (half of which contain
+jokes) and references (mostly to the "Gang Of Four" patterns book and
+Bob's own previous work).  Maybe I had expected the code samples to be
+more sophisticated.  Maybe I had expected fewer typos; I expect Bob's
+enough of a control freak to produce camera-ready copy, which must
+limit the effectiveness of a publisher's editors and proofreaders
+against slippery fingers.
+
+<p>But the typos didn't distract from the book's message. It starts
+with a clear manifesto, proclaiming (amongst others) that programmers
+aren't to be treated like exchangeable production workers. While
+touting various "agile" development methods, Bob is clearly partial to
+Extreme Programming, probably the most outgoing of the agile methods.
+(I would call it my favorite except I'm pretty ignorant of the others,
+so that endorsement wouldn't mean much.)
+
+<p>There is a lot of code in the book.  I haven't read all of it, but
+I've skimmed it all and read much of it.  I'd say two-third is Java
+code, the rest is C++.  Python gets a mention or two, together with
+Smalltalk and Ruby (apparently Bob's current favorite) as examples of
+"more dynamic languages" where some things are different or easier.
+
+<p>Seeing all that Java and C++ reminded me of how verbose these
+languages often are!  After reading Bob's very entertaining chapter of
+how he and another Bob wrote a scoring program for bowling, I wrote a
+similar program in Python in 75 minutes and 85 lines, plus 150 lines
+of unit testing code. [XXX insert comparison in #lines.] My program
+used a much simpler data structure (a list of lists, each sublist
+representing a frame) and didn't follow the flow of Bob's program; I
+simply did what I thought was the best way to solve the problem in
+Python.  I don't think that reading Bob's program did much to
+influence my version, except that I used it to learn the scoring rules
+for bowling (not being a native American, I had only the vaguest idea
+of the difference between a strike and a spare before reading this
+chapter).
+
+<p>But in a sense, the verbosity of Java and C++ help the book; the
+method of test-driven design practiced throughout the book doesn't
+work for very small programs, and the bowling scoring program in
+Python would perhaps have been too small to make a good example
+(although the quirkiness of the rules of bowling definitely help).
+
+<p>The large volume of code in the book is important for Bob's story:
+there's a lot of it, often shown in various stages of development,
+from the first skeleton version, that barely passes the most trivial
+unit test, to the final, complete version, with full unit tests. This
+is an exellent illustration of test-driven design, although I still
+find it hard to believe that it really works like that in real life,
+when practiced in the extreme form shown in the book.
+
+<p>I am a firm believer in writing unit tests; in a recent mid-size
+programming project, adding a fairly elaborate new feature to Zope 3,
+I found time after time that the remaining bugs in the code coincided
+with places where I had cut corners in the unit tests.  But the unit
+tests played only a small role in the <i>design</i> of my code.  There
+was a solid high-level design on paper, done months before I got the
+project, and this design for the most part worked well.  It wasn't
+grand enough to call it "big design up front"  (which has a bad rep in
+the XP world); most programming details weren't fixed by the design
+and in fact I wrote large parts of the code twice, first to get a feel
+for the "lay of the land", and then another time to "get it right".
+Only the second version of the code had solid unit tests, which were
+essential to get all the code details right -- but they didn't
+influence the design much, which was formed by thinking over the
+problem after writing the first prototype.  To be honest, there was
+an even earlier prototype by someone else, which I ended up mostly
+throwing away, but which probably informed the design with which I
+started.
+
+<p>Besides writing about XP and test-driven design, Bob writes about a
+number of programming patterns.  Most of these are repeats of
+Gang-of-Four patterns, some come from Bob's own patterns book.  I find
+Bob's approach refreshing: while I own the GoF book, I haven't read it
+cover-to-cover, and only occasionally used it as a reference.  Bob's
+treatment is lighter, but more importantly, he repeatedly warns for
+mindless use of patterns.  He explains how some patterns can easily
+lead to overengineered code, and shows examples of lighter
+alternatives (usually different patterns from the same sources).
+
+<p>But more than test-driven design or patterns, for me the
+centerpiece of the book are the various principles of agile
+development.  There is the Liskov Substitution Principle, a reminder
+about the intent of subclassing; the Single Responsibility Principle,
+which can be used to decide when it's better to split a class into
+two; the Open-Closed Principle, stating that a class should be open to
+extension but closed to change (since every change to a class requires
+relinking all code that depends on it; not quite true in Python, but
+still a useful principle).
+
+<p>Finally there's the Dependency Inversion Principle, which reminds
+us that rather than having the higher-level classes depend on the
+lower-level classes, like we used to do it, we should have the
+higher-level classes define interfaces upon which the lower-level
+classes depend.  This principle, like several of the others, is
+designed to decouple different parts of a program, so there's less
+need for relinking.  Again, this is less important for Python.  In C++
+or Java this change usually means that you have to create an interface
+describing the concrete low-level class, rewrite the higher-level
+class to take an instance implementing that interface, and rewrite the
+lower-level class to implement the interface.
+
+<p>Once this is done, the low-level class can change without affecting
+the higher-level class (which only depends on the interface), as
+opposed to before the change, when every change in the lower-level
+class required relinking the higher-level class.  Why is this bad?
+The higher-level class doesn't change that much, but the lower-level
+class is where most of the action is, and hence much of the churn
+during development.  Surely reducing the dependencies on a high-churn
+class must be a worthy goal!
+
+<p>But in Python, the implementation of this cunning plan is almost
+too simple to deserve a Principle with a capital P.  Since in Python,
+interfaces (we tend to call them protocols) are usually only in the
+programmer's head, all we have to do is to make sure that the
+higher-level class doesn't directly instantiate the lower-level class,
+but gets an instance (or instances, as the case may be; or perhaps a
+factory function) passed in. Then we can change the lower-level class
+as long as the signatures of the methods used by the higher-level
+class don't change (this is Python's equivalent of keeping the
+interface fixed); and we can even substituting an entirely different
+class as long as it has the same set of methods.
+
+<p> 
+
+<p>PS. (back to today, February 2004): does anybody else think that
+Ant is a poor excuse for a build tool?  Some of my top complaints:
+
+<ul>
+<li>XML wasn't designed to be edited by humans on a regular basis.
+<li>Ant is extremele verbose.
+    The external command "cp A B" becomes a four-line construct.
+<li>Ant is not Unix-friendly.  The &lt;copy&gt; command doesn't copy
+    the permission bits of Unix files; the &lt;exec&gt; command doesn't
+    consider an exit status of "2" to be an error.
+<li>Why do I have to say vmlauncher="false" everywhere?
+</li></li></li></li></ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=32026.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=32026&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Guido van van Rossum adds a new entry to <a href="../index.html$/blogger=guido.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/guido.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D32026&amp;title=Bob+Martin%27s+Agile+Programming+book&amp;bodytext=Half+book+review%2C+half+Python-vs-static-languages+musings&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D32026&amp;title=Bob+Martin%27s+Agile+Programming+book">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D32026&amp;title=Bob+Martin%27s+Agile+Programming+book">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/guido.jpg"/></td><td>Guido van Rossum is the creator of Python, one of the major
+programming languages on and off the web. The Python community refers to him as the BDFL (Benevolent Dictator For Life), a title straight
+from a Monty Python skit. He moved from the Netherlands to the USA in
+1995, where he met his wife. Until July 2003 they lived in the
+northern Virginia suburbs of Washington, DC with their son Orlijn, who
+was born in 2001. They then moved to Silicon Valley where Guido now works for Google
+(spending 50% of his time on Python!).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Guido van van Rossum. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

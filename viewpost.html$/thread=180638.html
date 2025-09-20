@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Inner Classes or Closures</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=180638.html">Discuss</a> | 
+<a href="mailto:?subject=Inner Classes or Closures&amp;body= %0AArtima Weblogs %0AInner Classes or Closures %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=180638">Email</a> | 
+<a href="../viewpostP.html$/thread=180638.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+<a class="sl" href="thread=182412.html" title="Clear, Consistent, and Concise Syntax (C3S) for Java">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Inner Classes or Closures</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">October 15, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+One of the areas receiving a lot of attention for J7 is simplifying and extending the capabilities of inner classes or adding a new construct the closure. This blog examines the options and compares the different proposals using a typical example, inject.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><em>I have editted this blog to incorporate some improvements suggested by Neal
+  Gafter - thanks Neal.</em> </p>
+<p>Since this is my virgin blog I would like to thank Bill for agreeing to me
+  blogging and say that I will be blogging mostly about Design Patterns in Java.
+  Particularly my own pet project a <a href="../_/http/pec.dev.java.net/index.html">Pattern
+  Enforcing Compiler™ (PEC™) for Java</a>. However this first blog
+  is about proposed new features for Java 7 — wow we are talking about
+  7 and 6 isn't done and dusted yet! </p>
+<p>One of the areas receiving a lot of attention for J7 is simplifying and extending
+  the capabilities of inner classes or adding a new construct the closure. This
+  blog examines the options and compares the different proposals using a typical
+  example, inject. Amongst the options on the web are:</p>
+<ol>
+<li>Do nothing — Mitts off my favourite language!</li>
+<li>Add Closures - which are like inner classes but have read and <em>write</em> access
+    local variables and <code>return</code> exits from the enclosing method as
+    well as exiting from the closure (some proposals support <code>break</code> and <code>continue</code> as
+    well as <code>return</code>). E.g. <a href="../_/http/gafter.blogspot.com/2006/10/iterative-control-abstraction-users.html"><em>BGGA
+    Closures</em></a>, proposed by <strong>B</strong>racha, <strong>G</strong>after, <strong>G</strong>osling,
+    and <strong>A</strong>he. </li>
+<li>Add spiffy new syntax that makes anonymous inner classes instance creation
+    shorter and let inner classes have <em>write</em> access to local variables
+    (<code>return</code> acts as it currently does for an inner class). E.g. <a href="../_/http/docs.google.com/Doc.aspx$/id=k73_1ggr36h.aspx">Concise Instance
+    Creation Expressions (CICE)</a>, proposed by Bloch, Lea, and Lee. </li>
+<li><strong>S</strong>horter <strong>S</strong>yntax for <strong>C</strong>ommon <strong>O</strong>perations
+    in general but with some bias to make inner class syntax, in particular,
+    shorter and to give inner classes <em>write</em> access to locals (<code>return</code> acts
+    as it currently does for an inner class). E.g. <a href="../_/http/bugs.sun.com/bugdatabase/view_bug.do$/bug_id=6389769.do">SSCO <strong>R</strong>equest <strong>F</strong>or <strong>E</strong>nhancement
+    6389769</a>, proposed by Yours Truly (note the wild mismatch in standing
+    between the Authors of the first two proposal and the third :). </li>
+</ol>
+<p>In the Appendix to this blog an alternative SSCO proposal to RFE 6389769 is
+  given and this proposal is used in the example given below. The example below
+  is straight forward, so you probably don't need to read the details of the
+  three proposals to understand the example. The details of the proposals are
+  however worth a read to understand the thought process behind the proposals. </p>
+<h1>Examples</h1>
+<p>Taking two examples will illustrate the four different approaches
+  (my apologies in advance if I don't quite get the syntax exactly correct for
+  other people's proposals). The examples are taken from some of my code, but
+  I think they are reasonably typical. I added to my original source code the
+  throwing of a generic exception (the original didn't throw anything); because
+  BGGA Closure makes a big deal of exception throwing. The examples are <code>inject</code> (also
+  called <code>reduce</code>, <code>fold</code>, or <code>accumulate</code> in
+  some libraries) and <code>forEach</code> (a.k.a. <code>each</code>). <code>inject</code>  applies
+  a function to each element of a list and when all the elements are processed
+  the result is returned, typically the result is a scalar. Likewise <code>forEach</code>  processes each element of a list, but does not return anything. The use of
+  both <code>inject</code> and
+  <code>forEach</code> in the examples is the common example usage of summing
+  a list of integers, whilst I think <code>inject</code> and <code>forEach</code>  are typical
+  methods I am less convinced about the summing of integers example (I have never
+  actual done this with an inner class and I write <em>scientific</em> software).
+  However summing of integers is a standard example.</p>
+<h2>Java <code>inject</code>:</h2>
+<pre>Use:
+    <font color="#0000FF">final</font> Integer sum = <strong>inject</strong>( input, <font color="#FF0000">0</font>,
+        <font color="#0000FF">new</font> Injection&lt; Integer, RuntimeException &gt;() {
+      <font color="#0000FF">public void</font> <strong>call</strong>( <font color="#0000FF">final</font> Integer item ) { value += item; }
+    } );
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; R, Es <font color="#0000FF">extends</font> Throwable &gt; R <strong>inject</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; R &gt; collection, <font color="#0000FF">final</font> R initial,<font color="#0000FF">
+       final</font> Injection&lt; R, Es &gt; injection )
+	     <font color="#0000FF">throws</font> Es {
+    injection.value = initial;
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> R item : collection ) { injection.<strong>call</strong>( item ); }
+    <font color="#0000FF">return</font> injection.value;
+  }
+
+  <font color="#0000FF">public abstract class</font> Injection&lt; R, Es <font color="#0000FF">extends</font> Throwable &gt; {
+    <font color="#0000FF">public</font> R value;
+
+    <font color="#0000FF">public</font> <strong>Injection</strong>( <font color="#0000FF">final</font> R initial ) { value = initial; }
+
+    <font color="#0000FF">public abstract void</font> <strong>call</strong>( R item ) <font color="#0000FF">throws</font> Es;
+  }
+</pre>
+<h2>Java <code>forEach</code>:</h2>
+<pre>Use:
+    <font color="#0000FF">final</font> Tuple1&lt; Integer &gt; sum = tuple( <font color="#FF0000">0</font> );
+    <strong>forEach</strong>( input, <font color="#0000FF">new</font> Function1&lt; Integer, RuntimeException &gt;() {
+      <font color="#0000FF">public void</font> <strong>call</strong>( <font color="#0000FF">final</font> Integer item ) { sum.e1 += item; }
+    } );
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; A, Es <font color="#0000FF">extends</font> Throwable &gt; <font color="#0000FF">void</font> <strong>forEach</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; A &gt; collection, <font color="#0000FF">final</font> Block1&lt; A, Es &gt; block )
+	     <font color="#0000FF">throws</font> Es {
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> A item : collection ) { block.<strong>call</strong>( item ); }
+  }
+
+  <font color="#0000FF">public interface</font> Block1&lt; A1, Es <font color="#0000FF">extends</font> Throwable &gt; {
+    <font color="#0000FF">void</font> <strong>call</strong>( A1 item ) <font color="#0000FF">throws</font> Es;
+  }
+  
+  <font color="#0000FF">public class</font> Tuples {<font color="#0000FF">
+    public static class</font> Tuple1&lt; E1 &gt; {
+      <font color="#0000FF">public</font> E1 e1;
+
+      <font color="#0000FF">public</font> <strong>Tuple1</strong>( <font color="#0000FF">final</font> E1 value ) { <font color="#0000FF">this</font>.value = value; }
+    }
+
+    <font color="#0000FF">public static</font> &lt; E1 &gt; T1&lt; E1 &gt; <strong>tuple</strong>( <font color="#0000FF">final</font> E1 value ) {
+      <font color="#0000FF">return new</font> <strong>Tuple1</strong>( value );
+    }
+
+    ...
+
+  }</pre>
+<h2>BGGA <code>inject</code>:</h2>
+<pre>Use:
+    <font color="#0000FF">final</font> Integer sum = <font color="#0000FF">for</font> <strong>inject</strong>( input, <font color="#FF0000">0</font>, <font color="#0000FF">final</font> Integer item ) {
+      value += item;
+    };
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; R, <font color="#0000FF">throws</font> Es<font color="#0000FF"> </font>&gt; R <font color="#0000FF">for</font> <strong>inject</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; R &gt; collection, <font color="#0000FF">final</font> R initial, 
+       <font color="#0000FF">final</font> Injection&lt; R, Es &gt; injection ) <font color="#0000FF">throws</font> Es {
+    injection.value = initial;
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> R item : collection ) { injection.<strong>call</strong>( item ); }
+    <font color="#0000FF">return</font> injection.value;
+  }
+
+  <font color="#0000FF">public abstract class</font> Injection&lt; R, Es <font color="#0000FF">extends</font> Throwable &gt; {
+    <font color="#0000FF">public</font> R value;
+
+    <font color="#0000FF">public abstract void</font> <strong>call</strong>( R item ) <font color="#0000FF">throws</font> Es;
+  }
+</pre>
+<h2>BGGA <code>forEach</code>:</h2>
+<pre>Use:
+    Integer sum = <font color="#FF0000">0</font>;<font color="#666666"> // cannot be final even if logically it should be</font><strong>
+    </strong><font color="#0000FF">for</font> <strong>each</strong>( input, <font color="#0000FF">final</font> Integer item ) { sum += item; }
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; A1, <font color="#0000FF">throws</font> Es&gt; <font color="#0000FF">void for</font> <strong>each</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; A1 &gt; collection, <font color="#0000FF">final</font> Block1&lt; A1, Es &gt; block )
+	     <font color="#0000FF">throws</font> Es {
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> A1 item : collection ) { block.<strong>call</strong>( item ); }
+  }
+
+  <font color="#0000FF">public interface</font> Block1&lt; A1, <font color="#0000FF">throws</font> Es&gt; { void <strong>call</strong>( A1 a1 ) <font color="#0000FF">throws</font> Es; }</pre>
+<h2>CICE <code>inject</code>:</h2>
+<pre>Use:
+    <font color="#0000FF">final</font> Integer sum = <strong>inject</strong>( input, <font color="#FF0000">0</font>,
+        Injection&lt; Integer, RuntimeException &gt;( <font color="#0000FF">final</font> Integer item ) {
+      sum += item;
+    } );
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; R, Es <font color="#0000FF">extends</font> Throwable &gt; <font color="#0000FF">void</font> <strong>inject</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; R &gt; collection, <font color="#0000FF">final</font> R initial, <font color="#0000FF">
+       final</font> Injection&lt; R, Es &gt; block ) <font color="#0000FF">throws</font> Es {
+    injection.value = initial;<font color="#0000FF">
+    for</font> ( <font color="#0000FF">final</font> R item : collection ) { injection.<strong>call</strong>( item ); }
+    <font color="#0000FF">return</font> injection.value;
+  }
+
+<font color="#0000FF">  public abstract class</font> Injection&lt; R, Es <font color="#0000FF">extends</font> Throwable &gt; {
+    <font color="#0000FF">public</font> R value;
+<br/>    <font color="#0000FF">public abstract void</font> <strong>call</strong>( R item ) <font color="#0000FF">throws</font> Es;<br/>  }</pre>
+<h2>CICE <code>forEach</code>:</h2>
+<pre>Use:
+    Integer sum = <font color="#FF0000">0</font>;<font color="#666666"> // cannot be final even if logically it should be</font><strong>
+    </strong><strong>forEach</strong>( input, Block1&lt; Integer, RuntimeException &gt;( <font color="#0000FF">final</font> Integer item ) {
+      sum += item;
+    } );
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; A1, Es <font color="#0000FF">extends</font> Throwable &gt; <font color="#0000FF">void</font> <strong>forEach</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; A1 &gt; collection, <font color="#0000FF">final</font> Block1&lt; A1, Es &gt; block )
+	     <font color="#0000FF">throws</font> Es {
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> A1 item : collection ) { block.<strong>call</strong>( item ); }
+  }
+
+<font color="#0000FF">  public interface</font> Block1&lt; A1, Es <font color="#0000FF">extends</font> Throwable &gt; {<br/>    void <strong>call</strong>( A1 a1 ) <font color="#0000FF">throws</font> Es;<br/>  }</pre>
+<h2>SSCO <code>inject</code>:</h2>
+<pre>Use:
+    <font color="#0000FF">final</font> Integer sum = <strong>inject</strong> input, <font color="#FF0000">0</font>, <font color="#0000FF">new</font>.{ ( <font color="#0000FF">final</font> item ) value += item };
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; R, Throwable... Es &gt; R <strong>inject</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; R &gt; collection, <font color="#0000FF">final</font> R initial,
+       <font color="#0000FF">final</font> Injection&lt; R, Es &gt; injection ) <font color="#0000FF">throws</font> Es {
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> R item : collection ) injection.<strong>call</strong> item;
+    <font color="#0000FF">return</font> injection.value
+  }
+
+  <font color="#0000FF">public abstract class</font> Injection&lt; R, Throwable... Es &gt; {
+    <font color="#0000FF">public</font> R value;
+
+    <font color="#0000FF">public</font> <strong>Injection</strong>( <font color="#0000FF">final</font> R initial ) value = initial;
+
+    <font color="#0000FF">public abstract void</font> <strong>call</strong>( R item ) <font color="#0000FF">throws</font> Es
+  }</pre>
+<h2>SSCO <code>forEach</code>:</h2>
+<pre>Use:
+    Integer sum = <font color="#FF0000">0</font>;<font color="#666666"> // cannot be final even if logically it should be</font>
+	<strong>  forEach</strong> input, <font color="#0000FF">new</font>().{ ( <font color="#0000FF">final</font> item ) sum += item };
+											
+Where:
+  <font color="#0000FF">public static</font> &lt; A1, Throwable... Es &gt; <font color="#0000FF">void</font> <strong>forEach</strong>(
+       <font color="#0000FF">final</font> Iterable&lt; A1 &gt; collection, <font color="#0000FF">final</font> Block1&lt; A1, Es &gt; block )
+	     <font color="#0000FF">throws</font> Es
+    <font color="#0000FF">for</font> ( <font color="#0000FF">final</font> A1 item : collection ) block.<strong>call</strong> item;
+  
+  <font color="#0000FF">public interface</font> Block1&lt; A1, Throwable... Es &gt; <font color="#0000FF">void</font> <strong>call</strong>( A1 item ) <font color="#0000FF">throws</font> Es;
+</pre>
+<h1>Vote</h1>
+<p>I obviously prefer SSCO, otherwise I wouldn't be proposing it! I think the
+  advantages are that it is consistent with current Java (this is also true of
+  CICE) and that it will not only help with instances of inner classes but will
+  also reduce verbosity in many places. E.g. it is the shortest code for both
+  use of the example and declaration of the example. But, which do <em>you</em> prefer? </p>
+<ol>
+<li>Do nothing — Mitts off my favourite language!</li>
+<li><a href="../_/http/gafter.blogspot.com/2006/10/iterative-control-abstraction-users.html"><em>BGGA
+        Closures</em></a>. </li>
+<li><a href="../_/http/docs.google.com/Doc.aspx$/id=k73_1ggr36h.aspx">Concise Instance
+      Creation Expressions (CICE)</a>. </li>
+<li><a href="../_/http/bugs.sun.com/bugdatabase/view_bug.do$/bug_id=6389769.do">Shorter
+      Syntax for Common Operations (SSCO)</a> (as described in detail in the
+      Appendix below).</li>
+</ol>
+<h1>Appendix - New SSCO Proposal </h1>
+<p><strong>Acknowledgements: </strong>This new SSCO proposal has Rules taken
+  from or inspired by: RFE 6389769, the discussions in the 6389769 forum, Ruby,
+  and BGGA Closures.</p>
+<p><strong>Rule 0: </strong>For a method call allow brackets, <code>()</code>,
+  to be omitted if there are no arguments and for thelast call in a chain of <em>top
+  level</em> calls
+  (method, constructor, or modified <code> new</code>, see Rules 1 and 2 below);
+  provided that the call isn't ambiguous with respect to a field. <em>Top Level</em> means
+  the call isn't an argument to another call. Note braces start a new statement
+  with a new top level; if a new statement is started without braces then this
+  does not create a new top level (see E.g. 2 for Rule 5 below). The last call
+  means that for the top level calls only: it is either the only call (and that
+  call isn't qualified) or it is the call following the last dot. The last call
+  rule means it must follow the last dot, even if that dot is a qualifier dot
+  rather than a call dot; so that an integer argument is distinct from a real
+  argument (see last example Rule 2). E.g.:</p>
+<pre>     size = list.<strong>size</strong>;
+     list.<strong>set</strong> <font color="#FF0000">0</font>, <font color="#FF0000">'A'</font>;
+     list.<strong>add</strong>( <font color="#FF0000">'A'</font> ).<strong>add</strong> <font color="#FF0000">'B'</font>;
+     list.<strong>add</strong> string.<strong>charAt</strong>( <font color="#FF0000">0</font> );</pre>
+<p><strong>Rule 1: </strong>Allow <code>new</code> to be used as a qualifier
+  with a <code> .</code> (dot). This rule improves readability, is more consistent
+  with the rest of Java, and (importantly) enables Rule 2. E.g.:</p>
+<pre>     ArrayList&lt; String &gt; strings = <font color="#0000FF">new</font>.ArrayList&lt; String &gt;.<strong>add</strong> <font color="#FF0000">"A"</font>;
+     T[] numbers = (T[])<font color="#0000FF">new</font>.Number[ <font color="#FF0000">1</font> ]; <font color="#666666">// where T extends Number</font>
+   
+  Which are equivalent to:
+     ArrayList&lt; String &gt; strings = (<font color="#0000FF">new</font> ArrayList&lt; String &gt;()).<strong>add</strong>( <font color="#FF0000">"A"</font> );
+     T[] numbers = (T[])(<font color="#0000FF">new</font> Number[ <font color="#FF0000">1</font> ]); <font color="#666666">// where T extends Number</font></pre>
+<p><strong>Rule 2: </strong>Allow <code>new</code> to infer type and use <code>&lt;&gt;</code> to
+  mean a raw type when a <code>.</code> is used (but not for a space). This rule
+  considerably shortens generic declarations and also instances of anonymous
+  inner classes. E.g.:</p>
+<pre>     <font color="#666666">// Raw Types</font>
+     ArrayList strings = <font color="#0000FF">new</font>; <font color="#666666">// Inferred</font>
+     List strings = <font color="#0000FF">new</font>.ArrayList&lt;&gt;; <font color="#666666">// Explicit</font>
+ 
+     <font color="#666666">// Inferred Generic types</font>
+     List&lt; String &gt; strings = <font color="#0000FF">new</font>.ArrayList;
+     ArrayList&lt; String &gt; strings = <font color="#0000FF">new</font>;
+     ArrayList&lt; String &gt; strings = <font color="#0000FF">new</font> <font color="#FF0000">5</font>;
+     List&lt; String &gt; strings = <font color="#0000FF">new</font>.{ <font color="#666666">// Anonymous List&lt; String &gt;</font>
+         ...
+     };
+     ArrayList&lt; String &gt; strings = <font color="#0000FF">new</font>( <font color="#FF0000">5</font> ).{ <font color="#666666">// Anonymous ArrayList&lt; String &gt; of size 5</font>
+         ...
+     };</pre>
+<p><strong>Rule 3: </strong>If an expression ends in <code>}</code> then there
+  is no need for <code>;</code> before the brace (like array initializers and
+  argument lists). This rule helps the readability of instances of anonymous
+  classes. E.g.:</p>
+<pre>     <font color="#0000FF">if</font> ( end ) { <font color="#0000FF">break</font> }</pre>
+<p><strong>Rule 4: </strong>Consistently make <code>{}</code> optional for a
+  single line (not just <code>if</code> etc.). This rule helps the readability
+  of instances of anonymous classes, see last example Rule 5, and shortens many
+  simple class and method declarations. E.g.:</p>
+<pre>     <font color="#0000FF">class</font> IntWrapper <font color="#0000FF">public int</font> i;
+     @Override <font color="#0000FF">public</font> String <strong>toString</strong>() <font color="#0000FF">return</font> <font color="#FF0000">"Hello"</font>; <font color="#666666">// Also see Rules 9 &amp; 10 below</font></pre>
+<p><strong>Rule 5: </strong>Infer return type, method name, arguments and exceptions
+  if a single method is abstract (works for interfaces or abstract classes) and
+  it isn't ambiguous. In particular it may be necessary to supply the type of
+  the method arguments, see example at end. The brackets around the argument
+  list, even for an empty argument list cannot be omitted; this is needed to
+  distinguish between a method declaration using the new syntax and an instance
+  initializer. . This rule helps the readability of instances of anonymous classes.
+  E.g.:</p>
+<pre>     <font color="#666666">// E.g. 1: Using Rule 5 only</font>
+     <font color="#0000FF">class</font> MyAction <font color="#0000FF">implements</font> ActionListener {
+         ( notUsed ) {
+             textArea.<strong>append</strong>( textField.<strong>getText</strong>() );
+         }
+     }
+ 
+     <font color="#666666">// E.g. 2: Using Rules 0 to 5</font>
+     textField.<strong>addActionListner</strong> <font color="#0000FF">new</font>.{ ( notUsed ) textArea.<strong>append</strong> textField.<strong>getText</strong>() };
+ 
+     <font color="#666666">// Or</font>
+     textField.<strong>addActionListner</strong> <font color="#0000FF">new</font>.( notUsed ) textArea.<strong>append</strong>( textField.<strong>getText</strong>() );;</pre>
+<p><strong>Rule 6: </strong>Allow <code>extends</code> type generic arguments
+  to be shortened to <code>&lt; <em>Type name</em> &gt; </code> (i.e. like normal
+  variable declarations), e.g.:</p>
+<pre>     <font color="#0000FF">public static</font> &lt; K, V &gt; Map&lt; K, V &gt; <strong>unmodifiableMap</strong>( Map&lt; K ?, V ? &gt; map ) ...
+     <font color="#0000FF">public class</font> Enum&lt; Enum&lt; E &gt; E &gt; ...
+ 
+   Which are equivalent to
+     <font color="#0000FF">public static</font> &lt; K, V &gt; Map&lt; K, V &gt; <strong>unmodifiableMap</strong>( Map&lt; ? <font color="#0000FF">extends</font> K, ? <font color="#0000FF">extends</font> K &gt; map ) ...
+     <font color="#0000FF">public class</font> Enum&lt; E <font color="#0000FF">extends</font> Enum&lt; E &gt; &gt; ...</pre>
+<p><strong>Rule 7: </strong>A <code>throws</code> clause can be empty, which
+  means the method doesn't throw anything (equivalent to an absent <code>throws</code> clause).
+  This is useful in conjunction with generics, see rule 8 below. E.g.:</p>
+<pre>     Void <strong>call</strong>() <font color="#0000FF">throws</font>;</pre>
+<p><strong>Rule 8: </strong>Generics are extended to allow varargs (only for
+  use with <code> Throwable</code>s and derivatives). An empty generics varargs
+  list is allowed and it is equivalent to an absent throws clause (note Rule
+  5 above). E.g.: </p>
+<pre>     &lt; R, Es <font color="#0000FF">extends</font> Throwable... &gt; R <strong>call</strong>() <font color="#0000FF">throws</font> Es;
+     &lt; R, Throwable... Es &gt; R <strong>call</strong>() <font color="#0000FF">throws</font> Es; <font color="#666666">// See Rule 6 above</font></pre>
+<p><strong>Rule 9: </strong><code>return</code> may be omitted for last line
+  of a method and the returned value is the value of the last expression, e.g.:</p>
+<pre>     @Override <font color="#0000FF">public</font> String <strong>toString</strong>() <font color="#FF0000">"Hello"</font>; <font color="#666666">// Also see rule 10</font></pre>
+<p><strong>Rule 10: </strong><code>@Override <em>name</em></code> infers modifiers,
+  return type, argument types, and exceptions (like Rule 5 above), e.g.:</p>
+<pre>     @Override <strong>toString</strong>() <font color="#FF0000">"Hello"</font>;
+     @Override <strong>equals</strong>( other ) ...</pre>
+<p><strong>Rule 11: </strong>Non-final locals that are referenced by an inner
+  class are automatically wrapped in a final-tuple instance, like C# 3.0 does.
+  Note: special treatment, name mangelling temporary required, of non-final arguments
+  is needed (not shown in example below). E.g.:</p>
+<pre>   Given:
+     <font color="#0000FF">public class</font> Tuple1&lt; E1 &gt; {
+       <font color="#0000FF">public</font> E1 e1;
+       <font color="#0000FF">public</font> Tuple1( <font color="#0000FF">final</font> E1 e1 ) <font color="#0000FF">this</font>.e1 = e1
+     }
+ 
+     <font color="#0000FF">public class</font> Tuple2&lt; E1, E2 &gt; <font color="#0000FF">extends</font> Tuple1 ...
+     ...
+     <font color="#0000FF">public interface</font> Function1&lt; R, A1, Throwable... Es &gt; R <strong>call</strong>( A1 a1 ) <font color="#0000FF">throws</font> Es;
+     <font color="#0000FF">public interface</font> Predicate1&lt; A1, Throwable... Es &gt; <font color="#0000FF">extends</font> Function1&lt; Boolean, A1, Es &gt;;
+     ...
+     <font color="#0000FF">public static</font> &lt; T, Throwable... Es &gt; List&lt; T &gt; <strong>select</strong>( <font color="#0000FF">final</font> Iterable&lt; T &gt; c, <font color="#0000FF">final</font> Predicate1&lt; T ?, Es &gt; f ) <font color="#0000FF">throws</font> Es ...
+   
+  Then:
+     String beginning = <font color="#FF0000">"Fred"</font>;
+     ArrayList&lt; String &gt; names = <font color="#0000FF">new</font>.<strong>add</strong> <font color="#FF0000">"Frederick"</font>;
+     ArrayList&lt; String &gt; filtered = <strong>select</strong> names, <font color="#0000FF">new</font>.{ ( name ) name.<strong>startsWith</strong> beginning  };
+   
+  Which is equivalent to the following verbose version:
+     <font color="#0000FF">final</font> Tuple1&lt; String &gt; beginning = new Tuple1&lt; String &gt;( <font color="#FF0000">"Fred"</font> );
+     ArrayList&lt; String &gt; names = (<font color="#0000FF">new</font> ArrayList&lt; String &gt;()).<strong>add</strong>( <font color="#FF0000">"Frederick"</font> );
+     ArrayList&lt; String &gt; filtered = <strong>select</strong>( names, <font color="#0000FF">new</font> Predicate1&lt; String &gt;() {
+       public Boolean <strong>call</strong>( <font color="#0000FF">final</font> String name ) {
+         <font color="#0000FF">return</font> name.<strong>startsWith</strong>( beginning.e1 );
+       }
+     } );</pre>
+<p><strong>Rule 12: </strong>If a method returns a <code>Void</code>, then make
+  the end of a method without a <code>return</code> and a <code>return</code> without
+  an argument synonymous with <code>return null</code>. E.g. the following are
+  identical.</p>
+<pre>   Given:
+     <font color="#0000FF">interface</font> Function0&lt; R, Throwable... Es &gt; R <strong>call</strong>() <font color="#0000FF">throws</font> Es;
+   
+  Then:
+     Function0&lt; Void &gt; block1 = <font color="#0000FF">new</font>.{ () };
+     Function0&lt; Void &gt; block2 = <font color="#0000FF">new</font>.{ () <font color="#0000FF">return</font> };
+     Function0&lt; Void &gt; block3 = <font color="#0000FF">new</font>.{ () <font color="#0000FF">return null</font> };
+     Function0&lt; Void &gt; block4 = <font color="#0000FF">new</font> Function0&lt; Void &gt;() {
+       Void <strong>call</strong>() { <font color="#0000FF">return null</font>; }
+     };
+   
+  Are all the same.</pre>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=180638.html">38
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=180638&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D180638&amp;title=Inner+Classes+or+Closures&amp;bodytext=One+of+the+areas+receiving+a+lot+of+attention+for+J7+is+simplifying+and+extending+the+capabilities+of+inner+classes+or+adding+a+new+construct+the+closure.+This+blog+examines+the+options+and+compares+the+different+proposals+using+a+typical+example%2C+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D180638&amp;title=Inner+Classes+or+Closures">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D180638&amp;title=Inner+Classes+or+Closures">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

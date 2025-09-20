@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Specs Without Tests Are Meaningless</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=265376.html">Discuss</a> | 
+<a href="mailto:?subject=Specs Without Tests Are Meaningless&amp;body= %0AArtima Weblogs %0ASpecs Without Tests Are Meaningless %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=265376">Email</a> | 
+<a href="../viewpostP.html$/thread=265376.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=265021.html" title="Thinking Upside Down">Previous</a> | 
+<a class="sl" href="thread=265525.html" title="Podcast Interview with Linux Outlaws">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Specs Without Tests Are Meaningless</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">August 14, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In hindsight, it seems strange it has taken us so long to figure this out in the computing field. Applications elsewhere might be even more important.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>In programming, the use of unit tests and acceptance tests are probably still overshadowed by "it works for me" approaches. It seems easier to get things to work once, declare them "done" and move on. However, once you understand how very coupled programs are, you also understand that any change to a program can cause unexpected effects to appear throughout the rest of the program. Upon seeing this, the only solution is relentless, automated testing. In fact, the rise of automated test suites shows the failure of decoupling. Decoupling is nonetheless still a good guideline -- it's just not a solution for program correctness and stability.</p>
+<p>The leaders in our community have seen that you can't just say something works a particular way. You have to test for it. The reason you need tests is because what you're testing can change over time, and this might in fact be why we tripped up. When you apply the scientific method to discover some principle of the universe, once that principle is uncovered it stays the same. By that reasoning, our code, once written, should also stay the same.</p>
+<p>But the reason scientific theories are called so is that, while your current tests might produce results that support the theory, someone might come up with a test in the future that requires a change to the theory. In evolution, for example, it was found that species are stable for periods, then undergo sudden changes -- this is called "punctuated equilibrium" and required changes to the way we look at the theory. In a stretch, you could think of it as "micro-creationism" but for people who don't like evolution this won't help, because all variations of evolutionary theory has things changing -- evolving -- and if you don't like the fact that things change the only thing that will make you happy is a complete repeal of evolution; we'd have to pretend that we don't see species changing over time.</p>
+<p>The reason I'm rehashing the basics of science is this: when people are involved, we can't assume that we're dealing with anything as relatively stable as scientific theories. People have the ability to be temporarily anti-entropic, to push things in directions that are ultimately "counter to the natural order of things" (I like to think that things like information and self-actualization are similar to entropy; that they somehow "want" to percolate through the world).</p>
+<p><a class="reference" href="../_/http/www.amazon.com/gp/product/0932633013$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0932633013/index.html">Gerald Weinberg</a> says "Things are the way they are because they got that way ... one logical step at a time." I personally think that the word "logical" is a bit tongue-in-cheek; what I think he means is "logical based on the pressures at the moment," because this maxim is his way of explaining how companies and teams get themselves into completely contorted positions: one "logical" step at a time. If you look at each step, given the conditions and pressures at the moment that decision was made, the individual <em>decision</em> is "logical," even though the sum total of all the decisions may put the team or company into a completely crazy place.</p>
+<p>There are two ways to help this situation. The most amazing solution would be to figure out the right set of pressures to prioritize so that the decisions are always going in the right direction to keep a company or team from going to crazy places. I don't think we yet have the tools to do this kind of social engineering; we've only begun to see the possibilities here.</p>
+<p>So in the meantime, we need to fall back to the second approach, the one we discovered in our relatively newfound world of software development. Software tends to creep in bad directions, so we have to test it all the time. Human groups (companies and teams) also tend to creep (at least, when you don't know enough to socially engineer them) and so we need tests for those, too.</p>
+<p>The example I'm working up to is the company philosophy and mission statement. If you've seen enough of these and the companies they are supposedly guiding, you know there's an almost universal disconnect between what a company says they're about and what they actually do. No one takes the company philosophy seriously because they know that the leaders of the company don't take it seriously. And that's because there's no way to know when it's been violated.</p>
+<p>That's why we need tests. Things creep, and unless you know (A) when you need to raise the red flag and (B) that someone will pay attention when you do, a company philosophy is meaningless. Laughable, even.</p>
+<p>I didn't realize this until I saw the <a class="reference" href="../_/http/www.slideshare.net/reed2001/culture-1798664/index.html">NetFlix company culture statement</a>. Although this is in slide form, it was meant to be read rather than presented. The first thing you'll notice is that they didn't try to just come up with a one-line mission statement. Those are probably still important, but you can't convey the necessary philosophy in a single line. When you go through this, you'll see a lot of very well-crafted maxims that were obviously lifted from combing through many of the more insightful business books.</p>
+<p>What's exceptional about this is that it doesn't just say things like "people are our most important resource." As you've no doubt seen, this is easy to say and just as easy to casually discard when the quarterly profit statements dip. The problem is that there's ordinarily no way to call someone out and show that they aren't walking the talk, because there's no clear line that's being crossed. Without a test, you can always begin creeping (taking Weinberg's "one logical step at a time") until you end up in a bad place.</p>
+<p>Let's look at a critical example: team members. With most companies, it seems like you have a position to fill, you interview until you find someone that seems to fit, then you can check the box next to that position and move on. If the person leaves or otherwise needs to be replaced, then you have to go through all that hassle again. Thus, if the person you hire is toxic to the team in any form, you tend to resist the hassle of changing the team member. In fact, most companies require a long process before you can fire a toxic member, and the whole time they are dragging the team down ... which is not something a team quickly recovers from. Just the discovery that you can be forced to work with a toxic person for such a long time because someone got impatient and short-circuited the hiring process causes significant damage.</p>
+<p>Netflix attempts to change this scenario in two ways. First, they try to search for the right people all the time, rather than just when a box needs to be checked off. This changes the nature of hiring to something more like mushroom-hunting. Mushroom hunters are always keeping an eye open for mushrooms even when they're "just hiking." If they don't find any mushrooms on a particular hike, they don't bring back a bag of dirt just to bring something back. Other times they might discover an abundance of mushrooms when they're not particularly searching. Netflix appears to consider finding a team member a serendipitous event, not a task with a checkbox.</p>
+<p>What's especially interesting is that they have a test for employees. This is not whether someone is toxic or not -- someone who gets through the process and turns out to be toxic is apparently removed at the earliest opportunity. The test is whether an employee is exceptional. The "Keeper Test" is clever because it relies partly on intuition: a manager thinks "Which of my people, if they told me they were leaving in two months for a similar job at a peer company, would I fight hard to keep at Netflix?" (I'm actually not clear on why "a similar job at a peer company" is important). Their goal, they say, is to have "stars in every position" so if you aren't someone that is worth fighting hard for, then you should get a generous severance now so that Netflix can try to find a star for that role (and, I observe, you don't bring down the energy of the team in the meantime -- just like someone who isn't engaged in an open-spaces discussion should go find a discussion where they can add energy).</p>
+<p>The Netflix culture statement could be "Get and keep the best people, and enable them." And perhaps more important, "don't bog people down by accreting new rules everytime something happens." They say that the best thing about working there is that you get to work with exceptional people -- which if you think about it is the most compelling reason to go to a job (assuming you can get enough money to get by). As a consultant, what I miss most is working with stimulating people on a day-to-day basis, but when I see the state of most companies I'm glad I mostly work on my own. However, there are some consulting clients, and also experiences like writing <a class="reference" href="../_/http/www.mindviewinc.com/Books/FirstStepsInFlex/Index.html">First Steps in Flex</a> with James Ward, where I come away saying "I'd like to do more things like this!" Netflix' goal of creating an environment where you get to work with exceptional people is very compelling, and it gives me some insight on why my friend Carl left Google to go there.</p>
+<p>Do yourself a favor, especially if you're starting a new company, and go read their <a class="reference" href="../_/http/www.slideshare.net/reed2001/culture-1798664/index.html">culture statement</a>. It's undoubtedly imperfect and it modifies existing company structure rather than trying to reinvent the company (as I'd like to do) but it is filled with excellent insights and ideas.</p>
+<p>It's not surprising we have this belief in the unchanging nature of things, to the point where we think we can build a system that doesn't change. Up until about 200 years ago (and really, about 100 years ago), you could live your whole life without anything changing, from birth until death. Moving to a heliocentric view of the universe was a giant change, but nowadays we casually throw Pluto out as a planet and discover that the bulk of matter in the universe is "dark." Big companies rise and fall within a few years instead of surviving for decades. And the consequences of our decisions -- intentional and unintentional -- can sometimes be seen within seconds instead of years. Without tests, you can't know whether you've strayed from your desired path (and yes, good tests are hard to create).</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=265376.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=265376&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D265376&amp;title=Specs+Without+Tests+Are+Meaningless&amp;bodytext=In+hindsight%2C+it+seems+strange+it+has+taken+us+so+long+to+figure+this+out+in+the+computing+field.+Applications+elsewhere+might+be+even+more+important.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D265376&amp;title=Specs+Without+Tests+Are+Meaningless">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D265376&amp;title=Specs+Without+Tests+Are+Meaningless">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

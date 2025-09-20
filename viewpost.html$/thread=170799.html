@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Getting Serious about Preserving Behavior</title>
+<meta charset="utf-8"/>
+<meta content="Michael Feathers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=mfeathers.html">Michael Feathers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=170799.html">Discuss</a> | 
+<a href="mailto:?subject=Getting Serious about Preserving Behavior&amp;body= %0AArtima Weblogs %0AGetting Serious about Preserving Behavior %0Aby Michael Feathers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=170799">Email</a> | 
+<a href="../viewpostP.html$/thread=170799.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=168511.html" title="Offensive Coding">Previous</a> | 
+<a class="sl" href="thread=171323.html" title="Vise - A Testing/Refactoring Tool for Java">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Let's Reconsider That</span><br>
+<span class="ts">Getting Serious about Preserving Behavior</span><br/>
+<span class="as">by Michael Feathers</span><br/>
+<span class="pd">August 3, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this blog, I describe 'sensing variables', and how you can use them to make large method refactoring easier.  I also discuss the potential for tools which could achieve the same effects in a nicer way.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I spend a lot of time looking at ugly code.  Sometimes it makes me angry. I see horrible swirls of chaos and it seems that the people who wrote the code just didn’t care.  At other times, though, I’m deeply sympathetic.  I see deep dark edifices of code with little bright spots, places where it’s obvious that the programmers did care, but they were dealing with something insurmountable, something that they were deeply afraid of, and fear won the day.</p>
+<p>I’m not going to get on my hobby horse about writing tests in this blog.  If you’ve read my blogs, or heard me talk, you know that I continually point out that work in code covered with tests is qualitatively different.  When your code is surrounded with tests, there’s much less fear.  Tests are a huge behavioral invariant which gives you feedback when you change your code.  They make aggressive refactoring possible...  Code can actually get better...  Well, enough of the rant. The thing that I'm trying to say is that I believe that this problem, the problem of knowing whether we are changing behavior in unexpected ways when we refactor is a <i>core</i> problem in software engineering.</p>
+<p>Forget testing for a second, what we really want to know is whether we are making unintentional behavioral change in our systems when we modify them.  Imagine a world in which we see the effects of most changes we make in our systems immediately, where we’re able to decide whether we like them or not and then move on.  Test-Driven Development gives us that model of development, but I wonder if we can do more.  Maybe we can move to a model where we’re able to “checkpoint” behavior directly in a language or an IDE.  In this blog, I’ll talk about how we can do that sort of checkpointing using a manual technique.  In a subsequent blog, I’ll talk about how we can move toward tooling that helps us do the same thing more easily.</p>
+<h2>Sensing Variables</h2>
+<p>I few years ago, I wrote up a technique that I called <i>using sensing variables</i>.  It’s an incredibly simple technique, but it can be very handy.</p>
+<p>Here’s an example.</p>
+
+Let’s say that we have a large ugly method and we want to do some refactoring within it:</p>
+<pre>
+void process(int id, long location) {
+    int value;
+    Dispatcher dispatcher = new Dispatcher(location);
+    
+    if (...) {
+	if (...) {
+            // imagine 500 lines of ugly code here
+            ...
+
+            String baseMessage = “@” + getLastMessage();
+            dispatcher.send(artLevel, 3);
+            baseMessage += getMaxRate() + “ “ + value + “.optkey”;
+
+    // imagine 500 lines of ugly code here
+    ...
+}
+</pre>
+<p>One of the things that we’d like to do is take all of that work we do to calculate baseMessage and move it into another method but there are some things in the code that get in the way; the call to send() on dispatcher for instance. It occurs right in the middle of our calculation of baseMessage.  If we could move that line, <i>dispatcher.send(artLevel, 3)</i>, down a few lines, we could have this:</p>
+<pre>
+    String baseMessage = “@” + getLastMessage();
+    baseMessage += getMaxRate() + “ “ + value + “.optkey”;
+
+    <em>dispatcher.send(artLevel, 3);</em>
+</pre>
+<p>And it would be pretty easy to extract all of the baseMessage calculation into a method named getBaseMessage().</p>
+<p>Can we make that change?  Well, we can if there aren't any unpleasant side-effects.  If send() doesn’t affect the result of getMaxRate() in the next line, then we could move the <i>dispatcher.send(artLevel, 3)</i> statement below the calculation of baseMessage.</p>
+<p>How can we tell?</p>
+<p>One simple way is to introduce a new variable, a variable that we can use to sense the value of baseMessage and a particular point in the method's execution:</p>
+<pre>
+<em>public String calculatedBaseMessage  = ””;</em>
+
+void process(int id, long location) {
+    int value;
+    Dispatcher dispatcher = new Dispatcher(location);
+    
+    if (...) {
+	if (...) {
+            // imagine 500 lines of ugly code here
+            ...
+
+            String baseMessage = “@” + getLastMessage();
+            dispatcher.send(artLevel, 3);
+            baseMessage += getMaxRate() + “ “ + value + “.optkey”;
+
+            <em>calculatedBaseMessage = baseMessage;</em>
+
+    // imagine 500 lines of ugly code here
+    ...
+}
+</pre>
+<p>Now that we have that variable, we can write tests using it:</p>
+<pre>
+void testProcessLocal() {
+    final int ID = 12;
+    DispatchCommand command = new DispatchCommand();
+    command.process(ID, LOCAL_LOCATION);
+    assertEquals(“”, command.calculatedBaseMessage);
+}
+
+void testProcessRemote() {
+    final int ID = 12;
+    DispatchCommand command = new DispatchCommand();
+    command.process(ID, REMOTE_LOCATION);
+    assertEquals(“”, command.calculatedBaseMessage);
+}
+</pre>
+<p>Notice that we’re just checking for an empty string in each of these tests.  Once we run the tests, we will get failures which will show us the calculated value of baseMessage for particular inputs.  Then we can adjust the tests so that they pass.  When we do, we’ll have a set of tests that pin down the existing behavior:</p>
+<pre>
+void testProcessLocal() {
+    final int ID = 12;
+    DispatchCommand command = new DispatchCommand();
+    command.process(ID, LOCAL_LOCATION);
+    assertEquals(“@ red 10.3 3.44 .optkey”, command.calculatedBaseMessage);
+}
+
+void testProcessRemote() {
+    final int ID = 12;
+    DispatchCommand command = new DispatchCommand();
+    command.process(ID, REMOTE_LOCATION);
+    assertEquals(“@ red 11.4 4.55 .optkey”, command.calculatedBaseMessage);
+}
+</pre>
+<p>Now, we can try to move that line of code and see what happens:</p>
+<pre>
+public String calculatedBaseMessage  = ””;
+
+void process(int id, long location) {
+    int value;
+    Dispatcher dispatcher = new Dispatcher(location);
+    
+    if (...) {
+	if (...) {
+            ...
+
+            String baseMessage = “@” + getLastMessage();
+            // dispatcher.send(artLevel, 3);
+            baseMessage += getMaxRate() + “ “ + value + “.optkey”;
+
+            calculatedBaseMessage = baseMessage;
+
+            <em>dispatcher.send(artLevel, 3);      // Moved from above (see commented-out line below declaration of baseMessage)</em>
+ 
+    ...
+}
+</pre>
+<p>When we run the tests, we’ll know whether send() had a side-effect that affected our refactoring.  If the tests fail, it did.  If they pass, we can have some confidence that the move was safe.</p>
+<p>Now, if you’re seeing this for the first time you might be thinking one of two things.  One is that you could probably use a debugger for this.. you could set a watch on baseMessage and debug to find out what happens to it.  That’s  fine as far as it goes, the problem is that debuggers carry us through one path of execution for one set of input values.  Sensing variables can be used across many paths of execution with many different input values.  We can use them to write several tests against a chunk of code and effectively pin it down from several different directions.</p>
+<p>The other thing that you might be thinking about is that it just feels wrong to introduce variables into production code specifically for testing.  Frankly, I feel the same way and that’s why I use sensing variables as a temporary technique.  I use them to pin down some behavior, then I add code or refactor.. then I delete them.</p>
+<p>Often, I can alter the tests that used them so that they are still useful after my refactoring.  For instance, if I extracted all that code for baseMessage into a method, I can alter the tests I wrote above so that they look like this:</p>
+<pre>
+void testLocalBaseMessage() {
+    DispatchCommand command = new DispatchCommand();
+    assertEquals(“@ red 10.3 3.44 .optkey”, 
+	command.getBaseMessage(“red”, “10.3”, “3.44”));
+}
+
+void testRemoteBaseMessage() {
+    DispatchCommand command = new DispatchCommand();
+    assertEquals(“@ red 11.4 4.55 .optkey”, 
+	command.getBaseMessage(“red”, “11.4”, “4.55”);
+}
+</pre>
+<p>These tests test essentially the same behavior, but in a narrower sense.  They test it directly on the new method we extracted not on the method it came from.</p>
+<p>I’ve used sensing variables in a variety of projects.  They're useful but they are a little tedious to set up.  In my next blog, I’ll show a little tool that you can use to make the use of sensing variables easier, and I'll describe how languages and IDEs could give us direct support for them.<p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=170799.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=170799&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michael Feathers adds a new entry to <a href="../index.html$/blogger=mfeathers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/mfeathers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D170799&amp;title=Getting+Serious+about+Preserving+Behavior&amp;bodytext=In+this+blog%2C+I+describe+%27sensing+variables%27%2C+and+how+you+can+use+them+to+make+large+method+refactoring+easier.++I+also+discuss+the+potential+for+tools+which+could+achieve+the+same+effects+in+a+nicer+way.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D170799&amp;title=Getting+Serious+about+Preserving+Behavior">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D170799&amp;title=Getting+Serious+about+Preserving+Behavior">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/michaelfeathers.jpg"/></td><td>Michael has been active in the XP community for the past five years, balancing his time between working with, training, and coaching various teams around the world. Prior to joining Object Mentor, Michael designed a proprietary programming language and wrote a compiler for it, he also designed a large multi-platform class library and a framework for instrumentation control. When he isn't engaged with a team, he spends most of this time investigating ways of altering design over time in codebases.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Michael Feathers. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

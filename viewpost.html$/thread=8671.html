@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Future of UML</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=8671.html">Discuss</a> | 
+<a href="mailto:?subject=The Future of UML&amp;body= %0AArtima Weblogs %0AThe Future of UML %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=8671">Email</a> | 
+<a href="../viewpostP.html$/thread=8671.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=6820.html" title="The Second Time Around">Previous</a> | 
+<a class="sl" href="thread=12199.html" title="The Myth of External Program Documentation">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">The Future of UML</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">July 29, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Guerrilla Development is software development in an environment unsupportive of the effort. In my first few essays I discussed some of the problems software departments might have in their interactions with the rest of the company. In this one, I talk a bit about UML and my concerns for its future.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<blockquote>
+"What is the best UML tool?"
+<br/>
+"A white board marker."
+</blockquote>
+<h2>Introduction</h2>
+<p>
+<i>Guerrilla Development</i> is software development in an environment 
+unsupportive of the effort. In my first few essays I discussed some of
+the problems software departments might have in their interactions with 
+the rest of the company. These included stonewalling product managers,
+poor-planning upper managers, and even hostile engineers in related
+departments or disciplines. Software engineering discussions in books,
+magazines, and user groups tend to apportion too much blame on the
+software department when things don't go smoothly. I believe that there
+is plenty of blame to go around.
+</p>
+<p>
+That said, I agree that some of our problems are self-inflicted. Other
+problems might be better categorized as <i>missed opportunities</i>. In this
+essay, I'll discuss one such missed opportunity and articulate some of
+my worries for the future of UML.
+</p>
+<h2>The Future of UML</h2>
+<p>
+The reactions that I get from many engineers when I broach the topic
+of UML leads me to believe that they think the whole thing is a 
+conspiracy foisted upon the software community by the tool vendors
+in their endless search for more suckers. If that notion prevails,
+I'm certain that we will have lost out on something important.
+</p>
+<p>
+UML can be a fabulous tool for helping engineers communicate ideas.
+The power of UML isn't the fact that it is drawn with boxes and
+arrows but that the specific shapes of things and the types of 
+arrows have some agreed upon meaning. If two engineers know something
+about, say, class diagrams in UML and one of them begins drawing a 
+class hierarchy, the other immediately knows which class inherits from
+the other. There is nothing <i>magic</i> about the boxes or arrows;
+it is just a set of agreed upon conventions that allows engineers who
+share the knowledge of those conventions to communicate quickly and
+effectively.
+</p>
+<p>
+As simple as all this sounds, the influence of the tools vendors, book 
+publishers, and consulting houses trying to make UML sound elaborate, 
+complicated, and expensive cannot be ignored. Their efforts
+to take these simple conventions for communicating engineering design ideas 
+and turn them into something profitable may endanger the 
+entire initiative. Is UML worth saving? Can it really
+help <i>real</i> projects, projects that produce code, have deadlines,
+and live in <i>Guerrilla Development</i> environments?
+</p>
+<p>
+Yes. I believe UML can help. And, as always, I've got a 
+few stories from my lurid and sordid past to back up that claim.
+</p>
+<h2>The Prescriber</h2>
+<p>
+I began working for a company that made virtual private network software
+in the Spring of 1998 and was teamed up with another fellow, Mike (also
+a new hire) to work on a part of the project called the <i>Prescriber</i>.
+The Prescriber was an interesting concept. It was to be part of the VPN
+dialer residing on the client's MS Windows machine that would diagnose
+and automatically repair (if possible) problems with the client machine's
+configuration, software, or settings. The idea was this: some of
+the problems a client might have with his laptop on the road were minor
+such as well-known .DLL conflicts or improper network settings. A small,
+extensible rules engine might be able to detect and even correct many of
+these problems.
+</p>
+<p>
+The initial design of the Prescriber had been done in 
+<a href="../_/http/tcl.activestate.com/index.html">TCL</a>
+(as one of the other fellows who worked at this company had been a college
+classmate of <a href="../_/http/home.pacbell.net/ouster/index.html">John K. Ousterhout</a>,
+the developer of TCL). Mike and I
+wanted to do the next phase in <a href="../_/http/Java.sun.com/index.html">Java</a>. 
+After some discussion, the decision was eventually made
+to transition the project to Java and work began in earnest.
+</p>
+<p>
+Mike and I quickly found that we worked well together. We began camping
+out in one of the smaller conference rooms and filling the white boards
+with ideas. One of the unique aspects of this part of
+the project is that the results had to be <i>user extendable</i>. For
+example, customers might wish to use the Prescriber to help enforce their IT 
+policies. The Prescriber wasn't going to just help establish the VPN 
+connection for the client; it was also going to help manage the entire 
+VPN experience. This extendibility requirement placed some extra burdens 
+on us that other members of the development team did not have.
+</p>
+<p>
+For one thing, our program documentation would need to be much more
+extensive than anybody else's. This part of the project was not just
+a <i>binary-and-nobody-will-see-the-insides-of-this</i> deliverable.
+We had to have a clear structure for the facility with an architecture
+that would enable, and even encourage, extendibility. We also had to plan
+on having a significantly more detailed documentation set including a
+<i>Theory of Operation</i> document so developers in those IT departments
+would have some idea of how to create these Prescriber extensions safely.
+Creating user-extendable software is not a trivial task. Nardi's book
+<i>A Small Matter of Programming</i> discusses this at length.
+</p>
+<p>
+
+Mike and I needed to work together efficiently and, hopefully, 
+create artifacts during our design and implementation phases that 
+could be reused later when we created the final 
+documentation. Most of all, we needed to run this project so we 
+could get some version of the Prescriber done for the next release 
+of the dialer, an event only months away.
+</p>
+<h2>It is the Code, Stupid</h2>
+<p>
+We needed code and we needed back-up documentation. We also
+needed a way to divide up the project so that
+Mike and I could work quickly without "stepping on each other". I
+began drawing UML class and package diagrams on the white boards
+during our marathon design sessions. I'm not sure how much UML Mike
+had seen before this point but he was extremely quick to catch on.
+We did refinement after refinement on those white boards, seeing
+the structure of the product and the relationships between the
+pieces. We found a convenient way to divide the problem down the
+middle.
+</p>
+<p>
+Things were looking up but, of course, we had yet to write a single 
+stitch of code. We needed a way to be as productive in the detailed
+design and coding as we had been in this early architectural and 
+high-level design phase. The UML diagrams first drawn on the white
+boards in the conference rooms had been transferred to my notebooks
+but it seemed like a waste to stop there. The descriptions and
+relationships in those diagrams had been instrumental in helping
+Mike and I understand the problem and our solution. This is <i>exactly</i>
+the kind of insight that an IT person extending the Prescriber later
+would need. Why can't we carry this forward?
+</p>
+<p>
+I had some experience with UML tools from previous projects. Most
+were bulky, buggy, and slow (not to mention expensive). There was
+one that had caught my eye, however. The tool's name was 
+<a href="../_/http/www.intranetjournal.com/news/blurb227.html">ClassDesigner</a>
+and it handled only a couple of the UML diagram types (code and package)
+but it had rock-solid round-trip engineering facilities. That is, you 
+create your design using class diagrams, use arrows and lines to indicate
+the relationships between the classes (inheritance, dependencies, references,
+etc.) and then <i>push the button</i> to have the tool generate the 
+corresponding Java code. After you've made changes to the code (filling
+in the implementations for the methods between the curly braces) you
+can update the diagrams and <i>push the button again</i> and the code
+is <b>updated</b>. This means your drawing and the associated code can
+stay synchronized.
+</p>
+<p>
+This round-trip engineering (being able to continue to generate the code
+from the drawings) meant that a couple of our biggest problems would be
+solved:
+</p>
+<ul>
+<li>Mike and I were making changes constantly. This was a way for us
+      to keep each other informed and to document the changes.
+  </li>
+<li>There wasn't going to be a lot of time after the coding was done
+      to produce the Theory of Operations document. We'd need to have
+      as much of the materials in place as possible. Having the diagrams
+      "track" the code meant that they could be used later with high
+      confidence.
+  </li>
+</ul>
+<p>
+I was convinced that ClassDesigner would do the job for us. But, I had
+to convince Mike (who was pretty easy-going and thought it was worth a
+try) and management. Given that I had spent a <i>lot</i> of points getting
+the Java (and not TCL) decision, I wasn't sure if I could go to the well
+again so soon. I did. And, to my pleasant surprise, the VP of Engineering
+was intrigued by the idea. Of course, he wanted to see more. I agreed to
+give him a demonstration of what this tool could do.
+</p>
+<p>
+The other feature a typical UML tool has is <i>reverse engineering</i>.
+The tool reads all of your source files and creates appropriate class
+diagrams. I reverse engineered the entire project. 
+</p>
+<p>
+As with most projects, some aspects of the development were going better
+than others. There was one particular part of the project (no, I'm not
+going to say which one!) that had been a point of contention. As I 
+untangled the diagrams for the various subsystems, some areas of the
+diagram became neat and pretty. Other areas were a bit jumbled but
+still intelligible. One area was a mess. Guess which part
+of the project that was!
+</p>
+<p>
+Early on a Saturday morning I set up the projector and prepared for
+my 1:1 with the VP. When he arrived, I put up a single drawing that
+showed a 100,000 foot view of the project. You could see boxes and 
+lines but no names. Most of it looked organized but one area looked
+completely tangled. He saw it immediately.
+</p>
+<p>
+"My theory", I told him, "is that the design isn't right if the
+picture isn't pretty. If the elements of the design have too 
+many interdependencies or if there are too many <i>moving parts</i>
+that will show up in the diagrams." 
+</p>
+<p>
+"What's this area here?", he asked. It was the allegedly problematic
+part of the project. "I wish we had this tool in the beginning", he
+said. I knew I'd sold him on the idea. He agreed to get a small number
+of licenses for the tool.
+</p>
+<p>
+We produce products that are made of code. But, the structure of these
+products, the high-level design and architecture, is not easily viewed 
+by just looking at the code. This 100,000 foot view, or <i>topsight</i>
+as Gelernter describes in his book <i>Mirror Worlds</i> is more easily
+obtained through something like UML. The VP had gained <i>topsight</i>
+into his project, possibly for the first time, and he recognized its
+value immediately.
+</p>
+<h2>Resistance</h2>
+<p>
+My story has been entirely too happy so far. Except for some skepticism
+from the VP, we had not run into any resistance concerning UML or 
+ClassDesigner. Once we got the go-ahead, however, there was the beginnings
+of grumblings about the newfangled tool. Luckily, our part of the project
+was isolated enough that few felt threatened by it. The most resistance
+came from <b>the vendor</b>.
+</p>
+<p>
+Cayenne Software had purchased the ClassDesigner product from a
+one-man company run by a fellow named Naresh Bhatia who followed his product to Cayenne.
+Bhatia may have understood what he created but it was clear that few 
+others at Cayenne did. When I talked to Cayenne's sales team about obtaining
+licenses for the ClassDesigner product they were confused. Was I sure? Didn't
+I want the more "capable" (expensive) ObjectTeam product? "No", I insisted,
+ClassDesigner does exactly what I need. It is fast, reliable, easy to learn
+and use, and is a quarter the price of ObjectTeam. 
+</p>
+<p>
+To be honest, I don't remember how this happened but somehow, I got
+roped into doing a full-blown product comparison between ClassDesigner
+and ObjectTeam. Perhaps I had mentioned to the VP that the vendor was
+pushing this or, more likely, the VP was in on one of the sales calls
+and was intrigued by the ObjectTeam pitch made by the Cayenne sales person.
+</p>
+<p>
+I spent a week carefully comparing the products. I took the UML specification
+and found that ObjectTeam couldn't actually produce most of the drawings
+in the specification. The round-trip engineering was weak (which was the
+<i>key</i> feature we were looking for), the interface was muddled, and
+it had a nasty tendency to crash just before I had thought about saving
+my work. I produced a 30 page report highlighting the deficiencies of
+ObjectTeam. I heard later that my report had circulated through some of
+the highest circles at Cayenne. The defects and deficiencies were undeniable;
+they had just been conveniently "omitted" from any previous status reports from
+the ObjectTeam group, apparently.
+</p>
+<p>
+With this behind us, ClassDesigner was <i>officially selected</i>
+as our UML tool and Mike and I proceeded to complete the project.
+In fact, it worked so well that the VP bought into my suggestion
+that we obtain a site license for the product and begin encouraging
+other engineers to use it. I negotiated the deal near the end of
+Cayenne's next quarter.
+</p>
+<p>
+Then Cayenne was <a href="../_/http/www.itweb.co.za/office/bytes/9808311348.htm">
+bought</a> by Sterling Software. Sterling, confused why anyone would buy
+ClassDesigner when they could pay four times as much and get ObjectTeam,
+promptly killed the product. Furious, I called my Cayenne (now Sterling)
+sales person and demanded that we be refunded our site license fee since
+the product had actually been killed before we had a chance to deploy
+it. Our money was returned.
+</p>
+<p>
+Still hoping to keep UML and UML tools in the loop, we briefly
+played with Rational Rose which, like ObjectTeam, was large, slow,
+expensive, and buggy. But, the bloom was off the rose (so to speak) and
+the efforts to integrate UML into the development process were
+abandoned.
+</p>
+<h2>Observations and Lessons Learned</h2>
+<p>
+There are several things you might take away from this story:
+</p>
+<ul>
+<li><b>White board markers make powerful UML tools</b> One of the most
+      important phases of the project was the very beginning when Mike and
+      I needed to get organized, create a workable architecture, and divide
+      the project up so we could work quickly and efficiently. The UML tool
+      we used was a white board and a set of white board markers. I contend 
+      these tools are still the best tools available today.
+  </li>
+<li><b>Most have never seen effective use of UML</b> My manager was
+      delighted to see a reverse engineered drawing of his project. For
+      the first time since its early days, he believed he could see what
+      was going on. Properly done, UML can provide what Gelernter calls
+      <i>topsite</i> even late in a project's development cycle. 
+  </li>
+<li><b>UML tools <i>can</i> be used day-to-day in start-ups</b> Sometimes
+      I think the UML vendors believe that only Fortune 500 companies and
+      government contractors buy these tools. Well, maybe that's right. But,
+      I have existence proofs that projects in high-stress start-ups can
+      also be helped greatly by <i>the right tools</i>. ClassDesigner helped
+      us kick butt, a fact that was apparently mystifying to its vendor.
+  </li>
+<li><b>Not all engineers are good designers</b> Yeah, there's a shock!
+      Without a reasonable format for articulating the details of a design,
+      however, it might be hard to tell the difference between a weak design
+      and a weakly presented design. UML can help provide a common structure
+      and tool set for designers to exchange ideas. I'm convinced that most
+      weak designs are allowed to proceed to the next phase because the
+      reviewers never really understood what they were approving. If UML
+      can provide clarity during reviews, it might be well worth the effort.
+  </li>
+<li><b>Vendors are idiots</b> A bit harsh, but too near the truth to 
+      dismiss outright. If anybody on the Cayenne sales team had done the
+      simple things I had done (like just try to draw the sample diagrams
+      from the UML specification with ObjectTeam) they would have easily
+      come to the same conclusions I did. But, nobody tried. The sales people
+      had <i>no idea whatsoever</i> how this product was going to be used
+      day-to-day by us. And, when we explained it, they didn't believe us.
+  </li>
+<li><b>UML's future depends on breaking out of this tool idiocy</b>
+      UML can be a powerful means of expressing design ideas but its future
+      is bleak if the kind of idiocy described here is left unchecked. The
+      tool vendors need to understand that developers respect tools that
+      help them crank out code. Any tools developed need to be rock solid,
+      fast, affordable, and <i>adoption-friendly</i>. From what I see, we've
+      got a long way to go.
+  </li>
+</ul>
+<h2>Postscript</h2>
+<p>
+I have a very good friend (Jeff) who also happens to be an excellent engineer
+(and engineering manager). One of the things that makes Jeff an interesting 
+person to talk to is the fact that he sees the world much differently that 
+I do. He is a very (very, very) verbal person. He gains nothing from 
+diagrams; he'd rather read the text. Pictures convey very little information
+for him. 
+</p>
+<p>
+I have a season ticket package with the Boston Symphony Orchestra
+and asked Jeff if he and his Significant Other wanted to join me and mine
+to a concert. "No", he replied. If the music doesn't have words then, to
+him, it is just "a lot of pretty sounds". It is nice, of course, but it
+doesn't hold any meaning to him. I'd never thought about how <i>visual</i>
+music could be until that point, but understood immediately why he might
+be reluctant to go. Jeff is the kind of thinker that prefers literature
+over music because that is how his brain works.
+</p>
+<p>
+Trying to do a white board session drawing UML diagrams with Jeff would
+probably be an exercise in frustration. I'm sure there are plenty of 
+engineers out there who, like Jeff, are much more verbal and far less
+visual than I am. For those folks, I conceded that UML has very little
+to offer you. This is one (of many) reasons why UML cannot be a substitute
+for written artifacts.
+</p>
+<h2>Final note</h2>
+<p>
+I ran into somebody who had still been associated with the project
+this summer, some 4+ years after the first new Prescriber had shipped.
+"Had the documentation been helpful?", I asked. "Are you kidding?!",
+my friend replied. "It scared the hell out of 'em." I looked aghast.
+He continued, "they take one look at the size of the notebook you
+left and they say <i>I'm not touching that! It looks complicated!</i>."
+<b>Sigh...</b>
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h3>Resources</h3>
+<ul>
+<li><b>Mirror Worlds</b> by David Hillel Gelernter. Find it on 
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/019507906X/index.html">here</a>.
+      My review for that work is also on that page.
+  </li>
+<li><b>UML Distilled: A Brief Guide to the Standard Object Modeling Language (2nd Edition)</b>
+       by Martin Fowler and Kendall Scott.  Find it on 
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/020165783X/index.html">here</a>.
+      I've not done a review of this book on Amazon but I'll give it a full recommendation
+      here. If you were to only own one book on UML then this would be a good choice.
+      It is brief (but not terse) and hits all the <i>high points</i> of UML and its usage.
+  </li>
+<li>ClassDesigner marketing blurb can be found
+      <a href="../_/http/www.intranetjournal.com/news/blurb227.html">here</a>.
+  </li>
+<li><b>A Small Matter of Programming: Perspectives on End User Computing</b>
+       by Bonnie A. Nardi. Find it on 
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0262140535/index.html">here</a>.
+      My review of this work may also be found on this page.
+  </li>
+<li>See all my <a href="../_/http/www.amazon.com/index.html">amazon.com</a> reviews
+      <a href="../_/http/www.amazon.com/exec/obidos/tg/cm/member-reviews/-/A1VVCPL1NEHUCW/index.html">here</a>.
+  </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=8671.html">17
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=8671&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D8671&amp;title=The+Future+of+UML&amp;bodytext=Guerrilla+Development+is+software+development+in+an+environment+unsupportive+of+the+effort.+In+my+first+few+essays+I+discussed+some+of+the+problems+software+departments+might+have+in+their+interactions+with+the+rest+of+the+company.+In+this+one%2C+I+talk+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D8671&amp;title=The+Future+of+UML">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D8671&amp;title=The+Future+of+UML">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

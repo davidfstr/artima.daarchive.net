@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Things to Know About Python Super [3 of 3]</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=237121.html">Discuss</a> | 
+<a href="mailto:?subject=Things to Know About Python Super [3 of 3]&amp;body= %0AArtima Weblogs %0AThings to Know About Python Super [3 of 3] %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=237121">Email</a> | 
+<a href="../viewpostP.html$/thread=237121.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=236278.html" title="Things to Know About Python Super [2 of 3]">Previous</a> | 
+<a class="sl" href="thread=237764.html" title="Generic functions vs mixins: a case study">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Things to Know About Python Super [3 of 3]</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">August 24, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This final installment documents other subtle and somewhat surprising features of Python's super.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Working with <tt class="docutils literal"><span class="pre">super</span></tt> is tricky, not only because of the quirks and
+bugs of <tt class="docutils literal"><span class="pre">super</span></tt> itself, but also because you are likely to run into
+some gray area of the Python language itself. In particular, in order to
+understand how <tt class="docutils literal"><span class="pre">super</span></tt> works, you need to understand really well
+how attribute lookup works, including the tricky cases of
+special attributes and metaclass attributes.
+Moreover, even if you know perfectly well how <tt class="docutils literal"><span class="pre">super</span></tt> works,
+interacting with a third party library using (or not using) <tt class="docutils literal"><span class="pre">super</span></tt>
+is still non-obvious. At the end, I am led to believe that the problem is not
+<tt class="docutils literal"><span class="pre">super</span></tt>, but the whole concept of multiple inheritance and cooperative
+methods in Python.</p>
+<div class="section">
+<h1><a id="special-attributes-are-special" name="special-attributes-are-special">Special attributes are special</a></h1>
+<p>This issue came up at least three or four times in the Python
+newsgroup, and there
+are various independent bug reports on sourceforge about it,
+you may face it too. Bjorn Pettersen was the first one who pointed out the
+problem to me (see also bug report <a class="reference" href="../_/http/bugs.python.org/issue729913/index.html">729913</a>): the issue is that</p>
+<p><tt class="docutils literal"><span class="pre">super(MyCls,</span> <span class="pre">self).__getitem__(5)</span></tt></p>
+<p>works, but not</p>
+<p><tt class="docutils literal"><span class="pre">super(MyCls,</span> <span class="pre">self)[5]</span></tt>.</p>
+<p>The problem is general to all special methods, not only to <tt class="docutils literal"><span class="pre">__getitem__</span></tt>
+and it is a consequence of the implementation of
+attribute lookup for special methods. Clear explanations of what is
+going on are provided by Michael Hudson as a comment to the bug report:
+<a class="reference" href="../_/http/bugs.python.org/issue789262/index.html">789262</a> and by Raymond Hettinger as a comment to the bug report <a class="reference" href="../_/http/bugs.python.org/issue805304/index.html">805304</a>.
+Shortly put, this is not a problem of <tt class="docutils literal"><span class="pre">super</span></tt> per se, the problem is
+that the special call <tt class="docutils literal"><span class="pre">x[5]</span></tt> (using <tt class="docutils literal"><span class="pre">__getitem__</span></tt> as example) is
+converted to  <tt class="docutils literal"><span class="pre">type(x).__getitem__(x,5)</span></tt>
+<em>only if</em> <tt class="docutils literal"><span class="pre">__getitem__</span></tt> is explicitely defined in <tt class="docutils literal"><span class="pre">type(x)</span></tt>. If
+<tt class="docutils literal"><span class="pre">type(x)</span></tt> does not define <tt class="docutils literal"><span class="pre">__getitem__</span></tt> directly, but only
+indirectly via delegation (i.e. overriding <tt class="docutils literal"><span class="pre">__getattribute__</span></tt>),
+then the second form works but not the first one.</p>
+<p>This restriction will likely stay in Python, so it has to be
+considered just a documentation bug, since nowhere in
+the docs it is mentioned that special calling syntaxes (such as
+the <tt class="docutils literal"><span class="pre">[]</span></tt> call, the <tt class="docutils literal"><span class="pre">iter</span></tt> call, the <tt class="docutils literal"><span class="pre">repr</span></tt> call, etc. etc.)
+are special and bypass <tt class="docutils literal"><span class="pre">__getattribute__</span></tt>. The advice is:
+just use the more explicit form and everything will work.</p>
+</div>
+<div class="section">
+<h1><a id="super-does-not-work-with-meta-attributes" name="super-does-not-work-with-meta-attributes"><tt class="docutils literal"><span class="pre">super</span></tt> does not work with meta-attributes</a></h1>
+<p>Even when <tt class="docutils literal"><span class="pre">super</span></tt> is right, its behavior may be surprising, unless
+you are deeply familiar with the intricacies of the Python object
+model. For instance, <tt class="docutils literal"><span class="pre">super</span></tt> does not
+play well with the <tt class="docutils literal"><span class="pre">__name__</span></tt> attribute of classes, even if it
+works well for the <tt class="docutils literal"><span class="pre">__doc__</span></tt> attribute and other regular
+class attributes. Consider this example:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; class B(object):
+...     "This is class B"
+...
+&gt;&gt;&gt; class C(B):
+...     pass
+...
+</pre>
+</blockquote>
+<p>The special (class) attribute <tt class="docutils literal"><span class="pre">__doc__</span></tt> is retrieved as you would expect:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; super(C, C).__doc__ == B.__doc__
+True
+</pre>
+</blockquote>
+<p>On the other hand, the special attribute <tt class="docutils literal"><span class="pre">__name__</span></tt> is not
+retrieved correctly:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; super(C, C).__name__ # one would expect it to be 'B'
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in ?
+AttributeError: 'super' object has no attribute '__name__'
+</pre>
+</blockquote>
+<p>The problem is that <tt class="docutils literal"><span class="pre">__name__</span></tt> is not just a plain class
+attribute: it is actually a <em>getset descriptor</em> defined on
+the metaclass <tt class="docutils literal"><span class="pre">type</span></tt> (try to run  <tt class="docutils literal"><span class="pre">help(type.__dict__['__name__'])</span></tt>
+and you will see it for yourself). More in general, <tt class="docutils literal"><span class="pre">super</span></tt> has
+problems with meta-attributes, i.e. class attributes of metaclasses.</p>
+<p>Meta-attributes differs from regular attributes since they are not
+transmitted to the instances of the instances. Consider this example:</p>
+<pre class="literal-block">
+class M(type):
+    "A metaclass with a class attribute 'a'."
+    a = 1
+
+class B:
+    "An instance of M with a meta-attribute 'a'."
+    __metaclass__ = M
+
+class C(B):
+    "An instance of M with the same meta-attribute 'a'"
+
+if __name__ == "__main__":
+    print B.a, C.a # =&gt; 1 1
+    print super(C,C).a #=&gt; attribute error
+</pre>
+<p>If you run this, you will get an attribute error. This is a case
+where <tt class="docutils literal"><span class="pre">super</span></tt> is doing the <em>right</em> thing, since 'a' is <em>not</em> inherited
+from B, but it comes directly from the metaclass, so 'a'
+is <em>not</em> in the MRO of C. A similar thing happens for the <tt class="docutils literal"><span class="pre">__name__</span></tt>
+attribute (the fact that it is a descriptor and not a plain
+attribute does not matter), so <tt class="docutils literal"><span class="pre">super</span></tt> is working correctly, but
+still it may seems surprising at first.
+You can find the
+rationale for this behaviour in <a class="reference" href="../_/http/www-128.ibm.com/developerworks/linux/library/l-pymeta2/index.html">my second article with David Mertz</a>;
+in the case of <tt class="docutils literal"><span class="pre">__name__</span></tt> it is obvious though: you don't want
+all of your objects to have a name, even if all your classes do.</p>
+<p>There are certainly other bugs and pitfalls which I have not mentioned here
+because I think are not worth mention, or because I have forgot them, or
+also because I am not aware of them all. So, be careful when you use
+<tt class="docutils literal"><span class="pre">super</span></tt>, especially in earlier versions of Python.</p>
+</div>
+<div class="section">
+<h1><a id="remember-to-use-super-consistently" name="remember-to-use-super-consistently">Remember to use super consistently</a></h1>
+<p>Some years ago James Knight wrote an essay titled
+<a class="reference" href="../_/http/fuhm.net/super-harmful/index.html">Super considered harmful</a> where he points out a few shortcomings
+of <tt class="docutils literal"><span class="pre">super</span></tt> and he makes an important recommendation:
+<em>use super consistently, and document that you use it, as it is part of the
+external interface for your class, like it or not</em>.
+The issue is that a developer inheriting from a hierarchy written by somebody
+else has to know if the hierarchy uses <tt class="docutils literal"><span class="pre">super</span></tt> internally
+or not. For instance, consider this case, where the library author has
+used <tt class="docutils literal"><span class="pre">super</span></tt> internally:</p>
+<pre class="literal-block">
+# library_using_super
+
+class A(object):
+    def __init__(self):
+        print "A",
+        super(A, self).__init__()
+
+class B(object):
+    def __init__(self):
+        print "B",
+        super(B, self).__init__()
+</pre>
+<p>If the application programmer knows that the library uses <tt class="docutils literal"><span class="pre">super</span></tt> internally,
+she will use <tt class="docutils literal"><span class="pre">super</span></tt> and everything will work just fine; but it she does not
+know if the library uses <tt class="docutils literal"><span class="pre">super</span></tt> she may be tempted to call <tt class="docutils literal"><span class="pre">A.__init__</span></tt>
+and <tt class="docutils literal"><span class="pre">B.__init__</span></tt> directly, but this will end up in having <tt class="docutils literal"><span class="pre">B.__init__</span></tt>
+called twice!</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; from library_using_super import A, B
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(A, B):
+...     def __init__(self):
+...         print "C",
+...         A.__init__(self)
+...         B.__init__(self)
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = C()
+C A B B
+</pre>
+</blockquote>
+<p>On the other hand, if the library does <em>not</em> uses <tt class="docutils literal"><span class="pre">super</span></tt> internally,</p>
+<pre class="literal-block">
+# library_not_using_super
+
+class A(object):
+    def __init__(self):
+        print "A",
+
+class B(object):
+    def __init__(self):
+        print "B",
+</pre>
+<p>the application programmer cannot use <tt class="docutils literal"><span class="pre">super</span></tt> either, otherwise
+<tt class="docutils literal"><span class="pre">B.__init__</span></tt> will not be called:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; from library_not_using_super import A, B
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(A,B):
+...     def __init__(self):
+...         print "C",
+...         super(C, self).__init__()
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = C()
+C A
+</pre>
+</blockquote>
+<p>So, if you use classes coming from a library in a multiple inheritance
+situation, you must know if the classes were intended to be
+cooperative (using <tt class="docutils literal"><span class="pre">super</span></tt>) or not. Library author should always
+document their usage of <tt class="docutils literal"><span class="pre">super</span></tt>.</p>
+</div>
+<div class="section">
+<h1><a id="argument-passing-in-cooperative-methods-can-fool-you" name="argument-passing-in-cooperative-methods-can-fool-you">Argument passing in cooperative methods can fool you</a></h1>
+<p>James Knight devolves a paragraph to the discussion of argument passing
+in cooperative methods. Basically, if you want to be safe, all your cooperative
+methods should have a compatible signature. There are various ways of
+getting a compatible signature, for instance you could accept everything (i.e.
+your cooperative methods could have signature <tt class="docutils literal"><span class="pre">*args,</span> <span class="pre">**kw</span></tt>) which is
+a bit too much for me, or all of your methods could have exactly the same
+arguments. The issue comes when you have default arguments, since your
+MRO can change if you change your hierarchy, and argument passing may
+break down. Here is an example:</p>
+<pre class="literal-block">
+"An example of argument passing in cooperative methods"
+
+class A(object):
+    def __init__(self):
+        print 'A'
+
+class B(A):
+    def __init__(self, a=None):
+        print 'B with a=%s' % a
+        super(B, self).__init__(a)
+
+class C(A):
+    def __init__(self, a):
+        print 'C with a=%s' % a
+        super(C, self).__init__()
+
+class D(B, C):
+    def __init__(self):
+        print 'D'
+        super(D, self).__init__()
+</pre>
+<pre class="doctest-block">
+&gt;&gt;&gt; from cooperation_ex import D
+&gt;&gt;&gt; d = D()
+D
+B with a=None
+C with a=None
+A
+</pre>
+<p>This works, but it is fragile (you see what will happen if you change
+<tt class="docutils literal"><span class="pre">D(B,</span> <span class="pre">C)</span></tt> with <tt class="docutils literal"><span class="pre">D(C,</span> <span class="pre">B)</span></tt>?) and in general it is always difficult
+to figure out which arguments will be passed to each method and in
+which order so it is
+best just to use the same arguments everywhere (or not to use
+cooperative methods altogether, if you have no need for cooperation).
+There is no shortage of examples of trickiness in multiple inheritance
+hierarchies; for instance I remember a post from comp.lang.python
+about the <a class="reference" href="../_/http/tinyurl.com/3jqhx7/index.html">fragility of super</a> when changing the base class.</p>
+<p>Also, beware of situations in which you have
+some old style classes mixing with new style classes: the result may
+depend on the order of the base classes (see examples 2-2b and 2-3b
+in <a class="reference" href="../_/http/fuhm.net/super-harmful/index.html">Super considered harmful</a>).</p>
+<p>UPDATE: the introduction of Python 2.6 made the
+special methods <tt class="docutils literal"><span class="pre">__new__</span></tt> and <tt class="docutils literal"><span class="pre">__init__</span></tt> even more brittle with respect to
+cooperative super calls.</p>
+<p>Starting from Python 2.6 the special methods <tt class="docutils literal"><span class="pre">__new__</span></tt> and
+<tt class="docutils literal"><span class="pre">__init__</span></tt> of <tt class="docutils literal"><span class="pre">object</span></tt> do not take any argument, whereas
+previously the had a generic signature, but all the arguments were
+ignored. That means that it is very easy to get in trouble if your
+constructors take arguments. Here is an example:</p>
+<pre class="literal-block">
+class A(object):
+    def __init__(self, a):
+        super(A, self).__init__() # object.__init__ cannot take arguments
+</pre>
+<pre class="literal-block">
+class B(object):
+    def __init__(self, a):
+        super(B, self).__init__() # object.__init__ cannot take arguments
+</pre>
+<pre class="literal-block">
+class C(A, B):
+    def __init__(self, a):
+        super(C, self).__init__(a) # A.__init__ takes one argument
+</pre>
+<p>As you see, this cannot work: when <tt class="docutils literal"><span class="pre">self</span></tt> is an instance of <tt class="docutils literal"><span class="pre">C</span></tt>,
+<tt class="docutils literal"><span class="pre">super(A,</span> <span class="pre">self).__init__()</span></tt> will call <tt class="docutils literal"><span class="pre">B.__init__</span></tt> without
+arguments, resulting in a <tt class="docutils literal"><span class="pre">TypeError</span></tt>. In older Python you could
+avoid that by passing <tt class="docutils literal"><span class="pre">a</span></tt> to the super calls, since
+<tt class="docutils literal"><span class="pre">object.__init__</span></tt> could be called with any number of arguments.
+This problem was recently pointed out by <a class="reference" href="../_/http/freshfoo.com/blog/object__init__takes_no_parameters/index.html">Menno Smits</a> in his blog
+and there is no way to solve it in Python 2.6, unless you change all
+of your classes to inherit from a custom <tt class="docutils literal"><span class="pre">Object</span></tt> class with an
+<tt class="docutils literal"><span class="pre">__init__</span></tt> accepting all kind of arguments, i.e. basically reverting
+back to the Python 2.5 situation.</p>
+</div>
+<div class="section">
+<h1><a id="conclusion-is-there-life-beyond-super" name="conclusion-is-there-life-beyond-super">Conclusion: is there life beyond super?</a></h1>
+<p>In this series I have argued that <tt class="docutils literal"><span class="pre">super</span></tt> is tricky; I think
+nobody can dispute that. However the existence of dark corners is not
+a compelling argument against a language construct: after all, they
+are rare and there is an easy solution to their obscurity,
+i.e. documenting them. This is what I have being doing all along.
+On the other hand, one may wonder if all <tt class="docutils literal"><span class="pre">super</span></tt> warts aren't
+hints of some serious problem underlying. It may well
+be that the problem is not with <tt class="docutils literal"><span class="pre">super</span></tt>, nor with cooperative
+methods: the problem may be with multiple inheritance itself.</p>
+<p>I personally liked super, cooperative methods and multiple inheritance
+for a couple of years, then I started working with Zope and my mind
+changed completely. Zope 2 did not use super at all but is a mess anyway,
+so the problem is multiple inheritance itself. Inheritance
+makes your code heavily coupled and difficult to follow (<em>spaghetti
+inheritance</em>).  I have not found a real life problem yet that I could
+not solve with single inheritance + composition/delegation in a better
+and more maintainable way than using multiple inheritance.
+Nowadays I am <em>very</em> careful when using multiple inheritance.</p>
+<p>People should be educated about the issues; moreover people should
+be aware that there are alternative to multiple inheritance in
+other languages. For instance Ruby uses
+mixins (they are a restricted multiple inheritance without cooperative
+methods and with a well defined superclass, but they do not solve
+the issue of name conflicts and the issue with the ordering of
+the mixin classes); recently some people proposed the concepts
+of <a class="reference" href="../_/http/www.iam.unibe.ch/~scg/Research/Traits/index.html">traits</a> (restricted mixin where name conflicts must be solved explicitely
+and the ordering of the mixins does not matter) which is interesting.</p>
+<p>In CLOS multiple inheritance works better since (multi-)methods
+are defined outside classes and <tt class="docutils literal"><span class="pre">call-next-method</span></tt> is well integrated
+in the language; it is simpler to track down the ancestors
+of a single method than to wonder about the full class hierarchy.
+The language SML (which nobody except academics use, but would deserve
+better recognition) goes boldly in the direction of favoring composition over
+inheritance and uses functors to this aim.</p>
+<p>Recently I have written a trilogy of papers for Stacktrace discussing
+why multiple inheritance and mixins are a bad idea and suggesting
+alternatives. I plan to translate the series and to publish here in
+the future. For the moment you can use the Google Translator. The
+series starts from <a class="reference" href="../_/http/stacktrace.it/articoli/2008/06/i-pericoli-della-programmazione-con-i-mixin1/index.html">here</a> and it is a recommended reading if you ever
+had troubles with mixins.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=237121.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=237121&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D237121&amp;title=Things+to+Know+About+Python+Super+%5B3+of+3%5D&amp;bodytext=This+final+installment+documents+other+subtle+and+somewhat+surprising+features+of+Python%27s+super.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D237121&amp;title=Things+to+Know+About+Python+Super+%5B3+of+3%5D">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D237121&amp;title=Things+to+Know+About+Python+Super+%5B3+of+3%5D">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Breaking Up The Monolith: The End of the Procrastination!</title>
+<meta charset="utf-8"/>
+<meta content="Matthew Wilson" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bigboy.html">Matthew Wilson's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=238275.html">Discuss</a> | 
+<a href="mailto:?subject=Breaking Up The Monolith: The End of the Procrastination!&amp;body= %0AArtima Weblogs %0ABreaking Up The Monolith: The End of the Procrastination! %0Aby Matthew Wilson %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=238275">Email</a> | 
+<a href="../viewpostP.html$/thread=238275.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=236935.html" title="Development Management: Carthorse, Racehorse, or Wild Horse?">Previous</a> | 
+<a class="sl" href="thread=238955.html" title="Watch those spaces!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Prescriptions, Proscriptions, and Prognostications</span><br>
+<span class="ts">Breaking Up The Monolith: The End of the Procrastination!</span><br/>
+<span class="as">by Matthew Wilson</span><br/>
+<span class="pd">September 10, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Having spent nearly two years "getting everything sorted" ready to write my next book, I've decided enough is enough. It starts TODAY!
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<!--
+ Updated: 10th September 2008
+ -->
+<p>
+My next book,
+<a href="../_/http/breakingupthemonolith.com/index.html">"Breaking Up The Monolith: Advanced C++ Design Without Compromise"</a>,
+is
+<strike>humbly</strike> intended to illustrate how one can have one's C++ cake and
+eat it. Specifically, how to have high robustness <i>and</i> performance <i>and</i>
+expressiveness <i>and</i> flexibility, along with high(-ish) portability <i>and</i>
+discoverability &amp; transparency <i>and</i> modularity, and <i>not</i> have to
+compromise one for the other. Clearly, not even the slightest bit humble, then. ;-)
+</p>
+<h2>Why C++? Why Monolith?</h2>
+<p>
+These raisons d'être are based on the following axioms:
+<ol>
+<li>
+  Software must be <b>correct</b> and <b>robust</b>. If it's not,  no-one will use
+  it (again).
+  <br>
+<br/>
+  (Qualification: I'm talking here about middleware, large-scale data mining,
+  network servers, trading systems and other systems where C++ is the language of
+  choice. Obviously web apps are riddled with defects and people continue to use
+  them. Ho hum.)
+  <br/>
+<br/>
+</br></li>
+<li>
+  If your software must be <b>efficient</b>, C++ is very likely to be your
+  best/only choice. (If you think you can write
+  <a href="../_/http/pantheios.org/essentials.html#commercial-users">high performance systems</a>
+  in C# or Java, you probably aren't going to be interested in my book, or even
+  the rest of this blog post, so save yourself the next non-refundable couple of
+  minutes out of your life: You may need them to give your enterprise system a head
+  start over one written according to the principles and techniques, illustrated
+  in Monolith, available to C++ users ;-)
+  <br/>
+<br/>
+  If high efficiency is not needed, then for Bob's sake save yourself the
+  heartache, and use a simpler language! I take this advice myself every day,
+  deferring to C#, Python or Ruby when time-taken-to-write is more important than
+  time-taken-to-execute.
+  <br/>
+<br/>
+  (This advice may sound somewhat heretical from a C++ author and practitioner. So be
+  it. I even said as much in the prologue to my last book
+  <a href="../_/http/extendedstl.com/index.html">Extended STL, volume 1</a>. That <i>may</i> have
+  something to do with why it's not yet eclipsed Scott's C++ book sales records. ;-)
+  <br/>
+<br/>
+</li>
+<li>
+  If you've got to use C++, your job is already a hard one. C++ is not easy, and never
+  will be, and anyone who tries to convince you otherwise is telling pork pies.
+  Remember: <a href="../_/http/en.wikipedia.org/wiki/Leaky_abstraction/index.html">All Abstractions Leak!</a>
+<br/>
+<br/>
+  Given your situation, you now most certainly want all the help you can get in terms
+  of writing and maintaining your application code. You want to write your application
+  in terms of libraries that:
+  <ul>
+<li>
+    facilitate <b>high expressiveness</b>, so your application code is dense with <i>what it
+    does</i>, rather than overwhelmed with supporting code,
+   </li>
+<li>
+    have <b>high discoverability</b>, so you are efficient in using the library to
+    express your intent, and are unlikely to make mistakes while doing so,
+   </li>
+<li>
+    facilitate <b>high transparency</b>, so you can understand your application code
+    when you have to come to edit it, or explain it to someone else who is maintaining
+    it,
+   </li>
+<li>
+    have <b>high flexibility</b>, so that as your application evolves you don't find
+    yourself having to impinge on efficiency and/or transparency in order to support
+    types or forms you'd not considered at the outset, or, the worst scenario, find
+    that you need to change libraries mid-stream with all that that entails in terms
+    of timeframes and risk
+   </li>
+</ul></li></ol>
+
+
+</p>
+<h2>Subject Areas</h2>
+<p>The things to be learned from/elucidated by Monolith include:
+<ul>
+<li>
+  Why strings are all wrong in C and C++, and why this costs so much in performance.
+ </li>
+<li>
+  The <b><i>Shim Concept(s)</i></b> - <i>An unbounded set of function overloads that
+  generalise between (aspects of) conceptually related but physically unrelated
+  types</i>.
+ </li>
+<li>
+  The <b><i>Handle::Ref+Wrapper Pattern</i></b> - [I haven't yet thought up a catchy
+  byline for this pattern. :$. It's essentially a way of sharing resources without
+  sacrificing syntactic simplicity and straightforwardness.]
+ </li>
+<li>
+  The <b><i>Type Tunnel Pattern</i></b> - <i>The situation
+  where a group of physically-unrelated types may be tunneled through an
+  extensible adaptation layer and presented in unified form to an underlying
+  layer for manipulation as a whole</i>.
+ </li>
+<li>
+  The <b><i>Principle of Intersecting Conformance</i></b> [Same here: no catchy
+  byline. Essentially it describes how structural conformance should be balanced
+  against performance and context-specific power.]
+ </li>
+<li>
+  The <b><i>Principle of Irrecoverability</i></b>: <i>it is not possible for a
+  software system to operate in accordance with its design if any component
+  part of that system has violated its design</i>.
+ </li>
+<li>
+  The <b><i>Principle of Removability</i></b>: When applied to contract enforcement,
+  the principle of removability states: <i>A contract enforcement should be removable
+  from correct software without changing the (well-functioning) behaviour</i>. When
+  applied to logging, the principle of removability states: <i>It must be possible to
+  disable any log statement within correct software without changing the
+  (well-functioning) behaviour</i>.
+ </li>
+<li>
+  . . . and a whole load of the usual practical techniques and gotchas to enable you
+  utilise the concepts, patterns, practices, and principles in writing your own C++
+  libraries without compromise.
+ </li>
+</ul>
+</p>
+<p>
+Already there's plenty of evidence as to the usefulness of these concepts, patterns
+and principles.
+</p>
+<p>
+<b>Shims</b> are one of the reasons that all the
+<a href="../_/http/stlsoft.org/index.html">STLSoft-related libraries</a> work together
+without any coupling between any of them.
+</p>
+<p>
+  The <b>Type Tunnel</b> pattern is put to good use - albeit in different forms
+  (different interface layers and/or tunnel mechanisms) -
+  in the
+  <a href="../_/http/fastformat.org/index.html">FastFormat</a>,
+  <a href="../_/http/pantheios.org/index.html">Pantheios</a>
+  and
+  <a href="../_/http/vole.sourceforge.net/index.html">VOLE</a>
+  open-source libraries:
+ <ul>
+<li>
+<b>Pantheios</b> is the
+   <a href="../_/http/pantheios.sourceforge.net/performance.html#sweet-spot">world's fastest</a>
+   and most robust C++ logging API library. It is 100% robust because it is
+   100% type-safe and the correctness of a given logging statement is dependent
+   solely on compile-time factors. It has unmatchable performance, being several
+   times faster than other major logging libraries when a given severity level is
+   enabled ("switched on") and up to 500 x (that's 50000%) faster when a given
+   severity is disabled ("switched off").
+  </li>
+<li>
+   The recently-released <b>FastFormat</b> will, I am confident, prove to be
+   the fastest type-safe C++ formatting library ever written. Early indications show it
+   to up to 4x faster than C's Streams library, 2-8 x faster than C++'s IOStreams
+   library and 5-20 x faster than Boost.Format, all the while being 100% type-safe
+   and infinitely extensible. (Exhaustive performance tests are being  prepared,
+   and results will be reported on the
+   <a href="../_/http/fastformat.org/index.html">FastFormat website</a>
+   in the near future.) If you're interested in these early stages, checkout the
+   memory allocation guessing game on the website to see just how sparingly the
+   library uses up processor cycles.
+  </li>
+<li>
+<b>VOLE</b> is a COM Automation driver library, that hides almost all the scary
+   and verbose guff that is involved when manipulating <code>IDispatch</code>,
+   allowing the user to pass and receive variables using natural C++ types.
+   The write-up of VOLE is the first thing I'll be attacking in the next phase
+   of writing of Monolith.
+  </li>
+</ul>
+All three of these libraries strongly promote expressiveness and flexibility,
+without sacrificing correctness, robustness or performance. <b>Breaking Up The
+Monolith</b> will show you how.
+</p>
+<p>
+<h2>Delays</h2>
+<p>Having started writing the book in Q3 '06, why is it that now, in Q3 '08, I am only
+just getting serious about finishing it? Well, there've been a number of distractions. I
+spent more than a year involved with running a development team for a client, something
+that has <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=236935.html">challenges all its own</a>.
+
+<p>I've also been trying to get all my content-related project ducks - libraries, blogs,
+articles, other books, related consultancies - in a row, (in hindsight) a ludicrous
+thing to try and attempt. This has, in part, led to the situation where
+<a href="../_/http/pantheios.org/index.html">Pantheios</a> has been in beta for <b>two years</b>,
+and <a href="../_/http/fastformat.org/index.html">FastFormat</a> has been in a state of unreleased
+proven-concept for nearly that time. Enough already!
+
+<p>Since I'm never going to be ready, and my publisher's nearly set to put a contract
+out on me - and not the kind that pays royalties - I've decided that, like having children, if there's never a good time to do it, I might as well start now. So that's what I've decided to do: come hell or high water, each week I will devote two days to writing Monolith.
+
+<h2>Why blog about it?</h2>
+<p>
+Now having blathered on about all the whys, the last why is: Why am I telling you this?
+Is this just another typical blog rant in narcissism? Of course it is. But ... there
+are some valid drivers here as well. First, obviously, I want people to be interested in
+the book. As I mentioned in a
+<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=228433.html">previous blog post</a>,
+I've been advised by some of the greats to save the "how it works" / "magic" for the
+books, and write about the "how to use it" &amp; "why you should use it" in articles and
+blogs, etc. If I can interest people with more of the latter, perhaps they'll be inclined
+to stump up for the former.
+
+<p>
+Second, as an act of discipline, if I have to report on the progress of the book, and
+its related libraries, on a regular basis - I'm still tossing up between weekly and
+fortnightly - then any procrastination will be caught, and guiltily reported, much
+earlier. And it's very likely that the embarassment and the focus will keep me on track.
+
+<p>
+Consequently, I've decided to blog about the process here, frequently and regularly. Since
+I'm a combination of arrogant narcissist and cynical realist, I won't be surprised if
+no-one reads or posts responses to any of it, but I will hold it against you!
+
+<p>In the next posts I'll start introducing you to the exemplars for the concepts, patterns,
+practices and principles, beginning with VOLE, which I'm about to enhance significantly and document properly. I'll also report on how my first few days of concentrated writing have proceeded. But for now:
+
+<p>
+    <i>That'll do,</i> Donkey<i>. That'll do.</i>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=238275&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Matthew Wilson adds a new entry to <a href="../index.html$/blogger=bigboy.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bigboy.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238275&amp;title=Breaking+Up+The+Monolith%3A+The+End+of+the+Procrastination%21&amp;bodytext=Having+spent+nearly+two+years+%26quot%3Bgetting+everything+sorted%26quot%3B+ready+to+write+my+next+book%2C+I%27ve+decided+enough+is+enough.+It+starts+TODAY%21&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238275&amp;title=Breaking+Up+The+Monolith%3A+The+End+of+the+Procrastination%21">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238275&amp;title=Breaking+Up+The+Monolith%3A+The+End+of+the+Procrastination%21">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/matthewwilson.jpg"/></td><td>Matthew Wilson is a software development consultant and creator of
+ the
+ <a href="../_/http/www.fastformat.org/index.html">FastFormat</a>,
+ <a href="../_/http/pantheios.org/index.html">Pantheios</a>
+ and
+ <a href="../_/http/www.stlsoft.org/index.html">STLSoft</a>
+ libraries. He is
+ author of the books
+ <a href="../_/http/www.imperfectcplusplus.com/index.html"><i>Imperfect C++</i></a>
+ (Addison-Wesley, October 2004) and
+ <a href="../_/http/extendedstl.com/index.html"><i>Extended STL, volume 1</i></a>
+ (Addison-Wesley, 2007), and is currently working on his third,
+ <a href="../_/http/breakingupthemonolith.com/index.html"><i>Breaking Up The Monolith: Advanced C++ Design Without Compromise</i></a>.
+ He has published over 60 articles on C++ and other topics, and has served as columnist
+ and contributing editor for <a href="../_/http/www.cuj.com/index.html">C/C++ Users Journal</a>.
+ Matthew believes that code should be discoverable and largely self-documenting, and lives up
+ to that by being a hopeless documentor. He can be contacted via
+ <a href="../_/http/www.imperfectcplusplus.com/index.html">http://www.imperfectcplusplus.com/</a> or
+ <a href="mailto:stlsoft@gmail.com">stlsoft@gmail.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Matthew Wilson. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

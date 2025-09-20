@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/20</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=255303.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/20&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/20 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=255303">Email</a> | 
+<a href="../viewpostP.html$/thread=255303.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=251476.html" title="The Adventures of a Pythonista in Schemeland/19">Previous</a> | 
+<a class="sl" href="thread=255612.html" title="The Adventures of a Pythonista in Schemeland/21">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/20</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">April 27, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+One of the trickiest things about Scheme is the distinction between the interpreter semantics which is typically
+(but not always) used at the REPL and compiler semantics
+which is typically (but not always) used in scripts.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">The compilation and evaluation strategy of Scheme programs</h1>
+<p>One of the trickiest aspects of Scheme, coming from Python, is its
+distinction between <em>interpreter semantics</em> and <em>compiler semantics</em>.</p>
+<p>The problem is that the same program can be executed both with
+interpreter semantics (typically when typed at the REPL)
+and with compiler semantics (typically when run as a script), but the way the
+program behaves is different. Moreover, there
+are programs which are valid at the REPL but are rejected by the compiler.</p>
+<p>To make things worse, the interpreter semantics is unspecified by the
+R6RS report, whereas the compiler semantics is loosely specified,
+so that there are at least three different and incompatible semantics
+about how programs are compiled and libraries are imported:
+the Ikarus/Ypsilon/IronScheme/MoshScheme one, the Larceny one and the
+PLT one.</p>
+<p>In other words, there is no hope of making programs with the
+interpreter semantics portable; moreover, there also plenty of
+programs with compiler semantics which are not portable.</p>
+<p>Fortunately the module system works well enough for most simple
+cases. The proof is that we introduced the R6RS module system in
+episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=239699.html">5</a>, and for 15 episode we could go on safely by just using the
+basic import/export syntax. However, once nontrivial macros enters in
+the game, things are not easy anymore.</p>
+<div class="section">
+<h1><a id="interpreter-semantics-vs-compiler-semantics" name="interpreter-semantics-vs-compiler-semantics">Interpreter semantics vs compiler semantics</a></h1>
+<p>First of all, let me clarify what I do mean by interpreter semantics
+and compiler semantics, terms which have nothing to do with
+being an interpreted or compiled language, since both Scheme interpreters
+and Scheme compilers exhibit both semantics.</p>
+<p><em>Compiler semantics</em> means that a program has (at least)
+two phases, the run-time phase and the expand-time phase, and
+some parts of the programs are executed at expand-time and some
+other parts of the program are executed at run-time. Scheme has
+a generic concept of <em>macro expansion time</em> which is valid even
+for interpreted implementation when there is no compilation time.</p>
+<p><em>Interpreter semantics</em> means that a program is fully evaluated at
+runtime, with no distinction between phases (for pure interpreters)
+or with interleaved expansion and evaluation phases (for
+incremental compilers).</p>
+<p>For instance Ikarus and Ypsilon work as incremental compilers
+at the REPL (I consider this as interpreter semantics, by stretching
+the terminology) and as batch compilers for scripts (for Ypsilon
+this is true only when the R6RS
+compatibility flag is set).</p>
+<p>Python works as an incremental compiler at the REPL (each time you enter
+a function in the REPL it is compiled to bytecode, and you can
+extract the bytecode by looking at <tt class="docutils literal"><span class="pre">.func_code</span></tt> attribute) and
+as batch compiler for scripts.</p>
+<p>Conceptually, in Python everything happens at runtime, including
+bytecode compilation. While technically bytecode compilation
+is cached, conceptually you may very well think that every module
+is recompiled at runtime, when you import it - which is actually what
+happens if the module has changed in the meanwhile.</p>
+<p>In short, you can consider Python as an interpreter (as it is usually
+done) and there is no substantial difference between typing commands
+at the REPL and writing a script. There are a few minor differences
+actually, but they are not relevant for what I am discussing now.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/Interpreter_Symbol.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/Interpreter_Symbol.jpg">
+<p>Things are quite different in Scheme. The interpreter semantics is
+<em>not specified</em> by the R6RS standard and it is completely
+implementation-dependent. It is also compatible with the standard to
+not provide interpreter semantics at all, i.e. to not provide a REPL:
+for instance PLT Scheme does not provide a REPL for R6RS programs
+(it does provide a REPL for non R6RS programs which is actually quite
+exceptional since it uses compiler semantics and not interpreter
+semantics!).</p>
+<p>The compiler semantics i.e. the <a class="reference" href="../_/http/www.r6rs.org/final/html/r6rs/r6rs-Z-H-13.html#node_chap_10">expansion process</a>
+of Scheme source code is (loosely) specified by the R6RS
+standard and is used in libraries. The semantics used in scripts is not clear
+(in the words of Will Clinger <em>there is no such thing as an R6RS-conforming
+Scheme script, because Scheme scripts are described only
+by a non-binding document that was never ratified</em>).</p>
+<p>The difference between the two semantics is most visible when you have
+macros depending on helper functions. When a program is read in
+interpreter semantics, everything happens at runtime: it is possible
+to define a function and immediately after a macro using that
+function.</p>
+<p>When a program is read in batch compiler semantics instead, <em>all</em> the
+definitions and the expressions are read, the macros are expanded and
+the program compiled, <em>before</em> execution.</p>
+<p>Implementations have a considerable freedom in what they allowed
+to do; for instance Ypsilon scripts use batch compiler semantics when the
+<tt class="docutils literal"><span class="pre">--r6rs</span></tt> flag is set, but by default they use incremental
+compiler semantics, just as the REPL. On the opposite side of the
+spectrum, the PLT REPL (in non-R6RS mode) basically
+uses batch compiler semantics.</p>
+<p>In any case the behavior of code typed the REPL is never identical to
+the behavior of a script: for instance, at the REPL you can import
+modules at any moment, whereas in a script you must import them at the
+beginning.  There are other subtler differences, for instance in the
+behavior of continuations. Then bottom line is that you should not
+believe your REPL blindly.</p>
+</img></div>
+<div class="section">
+<h1><a id="macros-and-helper-functions" name="macros-and-helper-functions">Macros and helper functions</a></h1>
+<p>As I said, you see the problem of compiler semantics once you
+start using macros which depend from auxiliary functions. More in
+general there is the same problem for any identifier which is used in
+the right hand side of a macro definition and not inside the
+templates. For instance, consider this simple macro</p>
+<pre class="literal-block">
+(def-syntax (assert-distinct arg ...)
+  #'(#f)
+  (distinct? bound-identifier=? #'(arg ...))
+  (syntax-violation 'assert-distinct "Duplicate name" #'(arg ...)))
+</pre>
+<p>which raises a compile-time exception (syntax-violation) if it is
+invoked with duplicate arguments. Such macro could be used as a
+helper in macros defining multiple names at the same time, like
+the <tt class="docutils literal"><span class="pre">multi-define</span></tt> macro of episode <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240804.html">9</a>.
+<tt class="docutils literal"><span class="pre">assert-distinct</span></tt> relies on the builtin function
+<tt class="docutils literal"><span class="pre">bound-identifier=?</span></tt> which returns true when two identifiers
+are equal and false otherwise (this is an extremely simplified explanation,
+let me refer to the <a class="reference" href="../_/http/www.r6rs.org/final/html/r6rs-lib/r6rs-lib-Z-H-13.html#node_idx_1142">R6RS document</a> for the gory details) and
+on the helper function <tt class="docutils literal"><span class="pre">distinct?</span></tt> defined as follows:</p>
+<pre class="literal-block">
+;; check if the elements of a list are distinct according to eq?
+(define (distinct? eq? items)
+  (if (null? items) #t ; no items
+      (let+ ((first . rest) items)
+        (cond
+         ((null? rest) #t); single item
+         ((exists (cut eq? first &lt;&gt;) rest) #f); duplicate
+         (else (distinct? eq? rest)); look at the sublist
+         ))))
+</pre>
+<p><tt class="docutils literal"><span class="pre">distinct?</span></tt> takes a list of objects and finds out they are all
+distinct according to some equality operator, of if there are duplicates.
+Here are a couple of test cases:</p>
+<pre class="literal-block">
+(test "distinct"
+      (distinct? eq? '(a b c))
+      #t)
+
+(test "not-distinct"
+      (distinct? eq? '(a b a))
+      #f)
+</pre>
+<p>It is natural, when writing new code, to try things at the REPL and to
+define first the function and then the macro. The problem is that the
+code will work in REPL: however, in R6RS-conforming implementations,
+if you cut and paste from the REPL and convert it into a script, you
+will run into an error!</p>
+<p>The explanation is that in compiler semantics macro
+definitions and function definitions happens at <em>different times</em>. In
+particular, macro definitions are taken in consideration <em>before</em>
+function definitions, independently from their relative position in
+the source code. Therefore our example fails to compile since the
+<tt class="docutils literal"><span class="pre">assert-distinct</span></tt> macro makes use of the <tt class="docutils literal"><span class="pre">distinct?</span></tt> function
+which is <em>not yet defined</em> at the time the macro is considered,
+i.e. at expansion time. Actually, not only functions are not evaluated
+at expansion time and cannot be used inside a macro, but in general
+the right hand side of any definition is left unevaluated by the compiler.
+This explains why <tt class="docutils literal"><span class="pre">(define</span> <span class="pre">x</span> <span class="pre">(/</span> <span class="pre">1</span> <span class="pre">0))</span></tt> is compiled correctly,
+as we <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=251476.html">discussed in the previous article</a> .</p>
+<p>There are nonportable ways to avoiding writing the helper
+functions in a separate module. For instance Ypsilon scripts by
+default (unless the strict R6RS-compatibility flag is set) use
+interpreter semantics and have no phase separation. On the other
+end of the spectrum, mzscheme has very strong phase separation,
+but it is still possible to define helper functions at expand-time
+without putting them in a separated module, using the nonportable
+<tt class="docutils literal"><span class="pre">define-for-syntax</span></tt> form.</p>
+<p>Nevertheless, <em>the only portable way to make
+available at expand time a function defined at runtime is to
+define the function in a different module and to import it at
+expand time</em>.</p>
+</div>
+<div class="section">
+<h1><a id="a-note-about-incremental-compilers-and-interpreters" name="a-note-about-incremental-compilers-and-interpreters">A note about incremental compilers and interpreters</a></h1>
+<p>Ikarus and Ypsilon use the semantics of an <em>incremental compiler</em>:
+each top level block of code is compiled - to native code in Ikarus and
+to bytecode in Ypsilon - and executed immediately.  Each new definition
+augments the namespace of known names at runtime, both for first class
+objects and macros. Macros are both defined and expanded at runtime.</p>
+<p>It is clear tha the semantics of an incremental compiler is
+very similar to the semantics of an interpreter; here is an example in
+Ikarus, where a macro is defined which depends from a helper function:</p>
+<pre class="literal-block">
+&gt; (define (double x) (* 2 x))
+&gt; (def-syntax (m) (double 1))
+(m)
+2
+</pre>
+<p>However, an incremental compiler is not identical to an interpreter,
+since internally it uses phase separation to compile blocks
+of code; for instance in Ikarus if you put together the
+previous definition in a single block you get an error,
+since the function <tt class="docutils literal"><span class="pre">double</span></tt> is known at run-time
+but not at expand-time:</p>
+<pre class="literal-block">
+&gt; (let () (define (double x) (* 2 x)) (def-syntax (m) (double 1)) (m))
+Unhandled exception
+ Condition components:
+   1. &amp;who: double
+   2. &amp;message: "identifier out of context"
+   3. &amp;syntax:
+       form: double
+       subform: #f
+   4. &amp;trace: #&lt;syntax double&gt;
+</pre>
+<p>There are still Scheme implementations which are pure interpreters and
+do not distinguish expand time from runtime at all; here is an example
+in Guile (notice that Guile is <em>not</em> an R6RS implementation):</p>
+<pre class="literal-block">
+guile&gt; (let () (define (double x) (* 2 x)) (define-macro (m) (double 1)) (m))
+2
+</pre>
+<p>I am using <tt class="docutils literal"><span class="pre">define-macro</span></tt> here which is the built-in macro mechanism
+for Guile: as you see the function <tt class="docutils literal"><span class="pre">double</span></tt> is immediately available
+to the macro, even if it is defined inside the same block as the macro,
+which is not the case for any of the existing R6RS implementations.
+Notice however that Guile also supports high level macros (via an external library)
+with compiler semantics.</p>
+</div>
+<div class="section">
+<h1><a id="discussion" name="discussion">Discussion</a></h1>
+<p>The interpreter semantics is the most intuitive and easier to
+understand. In such semantics everything happens at runtime; the code
+may still be compiled before being executed, as in incremental
+compiler, but this is an implementation detail: from the point of view
+of the programmer the feeling is the same as using an interpreter -
+modulo the tricky point mentioned in the previous paragraph.</p>
+<p>The interpreter semantics is also the most powerful semantics of all:
+for instance, it is possible to redefine identifiers and to import
+modules at runtime, things which are both impossible in compiler
+semantics.</p>
+<p>If you look at it with honesty, the compiler semantics is basically a
+performance hack: by separing compilation time from runtime you can
+perform some computation only once (at compilation time) and gain
+performance. This is not strange at all: compilers <em>are</em> performance
+hacks. It is just more efficient to convert a a program into machine
+code with a compiler than to interpret it expression by expression.</p>
+<p>The other main reason to favor compilers over interpreters, apart
+from performance, is compile-time cheching. Compilers are able to reject a
+class of incorrect programs even before executing them.
+Scheme compilers are traditionally not too strong in this respect, because of
+dynamic typing and because of the design philosophy of the
+language (be permissive, we will solve the errors later). Nevertheless,
+with macros you can in principle add all the compile-time checkings
+you want (we just saw the checking for distinct names):
+it is even possible to turn Scheme into a typed language, like <a class="reference" href="../_/http/www.ccs.neu.edu/home/samth/typed-scheme/index.html">Typed Scheme</a>.</p>
+<p>Another (minor) advantage of the compiler semantics is that it makes
+it easier for static tools to work with a program.
+For instance in Python an IDE cannot implement autocompletion of names in a
+reliable way, without having knowledge of the running program. In Scheme
+an IDE can statically determine all the names imported by the program
+and thus offer full autocompletion.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=255303.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=255303&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255303&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F20&amp;bodytext=One+of+the+trickiest+things+about+Scheme+is+the+distinction+between+the+interpreter+semantics+which+is+typically%0D%0A%28but+not+always%29+used+at+the+REPL+and+compiler+semantics%0D%0Awhich+is+typically+%28but+not+always%29+used+in+scripts.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255303&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F20">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D255303&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F20">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

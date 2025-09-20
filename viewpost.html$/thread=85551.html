@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Adding Optional Static Typing to Python</title>
+<meta charset="utf-8"/>
+<meta content="Guido van van Rossum" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#AACCFF" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=guido.html">Guido van van Rossum's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=85551.html">Discuss</a> | 
+<a href="mailto:?subject=Adding Optional Static Typing to Python&amp;body= %0AArtima Weblogs %0AAdding Optional Static Typing to Python %0Aby Guido van van Rossum %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=85551">Email</a> | 
+<a href="../viewpostP.html$/thread=85551.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=32026.html" title="Bob Martin's Agile Programming book">Previous</a> | 
+<a class="sl" href="thread=86641.html" title="Adding Optional Static Typing to Python -- Part II">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">All Things Pythonic</span><br>
+<span class="ts">Adding Optional Static Typing to Python</span><br/>
+<span class="as">by Guido van van Rossum</span><br/>
+<span class="pd">December 23, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Optional static typing has long been requested as a Python feature.  It's been studied in depth before (e.g. on the type-sig) but has proven too hard for even a PEP to appear.  In this post I'm putting together my latest thoughts on some issues, without necessarily hoping to solve all problems.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>An email exchange with Neal Norwitz that started out as an inquiry
+about the opening of a stock account for the PSF (talk about bizarre
+conversation twists) ended up jogging my thoughts about optional
+static typing for Python.</p>
+<p>[As an experiment, I'm going to post this to Artima without mentioning
+it anywhere else.  If RSS works, it should show up on various other
+blogs within days.]</p>
+<div class="section" id="what-is-optional-static-typing">
+<h1><a name="what-is-optional-static-typing">What is Optional Static Typing?</a></h1>
+<p>The Python compiler doesn't know about the types of the objects you
+pass around in a Python program; only the run-time (the Virtual
+Machine) does. This makes Python expressive and flexible, but
+sometimes means that bugs of a rather trivial kind (like typos in
+method names) are found later than the developer would have
+liked. Without losing the benefits of Python's dynamic typing, it
+would be nice if you had the option to add type declarations for your
+method arguments, variables and so on, and then the compiler would
+give you a warning if you did something that wasn't possible given
+what the compiler knows about those types. While there are third-party
+program checkers that find a lot of problems without type
+declarations, e.g. <a class="reference" href="../_/http/pychecker.sourceforge.net/index.html">pychecker</a>, it would be nice if (a) this
+capability was built into the Python compiler and (b) you could give
+it hints in cases where its type inference broke down.</p>
+<p>Let's look at a simple function:</p>
+<pre class="literal-block">
+def gcd(a, b):
+    while a:
+        a, b = b%a, a
+    return b
+</pre>
+<p>This pretty much only makes sense with integer arguments, but the
+compiler won't stop you if you call it with string or floating point
+arguments. Purely based on the type system, those types are fine: the
+% operator on two strings does string formatting (e.g. "(%s)" %
+"foobar" gives "(foobar)"), and Python happens to define % on floats
+as well (3.7 % 0.5 gives 0.2). But with string arguments the function
+is likely to raise a TypeError (gcd("", "%s") notwithstanding) and
+float arguments often cause bogus results due to the rounding errors.</p>
+<p>So let's consider a simple type annotation for this function:</p>
+<pre class="literal-block">
+def gcd(a: int, b: int) -&gt; int:
+    while a:
+        a, b = b%a, a
+    return b
+</pre>
+<p>I've considered various ways of adding argument types, and I've come
+to like this notation best. I couldn't use a colon to indicate the
+return type, because it would be too ambiguous to distinguish between
+these two:</p>
+<pre class="literal-block">
+def foo(): int:
+
+def foo(): print
+</pre>
+<p>(Yes, that's in part because Python's parser generator is so lame, but
+that in turn is intentional -- it is so lame to prevent me from
+inventing syntax that is either hard to write a parser for or hard to
+disambiguate by human readers, who always come first in Python's
+design.)</p>
+</div>
+<div class="section" id="issues">
+<h1><a name="issues">Issues</a></h1>
+<p>Let's look at a bunch of issues. For some, I have strawman answers.
+For others, I'm still groping in the dark. (And I need a re-education
+on how some of these things are solved in other languages!)</p>
+<div class="section" id="concrete-vs-abstract-types">
+<h2><a name="concrete-vs-abstract-types">Concrete vs. Abstract Types</a></h2>
+<p>It would be a shame if declaring gcd() as taking int arguments would
+mean that gcd(123456789012345, 23456789012355) would no longer work
+(those are longs, not ints).  This particular case can be solved by
+using inheritance (let int derive from long, or vice versa), but there
+are others that aren't solved so easily.  For example:</p>
+<pre class="literal-block">
+from StringIO import StringIO
+
+def foo(f: StringIO) -&gt; str:
+    f.write("hello")
+    return f.getvalue()
+
+f1 = StringIO("booh+")
+print foo(f1)  # prints "booh+hello"
+</pre>
+<p>What if a cStringIO instance were passed?  There are technical reasons
+why cStringIO can't or shouldn't inherit from StringIO, but more
+importantly, requiring inheritance defeats Python's reliance on <a class="reference" href="../_/http/c2.com/cgi/wiki$/DuckTyping/index.html">duck
+typing</a>.</p>
+<p><strong>Possible solution?</strong>: the compiler derives an inherited interface
+(let's call this a <em>duck type</em>) for the argument from the fact that
+the only two methods used are write() and getvalue(); the latter
+returning a str.  It makes sure that these methods are in fact defined
+by the StringIO class, and then accepts other class instances that
+implement the duck type.</p>
+<p><strong>But...</strong>: taking that to the extreme would not flag gcd("x", "y") as
+a bug because the operations used (bool-testing, binary %) are
+supported.  Also, it doesn't help for the return type.  What if I had
+a UnicodeStringIO class whose getvalue() returned a Unicode string?</p>
+</div>
+<div class="section" id="container-types">
+<h2><a name="container-types">Container Types</a></h2>
+<p>Container types offer lots of interesting problems.  As an
+introduction (not yet using containers), consider a function that
+compute the smallest of two values:</p>
+<pre class="literal-block">
+def min(a, b):
+    if a &lt; b:
+        return a
+    else:
+        return b
+</pre>
+<p>We would like to be able to add type annotations indicating that a and
+b should have the same type and that the result also has that type.
+Strawman syntax:</p>
+<pre class="literal-block">
+def min(a: T, b: T) -&gt; T:
+    if a &lt; b:
+        return a
+    else:
+        return b
+</pre>
+<p>As a (rather unpythonic) strawman, I'm using T and T0, T1, T2, etc. as
+<em>type variables</em>.  You can think of these as the free variables in an
+equation of types; we're saying that the types of a, b and the
+(unnamed) return value must all be the same.  So min(1, 2) is valid
+and returns an int; min("a", "b") is valid and returns a string.</p>
+<p>What about min(1, 2.5)?  That ought to be valid and return a float.  I
+guess this means that there should be some kind of typing hierarchy
+that explains how the various numeric types are embedded in each
+other.  The VM already knows about these coercion rules, but the trick
+is to build them into the type system.  I think I would like to do
+this using a mechanism separate from inheritance, since I really don't
+think that it is a good idea to require that int is a subclass of
+float and float a subclass of complex.  But the mechanism should also
+be open to user-defined types; there shouldn't be mechanisms in Python
+that the user cannot extend (not many, anyway).</p>
+<p>Now on to containers.  Let's look at a different function that
+computes the smallest element of a sequence:</p>
+<pre class="literal-block">
+def min(a):
+    it = iter(a)
+    x = it.next()    # This raises StopIteration if a is empty
+    for y in it:
+        if y &lt; x:
+            x = y
+    return x
+</pre>
+<p>How would we write the signature?  Clearly a is any iterable; the
+function return type is the iterable's element type.  Strawman:</p>
+<pre class="literal-block">
+def min(a: iterable(T)) -&gt; T:
+    it = iter(a)
+    x = it.next()    # This raises StopIteration if a is empty
+    for y in it:
+        if y &lt; x:
+            x = y
+    return x
+</pre>
+<p>I guess iterable would have to be a new built-in to represent the
+concept "anything over which you can iterate".  This includes lists
+and tuples and strings, but also dictionaries, files, and in general
+anything that defines __getitem__ or __iter__.</p>
+<p>The Boost folks have a habit of Capitalizing these abstract types, so
+it would be Iterable.  That would perhaps also be a way out of the
+dilemma of int vs. long: we could use Integer for idealized integers.
+There are other numeric abstractions that we might want to define,
+like Exact and Inexact, Rational, Real and Complex (and Quaternion?),
+but I don't want to digress into number systems.  Type systems are
+hard enough without them.</p>
+<p>Perhaps we could extend this convention to saying that whenever a
+class name starts with a Capital letter it acts as a duck type, and
+when it starts with a lower case letter it acts as a concrete type (so
+only instances of the type and its subclasses are allowed).</p>
+<p>I don't particularly like enforcing naming conventions based on case;
+it's one thing to have an agreement amongst a group of Python
+developers that Foo is an abstract class and foo is a concrete class,
+but it's quit a different thing to have the compiler look at this too
+for its type checking.</p>
+<p>It would be good to have a set of notations both for the common
+(abstract and concrete) container types, just so we can write more
+examples.  Here's a strawman.</p>
+<blockquote>
+<p>list(T): a list whose elements are all T's</p>
+<p>set(T): a set whose elements are all T's (set is a builtin in Python
+2.4)</p>
+<p>tuple(T0, T1, T2): a tuple of length three whose elements have the
+specified types (if you want to use tuples of arbitrary length as
+sequences, use Seqence)</p>
+<p>dict(T1, T2): a dict whose key type is T1 and whose value type is T2</p>
+<p>Iterable(T): an iterable whose elements are all T's</p>
+<p>Sequence(T): a sequence whose elements are all T's</p>
+<p>Mapping(T1, T2): a mapping whose key type is T1 and whose value type
+is T2</p>
+<p>union(T1, T2): either T1 or T2 (union is not really a type but an
+operator, but I think it could just be a built-in)</p>
+</blockquote>
+<p>Do we need to distinguish between mutable and immutable sets and
+sequences?</p>
+<p>We need a better name for type(None) than types.NoneType; perhaps void
+will do?</p>
+<p>A common pattern for optional values is to have union(T, void).
+Perhaps we could add the notation optional(T) to mean just this?</p>
+<p>I'm handwaving a bit about how the compiler knows all these built-in
+names.  I think it should assume that names of built-ins that aren't
+redefined as globals (or imported, etc.) stand for their built-in
+meaning and there's no surreptitious run-time redefinition going on.
+So then it can know about int, and about len(x: sequence(T))-&gt;int, and
+so on.</p>
+</div>
+<div class="section" id="overloading">
+<h2><a name="overloading">Overloading</a></h2>
+<p>This is not about operator overloading, which is simple enough, but
+about method signature overloading a la Java.  While most overloading
+is easily expressed using either default argument values or a simple
+union type, there are some cases that defeat this approach.</p>
+<p>For example, the signatures of the built-in min() and max() functions
+cause some grief: they overload two quite different functions:</p>
+<pre class="literal-block">
+def min(a: iterable(T)) -&gt; T:
+    ...
+
+def min(x: T, y: T, *rest: sequence(T)) -&gt; T:
+    ...
+</pre>
+<p>I don't know how to deal with this except by somehow making this kind
+of overloading explicit.  Decorators to the rescue perhaps:</p>
+<pre class="literal-block">
+@overloaded
+def min(a: iterable(T)) -&gt; T:
+    ...
+
+@overloaded
+def min(x: T, y: T, *rest: sequence(T)) -&gt; T:
+    ...
+</pre>
+<p>The overloaded decorator could build a multimethod dispatched based on
+the call signature.  That's probably quicker than decoding the types
+by hand from a varargs argument...</p>
+</div>
+<div class="section" id="compile-time-vs-run-time">
+<h2><a name="compile-time-vs-run-time">Compile Time vs. Run Time</a></h2>
+<p>Python traditionally does more stuff at run time than most languages.
+This makes compile time type checking difficult.  For example, the
+Python compiler (unlike e.g. the Java compiler) doesn't resolve
+imports at compile time -- it just notes that an imported module of a
+certain name is supposed to exist and moves on.  (from ... import *
+leaves it in the dark even more completely -- just like the human
+reader.)</p>
+<p>Perhaps some of the type checking should be postponed to import time?
+That solves the problem that even if the compiler were to follow the
+import references, it can't be sure that the module that's present at
+compile time defines the same classes as the module that's present at
+run time.  Java actually has a similar problem, and solves it by
+putting lots of information in class files which is then checked by
+the bytecode loader before the bytecode is allowed to run.  We can do
+a similar thing, or perhaps even more extreme.  (Neal Norwitz prompted
+me to think of this approach.  Let's hope it isn't patented.)</p>
+<p>[I could write more, but it would take all night.
+Perhaps tomorrow, perhaps in the new year.]</p>
+</div>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=85551.html">49
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=85551&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Guido van van Rossum adds a new entry to <a href="../index.html$/blogger=guido.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/guido.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D85551&amp;title=Adding+Optional+Static+Typing+to+Python&amp;bodytext=Optional+static+typing+has+long+been+requested+as+a+Python+feature.++It%27s+been+studied+in+depth+before+%28e.g.+on+the+type-sig%29+but+has+proven+too+hard+for+even+a+PEP+to+appear.++In+this+post+I%27m+putting+together+my+latest+thoughts+on+some+issues%2C+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D85551&amp;title=Adding+Optional+Static+Typing+to+Python">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D85551&amp;title=Adding+Optional+Static+Typing+to+Python">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/guido.jpg"/></td><td>Guido van Rossum is the creator of Python, one of the major
+programming languages on and off the web. The Python community refers to him as the BDFL (Benevolent Dictator For Life), a title straight
+from a Monty Python skit. He moved from the Netherlands to the USA in
+1995, where he met his wife. Until July 2003 they lived in the
+northern Virginia suburbs of Washington, DC with their son Orlijn, who
+was born in 2001. They then moved to Silicon Valley where Guido now works for Google
+(spending 50% of his time on Python!).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Guido van van Rossum. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

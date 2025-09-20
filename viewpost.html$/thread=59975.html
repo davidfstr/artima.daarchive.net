@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Service Oriented Architectures - Separating Hype From Reality</title>
+<meta charset="utf-8"/>
+<meta content="Sean Landis" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=seanl.html">Sean Landis' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=59975.html">Discuss</a> | 
+<a href="mailto:?subject=Service Oriented Architectures - Separating Hype From Reality&amp;body= %0AArtima Weblogs %0AService Oriented Architectures - Separating Hype From Reality %0Aby Sean Landis %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=59975">Email</a> | 
+<a href="../viewpostP.html$/thread=59975.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=58217.html" title="D4@J1">Previous</a> | 
+<a class="sl" href="thread=165855.html" title='Java EE: "Java Ever Evolving"'>Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">People Over Process</span><br>
+<span class="ts">Service Oriented Architectures - Separating Hype From Reality</span><br/>
+<span class="as">by Sean Landis</span><br/>
+<span class="pd">July 12, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Does service oriented architecture mean Web Services? Is Web Services even appropriate as an SOA technology? These and other issues are explored in this post.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+This post is based on a Birds of a Feather I gave at JavaOne. Thanks to Michael Ogg, CTO of Valaran Corporation, for an earlier presentation that this is based on.
+
+<p>I suppose we should be thankful for web services: we are no longer considered
+aliens when speaking about service oriented architecture (SOA). In fact,
+it's even cool to talk about SOA. The company I work for has even recieved
+RFPs that require SOA. The unfortunate side-effect of all this is that 
+SOA is now often understood as synonomous with web services. This despite
+the fact that web services are not particularly well suited for the task.
+
+<h1>A Simple Definition</h1>
+There are a lot of 'definitions' for web services ranging from simple to
+complex. I like to keep things simple and I believe complexity is often
+introduced to justify the approach being used. About the simplest definition
+I have seen for Service Oriented Architecture is an architecture based on
+services, where a service is a distributed resource that is accessed in
+accordance with its interface. The keys are the distributed nature, the
+importance of the interface, and the hiddeness of the resource, whether it
+be data or program, or both. 
+
+<h1>Review of Services</h1>
+A service exposes its <i>behavior</i> (resources) via its <i>interface</i>.
+The service can be accessed via request-reply or asynchronous messaging, it
+can have autonomous behavior (e.g., events), and it can be a client to other
+services. A key point is that the interface is a <i>contract</i> for the
+service's semantics: A service with <i>this</i> interface behaves
+like <i>this</i>. The implementation is, well, an implementation detail.
+You don't know how it was implemented or what language was used, as long as
+it satisfies the service's contract. <i>So, are all services that follow this
+pattern equal?</i>
+<h2>Implementation</h2>
+All the hype about <i>Java Web Services</i> is just that. It's irrelevant
+whether Java is used in the implementation. The very name,
+"Java Web Services," is absurd. True, just as with CORBA, using Java makes 
+implementation almost possible. And mostly thanks to Java, some of the tools
+are possibly quite good. But the point remains: <i>That a service happens to 
+be implemented in Java is merely an implementation detail.</i>
+<p>Why mention CORBA? Well, CORBA was the first serious OO-based SOA.
+Second, it has a lot in common with web services. And, finally, thanks to 
+it's past popularity, the lessons to be learned from the CORBA experience 
+should resonate with many of us.
+
+<h2>Interfaces</h2>
+Web services defines service interfaces using WSDL, an XML-based language.
+CORBA uses OMG IDL to define its interfaces. Jini defines interfaces
+using Java. (Jini can be thought of as the "native" Java SOA.) 
+So all three use some form of IDL. Does that mean they are all the same? 
+
+<p>WSDL and OMG IDL are
+<i>meta-languages</i> whereas Java is a <i>real language</i>. The distinction
+is fundamental because <i>it is the interface that enables the semantics</i>.
+
+<h2>Java Interfaces</h2>
+A Java interface is part of a <i>type system,</i> so 
+<code>interface foo</code> cannot be confused with <code>interface bar</code>
+even if all their methods have identical signatures. In web services, there's 
+no guarantee that a lookup will get the right thing back. All you are doing is 
+using names. 
+
+<p>Java interfaces are polymorphic and the methods have strongly-typed 
+parameters, return types and exceptions. These notions extend to all other
+classes and interfaces in the language.
+
+<p>If using RMI, an interface's implementing class (aka proxy, or stub) has
+an associated ClassLoader. This is a powerful feature because we can choose
+which class to load based on its ClassLoader. If we don't trust the 
+ClassLoader, we don't load the class. Jini 2.0 takes this further by 
+providing means for establishing proxy trust on a per proxy basis. With 
+these mechanisms, a service client can
+safely load <i>never-seen-before</i> classes.
+
+<h2>WSDL and OMG IDL</h2>
+Both OMG IDL and WSDL use language bindings and naming conventions to 
+<i>simulate</i> strong-typing. Thanks to this, all CORBA services and clients 
+are interoperable. That is, except when using different ORBs, or different 
+IDL compilers. Then all bets are off. Why should Web Services be any 
+different? Meta-language-based 
+middleware cannot, by definition, agree on the language at the end-points,
+therefore it must agree on the protocol. Protocol-based middleware can
+not be protocol-independent, so you must ask yourself this fundamental
+question. Which is better: language-independence or protocol-independence? 
+How you answer will define the nature of the SOA you build.
+
+<p>There are two main problems with langugage-independent IDLs. The first
+is that history has shown it is hard to reliably achieve correct behavior
+at the endpoints. And secondly,
+as I hope to show, an unacceptable number of architecture-critical 
+features are lost.
+
+<h1patterns< h1="">
+
+In Java you can make use of semantically meaningful
+design patterns. For example, the event pattern is based on sources and 
+listeners. The <code>RemoteEventListener</code> class has the semantics of 
+the <code>Remote</code> object. Additionally, objects are serializable 
+(or not) for a semantic reason, e.g., <code>Socket</code> can't be serialized 
+and the language enforces it. 
+
+<p>Java includes JAAS, a complete language-based security model. This is not
+a high-level add-on; it's built into, and enforced by the language. There's
+no question how the security patterns will behave when properly used.
+
+<p>Jini Extensible Remote Invocation (JERI) provides a highly-customizable 
+RMI programming model. JERI provides a set of patterns for establishing 
+communication transports, for establishing per method constraints (most
+notably security constraints), and for exporting them to remote clients.
+JERI provides a protocol-independent, secure means of performing RMI-style
+interactions with remote services. This is much more convenient and reliable
+than a protocol-based, language-mapped system can provide. 
+
+<p>Meta-language interface definitions lose all these capabilities.
+
+<h1>An Example</h1>
+
+A simple example compares interface languages and their consequences. The 
+Java interface is straightforward:
+
+<pre>
+public interface Cookie {
+  String getCookie(int select) throws java.rmi.RemoteException;
+}
+</pre>
+<p>But (a small part of) the WSDL reveals problems:
+
+<pre>
+&lt;message name='CookieService_getCookie_Response_Soap'&gt;
+    &lt;part name='response' type='xsd:string'/&gt;
+&lt;/message&gt;
+&lt;message name='CookieService_getCookie__Request_Soap'&gt;
+    &lt;part name='p0' type='xsd:int'/&gt;
+&lt;/message&gt;
+...
+&lt;operation name='getCookie' parameterOrder='p0'&gt;
+    &lt;input message='tns:CookieService_getCookie__Request_Soap'/&gt;
+    &lt;output message='tns:CookieService_getCookie_Response_Soap'/&gt;
+    &lt;fault name='RemoteException' message='tns:RemoteException'/&gt;
+&lt;/operation&gt;
+</pre>
+<p>First off, there's an obvious difference in complexity and readability. 
+It's trivial to write a Java interface but even a simple interface is
+daunting in WSDL. Thank God there's tools that usually work. 
+
+<p>Secondly, and most important, Java's strong-typing means an 
+<code>int</code> will actually be sent and
+recieved. Both service end-points are Java so the protocol is irrelevant and
+the "mapping" is always consistent via Java object serialization. If a 
+malicious client sends a bogus message, the service still throws 
+<code>IllegalArgumentException</code> or <code>RemoteException</code>.
+By contrast, WSDL end-points are undefined, so the protocol is all we've got.
+We are ensured of the formatting on the wire, but we have no idea what 
+happens if <code>type='xsd:int'</code> is incorrectly mapped or unmapped.
+
+<p>If you as a service writer, happen to be using JERI, then you get the 
+benefit of controlling both service endpoints through mobile code. 
+This means that even if you
+are using a custom protocol, you are in control of how objects are marshalled
+and unmarshalled on both ends of the wire. You no longer have to put your 
+service's reliability into the hands of some unknown entity on the far end
+of the wire. You don't need to worry about endpoints that might be out of 
+compliance with the 
+protocol, that might have bugs you can't fix, that might not support the
+same version of the protocol, or that might even be malicious.
+
+<h1>Stories We've Heard</h1>
+Why do people base their SOA on Web Services? We've heard many stories.
+
+<p><b>"But the XML stream is ASCII so I can see what's going on."</b>
+So when was the last time you had to crack a JRMP stream? Readable
+protocols may be good for debugging in the absence of middleware support, 
+but if you still require human-readable protocols in your application, 
+then you have more serious problems. Anyway, are 
+SOAP suds any simpler to read than JRMP? And if you really
+want readability, Jini and JERI can give you an ASCII stream 
+if you want one.
+
+<p><b>"But in practice, the end-points are Java anyway."</b>
+If so, then why go to all this trouble? You're still at the mercy of the 
+endpoint implementations.
+
+<p><b>"But I can us HTTP/HTTPS for the transport."</b>
+With Jini you can use HTTP/HTTPS if you want to. JERI makes it quite easy to
+do so.
+
+<p><b>"But everyone else is using it."</b>
+When it comes to fads, software technologists are no better than teenagers.
+We chase the latest thing in hopes it will solve our problems. We falsely 
+assume the next new technology is a step forward. The facts are that we
+work on hard problems, that technology doesn't always take forward steps,
+and that "everyone else" are often wrong.
+
+<h1>Pedagogical Grid Computing Example</h1>
+I had to look it up: "pedagogical" means <i>for teaching purposes.</i> 
+This isn't a real world grid solution but it demonstrates some reasons
+why web services is not an ideal grid computing technology. In fact,
+Grid computing is a perfect Jini application, but somehow it got hijacked as 
+<i>The Web Services Killer App.</i>
+<p>A grid needs a point of entry:<p>
+<pre>
+public interface Grid {
+    public JobId submit(JobSpecification jobSpec,
+                        UserSpecification userSpec,
+                        RemoteEventListener callback)
+        throws RemoteException, GridException;
+    // other methods ...
+</pre>
+<p>Notice the semantic richness of this example. Furthermore, the use of 
+dynamic callbacks makes for a much more powerful application. This is beyond
+the reach of web services. Inside the Grid cloud, the argument for real 
+objects is stronger still:
+
+<pre>
+public interface Task {
+    public void prepare(Object o) throws Exception;
+    public void setRunnable(Runnable runnable);
+    public void addListener(RemoteEventListener
+                            listener);
+    // other methods ...
+}
+</pre>
+<p>Here's an example of the <i>Active Object Pattern</i> for distributed
+objects. Again, this is way beyond the capabilities of web services but 
+dramatically increases the power of a grid application. Anyone familiar with
+Jini is probably thinking, "what about JavaSpaces?" Indeed, JavaSpaces is
+an ideal grid service technology that would be very difficult to leverage in a
+web services-based grid solution.
+
+<h1>Some Miscellaneous Ranting</h1>
+If you believe in the power of objects, then you probably realize that
+although it has "methods," WSDL is more like a data type (in the C struct 
+sense) than an object.  Much though I dislike CORBA, Web Services is a step 
+backward. There is no polymorphism or class inheritance. Web Services breaks 
+the Einstein Simplicity Doctrine: <i>"Everything should be made as simple as 
+possible, but not simpler."</i> Web services is less simple than CORBA but 
+weaker in many respects, and we all know CORBA is not simple!
+
+<p>Web Services breaks one of the key doctrines identified in the classic
+"Note on Distributed Computing": Local vs. remote objects. The argument
+made by Waldo, Wolrath, et. al., is that there is a fundamental difference
+between local and remote objects and any distributed system that attempts
+to hide that difference is fundamentally flawed. At the time, CORBA was the
+example of remoteness-hiding, but we can substitute web services and make
+the same points. 
+
+<p> After all this, it seems amazing that the Globus group would use Web 
+Services as the basis for a globally distributed system!
+
+<h1>Some Conclusions</h1>
+I'd venture a guess that web services was the dominant topic at the last
+two JavaOne conferences. If you measured the number of sessions or the 
+number of attendees, I bet web services would win hands down. Clearly the 
+technology is enjoying widespread interest, but I saw no indication that
+there was widespread understanding or satisfaction. As developers are getting
+familiar with web services, they seem to be experiencing a degree of 
+dissatisfaction and even disillusionment. This is a part of the normal 
+<i>emerging technology hype cycle</i> as defined by the Gartner Group. 
+The hype after introduction reaches a crescendo at the <i>Peak of Inflated
+Expectations</i> and
+then drops into the <i>Trough of Disillusionment</i> as reality sets in. 
+The early adopters
+share their painful experiences and drive the interest level back down with
+their tales of caution. If the technology has merit, it will find its true
+niches and gain mainstream acceptance on the <i>Slope of Enlightenment</i>. 
+Eventually it will be supplanted with
+some new and better technology after reaching its <i>Plateau of 
+Productivity.</i>
+<p>Web services has begun to slide down into the trough of disillusionment. 
+For reference, Jini appears to have
+passed through the trough of disillusionment and is climbing up the slope of 
+enlightenment. (These are my estimates. You can see exactly how the Gartner
+Group evaluates them for only $495). How deep will the web services trough be? 
+Will it find a niche after enlightenment? I think so.
+
+<p>Web Services is a great integration technology (like a modern EDI). It
+provides a "common backplane" for weaving together disparate functions and
+allowing them to work together. For the IT department, web services is a
+Godsend. In that universe, the endpoints can be managed to ensure true
+interoperability. Whether web services is better at this than something else,
+say Jini, is a arguable. For example, if there's a degree of dynamic behavior,
+if services may come and go, then Jini would be better. If the environment
+is static, then web services is great. 
+
+<p>Web services is a good tool for exporting non-web services to a web 
+environment. In the IT world, a web-based SOA has the advantage of utilizing
+a browser as the client. This can ease development, but there are still
+problems. For example, one must standardize on a set of browser primitives
+or require a baseline browser. Furthermore, the client is fairly limited
+in what it can do computationally. With Jini, the proxy and the UI are 
+actually written by the service provider and dynamically downloaded to the 
+client as needed. There is 
+a base JVM requirement, but in practice, this tends to be easier to manage
+than the browser problem. Furthermore, the proxy can contain significant
+sophistication that goes beyond what a web service application
+can provide.
+
+<p>Web services are not good for complex systems including service 
+ecologies (SOA). For very simple service interactions, web services may be
+sufficient, but they may not be justified due to the cost of implementation
+and deployment. The bottom line is that there are too many important 
+characteristics lost due to the design assumptions of hiding remoteness and
+providing language-independence. If you are considering employing SOA, then
+consider what's been written here, and consider a pure Java and Jini 
+approach over Web Services for building your Service Oriented Architecture.
+
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=59975.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=59975&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Sean Landis adds a new entry to <a href="../index.html$/blogger=seanl.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/seanl.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D59975&amp;title=Service+Oriented+Architectures+-+Separating+Hype+From+Reality&amp;bodytext=Does+service+oriented+architecture+mean+Web+Services%3F+Is+Web+Services+even+appropriate+as+an+SOA+technology%3F+These+and+other+issues+are+explored+in+this+post.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D59975&amp;title=Service+Oriented+Architectures+-+Separating+Hype+From+Reality">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D59975&amp;title=Service+Oriented+Architectures+-+Separating+Hype+From+Reality">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/seanlandis.jpg"/></td><td>Sean Landis is a technologist and programmer interested in, among other things, mobile and distributed sytems, location-based services, and skiing.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Sean Landis. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></h1patterns<></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

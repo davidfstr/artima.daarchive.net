@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Scala: An Effective Blend of Object Oriented and Functional Programming</title>
+<meta charset="utf-8"/>
+<meta content="Christopher Diggins" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cdiggins.html">Christopher Diggins' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=115705.html">Discuss</a> | 
+<a href="mailto:?subject=Scala: An Effective Blend of Object Oriented and Functional Programming&amp;body= %0AArtima Weblogs %0AScala: An Effective Blend of Object Oriented and Functional Programming %0Aby Christopher Diggins %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=115705">Email</a> | 
+<a href="../viewpostP.html$/thread=115705.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=115363.html" title="Typesafe Enums in C++">Previous</a> | 
+<a class="sl" href="thread=115788.html" title="Policy Based Range Checking Class for C++">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Heron-Centric: Ruminations of a Language Designer</span><br>
+<span class="ts">Scala: An Effective Blend of Object Oriented and Functional Programming</span><br/>
+<span class="as">by Christopher Diggins</span><br/>
+<span class="pd">June 21, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Until relatively recently programming languages have fit neatly into either "imperative" or "functional" categories.
+Scala represents a new breed of language which obliterates these arbitrary restrictions.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+I have been studying the <a href="../_/http/scala.epfl.ch/index.html">Scala programming language</a>
+by Martin Odersky and his lab in great depth recently
+and I really like what I see. Scala is a very effective blend of functional, imperative and object
+oriented techniques and has a practical minded design despite supporting very advanced techniques.
+</p>
+<p>
+I was perusing the Scala standard library and came upon the library's implementation of <tt>List</tt>. The implementation
+was quite idiomatic of the functional style with the member functions expressed mostly in terms of various combinations of
+Car (<tt>head</tt>), Cdr (<tt>tail</tt>), and Cons (<tt>::</tt>). The implementation was mediochre because many of the
+functions were not tail-recursive. This meant that the code was very compact and readable ( which I like ), but caused
+stack overflows on lists of over 1000 elements (which was unacceptable) as well as being inefficient ( which I can live with ).
+</p>
+<p>
+I decided to try my hand at rewriting the class to see if I could do any better, and I came upon the
+observation that a list implementation can be entirely expressed in terms of an interface containing simply one function:
+<tt>foreach</tt>. I decided to build a set of classes all deriving from a single <tt>Sequence</tt> trait ( a kind of
+abstract class) as follows:
+</p>
+<pre>
+  trait Sequence[+a]  {
+    def foreach(f: a =&gt; unit): unit;
+  }
+</pre>
+<p>
+  The <tt>List</tt> trait introduces dozens of functions derived from this as follows
+  (they are not all tested yet, sorry):
+</p>
+<pre>
+  trait List[+a] extends Sequence[a]
+  {
+    def defaultElement : a =
+      null.asInstanceOf[a];
+
+    def apply(n : Int) =
+      { var i = 0; foldLeft[a](defaultElement)((xs, x) =&gt; { i = i + 1; if (i - 1 == n) x else xs; }); }
+
+    def head : a =
+      apply(0);
+
+    def last: a =
+      { var i = 0; foldLeft[a](head)((xs, x) =&gt; x); }
+
+    def tail : List[a] =
+      { var atHead = true; foldLeft[List[a]](Nil)((xs, x) =&gt; if (atHead) { atHead = false; Nil } else x :: xs);  }
+
+    def isEmpty: Boolean =
+      length == 0;
+
+    def ::[b &gt;: a](x: b): List[b] =
+      new diggins.::(x, this);
+
+    def map[b](f: a =&gt; b): List[b] =
+      foldLeft[List[b]](Nil)((xs, x) =&gt; f(x) :: xs);
+
+    def filter(p: a =&gt; Boolean): List[a] =
+      foldLeft[List[a]](Nil)((xs, x) =&gt; if (p(x)) x :: xs else xs);
+
+    def reverse: List[a] =
+      foldLeft[List[a]](Nil)((xs, x) =&gt; x :: xs);
+
+    def reverseForeach(f : a =&gt; unit) =
+      reverse.foreach(f);
+
+    def reverseMap[b](f : a =&gt; b) : List[b] =
+      reverse.map(f);
+
+    def length: Int =
+      { var i = 0; var x = this; while (x != Nil) { i = i + 1; x = x.tail; }; i; }
+
+    def count(p : a =&gt; Boolean) : Int =
+      { var i = 0; foreach(x : a =&gt; if (p(x)) { i = i + 1; }); i; }
+
+    def indices: List[Int] =
+      { var i = -1; map[Int](x : a =&gt; { i = i + 1; i; }); }
+
+    def init: List[a] =
+      take(length - 1);
+
+    def take(n: Int): List[a] =
+      { var i = -1; filter(x : a =&gt; { i = i + 1; i &lt; n; } ); }
+
+    def drop(n: Int): List[a] =
+      { var i = -1; filter(x : a =&gt; { i = i + 1; i &gt;= n; } ); }
+
+    def takeRight(n : Int): List[a] =
+      drop(length - n);
+
+    def dropRight(n : Int): List[a] =
+      take(length - n);
+
+    def splitAt(n: Int): Pair[List[a], List[a]] =
+      Pair(take(n), drop(n));
+
+    def takeWhile(p: a =&gt; Boolean): List[a] =
+      { var ret = true; filter(x =&gt; if (p(x)) ret else { ret = false; false; }) }
+
+    def dropWhile(p: a =&gt; Boolean): List[a] =
+      { var ret = false; filter(x =&gt; if (p(x)) ret else { ret = true; true; }) }
+
+    def span(p: a =&gt; Boolean): Pair[List[a], List[a]] =
+      Pair(takeWhile(p), dropWhile(p));
+
+    def negate_predicate[b](p: b =&gt; Boolean)(x : b) : Boolean =
+      !p(x);
+
+    def break(p: a =&gt; Boolean): Pair[List[a], List[a]] =
+      span(negate_predicate[a](p));
+
+    def remove(p : a =&gt; Boolean) : List[a] =
+      filter(negate_predicate[a](p));
+
+    def partition(p : a =&gt; Boolean) : Pair[List[a], List[a]] =
+      Pair(filter(p), remove(p));
+
+    def forAll(p : a =&gt; Boolean) : Boolean =
+      { var ret = true; foreach(x =&gt; if (!p(x)) ret = false); ret; }
+
+    def exists(p : a =&gt; Boolean) : Boolean =
+      { var ret = false; foreach(x =&gt; { if (p(x)) ret = true }); ret; }
+
+    def contains(elem: Any): boolean =
+      exists(x =&gt; x == elem);
+
+    def foldLeft[b](z: b)(f: (b, a) =&gt; b): b =
+      { var ret = z; foreach(x : a =&gt; { ret = f(ret, x); }); ret; }
+
+    def foldRight[b](z: b)(f: (a, b) =&gt; b): b =
+      { var ret = z; reverseForeach(x : a =&gt; { ret = f(x, ret); }); ret; }
+  }
+</pre>
+<p>
+  This also is another trait, and it can not be instantiated. Two
+  concrete classes which implement the List interface are:
+</p>
+<pre>
+  object Nil extends List[All] {
+    override def isEmpty = true;
+    override def foreach(f: All =&gt; unit): unit = error("head of empty list");
+  }
+
+  class ::[+a](hd: a, tl: List[a]) extends List[a] {
+    override def isEmpty = false;
+    override def foreach(f: a =&gt; unit): unit =
+      { var x:List[a] = this; while (!x.isEmpty) { f(x.head); x = x.tail; } }
+    override def head: a = hd;
+    override def tail: List[a] = tl;
+  }
+</pre>
+<p>
+  A rather nifty feature of Scala is that identifiers can be symbols. In this case <tt>::</tt> is a
+  name of a class which implements the List interface. We can also use it with infix notation as follows:
+</p>
+<pre>
+  val x : List = 1 :: 2 :: 3 :: nil;
+</pre>
+<p>
+  This is however only the tip of the iceberg. Scala also makes it easy to implement
+  lazy lists ala Haskell. I was able to create a lazy list in only a few lines of code as
+  follows:
+</p>
+<pre>
+  class LazyRange(begin_a : int, end_a : int) extends List[int]
+  {
+    def begin = begin_a;
+    def end = end_a;
+
+    override def foreach(f: int =&gt; unit): unit =
+      { var i = begin; while (i &lt;= end) { f(i); i = i + 1; }; };
+
+    override def apply(n : int) = n + begin;
+    override def reverse : LazyRange = new ReverseLazyRange(begin_a, end_a);
+    override def length = end - begin;
+    override def head = begin;
+    override def last = end;
+    override def tail = new LazyRange(begin_a, end_a - 1);
+  }
+</pre>
+<p>
+  I also created an efficient implementation of a list by using an array adapter:
+</p>
+<pre>
+class ArrayRange[a](arr_a : Array[a], begin_a : int, end_a : int) extends List[a]
+{
+  val arr = arr_a;
+  val begin = begin_a;
+  val end = end_a;
+
+  override def isEmpty = begin == end;
+  override def tail = { if (length == 1) Nil else new ArrayRange[a](arr, begin + 1, end); }
+  override def length : Int = { end - begin; }
+  override def apply(n : int) : a = { arr(n); }
+  override def head = apply(0);
+  override def last = apply(length-1);
+
+  override def foreach(f : a =&gt; Unit) : Unit = {
+    var i = 0;
+    while (i &lt; length) {
+      f(apply(i));
+      i = i + 1;
+    }
+  }
+
+  override def map[b](f: a =&gt; b): ArrayRange[b] = {
+    var ret = new Array[b](length);
+    var i = 0;
+    while (i &lt; length) {
+      ret(i) = f(apply(i));
+      i = i + 1;
+    }
+    fromArray[b](ret);
+  }
+
+  override def filter(p: a =&gt; Boolean): ArrayRange[a] = {
+    var i = 0;
+    var j = 0;
+    var ret = new Array[a](length);
+    while (i &lt; length) {
+      if (p(apply(i))) {
+        ret(j) = apply(i);
+        j = j + 1;
+      }
+      i = i + 1;
+    }
+    fromArray[a](ret);
+  }
+
+  override def reverse : ArrayRange[a] =
+    new ReverseArrayRange[a](arr, begin, end);
+
+  def fromArray[b](x : Array[b]) : ArrayRange[b] =
+    new ArrayRange[b](x, 0, x.length);
+}
+</pre>
+<p>
+  I think Scala is one of the strongest new languages to come out in a long time, I encourage everyone to check it out.
+  For more of my Scala code you can see my posts to the mailing list online at
+  <a href="../_/http/news.gmane.org/gmane.comp.lang.scala">http://news.gmane.org/gmane.comp.lang.scala</a>.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=115705.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=115705&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Christopher Diggins adds a new entry to <a href="../index.html$/blogger=cdiggins.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cdiggins.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D115705&amp;title=Scala%3A+An+Effective+Blend+of+Object+Oriented+and+Functional+Programming&amp;bodytext=Until+relatively+recently+programming+languages+have+fit+neatly+into+either+%26quot%3Bimperative%26quot%3B+or+%26quot%3Bfunctional%26quot%3B+categories.%0D%0AScala+represents+a+new+breed+of+language+which+obliterates+these+arbitrary+restrictions.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D115705&amp;title=Scala%3A+An+Effective+Blend+of+Object+Oriented+and+Functional+Programming">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D115705&amp;title=Scala%3A+An+Effective+Blend+of+Object+Oriented+and+Functional+Programming">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/christopherdiggins.jpg"/></td><td>Christopher Diggins is a software developer and freelance writer. Christopher loves programming, but is eternally frustrated by the shortcomings of modern programming languages. As would any reasonable person in his shoes, he decided to quit his day job to write his own ( <a href="../_/http/www.heron-language.com/index.html">www.heron-language.com</a> ). Christopher is the co-author of the <a href="../_/http/www.cpp-cookbook.com/index.html">C++ Cookbook</a> from O'Reilly. Christopher can be reached through his home page at  <a href="../_/http/www.cdiggins.com/index.html">www.cdiggins.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Christopher Diggins. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

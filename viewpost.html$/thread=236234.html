@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Metaclasses in Python 3.0 [1 of 2]</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=236234.html">Discuss</a> | 
+<a href="mailto:?subject=Metaclasses in Python 3.0 [1 of 2]&amp;body= %0AArtima Weblogs %0AMetaclasses in Python 3.0 [1 of 2] %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=236234">Email</a> | 
+<a href="../viewpostP.html$/thread=236234.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=235871.html" title="Self-Introduction and Declaration of Intents">Previous</a> | 
+<a class="sl" href="thread=236260.html" title="Metaclasses in Python 3.0 [2 of 2]">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Metaclasses in Python 3.0 [1 of 2]</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">August 9, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the English translation of an article I wrote some time ago for Stacktrace: http://stacktrace.it/articoli/2008/01/metaclassi-python-3000/
+For convenience, I have split it in two posts.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I heard for the first time the word "metaclass" in 2002, when I begun studying
+Python. I was very active in the Python newsgroup then, and I received from
+<a class="reference" href="../_/http/en.wikipedia.org/wiki/David_Mertz/index.html">David Mertz</a> an invitation to write a joint paper about metaclasses.
+That was my very first paper outside Physics and since then I have had a
+particular affection for the subject. At the time the topic was hot
+since the metaclass mechanism had been just reformed
+(that was around the time Python 2.2 came along). Nowadays the subject
+is still hot since with Python 3.0 coming in October we will have
+another reform of the metaclass mechanism. The reform is for the better.
+I could not miss the occasion to write something about it.</p>
+<div class="section">
+<h1><a id="the-sweeet-changes" name="the-sweeet-changes">The sweeet changes</a></h1>
+<p>Here I assume my readers to be familiar with metaclass programming in
+Python, at least as it is intended from Python 2.2 to Python 2.6.  If
+you need to refresh your memory, my advice is to give a look to the
+metaclass trilogy David and I wrote for IBM DeveloperWorks, <em>Metaclass
+programming in Python</em>, parts <a class="reference" href="../_/http/www.ibm.com/developerworks/linux/library/l-pymeta.html">1</a>, <a class="reference" href="../_/http/www-128.ibm.com/developerworks/linux/library/l-pymeta2/index.html">2</a> e <a class="reference" href="../_/http/www.ibm.com/developerworks/library/l-pymeta3.html">3</a> .</p>
+<p>A metaclass is nothing else than a subclass of the builtin metaclass <tt class="docutils literal"><span class="pre">type</span></tt>:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class DoNothingMeta(type): # a silly metaclass
+...       pass
+</pre>
+<p>A metaclass can be instantiated by specifying a string (the <em>name</em>),
+a tuple of classes (the <em>bases</em>) and a dictionary (the <em>dic</em>):</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; C = DoNothingMeta('C', (object,), {})
+</pre>
+<p>The metaclass instance is a class named <em>C</em>, with parent <em>object</em> and an empty
+dictionary. In Python 3.0 everything remains the same: the only change
+is in the <em>syntactic sugar</em>. In Python 2.2+ you have at your disposition
+the so-called <tt class="docutils literal"><span class="pre">__metaclass__</span></tt> hook and that the previous line can
+be written also as</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(object): __metaclass__ = DoNothingMeta
+</pre>
+<p>In Python 3.0+ instead, you can use a somewhat nicer syntax:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(object, metaclass=DoNothingMeta): pass
+</pre>
+<p>The important thing to notice is that in Python 3.0 you can write</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; class C(object): __metaclass__ = DoNothingMeta
+</pre>
+<p><em>but the hook is not recognized</em>: Python 3.0 will just add a <tt class="docutils literal"><span class="pre">__metaclass__</span></tt>
+attribute to your class, but the attribute will not be treated in any special
+way and in particular your class will not be magically converted in an instance
+of the metaclass: the class of <tt class="docutils literal"><span class="pre">C</span></tt> will stay <tt class="docutils literal"><span class="pre">type</span></tt>
+and not <tt class="docutils literal"><span class="pre">DoNothingMeta</span></tt>:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; type(C) is DoNothingMeta
+False
+</pre>
+<p>This is potentially risky when porting code from Python 2.X to Python
+3.0. I guess the 2to3 tool will give some warning, but I have not
+tried it yet. If anybody who knows read this post, feel free to
+comment.</p>
+</div>
+<div class="section">
+<h1><a id="the-hot-changes" name="the-hot-changes">The hot changes</a></h1>
+<p>The syntactic changes, however useful, are still cosmetics. The substantial
+change between Python 2.2 and Python 3.0 is <em>semantic</em>: in Python 3.0
+the dictionary passed to the metaclass can be replaced with a generic
+object with a <tt class="docutils literal"><span class="pre">__setitem__</span></tt> method. In particular, you
+can pass to a metaclass an ordered dictionary instead of a ordinary
+dictionary. That means that it is possible to keep the order of the
+declarations in the class body, a much desired feature for metaclass
+practictioners.
+For instance, suppose we want to define a <tt class="docutils literal"><span class="pre">Book</span></tt> class with fields
+<tt class="docutils literal"><span class="pre">title</span></tt> and <tt class="docutils literal"><span class="pre">author</span></tt> (in that order).
+In Python 2.2 we would be forced to repeat the names of the fields:</p>
+<pre class="literal-block">
+class BookPython22(object):
+
+    title = 'varchar(128)'
+    author = 'varchar(64)'
+
+    order = ['title', 'author']
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">order</span></tt> list is redundant and annoying, but you cannot get rid
+of it in traditional Python, otherwise you would miss the relative
+ordering of <tt class="docutils literal"><span class="pre">title</span></tt> and <tt class="docutils literal"><span class="pre">author</span></tt>. In Python 3.0 instead, the
+<tt class="docutils literal"><span class="pre">order</span></tt> list can be avoided, provided we use an ordered dict.  At
+the moment I am writing this is not clear if an ordered dict class will
+enter in the standard library of Python 3.0, therefore I will give a
+simple implementation here:</p>
+<pre class="literal-block">
+from collections import Mapping
+
+class odict(Mapping):
+   "A simple implementation of ordered dicts without __delitem__ functionality"
+
+   def __init__(self, alist=None):
+       self._inner = {} # inner dictionary
+       self._keys = [] # the dictionary keys in order
+       if alist:
+           for k, v in alist:
+               self[k] = v
+
+   def __getitem__(self, key):
+       return self._inner[key]
+
+   def __setitem__(self, key, value):
+       self._inner[key] = value
+       self._keys.append(key)
+
+   def __iter__(self):
+       return iter(self._keys)
+
+   def __len__(self):
+       return len(self._keys)
+
+   def __repr__(self):
+       return '{%s}' % list(self.items())
+</pre>
+<p>I am deriving here from the <tt class="docutils literal"><span class="pre">Mapping</span></tt> Abstract Base Class provided
+by the collections module, which takes the place of the traditional
+<tt class="docutils literal"><span class="pre">UserDict.DictMixin</span></tt> class. Talking about the ABCs would take too
+long and I will leave that for a future post.</p>
+<p>The relevant thing to say for what concerns dictionaries
+is that the dictionary interface has changed in Python 3.0: the methods
+<tt class="docutils literal"><span class="pre">.iterkeys()</span></tt>, <tt class="docutils literal"><span class="pre">.itervalues()</span></tt> and <tt class="docutils literal"><span class="pre">.iteritems()</span></tt>
+were removed and the methods <tt class="docutils literal"><span class="pre">.keys()</span></tt>, <tt class="docutils literal"><span class="pre">.values()</span></tt>
+and <tt class="docutils literal"><span class="pre">.items()</span></tt> now return views instead of lists. Again, I have
+no time to discuss views right now, but you can look at the <a class="reference" href="../_/http/www.python.org/dev/peps/pep-3106/index.html">relevant PEP</a>.</p>
+<p>We still need to tell the metaclass to use an <tt class="docutils literal"><span class="pre">odict</span></tt> instead of <tt class="docutils literal"><span class="pre">dict</span></tt>.
+To this aim, Python 3.0 recognizes a special (class)method
+<tt class="docutils literal"><span class="pre">__prepare__(mcl,</span> <span class="pre">name,</span> <span class="pre">bases)</span></tt> returning the would be class dictionary.
+Therefore it is enough to add a suitable <tt class="docutils literal"><span class="pre">__prepare__</span></tt> to the metaclass:</p>
+<pre class="literal-block">
+class MetaBookExample(type):
+   @classmethod
+   def __prepare__(mcl, name, bases):
+       return odict()
+   def __new__(mcl, name, bases, odic):
+       cls = super().__new__(mcl, name, bases, dict(odic))
+       cls.odic = odic
+       return cls
+</pre>
+<p>The tricky point here is that the <tt class="docutils literal"><span class="pre">__new__</span></tt> method must convert
+the class "dictionary" returned by <tt class="docutils literal"><span class="pre">__prepare__</span></tt> into
+a regular dictionary (this explains the <tt class="docutils literal"><span class="pre">dict(odic)</span></tt> expression).
+If your <tt class="docutils literal"><span class="pre">__prepare__</span></tt> method does not return an instance of <tt class="docutils literal"><span class="pre">dict</span></tt>
+and you do not override <tt class="docutils literal"><span class="pre">__new__</span></tt> properly, you will get an error.
+For instance in this example if you do not override <tt class="docutils literal"><span class="pre">__new__</span></tt> you will
+get a <tt class="docutils literal"><span class="pre">TypeError:</span> <span class="pre">type()</span> <span class="pre">argument</span> <span class="pre">3</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">dict,</span> <span class="pre">not</span> <span class="pre">odict</span></tt> when
+you try to instantiate the metaclass. If you do things correctly, instead,</p>
+<pre class="literal-block">
+class BookExample(metaclass=MetaBookExample):
+   "An example"
+   title = 'Varchar(128)'
+   author = 'Varchar(64)'
+</pre>
+<p>you may verify that the order of the class attributes is preserved:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; BookExample.odic # this is an odict instance
+{[('__module__', '__main__'), ('__doc__', 'An example'), ('title', 'Varchar(128)'), ('author', 'Varchar(64)')]}
+</pre>
+<p>We see here that the metaclass is also passing a couple of implicit
+magic attributes <tt class="docutils literal"><span class="pre">__module__</span></tt> and <tt class="docutils literal"><span class="pre">__doc__</span></tt> to the class. This is
+the usual behavior even in Python 2.2+ so it should not come as a
+surprise to you.</p>
+<p>Keeping the order of class attributes can be useful for
+the builders of Object Relation Mappers (<a class="reference" href="../_/http/www.sqlalchemy.org/index.html">SQLAlchemy</a> anyone?),
+since it becomes possible to match the order of the columns in the database
+with the order of the column attributes at the Python level.
+In the second part of this article I will give a pedagogical example of
+what you can do with Python 3.0 metaclasses, by implementing a
+clever (not necessarily in a good sense) record system. Stay tuned!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=236234.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=236234&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236234&amp;title=Metaclasses+in+Python+3.0+%5B1+of+2%5D&amp;bodytext=This+is+the+English+translation+of+an+article+I+wrote+some+time+ago+for+Stacktrace%3A+http%3A%2F%2Fstacktrace.it%2Farticoli%2F2008%2F01%2Fmetaclassi-python-3000%2F%0D%0AFor+convenience%2C+I+have+split+it+in+two+posts.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236234&amp;title=Metaclasses+in+Python+3.0+%5B1+of+2%5D">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D236234&amp;title=Metaclasses+in+Python+3.0+%5B1+of+2%5D">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

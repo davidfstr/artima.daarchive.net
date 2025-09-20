@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Make, Mailing Lists, and Ruby</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=152464.html">Discuss</a> | 
+<a href="mailto:?subject=Make, Mailing Lists, and Ruby&amp;body= %0AArtima Weblogs %0AMake, Mailing Lists, and Ruby %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=152464">Email</a> | 
+<a href="../viewpostP.html$/thread=152464.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=148909.html" title="Are There No Decent Mailing List Programs?">Previous</a> | 
+<a class="sl" href="thread=152728.html" title="Ruby vs. Groovy">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">Make, Mailing Lists, and Ruby</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">March 17, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+When I found Martin Fowler's article on the benefits of Rake (the Ruby version of Make), I immediately became committed to learning Ruby. I needed to write a mailing list program, too. Ruby turns out to be ideal for both.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section" id="rake-and-rant-a-better-make-and-ant">
+<h1><a name="rake-and-rant-a-better-make-and-ant">Rake and Rant -- A Better Make and Ant</a></h1>
+<p>Talk about pain reduction! Rake eliminates the syntax woes of makefiles and Ant. It lets you add automatic dependency rules for file types the original implementation may not have considered, and it puts the power of the programming language completely at your disposal--so it becomes possible to code conditionally-executed tasks, task loops, and other things that are difficult to do with current build languages.</p>
+<blockquote>
+<p>Notes:</p>
+<ul class="simple">
+<li>Martin's excellent article on Rake is at 
+<a class="reference" href="../_/http/www.martinfowler.com/articles/rake.html">http://www.martinfowler.com/articles/rake.html</a></li>
+<li>Rant is another implementation of the Rake syntax. It focuses
+on performance and reliabiltiy. But virtually all of the 
+how-to-use-it documentation is for Rake.</li>
+</ul>
+</blockquote>
+<p>With Rake, you write something that looks very much like a makefile--only in reality it's Ruby. So you do simple makefile things, or you can do complex Ruby things. It's your choice. You have the convenience of standard makefile processing with syntax like this:</p>
+<pre class="literal-block">
+# task X depends on tasks Y and Z
+task :X =&gt; [:Y, :Z] do  
+  ...code for task X...
+end
+</pre>
+<p>But since the code is in reality a Ruby script, you can use the expressive power
+of the language to do more creative manipulations (which Folwer talks about in his article). In this code, for example, :X defines a symbol named X, and the task
+method (invoked without parentheses) produces a method call that looks much
+like a makefile entry.</p>
+<p>So I became highly motivated to take a deeper look at Ruby. I had taken a first look several years ago. At the time, I saw a variety of cryptic Perlisms that tended to put me off, like $_. (How self-documenting is that?) Like Perl, there were multiple ways to do things. And there was operator overloading, all of which tend to make code less readable.</p>
+<p>I wasn't a big fan of operator overloading, mostly because of the potential readability problems. I mean, it's hard enough to read code. But if you can't even count on the operators doing what you think they're doing, how can you make any sense of what you read? But then it occured to me =&gt; might be overloaded to implement the syntax needed for a build file.</p>
+<p>As it turns out, =&gt; is defined as a hash operator. So in this case, it's mapping a target symbol to its dependencies so Rake can do things in the right sequence. So =&gt; isn't really overloaded. But thinking that it might be changed my mind about operator overloading.</p>
+<p>In his article, Fowler concludes that an internal domain specific language really makes sense for builds, In the same vein, I conclude that operator-overloading makes a lot of sense when it's used to define an internal domain-specific language. To quote Martin's point more fully:</p>
+<blockquote>
+<p>All three build languages share another characteristic - they are all 
+examples of a Domain Specific Language (DSL). However they are different
+kinds of DSL. In the terminology I've used before:</p>
+<blockquote>
+<ul class="simple">
+<li>make is an external DSL using a custom syntax</li>
+<li>ant (and nant) is an external DSL using an XML based syntax</li>
+<li>rake is an internal DSL using Ruby.</li>
+</ul>
+</blockquote>
+<p>The fact that rake is an internal DSL for a general purpose language is a 
+very important difference between it and the other two. It essentially allows 
+me to use the full power of ruby any time I need it, at the cost of having to 
+do a few odd looking things to ensure the rake scripts are valid ruby. Since
+ruby is an unobtrusive language, there's not much in the way of syntactic 
+oddities. Furthermore since ruby is a full blown language, I don't need to drop
+out of the DSL to do interesting things - which has been a regular frustration
+using make and ant. Indeed I've come to view that a build language is really
+ideally suited to an internal DSL because you do need that full language power
+just often enough to make it worthwhile - and you don't get many 
+non-programmers writing build scripts.</p>
+</blockquote>
+<p>Ruby's syntactic freedom and operator-overloading combine to define a relatively
+clean build language. I hadn't thought of operator overloading as a 
+language-construction tool before. But in that context, it makes a lot of sense.
+It's a given that things take on new meanings in a different language, whether you're talking about computer languages or natural languages.</p>
+<p>By now, too, the cryptic constructs had become more familiar, so I didn't mind them as much. That creates an internal conflict, of course. I like to say that "Human adaptability is no excuse for a poor design." But I've adapted! And now that I'm used to it, I do like the short little syntax pf $_ compared to a longer construct like #{line}. I even read the underscore as "line"! So I'm conflicted between ease of writing and ease of reading. Sigh. But I think I'll learn to live with myself--mostly because coding in Ruby is turning out to be a lot of fun.</p>
+</div>
+<div class="section" id="ruby-coding-can-be-fun">
+<h1><a name="ruby-coding-can-be-fun">Ruby -- Coding can be Fun</a></h1>
+<p>As I went deeper, I began to appreciate Ruby much more. I had long missed C's ability to send a function pointer as an argument. In Ruby, you do that with a /closure/ (a code segment in braces that can take arguments), when I saw how you execute one inside of a method that it has been passed to.</p>
+<p>I'm still trying to fully grok the concept of closures and find the best way to explain it. For nwo, here's what I've got: Think "C-style function pointer (or anonyomous class) passed to an iterator, with an adapter interface that lets the receiver call the 'doit' method in the function". Only instead of coding all that stuff by hand, you use a few tiny pieces of syntax to define the function: {|param| ...code...}. I mean, dang. Talk about productivity. Talk about ease of programming.</p>
+<p>You want to process a collection? No need to code an iterator. Call "each" and pass it the code you want: myList.each {|x| ...do something with x...}. (Note the implied contract. The "each" method is defined to invoke the closure with an argument. That's not exactly obvious, at first glance. Most discussions of closures don't seem to mention that contract, which may tend to make closures more of a mystery than then need to be. (On the other hand, it may be harder to understand what's really going on than to simply treat it as magic.)</p>
+<p>Implement some other some other methods that take closures, as well, and make them part of the standard--methods like <em>collect</em> and <em>find</em>. Then you pass a closure to the find that method that identifies the kind of thing you want: myList.find {|x| ...return true when x is a sports car or motorcyle...}.</p>
+<p>But as good as closures are, don't stop there. Make the language dynamic, so you can iterate over pretty much anything. So you can iterate over the parameters defined in a Struct, for example, and pass a function to them to print them out--and make it super simple to get to the name of the property, so you can print that as well.</p>
+<p>Speaking of Struct, that's a nice little 'class' that doesn't have any methods. Just properties that are always accessed with getters and setters--but use the same syntax whether or not the methods are present. Then, if you decide to add a setter method later to log changes, you can do it without changing the code everywhere the property is referenced. (I think that's the way it works, anyway.)</p>
+<p>Then add Module--a superclass of class that can't be instantiated, but which can easily be included into a class you're writing (aka "mix-ins"). The methods don't have to be declared static. They already are, because they're in a Module. That was a Perlism worth adopting.</p>
+<p>But wait, there's more. Not only can you add to a class you're writing by including a Module, you can truly "extend" an existing class by adding stuff to it. When you do that, you're not making a copy with a new name, you're adding to the existing class. So if there's a feature you want in String, you can add it. Nice. And you can make the additions to other code that has been using String, without having to redeclare every variable in town.</p>
+<p>And by all means build in regular-expression string processing. My one quibble: The examples I saw had syntax that seemed backwards to me. They had /regularExpression/ =~ string to see of there is a match, rather than string =~ /regularExpression/. But it turns out that both coding styles are possible. That's basically they way it should be.
+If A = B, then B = A. Similarly, if /RE/ =~ A, then A =~ /RE/. A match is a match is a match.</p>
+<p>One feature that seemed mysterious and possibly inadvisable at first glance was parallel assignment: a, b = 1, 2, which assigns 1 to a and 2 to b. (Pardon me if I get syntax wrong. I'm a concept guy. The compiler corrects me all the time.) What was the value of parallel assignment, I wondered? Then I saw this in the explanation of the yield statement, in Ruby in a Nutshell:</p>
+<blockquote>
+The expression passed to yield is assigned to the block's argument(s).
+Parallel assignment is performed when multiple expressions are passed.</blockquote>
+<p>In other words, parallel assignment is the internal glue that takes the collection
+of arguments passed to the yield method and binds them to the collection of parameters expected by the block. Pretty darn cool. And powerful.</p>
+<blockquote>
+<strong>Note:</strong>
+That seems a lot like closures, to me. But I'm told that blocks
+and closures are basically different things. Someday, I'm going to understand
+that better. When I do, I'm going to write more.</blockquote>
+<p>There's also a powerful case statement, of the kind I haven't seen since the Icon language, of Snobol lineage. Like Ruby, it had powerful string processing and built-in regular expression processing. It also had the same kind of case statement--one where you could put an expression at the top of the statement and compare it to arbitrary expressions in the when-clauses. So can say "when testObject.color == blue", and "when testObject.length &gt; 40, and things like that--all in the same case statement. It's not something you need a lot, but when you do need it, you can say exactly what you mean.</p>
+<p>There's lots of good stuff in the library, too. There's a terrific, easy to use XML parser (REXML), web-enabling packages for HTTP, mail, and CGI. A package for 
+generating HTML. Stuff for database access and unit testing. The list goes on.</p>
+<p>Then there's the RAILs framework. That one is exciting if only because it pretty much eliminates configuration files. Like Beans, RAILs depends on coding conventions. You follow the conventions, and the framework uses reflection to do all of the wiring for you. Very nice.</p>
+<p>Then there are features I haven't even begun to use, like generating code inside a program and then executing it--lambda functions and Lisp-like stuff like that. That's one benefit of having a symbol-definition construct: You can define variable names and method names dynamically, and then use them. That sort of thing is going to be powerful, when I finally manage to wrap my head around it. So I get to have fun today, and even greater power tomorrow. Very enticing.</p>
+</div>
+<div class="section" id="the-small-stuff">
+<h1><a name="the-small-stuff">The Small Stuff</a></h1>
+<p>Ruby has the things you expect in an OO language, like threading, exceptions, and exception handlers. But it also has a raft of smaller features that just plain make life easier. Sometimes, it's the accumulation of small advantages that paves the way to productivity, rather than the grand concepts. Ruby has both. Here's a smattering of the goodnesses:</p>
+<blockquote>
+<ul>
+<li><p class="first">Adjacent strings automatically concatenate. No need to code "+" or "&amp;" 
+or what have you to put them together.</p>
+</li>
+<li><p class="first">Inline strings that can include newlines, or "here" documents. You start
+one with &lt;&lt;&lt;, and specify an end-tag--say XYZ. That gives you &lt;&lt;&lt;XYZ. 
+The string begins on the next line, which makes it easy to line
+up your text. The string ends when XYZ is found at the beginning of a subsequent
+line. But it gets even better than that. The string starts on the next 
+line, <em>even if other syntax elements exist on the initial line</em>. So the
+code for sending a message can look like this:</p>
+<pre class="literal-block">
+smtp.sendmail(&lt;&lt;&lt;BODY, from, to)
+Here is the text of the message.
+Here is line two.
+BODY
+</pre>
+<p>Note that the body of the message starts on the second line. How cool is that? 
+Maybe it's odd. But I liked it. Of course, the text all has to start in the
+first column so, in practice, here-documents will be much more useful when
+defining constants--like when you're writing usage messages, for example.
+For uses like that, here-documents are invaluable.</p>
+</li>
+<li><p class="first">Retry. Get an exception. Fix the problem in the rescue clause. Issue "retry"
+to start the method over again.</p>
+</li>
+<li><p class="first">BEGIN/END segments for stuff you want to at the start or end of the program.
+Simple. Easy.</p>
+</li>
+<li><p class="first">gets. If a file was specified on the command line, reads that. Otherwise,
+reads standard input. Puts the value in the standard location ($_). 
+Not even one line of code--one <em>word</em> of code. Easy. Simple.</p>
+</li>
+<li><p class="first">Read all lines of a file into memory with array = <a class="reference" href="../_/file/:readlines(path/index.html">File::readlines(path</a>)</p>
+</li>
+<li><p class="first">String functions like center, include, split, slice, squeeze,
+strip. Plus regular expression processing that's built into the language:
+/...regular expression here.../.</p>
+</li>
+<li><p class="first">-p and -n command line options. Like Perl, the interpreter iterates over
+the contents of a file and executes your code on each line. It then
+either automatically prints the line (-p), or doesn't print unless you say
+so (-n). Those come in handy for little jobs from time to time. It's nice
+to have one language for that kind of thing that you can also use for larger
+stuff--like the mailing list program.</p>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="building-a-mailing-list-processor">
+<h1><a name="building-a-mailing-list-processor">Building a Mailing List Processor</a></h1>
+<p>The rubber meets the road when you sit down to build something. That's when you begin to answer the question, "how much work is it going to require to get stuff done?" When you're looking at a long list of backlogged projects, that becomes a pretty important question.</p>
+<p>The answer, in Ruby, keeps turning out to be "not a heck of a lot". Reading mailing addresses out of a file: A few lines of code. Sending an SMTP message: A few more lines. Processing arguments: A couple more. Reading the message from a file: A one-liner.</p>
+<p>The last problem to solve: Reading named parameters from a configuration file, so I can specify values like the from-address in one place. I haven't quite found the solution yet, but I'm sure it's short. It should be as simple as reading a Struct from a file. I haven't quite put the pieces together yet, but I know the answer is there.</p>
+<p>If it weren't for the learning curve, I'd be done by now. Reading books, finding examples, understanding how things work--I've spent a little while doing that. But the code is essentially trivial. That's the way it should be! It gives me the happy feeling that the time invested in acquiring understanding will pay off handsomely in the future.</p>
+<p>This post has gotten too long already, so I'll save the code snippets for another time.
+But I had to share my delight with Ruby and Rake. As always, the delight will last until I find even better tools--but it might be quite a while before that happens.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=152464.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=152464&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D152464&amp;title=Make%2C+Mailing+Lists%2C+and+Ruby&amp;bodytext=When+I+found+Martin+Fowler%27s+article+on+the+benefits+of+Rake+%28the+Ruby+version+of+Make%29%2C+I+immediately+became+committed+to+learning+Ruby.+I+needed+to+write+a+mailing+list+program%2C+too.+Ruby+turns+out+to+be+ideal+for+both.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D152464&amp;title=Make%2C+Mailing+Lists%2C+and+Ruby">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D152464&amp;title=Make%2C+Mailing+Lists%2C+and+Ruby">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

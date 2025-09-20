@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Software Engineering and the Art of Design</title>
+<meta charset="utf-8"/>
+<meta content="Jim Waldo" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=waldo.html">Jim Waldo's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=7600.html">Discuss</a> | 
+<a href="mailto:?subject=Software Engineering and the Art of Design&amp;body= %0AArtima Weblogs %0ASoftware Engineering and the Art of Design %0Aby Jim Waldo %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=7600">Email</a> | 
+<a href="../viewpostP.html$/thread=7600.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=4892.html" title="Why Standards, Part Deux">Previous</a> | 
+<a class="sl" href="thread=10522.html" title="Knowing and Learning">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Objects, Networks, and Making Things Work</span><br>
+<span class="ts">Software Engineering and the Art of Design</span><br/>
+<span class="as">by Jim Waldo</span><br/>
+<span class="pd">July 17, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Software engineering is a lot less like other kinds of engineering than most of us would like to think. There is an aspect of art to what we do, that is learned not in school but by finding a master and serving an apprenticeship.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>It's been over a month since I last posted, a break explained by the
+  intervention of JavaOne and the experience of being <i>Slashdotted</i> on my
+  last installment. But July is here, so it is time to declare independence
+  once again and post some thoughts.
+
+  <p>During the last couple of weeks, I've been reading a number of articles
+  by <a href="../_/http/www.paulgraham.com">Paul Graham</a> on the connection
+  between programming and art and the similarities in different kinds of
+  things that we call <i>design</i>. I like a lot of what Graham has to say
+  (and agree with some of it as well), and while he sometimes takes a long
+  time to say it (at least for a web publication), it is because his points
+  are complex rather than because his writing is long-winded. I highly
+  recommend the site, both for its look and its content, especially his
+  articles on what it is to develop software.
+
+  <p>Software development is an odd sort of activity. While we in the industry
+  talk about being engineers, it is engineering of a rather odd sort. The body
+  of established science that you need to know to become a software engineer
+  is rather small, and there are a number of very good software developers who
+  have never formally studied the field at all. I consider myself at least a
+  competent software designer. But my own formal training was in philosophy
+  (as it turns out is also the case with Paul Graham), and about a third of
+  those with whom I went to graduate school are now designing software. And
+  nearly all of us made the switch with little or no formal training in
+  software engineering or computer science.
+
+  <p>While it is less common now than it was when I started in the field (low
+  those many years ago), there are a surprising number of excellent software
+  developers and designers whose background is in subjects such as
+  mathematics, or music, or anthropology, or a number of other disciplines
+  that are not thought of as engineering. While I don't think that it is
+  impossible, I would bet there are very few people who switched from, say,
+  philosophy or music to, say, mechanical or electrical engineering
+  without any additional formal education. This is certainly less true
+  now than it was 20 or so years ago when I started; I doubt that I could
+  find the positions now that I was able to find then that allowed me to make
+  the switch. But the fact that it was possible until fairly recently says
+  something, I think, about the nature of software production.
+
+  <p>One possible explanation is that software engineering is a fairly new
+  field. There isn't a large body of knowledge that one needs to master to
+  become a software engineer; you can start doing reasonable (and useful) work
+  while picking up that knowledge. The same may have been true in the past of
+  other forms of engineering, but now those fields have matured to a point
+  where there is a lot of accumulated knowledge that is best learned as part
+  of a formal education. But I think that the real reason is somewhat
+  different than the youth of the subject; I think the real reason is that
+  software engineering isn't like other forms of engineering so much as it is
+  like a craft or an art form, both activities that can be learned by
+  apprenticeships rather than formal education.
+
+  <p>The notion of an apprenticeship is rarely talked about by the human
+  resources types (although the newest incarnation of the idea, that of
+  mentoring, is becoming pretty respectable), but it is a pretty standard way
+  of getting your real training in software development. Ask most any good
+  software developer who he or she served an apprenticeship with, and they
+  will start telling stories of the master craftsman from whom they learned
+  their art. Most won't even find the question odd, or ask for an
+  explanation. How else could we have learned what we do?
+
+  <p>This is even (or perhaps especially) true of those who have had formal
+  education in software engineering. I've often told university professors
+  that people coming straight out of school are mostly useless for at least
+  six months when they enter my groups, and that it takes them about a year
+  to become really useful. This is true for those with master's degrees and
+  with bachelors (don't even ask me about Ph.D.s). And it shouldn't be
+  surprising...after all, the sort of software development that is done in a
+  university setting is very different than the sort of development (and
+  maintenance) done in an industrial setting. Learning the latter takes more
+  than a course; it takes practice, and the accumulated practice of someone
+  (or someones) who have done it long enough and successfully enough to have
+  an idea of the craft involved.
+
+  <p>Of course, another reason that there is no good way to teach a class that
+  will train people in the aspects of design and software development that are
+  learned during an apprenticeship is that there is no single method that is
+  right. There are many ways of doing good software development and design,
+  just as there are many ways of doing those things badly. Some good
+  designers will work long and hard on a specification before any code is
+  written, trying to figure out all of the structure of a system before
+  changing that structure becomes difficult. Others will do lots of
+  prototypes, iterating over the code until the structure of the overall
+  design becomes clear. Others do some combination of these two approaches;
+  I'm sure that there are others that do something entirely different. The
+  designs that result from these different approaches are not better or worse
+  than those that result from some other way of coming at the problem. But
+  they are different.
+
+  <p>All of this was studied by <a href="../_/http/www.cs.unc.edu/~brooks/index.html">Fred
+  Brooks</a>, author of the classic <b>Mythical Man Month</b> and Turing
+  Award winner; the results of his study led to his papers on the design of
+  design. His conclusion, which surprises few good software engineers but
+  dismays many in management, is that good design comes from good designers,
+  not from some process. This may dismay many managers because it means that
+  the engineers they employ are not interchangeable parts that can be insured
+  to give good results by the application of the <i>right</i> process. But it
+  is the truth, and they need to deal with it, as do those who want to take
+  the individual out of design by having a more (supposedly) rigorous set of
+  rules for software engineering.
+
+  <p>A corollary of the Brooks conclusion that good design comes from good
+  designers is that good designers receive their training from other good
+  designers. This training happens during the apprenticeship, when attempts
+  at design are reviewed and criticized, when code is read, or during
+  conversations over the lunch table. It generally doesn't happen in a
+  classroom (although the master craftsman may be a teacher, who does the
+  training during reviews, readings, and lunches). And, much like working
+  with a Zen master, it happens at different times and in different ways for
+  different people. Someone who is a good master for one person learning the
+  craft may be just wrong for another.
+
+  <p>The point of all this, if there is one, is that those who want to reduce
+  software engineering (by which I mean the designing and producing of
+  high-quality software systems) to a set of rules and procedures that can be
+  followed by anyone to get consistently good results simply don't understand
+  the field. Yes, there are processes which can help in the production of
+  good software (any group that doesn't have a good way of doing code reviews
+  is fooling itself if it claims to be producing quality software). But while
+  lack of such processes can insure the production of bad software, having
+  such processes does not insure the production of good software. For that
+  something extra is needed, which is the craft and aesthetics that result
+  from training with a master in the art.
+
+  <p>In this way, what we call software engineering is really more like
+  architecture (real architecture that produces buildings) than it is like
+  other kinds of engineering. There is an element of science (a building has
+  to obey the laws of physics) but there is also a large element of
+  art. Depending on what kind of software you produce, the mix of the two may
+  differ some, but there is always a mix. Much of the science can be taught
+  in schools, but the art can only be learned by practice and can be produced
+  in many ways. Those who are looking for the one true way to do the art
+  don't understand what it is we produce, or wish that what they understand
+  can be replaced by something more "scientific." It can't, so they should
+  just get over it.
+
+  <p>And, I might add, it is a good thing that what we do requires both art
+  and science. That is what makes it so much fun...
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=7600.html">27
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=7600&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jim Waldo adds a new entry to <a href="../index.html$/blogger=waldo.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/waldo.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D7600&amp;title=Software+Engineering+and+the+Art+of+Design&amp;bodytext=Software+engineering+is+a+lot+less+like+other+kinds+of+engineering+than+most+of+us+would+like+to+think.+There+is+an+aspect+of+art+to+what+we+do%2C+that+is+learned+not+in+school+but+by+finding+a+master+and+serving+an+apprenticeship.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D7600&amp;title=Software+Engineering+and+the+Art+of+Design">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D7600&amp;title=Software+Engineering+and+the+Art+of+Design">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jimwaldo.jpg"/></td><td>Jim Waldo is a Distinguished Engineer with Sun Microsystems, where he is the lead architect for Jini, a distributed programming system based on Java. Prior to Jini, Jim worked in JavaSoft and Sun Microsystems Laboratories, where he did research in the areas of object-oriented programming and systems, distributed computing, and user environments. Before joining Sun, Jim spent eight years at Apollo Computer and Hewlett Packard working in the areas of distributed object systems, user interfaces, class libraries, text and internationalization. While at HP, he led the design and development of the first Object Request Broker, and was instrumental in getting that technology incorporated into the first OMG CORBA specification.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Jim Waldo. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

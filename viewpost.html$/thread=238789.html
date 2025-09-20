@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/1</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=238789.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/1&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/1 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=238789">Email</a> | 
+<a href="../viewpostP.html$/thread=238789.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=237764.html" title="Generic functions vs mixins: a case study">Previous</a> | 
+<a class="sl" href="thread=238941.html" title="The adventures of a Pythonista in Schemeland/2">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/1</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">September 18, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the first episode of a long running series of articles about Scheme. Currently I have published the first 11 episodes of it on Stacktrace. This episode is a revised translation of http://stacktrace.it/2008/02/le-avventure-di-un-pythonista-schemeland-1/
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="my-target" name="my-target">My target</a></h1>
+<p>As you can imagine from the title, this series has been written from
+the point of view of a Python programmer. Nevertheless,
+it should be easy to follow for any programmer familiar with
+any dynamic language such as Perl, Ruby, PHP, Tcl, etc.  In
+general all those languages (let me call them mainstream dynamic languages) are
+similar: interpreted, very dynamic, with a strong support for
+scripting (ok, maybe PHP does not fit the last point, but you get the
+idea ;)</p>
+<p>Scheme is different. Even if it is very dynamic and well
+suited for scripting, very often it is also compiled (both
+to native code or to a target language such as C, Java or the CLR)
+and can work at C speed. Moreover Scheme is a functional
+language and it makes use of a set of functional idioms which
+are unknown in the mainstream languages. Finally, Scheme offers
+to its user an extremely advanced macrology (actually it has the most
+advanced macro system I know) and extremely powerful features (such
+as continuations) without equivalent in other languages.</p>
+<p>That
+means that learning Scheme is not trivial: actually it takes of
+lot of effort and motivation to master it.
+If you see a programming language just as a tool to perform a given
+job in the smallest possible time, and your job is not programming language
+research, then you should not learn Scheme. Scheme is for people
+who want to know  the many possible ways of performing the same job,
+who want to understand the advantages and the disadvantages of the
+different approaches, who want to explore programming paradigms.</p>
+<p>I do not think that the first kind of programmers (let say the
+engineers) is inferior to the second kind (let say
+the explorers) or viceversa. It all depends on where your interest
+lies. If you are doing bioinformatics and you researching a cure
+for a genetic sickness I expect you to solve your problem in
+the smallest possible amount of time with a specialized library
+without dispersing your efforts reinventing the wheel.
+On the other hand, if you are a Computer Science professor
+I would expect to you to know many different languages and
+programming languages paradigms, having reinvented many wheels.</p>
+<p>Pythonistas, generically speaking, are in between: they are pragmatic
+programmers who want to do a real job, but they are also persons which
+are not content with the first language they find, otherwise they
+would stay for their entire life programming Visual Basic, Java or
+C++. They are both engineers and explorers at the same time (you could
+say that a good engineer should be a bit of an explorer, too,
+especially in a fast changing field such a programming).</p>
+<p>This series is meant for programmers that fit the description
+I have just given. Its main goal is to discuss a few features of
+the Scheme programming language, with the aim to solicit your
+curiousity and make you think if you can learn something useful
+from this language which is dismissed by most as being just an
+academic language.</p>
+</div>
+<div class="section">
+<h1><a id="a-bit-of-history-fortran-and-lisp" name="a-bit-of-history-fortran-and-lisp">A bit of history: Fortran and Lisp</a></h1>
+<p>The <a class="reference" href="../_/http/www.levenez.com/lang/history.html">history of programming</a> begins with two languages with
+two completely different philosophies and goals: Fortran and Lisp.
+Both languages come from Academia, but from two opposite fields:
+on one side we find physicists and engineers interested in numeric
+computations to be run in the most efficient way to solve concrete
+problems of physics/engineering; on the other side we find
+matematicians interested in algorithmic research trying to
+solve abstract problems like symbolic computation, theorem proving,
+artificial intelligence and related topics.</p>
+<p>Both fields had first class brains and the result of their effort
+were Fortran, which is still - after fifty years - the reference point
+for numeric computation, and Lisp, which is still the reference
+point for metaprogramming techniques. Both languages had and still
+have and enormous success in they market niche and will be probably
+still be us one hundred years from now.
+Nevertheless, both Fortran and Lisp are nowadays languages of small
+visibility, since their niches has become very small and far away
+from what we mean as mainstream programming today.</p>
+<p>The reason for the little popularity of Fortran is clear: the language
+has been designed with one and only one goal in mind, efficency in
+numeric computation (<em>number crunching</em>). For everything else,
+Fortran, is not an appealing choice. Nowadays, most programmers have
+no reason to write libraries for floating point computations (they are
+already written, or they are only written by specialized people) so
+they have no need for Fortran. Also, C and C++ are nearly as efficient
+as Fortran and they have substantial advantages from the point of view
+of the interface with the operating system; moreover, most scientific
+tasks nowadays involves using a variety of technology and glue
+languages shine in this context: for instance you could use Python for
+writing the user interface and the visualization software, by calling
+underlying scientific libraries written in C or in Fortran.</p>
+<p>The reason for the little popularity of Lisp is less clear:
+Lisp (I mean here Lisp in a large sense, intending the whole
+family of Lisp-derived languages including Scheme) is a general
+purpose language, it could do everything, it is nearly as fast
+as C, but nobody is using it. Newsgroups are full of flame wars
+between people claiming that Lisp is dead versus people claiming
+that Lisp is not dead at all and that it will be the language
+of the future. I will prudentelly avoid all these hot debates,
+I would not formulate any theory about the popularity of Lisp,
+and I will just discuss the Scheme language, leaving the reader
+to formulate his own opinion ;)</p>
+</div>
+<div class="section">
+<h1><a id="the-algorithmic-language-scheme" name="the-algorithmic-language-scheme">The algorithmic language Scheme</a></h1>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/scheme_shield.png" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/scheme_shield.png">
+<p>Scheme was born in 1975 (it is nearly twice as old as Python) as a
+dialect of the Lisp family. Nowadays by "Lisp" we refer usually to the
+language Common Lisp as standardized in 1989, well after Scheme. To
+discuss the differences and the advantages/disadvantages of Scheme
+with respect to Common Lisp would be long and I would expose myself to
+flame wars: usenet is full of furious discussions between Scheme and
+Lispers saying that their languages are completely different and that
+the opposite language is complete crap; nevertheless, anybody not
+knowning Scheme nor Lisp would have difficulty to distinguish one from
+the other (!)</p>
+<p>Basically, both languages share a lot of features and a lot of what I
+will say about Scheme will apply to Common Lisp too. The biggest
+differences are sociological: the Scheme community is more academic
+and interested in research, experimentation and didactic; the
+Common Lisp community is closer to the IT business world and
+interested in solving real word problems. Of course this is a
+simplification but there is some truth in it. In the past,
+Scheme was meant to be a small language and it was particularly easy to
+implement; nowadays, this is not true anymore, since compliance
+with the latest Scheme specification requires a lot of work from
+the implementor side. Many people on the Scheme community are not
+happy with that, but a larger specification should in principle
+improve portability between implementations. Historically,
+Common Lisp was born as  <em>union</em> of may features presents in Lisp
+dialects before standardization, whereas Scheme was born as
+<em>intersection</em> of the same features. The
+<a class="reference" href="../_/http/www.schemers.org/Documents/Standards/R5RS/HTML/index.html">Revised Report 5 on the Algorithmic language Scheme</a> (aka R5RS) says:</p>
+<blockquote>
+<em>Programming languages should be designed not by piling feature on
+top of feature, but by removing the weaknesses and restrictions that
+make additional features appear necessary.</em> -- William Clinger</blockquote>
+<p>As a consequence of this principle, all Scheme standards up to R5R6
+are much smaller than the Common Lisp standard: actually too small, so
+that it is practically impossible to write "real" applications
+following the standard only. Recently people have tried to solve this
+issue by introducing a new standard, much bigger than the previous
+ones, the hotly debated R6RS ( <a class="reference" href="../_/http/www.r6rs.org/index.html">Revised Report 6 on the Algorithmic
+language Scheme</a>).  The preparation of this standard has generated
+endless suffering in the Scheme community, since a significant
+minority has seen it as a betrayal of the spirit of Scheme.  Nowadays
+Scheme is no more a little language: the R6RS requires a module
+system, a condition system, advanced macrology, a standard library,
+unicode support and many other features not requested before.  Not
+only it is difficult to write a new implementation, it is also
+difficult to take an old R5RS implementation and to make it compatible
+with the new standard. Since R6RS is relatively recent (it was
+published in September 2007) there are few implementations of it. The
+first were <a class="reference" href="../_/http/www.ccs.neu.edu/home/will/Larceny/index.html">Larceny</a> and <a class="reference" href="../_/http/www.cs.indiana.edu/~aghuloum/ikarus/index.html">Ikarus</a>; now there is also
+<a class="reference" href="../_/http/code.google.com/p/ypsilon/index.html">ypsilon</a>. Moreover, <a class="reference" href="../_/http/www.plt-scheme.org/index.html">PLT Scheme</a> has grown an R6RS-compatibility
+mode. I will use Ikarus for my examples.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/Ikarus_Scheme_Logo.png" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/Ikarus_Scheme_Logo.png">
+<p>The installation procedure is trivial, it is enough to download the
+tarball and to compile with the usual <tt class="docutils literal"><span class="pre">configure</span></tt> and <tt class="docutils literal"><span class="pre">make</span></tt>
+dance.  You can test that your installation works by invoking the
+interactive prompt:</p>
+<pre class="literal-block">
+$ ikarus
+Ikarus Scheme version 0.0.3
+Copyright (c) 2006-2008 Abdulaziz Ghuloum
+
+&gt; (display "hello world\n")
+hello world
+</pre>
+<p>If you are running Windows, you may want to install Common Larceny, that
+runs on .NET.</p>
+<p>This is the end: in the next episode I will discuss the problem of the
+implementations of Scheme and the issue of the portability of
+libraries. See you soon!</p>
+</img></img></div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=238789.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=238789&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238789&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F1&amp;bodytext=This+is+the+first+episode+of+a+long+running+series+of+articles+about+Scheme.+Currently+I+have+published+the+first+11+episodes+of+it+on+Stacktrace.+This+episode+is+a+revised+translation+of+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16"/>Digg
+  </a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238789&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F1">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D238789&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F1">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

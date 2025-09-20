@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Dreams and Nightmares</title>
+<meta charset="utf-8"/>
+<meta content="Johan Peeters" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=yo.html">Johan Peeters' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=200967.html">Discuss</a> | 
+<a href="mailto:?subject=Dreams and Nightmares&amp;body= %0AArtima Weblogs %0ADreams and Nightmares %0Aby Johan Peeters %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=200967">Email</a> | 
+<a href="../viewpostP.html$/thread=200967.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=162577.html" title="Microsoft Under Attack">Previous</a> | 
+<a class="sl" href="thread=320875.html" title="Security Debt">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Thinking Aloud</span><br>
+<span class="ts">Dreams and Nightmares</span><br/>
+<span class="as">by Johan Peeters</span><br/>
+<span class="pd">April 3, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+At last week's SPA conference, Paul Dyson and I ran a workshop on planning non-functional requirements in agile projects. Here is a personal account.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+Agile projects measure progress in terms of the business value realized. This is a huge leap forward from the practice of implementing a technical infrastructure first and subsequently layering business logic on top. Since commercial stakeholders are the best judges of value, prioritizing and planning feature implementation is their prerogative. But has the pendulum swung too far? In the abhorrence of 'Big Design Upfront', architecture has been discredited. As a result, many agile projects struggle with planning technical work that apparently does not add any value, yet must be performed for long-term system viability. Many techniques have been tried to reconcile planning according to business value with the need for maintaining and improving infrastructure, including reserving a portion of the development effort for 'technical work' and hence not giving commercial planners access to the complete team's time budget, or even planning entire iterations around technical improvements without any demonstrable business value. These are, at best, a fudge and detract from the original intuition behind agile planning. Hence, in <a href="../_/http/www.spaconference.org/cgi-bin/wiki.pl/$/PlanningForNonFunctionalRequirementsInAgileProjects/index.html">this workshop</a> we aimed to grasp the nettle and look for a more fundamental resolution of the tension between the desire to create value and the need to provide a solid technical infrastructure.
+</p>
+<p>
+The question is not whether and when to let economics guide planning as opposed to technical considerations. In the end, economics always win. The problem, in my view, is that we tend to see the value of a new feature, but not its cost. By cost, I do not mean the effort we need to invest into implementing the feature, but rather the cost of the nightmare scenario's that may execute as the system offers some new functionality. I developed this approach in the context of my work in secure development (see <a href="../_/http/johanpeeters.com/papers.html">my paper on agile security requirements</a>): it is easy to see how a successful application creates an attractive target for malicious users. For example, it is likely that an online casino will attract players that cheat. Therefore, according to one nightmare scenario an attacker is able to consistently beat the bank. If this were to happen, this would clearly be costly. The impact of such a successful attack must, however, be tempered by its likelihood. The cost we should therefore take into consideration is the loss incurred by a successful attack times the probability of its occurrence. This calculation is at the heart of the insurance industry and has kept it very profitable.
+<br>
+The cost of nightmare scenario's, should be taken into account when optimizing the business value in an iteration plan.
+<br/>
+If this approach works for security requirements, it is but a small step to apply it to other non-functional requirements. If it works for the wicked, it is likely to work for the incompetent. If it tells us how much effort to expend on fending off Denial of Service attacks, it should be solid enough to decide how much attention performance issues deserve.
+</br></p>
+<p>
+We confronted a planning technique that makes nightmare scenario's explicit with a more traditional approach which only makes use of user stories in a simulation with 4 teams. 2 teams wrote explicit nightmare scenario's and estimated them for cost and effort alongside the user stories. The 2 other teams took a more traditional approach and only produced user stories. However, they did not try to fudge the non-functional requirements, but rather factored them into existing user stories as acceptance criteria, or wrote new user stories to capture them. In the former case, the cost of things going wrong is replaced by an increased implementation estimate as additional acceptance criteria must be satisfied. In the latter, customers are asked what value they attach to a non-functional requirement being met. This can work well: a business person should be able to assess what value it brings to be able to serve 100 versus 10 concurrent users.
+<br/>
+The 'everything is a user story' approach definitely has the advantage of simplicity. As one is writing nightmare scenario's, it soon becomes apparent that pessimism is prolific and contagious. Nightmare scenario's quickly outnumber the user stories and all looks bleak. The optimization problem becomes intractable as the set of nightmare scenario's that an iteration plan should take into account depends on the mix of user stories to be implemented. Therefore, for those non-functional requirements amenable to the user story approach, this seems to be the way to go. For the others, ignore them, unless they prove to be particularly costly. In such case, tracking them explicitly is probably wise.
+</p>
+<p>
+In the second part of the workshop, there was an open discussion intended to mine the participants' experience.
+</p>
+<p>
+The point was made that, like functional requirements, non-functional requirements need failing tests. Without failing tests, it is all too easy to get stuck in a mire of '-ilities' that lack precision and cannot be validated. Unfortunately, tests for non-functional requirements are substantially harder to write and perform than functional tests. One of the challenges is running the tests in an environment that sufficiently resembles the target to yield significant results. Scalability, for example, is difficult to test for unless the test environment makes the same provision for load balancing as the production environment. Hence, projects increasingly make use of a staging environment on the production servers.
+</p>
+<p>
+Many non-functional requirements are orthogonal to user stories. This is an impediment to planning their implementation as part of the user stories.
+</p>
+<p>
+Like functional requirements, non-functional requirements deserve to be revisited at each iteration. It may be comforting to think that, if you get it wrong, you get a second crack at the whip. On the other hand, you are never really done since new non-functional requirements may emerge throughout the duration of the project and old requirements that were initially deemed of secondary importance may take on an increased significance.
+</p>
+<p>
+What does it mean when a customer wants the system to be maintainable? Someone put it like this: could you work faster and not charge as much? This is an understandable sentiment which we try to accommodate in the agile community, but it is hardly a testable requirement. Or is it? One suggestion was to measure maintainability by the velocity of the project. In my opinion this is tricky since the capabilities of the team also influence velocity; for example, as a team gains confidence, velocity goes up, when people take holidays, velocity goes down.
+</p>
+<p>
+This was my take on the workshop. If you were there and feel I left something important out, or misrepresented some of the discussion, please leave a comment. In any case, I would like to hear from you if you have any views on how to treat non-functional requirements, particularly in agile projects.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=200967.html">5
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=200967&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Johan Peeters adds a new entry to <a href="../index.html$/blogger=yo.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/yo.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D200967&amp;title=Dreams+and+Nightmares&amp;bodytext=At+last+week%27s+SPA+conference%2C+Paul+Dyson+and+I+ran+a+workshop+on+planning+non-functional+requirements+in+agile+projects.+Here+is+a+personal+account.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D200967&amp;title=Dreams+and+Nightmares">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D200967&amp;title=Dreams+and+Nightmares">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/johanpeeters.jpg"/></td><td>Johan Peeters is an independent software architect who spends a lot of 
+time plumbing and generally fixing leaks.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Johan Peeters. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>10 Fallacies of Software Analysis and Design</title>
+<meta charset="utf-8"/>
+<meta content="Carlos Perez" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=ceperez.html">Carlos Perez's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=57224.html">Discuss</a> | 
+<a href="mailto:?subject=10 Fallacies of Software Analysis and Design&amp;body= %0AArtima Weblogs %0A10 Fallacies of Software Analysis and Design %0Aby Carlos Perez %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=57224">Email</a> | 
+<a href="../viewpostP.html$/thread=57224.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=19393.html" title="Has Java Reached The Inefficiency Phase?">Previous</a> | 
+<a class="sl" href="thread=63261.html" title="The Architecture of Participation vesus Hacking">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Manageability Pro</span><br>
+<span class="ts">10 Fallacies of Software Analysis and Design</span><br/>
+<span class="as">by Carlos Perez</span><br/>
+<span class="pd">June 28, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+There are a lot of ideas in software engineering are considered as truth until someone pinpoints the fallacies.  Peter Deutsch first came up with his Eight Fallacies of Distributed Computing to debunk misconceptions about distributed computing.  I happen to have a list of my own.  Here are 10 Fallacies of Software Analysis and Design.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+There are a lot of ideas in software engineering are considered as truth until someone pinpoints the fallacies.  Peter Deutsch first came up with his Eight Fallacies of Distributed Computing to debunk misconceptions about distributed computing:  
+</p>
+<blockquote>
+Essentially everyone, when they first build a distributed application, makes the following eight assumptions. All prove to be false in the long run and all cause big trouble and painful learning experiences. 
+<br>
+<ol>
+<li>The network is reliable
+</li><li>Latency is zero
+</li><li>Bandwidth is infinite
+</li><li>The network is secure
+</li><li>Topology doesn't change
+</li><li>There is one administrator
+</li><li>Transport cost is zero
+</li><li>The network is homogeneous
+</li></ol>
+</br></blockquote>
+<p>
+I happen to have a list of my own.  These are the 10 Fallacies of Software Analysis and Design:
+</p>
+<p>
+<blockquote>
+<ol><li>You can trust everyone
+</li><li>Universal agreement is possible 
+</li><li>A perfect model of the real world can be created
+</li><li>Change can be avoided
+</li><li>Time doesn't exist
+</li><li>Everyone can respond immediately
+</li><li>Concurrency can be abstracted away
+</li><li>Side effects and non-linearity should be removed
+</li><li>Systems can be proven to be correct
+</li><li>Implementation details can be hidden
+</li></ol>
+</blockquote>
+<p>
+You can trust everyone. Security is obviously a big problem in the computing world today; you cannot simply blindly trust external systems.  However, even though many have ignored these concerns, everyone agrees that is a problem.  The part thats a fallacy is trust of a more subtle variety.  That is its a fallacy to assume that if another system declares something as true, it is actually true.  Its more general that conventional security, however its a pervasive problem in the Internet.   For example, there are firms that provide a service called Search Optimization.  The service artificially tries to improve a search ranking.  How it does this is by falsely planting information all over the Internet to fool search engines and ultimately up its ranking.  In short, you cannot trust other parties will give you accurate information.
+</p>
+<p>
+Universal agreement is possible. Achieving universal agreement is a fallacy because a common classification scheme is not only difficult to arrive at, but that classification changes over time.  In addition change happens on a per participant basis.  So either all participants are in absolute lock-step agreement or agreement can only exist in a relative sense. Finally, how can one achieve agreement if others may have conflicting agendas?
+</p>
+<p>
+A perfect model of the real world can be created.  Why is there this hidden belief by data modelers that a domain model can be created that can withstand the test of time?  Thats is one that can cover any new requirement that can be possibly imagined?  The problem with this thinking is that it reinforces the idea that change can be avoided.  Furthermore, it assumes that you modeling constructs are powerful enough to capture any new concept. 
+</p>
+<p> 
+Change can be avoided. Why is it that so many systems are designed without a bit of consideration for change?  Could it be that its just too difficult to do or are we just simply lazy, that is, leave it to the next guy to worry about.  The root cause of this problem may lie in that conventional software development does not employ metrics to measure agility.
+</p>
+<p>
+Time doesn't exist. The fact that time doesnt exist is obviously a fallacy; unfortunately mathematics tends to remove time out of the equation.  Thats simply because its much easier to work with.  Unfortunately, this mathematics tradition carries over into the computing world.  Examples of this are functional programming languages.  Functional programming languages have extremely good analytic properties, but they are deficient pragmatically.  Thats because they are cumbersome when dealing with state.  However you simply just cant ignore state, thats because state is about time and anyone with a brain would notice that it indeed exists.
+</p>
+<p>
+Everyone can respond immediately. Why is it that systems are designed such that other systems are always available and can respond immediately?  Its as if every system unfailing communication, infinite resources and can process any request instantaneously.  The fact is, communications do fail, resources are limited and request can sometime involve other parties that cant act as quickly. 
+</p>
+<p>
+Concurrency can be abstracted away.  The thought here is that concurrency is a technical issue and can be handled at that level of discourse.  Unfortunately, concurrency can have business consequences.  Resources are not all abstract and resources cannot be reserved without business consequences.  Coordination is not a implementation detail, not everyone can wait forever, and not everyone can react instantaneously. 
+</p>
+<p> 
+Side effects and non-linearity should be removed Side effects and non-linearity should be removed, this again in a reflection of our mathematical heritage.  In mathematics, side effects are extremely difficult to handle and Non-linear systems are force fitted into linear models to enable analysis.  Unfortunately, the world isnt as orderly as we would like.  Feedback is a natural occurrence, and you cant ignore.
+</p>
+<p>
+Systems can be proved to be correct.  Again this is an artifact or our mathematical roots.  Wouldnt it be nice if we could prove that our systems are correct without actually running them through a battery of tests?  Well, thats the idea here, unfortunately, there are a couple of problems.  The first is, how can you prove that your proof is correct?  The second is, if you cant take away time, side effects and non-linearity, then the chances that you can arrive at an analytic solution go down pretty quickly.  
+</p>
+<p>
+Implementation details can be hidden. This fallacy has its roots in our habits to create abstractions.  That is hide details and concentrate only on the essentials.  Unfortunately, abstractions do leak, not all implementation aspects can be truly be hidden. The real world is governed in time and space and when implementation is linked to it, no amount of abstraction can hide the fact that the real world exists.
+</p>
+<p>
+These fallacies have its roots in our mathematical traditions, which is a world of perfect determinism. Unfortunately this static thinking mindset is prevalent in software engineering. It's important to realize that the world undergoes continuous change, with feedback and side effects that create non-linearities, with time that's relativistic and with humans that are unpredictable. Finally, if its not obvious to you, your software implementation actually interfaces with this reality. 
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=57224.html">8
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=57224&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Carlos Perez adds a new entry to <a href="../index.html$/blogger=ceperez.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/ceperez.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D57224&amp;title=10+Fallacies+of+Software+Analysis+and+Design&amp;bodytext=There+are+a+lot+of+ideas+in+software+engineering+are+considered+as+truth+until+someone+pinpoints+the+fallacies.++Peter+Deutsch+first+came+up+with+his+%C2%93Eight+Fallacies+of+Distributed+Computing%C2%94+to+debunk+misconceptions+about+distributed+computing.++I+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D57224&amp;title=10+Fallacies+of+Software+Analysis+and+Design">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D57224&amp;title=10+Fallacies+of+Software+Analysis+and+Design">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/carlosperez.jpg"/></td><td>Carlos E. Perez has been an object-oriented practitioner for over a decade. He holds a Bachelor's Degree in Physics and a Master's Degree in Computer Science from the University of Massachusetts. He has polished his craft while working in IBM's Internet Division and IBM's TJ Watson Research Center in Hawthorne, New York. He now works for a startup 1/100,000th the size of his former employer. He writes about topics covering emerging aspect and object oriented paradigms, loosely coupled architecture, open source projects and Java evangelism.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Carlos Perez. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

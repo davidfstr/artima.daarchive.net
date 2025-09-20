@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>For the Sake of Simplicity</title>
+<meta charset="utf-8"/>
+<meta content="Kevlin Henney" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=kevlin.html">Kevlin Henney's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=362327.html">Discuss</a> | 
+<a href="mailto:?subject=For the Sake of Simplicity&amp;body= %0AArtima Weblogs %0AFor the Sake of Simplicity %0Aby Kevlin Henney %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=362327">Email</a> | 
+<a href="../viewpostP.html$/thread=362327.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=351308.html" title="Use Uncertainty As a Driver">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Road to Code</span><br>
+<span class="ts">For the Sake of Simplicity</span><br/>
+<span class="as">by Kevlin Henney</span><br/>
+<span class="pd">July 18, 2014</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Fifteen years ago this month a piece of mine appeared in EXE Magazine (RIP) lamenting unnecessary complexity in software. A significant update for the twenty-first century proves to be unnecessary. The message and the examples are the same, so I'm posting it again for posterity, as caution for the next fifteen years, and for the sake of simplicity.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+Software development is about many things, one of which is the management of complexity. It is a lesson that has been oft repeated, but apparently not as often heeded. The inherent complexity of a software system is something that we can do little about. We cannot eliminate it, but we can hide and abstract it. We can also create complexity.
+<p>
+That software systems are getting bigger and more pervasive is testament that we can at times muster the wherewithal to manage the inherent complexity of constructing large systems. At other times, however, it simply supports the view that creating complexity is far easier than hiding it — the creeping featurism, physical size, and bugginess of certain operating systems and wordprocessing packages is tantamount to a public admission of software engineering failure. To paraphrase Blaise Pascal, "The software to solve your problem is larger and more complex than necessary, because we did not have the ability or resources to make it smaller and simpler."
+<p>
+The inherent complexity of a software system is related to the problem it is trying to solve; the actual complexity of a software system is related to the size and structure of the software system as built. The difference between the two is a measure of our inability to match the solution to the problem.
+<p>
+This deficit (or surplus, depending on your perspective) is caused by — and manifested in — many aspects of the software and its development process. It reflects the structure and culture of the organisation and people that created it. It is reflected in its interface, by which I mean GUI, configuration, public API, and so on. And it is reflected in its reliability and adaptability. A more complex system will inevitably have more bugs and be harder to change — all other things being equal — than an equivalent simple system.
+<p>
+Note that there is a major, but nonetheless subtle, distinction between <i>simple</i> and <i>simplistic</i>. Dumbing things down, sweeping complexity under the carpet, is an example of <i>simplistic</i> — the complexity still leaks out. Far from eliminating the need for skills, when simplistic tools (and mindsets) are applied to non-simple problems they highlight that technology alone cannot solve the problem, and that skills for managing software complexity — skills better known as <i>programming</i> — are needed as much as ever. Zero- and minimal-programming models solve particular categories of problem for particular categories of people, but beyond that scope they are simplistic rather than simple, creating rather than solving problems — keep in mind, for example, that the majority of spreadsheets have significant bugs.
+<p>
+In this context, what is simplicity? Simplicity is related to minimalism, as characterised by <a href="../_/http/uk.phaidon.com/store/architecture/minimum-9780714843537/index.html">John Pawson</a>: "The minimum could be defined as the perfection that an artefact achieves when it is no longer possible to improve it by subtraction. This is the quality that an object has when every component, every detail, and every junction has been reduced or condensed to the essentials. It is the result of the omission of the inessentials."
+<p>
+In other words, leaving or taking things out by constantly examining the difference between inherent and actual complexity, questioning and reducing the number of features, and questioning and reducing the amount of code. For benighted management that still measures productivity in terms of KLOCs, this is scary: it appears to represent negative productivity. But... less code, fewer bugs... fewer features, greater ease of use... and so on.
+<p>
+This leads to an interesting marketing possibility, and one that I have seen in action only a few times: the idea that a subsequent release of a product might be smaller or have fewer features than the previous version, and that this property should be considered a selling point. Perhaps the market is not mature enough to accept it yet, but it remains a promising and classic ideal — less is more.
+<p>
+In software development we have already had these principles enshrined in our terminology for many decades: low coupling and high cohesion. As David Parnas noted, "Partition to minimize interfaces." The wisdom has been captured. Most developers today, however, either do not know what these terms mean or they do not understand their significance. The practice of aggressively managing dependencies between parts of a software system applies at every level: function to function; class to class; component to component. A separation of concerns leads to separation in software architecture — space to breathe, space to think, space to work.
+<p>
+A software system reflects the principles used to build it. Personally, I find it quite disturbing to see some of the files being copied or replaced when an application is installed on Windows — "Hey, isn't that file part of the operating system? Why is the application layer messing around with the operating system layer? And why do I need to install this completely unrelated piece of software to make this other one work? ... Uh, why don't some of my other applications work any more?"
+<p>
+It is not technology that solves problems, it is understanding: simplicity and minimalism are not criteria to apply to our understanding, but criteria that should be applied to the products of our understanding. We are often in the situation of having technology before understanding, and without principles to guide us we can end up with logical absurdities. To illustrate this, and reinforce the message of inherent versus actual complexity, I will leave you with the following thought: why is it that when I install new software on a Windows machine it typically requires me to reboot (or, as is often the case, rerereboot) the operating system, and yet plugging in a new piece of hardware does not? The hardware often seems softer than the software.
+<p>
+<br/>
+<br/>
+<i>This article was first published in the July 1999 issue of <a href="../_/http/en.wikipedia.org/wiki/.EXE_Magazine/index.html">EXE Magazine</a>.</i>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=362327&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Kevlin Henney adds a new entry to <a href="../index.html$/blogger=kevlin.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/kevlin.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D362327&amp;title=For+the+Sake+of+Simplicity&amp;bodytext=Fifteen+years+ago+this+month+a+piece+of+mine+appeared+in+EXE+Magazine+%28RIP%29+lamenting+unnecessary+complexity+in+software.+A+significant+update+for+the+twenty-first+century+proves+to+be+unnecessary.+The+message+and+the+examples+are+the+same%2C+so+I%27m+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D362327&amp;title=For+the+Sake+of+Simplicity">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D362327&amp;title=For+the+Sake+of+Simplicity">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/kevlinhenney.jpg"/></td><td>Kevlin is an independent consultant and trainer based in the UK. His development interests are in patterns, programming, practice and process. He has been a columnist for various magazines and web sites, including <em>Better Software</em>, <em>The Register</em>, <em>Application Development Advisor</em>, <em>Java Report</em> and the <em>C/C++ Users Journal</em>. Kevlin is co-author of <em>A Pattern Language for Distributed Computing</em> and <em>On Patterns and Pattern Languages</em>, two volumes in the <em>Pattern-Oriented Software Architecture</em> series. He is also editor of the <em>97 Things Every Programmer Should Know</em> site and book.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2014 Kevlin Henney. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

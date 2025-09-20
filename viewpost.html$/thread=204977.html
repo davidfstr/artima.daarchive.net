@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2007, #1: Java Client Apps the Easy Way</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=204977.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2007, #1: Java Client Apps the Easy Way&amp;body= %0AArtima Weblogs %0AJavaOne 2007, #1: Java Client Apps the Easy Way %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=204977">Email</a> | 
+<a href="../viewpostP.html$/thread=204977.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=202756.html" title="The Future of Online Dialog">Previous</a> | 
+<a class="sl" href="thread=205140.html" title="JavaOne 2007, #2: Making Web Apps Easy">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2007, #1: Java Client Apps the Easy Way</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 8, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Creating client-side Java applications just got a whole lot easier.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>This year, Monday was "day zero" of the JavaOne event.
+The CommunityOne agenda included tracks on NetBeans,
+Linux &amp; Solaris, OpenJDK/Mobile, Web 2.0, GlassFish
+(open server), and OpenSolaris.</p>
+<p>I sat in on the NetBeans sessions, with a side order
+of JRuby and Rails. I picked up a lot about creating
+web apps with Rails. I'll cover that in a future post.
+But I've got to tell you, it was pretty darn impressive
+how much easier it has become to write a good client-side
+app in Java. NetBeans 6 isn't quite at the point where you
+can just press a button and have the whole application
+written for you, but it's getting remarkably close.</p>
+<p>In Monday's NetBeans session, a database application
+with menus, dialogs, pictures, and an online map
+was created in 4 minutes. Total amount of code written
+for the project: one line. It took advantage of a
+terrific mapping component available from Sun Labs, but
+the really cool part was the way everything was put
+together interactively.</p>
+<p>The demonstration featured several client-building
+capabilities that have been developed in tandem.
+Working together, developers working on Swing,
+NetBeans, and the GUI framework have put
+together a series of capabilities that spell
+c-o-n-v-e-n-i-e-n-c-e for client-side developers.</p>
+<div class="section">
+<h1><a id="building-the-app" name="building-the-app">Building the App</a></h1>
+<p>The new application-building features include:</p>
+<p><strong>GUI Builder</strong></p>
+<blockquote>
+With the Matisse GUI builder that is part of NetBeans 6,
+you can drag and drop components into your application.
+Built on the GroupLayout manager, the components then
+auto-snap to one of several predefined distances,
+and you can align easily the baselines of label text and
+text in a field. You can also select a group of components
+and enclose them in a container, or "duplicate" the group,
+which automatically resizes the window to make room.
+Duplication also preserves the alignment of the components,
+which is handy when you're building a table of components.
+Other notable features included the ability to drag a
+component from another project without having to add it
+the palette first, category headers in the palette to make
+it easier to find things, the ability to sort the palette,
+plus support for interface localization and choosing the
+look and feel you want. (The only GUI-building feature that
+wasn't demonstrated was window-resizing. That's a
+process that can consume a lot of time--especially
+with a layout manager that's as tricky to use manually as
+Matisse. Fortunately, auto-resizing is a feature that's
+said to be on the table for upcoming development.)</blockquote>
+<p><strong>Binding Capabilities</strong></p>
+<blockquote>
+<p>Next to GUI layout and resizing, wiring (connecting
+things together) is the most time consuming of the mechanical
+tasks in the GUI-building process. NetBeans 6 adds a
+binding tool that lets you point to things and say,
+"when that GUI element changes, poke the model over
+here, and when that value changes, update this,
+that, and the other gizmo". Enabling that capabability
+are the Binding class and the BindingGroup class.
+When you're doing it manually, you add a pair of entries
+to the Binding class, or add sets of pairs to a BindingGroup,
+and then invoke bind(). To get the behavior you want, you
+choose one of the three synchronization strategies that
+Binding objects implement: read once from the source
+object, continuous updates (one-way), or full synchronization
+(two-way). In addition to data converters, you can also
+specify validators for the full synchronization option,
+as depicted in the component-binding diagram:</p>
+<pre class="literal-block">
+  MODEL                    GUI
+(source) --&gt; convert --&gt; (target) --+
+    ^                               |
+    +--- validate &lt;-- convert &lt;-----+
+</pre>
+</blockquote>
+<p><strong>Action Builders</strong></p>
+<blockquote>
+NetBeans 6 also adds dialogs for defining Actions,
+so you can say what is supposed to happen when a user
+clicks a button, selects a menu item, or issues
+a particular combination of keystrokes--and only
+say it once. In the code, actions take advantage of
+a new annotation: @Action. Instead of creating an
+Action class and wiring up the event handling, you
+just add the annotation. Deep under the
+covers, all of the infrastructure is taken care
+of for you.</blockquote>
+</div>
+<div class="section">
+<h1><a id="making-it-run-right-making-it-run-fast" name="making-it-run-right-making-it-run-fast">Making it Run Right, Making it Run Fast</a></h1>
+<p>Building the interface is only part of the process, of course.
+You've still got to get the bugs out of the app, maximize
+performance, and make sure you don't have any memory leaks.
+(They're still possible, even with Java's automated
+garbage collector. One good way to get a memory leak is to
+create static variables. Long after the object has gone away,
+the class definition still has those static pointers hanging
+around, referencing objects that probably should have been
+discarded.)</p>
+<p>To improve those aspects of application building, NetBeans
+has added or improved several key features:</p>
+<p><strong>Debugging</strong></p>
+<blockquote>
+NetBeans 6 adds expression stepping, so you're not limited
+to debugging a line at a time. You can step over parts of
+a line to get to the expression you need to step into. There
+is also an Instances view that lets you see all instances
+of a particular class and identify all objects that hold a
+reference to a particular instance. (There is no
+back-in-time debugging, as yet. But as useful as that
+capability occasionally is, I've noticed that it also
+complicates the debugging interface quite a bit. So it
+seems wise to me that back-in-time debugging is a lower
+priority than some of the other features the team has
+implemented.)</blockquote>
+<p><strong>Profiling</strong></p>
+<blockquote>
+Profiling is now part of the base release, so you get it
+without having to add additional packages to NetBeans 6.
+The profiling demonstration showed dynamic graphs and
+pie charts with drill-down capabilities, in addition to
+the standard list display. The profiling capabilities
+also include integration with jmeter scripts (to create
+a load for a web application, for example).</blockquote>
+<p><strong>Memory Leaks</strong></p>
+<blockquote>
+<p>The combination of profiling, the instance view, and
+a jmeter script makes it pretty easy to identify
+the source of a memory leak. With the application running
+under load, you watch the number of instances for each
+object type grow. After a while, they tend to reach a
+steady state, where X number of objects of a given type
+are sufficient to handle the incoming requests, and the
+instance count bounces up and down around that number. But
+when you have a memory leak, the instance count for the offending
+object will soon sort to the top of the list, and will just
+keep growing and growing, never diminishing.</p>
+<p>Once you know which objects are avoiding garbage
+collection, you can go to the instances view to see who's holding
+on to the pointers that reference them. From there, you
+can go straight to the code to find out what changes to make.</p>
+</blockquote>
+</div>
+<div class="section">
+<h1><a id="deployment" name="deployment">Deployment</a></h1>
+<p>After you've built an application, got it running right, and
+got it running it fast, you still need to deliver it to your
+users--as well as any updates that happen to be needed from
+time to time.</p>
+<p>The NetBeans demo featured a quick point-and-shoot process
+to enable Java Web Start for the application, but it was
+so quick I missed the details! But I'm sure it will come up
+again in one of Tuesday's sessions: "Easy Deployment is
+Finally Here".</p>
+<p>Can't wait for that one. Stay tuned.</p>
+<blockquote>
+<strong>Note:</strong> I caught the session, and I'll be blogging on
+it later. The good news: The JRE will be a heck of a lot
+easier to install, you'll be able to invoke the
+installation operations programmatically, and JRE updates
+will patch the existing version instead of adding
+another copy. (Yay!) The bad news: Although the JRE
+will be way easier to install, you're still on your own when
+it comes to installing your application. (Java Web Start
+could be the ideal vehicle for that, but it's security
+sandbox is too limiting, especially since user-granted
+permissions aren't sticky--they have to be re-granted
+every time the user starts the app.)</blockquote>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=204977.html">3
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=204977&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204977&amp;title=JavaOne+2007%2C+%231%3A+Java+Client+Apps+the+Easy+Way&amp;bodytext=Creating+client-side+Java+applications+just+got+a+whole+lot+easier.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204977&amp;title=JavaOne+2007%2C+%231%3A+Java+Client+Apps+the+Easy+Way">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D204977&amp;title=JavaOne+2007%2C+%231%3A+Java+Client+Apps+the+Easy+Way">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

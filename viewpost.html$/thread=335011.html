@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>User Interface Programming in the (Near) Future</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=335011.html">Discuss</a> | 
+<a href="mailto:?subject=User Interface Programming in the (Near) Future&amp;body= %0AArtima Weblogs %0AUser Interface Programming in the (Near) Future %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=335011">Email</a> | 
+<a href="../viewpostP.html$/thread=335011.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=334124.html" title="More on Remote Procedure Calls">Previous</a> | 
+<a class="sl" href="thread=334450.html" title="Speaking in Grenoble, France and Stockholm">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">User Interface Programming in the (Near) Future</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">September 21, 2011</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In my article on JavaScript, I observed that we need a new language that generates good and safe JavaScript, so that you no longer have to think about either JavaScript issues or cross-browser problems. Little did I know that the solution(s) had already appeared in the form of JQuery and CoffeeScript.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=329840.html">Here is the earlier article</a>.</p>
+<p>The fact that there have been so many JavaScript libraries attempting to solve the problem, and that the solution appears in not one but two pieces perhaps makes it understandable that it's not initially obvious. But once you see how well the solution works, you'll shake off the shackles of the old, and unleash your UI creative potential. This combination is compelling enough that Rails has included it as part of the standard distribution.</p>
+<p>If you want to work across desktops, pads and handhelds, HTML5 looks like the only reasonable choice. And Windows 8 looks like it is going to be heavily based on HTML5, so these tools will also come in handy for that.</p>
+<div class="section">
+<h1><a id="jquery" name="jquery">jQuery</a></h1>
+<p>The browser problem is big. The amount of money that companies have invested to compensate for browser incompatibilities is huge. Entire jobs have been dedicated to that one issue.</p>
+<p>Many have attempted to solve it by creating JavaScript libraries. Because of the size and pain of the problem, many libraries were created, and because this was primarily an open-source market and unencumbered by money, a solution has (relatively rapidly) evolved. I'm quite glad I only showed up <em>after</em> things have been sorted out.</p>
+<p>The clear winner is <a class="reference" href="../_/http/jquery.com/index.html">jQuery</a>. Go to the site and you'll not only see thorough documentation including lots of tutorials, but also the plugin framework that allows lots of other people to create easy-to-use add-ons. There are tons of plugins, including the very impressive <a class="reference" href="../_/http/jqueryui.com/index.html">jQuery UI</a>.</p>
+<p>A particularly nice way to browse through the library is <a class="reference" href="../_/http/visualjquery.com/index.html">Visual jQuery</a>.  There are a number of books out -- I have <a class="reference" href="../_/http/www.amazon.com/jQuery-Action-Second-Bear-Bibeault/dp/1935182323/index.html">jQuery in Action</a> and <a class="reference" href="../_/http/www.amazon.com/jQuery-Cookbook-Solutions-Examples-Developers/dp/0596159773/index.html">jQuery Cookbook</a> but I hardly touched them before starting to write code -- the online resources are very good, and you can also find lots of examples in blogs.</p>
+<p>jQuery is a facade over both JavaScript and the browser DOM. If you do everything via jQuery calls, you insulate yourself against cross-browser issues and also many of the gotchas of JavaScript -- however, you're still programming in JavaScript (a problem we solve in the next section).</p>
+<p>Basically what jQuery allows you to do is discover parts and pieces of your UI and manipulate them. "Manipulate" means pretty much anything you can imagine, including modifying the CSS, creating and responding to events, Ajax, and all kinds of effects which, in combination with some of the mind-blowing plugins out there, rival what you can do with Flex. All this runs in the browser, without any browser plugins like Flash, Java or SilverLight.</p>
+<p>You'll see more when we get to the example.</p>
+</div>
+<div class="section">
+<h1><a id="coffeescript" name="coffeescript">CoffeeScript</a></h1>
+<p>Although jQuery solves your browser issues, you're still working with a language (JavaScript) that wants to bite you at every turn (see the aforementioned previous article). Wouldn't it be nice to be able to program using a modern language that feels like Python, Ruby and Scala?</p>
+<p>That's what CoffeeScript does. You write in a very spare and clean object-functional language, and it compiles into safe JavaScript. Other than being able to transparently call functions in the JavaScript library, you don't even have to <em>think</em> about JavaScript (well, except when debugging, but even that might be a temporary issue).</p>
+<p><a class="reference" href="../_/http/jashkenas.github.com/coffee-script/index.html">The CoffeeScript site</a> is very well done; it has a nice introduction and there are numerous resources including a screencast introduction; there was also a recent <a class="reference" href="../_/http/vimeo.com/28772382/index.html">presentation at JavaZone</a> which is quite good and not linked from the CoffeeScript site.</p>
+<p>My favorite book so far is the free, online <a class="reference" href="../_/http/arcturo.github.com/library/coffeescript/index.html">Little Book on CoffeeScript</a> (except for the last chapter, which I found muddied the waters). I've also been reading <a class="reference" href="../_/http/www.amazon.com/CoffeeScript-Accelerated-JavaScript-Development-Pragmatic/dp/1934356786/index.html">CoffeeScript: Accelerated JavaScript Development</a> which I like -- the voice makes for pleasant reading -- but which is slightly odd in places, nonetheless quite useful. There's even a chapter on using CoffeeScript with jQuery which I found helpful (and another indication that the combination of the two is the future of UI).</p>
+</div>
+<div class="section">
+<h1><a id="my-favorite-example-the-changing-color-grid" name="my-favorite-example-the-changing-color-grid">My Favorite Example: The Changing Color Grid</a></h1>
+<p>Although I will let the jQuery and CoffeeScript resources cited above be your full introduction to the language, I'll show you an example here that is one I tend to create whenever exploring a new UI development system; it's sort of my "hello, world" for UI.</p>
+<p>I like to see what it takes to create a grid of colored boxes and then randomly change those colors. This is by no means a perfect exploration of a UI system, but it gives you a good feel about what it's like to develop with. Considering the difficult experience I had with JavaScript years ago, CoffeeScript + jQuery is a delight to use. Indeed, even considering all the UI libraries I've looked at over the years, this system is certainly one of the best, especially when you take into account the ever-expanding ocean of jQuery plugins.</p>
+<p>jQuery works by hooking into your HTML and modifying it. This "hook" can be virtually anything from tag types to styles to individual identifiers. To start with, we'll use the <strong>id</strong> "board"of a single paragraph as our hook:</p>
+<pre class="literal-block">
+&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;title&gt;CoffeeScript and jQuery Make a Color Grid&lt;/title&gt;
+    &lt;script type="text/javascript" src="jquery.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="grid.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;p id="board" align="center"&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>Note the inclusion of <strong>jquery.js</strong>, which is all you need do to add jQuery. The <strong>grid.js</strong> is the JavaScript file that will be generated by our CoffeeScript code. So all the browser sees is HTML and JavaScript.</p>
+<p>Let's create the CoffeeScript in pieces. We're going to create a table filled with rows of cells of blocks of color. Here's a CoffeeScript function to create one of those cells:</p>
+<pre class="literal-block">
+cell = (row, col) -&gt;
+  "&lt;td id='#{row}X#{col}' style='border-style:solid;border-width:8px;'&gt;&lt;/td&gt;"
+</pre>
+<p>Like JavaScript, everything in CoffeeScript is a variable -- including a function. To make <strong>cell</strong> a function, we assign it to a function. A function is defined as an argument list in parentheses followed by an arrow, followed by the function definition. Basically, all functions are defined as anonymous functions, and we can choose to assign them to variables if we want. So here, <strong>cell</strong> is a function that takes two arguments.</p>
+<p>Like Python, blocks of code are determined by indentation, and the de facto standard indent size in CoffeeScript is 2.</p>
+<p>Like Scala, the last expression in a function becomes the return value. So here, we're returning a string. Note the <strong>#{row}</strong> and <strong>#{col}</strong>; within a double-quoted string; these expressions substitute the <strong>row</strong> and <strong>col</strong> variables into the resulting string. This becomes the unique <strong>id</strong> for that cell, which we'll use later to discover and manipulate that cell using jQuery.</p>
+<p>You can also see that I have not established the color of the table cell yet. We'll do that later, also using jQuery.</p>
+<p>Now let's create a row of these cells:</p>
+<pre class="literal-block">
+row = (ncols, row) -&gt;
+  '&lt;tr&gt;' +  (cell(row, col) for col in [0..ncols]).join('') + "&lt;/tr&gt;\n"
+</pre>
+<p>The parenthesized expression is a <em>comprehension</em>, just like in Python. The square brackets create a list, and the <strong>..</strong> produces a range. Once the list of cells is created, it is joined together using the JavaScript <strong>join()</strong> function -- note how transparent it is for CoffeeScript to call JavaScript functions, just like Scala calling Java functions.</p>
+<p>Finally, the whole table:</p>
+<pre class="literal-block">
+table = (nrows, ncols) -&gt;
+  '&lt;table&gt;\n' + (row(ncols, n) for n in [0..nrows]).join('') + '&lt;/table&gt;'
+</pre>
+<p>This will be inserted into the paragraph in our HTML.</p>
+<p>Now we want to create a random RGB color:</p>
+<pre class="literal-block">
+randomRGBColor = -&gt;
+  val = -&gt; Math.floor(Math.random()*255)
+  "rgb(" + val() + "," + val() + "," + val() + ")"
+</pre>
+<p>If you have no arguments for your function, you can just leave out the parentheses for the argument list. Note that <strong>val</strong> is a nested function, and that one-line functions just put the code on the same line as the arrow.</p>
+<p>The <strong>randomize</strong> function steps through all the cells and change the CSS <strong>border-color</strong> for each one using jQuery:</p>
+<pre class="literal-block">
+randomize = (nrows, ncols) -&gt;
+  for r in [0..nrows]
+    for c in [0..ncols]
+      $('#' + "#{r}X#{c}").css("border-color", randomRGBColor())
+  setTimeout (-&gt; randomize nrows, ncols), 1000
+</pre>
+<p>The <strong>$</strong> calls jQuery, and the expression in parentheses right afterward tells jQuery what we're looking for. Here, the initial <strong>#</strong> means we're looking for an <strong>id</strong> (a leading <strong>.</strong> would mean a class name, and there are others). Once we find the component with that <strong>id</strong>, we use the jQuery <strong>css()</strong> method to change the border-color to a randomly-selected color. Finally, we use JavaScript's <strong>setTimeout()</strong> function to call this function again after 1 second.</p>
+<p>Every program needs a <strong>main()</strong>. In jQuery, this must be attached to the point in the lifecycle after the page is loaded and is ready, so that jQuery can find the components you're looking for. In CoffeeScript, your <strong>main()</strong> looks like: <strong>$ -&gt;</strong>:</p>
+<pre class="literal-block">
+$ -&gt;
+  rows = 30; cols = 60
+  $("#board").html(table rows, cols)
+  randomize rows, cols
+</pre>
+<p>Semicolons are normally unnecessary in CoffeeScript because it recognizes line breaks after complete expressions to be the end of that expression. If you want to put more than one expression on a line, you separate them with semicolons.</p>
+<p>The <strong>$("#board")</strong> tells jQuery to find any and all components with that <strong>id</strong> (in our HTML, there's only one). The jQuery <strong>html()</strong> method inserts its argument as HTML. The argument is a call to our <strong>table()</strong> function, but note that -- like Ruby and Scala -- we don't need to use parentheses around the arguments.</p>
+<p>Once the table has been inserted, we call <strong>randomize()</strong> and the flashy blinking colors begin!</p>
+<p>While developing, you can tell the CoffeeScript compiler to run in the background and compile your code every time you save it. In my case, all the above code was in a file called <strong>grid.coffee</strong> so the command-line for continuous compilation is:</p>
+<pre class="literal-block">
+coffee -w -c grid.coffee
+</pre>
+<p>For monitoring and debugging, the docs tell you to install FireBug on FireFox, but I discovered that the Chrome browser has very nice debugging built-in: select the wrench on the right side, then <strong>tools</strong>, then <strong>JavaScript Console</strong>. Note that all debugging messages will refer to the generated JavaScript rather than the CoffeeScript source, so you must at least be comfortable with JavaScript.</p>
+</div>
+<div class="section">
+<h1><a id="limitations" name="limitations">Limitations</a></h1>
+<p>As incredible as the CoffeeScript/jQuery combination is, there are limitations.</p>
+<p><strong>Programming environments</strong>. These are not like FlexBuilder (yet), but I suspect we might see them -- perhaps even from Adobe. I'm used to being on the bleeding edge, so I just installed CoffeeScript-mode for emacs.</p>
+<p><strong>Debugging</strong>. As noted, debugging tools work only with the generated JavaScript, and your primary way of communicating program status is with <strong>console.log</strong>. Again, I'm used to the bleeding edge so I didn't have any complaints about the tools at hand.</p>
+<p>The combination of CoffeeScript and jQuery looks like a juggernaut to me. They solve so many of the previous problems that it's breathtaking. I don't see jQuery being unseated anytime soon; it will just continue to grow. I really like CoffeeScript, but someone could conceivably come along with a much better language and unseat that sometime in the future. But for now, my UI issues are resolved.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=335011.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=335011&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335011&amp;title=User+Interface+Programming+in+the+%28Near%29+Future&amp;bodytext=In+my+article+on+JavaScript%2C+I+observed+that+we+need+a+new+language+that+generates+good+and+safe+JavaScript%2C+so+that+you+no+longer+have+to+think+about+either+JavaScript+issues+or+cross-browser+problems.+Little+did+I+know+that+the+solution%28s%29+had+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335011&amp;title=User+Interface+Programming+in+the+%28Near%29+Future">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D335011&amp;title=User+Interface+Programming+in+the+%28Near%29+Future">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2011 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

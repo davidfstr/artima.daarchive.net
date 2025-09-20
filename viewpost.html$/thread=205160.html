@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2007, #3: Mashup a Web App with Little or No Code</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=205160.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2007, #3: Mashup a Web App with Little or No Code&amp;body= %0AArtima Weblogs %0AJavaOne 2007, #3: Mashup a Web App with Little or No Code %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=205160">Email</a> | 
+<a href="../viewpostP.html$/thread=205160.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=205140.html" title="JavaOne 2007, #2: Making Web Apps Easy">Previous</a> | 
+<a class="sl" href="thread=205945.html" title="JavaOne 2007, #4: Wrapup">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2007, #3: Mashup a Web App with Little or No Code</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">May 14, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+When the information you need already exists, but it's scattered here and there around the web, you have an option. You can create a small, super-lightweight web app to put it together--a mashup. It's not quite as easy as falling off a log, but it's gotten to the point that end users can create their own applications.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p><strong>Contents</strong></p>
+<blockquote>
+<ul>
+<li><a href="#what-s-a-mashup">What's a Mashup?</a></li>
+<li><a href="#the-long-tail">The Long Tail</a></li>
+<li><a href="#structure-of-a-mashup">Structure of a Mashup</a></li>
+<li><a href="#mashup-builders">Mashup Builders</a>: Google Gadgets, Yahoo 
+      Pipes, Teqlo, QEDWiki</li>
+<li><a href="#mashup-enablers">Mashup Enablers</a>: Microformats &amp; Web 
+      Scrapers (OpenKapow, Kapow, Dapper)</li>
+<li>
+<dl>
+<dt><a href="#mashup-technologies">Mashup Technologies</a></dt>
+<dd>
+<ul>
+<li><a href="#web-page-gui-components-and-gui-builders">Web page GUI 
+              components and GUI Builders</a>: GWT, Xap, NetBeans</li>
+<li><a href="#data-formats">Data Formats</a>: Microformats, RSS, Atom, 
+              JSON, JSONP</li>
+<li><a href="#communication-mechanisms">Communication Mechanisms</a>: 
+              REST, APP</li>
+<li><a href="#data-sources-and-repositories">Data Sources and Repositories</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><a href="#coding-libraries">Coding Libraries</a>: JSR 311, ROME, ROME 
+      Propono</li>
+<li><a href="#service-building-strategies">Service-Building Strategies</a></li>
+<li><a href="#security-considerations">Security Considerations</a></li>
+<li><a href="#resources">Resources</a></li>
+</ul>
+</blockquote>
+<h1><a id="what-s-a-mashup" name="what-s-a-mashup">What's a Mashup?</a></h1>
+<p>Mashups are super-lightweight web apps that are created in minimum time,
+with minimum code, from information and services that already exist on
+the web. You want your email, RSS feeds, and calendar all in one page?
+Smash the pieces into a web page that has the interface you want. Have
+a web-accessible GPS locator in your company's delivery trucks? Combine
+that feed with a a map service like Google maps to display the truck's
+location in real time,</p>
+<p>The possibilities are cool, and the prospect of doing them with very
+little work is even cooler. so it was great to get an overview of
+the technologies that make it all work.</p>
+<p>Andreas Krohn of Kapow Technologies gave a great survey of the
+tchnology landscape. This post summarizes his talk, mashing it together
+with a talk given by Sean Brydon, Greg Murray, and
+Mark Basier of Sun Microsystems, as well as one given by Dave Johnson
+(also from Sun). (The latter talks went deeper into the technologies
+and provided useful insights into security considerations. But mostly
+they introduced the most important buzzwords to know.)</p>
+<h1><a id="the-long-tail" name="the-long-tail">The Long Tail</a></h1>
+<p>Software development tends to be an expensive, time-consuming process.
+So only the most critical projects get implemented. There are a
+limited number of them, but since they are used by many people, they
+justify the investment in a system that enhances reliability and scalability,
+like the Service-Oriented Architecture (SOA)--even if it is more complex
+and harder to use.</p>
+<p>On the other hand, many people have a need for small, single-purpose
+applications that may not do much more than put information together
+for their purposes. Those small apps rarely get developed, because
+coding resources are scarce. There are a very small number of users
+for those apps, but there are a large number of applications. When
+plotted on a curve, there the number of possible applications continues
+to infinity as the number of users diminishes to one:</p>
+<pre>
+      | *
+  ^   |  *
+  |   |   *
+Users |    *
+      |     *
+      |       *
+      |         *
+      |            *
+      |                *
+      |                    *
+      |                         *
+      |                              *
+      |                                   *   *   *
+      +--------------------------------------------
+                   Applications --&gt;
+</pre>
+<p>Andreas pointed out that mashups help to address that "long tail"
+at the end of the graph. All development enhancements do that
+to some degree, of course. But the goal of mashup technology is
+to get to the point that users can do it for themselves.</p>
+<h1><a id="structure-of-a-mashup" name="structure-of-a-mashup">Structure of a Mashup</a></h1>
+<p>Let's say you want to put your hotel reservations, map
+of their locations, and a calender with your travel dates,
+all on one page. The goal is to see the information you
+need, all in one place, gathering it from whereever it
+happens to exist.</p>
+<p>To create a mashup, you need:</p>
+<blockquote>
+<ul>
+<li>Web page GUI components and a GUI Builder</li>
+<li>A communication mechanism and a data format</li>
+<li>One or more data sources you can access</li>
+<li>Optionally, a data repository you can interact with</li>
+</ul>
+</blockquote>
+<p>The GUI components display data and give you a way
+to provide selection. The coommunication mechanism
+goes out to the web, delivering a package of information
+in a given data format. The data sources deliver
+one-way information, while the optional repository
+gives you a way to store information you want to save.</p>
+<p>In a moment, We'll look at The most common technologies
+used in each area. First, let's take a look at some
+all-in-one mashup builders that let you create a mashup
+without writing a line of code.</p>
+<h1><a id="mashup-builders" name="mashup-builders">Mashup Builders</a></h1>
+<dl>
+<dt><strong>Google Gadgets</strong></dt>
+<dd>These are fast way to see what a mashup could be. Google Gadgets are mostly 
+      display-only widgets, some of which let you specify filtering criteria or 
+      add information (like the calendar). They're pre-connected to a data service, 
+      and they provide bits of javascript you can drop into a web page. (So far, 
+      I haven't figured out how to keep them from overwriting each other, but 
+      I'm sure I'll figure it out, eventually)</dd>
+<dt> </dt>
+<dt><strong>Yahoo Pipes</strong></dt>
+<dd> With Yahoo Pipes, you drag and drop components onto a page, identify 
+      the RSS feeds you want to use for your data source, and then specify sorting 
+      and selection criteria (which you can attach to fields and other GUI components) 
+      to control the information you see. 
+      <p>You can also configure your mashup to publish the information it gathers, 
+        delivering information in other formats such as Atom and JSON.</p>
+<p>The Pipes system is limited to RSS feeds, so if you want to access additional 
+        data sources, or perhaps add special functionality (like dragging items 
+        to the calendar), then you'll need to add some code.</p>
+</dd>
+<dt><strong>Teqlo</strong></dt>
+<dd>This award-winning system uses Java technology. It only works with Firefox 
+      2.0, but it provides multiple kinds of widgets--including RSS readers, todo 
+      lists, calendar, and others. Perhaps even more than the GUI building tool 
+      is the fact that the widgets can talk to each other, so you can drag and 
+      drop information from one widget to another. (You could drag an entry into 
+      the calendar, for example, or drag a calendar entry into the map to see 
+      where it's located.)</dd>
+<dt> </dt>
+<dt><strong>QEDWiki</strong></dt>
+<dd>I stumbled across this item while researching the others. IBM's QEDWiki 
+      is a PHP-based system that combines Wiki building and mashup construction 
+      in a single system that both coders and end users can customize to get the 
+      behaviors they want.</dd>
+</dl>
+<p>If you want to start playing with these technologies and see what kind of mashups 
+    you can construct, head over to the <a href="#resources">Resources</a> section 
+    now. To find out how to turn normal web pages into data sources you can use 
+    in your mashups, read the next section. Following that, you'll find more information 
+    on the underlying technologies.</p>
+<h1><a id="mashup-enablers" name="mashup-enablers">Mashup Enablers</a></h1>
+<p>When the information you is on the web, but it isn't
+in a form a mashup can, there is a solution: Use a
+Mashup Enabler to convert the information into
+usable form.</p>
+<dl>
+<dt><strong>Microformats</strong></dt>
+<dd>Embedding microformat tags in an HTML page makes it possible to extract 
+      its contents in XML form. This kind of enabling requires cooperation from 
+      the information producer, but it's relatively easy to do, and the data tagging 
+      will remain valid even when the page layout changes.</dd>
+<dt> </dt>
+<dt><strong>Kapow and OpenKapow</strong></dt>
+<dd> Web Scrapers like Kapow and OpenKapow pull data from an HTML page and 
+      turns it into a data feed a mashup can use. (OpenKapow is the free version.) 
+      Andreas Krohn of Kapow Technologies demonstrated the process: 
+      <blockquote>
+<ul>
+<li>Download and run openkapow</li>
+<li>Tell it to build a new service</li>
+<li>Specify the URL the data comes from</li>
+<li>Tell it what to search for in the page</li>
+<li>Tell it which items to include in the output</li>
+<li>Do an initial search</li>
+<li>Specify a loop to output multiple items</li>
+<li>Use menu items to extract pieces</li>
+</ul>
+</blockquote>
+<p>The risk with web scraping, of course, is that the data format you're 
+        scraping could change. But the reward is that you get the app you want.</p>
+<p>The risk/reward ratio depends on the time required to create such an 
+        app. With the all-in-one mashup build systems that serve "the long 
+        tail", the ratio becomes favorable to the point that it's worth setting 
+        up a web scraper to access critical bits of data, even if it has to change 
+        once in a while.</p>
+<p><strong>Note:</strong> Other services in the web scraping category include 
+        Dapper, Google Data, and the Java Mozilla HTML parser.</p>
+</dd>
+</dl>
+<h1><a id="mashup-technologies" name="mashup-technologies">Mashup Technologies</a></h1>
+<p>What follows is a whirlwind tour of the technology buzzwords mentioned in 
+    the talks. My notes are sketchy at points, but should serve as a decent guide 
+    to the process.</p>
+<h2><a id="web-page-gui-components-and-gui-builders" name="web-page-gui-components-and-gui-builders">Web 
+      page GUI components and GUI Builders</a></h2>
+<p>In the old days, you did a lot of programming to create a GUI. But in the 
+      web era, you assemble pre-built components, wiring them to data feeds. The 
+      code you write--if any--is minimal.</p>
+<p>The components themselves are built using AJAX, of course. That means Javascript. 
+      But the tricky bit is the differences in the document object structure (DOM) 
+      that different browsers create for their web pages.</p>
+<p>AJAX component libraries attempt to account for those differences. The 
+      degree to which they're successful determines how robust and reliable they 
+      are.</p>
+<p>Libraries built of AJAX components include:</p>
+<blockquote>
+<ul>
+<li>prototype</li>
+<li>scrip.aculo.us</li>
+<li>Dojo</li>
+<li>jMaki, where the "j" stands for JavaScript, and "Maki" 
+          is Japanese for "wrapper", or "container".</li>
+</ul>
+</blockquote>
+<p>But even when you have the best of libraries, it takes a fair amount of 
+      work to wire them up and lay them out. That's where GUI builders come in.</p>
+<p>For a serious enterprise app that will have many users on different browsers, 
+      one of the commercial mashup builders may make sense, for the sake of increased 
+      reliability and timely support:</p>
+<blockquote>
+<ul>
+<li>BackBase</li>
+<li>NexaWeb</li>
+</ul>
+</blockquote>
+<p>On the other hand, when you're creating something for yourself, one of 
+      the open source builders may work well enough to do what you need on the 
+      browser you use regularly:</p>
+<blockquote>
+<ul>
+<li><strong>Google web Toolkit (GWT):</strong> Java classes that generate 
+          Javascript, so you can write cleaner code and use the compiler to help 
+          detect errors. With GWT you can browse the libraries, take advantage 
+          of code completion, refactor with the IDE, do unit testing, and rapidly 
+          cycle between coding and testing. Perhaps more importantly, the GWT 
+          libraries were designed to optimize the end user experience and only 
+          then, where possible, optimize the developer experience.<br/>
+            </li>
+<li><strong>XAP:</strong> The open source version of NexaWeb<br/>
+            </li>
+<li><strong>NetBeans:</strong> for jMaki</li>
+</ul>
+</blockquote>
+<h2><a id="data-formats" name="data-formats">Data Formats</a></h2>
+<dl>
+<dt><strong>Microformats</strong></dt>
+<dd>An XML microformat embedded in an HTML page is one kind of data format, 
+        of course, as are the more widely known RSS and Atom formats. This section 
+        compares those formats, along with Javascript Object Notation (JSON).</dd>
+<dt> </dt>
+<dt><strong>RSS</strong></dt>
+<dd> The standard syndication formats, intended for one feed and many listeners, 
+        are RSS and Atom. Of the two, RSS is the more widely known, but it has 
+        many difficulties: 
+        <ul>
+<li>RSS 1.0 and RSS 2.0, despite having similar names, are backed by 
+            two entirely different groups, and are fundamentally incompatible.</li>
+<li>Several variants of RSS 1.0's predecessors are still in common use, 
+            as well, from 0.92 through 0.94.</li>
+<li>RSS is a very loose standard, so succesfully parsing one standard 
+            doesn't guarantee success with a different one. (For example, it doesn't 
+            specify which fields could contain HTML escaped into text form, and 
+            there is no support for summares.)</li>
+<li>RSS only covers the transmission of text. It doesn't handle multimedia, 
+            binaries, or HTML.<br/>
+              </li>
+</ul>
+</dd>
+<dt><strong>Atom</strong></dt>
+<dd> The Atom specification rectifies those problems: 
+        <ul>
+<li>ATOM 1.0 is a single, well-specified IETF standard.</li>
+<li>It handles binaries and HTML, as well as text.</li>
+<li>There is a publishing protocol that can be used to create and update 
+            feeds, as well as a client protocol to consume them.<br/>
+              </li>
+</ul>
+</dd>
+<dt><strong>JSON</strong></dt>
+<dd> Individual XML formats and standard variants like RSS and Atom are 
+        great for data exchange, but they add a fair amount of overhead for a 
+        simple message. JavaScript Object Notation is a much simpler mechanism 
+        for sending small amounts of data. It's a lot easier to parse--all it 
+        takes is one line of Javascript, which makes it ideal for an AJAX client. 
+        <p>A client that expects JSON format data uses tbe following URL convention 
+          to express that preference:</p>
+<blockquote>
+<pre>
+http://someURL?format=json</pre>
+</blockquote>
+<p>The structure that comes back consists of:</p>
+<ul>
+<li> Name/value pairs, separated by colons, where strings are surrounded 
+            by quotes:</li>
+<blockquote>
+<pre>
+"id": 5
+"name": "Bob"
+</pre>
+</blockquote>
+<li>Multiple pairs in an object, separated by commas, where the object 
+            is defined by braces: </li>
+<blockquote>
+<pre>
+{"id": 5, "name": "bob" }
+</pre>
+</blockquote>
+<li>Multiple objects in an array, separated by commas, where the array 
+            is defined by square brackets: 
+            <blockquote>
+<pre>
+[ {...},
+  {....
+  }
+]
+</pre>
+</blockquote>
+</li>
+</ul>
+<p>When delivering JSON, the server sets the MIME type with a call like 
+          this one:</p>
+<blockquote>
+<pre>
+response.setContentTye("appication/json;charset=UTF-8")
+</pre>
+</blockquote>
+<p>Within strings, special characters like quotes, backslashes, slash 
+          characters, and control chars need to be escaped.</p>
+</dd>
+<dt><strong>JSONP</strong></dt>
+<dd>
+<p>In an interesting augmentation of basic JSON functionality, the client 
+          can append a callback name as parameter:</p>
+<blockquote>
+<pre>
+http://...?jsonp=someFunction</pre>
+</blockquote>
+<p>When the server sees that command, it surrounds the JSON data with 
+          a call to the function, returning:</p>
+<blockquote>
+<pre>
+someFunction(...JSON data...)
+</pre>
+</blockquote>
+<p>So instead of doing an XMLHttpRequest, the client can use JSONP.</p>
+</dd>
+</dl>
+<strong>Note on innerHTML:</strong> <br/>
+    Once you've obtained objects from your data source, the easist way to insert 
+    them into the web page so they can be viewed is by using the innerHTML function 
+    call on the element you want to modify:
+    <dl>
+<ul>
+<li> Easier for cross-platform browsers than DOM, which has major differences 
+          between IE and other browsers</li>
+<li> Handles embedded HTML</li>
+<li> Simpler to create/maintain</li>
+<li> You can create a string and assign it to an iterational property. 
+          For example: 
+          <blockquote>
+<pre>
+&lt;span onmouseover='alert(document.cookie);'&gt;Data&lt;/span&gt;
+</pre>
+</blockquote>
+</li>
+</ul>
+</dl>
+<h2><a id="communication-mechanisms" name="communication-mechanisms">Communication 
+      Mechanisms</a></h2>
+<p>The standard communication mechansims are REST, the Atom Publishing Protocol 
+      (APP) to publish Atom, RSS, JSON, and microformats, as well as straight 
+      HTTP requests to get such data.</p>
+<dl>
+<dt><strong>REST</strong></dt>
+<dd> REST stands for "REpresentational State Transfer". (Huh? 
+        What does that mean?) The standard definition goes on to state, "representations 
+        embody state". (Sorry, still no clue.) But at bottom, REST is <em>really</em> 
+        simple, and almost obvious. So it's worth knowing about. To help, here's 
+        an acronym that should be easier to remember:
+        <blockquote> Really Easy System for Transmitting (web data) </blockquote>
+<p>All REST is, in the end, is standard HTTP requests. The HTTP requests 
+          have been around for a long time, in fact. But someone finally decided 
+          to use them.</p>
+<p>With REST, you always specify a resource with a URI. You then implement 
+          standard CRUD functions (create, read, update, delete) with the equivalent 
+          HTTP requests:</p>
+<blockquote>
+<ul>
+<li>Http POST</li>
+<li>Http GET</li>
+<li>Http PUT</li>
+<li>Http DELETE</li>
+</ul>
+</blockquote>
+<p>When you combine REST with Javascript callback functions and JSON data, 
+          you get a lot of power at very low cost, even if the server is just 
+          pushing data to your client.</p>
+<p>But when the server is ready to listen to post, put, and delete requests, 
+          as well as GETs, you get even more power. And that is the basis of the 
+          Atom Publishing Protocol.</p>
+</dd>
+</dl>
+<p><strong>Atom Publishing Protocol (APP)</strong></p>
+<blockquote>
+<p>The APP is a REST-based publishing mechanism for Atom format data. In 
+        additon to providing CRUD functions with post, get, put, and delete, APP 
+        provides for user authentication, which is critical in any such scenario.</p>
+<p>Atom is a generic data format, of course. It's not just for blogs. But 
+        in addition to allowing any kind of data in an entry, Atom also allows 
+        for CRUD operations on collections of entries. In fact, it even includes 
+        next/previous links in its collections.</p>
+<p>To publish an entry, you post to a collection URI. To read one, you use 
+        GET. Then you edit and use PUT to replace it.</p>
+<p>Libraries that support APP include:</p>
+<blockquote>
+<ul>
+<li><strong>ROME:</strong> A strong Java library that handles RSS and 
+            Atom (discussed below)</li>
+<li><strong>Abdera:</strong> STAX-based Atom-only parser in Java</li>
+<li><strong>Google Data API:</strong> Google's library.</li>
+</ul>
+</blockquote>
+<p><strong>Note:</strong> Other entries in this category include the Universal 
+        Feed Parser (Python) and the Windows-only Windows RSS Platform built into 
+        IE7.</p>
+</blockquote>
+<h2><a id="data-sources-and-repositories" name="data-sources-and-repositories">Data 
+      Sources and Repositories</a></h2>
+<p>Now that you've see the choices for data formats and communication mechanisms, 
+      the possibilities for a data source are fairly easy to understand (any of 
+      which could be generated by masup enabler:</p>
+<blockquote>
+<ul>
+<li>RESTful service</li>
+<li>RSS or Atom feed (RSSBus, Grazr, Java ROME)</li>
+</ul>
+</blockquote>
+<p>The choices for a data repository are equally simple:</p>
+<blockquote>
+<ul>
+<li>RESTful service (especially one that supports APP)</li>
+<li>Local storage (for a rich client implementation)</li>
+</ul>
+</blockquote>
+<h1><a id="coding-libraries" name="coding-libraries">Coding Libraries</a></h1>
+<p>The libraries that make the most sense for coders on the Java platform include 
+    JSR 311, ROME, and ROME Propono.</p>
+<dl>
+<dt><strong>JSR 311</strong></dt>
+<dd>This JSR is a Java API for RESTful web services. It's intended to make 
+      coding simpler and encourage good RESTful style.</dd>
+<dt> </dt>
+<dt><strong>ROME</strong></dt>
+<dd> This toolkit is a DOM-based parser/generator in Java. Arguably the most 
+      capable toolkit for RSS and Atom on the java platform, it parses and generates 
+      all forms of RSS and Atom. It's based on JDOM, and is both pluggable and 
+      extenbsible.
+      <p>To consume an arbitrary feed with ROME, create a SynFeed object, read 
+        the data, and then convert it to Atom (or RSS, if you must). The command 
+        to create a new SynFeed looks something like this:</p>
+<blockquote> Synfeed feed = input.build(new InputStreamReader(inputStream));</blockquote>
+<p>When polling, take the following steps to maximize performance and minimize 
+        network traffic:</p>
+<ul>
+<li>Use HTTP conditional GET or Etags</li>
+<li>Don't poll too often</li>
+<li>Use ROME's Fetcher, which includes a caching feed-store (as do other 
+          such utilities)</li>
+</ul>
+<p>To publish with ROME:</p>
+<ul>
+<li>Create a synfeed</li>
+<li>Add entries to it</li>
+<li>Set the content type and deliver it: 
+          <blockquote>
+<pre>
+application/rss+xml
+application/atom+xml
+</pre>
+</blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>
+<strong>ROME Propono</strong>
+</dt>
+<dd> ROME Propono is a client/server library that makes it easy to build a client 
+    APP, and makes it easy to add RESTful services to an existing web app. </dd>
+</dl>
+<h1><a id="service-building-strategies" name="service-building-strategies">Service-Building 
+    Strategies</a></h1>
+<p>In general, you want to think syndication, not coordination. In other words, 
+    provide a RESTful feed, and let others mash it up the way they want to. (Instead 
+    of having long meetings where you make sure the provider and consumer interfaces 
+    match up.)</p>
+<p>You want to provide one or more of:</p>
+<blockquote>
+<ul>
+<li>APIs</li>
+<li>A RESTful web service</li>
+<li>Atom or RSS feeds</li>
+</ul>
+</blockquote>
+<p>But to make sure that clients can make use of your service, you also want 
+    to provide:</p>
+<blockquote>
+<ul>
+<li>Client-side javascript libraries</li>
+<li>A client-side widget</li>
+<li>Client-side CSS</li>
+<li>Documentation for the API</li>
+<li>An example showing how it all fits together</li>
+</ul>
+</blockquote>
+<p>You also want to set up a server-side proxy-style service, where:</p>
+<blockquote>
+<ul>
+<li>The browser gets a web page from the host server</li>
+<li>The web page gets Javascript file and CSS from the mashup server</li>
+<li>The javascript gets data from the mashup database server</li>
+</ul>
+</blockquote>
+<p>(The client can also use cross-site scripting to pull together data from 
+    multiple sources.)</p>
+<p>Ideally, the server should also be prepared to deliver data in mulitple formats, 
+    including JSON, JSONP, and XML:</p>
+<blockquote>
+<pre>
+if ("jsonp".equals(format) ...
+   response.write("callback" + jsonp_value + content)
+else if ("json".equals(format) ...
+   response.setContentType("text/json")
+else
+   response.setContentType "text/xml")
+   write ...</pre>
+</blockquote>
+<p>For performance, you'll also want to do as much caching as you can:</p>
+<blockquote>
+<ul>
+<li>Client-side cache via HTTP Conditional GET</li>
+<li>Proxy server cache via HTTP headers</li>
+<li>Server side cache using your favorite cache technology</li>
+</ul>
+</blockquote>
+<p>And you'll also want to set things up so that applications and browsers like 
+    Firefox, Safari, and IE can auto-discover your feeds, using HTML that looks 
+    roughly like this:</p>
+<blockquote>
+<pre>
+&lt;link rel="alternate", "title ="My Feed (RSS)",
+      href="feeds/myfeed?format=RSS"&gt;</pre>
+</blockquote>
+<p>You'll also want to ensure that you're generating a valid feed, with properly 
+    escaped HTML and well-formed XML:</p>
+<blockquote>
+<ul>
+<li><strong>feedvalidator.org</strong> (works on all formats)</li>
+</ul>
+</blockquote>
+<p>Other service-building strategies include:</p>
+<blockquote>
+<ul>
+<li><strong>DWR:</strong> A combination of servlets on the server and Javascript 
+        on client--good for a tightly integrated application</li>
+<li><strong>JavaServer Faces</strong> to wrap Ajax components</li>
+</ul>
+</blockquote>
+<p>In summary,</p>
+<blockquote>
+<ul>
+<li>Consider json for data interchanges</li>
+<li>Strive for RESTful design</li>
+<li>Access the server using a server-side proxy stragegy</li>
+<li>Build a RESTful service so others can mashup your site</li>
+</ul>
+</blockquote>
+<h1><a id="security-considerations" name="security-considerations">Security 
+    Considerations</a></h1>
+<p>The information in this section came from the Java Blueprints folks-Sean 
+    Brydon, Greg Murray, and Mark Basier--who turn out to have a fair amount of 
+    expertise on the subject. Any inaccuracies here resulted from my limitations, 
+    not theirs.</p>
+<p>To start with, use the data format that is appropriate for your level of 
+    exposure:</p>
+<blockquote>
+<ul>
+<li><strong>JSON:</strong> When you're in the same domain as the data provider. 
+        (You could get arbitrary Javascript, and that Javascript will execute, 
+        so you want to be inside your firewall.)</li>
+<li><strong>JSONP:</strong> When you are inside or outside of your domain. 
+        (You're specifying the javascript to execute with this format, so it's 
+        safer. That makes this the easiest and most portable option.)</li>
+<li><strong>XML:</strong> When you're getting data from outside your domain, 
+        or when the client isn't using Javascript, which would let it easily parse 
+        JSON data.</li>
+</ul>
+</blockquote>
+<dl>
+<dt><strong>Securing JSON:</strong></dt>
+<dd>
+<p>When using JSON, <em>any</em> javascript could be coming your way, so 
+        you need a certain level of trust in your data source, or added levels 
+        of security protection:</p>
+<blockquote>
+<ul>
+<li>Use a namespace for your javascript commands</li>
+<li>Use CSS for customization</li>
+<li>Don't add to the prototype of common objects</li>
+</ul>
+</blockquote>
+</dd>
+</dl>
+<p><strong>Securing your services:</strong></p>
+<blockquote>
+<ul>
+<li>Create a token: 
+        <ul>
+<li>Create a file with apikey (It's secure because it can't be edited 
+            with javascript.)<br/>
+              </li>
+</ul>
+</li>
+<li>Use a session-based hash to make sure that a session has been established 
+        (so the request isn't coming in at random): 
+        <ul>
+<li>Create an API key generated from the URL, using a one-way hash</li>
+<li>The user registers to get the API key (a very long string)</li>
+<li>The key is attached to the GET request</li>
+<li>The host name is mapped against the hash for access.</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p><strong>Other security notes:</strong></p>
+<blockquote>
+<ul>
+<li>Don't change state with HTTP GET</li>
+<li>Add a security token to your forms</li>
+<li>Don't just use cookies to validate the user</li>
+<li>When rendering query string data, verify it</li>
+</ul>
+</blockquote>
+<h1><a id="resources" name="resources">Resources</a></h1>
+<p>All-in-one mashup builders:</p>
+<blockquote>
+<ul>
+<li>BackBase: <a href="../_/http/www.backbase.com/index.html">http://www.backbase.com/</a>
+(Unfortunately, this page has a redirect
+that defeats the back button.)</li>
+<li>NexaWeb: <a href="../_/http/www.nexaweb.com/index.html">http://www.nexaweb.com/</a></li>
+<li>QEDWiki (IBM): <a href="../_/http/services.alphaworks.ibm.com/qedwiki/index.html">http://services.alphaworks.ibm.com/qedwiki/</a></li>
+<li>Pipes (Yahoo): <a href="../_/http/pipes.yahoo.com/pipes/index.html">http://pipes.yahoo.com/pipes/</a></li>
+<li>Teqlo: <a href="../_/http/www.teqlo.com/index.html">http://www.teqlo.com/</a></li>
+</ul>
+</blockquote>
+<p>Mashup Enablers</p>
+<blockquote>
+<ul class="simple">
+<li>Dapper: <a href="../_/http/www.dapper.net/index.html">http://www.dapper.net/</a></li>
+<li>Google Gadgets: <a href="../_/http/desktop.google.com/plugins/index.html">http://desktop.google.com/plugins/</a></li>
+<li>Kapow Technologies: <a href="../_/http/www.kapowtech.com/index.html">http://www.kapowtech.com/</a></li>
+<li>Microformats: <a href="../_/http/microformats.org/index.html">http://microformats.org/</a></li>
+<li>OpenKapow: <a href="../_/http/www.openkapow.com/index.html">http://www.openkapow.com/</a></li>
+</ul>
+</blockquote>
+<p>GUI-building technologies:</p>
+<blockquote>
+<ul class="simple">
+<li>Dojo: <a href="../_/http/dojotoolkit.org/index.html">http://dojotoolkit.org/</a></li>
+<li>DWR: <a href="../_/http/getahead.org/dwr/index.html">http://getahead.org/dwr/</a></li>
+<li>Google Web Tookkit (GWT): <a href="../_/http/code.google.com/webtoolkit/index.html">http://code.google.com/webtoolkit/</a></li>
+<li>Java Server Faces: <a href="../_/http/java.sun.com/javaee/javaserverfaces/index.html">http://java.sun.com/javaee/javaserverfaces/</a></li>
+<li>jMaki: <a href="../_/https/ajax.dev.java.net/index.html">https://ajax.dev.java.net/</a></li>
+<li>XAP: <a href="../_/http/incubator.apache.org/xap/index.html">http://incubator.apache.org/xap/</a></li>
+</ul>
+</blockquote>
+<p>Communications and data formats:</p>
+<blockquote>
+<ul class="simple">
+<li>Abdera (Apache): <a href="../_/http/incubator.apache.org/abdera/index.html">http://incubator.apache.org/abdera/</a></li>
+<li>Atom:
+- Spec: <a href="../_/http/www.ietf.org/rfc/rfc4287.txt">http://www.ietf.org/rfc/rfc4287.txt</a>
+- Overview: <a href="../_/http/www-128.ibm.com/developerworks/xml/library/x-atom10.html">http://www-128.ibm.com/developerworks/xml/library/x-atom10.html</a></li>
+<li>Google Data: <a href="../_/http/code.google.com/apis/gdata/index.html">http://code.google.com/apis/gdata/index.html</a></li>
+<li>JSON / JSONP: <a href="../_/http/www.json.org/index.html">http://www.json.org/</a></li>
+<li>REST: <a href="../_/http/rest.blueoxen.net/cgi-bin/wiki.pl">http://rest.blueoxen.net/cgi-bin/wiki.pl</a></li>
+<li>ROME / Propono:
+- <a href="../_/http/wiki.java.net/bin/view/Javawsxml/Rome/index.html">http://wiki.java.net/bin/view/Javawsxml/Rome</a>
+- <a href="../_/http/wiki.java.net/bin/view/Javawsxml/RomePropono/index.html">http://wiki.java.net/bin/view/Javawsxml/RomePropono</a></li>
+<li>RSS 1.0: <a href="../_/http/web.resource.org/rss/1.0/index.html">http://web.resource.org/rss/1.0/</a></li>
+<li>RSS 2.0: <a href="../_/http/feedvalidator.org/docs/rss2.html">http://feedvalidator.org/docs/rss2.html</a></li>
+</ul>
+</blockquote>
+<p>Feed Validator:</p>
+<blockquote>
+<ul class="simple">
+<li><a href="../_/http/www.feedvalidator.org/index.html">http://www.feedvalidator.org</a></li>
+</ul>
+</blockquote>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=205160.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=205160&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205160&amp;title=JavaOne+2007%2C+%233%3A+Mashup+a+Web+App+with+Little+or+No+Code&amp;bodytext=When+the+information+you+need+already+exists%2C+but+it%27s+scattered+here+and+there+around+the+web%2C+you+have+an+option.+You+can+create+a+small%2C+super-lightweight+web+app+to+put+it+together--a+mashup.+It%27s+not+quite+as+easy+as+falling+off+a+log%2C+but+it%27s+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205160&amp;title=JavaOne+2007%2C+%233%3A+Mashup+a+Web+App+with+Little+or+No+Code">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D205160&amp;title=JavaOne+2007%2C+%233%3A+Mashup+a+Web+App+with+Little+or+No+Code">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

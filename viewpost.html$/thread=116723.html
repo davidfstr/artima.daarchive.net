@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>JavaOne 2005, Day 1: It's a Groovy Day</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=116723.html">Discuss</a> | 
+<a href="mailto:?subject=JavaOne 2005, Day 1: It's a Groovy Day&amp;body= %0AArtima Weblogs %0AJavaOne 2005, Day 1: It's a Groovy Day %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=116723">Email</a> | 
+<a href="../viewpostP.html$/thread=116723.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=88252.html" title="CityDesk: A Decent Tool for WebLogs?">Previous</a> | 
+<a class="sl" href="thread=116895.html" title="JavaOne 2005, Day 2: Hitting the Jackpot!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">JavaOne 2005, Day 1: It's a Groovy Day</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">June 28, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Groovy is a Java-compatible scripting language that blends features from Ruby, Python, and Smalltalk. If you need robust ANT scripts, super shell scripts, or want to write fast unit tests, you may want to try something Groovy, for a change.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+God, I love the JavaOne conference. Running from session to session; sipping information through one fire hose after another; writing my reports in the evenings, in the mornings, and in spare moments during the day--and guzzling caffeine to get it all done. But even more stimulating than the caffeine is the pure intellectual high of discovering new things and finding out how they work. Besides, the walking is good exercise, and pumps my brain full of oxygen. Thank God the convention only lasts 4 days, though. Right now, I'm jazzed. By Friday, I'll be wiped.
+</p>
+<p>
+As always, I'll be bringing you reports on cool stuff--primarily language features and tools--things you can use to do a better job more quickly and more easily, so you can spend your time doing the things you love most--you know what they are.
+</p>
+<p>
+First up: An interesting scripting language called "Groovy". There are several Java-compatible scripting languages, of course. But at first glance, this one seems to do a lot of things right--enough to take a closer look, anyway.
+The 1.0 release is due out in September, so it should be usable in a production
+setting sometime shortly thereafter. In the meantime, it's recommended for
+exploration, quick hacks, and anything else that isn't "mission-critical".
+</p>
+<h3>A Groovy Introduction</h3>
+<p>
+Let's start by motivating the discussion: Why do you <em>care</em> about a new 
+scripting language, no matter how good it is? There are several reasons, according 
+to Rod Cope, of OpenLogic, Inc.: 
+</p>
+<ol>
+<li> <strong>ANT Scripts.</strong> Have you ever needed to write a loop or a 
+    conditional test in an ANT script? Darn near impossible, right? Groovy makes 
+    it easy to insert code segments into your ANT script. Once there, you can 
+    access ANT functions as APIs. For example, you can code <tt>ant.jar ...</tt> 
+    to access the ANT task that generates a jar file.</li>
+<li> <strong>Unit Tests.</strong> Unit tests be good--so anything that lets 
+    you generate them rapidly be also good. Built-in classes like GroovyTestCase 
+    and GroovyMock make it easy to generate test cases and <em>mock objects</em> 
+    (objects that have the same APIs as real objects, but which return constant 
+    values, instead of performing real functions. They let you isolate part of 
+    your application for testing, so the parts it depends on don't have to be 
+    functionally correct, or even operational). Note, though, that unit tests 
+    also have to be <em>maintainable</em>. See <a href="#CautionaryTale">The Cautionary 
+    Tale</a> below.</li>
+<li> <strong>Shell Scripts.</strong> The jury hasn't quite come in yet, but 
+    Groovy looks as though it may be a useful replacement for shell scripts . 
+    It supports pipes, cat, grep--all the stuff you love in Unix scripts. So the 
+    Groovy scripts figure to be (a) powerful, (b) portable, and (c) runnab;e on 
+    Windows, which is as script-deprived as you can get. (I've been tempted to 
+    switch to Max OS/X just to take advantage of the TCSH shell underneath the 
+    GUI. Groovy looks like a better answer)</li>
+<li> <strong>Generate and process hierarchical data.</strong> Like XML and XHTML. 
+    Easily.</li>
+<li><strong>Replace XSLT for XML transformations.</strong> Use Groovy instead, 
+    write a syntax-translator so you can edit something readable, or for a fun 
+    thesis project, come up with a process to convert an algorithm writtin in 
+    Groovy to its XSLT equivalent.</li>
+<li><strong>Launch an ActiveX-enabled app</strong>--like Word, Excel, Access, 
+    or IE. Display the window or keep it hidden. Print a set of files, perform 
+    a series of searches, or generate HTML pages in Word. Carry out calculations 
+    in Excel. Get data from Access. Automated testing of a web app by launching 
+    IE, accessing a servlet, and checking values in the DOM.</li>
+<li><strong>Generally make life easier.</strong> Because Groovy does, well, 
+    pretty groovy things--intelligently.</li>
+</ol>
+<p> Groovy classes are binary-compatible with Java, and the syntax is compatible 
+  as well, so you pretty much write Java. Semi-colons are optional, though, so 
+  it's a good idea to use a programming editor that lets you indent things easily 
+  and keeps the indentations regular. 
+<blockquote>
+<p>Note:<br/>
+    For a comparison to BeanShell, see <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117184#BeanShellVsGroovy.html">JavaOne 
+    2005 WrapUp: BeanShell vs. Groovy</a>.</p>
+</blockquote>
+<h3>More Groovy Features</h3>
+<p>
+You can play with things interactively, which is always fun. Using <tt>groovysh</tt> 
+(the Groovy shell), you type in some commands and then type <tt>go</tt> to make 
+them execute. That's pretty cool for "lab exercises", when you're trying to find 
+out what an API really does--for example, does it return null, and empty object, 
+or throw an exception when you pass in a funny parameter? Since the API probably 
+doesn't tell you, you can write a quick little experiment and mark down the results 
+in your "lab notebook". 
+</p>
+<p>
+Where Groovy really shines, though, is its capacity for intelligent code
+generation. It does a lot of the grunt work for you, which makes it a
+lot easier to write code. For example, when you add a button to a GUI, you 
+simply specify the code to execute when the button is pressed. There's no need
+to code listeners or call back methods.
+</p>
+<p>
+Regular-expression processing is built-in, along with robust string
+processing and file processing, which makes it pretty convenient for
+those "quick and dirty" hacks where you're converting files from one
+form to another.
+</p>
+<p> The language makes it easy to process collections, as well, with a built in 
+  method (<tt>each</tt>) to iterate over them. You code something like <tt>cars.each(car)</tt>, 
+  and "car" takes on the value of each item in the list of cars. (Multiple syntax 
+  choices are available here. See The Cautionary Tale, below.)
+</p>
+<p>
+It's also pretty darn easy to generate and parse hierarchical data
+structures like XML, xHTML, and other formats. The functions are built-in,
+so it only takes a couple of lines of code to parse an XML data set, for
+example, or to write out a nested collection in XML form.
+</p>
+<p> For SQL, things are similarly simple. You create a SQL object with one line 
+  of code. With another line, you invoke the <tt>execute</tt> method, passing 
+  an SQL query or update. Groovy takes care of the details. It opens the connection, 
+  processes the SQL, and closes the connection. 
+</p>
+<p> One of Groovy's more unusual features is the ability to add methods to <em>existing</em> 
+  classes in a <tt>use</tt> block. So if you want a String <tt>contains()</tt> 
+  method instead of having to code <tt>String.indexOf(...) != 0</tt> you can effectively 
+  add that method to the String class, rather than having to write a subclass. 
+</p>
+<p>
+The presentation highlighted a few other features, as well, without going
+into them in detail:
+</p>
+<ul>
+<li><strong>Processes</strong>: <tt>commandString.execute().text</tt> executes 
+    the command string and returns the result as a string.</li>
+<li><strong>Plugins:</strong> Groovy plugins for Eclipse, IntelliJ, and JEdit.</li>
+</ul>
+<h3>The Groovy Details</h3>
+<p>
+Here, as best I got them down in my notes, are some of the code segments
+provided in the presentation. The slides won't be online until sometime
+after the show, so we'll find out how accurate I was then. (In the
+meantime, I've learned my lesson! I'm taking my digital camera tomorrow,
+so I can grab pics of the code segments.)
+</p>
+<h4>Create a list</h4>
+<pre>
+    def people = ['Eric', 'Bill', 'Frank']
+</pre>
+<p>
+Creates a list of strings.
+</p>
+<blockquote> <strong>Warning:<br>
+</br></strong> Lists can be heterogenous. So <tt>['Eric', 1, 'Frank']</tt> is a perfectly 
+  fine list, as far as Groovy is concerned. But there is a reason that generics 
+  are so valuable in Java. The ability to make sure that a collection contains 
+  a predictable set of homogenous values is highly desirable in production code. 
+  On the other hand, with <em>sufficient</em> testing (note the emphasis) the 
+  issue does become moot--and Groovy does make testing easy.
+</blockquote>
+<h4>Create a map</h4>
+<pre>
+    def cars = ['Eric':'Mazda', 'Bill':..., ...]
+</pre>
+<p>
+Adding a colon maps the keys to values.
+</p>
+<h4>Create a nested map</h4>
+<pre>
+    def stuff = ['Eric':['car':'Mazda', 'computer':'PC'], ...
+</pre>
+<p>
+Putting one map inside of another makes a hierarchical data structure.
+</p>
+<h4>Convert the map to XML</h4>
+<pre>
+    xml = new groovy.xml.MarkupBuilder()
+    doc = xml.toys() {
+       for (entry in stuff)
+          person(name:entry.key) {
+             for (thing in entry.value)
+                item(name:thing.key; type=thing.value)
+          }
+    }
+</pre>
+<p>
+The names of the elements are specified as part of the code. To specify 
+attributes, you use the <tt>@</tt> prefix on a name, as in <tt>@type</tt>. 
+That XML data set the results looks like this:
+</p>
+<pre>
+    &lt;toys&gt;
+       &lt;person&gt;
+          &lt;name&gt;<strong>Eric</strong>&lt;/name&gt;
+          &lt;item&gt;
+            &lt;name&gt;<strong>car</strong>&lt;/name&gt;
+            &lt;type&gt;<strong>Mazda</strong>&lt;&lt;/type&gt;
+          &lt;/item&gt;
+           ...
+       &lt;/person&gt;
+       ...
+    &lt;/toys&gt;
+</pre>
+<h4>Parse an XML data set</h4>
+<pre>
+  xmlData = """<toys>
+     ...
+     </toys>"""
+  toys = new groovy.utils.xmlParser().parseText(xml)
+</pre>
+<p>
+The three quotes open and close the XML data string, so there is
+no need to escape attribute-quotes inside the string.
+</p>
+<h4>Execute SQL and read data from a database</h4>
+<pre>
+  sql = new groovy.sql.Sql(datasource)
+  sql.execute(...)
+  toys = sql.dataset("toys")
+</pre>
+<p>
+Execute a SQL command to update the database and read the
+contents of the table named "toys" into an internal map.
+</p>
+<h4>Write a GUI app</h4>
+<pre>
+  swing = new groovy.swing.SwingBuilder()
+  frame = swing.frame('title':'...', 'size':[400, 600]) {
+    menubar {
+       menuItem... --specify name and code for
+                              the action to perform {in braces}
+    }
+    panel {
+       label...    --specify label name
+       button...  --specify button text and action to perform
+  }
+  frame.show()
+</pre>
+<h3><a name="CautionaryTale"></a></h3>
+<h3>The Cautionary Tale</h3>
+<p>
+So at this point you're thinking, hey, Groovy might be pretty cool. There is one
+caveat though:
+</p>
+<blockquote>
+<em>There are several ways to write the same thing.</em>
+</blockquote>
+<p>
+For example, you can write <tt>int a = 1</tt> to define a variable as an integer, 
+or you can write <tt>def a = 1</tt> and let the language processor figure it out. 
+The processor is smart enough to figure out a <em>lot</em> of stuff, which is 
+pretty darn convenient, most of the time. But when I hear the words, "there's 
+usually several ways to do things", the hairs on the back of my neck stand up. 
+</p>
+<p>
+For some reason, that kind of flexibility always seems like a good idea to the folks who create
+scripting languages. It's the Perl syndrome: Never provide one way to do things
+if you can create three, and make sure that you can use different syntax styles
+so that, no matter what language people are used to, they'll feel right at home in
+this new, wonderful environment that will be surely become popular, because
+everyone can use it, right?
+</p>
+<p>
+Well, maybe.
+</p>
+<p> The problem with that approach is that while it makes scripts easier to <em>write</em>, 
+  it makes them much harder to <em>read</em>. Every program becomes a compilation 
+  of the idiosyncracies of the person who wrote it and the idioms they happened 
+  to master. And that it makes it much harder for someone else to read, understand, 
+  and modify. 
+</p>
+<p> Since Groovy is a Java-compatible scripting language, it's too bad it doesn't 
+  follow the rule that helped Java take off so rapidly--when you read Java code, 
+  you know <em>exactly</em> what it is doing. There is only one to write read 
+  it, because there is one only one possible syntax choice--nothing else compiles. 
+  So once you learn the basics, you can read <em>any</em> Java code, no matter 
+  who wrote it. 
+</p>
+<p> In contrast, the pragmas and macros used in other compiled languages and the 
+  multiple syntax choices available in scripting languages like Perl tend to produce 
+  "write-only" code. When you need to fix it, you may choose to rewrite it, rather 
+  than attempting to figure out what it's doing. That's ok when you're hacking 
+  in the garage, but it's not a big thrill for a manager or a coder who is working 
+  to meet a deadline. 
+</p>
+<p>
+Hopefully, things won't be quite that bad with Groovy--but's a potential pitfall
+I wish the designers had chosen to avoid.
+</p>
+<h3>Resources</h3>
+<ul>
+<li> Groovy downloads and additional info: <a href="../_/http/groovy.codehaus.org/index.html">http://groovy.codehaus.org</a>
+</li>
+<li> Groovy spec: <a href="../_/http/www.jcp.org/index.html">http://www.jcp.org</a> (JSR #241) 
+  </li>
+<li> JavaOne 2005 WrapUp: BeanShell vs. Groovy: <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117184#BeanShellVsGroovy.html">http://www.artima.com/weblogs/viewpost.jsp?thread=117184#BeanShellVsGroovy</a></li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=116723.html">14
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=116723&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D116723&amp;title=JavaOne+2005%2C+Day+1%3A+It%27s+a+Groovy+Day&amp;bodytext=Groovy+is+a+Java-compatible+scripting+language+that+blends+features+from+Ruby%2C+Python%2C+and+Smalltalk.+If+you+need+robust+ANT+scripts%2C+super+shell+scripts%2C+or+want+to+write+fast+unit+tests%2C+you+may+want+to+try+something+Groovy%2C+for+a+change.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D116723&amp;title=JavaOne+2005%2C+Day+1%3A+It%27s+a+Groovy+Day">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D116723&amp;title=JavaOne+2005%2C+Day+1%3A+It%27s+a+Groovy+Day">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

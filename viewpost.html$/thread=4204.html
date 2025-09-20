@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Sloppy and Forgiving versus Strict Systems</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4204.html">Discuss</a> | 
+<a href="mailto:?subject=Sloppy and Forgiving versus Strict Systems&amp;body= %0AArtima Weblogs %0ASloppy and Forgiving versus Strict Systems %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=4204">Email</a> | 
+<a href="../viewpostP.html$/thread=4204.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=4128.html" title="Introducing Artima Weblogs">Previous</a> | 
+<a class="sl" href="thread=4654.html" title="What Would You Ask James Gosling?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">Sloppy and Forgiving versus Strict Systems</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">March 28, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+For social programming to work, specifications must in theory be strictly adhered to by both providers and consumers. But some systems seem to work in practice with loose adherence to specifications, systems in which sloppy providers and forgiving consumers are the norm. How important is strict adherence to contracts?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Today I had a 1:00 PM appointment with Elliotte Rusty Harold, author of many books on Java and XML and the force behind the websites <a href="../_/http/www.cafeaulait.org/index.html">Cafe au Lait</a> and <a href="../_/http/www.cafeconleche.org/index.html">Cafe con Leche</a>. Rusty told me to meet him at the bookstore at the Software Developer (SD) conference. I showed up at the San Jose Convention Center shortly before 1:00, inwardly admiring myself for being so prompt and dependable. Unfortunately, SD was being held at the <i>Santa Clara</i> Convention Center. Luckily, Rusty was still waiting for me at 1:15 when I finally arrived at the correct convention center.
+
+<p>After lunch, Rusty and I sat down for a 90 minute interview, which I'll publish on Artima.com within the next few months. Rusty recently released <a href="../_/http/www.cafeconleche.org/XOM/index.html">XOM</a>, which is to a great extent <a href="../_/http/www.jdom.org/index.html">JDOM</a> refactored. In the interview, Rusty and I talked about API design in general, as well as particulars of XML processing APIs, especially JDOM and XOM.
+
+<h1>Social Programming</h1>
+<p>The very first time I interviewed  James Gosling back in 1999, I asked him how the rise of the network would change software development:
+
+<p><i> <b>James Gosling</b>: I think the biggest difference is that you can't just sit alone in a room and build stuff, because the things you're building interact with everything out there.  You can't just sit alone and do whatever you want.
+
+<p><b>Bill Venners</b>: And why is that? 
+
+<p><b>James Gosling</b>: Because you're trying to interact with other things, you have to know what the other things do.  If there are multiple people doing similar kinds of things, they have to have some kind of an agreement on how these things should work. If you're designing an electrical power delivery mechanism, for example, you have to design a wall socket. And everybody has to use the same wall socket; otherwise those toasters won't be able to plug in to you. 
+
+<p>It becomes an environment where people have to be much more socially involved. It really is a community thing.</p></p></p></i>
+<p>From: <a href="../_/http/www.artima.com/intv/gosling18.html">http://www.artima.com/intv/gosling18.html</a>
+<p>For years I have assumed that "social programming" of the kind envisioned by James Gosling would require strict adherence to contracts defined in thorough specifications. Without strict adherence to contracts clearly delineated in specifications, how could a distributed system being put together by lots of different parties ever work together?
+
+<p>I imagined such systems would work like this: People define specifications of APIs, data structures (such as XML schemas), and protocols. People use those specifications to guide them in 1) creating software that provides the specified services or data structures, and 2) creating software that uses or consumes the APIs or data structures. People bring providers and consumers together and everything works, because everyone  adhered strictly to the agreed upon specifications. 
+
+<h1>Attempting to Corner Rusty</h1>
+<p>One thing I had heard XML enthusiasts, including Rusty Harold, highlight as an advantage of XML is that because XML elements are individually tagged, invalid documents can often still be processed. This attitude has long grated against my strict-contracts personality. I figured this interview would be a good opportunity to try and convince Rusty and, via the interview, other XML enthusiasts that invalid documents should be rejected, not processed. 
+
+<p>But Rusty threw me off balance with his first example: RSS. He suggested that a huge percentage of the documents that purport to adhere to one of the four RSS standards actually don't. This threw me because I am planning to very soon write an application that consumes RSS feeds. I realized that if 99% of the RSS feeds on the Internet turn out in practice to be valid, then it makes sense for my application to reject invalid RSS documents. But if only 50% of the RSS feeds are valid, then I should surely try and handle the invalid documents as best I can. But then, anyone writing applications that consume RSS feeds would make the same decision. For the most part, RSS consumers would all deal with invalid RSS documents. And if that's the case, what is the incentive for RSS producers to create valid documents?
+
+<p>A good example of that kind of sloppy services/forgiving clients system is websites and browsers, in which the point of agreement is the HTML specification. In practice, a great percentage of web pages on the Internet have HTML errors in them. Because of that, browsers try hard to figure out what the intent of the HTML author was. The browsers are forgiving of those errors. As a result, websites don't really need to create valid HTML documents. And they don't. In fact, I probably don't to a significant extent. The way I verify the webpages  here at Artima.com is not by running them through an HTML verifier, but by looking at them in various browsers on various platforms.
+
+<p>A good example from the other end of the strict adherence spectrum is the Java class file. The JVM specification includes a chapter that formally and thoroughly specifies the format of the Java class file. It also says that JVMs must reject malformed (invalid) class files. JVMs are not forgiving of errors in class files. As a result, the producers of Java class files are very careful to only produce valid well-formed Java class files.
+
+<h1>Conclusion</h1>
+<p>My intuition tells me that for social programming to work, specifications must be strictly adhered to by both providers and consumers, like the Java class file. But then I see some systems that seem to work in practice with  loose adherence to specifications, systems in which sloppy providers and forgiving consumers are the norm. Rusty and I explored this topic at the end of our interview, but we didn't really nail it down. Here are some questions I'd enjoy hearing your opinion on:
+
+<p>1. What is it that makes some systems, like HTML and maybe RSS, become sloppy provider / forgiving consumer kinds of systems? What allows other systems, such as the Java class file format, to maintain strict adherence to the specification by all parties?
+
+<p>2. How important is strict adherence to specifications in social programming systems? In what kinds of situations is strict adherence important? When is strict adherence not so important?
+
+<p>3. To what extent is the level of adherence to specifications a manifestation of the "culture" of each particular social programming system?
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=4204.html">13
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=4204&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4204&amp;title=Sloppy+and+Forgiving+versus+Strict+Systems&amp;bodytext=For+social+programming+to+work%2C+specifications+must+in+theory+be+strictly+adhered+to+by+both+providers+and+consumers.+But+some+systems+seem+to+work+in+practice+with+loose+adherence+to+specifications%2C+systems+in+which+sloppy+providers+and+forgiving+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4204&amp;title=Sloppy+and+Forgiving+versus+Strict+Systems">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D4204&amp;title=Sloppy+and+Forgiving+versus+Strict+Systems">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Owners vs Caretakers</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=279897.html">Discuss</a> | 
+<a href="mailto:?subject=Owners vs Caretakers&amp;body= %0AArtima Weblogs %0AOwners vs Caretakers %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=279897">Email</a> | 
+<a href="../viewpostP.html$/thread=279897.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=269155.html" title="Database Constraints: Use Them or Lose Them?">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Owners vs Caretakers</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">January 19, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A short response to Tim Bray's recent blog post, Doing it Wrong.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Tim Bray's recent blog post, <a href="../_/http/www.tbray.org/ongoing/When/201x/2010/01/02/Doing-It-Wrong/index.html">Doing it Wrong</a> has received a fair amount of attention in recent days. In the post, Bray compares the supposedly light-weight agile development approaches used at Web-facing software startups with more formal and heavy-weight processes employed by enterprises, and includes the following observation:</p>
+<blockquote>
+<p>The community of developers whose work you see on the Web, who probably don’t know what ADO or UML or JPA even stand for, deploy better systems at less cost in less time at lower risk than we see in the Enterprise. This is true even when you factor in the greater flexibility and velocity of startups...</p>
+<p>This is unacceptable. The Fortune 1,000 are bleeding money and missing huge opportunities to excel and compete. I’m not going to say that these are low-hanging fruit, because if it were easy to bridge this gap, it’d have been bridged. But the gap is so big, the rewards are so huge, that it’s time for some serious bridge-building investment... This seems by far the most important thing for my profession to be working on.</p>
+</blockquote>
+<p>Bray then attempts to dissect the reasons for the great discrepancy, and concludes that technology and culture both play a role in the increased development cost at enterprises.</p>
+<p>Readers of <em>Doing it Wrong</em> have already commented that Bray's analysis falls short of mentioning the large number of startup failures. Others have noted that the venture-sponsored development style of startups holds scant relevance for enterprises that must carefully plan the use of limited resources: Managers really must know up-front the cost and delivery times for a software project, and developers, in turn, must be able to estimate those factors accurately at a project's inception.</p>
+<h1>Owners vs Caretakers</h1>
+<p>Yet, Bray's analysis as well as the comments to it neglect an important factor that, I think, accounts for a large portion of the discrepancy in the cost and quality of software projects. The difference is due not so much to that between enterprises and Web-facing start-up companies, but to the difference between two types of managers and developers: caretakers and owners.</p>
+<p>From a business perspective—Bray's main viewpoint—caretakers use other people's money, whereas owners use their own money, or are at least very significantly and personally exposed to monies invested in a project. More generally, owners of a project or a codebase have very strong personal incentives to make their users happy, be those incentives financial or purely professional. As a result, for owners efficiency and reduced costs are musts, not simply desirable attributes. Caretakers generally have less urgent objectives.</p>
+<p>Owners and caretakers are present in enterprises and startups. I've worked with owners of very large enterprises—companies owned by a few individuals as opposed to many shareholders—that insisted on very lean development practices; and also with enterprises where decisions were made by caretakers who had no personal financial or urgent professional stake in the process. But I've seen startups, too, where, although employees had a heavy incentive to make the business successful, the ready availability of venture money made frugality a somewhat remote concept.</p>
+<h1>Owners and Agility</h1>
+<p>I've found that working with owner-types <me>forces agile practices on a project: For one, those folks have absolute control over the purse, and you, as a vendor or consultant, simply won't get paid unless you show significant and regular progress. The more frequent the iterations, the better. All the agile practices work to a developer's advantage in such a setting. Also, owners are generally very hesitant to throw (their own) money at enterprise software that can't show short-term return on investment. That, in turn, determines to some extent the technologies used in the sense Bray describes. Finally, owners of successful enterprises are interested in the long-term maintainability and cost of applications—again, agile practices better able to manage change are more suited for this sort of an environment.</me></p>
+<p>Caretaker types, by contrast, are seldom incentivized in the sense owners are: From a business perspective, caretakers may receive a bonus or promotion based on quarterly or annual performance, whereas owners typically have a much longer view. Caretakers also have less riding on a project's success professionally: If a project doesn't pan out, they would just look for another project or job. Owners must please their customers, but caretakers must please their boss above all. As a result, caretakers are more interested in making safe choices: They have to be in a position to defend themselves in case something goes wrong with a project. Caretakers may also be less incentivized to follow iterative practices and deliver regular, measurable results, in part because they typically receive a fixed salary at regular time intervals. For owners, however, nothing is ever guaranteed: they must earn their pay each time they sit in front of a customer. </p>
+<p>Bray mentions Basecamp as one of his examples; in that case, all the developers really were owners of a relatively small company. They had clear incentives to make the application lean and clean, and easy to maintain, which then impacted their technology choices. At the other end of the spectrum are large-scale government-sponsored projects, where the owner is the amorphous tax payer and where everyone on the project is a caretaker. Bray mentions some of the more spectacular project failures in that sector.</p>
+<p>In-between those extremes are employees of firms that are somehow incentivized to make the best decisions for their companies. The "best" decision may not always be to save the most amount of money or to use the most capable technologies. "Best" requires context, and people are able to appreciate different contexts defined by different environments: I've known folks who recommended and used one set of technologies in their day jobs, and used something completely different in a startup they worked on at night. In one context they were caretakers, in the other, owners, leading to different motivations and decisions.</p>
+<h1>Should We All Be Owners?</h1>
+<p>Looking at this problem from the perspective of owners vs caretakers suggests that Bray's blog post is really about an age-old business problem: As soon as a business starts to have employees, or caretakers, an entirely different set of incentives and motivations enters the firm. While an owner-only company may be very efficient at every turn, you can hardly grow a business without employees.</p>
+<p>The same is true of a software project, even when it is an open-source project. It may be ideal to work alone or with just a special cadre of developers with deep and personal stakes in the project's success, that exclusiveness restricts growths if the project becomes widely used. While I don't have personal experience with this, I imagine that large open-source projects, such as the Linux kernel or the Eclipse IDE, require more resources than do small projects with a handful of owner-developers.</p>
+<p>You need to accept somewhat reduced efficiency in return for the ability to grow and serve more customers or users. That has been the case with many technology companies, from Microsoft to Google: Employee no. 20,000 at Google likely has different motivations from employee no. 5 when making technology decisions.</p>
+<p>We can't all be owners, but a company can take steps to motivate employees to think more like owners. Agile practices already promote the notion of "product owner" or even "business owner," and smart firms can make such phrases a fact in business terms, too.</p>
+<p>It must also be said that while owners have the right incentives, they don't always make the right decisions. A sizable bad decision can put a company out of business, losing the owners' principal and dashing their hopes.</p>
+<p>Do you agree that Bray's argument can be interpreted in terms of how "owners" vs "caretakers" make technology decisions? What do you think of Bray's blog post?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=279897.html">39
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=279897&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D279897&amp;title=Owners+vs+Caretakers&amp;bodytext=A+short+response+to+Tim+Bray%27s+recent+blog+post%2C+Doing+it+Wrong.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D279897&amp;title=Owners+vs+Caretakers">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D279897&amp;title=Owners+vs+Caretakers">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

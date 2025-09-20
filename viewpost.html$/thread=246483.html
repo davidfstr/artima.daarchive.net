@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Mixins considered harmful/2</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=246483.html">Discuss</a> | 
+<a href="mailto:?subject=Mixins considered harmful/2&amp;body= %0AArtima Weblogs %0AMixins considered harmful/2 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=246483">Email</a> | 
+<a href="../viewpostP.html$/thread=246483.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=246386.html" title="Ubuntu on the EeePC">Previous</a> | 
+<a class="sl" href="thread=246488.html" title="Setting Multiple Inheritance Straight">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">Mixins considered harmful/2</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">January 6, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In this post I clarify my position with respect to mixins, 
+I show a few common design mistakes and I suggest some alternative solution.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="a-few-conceptual-issues-with-mixins" name="a-few-conceptual-issues-with-mixins">A few conceptual issues with mixins</a></h1>
+<p>In the first article of this series I have discussed a very serious
+problem of the mixin approach, i.e. the namespace overpopulation issue.</p>
+<div class="figure">
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/python/Overpopulation.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/python/Overpopulation.jpg">
+<p class="caption">The namespace overpopulation issue</p>
+</img></div>
+<p>The overpopulation issue comes from the idea of growing functionality
+by adding more and more mixin classes, which is just plain wrong.
+It is true that you can use the idea in little frameworks
+with little damage, but that does not make it a good design solution.
+Small frameworks have a tendency to grow, and you should not
+start with a weak design.</p>
+<p>Some reader argued that this
+is not a problem of mixins <em>per se</em>, but a problem of bad design.
+That is true, but I maintain that a technique which is so easy to
+misuse even by expert programmers, should be regarded with suspicion,
+especially when there are better solutions available.
+Moreover, I have a few conceptual issues with mixins - as implemented in most
+languages - which are independent of the overpopulation problem.</p>
+<p>First of all, I think everybody agrees that the best way to solve a
+complex problem is to split it in smaller subproblems, by
+following the <em>dividi et impera</em> principle. The disturbing thing about
+mixins is that the principle is applied at the beginning (the problem
+is decomposed in smaller independent units) but at the end all
+the functionalities are added back to the client class as
+an undifferentiated soup of methods.</p>
+<p>Therefore a design based on mixins looks clean to the
+framework writer - everything is well separated in his mind - but
+it looks messy to the framework user - she sees
+methods coming from all directions without a clear separation. It is
+really the same situation than using the
+<tt class="docutils literal"><span class="pre">from</span> <span class="pre">module</span> <span class="pre">import</span> <span class="pre">*</span></tt> idiom, which is rightly frowned upon.</p>
+<p>I find it most unpythonic that mixins make the life of the framework
+writer easier, but the life of the framework reader more difficult,
+since the goal of Python is to make code <em>easy to read</em>, not easy to
+write.  The scenario I have in mind is the usual one: a poor
+programmer who needs to debug an object coming from a gigantic
+framework which is <em>terra incognita</em> to her, without any documentation
+and with a strict deadline (do you see yourself in there?). In such
+conditions a framework heavily based on mixins makes things harder,
+since the programmer gets drowned under hundreds of methods which
+are properly ordered in mixin classes on the paper, but not on the
+battle field.</p>
+<p>There is also another conceptual issue. The idea
+behind mixins is that they should be used for generic functionality
+which can be applied to different classes (think of mixins like Persistent,
+Comparable, Printable, etc.). But this is exactly the same situation
+where you want to use generic functions.</p>
+<p>In this <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=237764.html">post of mine</a> I actually argue that generic functions
+(a.k.a. multimethods) are a better solution than mixins. I also provide
+a very concrete example, which I think generalizes. The advantage of generic
+functions is that they are clearly defined outside classes,
+whereas the mixin approach is kind of schizophrenic:
+the functionality is actually defined externally, but that fact
+is made invisible to the final user.</p>
+<p>I am a big fan of generic functions which are already used
+in the Python word - <tt class="docutils literal"><span class="pre">print</span></tt> is a generic function,
+the comparison operators are generic functions, <a class="reference" href="../_/http/numpy.scipy.org/index.html">numpy</a> universal
+functions (ufunctions) are generic functions, etc - but should be
+used even more. With generic functions, mixins becomes useless.
+A side effect is that the class namespace becomes much slimmer: for instance,
+in <a class="reference" href="../_/http/en.wikipedia.org/wiki/CLOS/index.html">CLOS</a> classes are used just to contain state, whereas the methods
+live in a separate namespace. In most languages instead,
+classes are used as a namespace control mechanism, performing
+double duty - namespace control should be the job of modules.</p>
+</div>
+<div class="section">
+<h1><a id="a-particularly-bad-usage-of-mixins" name="a-particularly-bad-usage-of-mixins">A particularly bad usage of mixins</a></h1>
+<p>A tipical beginner's tutorial (for instance, I recommend <a class="reference" href="../_/http/www.linuxjournal.com/article/4540/index.html">Using
+Mix-ins with Python</a> , by Chuck Esterbrook which is very well written
+and very informative, even if the point of view is exactly the
+opposite of mine) will tell you that mixins are used to add
+functionality to the classes they mix in. For instance a mixin class
+<tt class="docutils literal"><span class="pre">WithLog</span></tt>
+could be used to enhance a pre-existing class <tt class="docutils literal"><span class="pre">C</span></tt> with a logging
+capability:</p>
+<pre class="literal-block">
+class C(object):
+  "A base class"
+</pre>
+<pre class="literal-block">
+class WithLog(object):
+  "A mixin class"
+  @property
+  def log(self):
+    return logging.getLogger(self.__class__.__name__)
+</pre>
+<pre class="literal-block">
+class C_WithLog(C, WithLog):
+  "A mixin-enhanced class"
+</pre>
+<p>An example of usage is the following:</p>
+<blockquote>
+<pre class="doctest-block">
+&gt;&gt;&gt; c = C_WithLog()
+&gt;&gt;&gt; c.log.warn("hello")
+</pre>
+</blockquote>
+<p>That prints</p>
+<blockquote>
+<tt class="docutils literal"><span class="pre">WARNING:C_WithLog:hello</span></tt>.</blockquote>
+<p>The usage of mixins you see here is wrong: why would you use
+inheritance when you need just one method? You can just import the one
+method you need!  Generally speaking, a mixin class has sense only
+when you have a set of methods which belong together: if you
+have a single method, or a set of disconnected methods, you are much
+better off by defining the methods externally, in an utility module,
+and then by importing them in the class namespace. Of course,
+here I am assuming that you really want the external method to end up
+in the class namespace, possibly because of interface requirements,
+but I am not saying that this is always a good idea. You can import the
+method in your class as simply as that:</p>
+<pre class="literal-block">
+class CWithLog(C):
+  from utility import log # log is the property defined above
+</pre>
+<p>This approach is very little used in Python, probably because most people
+coming from other languages do not know it is possible, but it
+is in my opinion a much clearer solution than inheritance.
+The problem with inheritance is that it requires a <em>substantial
+cognitive load</em>: when I see the line of code <tt class="docutils literal"><span class="pre">class</span> <span class="pre">C_WithLog(C,</span> <span class="pre">WithLog)</span></tt>
+I immediately I ask myself many
+questions: <em>which methods are exported by C_WithLog?
+is there any method of C which accidentally overrides one of the methods
+of C_WithLog? if yes, is there any method cooperation mechanism
+(super) or not? what are the ancestors of C_WithLog? which methods
+are coming from them? are such methods overridden by some C method?
+is there a cooperation mechanism on C_WithLog ancestors? What's the</em>
+<a class="reference" href="../_/http/www.python.org/download/releases/2.3/mro/index.html">method resolution order</a> <em>of the hierarchy?</em>
+On the other hand, if I see <tt class="docutils literal"><span class="pre">from</span> <span class="pre">utility</span> <span class="pre">import</span> <span class="pre">log</span></tt> I have very little
+to understand and very little to worry about. The only caution in this
+specific example is that I will have a single logger shared by all
+instances of the class since
+<tt class="docutils literal"><span class="pre">logging.getLogger(self.__class__.__name__)</span></tt> will return always the
+same object. If I need different loggers with different configurations
+for different instances I will have to override the <tt class="docutils literal"><span class="pre">.log</span></tt> attribute on
+a case by case basis, or I will have to use a different strategy, such as
+the <a class="reference" href="../_/http/en.wikipedia.org/wiki/Dependency_injection/index.html">dependency injection pattern</a>, i.e. I will have to pass the logger
+to the constructor.</p>
+</div>
+<div class="section">
+<h1><a id="acceptable-usages-of-mixins" name="acceptable-usages-of-mixins">Acceptable usages of mixins</a></h1>
+<p>There are usages for mixins which are restricted in scope and not
+dangerous: for instance, you can use mixins for implementing the comparison
+interface, or the mapping interface.  This is actually the approach suggested
+by the standard library, and by the new ABC's in Python 2.6. This is
+an acceptable usage: in this case there is no incontrollable
+growth of methods, since you are actually implementing well know
+interfaces - typically a few specific special methods.
+In order to give a practical example, let me discuss a toy application.</p>
+<p>Suppose you want to define a <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> class in an application
+to manage pictures and photos. A <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> object may contain
+both plain pictures (instances of a <tt class="docutils literal"><span class="pre">Picture</span></tt> class) and
+<tt class="docutils literal"><span class="pre">PictureContainer</span></tt> objects, recursively.
+From the point of view of the Python programmer it could make sense
+to implement such a class by using a dictionary.
+A <tt class="docutils literal"><span class="pre">Picture</span></tt> object will contain information such as the picture
+title, the picture date, and a few methods to read and write the
+picture on the storage (the file system, a relation database,
+an object database like the ZODB or the AppEngine <a class="reference" href="../_/http/code.google.com/appengine/docs/datastore/index.html">datastore</a>,
+or anything else).</p>
+<p>The first version of the <tt class="docutils literal"><span class="pre">PictureContainer</span></tt> class could be something
+like that:</p>
+<pre class="literal-block">
+class SimplePictureContainer(object):
+    "A wrapper around the .data dictionary, labelled by an id"
+    def __init__(self, id, pictures_or_containers):
+      self.id = id
+      self.data = {} # the inner dictionary
+      for poc in pictures_or_containers:
+        # both pictures and containers must have an .id
+        self.data[poc.id] = poc
+</pre>
+<p>At this point, one realized that it is annoying to call the inner
+dictionary directly and that it would be nicer to expose its methods.
+A simple solution is to leverage on the standard
+library class <tt class="docutils literal"><span class="pre">UserDict.DictMixin</span></tt> which is there just for
+that use case. Since we are at it, we can also add the logging
+functionality: that means that the low-level interface (calling
+directly the inner dictionary methods) will not log whereas
+the high level interface will log:</p>
+<pre class="literal-block">
+class BetterPictureContainer(SimplePictureContainer, DictMixin):
+  from utility import log
+
+  def __getitem__(self, id):
+    return self.data[id]
+
+  def __setitem__(self, id, value):
+    self.log.info('Adding or replacing %s into %s', id, self.id)
+    self.data[id] = value
+
+  def __delitem__(self, id):
+    self.log.warn('Deleting %s', id)
+    del self.data[id]
+
+  def keys(self):
+    return self.data.keys()
+</pre>
+<p>Using <tt class="docutils literal"><span class="pre">DictMixin</span></tt> is acceptable, since</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">DictMixin</span></tt> provided to its subclasses the standard interface of a
+dictionary, a conceptually tied set of methods;</li>
+<li>the dictionary interface is well know to anybody knowing how
+to use dictionaries in Python, so that the cognitive load is zero;</li>
+<li><tt class="docutils literal"><span class="pre">DictMixin</span></tt> allows a substantial code reuse: we redefined explicitly just
+4 methods, but actually we are indirecty affecting 17 other methods:
+<tt class="docutils literal"><span class="pre">__cmp__,</span> <span class="pre">__contains__,</span> <span class="pre">__iter__,</span>
+<span class="pre">__len__,</span> <span class="pre">__repr__,</span> <span class="pre">clear,</span> <span class="pre">get,</span> <span class="pre">has_key,</span> <span class="pre">items,</span> <span class="pre">iteritems,</span>
+<span class="pre">iterkeys,</span> <span class="pre">itervalues,</span> <span class="pre">pop,</span> <span class="pre">popitem,</span> <span class="pre">setdefault,</span> <span class="pre">update,</span> <span class="pre">values</span></tt>: without
+<tt class="docutils literal"><span class="pre">DictMixin</span></tt> we would need to reimplement all of them.</li>
+</ol>
+<p>However, notice that in this example the usage of <tt class="docutils literal"><span class="pre">DictMixin</span></tt> as mixin
+class is acceptable, but not optimal: the best solution is to use
+<tt class="docutils literal"><span class="pre">DictMixin</span></tt> as a base class, not as a mixin class.</p>
+<p>The core problem is that we started from a wrong desing: we wrote
+<tt class="docutils literal"><span class="pre">SimplePictureContainer</span></tt> when we did not know of the existence of
+<tt class="docutils literal"><span class="pre">DictMixin</span></tt>. Now, <em>a posteriori</em>, we are trying to fix the mistake by
+using multiple inheritance, but that it not the Rigth Thing (TM)
+to do. The right thing would be to change the source code of
+<tt class="docutils literal"><span class="pre">SimplePictureContainer</span></tt> and to derive directly from <tt class="docutils literal"><span class="pre">DictMixin</span></tt>.</p>
+<p>In the real world usually you do not have complete control of the code:
+you may leverage on a third party library with a design error, or
+simply with an old library, written when <tt class="docutils literal"><span class="pre">DictMixin</span></tt> did not exist.
+In such a situation you may have no way to modify the source code.
+Then using <tt class="docutils literal"><span class="pre">DictMixin</span></tt> and multiple inheritance is a perfectly
+acceptable workaround, but it is a workaround still, and it
+should not be traded for a clever design.</p>
+<p>Moreover, even the best examples of mixins could be replaced
+by generic functions: this is why I would not provide mixins, should I
+write a new language from scratch. Of course, in an existing language like
+Python, one has to follow the common idioms, so I use
+mixins in a few controlled cases, and I have no problems with that.
+For instance, one could define an <tt class="docutils literal"><span class="pre">EqualityMixin</span></tt> which defines
+the special methods <tt class="docutils literal"><span class="pre">__eq__</span></tt> and <tt class="docutils literal"><span class="pre">__ne__</span></tt>, with <tt class="docutils literal"><span class="pre">__ne__</span></tt> being the
+logical negation of <tt class="docutils literal"><span class="pre">__eq__</span></tt> (Python does not do
+that by default). That would be a fine usage but I don't do that, I
+prefer to duplicate two lines of code and to write the <tt class="docutils literal"><span class="pre">__ne__</span></tt>
+method explicitly, to avoid complicating my inheritance hierarchy.
+One should should decide when to use a mixin or not on a case by case
+basis, with a bias for the <em>not</em>.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=246483.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=246483&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D246483&amp;title=Mixins+considered+harmful%2F2&amp;bodytext=In+this+post+I+clarify+my+position+with+respect+to+mixins%2C+%0D%0AI+show+a+few+common+design+mistakes+and+I+suggest+some+alternative+solution.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D246483&amp;title=Mixins+considered+harmful%2F2">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D246483&amp;title=Mixins+considered+harmful%2F2">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

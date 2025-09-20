@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Please Teach me Web Frameworks for Python!</title>
+<meta charset="utf-8"/>
+<meta content="Guido van van Rossum" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#AACCFF" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=guido.html">Guido van van Rossum's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=146149.html">Discuss</a> | 
+<a href="mailto:?subject=Please Teach me Web Frameworks for Python!&amp;body= %0AArtima Weblogs %0APlease Teach me Web Frameworks for Python! %0Aby Guido van van Rossum %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=146149">Email</a> | 
+<a href="../viewpostP.html$/thread=146149.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=143947.html" title="Python Status Update">Previous</a> | 
+<a class="sl" href="thread=146503.html" title="Web Framework Redux">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">All Things Pythonic</span><br>
+<span class="ts">Please Teach me Web Frameworks for Python!</span><br/>
+<span class="as">by Guido van van Rossum</span><br/>
+<span class="pd">January 27, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Google makes me think about lots of stuff.  Today I'm thinking about the state of web frameworks.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>This is a plea for help.  Please educate me!</p>
+<p>After years of resistance, I'm finally finding myself building a web application again.  I think the last time I did that was the "faq wizard" which still lives in Python's Tools directory.  It was a CGI script using nearly standard Python string interpolation as a templating language, environment variables (plus cgi.py) and print statements to talk to the server, and the file system plus RCS for persistency.  It was used for years to maintain the Python FAQ on python.org, but was eventually retired.  (Is anybody still using it?!?)</p>
+<p>My new project (my so-called "starter project" at Google) is an internal tool for Google developers.  It will never be used outside Google.  I don't want to have to explain what it does, but I'll hint that it is a fairly standard database-backed dynamic application with authenticated users.  About the only slightly unusual characteristic is that it talks to another internal tool in addition to the database.  It will eventually be used by thousands of developers (millions if Google's exponential growth doesn't stop soon :-), so there are some performance needs, but nothing serious compared to the typical xyzzy.google.com property.  (This is also the reason that there aren't a ton of Google-developed frameworks that I can use -- there's a ton of reusable web server code, but it's mostly geared to the needs for massively parallelized servers where each box handles 1000s of hits per second, and consequently not really good for rapid prototyping.  And of course it's all C++ code.)</p>
+<p>I've got a working prototype that's a gross hack.  Instead of CGI and print it uses BaseHTTPServer.py, which is an adequate web server for development purposes, although I'm finding some strange gaps in its functionality (e.g. it has a time-formatting helper method, but it is hardwired to format the <em>current</em> time, so it's useless for formatting 'Expires' headers).  For templating I am still using standard string interpolation!  This has served me well (several coworkers were surprised I got it working in such a short time) but it's time for a refactoring.  So far, the biggest difference with the FAQ wizard is probably that it uses CSS!  (And even a line or two of Javascript.  No AJAX yet, but that can't be far off -- no Google application can be  without AJAX for very long. :-)</p>
+<p>Knowing myself, I'd happily go off and build my own web framework at this point, based on exactly the requirements of this particular application, but I figure that a framework written to serve the needs of a single target application wouldn't necessarily be better than some of the web frameworks that already exist for Python.  So where to start?</p>
+<p>I took a brief look at Django, and while I like their website (pretty and easily navigable and chockfull of useful information), I'm not keen on the particular tools they provide (it doesn't help that they begin every example with "from mumble.something import *").  For example, Django's templating language is rich and powerful, but it doesn't look very Pythonic to me -- in fact, it's so rich and powerful that it might as well be PHP.  Similarly, I'm not keen on their object-relational mapping approach.  There's too much magic based on name correspondence, and the automatically generated APIs feel a bit unpythonic (e.g. lots of getter and setter methods where a normal Python object would use public attributes and perhaps properties).  I imagine that it works best if you know exactly how it is mapped to SQL.</p>
+<p>One thing in Django that I like: the URL mapping API.  You specify a bunch of regular expressions, and for each regex you specify the function to be called.  Groups in the regex become arguments; named groups become keyword arguments.  Very simple and clean.  I'm not sure that I like having to put quotes around the function (path) names; but I can see how this actually saves typing because you won't have to write an import statement for it, and in rare cases it can save loading stuff you never use.</p>
+<p>Then I decided to have a look at Ruby on Rails, just to see what I could learn from the competition.  I watched two fascinating movies, but they went a bit too fast to really understand what was going on, and there seemed to be a fair amount of sleight of hand in the examples (a lot of default behavior that just happens to do the right thing for the chosen demo).  Again, the templating language seems a weird mixture of HTML and Ruby, and I find Ruby's syntax grating (too many sigils).  I believe I heard Greg Stein say recently that if you are really good in Ruby, CSS, HTML and SQL, you can produce great websites quickly with Rails -- but if you don't, you produce lousy websites quickly (just like with PHP).</p>
+<p>For a bit I pondered Quixote.  I used it to write a prototype application at Elemental two years ago, and I liked it fairly well.  I remember that setting it up was a bit weird (some strange config file that you had to get just right) but I like its approach to templating: instead of inventing a brand new templating language, it makes one tiny modification to Python so that you can use bare string literals (and expressions) instead of print statements to produce HTML.  It also has a really cool trick, due to Neil Schemenauer, that avoids the security issues that are so common in naively written PHP applications (just read BUGTRAQ for a while and you'll know what I'm referring to): by default string expressions are automatically HTML-encoded, <em>except</em> string literals, which are assumed to contain valid HMTL.  This means that you can write '&lt;h1&gt;' + title + '&lt;/h1&gt;' where title is some variable that you just received from the user, and HTML punctuation in title will be encoded, but the &lt;h1&gt; and &lt;/h1&gt; tags will be passed through unchanged.  But (as far as I recall) it doesn't have an interpolation strategy that's much more sophisticated than standard Python.</p>
+<p>Next I took a quick look at Michelle Levesque's PyWebOff blog.  It's nearly a year ago that she last did much about comparing Python web frameworks; I saw the last entries about Nevow (a templating system in Twisted) and it scared the hell out of me.  It takes 8 lines of inscrutable Python code and 12 lines of template HTML to produce a list with text in alternating colors.  The template uses XML namespaces.  I happen to know a lot about those (I was at Zope when we designed Zope's TAL templating language) but it is and will always be my opinion that XML was not intended for humans to be edited (except very occasionally as part of bootstrapping or debugging).  And that goes doubly so for XML with namespaces.  (Here I have to contend that Rails has the right idea -- "no XML sit-ups" is a great slogan!)</p>
+<p>I should probably read Michelle's blog for her experiences with other frameworks; but I got distracted and tried to figure out what the Python web-sig is up to.  There I found fequent mention of something called WSGI -- there's even a PEP, PEP 333!  I should definitely study that.  Although I fear that it's too low-level to really help me much; from the intro it appears to be more of a (very useful!) standard middleware API for Python web frameworks than that it provides much functionality that I could use right away in my application.  And the word middleware (just like much of Phillip Eby's work, alas) scares me.</p>
+<p>Before I post this, let me attempt at a brief classification of the features that every web framework needs.</p>
+<blockquote>
+<ul class="simple">
+<li>Independence from web server technology.
+You should be able to run the same application under Apache, as a CGI script,
+as a stand-alone server (e.g. BaseHTTPServer or Zope's or Twisted's built-in server),
+etc.  (The Java Servlet API does this really well IMO -- I used it at Elemental.)
+This should include logging and basic error handling (an API to generate
+any HTTP error, as well as a try/except around application code that returns
+a 500 error code if the application code fails.</li>
+<li>Templating with reuse.  Every web application needs to mix computed data
+(in which category I include data retrieved from a database) with HTML mark-up,
+and often a lot of the HTML markup is common for many pages (e.g. global navigation).</li>
+<li>Cookie handling.  For authentication, preferences, sessions, etc.</li>
+<li>Query parsing.  The bread and butter of form handling.</li>
+<li>URL dispatch.  You've got to be flexible in how URL paths are mapped to callables.
+Zope's URL-to-object mapping is extremely flexible.  Django's approach is nice too.</li>
+</ul>
+</blockquote>
+<p>I expect everything else is optional.  You can write your own SQL (as we did at Elemental), use an object-relational mapping library (like Django or RorR), or use an object database like Zope.  You can even persist things directly to the filesystem (just make sure it's being backed up :-).  While every dynamic website eventually develops authentication needs, there are many different existing approaches to authentication, and I suspect that it's not particularly hard to do this as part of the application.  Some frameworks go wild on predefined CSS and HTML templates.  (I believe Plone does this -- if you see a site with frequent use of 1-pixel rectangular borders and a calendar widget in the margin, you can bet it's somebody's first Plone project.)</p>
+<p>Please set me straight.  What did I miss?  Where is the WSGI standard implementation?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=146149.html">104
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=146149&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Guido van van Rossum adds a new entry to <a href="../index.html$/blogger=guido.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/guido.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D146149&amp;title=Please+Teach+me+Web+Frameworks+for+Python%21&amp;bodytext=Google+makes+me+think+about+lots+of+stuff.++Today+I%27m+thinking+about+the+state+of+web+frameworks.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D146149&amp;title=Please+Teach+me+Web+Frameworks+for+Python%21">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D146149&amp;title=Please+Teach+me+Web+Frameworks+for+Python%21">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/guido.jpg"/></td><td>Guido van Rossum is the creator of Python, one of the major
+programming languages on and off the web. The Python community refers to him as the BDFL (Benevolent Dictator For Life), a title straight
+from a Monty Python skit. He moved from the Netherlands to the USA in
+1995, where he met his wife. Until July 2003 they lived in the
+northern Virginia suburbs of Washington, DC with their son Orlijn, who
+was born in 2001. They then moved to Silicon Valley where Guido now works for Google
+(spending 50% of his time on Python!).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Guido van van Rossum. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

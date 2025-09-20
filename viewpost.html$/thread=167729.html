@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Signs of the Next Paradigm Shift: Part II</title>
+<meta charset="utf-8"/>
+<meta content="James O. Coplien" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cope.html">James O. Coplien's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=167729.html">Discuss</a> | 
+<a href="mailto:?subject=Signs of the Next Paradigm Shift: Part II&amp;body= %0AArtima Weblogs %0ASigns of the Next Paradigm Shift: Part II %0Aby James O. Coplien %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=167729">Email</a> | 
+<a href="../viewpostP.html$/thread=167729.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=167119.html" title="Signs of the Next Paradigm Shift: Part I">Previous</a> | 
+<a class="sl" href="thread=187211.html" title="The Interface is the Program, and it ain't Agile">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software: The Next Generation</span><br>
+<span class="ts">Signs of the Next Paradigm Shift: Part II</span><br/>
+<span class="as">by James O. Coplien</span><br/>
+<span class="pd">August 24, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In Part I, I related a resurgence in interest in multi-paradigm design about thirteen years after its first appearance.
+In this 'blog I consider what such developments portend for curriculum design and, in fact, the basic content of any CS program.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+So: What if I was right?
+
+<p>
+<a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=167119.html">My
+last 'blog</a> pondered the question:
+Why has there been an apparent resurgence in multi-paradigm design?
+I in fact am rather indifferent, for the sake of this article,
+about whether multi-paradigm design (MPD) is <i>the</i> right answer.
+Let me posit that the recent emergence of
+<a href="../_/http/www1.sungard.com/sungard/blog/post/darren/23/Commonality-and-Variation-key-CSA-principles/index.html">practical application of
+MPD</a>, the fact that it piqued the interest of two
+respected industry authorities (Trygve Reenskaug and, allegedly,
+Scott Meyers), and the fact that Vrije Universiteit Brussel is
+considering a major endeavor in this direction suggest that the
+idea has power.
+I am sure it is not the only idea of such breadth and power,
+and I'd enjoy hearing your comments about other viable
+alternatives that can serve as a broad integrative framework
+for teaching design.
+(I myself can posit
+<a href="../_/http/www.math.utsa.edu/~salingar/Chris.text.html">Alexander's
+design theories</a>, or the foundations
+of the Design Movement of
+<a href="../_/http/design.open.ac.uk/individual_pages/nigel_cross/people_nigel_cross.htm">Nigel Cross</a>,
+<a href="../_/http/www.thackara.com/index.html">John Thackara</a>,
+Peter Naur et al., as equally good foundations, though it
+is unlikely that you as readers are as conversant with
+those ideas as with the foundations of MPD.
+I'll revisit some of the problems with the more ambitious of
+these ideas, such as patterns, below.)
+
+<p>
+But -- if I was right, back in 1993, in feeling that MPD provided
+an integrative framework that solved many of the design problems
+faced by OO programmers (who were really turning into generic
+and generative programmers and a bunch of other things) at the
+time -- where does that leave academia?
+It leaves it in a position where it was teaching OO in 1993 while
+there was emerging published material on an alternative -- material
+coming out of an industry research lab.
+(Think about it -- most great programming language advances
+come emerged into the industry not from academia, but from
+industry research labs.)
+And in retrospect -- if I was right -- it means that academia stuck
+with what it had in 1993, and was late in picking up a key idea.
+Sadly, these days the main goal seems to be to crank
+out good Java programmers: that is where the current
+educational mindshare is.
+
+<p>
+Industry is about as bad off as academia save a few bright spots as the one described by <a href="../_/http/www1.sungard.com/sungard/blog/post/darren/23/Commonality-and-Variation-key-CSA-principles/index.html">Darren</a>.
+Industry is largely fad-driven, and most single paradigms have provided a most suitable place for fads to hang their hats.
+What's worse, modern academia often must pacify industry in exchange for research funding or to be able to work with companies to place graduates in jobs.
+Both academia and industry like things simple.
+Both yearn to measure progress.
+Progress is most easily measured along a single-dimensional ruler,
+so any single-dimensional paradigm is a more comfortable measure either than no paradigm at all, or than any multidimensional analysis that requires thought and synthesis.
+Systems engineering, a necessarily multidimensional discipline, has been a dieing art since the 1960s -- but like MPD it, too, seems to be
+<a href="../_/http/www.incose.org/index.html">seeing resurgence</a>.
+Maybe there is hope after all.
+
+<h1>The Past, the Future, and the Eternal</h1>
+
+Education is all about linking the past with the future.
+Faced with students who bring their exposure to the
+ideas of yesterday and today, the educator is faced with
+preparing them for the future.
+True, much of that preparation relates to rounding out
+students' knowledge about the past and the present.
+This includes the teaching of craft and technique.
+Such teaching should be at the core of a BS or <i>diplome</i> degree.
+
+<p>
+At some level the student transitions from competence to mastery.
+Being a master of a discipline means not only how to apply
+existing craft and technique, but to have the <i>insight</i>
+to choose from available techniques and the craft to combine
+those techniques tastefully.
+This, in my opinion, should be the goal of a college or university education.
+Just as the apprenticeships of the Middle Ages produced master
+carpenters, master stonemasons, and master jewelers, so today's
+educational systems should produce master programmers.
+If we stereotype that Middle Age culture a bit we find that,
+do-it-yourself-ers aside,
+no significant work was done by other than a master.
+Yes, there was a place for day laborers who carried
+the stones and hoisted beams, but the shape of the work
+always owed to masters.
+
+<h3>Teaching Craft</h3>
+<p>
+<i>Craft</i> is about bringing students up to the standards of yesteryear,
+standards that yesteryear has proven useful and valuable.
+Young practitioners of the crafts in the middle ages learned them from
+their parents and carried the practices into the next generation, and
+in fact this practice continues in carpentry, smith work, and other crafts
+in many spots in the world.
+Teaching Java is much like this.
+Java is rooted in the object-oriented craft and attempts -- with a degree of
+success or failure that I won't take up here -- to capture the essence of
+object-ness.
+My former employer North Central College feels they have improved their curriculum lately by going to a "Java curriculum."
+Even the name is interesting. It is neither an "OO curriculum" that uses Java
+nor a "programming curriculum" that emphasizes OO <i>through</i> Java.
+It was set up to build the Java craft.
+
+<p>
+Teaching craft has limited benefits.
+In addition to working in academia, I have also worked in industry.
+More often than not I have found that I spend as much time helping
+new employees fresh out of college unlearn things their professors
+taught them as their professors may have spent putting those ideas
+into their heads.
+Encapsulation and information hiding are rarely as pure as the
+academics would have it, and, no, Ellipse is not a derived class
+of Sphere (a real example from a college text written by some
+of my colleagues a few years back).
+Further, most of the design grounding that students need comes from
+the application domain and <i>can't</i> be taught effectively as
+part of any general curriculum: as all politics are local, most
+design is, too.
+Most of the work in telecom software, EDA software, TV set-top
+software, and most everything else, comes from design notions tied
+to the domain -- not from Java.
+
+<p>
+So academia is caught between Scylla and Charibdis.
+On one hand, no single craft is powerful enough to handle real-world problems.
+On the other hand, teaching design theory in the abstract distances the
+student from real-world problems.
+What I think we need is something in between:
+to give student skills in researching possible solutions,
+choosing applicable solutions, and combining those solutions.
+This is a form of <i>critical analysis</i>, and it is
+a key to mastering the art of software development.
+
+
+<h3>Teaching Critical Analysis</h3>
+<p>
+Of course, one still must learn craft on the road to mastery.
+I believe the first step is to move beyond a given technology (a "Java-based
+curriculum") to a curriculum grounded in concepts or ideals: to
+choose one or some small number of conceptual frameworks that
+cover software development from design through source coding
+and testing, and build a core curriculum around that.
+While focusing on a Java curriculum probably helps the student
+in the craftwork of the coding phase of development,
+I envision something that will help the student progress beyond that.
+We need to teach students to do good analysis,
+to take analysis results through design and implementation, and onward
+to testing, not forgetting project management and documentation.
+The student should be able to choose the right tools at
+each step: ER diagrams, class modeling, Use Cases,
+Prolog, C++, JUnit, and the like.
+One can build such a curriculum around a focused theme,
+such as MPD,
+that lends consistency to the overall program.
+
+<p>
+Some curricula have tried to do that.
+I think that Joe Bergin has done that in his work
+at PACE using an object worldview.
+I feel that time has shown us that the object worldview
+is too myopic, not only in terms of industrial focus (how
+does one accommodate things like generic and generative
+programming?) but also in turns of conceptualization.
+I feel an object worldview -- certainly as it is
+popularly cast in the literature and taught in
+academia -- forces one into a limited
+mindset that cuts off rich possibilities in most
+programming languages.
+
+<p>
+Though I may disagree with Joe about objects
+being the <i>right</i> conceptual framework,
+I agree with him about having such a broad
+framework to ground the curriculum.
+That is better than having a technology-based framework;
+you can't predict what technology will bring thirteen years hence.
+And it is certainly better than a buzzword-oriented
+pedagogical framework.
+Buzzwords come and go.
+CORBA, once an industry darling,
+<a href="../_/http/www.zeroc.com/documents/riseAndFallOfCorba.pdf">is now dead</a>
+after only a decade of real industry presence.
+Eiffel, once a darling of academia, has now faded.
+Objects, in my opinion, should now be shown the door -- certainly
+in the temple of thought, and perhaps even in the shops of craft.
+(We too easily forget that there was a period when even
+objects were out of fashion, and yielded to another flash
+in the pan called components.)
+
+<p>
+But I think we can do even better than that.
+Rather than choosing a single design paradigm as the educational framework,
+a university educator should choose a broader framework in which
+multiple design and programming styles are fair game.
+Tie the courses back to this framework and focus.
+Now, it's a tall order both to shape such a framework and
+to craft any kind of tangible focus for it.
+I believe multi-paradigm design rises to that challenge,
+and that's why I'm hopeful it is enjoying some resurgence.
+
+
+<h3>Perhaps there's a way</h3>
+<p>
+There is one guy who I know succeeded with a closely
+related set of ideas, and that's my friend
+<a href="../_/http/web.engr.oregonstate.edu/~budd/index.html">Tim Budd</a> at
+Oregon State University.
+Tim is a prolific author who produces really great pedagogical stuff.
+He's less interested in changing the industry with a big bang
+than in planting many small, simple ideas that will grow into
+a mass of influence in the hands of his students many years hence.
+
+<p>
+One of Tim's dearest interests is the language
+<a href="../_/http/web.engr.oregonstate.edu/~budd/Books/leda/index.html">Leda</a> -- a multi-paradigm language that he created as a teaching tool.
+The <i>language</i> serves as exactly the kind of focal
+point I mentioned above.
+I most interacted with Tim during my exploratory work in MPD
+because we both use the term "multi-paradigm," albeit to mean
+somewhat different things.
+To Tim, "paradigm" implies <i>computational model</i>
+whereas to me it constitutes a (structural) worldview.
+The two ideas are of course not unrelated and someday,
+some good researcher should try to unify them.
+
+<h1>Beyond Paradigm</h1>
+<p>
+I guess I couldn't resist the temptation to include that header in this article. What do I mean by it?
+
+<p>
+Too many CS curricula focus on a single, commercially popular paradigm. They may offer a token course or two on a competing paradigm through a course on Lisp or a couple of lectures on Prolog. Such an approach does little to arm the student with the intellectual tools of design. At best, it exposes the student to one more syntax and one more set of semantics. Those two together are a far cry from understanding the trade-offs of design whose scope is broader than any single paradigm.
+
+<p>
+Part of the problem is that paradigms are overly subject to fashion. If we are to transcend fashion and arm the student with the tools they will need several years hence, we can't focus on paradigm. I think we can focus on three other things instead: rules for choosing paradigms, rules for combining paradigms, and perhaps some forward-looking work into new paradigms.
+
+<h2>Choosing Paradigms</h2>
+<p>
+In a response to a follow-up post on my previous 'blog I noted that I sometimes use the term <i>meta-design</i> for the strategies behind MPD. MPD goes to the foundations of human perception (at least as we understand them in a Western framework) as a basis for choosing paradigms. It is a remarkably simple model based on the building blocks the mind uses to generalize or categorize. These small concepts, combined with simple rules, become the tools for choosing a paradigm.
+
+<p>
+We need to be teaching students this level of conceptual thinking. They should think not only about their programming languages as tools that can express these small number of concepts, but should be taught analysis as a way to find these concepts in their business world. Heaven help a world that goes looking for objects through an activity called "object-oriented analysis." In spite of the fact that my alma mater gave marching orders to teach OOA, I never taught it with a straight face. As usually taught it is just silly. We desperately need something broader.
+
+<h2>Mixing Paradigms</h2>
+<p>
+A Kuhnian purist would argue that paradigms are mutually exclusive, but history suggests otherwise. As the world moved from steam locomotives to diesel it needed engineers who understood both and who could effectively argue the superiority of one over the other. Such objective arguments are almost completely absent from contemporary CS education, and I think the paradigm-centric view of education is largely at fault for this.
+
+<p>
+Even if Kuhnian paradigms <i>are</i> mutually exclusive, few CS paradigms are true Kuhnian paradigms. Thoughtful people like Peter Wegner and Larry Constantine have both noticed that the object paradigm is just a combined rehash of established ideas. Maybe Von Neumann computation is a paradigm. And maybe there are paradigms beyond the Von Neumann model.  The so-called rule-based paradigm is always reduced to Von Neumanisms when anyone describes it within the field of computation; the same is true for the functional paradigm (a la pure Lisp). And databases are not so much a computing paradigm as a data organization paradigm. So the "Kuhn purism" argument against multiple paradigms doesn't hold water.
+
+<p>
+We desperately must learn to mix paradigms. We must teach students to choose the right tools for the right job so that we can support transitions across technological discontinuities in software, just as the transportation industry needed to migrate from steam to diesel power. At a more base level, we need to master multiple paradigms to be able to integrate systems from the mass of legacy software in the world today. No large enterprise can afford to re-design from scratch any more, and we need to learn how to navigate the waters of large-scale software integration in a sane way. Today, we hobble into this territory with techniques that can hardly be called engineering let alone science. I know we can do better in practice. Educational institutions should be ashamed that they are not rising to the challenge, but rather are perpetuating the problem. There are a couple of people out there like Tim Budd who are leading the charge into sanity. If you're an educator, consider joining them.
+
+
+<h2>The Next Paradigms</h2>
+<p>
+I would be naive to suggest that we have heard the last word on paradigms for software design. It is tempting to make such a claim given that we have repeatedly revisited the same ideas for fifty years. I can think of only one new programming language idea in 45 years and of no new ideas in 40 years. However, we must have hope, or at least curiosity, that there is unplowed turf out there.
+
+<p>
+In fact, patterns offered hope of a new paradigm of design that might have had a chance in software. Patterns are indeed a new paradigm. Grabow's <a href="../_/http/www.amazon.com/gp/product/0853621993/index.html">biography of Christopher Alexander</a> is in fact a Kuhnian analysis of why patterns constitute a paradigm shift from existing design techniques. Software patterns as originally envisioned by the Hillside founders can be reconciled with object-oriented design only in the sense that relativistic physics can be reconciled with Newtonian physics. Object design, like most of the concepts within multi-paradigm design, can be covered by classical classification techniques, whereas patterns require that one break out of pure classification. However, the popularization of patterns by pedagogical academics (such as Johnson at the University of Illinois) have picked up patterns only within the framework of the object paradigm, losing the paradigm shift. Academia followed  Piaget's model of learning, describing the new concept of patterns in terms of the known concept of objects. It is like teaching relativistic physics in a Newtonian framework.
+
+<p>One must wink at Piaget across a paradigm shift, and neither contemporary academia nor contemporary industrial practice has done that. I have little hope that it is possible for academia to do this, which is why I believe it will be difficult for any significantly new idea to come into the world through academia. Academia is perhaps the most conservative institution in the world. For example, instead of taking patterns to the level of generality they deserve, academic treatment of patterns has framed them in a way that is far less general even than object-oriented design.
+
+<p>
+To me, this suggests that the true discontinuities in practice will never come from academia. Perhaps industry is the one hope for change.
+Historically, most programming language innovations have come not out of academia but out of industry. However, if one accepts the premise that these "innovations" really aren't <i>that</i> new -- a fact I bemoaned above -- then maybe these new paradigms will indeed come from the research labs. They may even come from other fields of study such as mathematics or philosophy.
+
+<p>
+Even if these new ideas do emerge from academia, academia should not factor them into their curricula.
+Curriculum items should be based on proven principles.
+The pattern experience teaches us that even academia has
+difficulty embracing new modes of thought.
+Given this, the best thing that academia can do is to help
+its clients learn to understand, master, and integrate
+the proven paradigms of today.
+There is nothing in multi-paradigm design that isn't proven or obvious from first principles.
+That's clear today from Darren's work at Sungard.
+I also feel that the same was true in 1993.
+Academia could indeed have taken up the banner then.
+
+<p>
+There is no use crying over spilt milk, but we should be introspective today about the rough gems we have today that will be tomorrow's diamonds.
+Again, Tim Budd has fresh thoughts in this area these days, and
+we ignore him at our peril.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=167729.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=167729&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever James O. Coplien adds a new entry to <a href="../index.html$/blogger=cope.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cope.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167729&amp;title=Signs+of+the+Next+Paradigm+Shift%3A+Part+II&amp;bodytext=In+Part+I%2C+I+related+a+resurgence+in+interest+in+multi-paradigm+design+about+thirteen+years+after+its+first+appearance.%0D%0AIn+this+%27blog+I+consider+what+such+developments+portend+for+curriculum+design+and%2C+in+fact%2C+the+basic+content+of+any+CS+program.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167729&amp;title=Signs+of+the+Next+Paradigm+Shift%3A+Part+II">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D167729&amp;title=Signs+of+the+Next+Paradigm+Shift%3A+Part+II">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jimcoplien.jpg"/></td><td>Jim Coplien is a Senior Agile Coach and System Architect at Nordija A/S, doing international consulting in organization structure, software patterns, system architecture, as well as software development in electronic design automation, telecom, and finance. In this 'blog, he reflects on his academic career pursuant to his visiting professorship at University of Manchester Institute of Science and Technology, his appointment as the 2003-2004 Vloebergh Chair at Vrije Universiteit Brussel, two years as an Associate Professor at North Central College in Naperville, Illinois, and extensive work developing some of the first C++ and OOD training materials. He is well-known for his foundational work on object-oriented programming and on patterns, and his current research explores the formal foundations of the theory of design, foundations of aesthetics and beauty, and group theoretic models of design structure. He most recent book "Organizational Patterns of Agile Software Development", co-authored with Neil Harrison, culminates a decade of research. His book "Advanced C++ Programming Styles and Idioms" defined design and programming techniques for a generation of C++ programmers, and his book "Multi-Paradigm Design for C++" presents a vision for the evolution of current OO design techniques into a more general and better grounded theory of software construction.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 James O. Coplien. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

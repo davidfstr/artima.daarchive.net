@@ -1,0 +1,1087 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Final Performance Testing Example</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=122295.html">Discuss</a> | 
+<a href="mailto:?subject=The Final Performance Testing Example&amp;body= %0AArtima Weblogs %0AThe Final Performance Testing Example %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=122295">Email</a> | 
+<a href="../viewpostP.html$/thread=122295.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=122020.html" title="What is Consulting?">Previous</a> | 
+<a class="sl" href="thread=122509.html" title="Podcast Interview">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">The Final Performance Testing Example</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">August 5, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I've been working on this since the first post of this example; you can see that the code has been completely rewritten and (I think) greatly improved, both in terms of the generics and the performance tests themselves.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 10 (filtered)" name="Generator"/>
+<title>A performance test framework</title>
+<style>
+
+ /* Font Definitions */
+ @font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Georgia;
+	panose-1:2 4 5 2 5 4 5 2 3 3;}
+@font-face
+	{font-family:"Andale Mono";
+	panose-1:2 11 5 9 0 0 0 0 0 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:9.0pt;
+	margin-left:.25in;
+	line-height:13.5pt;
+	font-size:10.5pt;
+	font-family:Georgia;}
+h3
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.25in;
+	line-height:22.0pt;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:Verdana;
+	font-weight:normal;}
+p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:9.0pt;
+	margin-left:.25in;
+	font-size:9.0pt;
+	font-family:Georgia;}
+span.MsoFootnoteReference
+	{position:relative;
+	top:-3.0pt;}
+span.Heading3Char
+	{font-family:Verdana;}
+p.Code, li.Code, div.Code
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	line-height:12.0pt;
+	border:none;
+	padding:0in;
+	font-size:10.5pt;
+	font-family:"Andale Mono";}
+span.CodeChar
+	{font-family:"Andale Mono";}
+p.CodeInline, li.CodeInline, div.CodeInline
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.25in;
+	line-height:12.0pt;
+	border:none;
+	padding:0in;
+	font-size:10.5pt;
+	font-family:"Andale Mono";}
+p.CodeInlineTrailer, li.CodeInlineTrailer, div.CodeInlineTrailer
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:1.0pt;
+	margin-left:.85in;
+	font-size:3.0pt;
+	font-family:Georgia;}
+p.Exercise3, li.Exercise3, div.Exercise3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:9.0pt;
+	margin-left:.25in;
+	text-indent:0in;
+	font-size:10.5pt;
+	font-family:Georgia;}
+span.CodeInlineChar
+	{font-family:"Andale Mono";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+
+</style>
+</head>
+<body lang="EN-US">
+<div class="Section1">
+
+This is why it takes me so long to write (or rewrite) a book. Examples like this, which I think are done, rear up and gobble lots of time. The good thing is that I end up understanding all the problems in much more depth. But it makes books -- especially one the size of <i>Thinking in Java fourth edition</i> -- take forever. The following was taken directly from the book:
+
+<hr/>
+<h3><a name="_Toc110302753">A performance test framework</a></h3>
+<p class="MsoNormal">To prevent code duplication and to provide consistency among
+tests, Ive put the basic functionality of the test process into a framework.
+The following code establishes a base class from which you create a list of anonymous inner classes, one for each different test. Each of these inner classes is
+called as part of the testing process. This approach allows you to easily add
+and remove new kinds of tests.</p>
+<p class="MsoNormal">This is another example of the <i>Template Method</i> design
+pattern. Although you follow the typical approach of overriding the template
+method <b>Test.test( )</b> for each particular test, in this case the core
+code (that doesnt change) is in a separate <b>Tester</b> class.<a href="#_ftn1" name="_ftnref1" title=""><span class="MsoFootnoteReference"><sup><span style="font-size:8.0pt;position:relative;top:0pt;"><span class="MsoFootnoteReference"><sup><span style="font-size:8.0pt;font-family:Georgia;
+position:relative;top:0pt;">[1]</span></sup></span></span></sup></span></a> The
+type of container under test is the generic parameter <b>C</b>:</p>
+<div style="border:none;border-left:solid windowtext 1.0pt;padding:0in 0in 0in 10.0pt;
+margin-left:.25in;margin-right:0in;">
+<pre><code>
+//: containers/Test.java
+// Framework for performing timed tests of containers.
+
+public abstract class Test&lt;C&gt; {
+  String name;
+  public Test(String name) { this.name = name; }
+  // Override this Template Method for different tests.
+  // Returns actual number of repetitions of test.
+  abstract int test(C container, TestParam tp);
+} ///:~
+</code></pre>
+</div>
+<p class="CodeInlineTrailer"> </p>
+<p class="MsoNormal">Each <b>Test</b> object stores the name of that test. When
+you call the <b>test()</b> method, it must be given the container to be tested
+along with a messenger  or data transfer object that holds the various parameters for that particular test. The parameters include <b>size</b>,
+indicating the number of elements in the container, and <b>loops</b>, which
+control the number of iterations for that test. These parameters may or may not
+be used in every test.</p>
+<p class="MsoNormal">Each container will undergo a sequence of calls to <b>test()</b>,
+each with a different <b>TestParam</b>, so <b>TestParam</b> also contains <b>static</b>
+<b>array() </b>methods that make it easy to create arrays of <b>TestParam</b>
+objects. The first version of <b>array()</b> takes a variable argument list
+containing alternating <b>size</b> and <b>loops</b> values, and the second
+version takes the same kind of list except that the values are inside <b>String</b>sthis
+way it can be used to parse command-line arguments:</p>
+<div style="border:none;border-left:solid windowtext 1.0pt;padding:0in 0in 0in 10.0pt;
+margin-left:.25in;margin-right:0in;">
+<pre><code>
+//: containers/TestParam.java
+// A "data transfer object."
+import java.util.*;
+
+public class TestParam {
+  public final int size;
+  public final int loops;
+  public TestParam(int size, int loops) {
+    this.size = size;
+    this.loops = loops;
+  }
+  // Create an array of TestParam from a varargs sequence:
+  public static TestParam[] array(int... values) {
+    int size = values.length/2;
+    TestParam[] result = new TestParam[size];
+    int n = 0;
+    for(int i = 0; i &lt; size; i++)
+      result[i] = new TestParam(values[n++], values[n++]);
+    return result;
+  }
+  // Convert a String array to a TestParam array:
+  public static TestParam[] array(String[] values) {
+    int[] vals = new int[values.length];
+    for(int i = 0; i &lt; vals.length; i++)
+      vals[i] = Integer.decode(values[i]);
+    return array(vals);
+  }
+} ///:~
+</code></pre>
+</div>
+<p class="CodeInlineTrailer"> </p>
+<p class="MsoNormal">To use the framework, you pass the container to be tested
+along with a <b>List</b> of <b>Test</b> objects to a <b>Tester.run() </b>method
+(these are overloaded generic convenience methods which reduce the amount of
+typing necessary to use them). <b>Tester.run()</b> calls the appropriate
+overloaded constructor, then calls <b>timedTest()</b>, which executes each test
+in the list for that container. <b>timedTest()</b> repeats each test for each
+of the <b>TestParam</b> objects in <b>paramList</b>. Because <b>paramList</b>
+is initialized from the static <b>defaultParams</b> array, you can change the <b>paramList</b>
+for all tests by reassigning <b>defaultParams</b>, or you can change the <b>paramList</b>
+for one test by passing in a custom <b>paramList</b> for that test:</p>
+<div style="border:none;border-left:solid windowtext 1.0pt;padding:0in 0in 0in 10.0pt;
+margin-left:.25in;margin-right:0in;">
+<pre><code>
+//: containers/Tester.java
+// Applies Test objects to lists of different containers.
+import java.util.*;
+
+public class Tester&lt;C&gt; {
+  public static int fieldWidth = 8;
+  public static TestParam[] defaultParams= TestParam.array(
+    10, 5000, 100, 5000, 1000, 5000, 10000, 500);
+  // Override this to modify pre-test initialization:
+  protected C initialize(int size) { return container; }
+  protected C container;
+  private String headline = "";
+  private List&lt;Test&lt;&lt;C&gt;&gt; tests;
+  private static String stringField() {
+    return "%" + fieldWidth + "s";
+  }
+  private static String numberField() {
+    return "%" + fieldWidth + "d";
+  }
+  private static int sizeWidth = 5;
+  private static String sizeField = "%" + sizeWidth + "s";
+  private TestParam[] paramList = defaultParams;
+  public Tester(C container, List&lt;Test&lt;&lt;C&gt;&gt; tests) {
+    this.container = container;
+    this.tests = tests;
+    if(container != null)
+      headline = container.getClass().getSimpleName();
+  }
+  public Tester(C container, List&lt;Test&lt;&lt;C&gt;&gt; tests,
+      TestParam[] paramList) {
+    this(container, tests);
+    this.paramList = paramList;
+  }
+  public void setHeadline(String newHeadline) {
+    headline = newHeadline;
+  }
+  // Generic methods for convenience :
+  public static &lt;C&gt; void run(C cntnr, List&lt;Test&lt;&lt;C&gt;&gt; tests){
+    new Tester&lt;C&gt;(cntnr, tests).timedTest();
+  }
+  public static &lt;C&gt; void run(C cntnr,
+      List&lt;Test&lt;&lt;C&gt;&gt; tests, TestParam[] paramList) {
+    new Tester&lt;C&gt;(cntnr, tests, paramList).timedTest();
+  }
+  private void displayHeader() {
+    // Calculate width and pad with '-':
+    int width = fieldWidth * tests.size() + sizeWidth;
+    int dashLength = width - headline.length() - 1;
+    StringBuilder head = new StringBuilder(width);
+    for(int i = 0; i &lt; dashLength/2; i++)
+      head.append('-');
+    head.append(' ');
+    head.append(headline);
+    head.append(' ');
+    for(int i = 0; i &lt; dashLength/2; i++)
+      head.append('-');
+    System.out.println(head);
+    // Print column headers:
+    System.out.format(sizeField, "size");
+    for(Test test : tests)
+      System.out.format(stringField(), test.name);
+    System.out.println();
+  }
+  // Run the tests for this container:
+  public void timedTest() {
+    displayHeader();
+    for(TestParam param : paramList) {
+      System.out.format(sizeField, param.size);
+      for(Test&lt;C&gt; test : tests) {
+        C kontainer = initialize(param.size);
+        long start = System.nanoTime();
+        // Call the template method:
+        int reps = test.test(kontainer, param);
+        long duration = System.nanoTime() - start;
+        long timePerRep = duration / reps; // Nanoseconds
+        System.out.format(numberField(), timePerRep);
+      }
+      System.out.println();
+    }
+  }
+} ///:~
+</code></pre>
+</div>
+<p class="CodeInlineTrailer"> </p>
+<p class="MsoNormal">The <b>stringField()</b> and <b>numberField()</b> methods
+produce formatting strings for outputting the results. The standard width for
+formatting can be changed by modifying the <b>static fieldWidth</b> value. The <b>displayHeader()</b>
+method formats and prints the header information for each test.</p>
+<p class="MsoNormal">If you need to perform special initialization, override the <b>initialize( )</b>
+method. This produces an initialized container object of the appropriate
+sizeyou can either modify the existing container object or create a new one.
+You can see in <b>test( )</b> that the result is captured in a local
+reference<b> </b>called<b> kontainer</b>, which allows you to replace the
+stored member <b>container</b> with a completely different initialized
+container.</p>
+<p class="MsoNormal">The return value of each <b>Test.test()</b> method must be
+the number of operations performed by that test, which is used to calculate the
+number of nanoseconds required for each operation. You should be aware that <b>System.nanoTime()</b>
+typically produces values with a granularity that is greater than one (and this
+granularity will vary with machines and operating systems), and this will
+produce a certain amount of rattle in the results.</p>
+<p class="MsoNormal">The results may vary from machine to machine; these tests
+are only intended to compare the performance of the different containers.</p>
+<h3><a name="_Toc110302754">Choosing between <b>List</b>s</a></h3>
+<p class="MsoNormal">Here is a performance test for the most essential of the <b>List</b> operations. For comparison, it also shows the most important <b>Queue</b> operations. Two separate lists of tests are created for testing each
+class of container. In this case, <b>Queue</b> operations only apply to <b>LinkedLists</b>.</p>
+<div style="border:none;border-left:solid windowtext 1.0pt;padding:0in 0in 0in 10.0pt;
+margin-left:.25in;margin-right:0in;">
+<pre><code>
+//: containers/ListPerformance.java
+// Demonstrates performance differences in Lists.
+// {Args: 100 500} Small to keep build testing short
+import java.util.*;
+import net.mindview.util.*;
+
+public class ListPerformance {
+  static Random rand = new Random();
+  static int reps = 1000;
+  static List&lt;Test&lt;List&lt;Integer&gt;&gt;&gt; tests = 
+    new ArrayList&lt;Test&lt;List&lt;Integer&gt;&gt;&gt;();
+  static List&lt;Test&lt;LinkedList&lt;Integer&gt;&gt;&gt; qTests = 
+    new ArrayList&lt;Test&lt;LinkedList&lt;Integer&gt;&gt;&gt;();
+  static {
+    tests.add(new Test&lt;List&lt;Integer&gt;&gt;("add") {
+      int test(List&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops;
+        int listSize = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          list.clear();
+          for(int j = 0; j &lt; listSize; j++)
+            list.add(j);
+        }
+        return loops * listSize;
+      }
+    });
+    tests.add(new Test&lt;List&lt;Integer&gt;&gt;("get") {
+      int test(List&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops * reps;
+        int listSize = list.size();
+        for(int i = 0; i &lt; loops; i++)
+          list.get(rand.nextInt(listSize));
+        return loops;
+      }
+    });
+    tests.add(new Test&lt;List&lt;Integer&gt;&gt;("set") {
+      int test(List&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops * reps;
+        int listSize = list.size();
+        for(int i = 0; i &lt; loops; i++)
+          list.set(rand.nextInt(listSize), 47);
+        return loops;
+      }
+    });
+    tests.add(new Test&lt;List&lt;Integer&gt;&gt;("iteradd") {
+      int test(List&lt;Integer&gt; list, TestParam tp) {
+        final int LOOPS = 1000000;
+        int half = list.size() / 2;
+        ListIterator&lt;Integer&gt; it = list.listIterator(half);
+        for(int i = 0; i &lt; LOOPS; i++)
+          it.add(47);
+        return LOOPS;
+      }
+    });
+    tests.add(new Test&lt;List&lt;Integer&gt;&gt;("insert") {
+      int test(List&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops;
+        for(int i = 0; i &lt; loops; i++)
+          list.add(5, 47); // Minimize random access cost
+        return loops;
+      }
+    });
+    tests.add(new Test&lt;List&lt;Integer&gt;&gt;("remove") {
+      int test(List&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops;
+        int size = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          list.clear();
+          list.addAll(new CountingIntegerList(size));
+          while(list.size() &gt; 5)
+            list.remove(5); // Minimize random access cost
+        }
+        return loops * size;
+      }
+    });
+    // Tests for queue behavior:
+    qTests.add(new Test&lt;LinkedList&lt;Integer&gt;&gt;("addFirst") {
+      int test(LinkedList&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops;
+        int size = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          list.clear();
+          for(int j = 0; j &lt; size; j++)
+            list.addFirst(47);
+        }
+        return loops * size;
+      }
+    });
+    qTests.add(new Test&lt;LinkedList&lt;Integer&gt;&gt;("addLast") {
+      int test(LinkedList&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops;
+        int size = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          list.clear();
+          for(int j = 0; j &lt; size; j++)
+            list.addLast(47);
+        }
+        return loops * size;
+      }
+    });
+    qTests.add(
+      new Test&lt;LinkedList&lt;Integer&gt;&gt;("rmFirst") {
+        int test(LinkedList&lt;Integer&gt; list, TestParam tp) {
+          int loops = tp.loops;
+          int size = tp.size;
+          for(int i = 0; i &lt; loops; i++) {
+            list.clear();
+            list.addAll(new CountingIntegerList(size));
+            while(list.size() &gt; 0)
+              list.removeFirst();
+          }
+          return loops * size;
+        }
+      });
+    qTests.add(new Test&lt;LinkedList&lt;Integer&gt;&gt;("rmLast") {
+      int test(LinkedList&lt;Integer&gt; list, TestParam tp) {
+        int loops = tp.loops;
+        int size = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          list.clear();
+          list.addAll(new CountingIntegerList(size));
+          while(list.size() &gt; 0)
+            list.removeLast();
+        }
+        return loops * size;
+      }
+    });
+  }
+  static class ListTester extends Tester&lt;List&lt;Integer&gt;&gt; {
+    public ListTester(List&lt;Integer&gt; container, 
+        List&lt;Test&lt;List&lt;Integer&gt;&gt;&gt; tests) {
+      super(container, tests);
+    }
+    // Fill to the appropriate size before each test:
+    @Override protected List&lt;Integer&gt; initialize(int size){
+      container.clear();
+      container.addAll(new CountingIntegerList(size));
+      return container;
+    }
+    // Convenience method:
+    public static void run(List&lt;Integer&gt; list, 
+        List&lt;Test&lt;List&lt;Integer&gt;&gt;&gt; tests) {
+      new ListTester(list, tests).timedTest();
+    }
+  }
+  public static void main(String[] args) {
+    if(args.length &gt; 0)
+      Tester.defaultParams = TestParam.array(args);
+    // Can only do these two tests on an array:
+    Tester&lt;List&lt;Integer&gt;&gt; arrayTest =
+      new Tester&lt;List&lt;Integer&gt;&gt;(null, tests.subList(1, 3)){
+        // This will be called before each test. It
+        // produces a non-resizeable array-backed list:
+        @Override protected 
+        List&lt;Integer&gt; initialize(int size) {
+          Integer[] ia = Generated.array(Integer.class,
+            new CountingGenerator.Integer(), size);
+          return Arrays.asList(ia);
+        }
+      };
+    arrayTest.setHeadline("Array as List");
+    arrayTest.timedTest();
+    Tester.defaultParams= TestParam.array(
+      10, 5000, 100, 5000, 1000, 1000, 10000, 200);
+    ListTester.run(new ArrayList&lt;Integer&gt;(), tests);
+    ListTester.run(new LinkedList&lt;Integer&gt;(), tests);
+    ListTester.run(new Vector&lt;Integer&gt;(), tests);
+    Tester.fieldWidth = 12;
+    Tester&lt;LinkedList&lt;Integer&gt;&gt; qTest = 
+      new Tester&lt;LinkedList&lt;Integer&gt;&gt;(
+        new LinkedList&lt;Integer&gt;(), qTests);
+    qTest.setHeadline("Queue tests");
+    qTest.timedTest();
+  }
+} /* Output: (Sample)
+--- Array as List ---
+ size     get     set
+   10     130     183
+  100     130     164
+ 1000     129     165
+10000     129     165
+--------------------- ArrayList ---------------------
+ size     add     get     set iteradd  insert  remove
+   10     121     139     191     435    3952     446
+  100      72     141     191     247    3934     296
+ 1000      98     141     194     839    2202     923
+10000     122     144     190    6880   14042    7333
+--------------------- LinkedList ---------------------
+ size     add     get     set iteradd  insert  remove
+   10     182     164     198     658     366     262
+  100     106     202     230     457     108     201
+ 1000     133    1289    1353     430     136     239
+10000     172   13648   13187     435     255     239
+----------------------- Vector -----------------------
+ size     add     get     set iteradd  insert  remove
+   10     129     145     187     290    3635     253
+  100      72     144     190     263    3691     292
+ 1000      99     145     193     846    2162     927
+10000     108     145     186    6871   14730    7135
+-------------------- Queue tests --------------------
+ size    addFirst     addLast     rmFirst      rmLast
+   10         199         163         251         253
+  100          98          92         180         179
+ 1000          99          93         216         212
+10000         111         109         262         384
+*///:~
+</code></pre>
+</div>
+<p class="CodeInlineTrailer"> </p>
+<p class="MsoNormal">Each test requires careful thought to ensure that you are
+producing meaningful results. For example, the <b>add</b> test clears the <b>List</b>
+and then refills it to the specified list size. The call to <b>clear()</b> is
+thus part of the test, and may have an impact on the time, especially for small
+tests. Although the results here seem fairly reasonable, you could imagine
+rewriting the test framework so that there is a call to a preparation method
+(which would, in this case, include the <b>clear()</b> call) <i>outside</i> of
+the timing loop.</p>
+<p class="MsoNormal">Note that for each test, you must accurately calculate the
+number of operations that occur and return that value from <b>test()</b>, so
+the timing is correct.</p>
+<p class="MsoNormal">The <b>get</b> and <b>set</b> tests both use the random
+number generator to perform random accesses to the <b>List</b>. In the output,
+you can see that, for a <b>List</b> backed by an array and for an <b>ArrayList</b>,
+these accesses are fast and very consistent regardless of the list size,
+whereas for a <b>LinkedList</b> the access times grow very significantly for
+larger lists. Clearly, linked lists are not a good choice if you will be
+performing many random accesses.</p>
+<p class="MsoNormal">The <b>iteradd</b> test uses an iterator in the middle of
+the list to insert new elements. For an <b>ArrayList</b> this gets expensive as
+the list gets bigger, but for a <b>LinkedList</b> it is relatively cheap, and
+constant regardless of size. This makes sense because an <b>ArrayList</b> must
+create space and copy all its references forward during an insertion. This
+becomes expensive as the <b>ArrayList</b> gets bigger. A <b>LinkedList</b> only
+needs to link in a new element, and doesnt have to modify the rest of the
+list, so you expect the cost to be roughly the same regardless of the list
+size.</p>
+<p class="MsoNormal">The <b>insert</b> and <b>remove</b> tests both use
+location number 5 as the point of insertion or removal, rather than either end
+of the <b>List</b>. A <b>LinkedList</b> treats the end points of the <b>List</b>
+speciallythis improves the speed when using a <b>LinkedList</b> as a <b>Queue</b>.
+However, if you add or remove elements in the middle of the list, you include
+the cost of random access, which weve already seen varies with the different <b>List</b>
+implementations. By performing the insertions and removals at location five,
+the cost of the random access should be negligible and we should see only the
+cost of insertion and removal, but we will not see any specialized optimization
+for the end of a <b>LinkedList</b>. You can see from the output that the cost
+of insertion and removal in a <b>LinkedList </b>is quite cheap and doesnt vary
+with the list size, but with an <b>ArrayList</b>, insertions especially are <i>very</i>
+expensive, and the cost increases with list size.</p>
+<p class="MsoNormal">From the <b>Queue</b> tests, you can see how quickly a <b>LinkedList</b>
+can insert and remove elements from the endpoints of the list, which is optimal
+for <b>Queue</b> behavior.</p>
+<p class="MsoNormal">Normally, you can just call <b>Tester.run()</b>, passing the
+container and the <b>tests</b> list. Here, however, we must override the <b>initialize()</b>
+method so that the <b>List</b> is cleared and refilled before each
+testotherwise the <b>List</b> control over the size of the <b>List</b> would
+be lost during the various tests. <b>ListTester</b> inherits from <b>Tester</b>
+and performs this initialization using <b>CountingIntegerList</b>. The <b>run()</b>
+convenience method is also overridden.</p>
+<p class="MsoNormal">Wed also like to compare array access to container access
+(primarily against <b>ArrayList</b>). In the first test in <b>main()</b>, a
+special <b>Test</b> object is created using an anonymous inner class. The <b>initialize()</b>
+method is overridden to create a new object each time it is called (ignoring
+the stored <b>container</b> object, so <b>null</b> is the <b>container</b>
+argument for this <b>Tester</b> constructor). The new object is created using <b>Generated.array( )</b>
+(which was defined in the <i>Arrays</i> chapter) and <b>Arrays.asList()</b>.
+Only two of the tests can be performed in this case, because you cannot insert
+or remove elements when using a <b>List</b> backed by an array, so the <b>List.subList()</b>
+method is used to select the desired tests from the <b>tests</b> list.</p>
+<p class="MsoNormal">For random-access <b>get( )</b> and <b>set( )</b>
+operations, a <b>List</b> backed by an array is slightly faster than an <b>ArrayList</b>,
+but the same operations are dramatically more expensive for a <b>LinkedList</b>
+because it is not designed for random-access operations.</p>
+<p class="MsoNormal"><b>Vector </b>should be avoided; its only in the library
+for legacy code support (the only reason it works in this program is because it
+was adapted to be a <b>List</b> for forward compatibility).</p>
+<p class="MsoNormal">The best approach is probably to choose an <b>ArrayList</b>
+as your default and to change to a <b>LinkedList</b> if you need its extra
+functionality or you discover performance problems due to many insertions and
+removals from the middle of the list. If you are working with a fixed-sized
+group of elements, either use a <b>List</b> backed by an array (as produced by <b>Arrays.asList( )</b>),
+or if necessary, an actual array.</p>
+<p class="MsoNormal"><b>CopyOnWriteArrayList</b> is a special implementation of <b>List</b>
+used in concurrent programming, and will be discussed in the <i>Concurrency</i>
+chapter.</p>
+<h3><a name="_Toc110302756">Choosing between <b>Set</b>s</a></h3>
+<p class="MsoNormal">Depending on the behavior you desire, you can choose a <b>TreeSet</b>,<b> </b>a <b>HashSet</b>, or a <b>LinkedHashSet</b>.<b> </b>The
+following test program gives an indication of the performance trade-off between these implementations:</p>
+<div style="border:none;border-left:solid windowtext 1.0pt;padding:0in 0in 0in 10.0pt;
+margin-left:.25in;margin-right:0in;">
+<pre><code>
+//: containers/SetPerformance.java
+// Demonstrates performance differences in Sets.
+// {Args: 100 5000} Small to keep build testing short
+import java.util.*;
+
+public class SetPerformance {
+  static List&lt;Test&lt;Set&lt;Integer&gt;&gt;&gt; tests =
+    new ArrayList&lt;Test&lt;Set&lt;Integer&gt;&gt;&gt;();
+  static {
+    tests.add(new Test&lt;Set&lt;Integer&gt;&gt;("add") {
+      int test(Set&lt;Integer&gt; set, TestParam tp) {
+        int loops = tp.loops;
+        int size = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          set.clear();
+          for(int j = 0; j &lt; size; j++)
+            set.add(j);
+        }
+        return loops * size;
+      }
+    });
+    tests.add(new Test&lt;Set&lt;Integer&gt;&gt;("contains") {
+      int test(Set&lt;Integer&gt; set, TestParam tp) {
+        int loops = tp.loops;
+        int span = tp.size * 2;
+        for(int i = 0; i &lt; loops; i++)
+          for(int j = 0; j &lt; span; j++)
+            set.contains(j);
+        return loops * span;
+      }
+    });
+    tests.add(new Test&lt;Set&lt;Integer&gt;&gt;("iterate") {
+      int test(Set&lt;Integer&gt; set, TestParam tp) {
+        int loops = tp.loops * 10;
+        for(int i = 0; i &lt; loops; i++) {
+          Iterator&lt;Integer&gt; it = set.iterator();
+          while(it.hasNext())
+            it.next();
+        }
+        return loops * set.size();
+      }
+    });
+  }
+  public static void main(String[] args) {
+    if(args.length &gt; 0)
+      Tester.defaultParams = TestParam.array(args);
+    Tester.fieldWidth = 10;
+    Tester.run(new TreeSet&lt;Integer&gt;(), tests);
+    Tester.run(new HashSet&lt;Integer&gt;(), tests);
+    Tester.run(new LinkedHashSet&lt;Integer&gt;(), tests);
+  }
+} /* Output: (Sample)
+------------- TreeSet -------------
+ size       add  contains   iterate
+   10       746       173        89
+  100       501       264        68
+ 1000       714       410        69
+10000      1975       552        69
+------------- HashSet -------------
+ size       add  contains   iterate
+   10       308        91        94
+  100       178        75        73
+ 1000       216       110        72
+10000       711       215       100
+---------- LinkedHashSet ----------
+ size       add  contains   iterate
+   10       350        65        83
+  100       270        74        55
+ 1000       303       111        54
+10000      1615       256        58
+*///:~
+</code></pre>
+</div>
+<p class="CodeInlineTrailer"> </p>
+<p class="MsoNormal">The performance of <b>HashSet</b> is generally superior to <b>TreeSet</b>,
+but especially when adding elements and looking them up, which are the two most
+important operations. <b>TreeSet</b> exists because it maintains its elements
+in sorted order, so you use it only when you need a sorted <b>Set</b>. Because
+of the internal structure necessary to support sorting <i>and</i> because
+iteration is something youre more likely to do, iteration is usually faster
+with a <b>TreeSet</b> than a <b>HashSet</b>.</p>
+<p class="MsoNormal">Note that <b>LinkedHashSet</b> is more expensive for
+insertions than <b>HashSet</b>; this is because of the extra cost of
+maintaining the linked list along with the hashed container.</p>
+<h3><a name="_Toc110302757">Choosing between <b>Map</b>s</a></h3>
+<p class="MsoNormal">This program gives an indication of the trade-off between <b>Map</b> implementations:</p>
+<div style="border:none;border-left:solid windowtext 1.0pt;padding:0in 0in 0in 10.0pt;
+margin-left:.25in;margin-right:0in;">
+<pre><code>
+//: containers/MapPerformance.java
+// Demonstrates performance differences in Maps.
+// {Args: 100 5000} Small to keep build testing short
+import java.util.*;
+
+public class MapPerformance {
+  static List&lt;Test&lt;Map&lt;Integer,Integer&gt;&gt;&gt; tests =
+    new ArrayList&lt;Test&lt;Map&lt;Integer,Integer&gt;&gt;&gt;();
+  static {
+    tests.add(new Test&lt;Map&lt;Integer,Integer&gt;&gt;("put") {
+      int test(Map&lt;Integer,Integer&gt; map, TestParam tp) {
+        int loops = tp.loops;
+        int size = tp.size;
+        for(int i = 0; i &lt; loops; i++) {
+          map.clear();
+          for(int j = 0; j &lt; size; j++)
+            map.put(j, j);
+        }
+        return loops * size;
+      }
+    });
+    tests.add(new Test&lt;Map&lt;Integer,Integer&gt;&gt;("get") {
+      int test(Map&lt;Integer,Integer&gt; map, TestParam tp) {
+        int loops = tp.loops;
+        int span = tp.size * 2;
+        for(int i = 0; i &lt; loops; i++)
+          for(int j = 0; j &lt; span; j++)
+            map.get(j);
+        return loops * span;
+      }
+    });
+    tests.add(new Test&lt;Map&lt;Integer,Integer&gt;&gt;("iterate") {
+      int test(Map&lt;Integer,Integer&gt; map, TestParam tp) {
+        int loops = tp.loops * 10;
+        for(int i = 0; i &lt; loops; i ++) {
+          Iterator it = map.entrySet().iterator();
+          while(it.hasNext())
+            it.next();
+        }
+        return loops * map.size();
+      }
+    });
+  }
+  public static void main(String[] args) {
+    if(args.length &gt; 0)
+      Tester.defaultParams = TestParam.array(args);
+    Tester.run(new TreeMap&lt;Integer,Integer&gt;(), tests);
+    Tester.run(new HashMap&lt;Integer,Integer&gt;(), tests);
+    Tester.run(new LinkedHashMap&lt;Integer,Integer&gt;(),tests);
+    Tester.run(
+      new IdentityHashMap&lt;Integer,Integer&gt;(), tests);
+    Tester.run(new WeakHashMap&lt;Integer,Integer&gt;(), tests);
+    Tester.run(new Hashtable&lt;Integer,Integer&gt;(), tests);
+  }
+} /* Output: (Sample)
+---------- TreeMap ----------
+ size     put     get iterate
+   10     748     168     100
+  100     506     264      76
+ 1000     771     450      78
+10000    2962     561      83
+---------- HashMap ----------
+ size     put     get iterate
+   10     281      76      93
+  100     179      70      73
+ 1000     267     102      72
+10000    1305     265      97
+------- LinkedHashMap -------
+ size     put     get iterate
+   10     354     100      72
+  100     273      89      50
+ 1000     385     222      56
+10000    2787     341      56
+------ IdentityHashMap ------
+ size     put     get iterate
+   10     290     144     101
+  100     204     287     132
+ 1000     508     336      77
+10000     767     266      56
+-------- WeakHashMap --------
+ size     put     get iterate
+   10     484     146     151
+  100     292     126     117
+ 1000     411     136     152
+10000    2165     138     555
+--------- Hashtable ---------
+ size     put     get iterate
+   10     264     113     113
+  100     181     105      76
+ 1000     260     201      80
+10000    1245     134      77
+*///:~
+</code></pre>
+</div>
+<p class="CodeInlineTrailer"> </p>
+<p class="MsoNormal">Insertions for all the <b>Map</b> implementations except for
+<b>IdentityHashMap</b> get significantly slower as the size of the <b>Map</b>
+gets large. In general, however, lookup is much cheaper than insertion, which
+is good because youll typically be looking items up much more often than you
+insert them.</p>
+<p class="MsoNormal"><b>Hashtable</b> performance is roughly the same as <b>HashMap</b>.
+Since <b>HashMap</b> is intended to replace <b>Hashtable</b>, and thus uses the
+same underlying storage and lookup mechanism (which you will learn about later)
+this is not too surprising.</p>
+<p class="MsoNormal">A <b>TreeMap </b>is generally slower than a <b>HashMap</b>.
+As with <b>TreeSet</b>, a <b>TreeMap</b> is a way to create an ordered list.
+The behavior of a tree is such that its always in order and doesnt have to be
+specially sorted. Once you fill a <b>TreeMap</b>, you can call <b>keySet( )</b> to get a <b>Set</b> view of the keys, then <b>toArray( )</b> to produce an array of
+those keys. You can then use the <b>static </b>method <b>Arrays.binarySearch( )</b>
+to rapidly find objects in your sorted array. Of course, this only makes sense
+if the behavior of a <b>HashMap</b> is unacceptable, since <b>HashMap </b>is
+designed to rapidly find keys. Also, you can easily create a <b>HashMap </b>from
+a <b>TreeMap </b>with a single object creation or call to <b>putAll()</b>. In
+the end, when youre using a <b>Map</b>,<b> </b>your first choice should be <b>HashMap</b>,
+and only if you need a constantly sorted <b>Map</b> will you need <b>TreeMap</b>.</p>
+<p class="MsoNormal"><b>LinkedHashMap</b> tends to be slower than <b>HashMap</b>
+for insertions because it maintains the linked list (to preserve insertion
+order) in addition to the hashed data structure. Because of this list,
+iteration is faster.</p>
+<p class="MsoNormal"><b>IdentityHashMap</b> has different performance because it
+uses <b>==</b> rather than <b>equals( )</b> for comparisons. <b>WeakHashMap</b>
+is described later in this chapter.</p>
+</div>
+<div><br clear="all"/>
+<hr align="left" size="1" width="33%"/>
+<div id="ftn1">
+<p class="MsoFootnoteText"><a href="#_ftnref1" name="_ftn1" title=""><span class="MsoFootnoteReference"><sup><span style="font-size:8.0pt;position:relative;
+top:0pt;"><span class="MsoFootnoteReference"><sup><span style="font-size:8.0pt;
+font-family:Georgia;position:relative;top:0pt;">[1]</span></sup></span></span></sup></span></a> Krzysztof
+Sobolewski assisted me in figuring out the generics for this example.</p>
+</div>
+</div>
+<a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=122295.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=122295&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D122295&amp;title=The+Final+Performance+Testing+Example&amp;bodytext=I%27ve+been+working+on+this+since+the+first+post+of+this+example%3B+you+can+see+that+the+code+has+been+completely+rewritten+and+%28I+think%29+greatly+improved%2C+both+in+terms+of+the+generics+and+the+performance+tests+themselves.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D122295&amp;title=The+Final+Performance+Testing+Example">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D122295&amp;title=The+Final+Performance+Testing+Example">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr></hr></body>
+</html>

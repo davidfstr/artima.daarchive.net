@@ -1,0 +1,1634 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>ActionScript Collections and Functional Programming</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230610.html">Discuss</a> | 
+<a href="mailto:?subject=ActionScript Collections and Functional Programming&amp;body= %0AArtima Weblogs %0AActionScript Collections and Functional Programming %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=230610">Email</a> | 
+<a href="../viewpostP.html$/thread=230610.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=231524.html" title="What's Cool About PHP">Previous</a> | 
+<a class="sl" href="thread=233485.html" title="Brightcove vs. YouTube">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">ActionScript Collections and Functional Programming</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">June 5, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Not only are basic collections (arrays and associative arrays) tightly integrated into the core language, but arrays provide some sophisticated functional programming support. This article also introduces the creation and use of shared libraries and the basics of prototypes.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="contents topic">
+<p class="topic-title first"><a id="contents" name="contents">Contents</a></p>
+<ul class="simple">
+<li><a class="reference" href="#creating-and-using-libraries" id="id1" name="id1">Creating and Using Libraries</a><ul>
+<li><a class="reference" href="#library-structure" id="id2" name="id2">Library Structure</a></li>
+<li><a class="reference" href="#creating-a-library" id="id3" name="id3">Creating a Library</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#prototypes-for-dynamic-method-addition" id="id4" name="id4">Prototypes for Dynamic Method Addition</a><ul>
+<li><a class="reference" href="#displaying-arrays" id="id5" name="id5">Displaying Arrays</a></li>
+<li><a class="reference" href="#improving-the-syntax" id="id6" name="id6">Improving the Syntax</a></li>
+<li><a class="reference" href="#prototypes" id="id7" name="id7">Prototypes</a></li>
+<li><a class="reference" href="#improving-the-syntax-using-prototypes" id="id8" name="id8">Improving the Syntax Using Prototypes</a></li>
+<li><a class="reference" href="#aside-placing-functions-into-the-library" id="id9" name="id9">Aside: Placing Functions into the Library</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#the-versatile-array" id="id10" name="id10">The Versatile <strong>Array</strong></a><ul>
+<li><a class="reference" href="#creating-arrays" id="id11" name="id11">Creating <strong>Array</strong>s</a></li>
+<li><a class="reference" href="#adding-removing-concat-slicing-splicing" id="id12" name="id12">Adding, Removing, Concat, Slicing &amp; Splicing</a></li>
+<li><a class="reference" href="#reversing-and-searching" id="id13" name="id13">Reversing and Searching</a></li>
+<li><a class="reference" href="#basic-sorting" id="id14" name="id14">Basic Sorting</a></li>
+<li><a class="reference" href="#complex-sorting" id="id15" name="id15">Complex Sorting</a></li>
+<li><a class="reference" href="#copying-arrays" id="id16" name="id16">Copying Arrays</a><ul>
+<li><a class="reference" href="#deep-copy" id="id17" name="id17">Deep Copy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference" href="#associative-arrays" id="id18" name="id18">Associative Arrays</a><ul>
+<li><a class="reference" href="#objects-as-keys" id="id19" name="id19">Objects as Keys</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#arraycollection" id="id20" name="id20">ArrayCollection</a><ul>
+<li><a class="reference" href="#arraycollection-operations" id="id21" name="id21"><strong>ArrayCollection</strong> Operations</a></li>
+<li><a class="reference" href="#cursors-iterators" id="id22" name="id22">Cursors (Iterators)</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#functional-programming" id="id23" name="id23">Functional Programming</a><ul>
+<li><a class="reference" href="#map" id="id24" name="id24"><strong>map()</strong></a></li>
+<li><a class="reference" href="#filter" id="id25" name="id25"><strong>filter()</strong></a></li>
+<li><a class="reference" href="#boolean-tests" id="id26" name="id26">Boolean Tests</a></li>
+<li><a class="reference" href="#creating-your-own-functional-operations" id="id27" name="id27">Creating Your Own Functional Operations</a><ul>
+<li><a class="reference" href="#range" id="id28" name="id28"><strong>range()</strong></a></li>
+<li><a class="reference" href="#reduce" id="id29" name="id29"><strong>reduce()</strong></a></li>
+<li><a class="reference" href="#zip" id="id30" name="id30"><strong>zip()</strong></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#composability" id="id31" name="id31">Composability</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>JavaScript, from which ActionScript is derived, <em>is</em> a bit of a mongrel language and occasionally you'll encounter oddities, which I'll try to point out. However, it seems inevitable that all languages accumulate oddities of one kind or another, and few languages actually remove oddities -- Python 3.0 and an upcoming version of Ruby are the only examples I know of.</p>
+<p>Despite the occasional funkiness, the power of the ActionScript language tools along with the hybrid type checking (mostly static for tool support in Flex Builder, but dynamic whenever it's convenient) makes for a programming experience that I find much more straightforward and pleasing than Java.</p>
+<p>While much of what I describe here also applies to JavaScript, I have only tested it with ActionScript. JavaScript language features can be different from one browser to the next and also vary with browser versions.</p>
+<p>As an aside, I was not a fan of JavaScript after discovering the language syntax and basic features could vary across browsers. Compensating for arbitrary platform differences is not how I want to spend my time. And even though AJAX library creators put a lot of time and effort into writing cross-browser code, you still seem to spend some portion of your time dealing with cross-browser problems, which seems a bad use of brain cycles. ActionScript, however, is learn-once, use-everywhere -- you don't have to worry about whether particular language syntax will run on one browser or another.</p>
+<div class="section">
+<h1><a class="toc-backref" href="#id1" id="creating-and-using-libraries" name="creating-and-using-libraries">Creating and Using Libraries</a></h1>
+<p>In my <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=212818.html">earlier article on components</a>, I didn't use libraries. But library components are the best way to share code between projects, so the examples in this article will utilize reusable library components.</p>
+<p>I've found the coverage on the creation of libraries in books and documentation to be spotty and scattered, so it's important to describe it thoroughly before we get into collections.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id2" id="library-structure" name="library-structure">Library Structure</a></h2>
+<p>If you're a Java programmer, aspects of the library-creation process will be familiar. Each component lives in a namespace, and we want namespaces to be unique (to prevent collisions), so Flex follows the Java practice of beginning the namespace with the reversed URL of the individual or company creating the library. So in my case, my namespace will begin with <strong>com.mindviewinc</strong>.</p>
+<p>You can have multiple components within one namespace, so it makes sense to group them according to functionality. In this article I create three different types of components which I classify as <strong>display</strong>, <strong>format</strong>, and <strong>functional</strong>, so their full namespaces will be <strong>com.mindviewinc.display</strong>, <strong>com.mindviewinc.format</strong>, and <strong>com.mindviewinc.functional</strong>.</p>
+<p>Also like Java, the library directory structure must correspond to the namespace, so library components within the <strong>com.mindviewinc.display</strong> namespace must be placed in the directory <strong>com/mindviewinc/display</strong>. Mercifully, however, Java's classpath has not been inflicted upon ActionScript programmers; on the contrary, Flex Builder tends to be helpful when you are including libraries. Also, a Flex project typically compiles to a single SWF so installation is a matter of copying the SWF (usually onto your web site).</p>
+<p>The final similarity to Java is in the library's component files: each file can have only one public element (class or function). That way, each file only exposes that one element. Note that I didn't find this out through reading; Flex Builder told me when I tried to put more than one public element in a single file.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id3" id="creating-a-library" name="creating-a-library">Creating a Library</a></h2>
+<p>In Flex Builder, select <strong>File | New | Flex Library Project</strong>. It doesn't matter what you name your library (that is, you're not constrained by any of the aforementioned rules). I just called mine "Mindview." Right-click (or your machine's equivalent) on the "Mindview" folder, create a directory called "com," and beneath that create "mindviewinc," and beneath that create "display," "format," and "functional." The full directory structure for the library (including  the <tt class="docutils literal"><span class="pre">bin</span></tt> directory added by Flex Builder, and things we will add later) looks like this:</p>
+<pre class="literal-block">
+Mindview
+    + bin
+    + com
+        + mindviewinc
+            + display
+            + format
+            + functional
+            + test
+    + includes
+</pre>
+<p>Let's create a first library component; although it's simple it turns out to be useful in this article. It is a small modification to the <strong>TextArea</strong> and it simplifies the display of information.</p>
+<p>To create it, right-click on the <strong>display</strong> folder and select <strong>New | ActionScript Class</strong>. Call the class <strong>TextDisplay</strong>. Note that you're not given the option of naming the file; the file name is the same as the class name. You can also tell it what base class to inherit from. Flex Builder knows what package name to use because of the folder you're placing it in.</p>
+<p>Here's what the component looks like after the rest of the code has been filled in:</p>
+<pre class="literal-block">
+package com.mindviewinc.display {
+    import mx.controls.TextArea
+    public class TextDisplay extends TextArea {
+        public function TextDisplay() {
+            super()
+            percentHeight = 100
+            percentWidth = 100
+        }
+        public function show(s:* = "", delim:String = "\n"):void {
+            text += String(s) + delim
+        }
+    }
+}
+</pre>
+<p>Like Python, Ruby and Groovy, semicolons at the end of lines are optional. The compiler treats the end of a line as the end of a statement unless it's inside a parenthesized expression. The only time you are required to use a semicolon is when you have more than one statement on a single line, or an empty expression.</p>
+<p>If you've seen JavaScript or ActionScript code before, you'll note that typical code often makes heavy use of the <strong>this</strong> keyword. It turns out this use is redundant; like Java and C++, <strong>this</strong> is only necessary in special cases and the compiler will automatically scope to <strong>this</strong>. As I am a minimalist when it comes to code syntax, I will tend to leave off both redundant semicolons and redundant usages of <strong>this</strong>.</p>
+<p>The constructor sets the component to full width and height, and the method simplifies the act of displaying text. Note that ActionScript supports default function arguments, which I find very convenient.</p>
+<p>Note that <strong>show()</strong> has an asterisk for the argument type; this means "any type." You actually get any type if you don't specify a type, but then the compiler gives you a warning. The asterisk for the type tells the compiler that you intend this to be of any type. This way, <strong>show()</strong> can accept anything, then cast it to a <strong>String</strong> for printing.</p>
+<p>For testing, create a little Flex application that uses the component. Select <strong>File | New | Flex Project</strong>, give it a name and press the "next" button. Press "next" again and press the "Library path" button and then "Add Project." The "Mindview" library should appear as an option; select that. Press "Finish." Now if you start typing "&lt;Text", Flex Builder should provide "TextDisplay" as a completion option, and when you select that it puts in the necessary namespace field:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="TestTextDisplay"
+    xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:display="com.mindviewinc.display.*" &gt;
+&lt;display:TextDisplay id="t"/&gt;
+&lt;mx:creationComplete&gt;
+t.show("hello", ", ")
+t.show("world")
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>I'm taking slight liberties with the <strong>name</strong> property of the <strong>Application</strong> to note the name of this MXML file. However, <strong>name</strong> is generally used for child components so this shouldn't cause any problems.</p>
+<p>The <strong>creationComplete</strong> block is just like a <strong>Script</strong> block, except that it also defines an event handler -- in this case, the <strong>creationComplete</strong> event which is fired when the application is finished initializing. Using a <strong>creationComplete</strong> block is a convenient way to experiment with ActionScript code inside Flex Builder. Note also that the CDATA tags are only necessary when the script block contains special characters.</p>
+<p>Although the new component doesn't do much, it helps a little, and often that's all the value you need. In this article it simplifies the code enough to be worth it.</p>
+<p>Note that you aren't limited to adding libraries only when creating the project. At any time you can right-click on the project in Flex Builder and add new libraries.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id4" id="prototypes-for-dynamic-method-addition" name="prototypes-for-dynamic-method-addition">Prototypes for Dynamic Method Addition</a></h1>
+<p>ActionScript is unique among languages in that it is both static and dynamic. Although it is described as being "optionally statically typed," in practice you'll use static typing almost all the time, because that's what works best with Flex Builder, which can do code completion when it knows the types; you'll also get compile-time error checking and more efficient code generation.</p>
+<p>However, whenever it suits your needs you can cross the line into dynamic typing, effectively turning off static type checking only for the small portions of your code where you want greater flexibility. This is strikingly powerful, because it means that when you need more dynamic code you aren't forced to jump through the hoops required by a static-only language. Basically, you get the best of both worlds.</p>
+<p>In this article, I constantly need to display arrays in a meaningful fashion. I began exploring syntactically clean ways of doing this, and ended up learning about prototypes.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id5" id="displaying-arrays" name="displaying-arrays">Displaying Arrays</a></h2>
+<p>Here is a function for displaying arrays of any dimension, also placed in the <strong>com.mindviewinc</strong> library. For each element of the array, it checks to see if that element is also an array and if it is, makes a recursive call:</p>
+<pre class="literal-block">
+package com.mindviewinc.format {
+    public function formatArray(a:Array):String {
+        var result:String = ""
+        for(var i:int=0; i &lt; a.length; i++) {
+            if(a[i] is Array)
+                result += formatArray(a[i])
+            else if(a[i] == null)
+                ; // Do nothing
+            else
+                result += String(a[i])
+            result += ","
+        }
+        // Trim off last comma:
+        if(result.charAt(result.length - 1) == ',')
+            result = result.substring(0, result.length - 1)
+        return "[" + result + "]"
+    }
+}
+</pre>
+<p>The <strong>is</strong> operator performs run-time type identification. If the element is an <strong>Array</strong> object, we make a recursive call; if it's uninitialized we do nothing (note the need for the semicolon in this case, to define an empty expression), otherwise we convert it to a string. In every case a comma is added, so if you have an array with a specified size that's uninitialized you'll still see a comma for each space.</p>
+<p>If there's a trailing comma it's redundant and the <strong>String</strong> <strong>substring()</strong> method removes it. The return expression surrounds the result with square brackets.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id6" id="improving-the-syntax" name="improving-the-syntax">Improving the Syntax</a></h2>
+<p>If we use <strong>formatArray()</strong> with a <strong>TextDisplay</strong> object, the syntax for displaying an <strong>a:Array</strong> is:</p>
+<pre class="literal-block">
+t.show("a: " + formatArray(a))
+</pre>
+<p>Which is tolerable but tedious. It would be much nicer to be able to say:</p>
+<pre class="literal-block">
+a.show()
+</pre>
+<p>And have everything else taken care of for us. But this would appear to require us to add a new <strong>show()</strong> method to the <strong>Array</strong> class.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id7" id="prototypes" name="prototypes">Prototypes</a></h2>
+<p>In the original JavaScript language, <em>prototypes</em> were the only inheritance mechanism available. Subsequently the more traditional inheritance mechanism has been added and for the most part prototypes are now rarely used, but they still have value because you can add methods dynamically to both objects and classes.</p>
+<p>Ruby has the concept of <em>open classes</em>, where any existing class, even a builtin, can be "opened" for further modification. Prototypes are not quite that flexible; they are more like <em>extension methods</em> as found in C# 3.0. In particular, a method added via prototype can only access <strong>public</strong> elements of the class it's extending.</p>
+<p>For example, suppose we start with this:</p>
+<pre class="literal-block">
+package com.mindviewinc.test {
+    public dynamic class TestClass {
+        internal var x:String = "howdy"
+        public var y:String = "Yall"
+        private function foo():String { return "Hello, foo" }
+        protected function bar():String { return "Hello, bar" }
+        public function baz():String { return "Hello, baz" }
+    }
+}
+</pre>
+<p>The <strong>dynamic</strong> keyword is necessary if we wish to use prototypes on this class.</p>
+<p>To use prototypes, we access the class' <strong>prototype</strong> field to assign new functions:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="TestPrototypes" xmlns:mx="http://www.adobe.com/2006/mxml"
+    xmlns:test="com.mindviewinc.test.*" xmlns:display="com.mindviewinc.display.*"&gt;
+&lt;display:TextDisplay id="t"/&gt;
+&lt;mx:creationComplete&gt;
+    import com.mindviewinc.test.TestClass
+    TestClass.prototype.f1 = function():String { return this.foo() }
+    TestClass.prototype.f2 = function():String { return this.bar() }
+    TestClass.prototype.f3 = function():String { return this.baz() }
+    TestClass.prototype.f4 = function():String { return this.x }
+    TestClass.prototype.f5 = function():String { return this.y }
+    var tc:TestClass = new TestClass()
+    // t.show("f1(): " + tc.f1()) // Runtime error: "foo is not a function"
+    // t.show("f2(): " + tc.f2()) // Runtime error: "bar is not a function"
+    t.show("f3(): " + tc.f3())
+    t.show("f4(): " + tc.f4())
+    t.show("f5(): " + tc.f5())
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>The whole thing compiles even without the commented-out lines, but you get the runtime errors shown in the comments. For the function calls, the wording of the errors is not that helpful (it would be more valuable to say "not accessible" rather than "not a function"), but it gets the point across. Here's the output:</p>
+<pre class="literal-block">
+f3(): Hello, baz
+f4(): null
+f5(): Yall
+</pre>
+<p>Accessing the <strong>x</strong> and <strong>y</strong> fields is a different case. If a field is not <strong>public</strong>, that field will be <em>created</em> and given an initial value of <strong>null</strong>. So in that case you won't get a compiler warning or error, you just won't see the value you expect, so bugs are a little harder to track down.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id8" id="improving-the-syntax-using-prototypes" name="improving-the-syntax-using-prototypes">Improving the Syntax Using Prototypes</a></h2>
+<p>We can now add the <strong>show()</strong> method to the existing <strong>Array</strong> class. And whenever this file is included, it will automatically create a <strong>TextDisplay</strong> named <strong>t</strong>:</p>
+<pre class="literal-block">
+//: Mindview/includes/show.as
+// Include this to provide array.show()
+import com.mindviewinc.display.TextDisplay
+import com.mindviewinc.format.formatArray
+var t:TextDisplay = new TextDisplay()
+addChild(t)
+Array.prototype.setName = function(name:String):void {
+    this.id = name
+    this.setPropertyIsEnumerable("id", false)
+}
+Array.prototype.show = function(msg:String=""):void {
+    if(msg.length &gt; 0)
+        t.show(msg, " ")
+    if(this.hasOwnProperty("id"))
+        t.show(this.id, ": ")
+    t.show(formatArray(this))
+}
+Array.prototype.setPropertyIsEnumerable("setName", false)
+Array.prototype.setPropertyIsEnumerable("show", false)
+</pre>
+<p>So we don't have to repeat the name of the array every time we display it, the first function attaches a name to the array as the field <strong>id</strong>. However, if you have an unnamed array, the test for <strong>hasOwnProperty()</strong> in <strong>show()</strong> won't try to print it.</p>
+<p>By default, methods and fields that you add to an object are "enumerable," which means that a <strong>for each</strong> statement will produce them. In our <strong>Array</strong> case, when we call <strong>formatArray</strong> we only want to see the array elements. Attaching <strong>setName()</strong> and <strong>show()</strong> to <strong>Array</strong> using prototypes will make the new functions enumerable. So that none of these elements show up when displaying the array, we call <strong>setPropertyIsEnumerable()</strong> and make that property <strong>false</strong>.</p>
+<p>To make this work, we must <strong>include</strong> this file rather than <strong>import</strong> it, so that the code is effectively pasted in and compiled as part of the file where it's been included (like a C language <strong>#include</strong>). I've named the above file <strong>show.as</strong> and placed it in the <strong>Mindview/includes</strong> directory. Here's an example where it's used:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="TestShowArray" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var a:Array = [1,2,3]
+a.setName("a")
+var b:Array = [[1,2,3],7,[4,5,6]]
+b.setName("b")
+var c:Array = [b, b]
+c.setName("c")
+a.show()
+b.show()
+c.show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Here, <strong>Array</strong> objects are created using the convenient square-bracket syntax. I've given them multiple dimensions in order to verify that <strong>formatArray()</strong> is working correctly. Here's the output:</p>
+<pre class="literal-block">
+a: [1,2,3]
+b: [[1,2,3],7,[4,5,6]]
+c: [[[1,2,3],7,[4,5,6]],[[1,2,3],7,[4,5,6]]]
+</pre>
+<p>Even though <strong>setName()</strong> and <strong>show()</strong> are not native methods of <strong>Array</strong>, their syntax makes them appear so. Although prototypes cannot access anything but <strong>public</strong> members of a class, which makes them much more limited than Ruby's open classes, they can come in handy when you only need to add a method or two in order to make an existing class callable by a new function.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id9" id="aside-placing-functions-into-the-library" name="aside-placing-functions-into-the-library">Aside: Placing Functions into the Library</a></h2>
+<p>While developing this article I ran into a problem when trying to create ActionScript functions (rather than classes) inside the <strong>Mindview</strong> library. I could place the file in the correct folder and give it the right package name, but Flex Builder would not recognize it and do completion, or even compile it if I typed in the <strong>import</strong> statement by hand.</p>
+<p>This is clearly a bug in Flex Builder, but sometimes I could fix it by pretending to create a <em>class</em> in the library, then changing the contents inside the package to a function. Then it was recognized. Unfortunately, this didn't always work; sometimes the only way to make new library components visible is to start a new project after adding the library component. Ideally this bug will be fixed by the time or soon after you read this.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="the-versatile-array" name="the-versatile-array">The Versatile <strong>Array</strong></a></h1>
+<p>What's called an "array" in ActionScript is generally called a "list" or some other kind of higher-level collection in other languages, because an ActionScript <strong>Array</strong> object is very full-featured.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id11" id="creating-arrays" name="creating-arrays">Creating <strong>Array</strong>s</a></h2>
+<p>You've already seen the square-bracket syntax for creating arrays, which I prefer because it is shorter and cleaner (and is the same as Python). You can also create and initialize array objects using constructor syntax:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="CreatingArrays" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var a1:Array = new Array()  // Zero elements
+a1.setName("a1")
+a1.show()
+var a2:Array = new Array(7) // Seven elements
+a2.setName("a2")
+a2.show()
+a2[4] = 11 // Assign to zero-indexed location 4
+a2.show()
+var a3:Array = new Array('d', 'e', 'f') // List syntax
+a3.setName("a3")
+a3.show()
+// One way to create multidimensional arrays:
+var a4:Array = new Array(a1, a2, a3)
+a4.setName("a4")
+a4.show()
+t.show("a4[1][4]: " + a4[1][4] + " a4[2][2]: " + a4[2][2])
+// Using String's split() to make an array of characters:
+var a5:Array = "abcdefghijklmnopqrstuvwxyz".split('')
+a5.setName("a5")
+a5.show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Here's the output:</p>
+<pre class="literal-block">
+a1: []
+a2: [,,,,,,]
+a2: [,,,,11,,]
+a3: [d,e,f]
+a4: [[],[,,,,11,,],[d,e,f]]
+a4[1][4]: 11 a4[2][2]: f
+a5: [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id12" id="adding-removing-concat-slicing-splicing" name="adding-removing-concat-slicing-splicing">Adding, Removing, Concat, Slicing &amp; Splicing</a></h2>
+<p><strong>Array</strong>s have the kinds of tools you expect for inserting and removing elements. <strong>push()</strong> and <strong>pop()</strong> insert and remove elements from the end, and <strong>unshift()</strong> and <strong>shift()</strong> insert and remove elements from the beginning. <strong>splice()</strong> modifies the array in place by simultaneously removing and inserting elements at any point in the array. <strong>concat()</strong> creates a new array and adds elements to the end, while <strong>slice()</strong> creates a new array containing a section of the original:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="AddRemoveEtc" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var a:Array = [1,2,3,4,5,6,7]
+a.setName("a")
+a.show()
+a.push('x') // End of the array
+a.show("after push")
+a.pop()
+a.show("after pop")
+a.unshift('y') // Beginning of the array
+a.show("after unshift")
+a.shift()
+a.show("after shift")
+// Splice adds and removes from the original array:
+a.splice(2, 3, 'a', 'b', 'c', 'd')
+a.show("after splice")
+// concat() and slice() create new arrays:
+var b:Array = a.concat("foo", "bar", "baz")
+b.setName("b")
+b.show("concatted")
+var c:Array = a.slice(1,4)
+c.setName("c")
+c.show("sliced")
+a.show("unchanged")
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Here's the output:</p>
+<pre class="literal-block">
+a: [1,2,3,4,5,6,7]
+after push a: [1,2,3,4,5,6,7,x]
+after pop a: [1,2,3,4,5,6,7]
+after unshift a: [y,1,2,3,4,5,6,7]
+after shift a: [1,2,3,4,5,6,7]
+after splice a: [1,2,a,b,c,d,6,7]
+concatted b: [1,2,a,b,c,d,6,7,foo,bar,baz]
+sliced c: [2,a,b]
+unchanged a: [1,2,a,b,c,d,6,7]
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id13" id="reversing-and-searching" name="reversing-and-searching">Reversing and Searching</a></h2>
+<p>The <strong>reverse()</strong> method reverses the order of an array in-place. <strong>indexOf()</strong> searches for the argument and returns the array index of the first occurrence; <strong>lastIndexOf()</strong> searches backwards from the end:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ReverseAndSearch" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var a:Array = "abcdefghijklmnopqrstuvwxyz".split("")
+a.setName("a")
+a.show()
+a.reverse()
+a.show("reversed")
+// Search using strict equality (===)
+a[10] = 'spam'
+var i:int = a.indexOf('spam')
+t.show("i = a.indexOf('spam'): " + i + ", a[i]: " + a[i])
+// Search from the end:
+a[20] = 'spam'
+a.show()
+i = a.lastIndexOf('spam')
+t.show("i = a.lastIndexOf('spam'): " + i + ", a[i]: " + a[i])
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Here's the output:</p>
+<pre class="literal-block">
+a: [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
+reversed a: [z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a]
+i = a.indexOf('spam'): 10, a[i]: spam
+a: [z,y,x,w,v,u,t,s,r,q,spam,o,n,m,l,k,j,i,h,g,spam,e,d,c,b,a]
+i = a.lastIndexOf('spam'): 20, a[i]: spam
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id14" id="basic-sorting" name="basic-sorting">Basic Sorting</a></h2>
+<p>Basic sorting uses built-in comparisons. You can also specify variations on the basic sort using flags, which can be ORed together:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="Sorting" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var a:Array = "aBcDeFgHiJkLmNoPqRsTuVwXyZ".split("")
+a.setName("a")
+a.show()
+a.sort()
+a.show("After sorting")
+a.sort(Array.CASEINSENSITIVE)
+a.show("After case-insensitive sort")
+a.sort(Array.CASEINSENSITIVE | Array.DESCENDING)
+a.show("After case-insensitive, descending sort")
+var b:Array = [4,5,6,7,8,9,10]
+b.setName("b")
+b.show()
+b.sort()
+b.show("After sorting")
+b.sort(Array.NUMERIC)
+b.show("After numeric sort")
+b.sort(Array.NUMERIC | Array.DESCENDING)
+b.show("After numeric, descending sort")
+var c:Array = "ABCDEFGHIJK".split("").reverse()
+c.setName("c")
+c.show()
+var csorted:Array = c.sort(Array.RETURNINDEXEDARRAY)
+c.show("After indexed array sort")
+csorted.setName("csorted")
+csorted.show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Most of these sorts happen in-place. Here's the output:</p>
+<pre class="literal-block">
+a: [a,B,c,D,e,F,g,H,i,J,k,L,m,N,o,P,q,R,s,T,u,V,w,X,y,Z]
+After sorting a: [B,D,F,H,J,L,N,P,R,T,V,X,Z,a,c,e,g,i,k,m,o,q,s,u,w,y]
+After case-insensitive sort a: [a,B,c,D,e,F,g,H,i,J,k,L,m,N,o,P,q,R,s,T,u,V,w,X,y,Z]
+After case-insensitive, descending sort a: [Z,y,X,w,V,u,T,s,R,q,P,o,N,m,L,k,J,i,H,g,F,e,D,c,B,a]
+b: [4,5,6,7,8,9,10]
+After sorting b: [10,4,5,6,7,8,9]
+After numeric sort b: [4,5,6,7,8,9,10]
+After numeric, descending sort b: [10,9,8,7,6,5,4]
+c: [K,J,I,H,G,F,E,D,C,B,A]
+After indexed array sort c: [K,J,I,H,G,F,E,D,C,B,A]
+csorted: [10,9,8,7,6,5,4,3,2,1,0]
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id15" id="complex-sorting" name="complex-sorting">Complex Sorting</a></h2>
+<p>In order to demonstrate the more complex sorting functionality, we need a list of objects with multiple fields. The following <strong>Person</strong> class contains a <strong>static createArray()</strong> method that randomly generates any number of <strong>Person</strong> objects:</p>
+<pre class="literal-block">
+package com.mindviewinc.test {
+    [Bindable] // Create Bindable Value Objects
+    public class Person {
+        public var first:String
+        public var last:String
+        public var street:String
+        public var city:String
+        public var state:String
+        public var zip:String
+        public function Person(first:String, last:String, street:String, city:String, state:String, zip:String) {
+            this.first = first
+            this.last = last
+            this.street = street
+            this.city = city
+            this.state = state
+            this.zip = zip
+        }
+        private static var values:Array = [
+            ["Bob", "Betty", "John", "Jane", "Alfred", "Annette", "Sam", "Hank", "Hillary"],
+            ["Smith", "Miller", "Johnson", "Jones", "Lee", "Adams", "Jefferson"],
+            ["123 Elm Ave.", "100 Main St.", "123 Broadway", "123 Center St."],
+            ["Springfield", "Oak Grove", "Fairview", "Mount Pleasant", "Centerville", "Riverside", "Greenwood"],
+            ["IL", "UT", "KS", "PA", "IN", "ID", "WA", "OR"]
+        ]
+        private static function selectRandom(offset:int):String {
+            return values[offset][Math.round(Math.random() * (values[offset].length - 1))]
+        }
+        private static function makeZip(): String {
+            var result:String = ""
+            for(var i:int = 0; i &lt; 5; i++)
+                 result += String(Math.round(Math.random() * 9))
+            return result
+        }
+        public static function createPerson():Person {
+            return new Person(selectRandom(0), selectRandom(1), selectRandom(2),
+                selectRandom(3), selectRandom(4), makeZip())
+        }
+        public static function createArray(size:int):Array {
+            var result:Array = new Array(size)
+            for(var i:int = 0; i &lt; size; i++)
+                result[i] = createPerson()
+            return result
+        }
+        public function toString():String {
+            return first + " " + last + ", " + street + ", " + city  + ", " + state + " " + zip
+        }
+    }
+}
+</pre>
+<p>In the constructor, <strong>this</strong> is necessary to distinguish the arguments from the fields.</p>
+<p>By using the <strong>[Bindable]</strong> decorator on the class, the objects of this class become <em>Bindable Data Objects</em>, which means that all the fields in the objects become bindable and thus automatically updateable. We'll use this feature later in the article.</p>
+<p>Although all the fields are <strong>public</strong> for simplicity, they could also be exposed as properties. Even nicer, you can transparently change them from <strong>public</strong> fields into properties without changing any of the client code, because the syntax remains the same.</p>
+<p>For convenience, here is a class that can be used as an MXML component to hold an array containing a group of <strong>Person</strong> objects:</p>
+<pre class="literal-block">
+package com.mindviewinc.test {
+    import mx.core.UIComponent
+    public class People extends UIComponent {
+        public var quantity:Number
+        [Bindable] public var array:Array
+        protected override function commitProperties():void {
+            super.commitProperties();
+            array = Person.createArray(quantity)
+        }
+    }
+}
+</pre>
+<p>The <strong>commitProperties()</strong> event is called after the properties have been assigned from their MXML declarations, so <strong>quantity</strong> will be the correct value at that time.</p>
+<p>We want to display <strong>Person</strong> objects in a <strong>DataGrid</strong>, and to avoid repetition every time we want to control the order the columns are displayed, we'll create an MXML component that inherits from <strong>DataGrid</strong>:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:DataGrid name="PeopleGrid" height="100%" editable="true" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+    &lt;mx:columns&gt;
+        &lt;mx:DataGridColumn dataField="first"/&gt;
+        &lt;mx:DataGridColumn dataField="last"/&gt;
+        &lt;mx:DataGridColumn dataField="street"/&gt;
+        &lt;mx:DataGridColumn dataField="city"/&gt;
+        &lt;mx:DataGridColumn dataField="state"/&gt;
+        &lt;mx:DataGridColumn dataField="zip"/&gt;
+    &lt;/mx:columns&gt;
+&lt;/mx:DataGrid&gt;
+</pre>
+<p>The <strong>columns</strong> group establishes the display order for the data columns. As a simple test, we display a list of <strong>Person</strong> objects in a <strong>PeopleGrid</strong>:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="PersonTest" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:test="com.mindviewinc.test.*"&gt;
+&lt;test:People id="people" quantity="40"/&gt;
+&lt;test:PeopleGrid dataProvider="{people.array}"/&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Notice that you can sort on a particular column by clicking on the header for that column.</p>
+<p>Next you can see various kinds of complex sorting using <strong>sortOn()</strong> to sort on one or more fields, and a sort function:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ComplexSorting" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+&lt;![CDATA[
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.Person
+var people:Array = Person.createArray(10)
+people.show = function(msg:String = ""):void {
+    if(msg.length)
+       t.show(msg + ":")
+    for each(var p:* in people)
+       t.show(p)
+    t.show("========================================")
+}
+people.setPropertyIsEnumerable("show", false)
+people.show()
+people.sort()
+people.show("Ordinary sort")
+people.sortOn('last')
+people.show("sortOn('last')")
+people.sortOn(['last', 'street', 'zip'])
+people.show("sortOn(['last', 'street', 'zip'])")
+people.sortOn(['last', 'zip'], [Array.DESCENDING, Array.NUMERIC | Array.DESCENDING])
+people.show("sortOn(['last', 'zip'], [Array.DESCENDING, Array.NUMERIC | Array.DESCENDING]")
+function sortOnContinentalDivide(a:Person, b:Person):Number {
+    // Create set behavior for "in" testing:
+    var east:Object = {IL:0, KS:0, PA:0, IN:0}
+    var west:Object = {UT:0, ID:0, WA:0, OR:0}
+    if(a.state in west &amp;&amp; b.state in east)
+        return 1
+    if(a.state in east &amp;&amp; b.state in west)
+        return -1
+    return 0
+}
+people.sort(sortOnContinentalDivide)
+people.show("sortOnContinentalDivide")
+]]&gt;
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>An ordinary call to <strong>sort()</strong> just sorts on the initial field in <strong>Person</strong>, which is <strong>first</strong>. <strong>sortOn()</strong> not only allows you to choose a single field to sort on, it allows you to choose multiple fields; the first field in the list is the primary sorting field, the second is the secondary field, and so on. In addition, you can add a parallel array of sorting flags -- each element in the second array affects the corresponding element in the first array.</p>
+<p>In general, <strong>sortOn()</strong> will handle your complex sorting needs, but if it doesn't, you can take complete control by providing a sorting function to the <strong>sort()</strong> method. This function must return 1, -1 or zero depending on whether the first argument is greater than, less than or equal to the second argument, respectively. In the example above, the sort is based on whether the state is on the east or west side of the continental divide.</p>
+<p>Notice the definitions for <strong>east</strong> and <strong>west</strong>. These are <em>associative arrays</em>, which you'll learn about shortly. The keys, to the left of the colon, are automatically turned into strings by the compilers. The values are all zero because they are unused in this case. The reason for creating these associative arrays is ActionScript's <strong>in</strong> keyword, which tells you whether an argument is one of the keys in an associative array. The ability to ask whether an object is part of a group of others is <em>set</em> behavior, so by creating the associative arrays we are conveniently able to ask whether a state is <strong>in</strong> the <strong>east</strong> or the <strong>west</strong>. It's also possible to create associative arrays with objects rather than strings as keys; see later in this article.</p>
+<p>Here's the output:</p>
+<pre class="literal-block">
+Annette Adams, 123 Elm Ave., Riverside, WA 26323
+Annette Miller, 123 Broadway, Springfield, WA 41491
+Alfred Jones, 123 Elm Ave., Fairview, UT 43821
+Sam Lee, 123 Broadway, Springfield, UT 22643
+Hillary Jones, 123 Center St., Riverside, WA 42253
+John Miller, 123 Broadway, Oak Grove, ID 26276
+John Adams, 123 Elm Ave., Centerville, WA 22253
+Sam Adams, 123 Center St., Mount Pleasant, KS 50456
+Betty Miller, 123 Broadway, Riverside, IN 05445
+Annette Jones, 123 Elm Ave., Fairview, PA 26193
+========================================
+Ordinary sort:
+Alfred Jones, 123 Elm Ave., Fairview, UT 43821
+Annette Adams, 123 Elm Ave., Riverside, WA 26323
+Annette Jones, 123 Elm Ave., Fairview, PA 26193
+Annette Miller, 123 Broadway, Springfield, WA 41491
+Betty Miller, 123 Broadway, Riverside, IN 05445
+Hillary Jones, 123 Center St., Riverside, WA 42253
+John Adams, 123 Elm Ave., Centerville, WA 22253
+John Miller, 123 Broadway, Oak Grove, ID 26276
+Sam Adams, 123 Center St., Mount Pleasant, KS 50456
+Sam Lee, 123 Broadway, Springfield, UT 22643
+========================================
+sortOn('last'):
+Sam Adams, 123 Center St., Mount Pleasant, KS 50456
+Annette Adams, 123 Elm Ave., Riverside, WA 26323
+John Adams, 123 Elm Ave., Centerville, WA 22253
+Annette Jones, 123 Elm Ave., Fairview, PA 26193
+Hillary Jones, 123 Center St., Riverside, WA 42253
+Alfred Jones, 123 Elm Ave., Fairview, UT 43821
+Sam Lee, 123 Broadway, Springfield, UT 22643
+John Miller, 123 Broadway, Oak Grove, ID 26276
+Betty Miller, 123 Broadway, Riverside, IN 05445
+Annette Miller, 123 Broadway, Springfield, WA 41491
+========================================
+sortOn(['last', 'street', 'zip']):
+Sam Adams, 123 Center St., Mount Pleasant, KS 50456
+John Adams, 123 Elm Ave., Centerville, WA 22253
+Annette Adams, 123 Elm Ave., Riverside, WA 26323
+Hillary Jones, 123 Center St., Riverside, WA 42253
+Annette Jones, 123 Elm Ave., Fairview, PA 26193
+Alfred Jones, 123 Elm Ave., Fairview, UT 43821
+Sam Lee, 123 Broadway, Springfield, UT 22643
+Betty Miller, 123 Broadway, Riverside, IN 05445
+John Miller, 123 Broadway, Oak Grove, ID 26276
+Annette Miller, 123 Broadway, Springfield, WA 41491
+========================================
+sortOn(['last', 'zip'], [Array.DESCENDING, Array.NUMERIC | Array.DESCENDING]:
+Annette Miller, 123 Broadway, Springfield, WA 41491
+John Miller, 123 Broadway, Oak Grove, ID 26276
+Betty Miller, 123 Broadway, Riverside, IN 05445
+Sam Lee, 123 Broadway, Springfield, UT 22643
+Alfred Jones, 123 Elm Ave., Fairview, UT 43821
+Hillary Jones, 123 Center St., Riverside, WA 42253
+Annette Jones, 123 Elm Ave., Fairview, PA 26193
+Sam Adams, 123 Center St., Mount Pleasant, KS 50456
+Annette Adams, 123 Elm Ave., Riverside, WA 26323
+John Adams, 123 Elm Ave., Centerville, WA 22253
+========================================
+sortOnContinentalDivide:
+Sam Adams, 123 Center St., Mount Pleasant, KS 50456
+Annette Jones, 123 Elm Ave., Fairview, PA 26193
+Betty Miller, 123 Broadway, Riverside, IN 05445
+John Miller, 123 Broadway, Oak Grove, ID 26276
+Alfred Jones, 123 Elm Ave., Fairview, UT 43821
+Annette Miller, 123 Broadway, Springfield, WA 41491
+Sam Lee, 123 Broadway, Springfield, UT 22643
+Hillary Jones, 123 Center St., Riverside, WA 42253
+Annette Adams, 123 Elm Ave., Riverside, WA 26323
+John Adams, 123 Elm Ave., Centerville, WA 22253
+========================================
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id16" id="copying-arrays" name="copying-arrays">Copying Arrays</a></h2>
+<p>Like Java, ActionScript is reference-based. If you point two references at the same object, any changes in the object will show up through both references:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="CopyingArrays" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+function display():void {
+    t.show("a: " + formatArray(a))
+    t.show("b: " + formatArray(b))
+}
+var a:Array = ['a', 'b', 'c']
+var b:Array = a
+display()
+a[1] = 'x'
+display()
+b = a.slice()
+b[1] = 'b'
+display()
+var c:Array = b.concat()
+c[2] = 'z'
+display()
+t.show("c: " + formatArray(c))
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>This produces the following output:</p>
+<pre class="literal-block">
+a: [a,b,c]
+b: [a,b,c]
+a: [a,x,c]
+b: [a,x,c]
+a: [a,x,c]
+b: [a,b,c]
+a: [a,x,c]
+b: [a,b,c]
+c: [a,b,z]
+</pre>
+<p>Changing <strong>a[1]</strong> changes it for both <strong>a</strong> and <strong>b</strong> when the two references are aliased to the same array object. But using either <strong>slice()</strong> or <strong>concat()</strong> with no arguments produces a <em>shallow copy*</em> of the array, which means that the array is duplicated, but the objects the array points to are not.</p>
+<div class="section">
+<h3><a class="toc-backref" href="#id17" id="deep-copy" name="deep-copy">Deep Copy</a></h3>
+<p>A <em>deep copy</em> means that not only are references copied, but all the objects the references are pointing to must also be copied. To see the effect of shallow vs. deep copy, it's helpful to have a class that automatically generates a unique field:</p>
+<pre class="literal-block">
+package com.mindviewinc.test {
+    public class AutoID {
+        private static var count:Number = 'A'.charCodeAt()
+        public var id:String = String.fromCharCode(count++)
+        public function toString():String { return id }
+    }
+}
+</pre>
+<p>Using a <strong>static</strong> variable, this class automatically creates a different <strong>id</strong> for each new object, and produces that <strong>id</strong> whenever you ask for a string representation of the object. Notice that the <strong>override</strong> keyword is <em>not</em> used when defining <strong>toString()</strong> even though you normally need to invoke <strong>override</strong> when providing a new definition for an existing method. This is an artifact left over from prototype days, and it will cause you some consternation if you forget and try to use <strong>override</strong>.</p>
+<p>The following example demonstrates the issue with shallow copy, and then shows the solution suggested in the ActionScript documentation (which comes with Flex Builder):</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ShallowCopy" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.AutoID
+function display():void {
+    t.show("a: " + formatArray(a))
+    t.show("b: " + formatArray(b))
+}
+var a:Array = [new AutoID(), new AutoID(), new AutoID(), new AutoID()]
+var b:Array = a.slice() // Shallow copy
+display()
+a[3].id = 'X'
+display() // Objects being pointed to are the same
+
+// Solution suggested in ActionScript docs:
+import flash.utils.ByteArray
+function deepCopy(source:Object):* {
+    var myBA:ByteArray = new ByteArray()
+    myBA.writeObject(source)
+    myBA.position = 0
+    return(myBA.readObject())
+}
+// The bits are there, but it loses the type information:
+b = deepCopy(a)
+a[3].id = 'Y'
+display()
+for(var i:* in b)
+    t.show('b[i].id: ' +  b[i].id)
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>The <strong>deepCopy()</strong> function creates a deep copy by serializing the array into an instance of the ByteArray class, and then reading the array back into a new array.</p>
+<p>The result of <strong>deepCopy()</strong> isn't quite right, as you can see from the output:</p>
+<pre class="literal-block">
+a: [A,B,C,D]
+b: [A,B,C,D]
+a: [A,B,C,X]
+b: [A,B,C,X]
+a: [A,B,C,Y]
+b: [[object Object],[object Object],[object Object],[object Object]]
+b[i].id: A
+b[i].id: B
+b[i].id: C
+b[i].id: X
+</pre>
+<p>Although the <strong>id</strong> fields are there, this approach loses the type information about what the object is.</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id18" id="associative-arrays" name="associative-arrays">Associative Arrays</a></h1>
+<p><em>Associative arrays</em> are also referred to as dictionaries or maps. A regular array uses numbers to index into the array, whereas an associative array uses objects as indexes (called <em>keys</em>).</p>
+<p>While C++ and Java use libraries for associative arrays, in Python, Ruby and ActionScript they are first-class language elements (in Perl they are <em>hashes</em>). The ActionScript/JavaScript approach seems slightly odd because an associative array is just an <strong>Object</strong>, or rather an <strong>Object</strong> is an associative array. It turns out this is not so strange; in Python, for example, all members of an object are held in a dictionary.</p>
+<p>ActionScript provides a convenient syntax for creating dictionaries, very similar to Python's dictionary definition. You define the dictionary using curly braces, and divide keys from values using colons:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="AssociativeArrays" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var dict:Object = { foo:"hello", bar:"world", baz: "goodbye" }
+t.show("dict.foo: " + dict.foo)
+t.show("dict['bar']: " + dict['bar'])
+for(var key:String in dict)
+    t.show(key + ": " + dict[key])
+for each(var val:String in dict)
+    t.show(val)
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Here's the output:</p>
+<pre class="literal-block">
+dict.foo: hello
+dict['bar']: world
+baz: goodbye
+bar: world
+foo: hello
+goodbye
+world
+hello
+</pre>
+<p>Notice that, even though we're using dictionary-definition syntax, we are actually creating an object, as you can see by the dot-access in <strong>dict.foo</strong>. But you can also access elements using array-indexing syntax as seen in <strong>dict['bar']</strong>, although you must put the key in quotes (even though quotes are not necessary when defining the key within curly braces).</p>
+<p>You can now see the fundamental difference between the <strong>for</strong> and <strong>for each</strong> statements: both iterate through the elements of an object, but <strong>for</strong> produces the keys and <strong>for each</strong> produces the values. This explains the odd results when using <strong>for</strong> and <strong>for each</strong> with <strong>Array</strong> objects:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ForAndForEach" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var a:Array = "AEIOU".split('')
+for(var k:* in a)
+    t.show(k + " typeof k: " + typeof k)
+for each(var v:* in a)
+    t.show(v + " typeof v: " + typeof v)
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>The <strong>k:*</strong> is declaring <strong>k</strong> as an unknown type, since this is a generic function and we don't know what's in the array.</p>
+<p>When you say <strong>for</strong>, you're just iterating through the keys of the <strong>Array</strong>, which are just the numerical indices:</p>
+<pre class="literal-block">
+0 typeof k: number
+1 typeof k: number
+2 typeof k: number
+3 typeof k: number
+4 typeof k: number
+A typeof v: string
+E typeof v: string
+I typeof v: string
+O typeof v: string
+U typeof v: string
+</pre>
+<p>Because the curly-brace syntax produces an object and not just a plain dictionary, it is also a syntax for creating anonymous objects:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="AnonymousObjects" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var times:Number = 10
+var anon:Object = {
+    field1: "Hello, anonymous world",
+    field2: 1066,
+    function1: function():String { return this.field1 },
+    function2: function():Number { return times * this.field2}
+}
+t.show(anon.field1)
+t.show(anon.field2)
+t.show(anon.function1())
+t.show(anon.function2())
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>This produces:</p>
+<pre class="literal-block">
+Hello, anonymous world
+1066
+Hello, anonymous world
+10660
+</pre>
+<p>Note that <strong>anon</strong> also exhibits closure behavior; it captures the value of <strong>times</strong> which is defined outside of the scope of <strong>anon</strong>. This is not, however, a full proof of closure behavior in ActionScript; <a class="reference" href="../_/http/flexblog.faratasystems.com/$/p=125/index.html">here is an article on closures</a> that gives you the details.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id19" id="objects-as-keys" name="objects-as-keys">Objects as Keys</a></h2>
+<p>In the original example in this section, the dictionary was defined like this:</p>
+<pre class="literal-block">
+var dict:Object = { foo:"hello", bar:"world", baz: "goodbye" }
+</pre>
+<p>This syntax automatically turns the keys into strings, even though they are not quoted. But in the general case you are not restricted to strings as keys; you can use any object as a key.</p>
+<p>The following example not only shows the use of objects as keys, but it also introduces the <strong>Dictionary</strong> class, which has a somewhat subtle difference from using the basic <strong>Object</strong> dictionary. This reuses <strong>com.mindviewinc.test.AutoID</strong>, seen earlier in this article:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ObjectsAsKeys" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.AutoID
+function display(x:Object):void {
+    for(var k:* in x)
+       t.show(k + ":" + x[k] + ", typeof k: " + typeof k +
+            ", typeof x[k]: " + typeof x[k])
+}
+var a:AutoID = new AutoID(), b:AutoID = new AutoID(), c:AutoID = new AutoID()
+var dict1:Object = {a:'x', b:'y', c:'z'}
+display(dict1)
+t.show("dict1[b]:" + dict1[b]) // Undefined
+
+var dict2:Object = new Object()
+dict2[a] = 'one'
+dict2[b] = 'two'
+dict2[c] = 'three'
+display(dict2)
+t.show("dict2[b]:" + dict2[b])
+
+var dict3:Dictionary = new Dictionary()
+dict3[a] = 'one'
+dict3[b] = 'two'
+dict3[c] = 'three'
+display(dict3)
+t.show("dict3[b]:" + dict3[b])
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>The output tells the story:</p>
+<pre class="literal-block">
+b:y, typeof k: string, typeof x[k]: string
+c:z, typeof k: string, typeof x[k]: string
+a:x, typeof k: string, typeof x[k]: string
+dict1[b]:undefined
+B:two, typeof k: string, typeof x[k]: string
+A:one, typeof k: string, typeof x[k]: string
+C:three, typeof k: string, typeof x[k]: string
+dict2[b]:two
+A:one, typeof k: object, typeof x[k]: string
+B:two, typeof k: object, typeof x[k]: string
+C:three, typeof k: object, typeof x[k]: string
+dict3[b]:two
+</pre>
+<p><strong>dict1</strong> uses the "convenience syntax," but this ignores the attempt to use the objects <strong>a</strong>, <strong>b</strong> and <strong>c</strong>. Instead it turns the key names into strings, so when we say <strong>dict1[b]</strong> it doesn't have a value for <strong>b</strong> the object as a key.</p>
+<p>With <strong>dict2</strong> we explicitly assign using the square-bracket syntax and the un-quoted <strong>a</strong>, <strong>b</strong> and <strong>c</strong>. This time it does use the objects as keys, but you can see from the output that it uses their <em>string</em> representation (which is oftentimes just fine). <strong>Dictionary</strong> uses the key object's <em>identity</em> rather than its string representation, which you can see from the <strong>typeof</strong> expression in <strong>dict3</strong>'s output.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id20" id="arraycollection" name="arraycollection">ArrayCollection</a></h1>
+<p>It turns out that even if you use a raw <strong>Array</strong> as a <strong>dataProvider</strong>, that <strong>Array</strong> is automatically wrapped in an <strong>ArrayCollection</strong>:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ArrayCollectionWrapping" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:test="com.mindviewinc.test.*"&gt;
+&lt;test:People id="people" quantity="40"/&gt;
+&lt;test:PeopleGrid id="dg1" dataProvider="{people.array}"/&gt;
+&lt;mx:creationComplete&gt;
+import mx.collections.ArrayCollection
+import mx.controls.Alert
+Alert.show(String(dg1.dataProvider is ArrayCollection))
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>When you run this, you'll get an alert that says "true."</p>
+<p>If you have data that changes, the raw <strong>Array</strong> object doesn't generate change notifications to the data provider component, so that component doesn't get updated until it must be redrawn or if the data provider is reassigned. The <strong>ArrayCollection</strong>, however, generates these notifications. Thus, you should use an <strong>ArrayCollection</strong> to explicitly wrap a raw <strong>Array</strong>:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ArrayCollectionNotification"
+    xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:test="com.mindviewinc.test.*"&gt;
+&lt;test:People id="people" quantity="18"/&gt;
+&lt;mx:ArrayCollection id="ac1" source="{people.array}"/&gt;
+&lt;mx:ArrayCollection id="ac2" source="{people.array}"/&gt;
+&lt;test:PeopleGrid id="dg1" dataProvider="{ac1}"/&gt;
+&lt;test:PeopleGrid id="dg2" dataProvider="{ac2}"/&gt;
+&lt;mx:Button label="delete last item"
+    click="people.array.pop(); ac1.refresh(); ac2.refresh()"/&gt;
+&lt;mx:Button label="delete last item (2)"
+    click="people.array.pop();dg1.invalidateList();dg2.invalidateList()"/&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Notice the different approaches taken by each button: the first refreshes the <strong>ArrayCollection</strong>, the second invalidates the list in the <strong>PeopleGrid</strong>. In both cases the data on the <strong>PeopleGrid</strong> is updated, but the refresh causes a "push" from the <strong>ArrayCollection</strong> to the <strong>PeopleGrid</strong>.</p>
+<p>We'll often want our arrays of <strong>Person</strong> objects to be contained within <strong>ArrayCollections</strong>, so here's a component that encapsulates the process:</p>
+<pre class="literal-block">
+package com.mindviewinc.test {
+    import mx.collections.ArrayCollection
+    import mx.core.UIComponent
+
+    public class PeopleAC extends UIComponent {
+        public var quantity:Number
+        [Bindable] public var collection:ArrayCollection
+        private var array:Array
+        protected override function commitProperties():void {
+            super.commitProperties()
+            array = Person.createArray(quantity)
+            collection = new ArrayCollection(array)
+        }
+    }
+}
+</pre>
+<div class="section">
+<h2><a class="toc-backref" href="#id21" id="arraycollection-operations" name="arraycollection-operations"><strong>ArrayCollection</strong> Operations</a></h2>
+<p>This example shows many of the operations available for the <strong>ArrayCollection</strong>, but not all -- the remainder you can find in the Flex Builder documentation or online. A <strong>DataGrid</strong> of <strong>Person</strong> objects serves to illuminate these operations:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ArrayCollectionOperations"
+    xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:test="com.mindviewinc.test.*"
+    xmlns:display="com.mindviewinc.display.*"&gt;
+&lt;mx:Script&gt;
+import com.mindviewinc.test.Person
+import mx.collections.*
+[Bindable]
+private var people:ArrayCollection = new ArrayCollection(Person.createArray(40))
+private function filter(item:Object):Boolean {
+    return item.city == "Springfield"
+}
+private function makeSort():Sort {
+    var mySort:Sort = new Sort()
+    // Sort on the state first, last name second.
+    mySort.fields = [new SortField("state",true), new SortField("last",true)]
+    return mySort
+}
+&lt;/mx:Script&gt;
+&lt;mx:HDividedBox width="100%" height="100%"&gt;
+    &lt;mx:VBox height="100%"&gt;
+        &lt;mx:Button label="Add Filter" click="people.filterFunction=filter; people.refresh()"/&gt;
+        &lt;mx:Button label="Remove Filter" click="people.filterFunction=null; people.refresh()"/&gt;
+        &lt;mx:Button label="Add Sort" click="people.sort=makeSort(); people.refresh()"/&gt;
+        &lt;mx:Button label="Remove Sort" click="people.sort=null; people.refresh()"/&gt;
+        &lt;mx:Button label="Append" click="people.addItem(Person.createPerson())"/&gt;
+        &lt;mx:Button label="Remove Item" click="people.removeItemAt(0)"/&gt;
+        &lt;mx:Button label="Remove All" click="people.removeAll()"/&gt;
+        &lt;mx:Button label="Add At #3" click="people.addItemAt(Person.createPerson(), 3)"/&gt;
+        &lt;mx:Button label="Set Item #3" click="people.setItemAt(Person.createPerson(), 3)"/&gt;
+        &lt;mx:Button label="Get Item #3" click="t.text=String(people.getItemAt(3))"/&gt;
+        &lt;display:TextDisplay id="t" width="100%" height="40"/&gt;
+    &lt;/mx:VBox&gt;
+    &lt;test:PeopleGrid dataProvider="{people}"/&gt;
+&lt;/mx:HDividedBox&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Notice that when you apply or remove sorts and filters, you must call <strong>refresh()</strong> in order for the results to propagate to the display component, but all other operations automatically propagate.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id22" id="cursors-iterators" name="cursors-iterators">Cursors (Iterators)</a></h2>
+<p>Although there's only a single method that pertains to cursors, <strong>createCursor()</strong> returns an <strong>IViewCursor</strong> that has some interesting properties and methods:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ArrayCollectionCursors"
+    xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:test="com.mindviewinc.test.*"
+    xmlns:display="com.mindviewinc.display.*"&gt;
+&lt;mx:Script&gt;
+import com.mindviewinc.test.Person
+import mx.collections.*
+[Bindable]
+private var people:ArrayCollection = new ArrayCollection(Person.createArray(20));
+[Bindable]
+private var cursor:IViewCursor
+private var bookmark:CursorBookmark
+private function update():void {
+    if(!cursor) return
+    t.text = String(cursor.current)
+    before.text = "cursor.beforeFirst: " + cursor.beforeFirst
+    after.text = "cursor.afterLast: " + cursor.afterLast
+}
+private function findBob():void {
+    // findLast() and findAny() also require a sorted ArrayCollection.
+    people.sort = new Sort()
+    people.sort.fields = [new SortField("first",true)]
+    people.refresh()
+    cursor = people.createCursor()
+    cursor.findFirst({first:"Bob"})
+    update()
+}
+&lt;/mx:Script&gt;
+&lt;mx:HDividedBox width="100%" height="100%"&gt;
+    &lt;mx:VBox height="100%"&gt;
+        &lt;mx:Button label="Get Cursor" click="cursor=people.createCursor();update()"/&gt;
+        &lt;mx:Button label="Cursor Forward" click="if(cursor) cursor.moveNext();update()"/&gt;
+        &lt;mx:Button label="Cursor Backward" click="if(cursor) cursor.movePrevious();update()"/&gt;
+        &lt;mx:Button label="Remove" click="if(cursor) cursor.remove();update()"/&gt;
+        &lt;mx:Button label="Insert" click="if(cursor) cursor.insert(Person.createPerson());update()"/&gt;
+        &lt;mx:Button label="Find Bob" click="findBob()"/&gt;
+        &lt;mx:Button label="Set Bookmark" click="if(cursor) bookmark=cursor.bookmark"/&gt;
+        &lt;mx:Button label="Clear Sort" click="people.sort=null;people.refresh()"/&gt;
+        &lt;mx:Button label="Goto Bookmark" click="if(cursor) cursor.seek(bookmark);update()"/&gt;
+        &lt;display:TextDisplay id="t" width="100%" height="40"/&gt;
+        &lt;mx:Label id="before" /&gt;
+        &lt;mx:Label id="after" /&gt;
+    &lt;/mx:VBox&gt;
+    &lt;test:PeopleGrid dataProvider="{people}"/&gt;
+&lt;/mx:HDividedBox&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>In general, you can do a lot without cursors so you may not see them used that often. However, if you write code that uses cursors then it works with both <strong>ArrayCollection</strong> and <strong>XMLListCollection</strong>.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id23" id="functional-programming" name="functional-programming">Functional Programming</a></h1>
+<p><strong>ArrayCollection</strong>s are primarily useful because they are Flex components that wrap <strong>Array</strong>s and provide binding and events. The <strong>Array</strong>, being a Flash player component, isn't directly bindable and doesn't issue its own events. However, the underlying <strong>Array</strong> that each <strong>ArrayCollection</strong> wraps has some very interesting methods, a number of which fall under the category of <em>functional programming</em>.</p>
+<p>Functional programming is <em>applying operations to sequences</em>. These operations, however, are not applied in the usual way, looping through the sequence and doing things one at a time. In functional programming, you give directions to be applied to the sequence <em>en masse</em>. So, for example, you say <em>sequence.sum()</em> rather than looping through and adding each element.</p>
+<p>An important aspect of functional programming is that each of these operations have <em>no side effects</em>; that is, they do not affect either the sequence they are operating on or the surrounding environment. A pure functional operation only produces a result. Because of this constraint, each function call can be given its own thread and it doesn't collide with other threads -- thus functional programming provides an inherently thread-safe programming model.</p>
+<p>The <em>no side effects</em> rule is often something that must be followed, rather than enforced by the programming system. And in a language like Flex, which does not (yet) have concurrent programming support, the style is often followed more than the principles. For example, one of the more common operations for <strong>Array</strong>s is <strong>forEach()</strong>. On its own, <strong>forEach()</strong> has no way to be a pure functional call:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="CapitalizeInSitu" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.Person
+var people:Array = Person.createArray(7)
+people.forEach(function(elem:*, index:int, a:Array):void {
+    a[index].last = String(elem.last).toUpperCase()
+})
+people.show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>You'll see a result that looks like this:</p>
+<pre class="literal-block">
+[John LEE, 123 Center St., Riverside, WA 84712,Bob JOHNSON, 123 Center St., Oak Grove, ID 11612,
+Annette JOHNSON, 100 Main St., Centerville, ID 96663,Alfred SMITH, 123 Elm Ave., Springfield, PA 96655,
+Sam SMITH, 123 Center St., Riverside, KS 14278,Betty JONES, 123 Elm Ave., Fairview, ID 02329,
+Alfred JOHNSON, 123 Broadway, Riverside, OR 95528]
+</pre>
+<p><strong>forEach()</strong> takes a function that it applies to each element in the <strong>Array</strong>. It passes in the current element, the index, and the <strong>Array</strong>. Thus, <strong>forEach()</strong> has no context in which to capture intermediate results, so it cannot create and return a list of capitalized names. However, you can use <strong>forEach()</strong> within your own function, in which you establish this context yourself:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="CapitalizeResults" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.Person
+function capitalizeLast(a:Array):Array {
+    var result:Array = new Array(a.length)
+    a.forEach(function(elem:*, index:int, x:Array):void {
+        result[index] = String(elem.last).toUpperCase()
+    })
+    return result
+}
+var people:Array = Person.createArray(7)
+capitalizeLast(people).show()
+people.show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Now <strong>capitalizeLast()</strong> follows the <em>no side effect</em> rule and only returns a new <strong>Array</strong>, but does not affect the source <strong>Array</strong> as you can see from the results:</p>
+<pre class="literal-block">
+[MILLER,SMITH,JOHNSON,JONES,JOHNSON,ADAMS,JONES]
+[Annette Miller, 123 Center St., Fairview, ID 12877,Betty Smith, 123 Center St., Oak Grove, KS 55622,
+Betty Johnson, 123 Broadway, Fairview, WA 34446,Alfred Jones, 123 Center St., Centerville, OR 74145,
+Annette Johnson, 123 Center St., Fairview, IN 27773,John Adams, 100 Main St., Centerville, IL 65176,
+Hank Jones, 123 Broadway, Riverside, WA 88713]
+</pre>
+<div class="section">
+<h2><a class="toc-backref" href="#id24" id="map" name="map"><strong>map()</strong></a></h2>
+<p>One of the more powerful functional operations is <strong>map()</strong>, because it constructs its own new result array (as we did above) and applies the argument function on each element in the source array to produce the elements in the result array. So we can rewrite the previous example like so:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="MapCapitalize" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.Person
+var people:Array = Person.createArray(7)
+people.map(function(elem:*, index:int, x:Array):String {
+    return String(elem.last).toUpperCase()
+}).show()
+people.show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>You'll see similar output as before, but note that the result of <strong>map()</strong>s argument function is not <strong>void</strong> this time; instead, it's a <strong>String</strong> and <strong>map()</strong> stores each intermediate value in an <strong>Array</strong> that it keeps to produce the result. So we didn't have to write our own <strong>capitalizeLast()</strong> function as we did before.</p>
+<p>In general, when you need to take an <strong>Array</strong> and produce another <strong>Array</strong> from it, you'll use <strong>map()</strong>, and you will only use <strong>forEach()</strong> when you do want to modify the source <strong>Array</strong>.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id25" id="filter" name="filter"><strong>filter()</strong></a></h2>
+<p><strong>filter()</strong> also produces a new <strong>Array</strong>, but it does so by testing each element to find out if it belongs in the result.</p>
+<p>We can use <strong>filter()</strong> to find all the people with the last name "Miller":</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="FilterMiller" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.test.Person
+var people:Array = Person.createArray(100)
+t.show(people.filter(function(elem:*, index:int, x:Array):Boolean {
+    return elem.last == "Miller"
+}).length)
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id26" id="boolean-tests" name="boolean-tests">Boolean Tests</a></h2>
+<p><strong>Array</strong> has two built-in functions that apply a Boolean test to every element in the <strong>Array</strong> and return a Boolean result. <strong>every()</strong> produces <strong>true</strong> if every element in the <strong>Array</strong> passes the test, and <strong>some()</strong> returns <strong>true</strong> if one or more elements pass the test:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="BooleanFunctional" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+var functions:Array = [
+    function(e:*, i:int, a:Array):Boolean {
+        return e.length == 3
+    },
+    function(e:*, i:int, a:Array):Boolean {
+        return e.indexOf('a') != -1
+    },
+    function(e:*, i:int, a:Array):Boolean {
+        return e.indexOf('b') != -1
+    },
+]
+var a:Array = ['aaa', 'aab', 'abb', 'bba', 'xax', 'yya']
+for each(var func:Function in functions) {
+    t.show(a.every(func))
+    t.show(a.some(func), "\n\n")
+}
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Here I've created an <strong>Array</strong> of functions which is applied to the <strong>Array a</strong> using <strong>for each</strong>. Here's the output:</p>
+<pre class="literal-block">
+true
+true
+
+true
+true
+
+false
+true
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id27" id="creating-your-own-functional-operations" name="creating-your-own-functional-operations">Creating Your Own Functional Operations</a></h2>
+<p>You can easily write your own and add them to a library for reuse. Here are a few examples, but you can easily add more. For inspiration, look at Python's <strong>itertools</strong> library and examples you can find around the web using <strong>itertools</strong>.</p>
+<div class="section">
+<h3><a class="toc-backref" href="#id28" id="range" name="range"><strong>range()</strong></a></h3>
+<p><strong>range()</strong> produces a sequence of numbers. Python's <strong>range()</strong> is defined as <em>range([start,] stop[, step])</em> where <em>start</em> is the starting value, <em>stop</em> is the value to stop at, and <em>step</em> is the increment value. Because <em>start</em> and <em>stop</em> are optional, we have to look at the actual number of arguments to decide what the arguments mean:</p>
+<pre class="literal-block">
+package com.mindviewinc.functional {
+    public function range(...args):Array {
+        function assert(b:Boolean, msg:String=""):void {
+            var errorMsg:String = "Error in  in call to range()"
+            if(msg.length &gt; 0)
+                errorMsg += ": " + msg
+            if(!b)
+                throw new ArgumentError(errorMsg)
+        }
+        assert(args.length &gt; 0, "At least one argument required")
+        assert(args.length &lt;= 3, "Too many arguments")
+        for(var i:int = 0; i &lt; args.length; i++)
+            assert(args[i] is Number, "All arguments must be Numbers")
+        var start:int = 0, stop:int = 0, stride:int = 1
+        if(args.length == 1)
+            stop = args[0]
+        if(args.length == 2) {
+            start = args[0]
+            stop = args[1]
+        }
+        if(args.length == 3) {
+            start = args[0]
+            stop = args[1]
+            stride = args[2]
+        }
+        var result:Array = [];
+        if(stride == 0) return result
+        if((stop - start &lt; 0) != (stride &lt; 0)) return result
+        for(i = start; i &lt; stop; i += stride)
+            result.push(i)
+        return result
+    }
+}
+</pre>
+<p>The "..." syntax indicates a variable argument list.</p>
+<p>Notice the nested <strong>assert()</strong> function. Flex allows only one function to be exposed in a package, and it doesn't allow the use of any other access specifiers for functions (no specifier exposes the function), so the only way I could figure out how to add more than one function is to nest it, which worked nicely. Since <strong>assert()</strong> ended up only checking arguments, I used the more specific exception <strong>ArgumentError</strong>.</p>
+<p>To follow Python functionality, if any of the argument values doesn't make sense, <strong>range()</strong> returns an empty <strong>Array</strong>.</p>
+<p>Here's a test program:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="RangeTest" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.functional.range;
+range(10).show()
+range(10, 20).show()
+range(10, 100, 5).show()
+range(-10, 100, 5).show()
+range(-10).show()
+range(0).show()
+range(-10, -20).show()
+range(-20, -10).show()
+range(-20, -10, 2).show()
+range(-20, -10, -2).show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>And the output:</p>
+<pre class="literal-block">
+[0,1,2,3,4,5,6,7,8,9]
+[10,11,12,13,14,15,16,17,18,19]
+[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95]
+[-10,-5,0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95]
+[]
+[]
+[]
+[-20,-19,-18,-17,-16,-15,-14,-13,-12,-11]
+[-20,-18,-16,-14,-12]
+[]
+</pre>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id29" id="reduce" name="reduce"><strong>reduce()</strong></a></h3>
+<p><strong>reduce()</strong> is another function lifted from Python. It takes an <strong>Array</strong> and applies a reduction function to every element, finally producing a single result:</p>
+<pre class="literal-block">
+package com.mindviewinc.functional {
+    public function reduce(a:Array, reducer:Function):* {
+        var result:* = a[0]
+        for each(var item:* in a.slice(1, a.length))
+          result = reducer(result, item)
+        return result
+    }
+}
+</pre>
+<p>Originally I tried to declare <strong>reducer</strong> as a <strong>function</strong> that takes two arguments, but discovered that this completely confused the compiler (unfortunately, it gave me no error messages, just lost its mind). It turns out that to pass in a function, you just use the type <strong>Function</strong> with no details, so here we're in the land of <em>partial</em> duck typing (dynamic type checking). It requires a function, but you can't specify that function's arguments, so we call <strong>reducer()</strong> with whatever arguments and return types that we expect, and we'll get an exception at runtime if it's used incorrectly.</p>
+<p>Note that I'm careful not to modify the argument <strong>a</strong>; I just read from it -- this follows the <em>no side effects</em> rule.</p>
+<p>Here's a simple test that just sums up the values:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ReduceSum" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.functional.*
+t.show(reduce(range(100), function(e1:*, e2:*):* {
+    return e1 + e2
+}))
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>You'll see a result of 4950, which is what Python produces with the statement <tt class="docutils literal"><span class="pre">sum(range(100))</span></tt>.</p>
+<p>Of course, you can also make your own <strong>sum()</strong> function and add it to your library.</p>
+</div>
+<div class="section">
+<h3><a class="toc-backref" href="#id30" id="zip" name="zip"><strong>zip()</strong></a></h3>
+<p>Python's <strong>zip()</strong> returns a list of tuples (read-only sequences) where each tuple contains the nth element of each of the argument sequences. We don't have tuples in ActionScript, so our <strong>zip()</strong> will just create <strong>Array</strong>s.</p>
+<p>If the input arrays are of different sizes, the result is the length of the smallest input array:</p>
+<pre class="literal-block">
+package com.mindviewinc.functional {
+    public function zip(...arrays):Array {
+        // Find the shortest array:
+        var smallest:int =
+            arrays.map(function(e:*, i:int, a:Array):int {
+                return e.length
+            }).sort()[0];
+        var result:Array = new Array(smallest)
+        for(var i:int = 0; i &lt; result.length; i++) {
+            var tuple:Array = []
+            for(var a:* in arrays) {
+                tuple.push(arrays[a][i])
+            }
+            result[i] = tuple
+        }
+        return result
+    }
+}
+</pre>
+<p>Note that the complexity of the <strong>smallest</strong> initialization expression requires a semicolon.</p>
+<p>Here's a test that demonstrates the behavior of <strong>zip()</strong>:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application name="ZipTest" xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;mx:creationComplete&gt;
+include "../../Mindview/includes/show.as"
+import com.mindviewinc.functional.zip
+var a:Array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+a.setName("a")
+var b:Array = "abcdefghijkl".split('')
+b.setName("b")
+var c:Array = "qrstuvwxyz".split('')
+c.setName("c")
+a.show()
+b.show()
+c.show()
+zip().show()
+zip(a).show()
+zip(a,b).show()
+zip(a,b,c).show()
+&lt;/mx:creationComplete&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>And the output:</p>
+<pre class="literal-block">
+a: [1,2,3,4,5,6,7,8,9,10,11,12]
+b: [a,b,c,d,e,f,g,h,i,j,k,l]
+c: [q,r,s,t,u,v,w,x,y,z]
+[]
+[[1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12]]
+[[1,a],[2,b],[3,c],[4,d],[5,e],[6,f],[7,g],[8,h],[9,i],[10,j],[11,k],[12,l]]
+[[1,a,q],[2,b,r],[3,c,s],[4,d,t],[5,e,u],[6,f,v],[7,g,w],[8,h,x],[9,i,y],[10,j,z]]
+</pre>
+</div>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id31" id="composability" name="composability">Composability</a></h2>
+<p>One functional-programming subject I haven't discussed is composability, which means that you can take existing functions and combine them into new functions. This means that the thread-independence characteristics of the existing functions still exist in the new function, which can be run in pieces under independent threads. Function composition tends to get complex, and if you don't get the concurrency benefits (as we don't in Flex -- yet) then it's generally more trouble than it's worth.</p>
+</div>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=230610.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=230610&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230610&amp;title=ActionScript+Collections+and+Functional+Programming&amp;bodytext=Not+only+are+basic+collections+%28arrays+and+associative+arrays%29+tightly+integrated+into+the+core+language%2C+but+arrays+provide+some+sophisticated+functional+programming+support.+This+article+also+introduces+the+creation+and+use+of+shared+libraries+and+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230610&amp;title=ActionScript+Collections+and+Functional+Programming">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D230610&amp;title=ActionScript+Collections+and+Functional+Programming">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

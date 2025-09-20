@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Simplifying XML Manipulation</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=163393.html">Discuss</a> | 
+<a href="mailto:?subject=Simplifying XML Manipulation&amp;body= %0AArtima Weblogs %0ASimplifying XML Manipulation %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=163393">Email</a> | 
+<a href="../viewpostP.html$/thread=163393.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=162149.html" title="Are Web Services Real?">Previous</a> | 
+<a class="sl" href="thread=163762.html" title="Remote Collaboration">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Simplifying XML Manipulation</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">June 7, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Every time someone creates a new XML-based language, God (performs some unspeakable act).
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>My initial strategy for XML was to recognize it for what it is -- a platform independent way to move data from one place to another -- and then, as much as possible, to ignore it and assume that I would only have to actually look at XML when I was debugging something.
+
+<p>Occasionally, XML is actually treated this way. For example, in XML-RPC, you make an ordinary function call, the mechanism converts it into XML and uses HTTP to transport the call across the network, the return value comes back as XML and the mechanism converts the XML back into useful data. It's the wet-dream of remote procedure calls that we've been trying, and failing, to achieve all these years (someone starts with an idea, then committees descend and you end up with things like CORBA and SOAP).
+
+<p>Alas, I haven't seen XML-RPC used yet in web-servicey things. I hope that it <i>is</i> used somewhere, but if you read my previous entry you'll see that the first two services I tried to use -- Fedex and the Post Office (and UPS apparently also works this way) -- uses something that's <i>almost</i> XML-RPC, but it's not, and you're expected to assemble your XML by hand and then use HTTP to send it to the server, then unbundle the XML that comes back. It's the worst of both worlds: an ordinary RESTful call, but instead of just handing the server plain HTTP arguments, you have to build and dissect the XML. I'm sure there's some reason they decided not to use XML-RPC in these cases, but I can't imagine what it is.
+
+<p>The point being that here's a case where the XML should have been invisible, but you have to mess with it by hand.
+
+<p>Another example is Ant. The creator of this tool has since apologized for using XML, but it's what we're stuck with. And it was too late, anyway, since Maven also appears to use XML. So again, you're stuck creating XML by hand.
+
+<p>For Thinking in Java, I wanted to automatically create the Ant build files for all the chapters, so I created a tool in Python that I call AntBuilder (it's not a general-purpose tool; it's designed specifically for the code in Thinking in Java). In the process I used <b>xml.dom.minidom</b> from the standard Python library. I'm not exactly sure what the genesis of this library is, but the resulting code is terribly verbose and obtuse, and thus difficult to modify and maintain. Indeed, others have created libraries that are simpler in comparison to <b>xml.dom.minidom</b>; <a href="../_/http/effbot.org/zone/element-index.htm">elementree</a> is probably the most notable, but I still found it a bit more verbose than I want, and I prefer something more like <a href="../_/http/codespeak.net/py/current/doc/xml.html">py.xml</a> (also look at the simplicity of <a href="../_/http/codespeak.net/py/current/doc/test.html">py.test</a> in the same package). It's worth noting, though, that elementree isn't all that bad and if it had been the original XML library in Python I probably wouldn't have gone to this trouble. And more importantly, a subset of elementree will be in Python 2.5.
+
+<p>At the time I was creating AntBuilder, the messiness of <b>xml.dom.minidom</b> made the creation of the build.xml files far too difficult to manage, so I began creating a simplified approach for building XML trees. And when I tried to make some modifications to the code from <a href="../_/http/opensource.pseudocode.net/files/shipping.tgz">http://opensource.pseudocode.net/files/shipping.tgz</a> which also used <b>xml.dom.minidom</b>, I ran into the same over-complexity problem. So yesterday I began rewriting the XML code from the AntBuilder project to create a general purpose XML manipulation library called <b>xmlnode</b>.
+
+<p>My goal was to make the resulting code as minimal and (to my standards) readable as possible. To me, XML is a hierarchy of nodes, and each node has a tag, potentially some attributes, and either a value or subnodes. As it turns out, the whole of XML can be encapsulated into a single class which I call <b>Node</b>. The operator <b>+=</b> has been overloaded to insert subnodes into a node, and the operator <b>+</b> has been overloaded to string together a group of subnodes.
+
+<p>You create a new <b>Node</b> using its constructor, and you give it a tag name, an optional value, and optionally one or more attributes. Thus, building an XML tree is about as simple as thinking about it -- the syntax doesn't get in the way (IMO).
+
+<p>With XML web-servicey things, the results also come back in XML, so the <b>Node</b> class has a static method (available in Python 2.4) that will take a dom and produce a hierarchy of <b>Node</b> objects. You can select a <b>Node</b> that has a particular tag name by using the "[]" operator (examples below). This only returns the first node with that tag name; if there are more then you must write the code to iterate through the nodes and select the appropriate one(s). But that's not very hard since each node just contains a Python list of other nodes.
+
+<p>You can download the code <a href="../_/http/www.mindviewinc.com/downloads/xmlnode.zip">here</a> (right-click to download). As I get feedback I will make changes. If you <b>import</b> the file, you'll get the single class that uses <b>xml.dom.minidom</b>, and if you run it as a standalone program it will execute all the test/demonstration code which provides examples so you can see how to use it.
+
+<p><b>Update:</b> (6/19/06) By using and testing this code, I've significantly redesigned it to make it clearer and easier to use. Also note that the design of the class allows it to be easily retargeted to a different underly XML library implementation, if desired.
+
+<p><pre>
+#!/usr/bin/python2.4
+"""
+xmlnode.py -- Rapidly assemble XML using minimal coding.
+
+By Bruce Eckel, (c)2006 MindView Inc. www.MindView.net
+Permission is granted to use or modify without payment as 
+long as this copyright notice is retained.
+
+Everything is a Node, and each Node can either have a value 
+or subnodes. Subnodes can be appended to Nodes using '+=', 
+and a group of Nodes can be strung together using '+'.
+
+Create a node containing a value by saying 
+Node("tag", "value")
+You can also give attributes to the node in the constructor:
+Node("tag", "value", attr1 = "attr1", attr2 = "attr2")
+or without a value:
+Node("tag", attr1 = "attr1", attr2 = "attr2")
+
+To produce xml from a finished Node n, say n.xml() (for 
+nicely formatted output) or n.rawxml().
+
+You can read and modify the attributes of an xml Node using 
+getAttribute(), setAttribute(), or delAttribute().
+
+You can find the value of the first subnode with tag == "tag"
+by saying n["tag"]. If there are multiple instances of n["tag"],
+this will only find the first one, so you should use node() or
+nodeList() to narrow your search down to a Node that only has
+one instance of n["tag"] first.
+
+You can replace the value of the first subnode with tag == "tag"
+by saying n["tag"] = newValue. The same issues exist as noted
+in the above paragraph.
+
+You can find the first node with tag == "tag" by saying 
+node("tag"). If there are multiple nodes with the same tag 
+at the same level, use nodeList("tag").
+
+The Node class is also designed to create a kind of "domain 
+specific language" by subclassing Node to create Node types 
+specific to your problem domain.
+
+This implementation uses xml.dom.minidom which is available
+in the standard Python 2.4 library. However, it can be 
+retargeted to use other XML libraries without much effort.
+"""
+from xml.dom.minidom import getDOMImplementation, parseString
+import copy, re
+
+class Node(object):
+    """
+    Everything is a Node. The XML is maintained as (very efficient)
+    Python objects until an XML representation is needed.
+    """
+    def __init__(self, tag, value = None, **attributes):
+        self.tag = tag.strip()
+        self.attributes = attributes
+        self.children = []
+        self.value = value
+        if self.value:
+            self.value = self.value.strip()
+
+    def getAttribute(self, name):
+        """
+        Read XML attribute of this node.
+        """
+        return self.attributes[name]
+
+    def setAttribute(self, name, item):
+        """
+        Modify XML attribute of this node.
+        """
+        self.attributes[name] = item
+
+    def delAttribute(self, name):
+        """
+        Remove XML attribute with this name.
+        """
+        del self.attributes[name]
+
+    def node(self, tag):
+        """ 
+        Recursively find the first subnode with this tag. 
+        """
+        if self.tag == tag:
+            return self
+        for child in self.children:
+            result = child.node(tag)
+            if result:
+                return result
+        return False
+        
+    def nodeList(self, tag):
+        """ 
+        Produce a list of subnodes with the same tag. 
+        Note:
+        It only makes sense to do this for the immediate 
+        children of a node. If you went another level down, 
+        the results would be ambiguous, so the user must 
+        choose the node to iterate over.
+        """
+        return [n for n in self.children if n.tag == tag]
+
+    def __getitem__(self, tag):
+        """ 
+        Produce the value of a single subnode using operator[].
+        Recursively find the first subnode with this tag. 
+        If you want duplicate subnodes with this tag, use
+        nodeList().
+        """
+        subnode = self.node(tag)
+        if not subnode:
+            raise KeyError
+        return subnode.value
+
+    def __setitem__(self, tag, newValue):
+        """ 
+        Replace the value of the first subnode containing "tag"
+        with a new value, using operator[].
+        """
+        assert isinstance(newValue, str), "Value " + str(newValue) + " must be a string"
+        subnode = self.node(tag)
+        if not subnode:
+            raise KeyError
+        subnode.value = newValue
+
+    def __iadd__(self, other):
+        """
+        Add child nodes using operator +=
+        """
+        assert isinstance(other, Node), "Tried to += " + str(other)
+        self.children.append(other)
+        return self
+
+    def __add__(self, other):
+        """
+        Allow operator + to combine children
+        """
+        return self.__iadd__(other)
+
+    def __str__(self):
+        """
+        Display this object (for debugging)
+        """
+        result = self.tag + "\n"
+        for k, v in self.attributes.items():
+            result += "    attribute: %s = %s\n" % (k, v)
+        if self.value:
+            result += "    value: [%s]" % self.value
+        return result
+        
+    # The following are the only methods that rely on the underlying
+    # Implementation, and thus the only methods that need to change
+    # in order to retarget to a different underlying implementation.
+
+    # A static dom implementation object, used to create elements:        
+    doc = getDOMImplementation().createDocument(None, None, None)
+
+    def dom(self):
+        """
+        Lazily create a minidom from the information stored
+        in this Node object.
+        """
+        element = Node.doc.createElement(self.tag)
+        for key, val in self.attributes.items():
+            element.setAttribute(key, val)
+        if self.value:
+            assert not self.children, "cannot have value and children: " + str(self)
+            element.appendChild(Node.doc.createTextNode(self.value))
+        else:
+            for child in self.children:
+                element.appendChild(child.dom()) # Generate children as well
+        return element
+
+    def xml(self, separator = '  '):
+        return self.dom().toprettyxml(separator)
+
+    def rawxml(self):
+        return self.dom().toxml()
+
+    @staticmethod
+    def create(dom):
+        """
+        Create a Node representation, given either
+        a string representation of an XML doc, or a dom.
+        """
+        if isinstance(dom, str):
+            # Strip all extraneous whitespace so that
+            # text input is handled consistently:
+            dom = re.sub("\s+", " ", dom)
+            dom = dom.replace("&gt; ", "&gt;")
+            dom = dom.replace(" &lt;", "&lt;")
+            return Node.create(parseString(dom))
+        if dom.nodeType == dom.DOCUMENT_NODE:
+            return Node.create(dom.childNodes[0])
+        if dom.nodeName == "#text":
+            return
+        node = Node(dom.nodeName)
+        if dom.attributes:
+            for name, val in dom.attributes.items():
+                node.setAttribute(name, val)
+        for n in dom.childNodes:
+            if n.nodeType == n.TEXT_NODE and n.wholeText.strip():
+                node.value = n.wholeText
+            else:
+                subnode = Node.create(n)
+                if subnode:
+                    node += subnode
+        return node
+</pre>
+<p>Here is the test program for the class, which also demonstrates how to use the various features:
+
+<pre>
+#!python
+"""
+Test the xmlnode library, and demonstrate how to use it.
+"""
+from xmlnode import Node
+import copy
+
+# The XML we want to create:
+request = """\
+&lt;RequestHeader&gt;
+  &lt;AccountNumber&gt;
+    12345
+  &lt;/AccountNumber&gt;
+  &lt;MeterNumber&gt;
+    6789
+  &lt;/MeterNumber&gt;
+  &lt;CarrierCode&gt;
+    FDXE
+  &lt;/CarrierCode&gt;
+  &lt;Service&gt;
+    STANDARDOVERNIGHT
+  &lt;/Service&gt;
+  &lt;Packaging&gt;
+    FEDEXENVELOPE
+  &lt;/Packaging&gt;
+&lt;/RequestHeader&gt;
+"""
+
+# Create a Node from a string:
+requestNode = Node.create(request)
+# Create a Node from a minidom:
+requestNode = Node.create(requestNode.dom())
+
+# Assemble a Node programmatically:
+root = Node('RequestHeader')
+account = Node('AccountNumber', '12345')
+assert account.value == '12345'
+root += account # Insert account node as child of root
+# Add new child nodes:
+root += Node('MeterNumber', '6789')
+root += Node('CarrierCode', 'FDXE') 
+root += Node('Service', 'STANDARDOVERNIGHT') 
+root += Node('Packaging', 'FEDEXENVELOPE')
+
+assert root.xml() == requestNode.xml()
+assert root.xml() == request
+# Dom objects are different, not equivalent:
+assert root.dom() != requestNode.dom()
+
+# A more succinct approach. The '+' adds child nodes
+# to the RequestHeader node. 
+root2 = Node('RequestHeader') + \
+        Node('AccountNumber', '12345') + \
+        Node('MeterNumber', '6789') + \
+        Node('CarrierCode', 'FDXE') + \
+        Node('Service', 'STANDARDOVERNIGHT') + \
+        Node('Packaging', 'FEDEXENVELOPE')
+
+assert root2.xml() == root.xml()
+
+# Reading a value using operator[]. 
+assert root2['AccountNumber'] == '12345'
+
+# Begin creating a DSL for Fedex:    
+class RequestHeader(Node):
+    def __init__(self, acct, meter, ccode, serv, packg):
+        Node.__init__(self, 'RequestHeader')
+        self += Node('AccountNumber', acct)
+        self += Node('MeterNumber', meter)
+        self += Node('CarrierCode', ccode) 
+        self += Node('Service', serv) 
+        self += Node('Packaging', packg)
+
+header = RequestHeader('12345', '6789', 'FDXE', 
+          'STANDARDOVERNIGHT', 'FEDEXENVELOPE')
+assert header.xml() == root2.xml()
+
+root3 = Node("Top")
+two = Node("two")
+two += Node("three", "wompity", x="42")
+two += Node("four", "woo")
+root3 += two
+root3 += Node("five", "rebar", stim="pinch", attr="ouch")
+
+# Conversion to string:
+assert str(root3.node("five")) == """\
+five
+    attribute: stim = pinch
+    attribute: attr = ouch
+    value: [rebar]"""
+
+assert root3.xml() == """\
+&lt;Top&gt;
+  &lt;two&gt;
+    &lt;three x="42"&gt;
+      wompity
+    &lt;/three&gt;
+    &lt;four&gt;
+      woo
+    &lt;/four&gt;
+  &lt;/two&gt;
+  &lt;five attr="ouch" stim="pinch"&gt;
+    rebar
+  &lt;/five&gt;
+&lt;/Top&gt;
+"""
+
+# Reassign values:
+root3["four"] = "wimpozzle"
+# Can easily extract a subtree:
+assert root3.node("four").xml() == """\
+&lt;four&gt;
+  wimpozzle
+&lt;/four&gt;
+"""    
+
+# Change attribute:
+root3.node("five").setAttribute("attr", "argh!")
+assert root3.node("five").xml() == """\
+&lt;five attr="argh!" stim="pinch"&gt;
+  rebar
+&lt;/five&gt;
+"""    
+
+# Remove attribute:
+root3.node("five").delAttribute("attr")
+assert root3.node("five").xml() == """\
+&lt;five stim="pinch"&gt;
+  rebar
+&lt;/five&gt;
+"""    
+
+# Create a Node from a minidom:
+nn = Node.create(root3.dom())
+assert nn.xml() == root3.xml()
+
+# Cannot insert values into anything but leaf nodes:
+test = copy.deepcopy(root3)
+test["two"] = "Replacement"
+try:
+    print test.xml()
+except AssertionError:
+    pass # Expected
+
+# Handling block text values (imperfect but consistent):
+beware = Node.create("""\
+&lt;SomeText&gt;
+    Beware the machines that confuse
+    And
+    The men behind them
+&lt;/SomeText&gt;
+""")
+assert beware.xml() == """\
+&lt;SomeText&gt;
+  Beware the machines that confuse And The men behind them
+&lt;/SomeText&gt;
+"""
+</pre>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=163393.html">29
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=163393&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D163393&amp;title=Simplifying+XML+Manipulation&amp;bodytext=Every+time+someone+creates+a+new+XML-based+language%2C+God+%28performs+some+unspeakable+act%29.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D163393&amp;title=Simplifying+XML+Manipulation">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D163393&amp;title=Simplifying+XML+Manipulation">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

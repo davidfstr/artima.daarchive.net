@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Inside Out, or Outside In?</title>
+<meta charset="utf-8"/>
+<meta content="Ken Arnold" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=arnold.html">Ken Arnold's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=25543.html">Discuss</a> | 
+<a href="mailto:?subject=Inside Out, or Outside In?&amp;body= %0AArtima Weblogs %0AInside Out, or Outside In? %0Aby Ken Arnold %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=25543">Email</a> | 
+<a href="../viewpostP.html$/thread=25543.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=7435.html" title="The Sum of Ant">Previous</a> | 
+<a class="sl" href="thread=52241.html" title="Need a napkin?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Notes from Underfoot</span><br>
+<span class="ts">Inside Out, or Outside In?</span><br/>
+<span class="as">by Ken Arnold</span><br/>
+<span class="pd">December 16, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+...Wherein we look at a discussion on Unix vs. Windows religions and customs, try to make a little sense of it, and talk about designing from the outside in.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p> Okay, it turns out that I may not be the best blogger.  I seem
+not to have a compulsion to write all the time, so it's been far
+too long since I wrote here.  I'll try to do better, but I make no
+guarantees.
+
+<p> This entry is inspired by an essay by Joel Spolsky, of <a href="../_/http/www.joelonsoftware.com/index.html">"Joel on Software"</a> fame.
+The essay <a href="../_/http/www.joelonsoftware.com/articles/Biculturalism.html">"Biculturalism"</a>
+is inspired by the book <i><a href="../_/http/www.kokogiak.com/amazon/detpage.asp$/sb=s&amp;asin=0131429019&amp;field-keywords=art+of+unix+programming&amp;schMod=books&amp;type=.asp">The
+Art of Unix Programming</a></i> by <a href="../_/http/www.catb.org/~esr/index.html">Eric
+S. Raymond</a>.  (If you prefer bits to atoms, you can <a href="../_/http/www.faqs.org/docs/artu/index.html">read the whole book online</a> for free,
+Eric being a famous Open Source advocate.)
+
+<p><i>[One digression before we get into it: Follow that link to the book above.  You will find yourself on a great website for books:  
+<a href="../_/http/www.kokogiak.com/amazon/default.asp">Amazon Lite</a>.  It's Amazon without all the noisy fluff, and is where I go first now to buy books.  Very sweet.]</i>
+<p> Joel writes very insightful stuff on software, the process of developing software, and managing software teams.  I can disagree strongly with him on things, but he's always thinking hard and well.  If nothing else, when I have the chance I'm gonna steal a lot of his ideas about <a href="../_/http/www.joelonsoftware.com/articles/BionicOffice.html">how to design office space for software teams.</a>  And I still throw his notes on <a href="../_/http/www.joelonsoftware.com/articles/fog0000000073.html">"Guerrilla Guide to Interviewing"</a> in front of everyone I can.
+
+<p> Joel talks a good deal about the cultural differences between Unix and Windows developers.  He sums it up this way: "Unix culture values code which is useful to other programmers, while Windows culture values code which is useful to non-programmers."  All generalizations are false, of course, but this one is less false than most.  As a long-time Unix geek, I obviously can argue the advantages of the Unix preference. (For me, it's primarily composability: I can use pipes and the like to put combine useful things to do new useful things, which is really hard with GUI-based programs; see my rant on <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=7435.html">ant</a>.)  And I have a lot of respect for the idea that non-programmers aren't programmers, and need things they can understand.  (Composing stuff together is a form of programming, and non-programmers aren't programmers, if you can believe it.)
+
+<p> His primary example is Eric's rule that <a href="../_/http/www.faqs.org/docs/artu/ch11s09.html">"Silence is Golden"</a>.  Basically it says that programs shouldn't be chatty when they're doing what they should do.
+
+<p> If he hadn't cited this particular example you might not be reading this.  You see, I suggested this rule to Eric, so I feel particularly responsible.  At the time I had been using a program that printed out about 30 lines of verbosity of "Look what I'm up to <em>now!</em>"  After the umpteenth time I ran it, I was pretty annoyed at being told stuff that only mattered to someone debugging that program.  In other words, it was using up a lot of my limited information bandwidth telling me stuff that mattered to only one person <i>who wasn't me.</i>  So I had this on my mind.
+
+<p> The fundamental difference here is that a text-based program has exactly one output channel -- characters on the screen.  This makes that space extremely valuable, and therefore not be wasted.  A GUI program can spin its state in one text line so it doesn't use up much visual space and is easy to ignore.  A screen program has no place to put lower-priority messages.
+
+<p>Joel is right that this is a cultural prejudice, but it's built on unvarnished experience in this ecosystem.  Just like the Windows prejudice in favor of "more usability for Mom" is built on a coherent reality that is vital.
+
+<p> Joel himself falls victim to the arrogance of cultural familiarity that he accuses Eric of.  Consider this: 
+
+<blockquote>
+When Raymond points out that the CSV format is inferior to the /etc/passwd format, he's trying to score points for Unix against Windows, but, you know what? He's right. /etc/passwd <em>is</em> easier to parse than CSV, and if you read this book, you'll know why, and you'll be a better programmer.
+</blockquote>
+
+Maybe Eric is pointing this out because it <em>is</em> easier, not to score points against Windows.  He also says that self-righteousness is more common in the Unix culture, which shows a certain blindness that comes from being more likely to treat self-righteousness on your own side as just a statement of truth.
+
+<p>Of course, Eric doesn't help himself by having a certain righteous tone himself.  You can't read it without feeling that you are thought to be at the feet of a kindly guru, as the picture on the cover makes clear.
+
+<p> Joel almost gets to the meat of things when he talks about Apple and OS X.  The years of inability of the Unix market to spread on the desktop have nothing to do, really, with having command line programs and readable text-based configuration files.  This are not hindrances, but the cultural prejudice against limiting programmers is.  OS X proves that you can put a good GUI on this stuff — Apple's administration GUI is far better than anything Windows can muster.  (If you want to prove it to yourself, try setting up wireless cards with encryption on Windows vs. OS X.  Oy.)  The X11 approach of "Make no choices: enable them" is fundamentally flawed.  The world needs a common, clear understanding of how a button works much more than it needs a dozen different buttons, each with comparative virtues.  Designing without applying the <a href="../_/http/www.artima.com/intv/taste.html">arrogance of taste</a> is a Really Bad Idea.
+
+<p> RMI took a better approach.  Ann Wollrath first designed what users needed (here "users" means "programmers using RMI").  The mechanisms were internally well designed, but not exposed.  Over time more of the internals get opened up to experts who need more than most users.  This gives the priority to the 80% most common uses, and when it comes time to expose underpinnings, you know why and for whom.  The X11 approach starts building from the bottom up rather than the outside in.  You have to guess everything anyone might want to do at every level, making each level a slow and careful slog.  After years and years you finally may get to where someone can use what you've done.  The RMI approach makes you usable <em>now</em>, and lets you expose what actual experience shows you need to expose, by which time you also know better how people want to use it.
+
+<p> This approach is a much more powerful and productive way to build tools.
+
+<p> Joel says that Eric's book rises above the culturally superior tone, and I agree.  Although to be fair, Eric's book is precisely trying to teach the culture, so I think it's fair to believe in it strongly in that context.  Still, I might add that Joel's review also rises above its cultural biases.  As usual, Joel is worth <a href="../_/http/www.joelonsoftware.com/navLinks/fog0000000247.html">a good read</a>.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=25543.html">9
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=25543&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Ken Arnold adds a new entry to <a href="../index.html$/blogger=arnold.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/arnold.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D25543&amp;title=Inside+Out%2C+or+Outside+In%3F&amp;bodytext=_Wherein+we+look+at+a+discussion+on+Unix+vs.+Windows+religions+and+customs%2C+try+to+make+a+little+sense+of+it%2C+and+talk+about+designing+from+the+outside+in.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D25543&amp;title=Inside+Out%2C+or+Outside+In%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D25543&amp;title=Inside+Out%2C+or+Outside+In%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/kenarnold.jpg"/></td><td>Ken Arnold is a recognized loose cannon in the software business, whose previous fusilades include being an inventor of Jini, designing JavaSpaces, writing books on Java and distributed systems, helping design CORBA 1.0, and (while at Berkeley on the BSD project) the curses library package, co-authoring rogue, and generally enjoying himself.  His interests include designing APIs and programming languages using general principles of human factors design because of his radical hypothesis that programmers are human, and other applications of this same principle to software design, management, and production.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Ken Arnold. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

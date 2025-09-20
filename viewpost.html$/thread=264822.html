@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Know Your Materials</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=264822.html">Discuss</a> | 
+<a href="mailto:?subject=Know Your Materials&amp;body= %0AArtima Weblogs %0AKnow Your Materials %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=264822">Email</a> | 
+<a href="../viewpostP.html$/thread=264822.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=264047.html" title="Business Rules of Thumb">Previous</a> | 
+<a class="sl" href="thread=265021.html" title="Thinking Upside Down">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Know Your Materials</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">August 7, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Lately I've seen a rash of startups and small companies that have made bad technology decisions. I can only assume these decisions were made at the wrong level, by people who don't understand the technology or the implications of their decisions.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>The Revolutionary War was revolutionary in more than one way. Up until then, all military actions were directed centrally, by generals. The chain of command was primarily for transferring orders in a validated fashion. This kind of centralized control made sense when battles were primarily men hacking each other slowly to death. The advent of the gun sped up the battle, but it took the Revolutionary War to adapt to this new velocity. Washington introduced the idea of pushing responsibility down to the lowest level, which means the decisions are made at the point where they have the most impact.</p>
+<p>Occasionally we see this principle in businesses -- Toyota, for example -- but most business leaders seem to hang onto the decision-making with the same grip as the old generals held onto their power. The mystique of the all-knowing decision-maker is strongly promoted by our monotheistic culture and the organizations that benefit from that; witness George W. Bush declaring himself "The Decider." And darn it all, it just feels powerful to be free of all those nagging fact-based doubts and just <em>say the way it should be!</em> People admire you, too. Being a decider is being a winner.</p>
+<p>As guns make battles go faster, computers make businesses go faster. Used to be, businesses were like massive slow boats. You make a decision, and you could be dead before it has any impact. Your successors are left in shock, saying "he must have been ... guessing! We better not let anyone know about this." (Very neat: self-hiding mistakes).</p>
+<p>Now, however, people might discover your incompetence within weeks, days, hours, or even instantly. This has been happening for decades, but continuing advances in computing are making it more and more obvious. Alas, it still feels <em>really</em> good to be in power. CEOs still make very disproportionate salaries, which helps imply that they know what they're doing (which is very important so that business schools can keep charging the big bucks).</p>
+<p>But when executives make technical decisions that are outside their expertise, things can go wrong very quickly. This is especially true with startups; bad decisions cost investor money, impact schedules and can ultimately decide whether the company survives.</p>
+<p>The most common place I see this is the most mundane: choice of client-side programming system. I recently visited (not a consulting job) a startup that was working on a technology that had nothing to do with computers. They happened to sell services over the web, but the fewer software engineers they have building their web interface, the more resources they have to focus on their primary skill, the thing that the company is all about.</p>
+<p>Here's how I imagine this played out. A VP of this company is playing golf with other VPs, and the subject of web interfaces comes up. Another VP, full of fresh knowledge from some Microsoft-sponsored retreat, expounds for awhile: "Yes, Java is very popular on the back end" (Now that they have something to battle it with, they can acknowledge the obvious). "But the only reliable way to build a web app is with CSS, HTML and JavaScript" (More chance of getting the company to give up and only run on IE once they see how much work it is to be cross-browser). All the VPs nod sagely and file away these facts for their next decider moment.</p>
+<p>Our VP goes back and hands down the decision. It might even go over very well if CSS, HTML and JavaScript are the only thing the programmers know -- but in that case the problem started before they were hired. And before you know it, the problems have exploded and the rate of feature addition has gone into decline.</p>
+<p>At the company I visited, there was one programmer whose job was exclusively -- I kid you not -- to deal with IE6 bugs. No new features, just dealing with idiosyncrasies of one version of one browser. It may be job security, but what a waste of talent.</p>
+<p>And what a waste of resources for the company to reinvent all these bug fixes rather than working on their actual product. Clearly all the AJAXy libraries may have reduced the problems but not solved them.</p>
+<p>I'll go out on what I think is an obvious limb here, and say that CSS, HTML and JavaScript will <em>never</em> work without a lot of cross-platform pain. The design-by-committee nature of these beasts will always compromise them at the expense of the programmer. Take HTML5, the grand glorious solution that everyone points to as the answer to everything. Already compromised: from Wikipedia,</p>
+<blockquote>
+<em>However, in July 2009, the editor of the burgeoning draft specification dropped the recommendation of the free software Theora and Vorbis codecs, after opposition from Apple and Nokia. This means HTML 5 does not currently specify a common video codec for Web development.</em></blockquote>
+<p>(This is probably also the answer to the question of why Google made its recent <a class="reference" href="../_/http/www.cringely.com/2009/08/google-taketh-away/index.html">acquisition of On2</a> which makes codecs; if it isn't part of HTML5, then Google needs one to add to Chrome).</p>
+<p>This is just one in a long line of cock-ups that have kept CSS/HTML/JavaScript apps from being cross platform. And it will <em>never</em> be fixed. Even if you believe that Microsoft, Mozilla, Apple, Google and others could even communicate well enough to agree on the meaning of the HTML5 spec and implement it identically, when will that happen? Anytime before HTML6 comes out? I've watched this long enough to see that you'll <em>never</em> be able to write a non-trival cross-platform web app using CSS/HTML/JavaScript. (Not to say that it won't be an improvement to have HTML5, but that you won't be able to assume it's available).</p>
+<p>I think it's more likely that fancier applications will be targeted to Google Chrome. How different is it, really, to install Chrome as a browser than it is to install Java? Chrome is easier and less scary for the end user to install. With all the powerful things that Google is putting in Chrome, features that go far beyond ordinary browsers, developers will be attracted to the Chrome platform. Add to that the Chrome OS and the ability to use all that HTML5 goodness without worrying about the other platforms and it will become very appealing. And top it off with Google's ability to make things easy and comfortable for the end-user, and you have a real development choice.</p>
+<p>There are other choices, of course. Microsoft pushes Silverlight, but really? It's going to solve the cross-platform problem? Which gaggle of Microsoft VPs is going to willingly give up the playing field and actively support those other browsers (sure, you can passively support them by saying it's OK to develop for non Microsoft browsers)? And what if something, somewhere, gets uncomfortable? Are you going to trust the company that spent hundreds of millions of dollars trying to reality-shift our brains so that we'd believe that Vista really is OK to not change their mind about this and decide that maybe Silverlight should only run on a Microsoft browser? Silverlight appears to be good technology, but I you just can't be sure if it will persist and spread.</p>
+<p>JavaFX also appears to be good technology. It's cross-browser, no worries there. It does require that the user install Java, which has historically been a sticking point and a blind spot for Sun, and might get fixed eventually. That is, if the Oracle acquisition doesn't throw things into chaos for an extended period.</p>
+<p>Then, of course, there's Flash/Flex. When I asked someone at the aforementioned company why they chose CSS/HTML/JavaScript, they said "we had to be sure that the user ...", trailing off because they realized that Flash is installed on basically every machine in the world. Anyone who uses YouTube has Flash installed. People aren't afraid of it.</p>
+<p>Sure, it's not perfect. It's more open than it used to be, but not perfectly open, and some developers have a problem with that. I would argue that it's open enough for most purposes, and more importantly you can cut the UI programming staff of the aforementioned startup down to a couple of programmers, and those programmers could be pounding out fancy new features rather than coping with browser differences.</p>
+<p>In the future, I would be tempted to try writing HTML5 on the Chrome platform. But in the present I still see Flash and Flex as the best options (Let's assume that those of you who can't resist the snarky comments at this point have already written them for previous blog posts). I'll end with a testimonial that was recently sent to me by Tim De Meyer, a senior Java EE developer at Cegeka, an end-to-end ICT solution provider located in Belgium. For the last 4 years he's worked on a large Agile project for the social security sector. He and a group of three others have been looking into Flex, and have this to report:</p>
+<blockquote>
+<p><em>Just wanted to let you know that, after years and years of developing web based applications using JSF, struts, spring MVC and the like, we've started a small project (26 days) using Flex as the front-end. It's been quite an adventure so far, because we're used to taking an agile approach that comes with a few engineering practices we try to live up to.</em></p>
+<p><em>So after some experimenting, we can now implement our user stories using our beloved test DRIVEN approach, writing jUnit tests for the java back-end, using FlexUnit to test our .as and .mxml files, and rounding it all up with some FlexUISelenium postdeploy-tests. And after a few days of struggling in Ant, we've now got a Hudson job building, testing and deploying our Flex app automatically. This results in a fully tested .war file we can hand over to our deployment team.</em></p>
+<p><em>As for the technology stack, we're using the new Spring-Flex thingy to expose our spring POJO's as Flex destinations, and the Swiz framework helps us do a clean(er) job in Flex.</em></p>
+<p><em>Although it's all pretty new to the most of us (we've got one experienced Flex programmer and 2 rookies who've just had some experience during an after-hours weekly workgroup), productivity has been great so far and our burn-down is telling us we're pretty much on track.</em></p>
+<p><em>So I hope this turns out to be a success and that we can do some more projects where we can use Flex as the front-end. After the project is done, we're hoping to give an internal presentation in order to grow some interest in our Applications division. We've already gotten our program manager to start reading</em> <a class="reference" href="../_/http/www.mindviewinc.com/Books/FirstStepsInFlex/Index.html">First Steps In Flex</a>. <em>As a former architect and developer, he's been very supportive towards these initiatives. Anyway, thanks for getting us, as Java developers, interested in the Flex world.</em></p>
+</blockquote>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=264822.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=264822&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D264822&amp;title=Know+Your+Materials&amp;bodytext=Lately+I%27ve+seen+a+rash+of+startups+and+small+companies+that+have+made+bad+technology+decisions.+I+can+only+assume+these+decisions+were+made+at+the+wrong+level%2C+by+people+who+don%27t+understand+the+technology+or+the+implications+of+their+decisions.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D264822&amp;title=Know+Your+Materials">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D264822&amp;title=Know+Your+Materials">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

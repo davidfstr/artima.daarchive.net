@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Is Distribution really that bad?</title>
+<meta charset="utf-8"/>
+<meta content="Calum Shaw-Mackay" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#ADD8E6" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=calum.html">Calum Shaw-Mackay's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=44530.html">Discuss</a> | 
+<a href="mailto:?subject=Is Distribution really that bad?&amp;body= %0AArtima Weblogs %0AIs Distribution really that bad? %0Aby Calum Shaw-Mackay %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=44530">Email</a> | 
+<a href="../viewpostP.html$/thread=44530.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+<a class="sl" href="thread=46738.html" title="The Great Theoretical Architecture">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Turn, and Face the Strange</span><br>
+<span class="ts">Is Distribution really that bad?</span><br/>
+<span class="as">by Calum Shaw-Mackay</span><br/>
+<span class="pd">April 14, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In my inaugural weblog entry here on Artima, I question whether the logic about the First Law of Distributed Computing is really that relevant now.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Ha! I thought Id throw out a really leftfield, contentious issue for my first weblog.</p>
+<p>I googled First law of distributed and came up with a few hits, as I suspected, for Martin Fowlers definition. If I have to be the only person, to argue around this (not necessarily disagree, well, not in all cases), well so be it.</p>
+<p>The first issue that springs to mind is: if you call something the First, you tend to want to expect it to be followed with one of Second, Next or Last  couldnt find anything on those, so perhaps it should be renamed the Only Law of Distributed Computing.</p>
+<p>Aside from being pedantic, my main issue, however, is whether distribution is always that bad. You understand where the law comes from, when the qualification goes along the lines of if you dont have to distribute, dont, because it costs.</p>
+<p>I really do understand this when youre writing a system that has to do hundreds of transactions per second, but if youre not then is distribution <i>such a big problem.</i></p>
+<h2>Facts of Life</h2>
+<p>My point comes from the fact that mankind has had to deal with distribution and its associated costs for millennia  weve never had everything that we need, during the entirety of our lives, right next to us.</p>
+<p>If your car is running low on petrol, you go and get some more  its highly unlikely that every person who has a car has a pump to fill up their car, just sitting there in their garden. When we need food, we might walk to the shop and buy some  this implies distribution and an associated cost, the energy consumed to walk to the shop and back. In ages past, if you didnt hunt  you didnt eat, yet the act of hunting consumed resources.</p>
+<p>Most businesses have suppliers that are many miles away, perhaps even on other continents and may serve customer that are also miles away  distribution doesnt stop them.</p>
+<p>In other words, I believe distribution, and the cost of it, to actually be a natural entity, so why in computing do we tirelessly fight against it? As with many things in life, it all comes down to a matter of perspective.</p>
+<p>The general consensus about why distributed objects are a Bad Thing, is that its more efficient to do things locally. Why take 20ms to do something between machines when it will only take 20ns to do it locally in a single VM?</p>
+<p>Well, to go back to my previous analogies, would you want your house to actually be filled with every possible amenity you need in your life? Aisles of food from your local supermarket, coupled with the obligatory petrol pump in your back garden, and your desk and PC from your office? You wouldnt have enough space to have the contents of your entire life sat at the side of you.</p>
+<p>Now back to the computing world  I might be able to run my entire software architecture out of one VM, but hey it might be slow as hell, but...<i>at least its local.</i></p>
+<p>Another point that always makes me wonder is that most of the people who quote the First Law, quote it on the Internet, the biggest public distribution network in the world. Why? Because they want their opinion heard; thus distribution. But voicing this comment is not without cost - they have to log on to a site, load in the pages, write their comment in an HTML form, submit it, etc.</p>
+<p>So the point of distribution should not be if its more efficient to do it locally, then dont distribute it, it should be if it is more beneficial to distribute then do it., or if the cost of distributing is less than the benefit gained  whats the problem?</p>
+<p>You see, from my standpoint of doing systems integration for the majority of my work, I just cant move my database, workflow and mainframe on to one box, and happily let them co-exist. </p>
+<p>If it takes the human eye between 300 and 400 milliseconds to blink, do you think it really matters to me that a Jini service call via RMI may only take 20ms to complete?
+If a user is willing to wait 500ms for a response, I could do 25 remote calls, before that user is going to become even slightly aware of the cost of the function being performed.</p>
+<h2>Facts of Reality</h2>
+<p>Distribution, both in distributed systems and distributed objects, is a fact of system reality, whether we like it or not. And many more people work in a world where processes and systems have to integrate, than those that can build green-field systems or where everything is in one box.</p>
+<p>Ambiguity is an undercurrent of linguistics. For example Doing something remotely is orders of magnitude slower than doing something in-process. Oh that tells me its slower. Its like the old argument, "C++ is x% faster than Java". Give me the real-time numbers for my given situation, because only that will tell me whether it really matters.</p>
+<p>Performance is of course an issue, but only if it is in fact an issue in the scenario, dont just use the Performance card to dismiss the benefits of distribution offhandedly</p>
+<h2>What is happening now?</h2>
+<p>I never really get that distribution is <b>only</b> okay if you have a web browser that talks to an application server (running all your middle-tier) that connects to a database. I see talk of Service Oriented Architectures mainly with Web Services, which is okay for others  Ive been doing SOA with Jini since 2000, and it hasnt seen me wrong yet, but your mileage may vary. </p>
+<p>But a key differentiator with SOA, and grids, is that it is distributed (it doesnt have to be, but it kind of defeats the purpose), each application that provides a service can be on a different box, the registry that allows connections to these services is also distributed (in general).</p>
+<p>So if the next generation of applications and architectures that are being touted are distributed  whats made people change their minds, and seeing that they are changing their minds, dont you think that people need to actually think about distribution in a rational manner, rather than just dismissing it out of hand?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=44530.html">15
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=44530&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Calum Shaw-Mackay adds a new entry to <a href="../index.html$/blogger=calum.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/calum.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D44530&amp;title=Is+Distribution+really+that+bad%3F&amp;bodytext=In+my+inaugural+weblog+entry+here+on+Artima%2C+I+question+whether+the+logic+about+the+First+Law+of+Distributed+Computing+is+really+that+relevant+now.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D44530&amp;title=Is+Distribution+really+that+bad%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D44530&amp;title=Is+Distribution+really+that+bad%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/calumshawmackay.jpg"/></td><td>Calum Shaw-Mackay is an architect on Java and Jini systems, working in the UK. His interests lie in distributed computing, adaptability, and abstraction. Calum has been using Jini for longer than he would care to mention. His main area for taking the blame (some people would call it 'expertise') is systems integration and distributed frameworks, and is an advocate of using Jini's unique strengths to build adaptable enterprise systems. His opinions are his own. He's tried to get other people to take his opinions off him, but they just won't.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 Calum Shaw-Mackay. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

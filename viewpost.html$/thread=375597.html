@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>ScalaTest 3.0 Preview</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=375597.html">Discuss</a> | 
+<a href="mailto:?subject=ScalaTest 3.0 Preview&amp;body= %0AArtima Weblogs %0AScalaTest 3.0 Preview %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=375597">Email</a> | 
+<a href="../viewpostP.html$/thread=375597.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=352018.html" title="ScalaTest 2.0.M6 Preview">Previous</a> | 
+<a class="sl" href="thread=375914.html" title="ScalaTest 3.0.0-M11 Released">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">ScalaTest 3.0 Preview</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">October 16, 2015</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The 3.0.0 release of ScalaTest is coming soon. It is a major release with significant new features. In this post, I give a preview of the new features, and ask for feedback.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+This week I released ScalaTest and Scalactic 3.0.0-M10 for Scala 2.10 and 2.11 and Scala.js 0.9.5. If you have time please try this release out on your projects and post feedback to <a href="../_/https/groups.google.com/forum/#!forum/scalatest-users/index.html">scalatest-users@googlegroups.com</a> or the <a href="../_/https/gitter.im/scalatest/scalatest/index.html">ScalaTest gitter channel</a>. Here's the dependency for an sbt build:
+</p>
+<pre>
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0-M10" % "test"
+</pre>
+<p>
+The main new feature of ScalaTest 3.0 is Scala.js support. We support all aspects of ScalaTest that can reasonably work on Scala.js. A few features are missing, such as the <code>have</code> and <code>be</code> matchers that take symbols--for example, <code>bird should have ('color(blue))</code>--and the <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Spec"><code>Spec</code></a> trait, which use reflection. These continue to work on the JVM as before. Other than a few such features that don't make sense or aren't possible on Scala.js, all of ScalaTest is available for testing Scala.js applications.
+</p>
+<p>
+ScalaTest is the most full-featured test framework available on Scala.js. Its ability to run in both worlds means you test code that you run both on the JVM and on JavaScript with tests that you run both on the JVM and JavaScript.
+</p>
+<p>
+Another major new feature in ScalaTest 3.0, which was in great part motivated by Scala.js, is async testing styles. ScalaTest 3.0 will offer an async flavor of each style trait in which tests are functions registered at construction time. For example in addition to <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.FunSuite"><code>FunSuite</code></a>, there's now an <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.AsyncFunSuite"><code>AsyncFunSuite</code></a>. In addition to <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.FeatureSpec"><code>FeatureSpec</code></a>, there's now an <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.AsyncFeatureSpec"><code>AsyncFeatureSpec</code></a>, and so on for the other test-as-function styles. The difference between <code>FunSuite</code> and <code>AsyncFunSuite</code> is that in <code>FunSuite</code>, the result type of a test is "<code>Assertion</code>", whereas in <code>AsyncFunSuite</code>, it is <code>Future[Assertion]</code>.
+</p>
+<p>
+<code>Assertion</code> is a type alias, new in 3.0, for <code>org.scalatest.Succeeded.type</code>, the type of the <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Succeeded$"><code>Succeeded</code></a> singleton. <code>Succeeded</code> was added in ScalaTest 2.0 to represent a successful test <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Outcome"><code>Outcome</code></a>. In 2.0 ScalaTest's <code>withFixture</code> method signature was modified to take a test function with result type <code>Outcome</code> as its parameter and to return an <code>Outcome</code> itself. This allows users to execute shared code at the beginning and/or end of a test, execute test bodies multiple times, or change the outcome of tests under certain condition--all without needing to catch exceptions. In 3.0, all the assertions and matcher expressions have been changed to return the <code>Succeeded</code> singleton instead of the <code>Unit</code> value singleton, which was the result in ScalaTest 1.x and 2.x. They still throw the same exceptions when a problem is detected, but when they succeed they return a different singleton object. I expect this change break no existing code in practice, because in earlier versions of ScalaTest the result type of tests was <code>Unit</code> or <code>Any</code>, essentially, and so any result of an assertion or matcher expression was normally ignored. Here's an example from the REPL using 3.0.0-M10:
+</p>
+<pre>
+scala&gt; val x = 1
+x: Int = 1
+
+scala&gt; assert(x &gt; 0)
+res0: org.scalatest.Assertion = Succeeded
+
+scala&gt; assert(x == 0)
+org.scalatest.exceptions.TestFailedException: 1 did not equal 0
+  at org.scalatest.Assertions$class.newAssertionFailedException(Assertions.scala:507)
+  at org.scalatest.Matchers$.newAssertionFailedException(Matchers.scala:7743)
+  at org.scalatest.Assertions$AssertionsHelper.macroAssert(Assertions.scala:472)
+  ... 43 elided
+
+scala&gt; x should be &gt; 0
+res2: org.scalatest.Assertion = Succeeded
+
+scala&gt; x shouldEqual 0
+org.scalatest.exceptions.TestFailedException: 1 did not equal 0
+  at org.scalatest.MatchersHelper$.newTestFailedException(MatchersHelper.scala:148)
+  at org.scalatest.MatchersHelper$.indicateFailure(MatchersHelper.scala:358)
+  at org.scalatest.Matchers$AnyShouldWrapper.shouldEqual(Matchers.scala:6792)
+  ... 43 elided
+</pre>
+<p>
+You write traditional (synchronous) tests just like you always did, and all existing code should compile and run exactly as before, but in async styles you must return from your tests a <code>Future[Assertion]</code>. The purpose of async styles is to allow you to write tests in a non-blocking manner. On the JVM this enables you to write tests consistently with production code in reactive frameworks like Akka and Play. On Scala.js it enables testing asynchronous code that would not otherwise be possible to test using ScalaTest blocking constructs (like <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.concurrent.ScalaFutures"><code>ScalaFutures</code></a>), because in JavaScript you *can't* block.
+</p>
+<p>
+In an async test you work in futures. Given, for example, a <code>Future[Int]</code> that has been returned by some code under test, you can map an assertion onto it like this:
+</p>
+<pre>
+scala&gt; import scala.concurrent.Future
+import scala.concurrent.Future
+
+scala&gt; import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext.Implicits.global
+
+scala&gt; val fut = Future { 1 }
+fut: scala.concurrent.Future[Int] = scala.concurrent.impl.Promise$DefaultPromise@52c293d0
+
+scala&gt; fut map { x =&gt; x should be &gt; 0 }
+res4: scala.concurrent.Future[org.scalatest.Assertion] = scala.concurrent.impl.Promise$DefaultPromise@1ca1e995
+</pre>
+<p>
+This value of type <code>Future[Assertion]</code> you can return to ScalaTest by leaving it as the result of your async test. When that future completes, the test will either succeed or fail. This future assertion would result in a successful test:
+</p>
+<pre>
+scala&gt; res4.value
+res5: Option[scala.util.Try[org.scalatest.Assertion]] = Some(Success(Succeeded))
+</pre>
+<p>
+Here's one that would result in a failed test:
+</p>
+<pre>
+scala&gt; fut map { x =&gt; x shouldEqual 0 }
+res6: scala.concurrent.Future[org.scalatest.Assertion] = scala.concurrent.impl.Promise$DefaultPromise@18daf92c
+
+scala&gt; res6.value
+res7: Option[scala.util.Try[org.scalatest.Assertion]] =
+        Some(Failure(org.scalatest.exceptions.TestFailedException: 1 did not equal 0))
+</pre>
+<p>
+You can include non-async tests that result in <code>Assertion</code> in an async style alongside your tests that result in <code>Future[Assertion]</code>. The final expression of such tests will be converted to a <code>Future[Assertion]</code> that has already succeeded. At run time, the test will either throw an exception or return that successful <code>Future[Assertion]</code>.
+</p>
+<p>
+The traditional styles like <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.FunSuite"><code>FunSuite</code></a> and <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.FeatureSpec"><code>FeatureSpec</code></a> also have changed the test result type. In ScalaTest 1.x and 2.x the result type of tests was <code>Unit</code>. In 3.0 it will be <code>Assertion</code>. However, we have a trait named <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Compatibility"><code>Compatibility</code></a> that is currently in effect by default that provides an implicit conversion from <code>Any</code> to <code>Assertion</code>. This will keep all old code working by providing a kind of value discarding similar to what the compiler does for <code>Unit</code>. The <code>Compatibility</code> "registration policy" offers convenience if you're using 3rd party tools that provide assertion syntax the returns the <code>Unit</code> value, such ask Akka's testkit of any of several Java mocking frameworks. If you prefer more type safety, you can mix in trait <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Safety"><code>Safety</code></a>, which will hide that <code>Any =&gt; Assertion</code> implicit. Any type errors you get you can fix by ending your test with <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Succeeded$"><code>Succeeded</code></a>, or what I will recommend, simply <code>succeed</code>. The "<code>succeed</code>" construct is a new one in ScalaTest 3.0 that returns the <code>Succeeded</code> singleton.
+</p>
+<pre>
+scala&gt; succeed
+res8: org.scalatest.Succeeded.type = Succeeded
+</pre>
+<p>
+One issue I would like to hear user's opinions on is whether <code>Compatibility</code> or <code>Safety</code> should be the default. My feeling is that safety should be the default in async styles, because no prior code exists that would break, and I fear <code>Compatibility</code> might be error prone when futures are involved. If safety (<a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.AsyncSafety"><code>AsyncSafety</code></a> actually) is the default in async styles, then I am thinking <code>Safety</code> should be the default in traditional styles for consistency. That would break a lot of code, so I'd do that through a long deprecation cycle. But still it would require everyone to either mix in <code>Compatibility</code> into their base classes, if they have base classes, or actually fix the type errors one way or another. To give you one example of the kind of type error you might encounter, ScalaTest's <code>intercept</code> construct, if it appears last in a test body, would give a type error because its result type is <code>Throwable</code>, not <code>Assertion</code>, because it returns the caught exception if the assertion succeeds.
+</p>
+<pre>
+scala&gt; intercept[IndexOutOfBoundsException] { "hi".charAt(-1) }
+res9: IndexOutOfBoundsException = java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+</pre>
+<p>
+You could fix this type error by placing "<code>succeed</code>" after <code>intercept</code>, but we added a new construct to <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.XXX"><code>Assertions</code></a> in ScalaTest 3.0 called <code>assertThrows</code>, which has the same behavior as <code>intercept</code> except it returns the <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.XXX"><code>Succeeded</code></a> singleton. So you could instead replace <code>intercept</code> with <code>assertThrows</code>:
+</p>
+<pre>
+scala&gt; assertThrows[IndexOutOfBoundsException] { "hi".charAt(-1) }
+res10: org.scalatest.Assertion = Succeeded
+</pre>
+<p>
+That could end up being quite being quite a few changes to get rid of deprecation warnings, so please give your opinions on
+whether <code>Compatibility</code> or <code>Safety</code> should be the default.
+</p>
+<p>
+The <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.BeforeAndAfter"><code>BeforeAndAfter</code></a>, <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.BeforeAndAfterEach"><code>BeforeAndAfterEach</code></a>, and <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.BeforeAndAfterEachTestData"><code>BeforeAndAfterEachTestData</code></a> traits do work with async styles, but you will need to
+synchronize access to shared mutable state between "before" and "after" code and test code. So I will recommend people
+override <code>withAsyncFixture</code> by default instead. The <code>withAsyncFixture</code> method takes a test function that returns a <code>Future[Outcome]</code> and
+itself returns <code>Future[Outcome]</code>. You can execute "beginning-of-test" code before invoking the test function, then map
+"end-of-test" code onto the returned <code>Future[Outcome]</code>, or just register the end-of-test code as a call back to be executed
+when the future completes.
+</p>
+<p>
+Although tests in async styles run assertions in futures, by default tests will execute one at a time in order. The second test won't start until
+the first test completes. The third test won't start until the second test completes, and so on. If you want the async tests to run in 
+parallel, you mix in <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.ParallelTestExecution"><code>ParallelTestExecution</code></a> to the test class, just as with traditional styles.
+</p>
+<p>
+ScalaTest 3.0.0-M10 has a handful of deprecations compared to the current, 2.x release, but should only have two breaking
+changes. First, one of the overloaded "thread" methods in <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Conductor"><code>Conductor</code></a> would no longer overload after changing the result type of
+tests to <code>Assertion</code>. It has been renamed to <code>threadNamed</code> in 3.0. I will likely release a 2.2.x version of ScalaTest with that deprecated prior to the 3.0 final release. Also, if someone
+had been invoking the <code>whenCompleted</code> method of <a href="../_/http/www.artima.com/docs-scalatest-3.0.0-M10/#org.scalatest.Status"><code>Status</code></a>, that now takes a
+<code>Try[Boolean] =&gt; Unit</code> instead of just a <code>Boolean =&gt; Unit</code>. Otherwise no
+existing ScalaTest 2.x code should break (so long as you clear all
+deprecation warnings before upgrading). Please let me know if you see a breakage when trying 3.0.0-M10 in your projects.
+</p>
+<p>
+Thanks and happy testing.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=375597.html">6
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=375597&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D375597&amp;title=ScalaTest+3.0+Preview&amp;bodytext=The+3.0.0+release+of+ScalaTest+is+coming+soon.+It+is+a+major+release+with+significant+new+features.+In+this+post%2C+I+give+a+preview+of+the+new+features%2C+and+ask+for+feedback.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D375597&amp;title=ScalaTest+3.0+Preview">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D375597&amp;title=ScalaTest+3.0+Preview">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2015 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Origin of BDFL</title>
+<meta charset="utf-8"/>
+<meta content="Guido van van Rossum" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#AACCFF" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=guido.html">Guido van van Rossum's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=235725.html">Discuss</a> | 
+<a href="mailto:?subject=Origin of BDFL&amp;body= %0AArtima Weblogs %0AOrigin of BDFL %0Aby Guido van van Rossum %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=235725">Email</a> | 
+<a href="../viewpostP.html$/thread=235725.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=227041.html" title="Python 3000 and You">Previous</a> | 
+<a class="sl" href="thread=241076.html" title="Goodbye Artima">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">All Things Pythonic</span><br>
+<span class="ts">Origin of BDFL</span><br/>
+<span class="as">by Guido van van Rossum</span><br/>
+<span class="pd">July 31, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I believe I've tracked down the origin of the term Benevolent Dictator For Life (BDFL) to a Python meeting in 1995.  It's a blast from the past!
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Occasionally people ask me about the origins of my nickname BDFL (Benevolent Dictator For Life).  At some point, Wikipedia claimed it was from a Monty Python skit, which is patently false, although it has sometimes been called a Pythonesque title.  I recently trawled through an old mailbox of mine, and found a message from 1995 that pinpoints the origin exactly.  I'm including the entire message here, to end any doubts that the term originated in the Python community.
+
+<p>Some background: On April 15 I had moved to the US to join CNRI for what would end up being a five-year stint.  One of the first things we wanted to do was establish some kind of (semi-)formal group overseeing Python development and workshops.  It was too early to think of conferences yet.  The idea was to call this the Python Software Association (or perhaps the Python Software Activity), and to have it be a subsidiary of CNRI, which would give it many of the benefits of a non-profit (CNRI being one) without any of the hassle.  On April 18 a group of folks interested in setting this up met: besides myself, there were Ken Manheimer and Mike McLay from NIST, Barry Warsaw, Roger Masse and Ted Strollo from CNRI, Jim Fulton from USGS, and Paul Everitt from Creative Minds, an early precursor of Zope Corporation.
+
+<p>As you can read below, everyone present was bestowed a title starting with First Interim, but mine was the only jocular one.  While I can't prove my title (with or without the First Interim prefix) was never used before, I'm pretty certain that it originated in this meeting.  Given what I know of how their minds work, it was most likely invented by Ken Manheimer or Barry Warsaw, though it may well have been a joint invention by all present.  I doubt that anyone remembers (I certainly don't recall anything specifically about this meeting, there were so many meetings those days).
+
+<p>Anyway, here's the whole message, with all the headers.  I've added some highlights to emphasize the most salient points.
+
+<pre>
+Return-Path: &lt;@coil-ether.nist.gov:klm@nist.gov&gt;
+Received: from CNRI.Reston.VA.US (cnri.reston.va.us [132.151.1.1]) by unix.cnri.reston.va.us (8.6.9/8.6.9) with SMTP id RAA01703; Fri, 5 May 1995 17:34:51 -0400
+Received: from coil-ether.nist.gov by CNRI.Reston.VA.US id aa16056;
+          5 May 95 17:34 EDT
+Received: by coil.nist.gov (4.1/SMI-3.2-del.7-klm.4)
+	id AA15998; Fri, 5 May 95 17:35:00 EDT
+Date: Fri, 5 May 95 17:35:00 EDT
+Message-Id: &lt;9505052135.AA15998@coil.nist.gov&gt;
+From: Ken Manheimer <ken.manheimer@nist.gov>
+To: "Barry A. Warsaw" <bwarsaw@cnri.reston.va.us>,
+        "Roger E. Masse" <rmasse@cnri.reston.va.us>, Paul.Everitt@cminds.com,
+        Jim Fulton <jfulton@qvarsx.er.usgs.gov>,
+        Guido van Rossum <guido@cnri.reston.va.us>,
+        Michael McLay <mclay@eeel.nist.gov>,
+        Kenneth Manheimer <ken.manheimer@nist.gov>,
+        "Theodore R. Strollo" <tstrollo@cnri.reston.va.us>
+Subject:  <b>Notes from the last PSA meeting at CNRI - Tue, April 18, 1995</b>
+Reply-To: ken.manheimer@nist.gov
+X-Mailer: VM 5.72 (beta) / Emacs 19.26.2
+Organization: National Institute of Standards and Technology
+
+Well, after a substantial delay as promised (:-), here are my notes
+from the last PSA/workshop meeting at cnri.  Note that there are a few
+items that we all need to get moving - paul, you have to post an
+explanation of the recruitment-process for workshop session
+conductors, and then all of us have to send out our solicitations.
+
+Barry and roger, i was supposed to report to you the address of the
+NIST time server - time.bldrdoc.gov is the one i use.  I believe it
+supports a number of network-time protocols - i use 'rdate' on the
+suns and 'netdate' on my linux box with it.  I also understand that it
+is coupled pretty closely with a NIST time-standard atomic clock.  It
+is physically in boulder, but presumably the time synch mechanisms
+account for the distance.  And anyway, who of us cares about
+millisecond absolute accuracy?
+
+
+Here are my notes, in a semi-outline format:
+
+  Landmark first meeting of first interim PSA board, including
+  first interim benevolent dictator-for-life, GvR, in attendance.
+
++ Attendees:
+
+   Barry Warsaw, CNRI
+   Guido van Rossum, CNRI
+   Jim Fulton, USGS
+   Ken Manheimer, NIST
+   Michael McLay, NIST
+   Paul Everitt, CMinds Inc.
+   Roger Masse, CNRI
+
++ Python workshop
+
+   ( my notes for the first part are sparse; after all, i wasn't the
+     official notetaker until later in the meeting...)
+
+   Not clear whether or not USGS will have the necessary internet/
+       mbone connectivity - jim is investigating
+   Discussions about mbone at workshop flailed around finding a
+       station to base an sbus video board that barry has available, i
+       may have a sparcstation IPC to bring.
+   I was left with the impression that there are fundamental
+       questions about whether the effort to set up an mbone broadcast
+       is warranted.
+
+ * **  Marshalling the agenda  **  action item!
+    Paul agreed to be the overall workshop-session coordinator
+    Agreed, on guido's suggestion, each of us would take
+      responsibility for recruiting people (or taking it on
+      ourselves) to handle a workshop session, and/or pieces of it.
+    Division of labor:
+
+   - Paul is going to post something explaining the overall scheme,
+   - Administrative Topics and Introductions: paul
+   - Distributed Computing: guido
+   - Extension Modules and Basic Applications: mike, but jim's
+					       emailing aaron waters
+   - GUI: jim
+   - Python Core: guido
+   - Software Mgmt: ken
+
+  ( Barry, roger: answer to incidental questions about reliable NIST
+  time server, slaved to the atomic clock - time.bldrdoc.gov.  It
+  apparently supports several time protocols, i use rdate on my
+  sun, netdate on my linux system, just 'cause that's what's built
+  in.)
+
++ Discussions re PSA
+
+ - Some suggested purposes of the PSA:
+    Give python credentials - "python is not just any old software
+       off the net", including visibility and formal contact point
+       for python-related questions
+    Coordination of python development and commercial activity
+    Stability of python - branding, forum for fielding user issues, etc
+    Network host making available python and PSA materials
+
+ - Proposal we're (mike?) going to make at python workshop:
+
+    PSA will be a user group, eventually have a network host, and
+    there are efforts in the works for funding (by cnri) to make it a
+    staffed organization.
+
+ - First Interim Board of Directors - a sundry collection of a motley crew:
+<b>
+  * First Interim Chairman: Mike McLay
+  * First Interim Keepers of python.org: 1st interim board, @CNRI
+  * First Interim Keeper of the Notes: Ken Manheimer
+  * First Interim Keeper of the python.org Materials Index: Paul Everitt
+  * First Interim Treasurer: decision postponed until there's money
+  * First Interim Workshop Coordinator: Paul Everitt
+  * First Interim Benevolent Dicator for Life: Guido van Rossum
+</b>
+ - python.org (see "1st interim keeper of...", above):
+
+    A claim on the address has been filed with the NIC, by roger masse
+        it may (?) informally be active, but will only be announced
+        once cnri does or does not make some arrangement for funding
+
+    We will wait to redirect the python mailing list (python-list@cwi.nl)
+        until cnri has officially established a place for python.org
+
+    We will relocate the steering-committed list (python-sc@eeel.nist.gov)
+        to the python.org host asac (As Soon As Convenient) (barry?)
+
+ - Discussion of a procedure for conducting python development proposals
+    All agree that it would be nice to have a regular procedure for
+        fielding and registering proposals for changes of and
+        additions to python.
+    Discussion of jim's recent proposal for a generic object API
+        poses a nice example of several components of such a
+        procedure.
+
+  . Purposes of procedure:
+
+    To help coordinate the process, so independent groups aren't
+        working separately on the same problem/issue
+    Establish formal collection of proposals, so:
+        people can find what's already gone before, and how they went
+        people working on implementation can have a central
+        collection to focus upon
+  . Very preliminary draft of proposal-submission procedure
+    : Champion submits initial proposal to mailing list
+    : Champion fields comments, discussion
+    : If still interested, champion submits followup proposal, for
+          inclusion in "PSA Notes" repository
+  . Notice (who could help it?) that nothing is said so far about
+        formalisms for getting the proposal implemented!
+  . jim, guido, and i agreed to discuss this further
+
+ken
+ken.manheimer@nist.gov, 301 975-3539
+</tstrollo@cnri.reston.va.us></ken.manheimer@nist.gov></mclay@eeel.nist.gov></guido@cnri.reston.va.us></jfulton@qvarsx.er.usgs.gov></rmasse@cnri.reston.va.us></bwarsaw@cnri.reston.va.us></ken.manheimer@nist.gov></pre>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=235725.html">10
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=235725&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Guido van van Rossum adds a new entry to <a href="../index.html$/blogger=guido.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/guido.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D235725&amp;title=Origin+of+BDFL&amp;bodytext=I+believe+I%27ve+tracked+down+the+origin+of+the+term+Benevolent+Dictator+For+Life+%28BDFL%29+to+a+Python+meeting+in+1995.++It%27s+a+blast+from+the+past%21&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D235725&amp;title=Origin+of+BDFL">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D235725&amp;title=Origin+of+BDFL">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/guido.jpg"/></td><td>Guido van Rossum is the creator of Python, one of the major
+programming languages on and off the web. The Python community refers to him as the BDFL (Benevolent Dictator For Life), a title straight
+from a Monty Python skit. He moved from the Netherlands to the USA in
+1995, where he met his wife. Until July 2003 they lived in the
+northern Virginia suburbs of Washington, DC with their son Orlijn, who
+was born in 2001. They then moved to Silicon Valley where Guido now works for Google
+(spending 50% of his time on Python!).</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Guido van van Rossum. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

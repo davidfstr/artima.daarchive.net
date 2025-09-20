@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Stupid datetime testing</title>
+<meta charset="utf-8"/>
+<meta content="Barry Warsaw" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=pumpichank.html">Barry Warsaw's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=251755.html">Discuss</a> | 
+<a href="mailto:?subject=Stupid datetime testing&amp;body= %0AArtima Weblogs %0AStupid datetime testing %0Aby Barry Warsaw %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=251755">Email</a> | 
+<a href="../viewpostP.html$/thread=251755.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=234982.html" title="Open source saves another marriage">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Software Jam Sessions</span><br>
+<span class="ts">Stupid datetime testing</span><br/>
+<span class="as">by Barry Warsaw</span><br/>
+<span class="pd">March 7, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Testing APIs that use the current date and time are a pain because those values are variable.  In Mailman 3 I hit upon a really dumb, simple way to do this that doesn't suck.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>So here's the problem: Let's say you have a database class that is unit
+tested.  I like doctests, but maybe you like Python unittest.  Your class has
+a column (exposed in your ORM class) for the date that the row was last
+touched, which is initialized from today's date.  How do you test this?</p>
+<p>Your test could just ensure that <em>some</em> date was stuffed in the
+attribute/column, but you can't really tell if it's the date you care about
+because that's going to be different every day you run the test.  So this
+solution isn't very good.</p>
+<p>You could change your API to allow you to pass a known date into it, and your
+test could call this extended API, but that's not great for several reasons.
+You'd rather not clutter your API up with extra parameters only used in
+testing, and it means your ORM class now has different logic for testing
+environments and production environments.  So I don't like this much either.</p>
+<p>I'm sure you've thought of your own approaches, including hacking Python's
+standard <cite>datetime</cite> module to stuff in instances that allow you to override
+<cite>datetime.datetime.now()</cite> and <cite>datetime.date.today()</cite>.  I thought of that too!
+Because these are built-in types, you can't just replace those methods, but
+Python does make it fairly easy to subclass built-in types.  So that would
+seem like a good approach except...</p>
+<p>I use the <a class="reference" href="../_/http/storm.canonical.com/index.html">Storm</a> ORM in Mailman 3 and it has very strict type checking on
+its column input values.  Generally this is a good thing, but in this case it
+prevents the subclassing approach because the <cite>DateTime</cite> column type won't
+accept subclasses of the built-in <cite>datetime</cite> type.</p>
+<p>The approach I settled on seems the least sucky to me.  It's also stupid
+simple, so I kind of like it for that reason too!  I wrote a simple wrapper
+class that only returns <cite>now()</cite> and <cite>today()</cite> and I make sure all the testable
+call sites call these methods instead of the <cite>datetime</cite> module's versions.
+The <cite>now()</cite> and <cite>today()</cite> in my utility module then are really instance
+methods of a class which can be told whether it's in testing mode or not.
+When it's not in testing mode, it simply returns <cite>datetime.datetime.now()</cite> and
+<cite>datetime.date.today()</cite> as usual.  When it <em>is</em> in testing mode, it returns
+instead a known date and time, which of course, you can test!</p>
+<p>The class itself has two additional class methods.  One resets the current
+date and time (in testing mode) to the original known values.  The other
+allows you to <em>fast forward</em> the known date and time.  Here's the (stripped
+down) code.  Note that because of the conditional expressions, Python 2.5 is
+required:</p>
+<pre class="literal-block">
+from __future__ import absolute_import, unicode_literals
+
+__metaclass__ = type
+
+import datetime
+
+class DateFactory:
+    """A factory for today() and now() that works with testing."""
+
+    # Set to True to produce predictable dates and times.
+    testing_mode = False
+    # The predictable time.
+    predictable_now = None
+    predictable_today = None
+
+    def now(self, tz=None):
+        return (self.predictable_now
+                if self.testing_mode
+                else datetime.datetime.now(tz))
+
+    def today(self):
+        return (self.predictable_today
+                if self.testing_mode
+                else datetime.date.today())
+
+    @classmethod
+    def reset(cls):
+        cls.predictable_now = datetime.datetime(2005, 8, 1, 7, 49, 23)
+        cls.predictable_today = cls.predictable_now.date()
+
+    @classmethod
+    def fast_forward(cls, days=1):
+        cls.predictable_now += datetime.timedelta(days=days)
+        cls.predictable_today = cls.predictable_now.date()
+
+factory = DateFactory()
+factory.reset()
+today = factory.today
+now = factory.now
+</pre>
+<p>Now, at the call sites, say in your database class, instead of something
+like:</p>
+<pre class="literal-block">
+import datetime
+self.date_created = datetime.date.today()
+</pre>
+<p>You'd write:</p>
+<pre class="literal-block">
+from ... import today
+self.date_created = today()
+</pre>
+<p>And your test would do something like this:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; from ... import factory
+&gt;&gt;&gt; factory.testing_mode = True
+
+&gt;&gt;&gt; thing1 = Thing()
+&gt;&gt;&gt; thing1.date_created
+datetime.datetime(2005, 8, 1, 7, 49, 23)
+
+&gt;&gt;&gt; factory.fast_forward(days=3)
+
+&gt;&gt;&gt; thing2 = Thing()
+&gt;&gt;&gt; thing2.date_created
+datetime.datetime(2005, 8, 4, 7, 49, 23)
+</pre>
+<p>I know there are mocking libraries out there that might help you with this,
+but I also think this is a nice simple approach where you don't want a lot of
+extra mocking scaffolding.  The cost is that you have to be disciplined not to
+use the standard <cite>datetime</cite> module at your call sites.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=251755.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=251755&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Barry Warsaw adds a new entry to <a href="../index.html$/blogger=pumpichank.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/pumpichank.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D251755&amp;title=Stupid+datetime+testing&amp;bodytext=Testing+APIs+that+use+the+current+date+and+time+are+a+pain+because+those+values+are+variable.++In+Mailman+3+I+hit+upon+a+really+dumb%2C+simple+way+to+do+this+that+doesn%27t+suck.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D251755&amp;title=Stupid+datetime+testing">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D251755&amp;title=Stupid+datetime+testing">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>Barry Warsaw has been developing software and playing music for more than 25 years.  Since 1995 he has worked in Guido van Rossum's Pythonlabs team.  He has been the lead developer of the JPython system, and is now the lead developer of GNU Mailman, a mailing list management system written primarily in Python.  He's also a semi-professional musician.  Python and the bass are his main axes.  Music and software are both at their best when enjoyed, participated in, and shared by their enthusiastic fans and creators.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Barry Warsaw. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

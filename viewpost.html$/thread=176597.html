@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The JVM as an (Un)Common Language Runtime</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=176597.html">Discuss</a> | 
+<a href="mailto:?subject=The JVM as an (Un)Common Language Runtime&amp;body= %0AArtima Weblogs %0AThe JVM as an (Un)Common Language Runtime %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=176597">Email</a> | 
+<a href="../viewpostP.html$/thread=176597.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=174603.html" title="The Death of the General-Purpose IDE and the Last Java Developer">Previous</a> | 
+<a class="sl" href="thread=178569.html" title="The Muck That Slows You Down">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">The JVM as an (Un)Common Language Runtime</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">September 15, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Efforts to make non-Java languages perform well on the JVM accelerated in recent years. The benefits of turning the JVM into a highly-optimized, general-purpose execution environment are many, but so are the challenges.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>This week's most talked-about Java news was the decision by Sun to hire the two key figures behind the JRuby project, with the ostensible goal of creating a first-class Ruby implementation on the JVM (see the Artima interview with the JRuby project leads, <a href="../_/http/www.artima.com/forums/flat.html$/forum=276&amp;thread=175857.html">Sun's JRuby Move</a>). In an email to Artima, Tim Bray, Sun's director of Web technologies, noted that:</p>
+<blockquote><p>Looking back ten years, it might have been really smart, at the birth of Java, to brand the platform and the language separately. But during Java's early years, the technology was hitting such a big sweet spot that it was easy to see the whole thing—VM, libraries, and language—as a single engineering triumph. Microsoft was smart to get out there and evangelize that a virtual machine and API repertoire aren't necessarily tied to a language. On the engineering front, we've been pretty serious about going multi-language for some time now, [for example,] with the work on Rhino and the proposed new dynamic-method-dispatch bytecode.</p></blockquote>
+<p>Robert Tolksdort's <a href="../_/http/www.robert-tolksdorf.de/vmlanguages.html">Languages for the Java VM</a> page currently lists close to 200 languages that can be executed on the JVM, in addition to Java itself. Non-Java languages on the JVM include anything from scripting languages, such as JavaScript or Ruby, to a whole array of Lisp-like languages, as well as <a href="../_/http/blogs.sun.com/herbertc/entry/project_semplice_visual_basic_for/index.html">Visual Basic</a>, COBOL, and assemblers that directly target JVM bytecode.</p>
+<h1>Performance, Libraries, and Politics</h1>
+<p> As Tim Bray alludes to, not only has the number of languages targeting the JVM been increasing, but so has the quality of many of those implementations. Indeed, many languages that target the JVM as an execution environment may find that the JVM can execute code written in a target language better in some cases than natively compiled code can. Here, again, is Tim Bray:</p>
+<blockquote>
+<p>Currently, native Ruby runs mostly in interpreted mode. If we arrange for JRuby to be compiled into Java bytecodes, it'll be running on the JVM, which is one of the world's most heavily-optimized pieces of software. So JRuby might end up having a general performance advantage.</p>
+<p>More specifically, Sun is leading the charge toward highly-parallel multicore computing with the T1000 and T2000 "Coolthreads" chips, which are really well-suited to server-side Web apps. The native Ruby implementation of threads is fairly limited and may not take good advantage of this kind of CPU. JRuby uses native Java threads, which are very highly tuned; so in the particular case of highly-threaded parallel code, there's a pretty good [chance] that JRuby will be a performance winner on modern silicon.</p>
+</blockquote>
+<p>In addition to improved performance, another advantage of executing non-Java code on the JVM is that that non-Java code in most cases will be able to take advantage of the huge array of Java class libraries. Thomas Enebo, one of the JRuby project leads, noted that, </p>
+<blockquote><p>Java has a huge corpus of libraries... In some semblance most libraries you can think of have already been implemented in Java, usually as an open source package. JRuby allows Ruby to access any Java class and interact with it as if it was written in Ruby. This means a Ruby programmer has a much larger toolbox at their disposal.</p>
+</blockquote>
+<p>Interaction between Java and non-Java languages inside the JVM works in both ways. When Tor Norbye <a href="../_/http/blogs.sun.com/tor/entry/semplice_keynote_demo/index.html">demonstrated</a> Project Semplice, allowing Visual Basic code to run on the JVM, he also pointed out the benefit of having a JSF page invoke a VB component running inside the JVM:</p>
+<blockquote><p>This compiles the BASIC file down to a Java bytecode class, which is located and instantiated by the JSF managed beans machinery at runtime. As a result, the application works and the JSF framework has no idea it's talking to BASIC code.</p>
+</blockquote>
+<p>Having the ability to execute many types of non-Java application on the JVM can bring a certain level of freedom to developers, since a primarily Java-centric enterprise IT shop may let you code up your app in, say, Ruby on Rails, and then simply run that app inside a highly available, clustered, and possibly even virtualized JVM environment.</p>
+<p>With the recent activity around supporting non-Java languages on the JVM, talk about the productivity benefits of dynamically typed languages, and with a naturally occurring fatigue that typically sets in with almost any technology or language with time, it may be an opportune moment for the Java powers-that-be to tweak the JVM and position it as a high-performance, general-purpose execution engine. In other words, it may be time, as Tim Bray said, to "brand the language and the platform separately."</p>
+<p>Such a move would pit the JVM as a competitor against Microsoft's Common Language Runtime (CLR). Both platforms could converge to being about execution, and not primarily about language (Microsoft has already positioned the CLR that way).  These platforms would then compete in providing a sophisticated array of execution facilities to code written in various languages. </p>
+<h1>How Well Can the JVM Handle Non-Java Code?</h1>
+<p>Given that both the JVM and the .NET CLR are Turing-complete, it should be possible to execute any program that runs on the CLR on the JVM as well. However, it is apparent that making many non-Java languages perform <em>well</em> on the JVM—or on the CLR as well—is not a trivial pursuit. That's partly the result of mismatch between key constructs in the JVM and non-Java languages. About implementing Ruby on the JVM, Charles Nutter noted that, </p>
+<blockquote>
+<p>For much of Ruby we've had to implement a "VM on top of a VM" that bridges that gap. We do not have control over the Java stack...so we maintain our own. We do not have a dynamic invocation bytecode in the JVM...so we use our own method. We don't have support for closures...so we simulate them with movable scopes and command implementations. However our recent efforts have aimed toward componentizing these pieces; as the JVM evolves to support them, we'll be able to toss them out one by one.</p>
+</blockquote>
+<p>Thomas Enebo, the other JRuby project lead, added that,</p>
+<blockquote><p>We have to emulate a set of language semantics which do not map well with the JVM's underlying design. Those language semantics are sometimes quirky and reflected some evolutionary set of changes which need to be properly reflected in our implementation. We are getting pretty close to matching parity with the C implementation, but some of the last cases will be a challenge.</p></blockquote>
+<p>In a blog post earlier this year, <a href="../_/http/debasishg.blogspot.com/2006/03/non-java-languages-on-jvm.html">Non Java Languages on the JVM</a>, Debasish Ghosh summarized some of the technical challenges implementing a language on either the CLR or the JVM, noting that, 
+
+<blockquote><p>There are still confusions regarding what should be parts of the language and what should be supported at the VM level... However, ... it is just a question of the ease of implementation and use and the speed of execution on the VM platforms.</p>
+</blockquote>
+<p>Gosh specifically highlighted four challenging areas in implementing dynamic languages on the JVM. The following are excerpts from his blog post: </p>
+<blockquote>
+<ul>
+<li><strong> invokedynamic in JVM</strong> Dynamically typed languages like Python, Ruby etc. perform method dispatch by name, and not by type - invokedynamic-enabled JVM will ensure "that the verifier won’t insist that the type of the target of the method invocation (the receiver, in Smalltalk speak) be known to support the method being invoked, or that the types of the arguments be known to match the signature of that method. Instead, these checks will be done dynamically."<br/><br/></li>
+<li><strong> Hotswapping</strong> The main idea is to allow code changes on the fly, while they are running. The full capability of hotswapping implies any kind of change to be supported, addition/modification/removal of methods and attributes including changes in inheritance hierarchy.<br/><br/></li>
+<li><strong> Tail Calls</strong> Functional language programmers use recursion to implement loops - however elegant it may look, recursive calls consume lots of stack space. Hence these languages employ all sorts of optimizations to make efficient loop implementation possible with constant stack space. Tail call optimization is one such technique, which replaces calls in tail position with jump statements. A call is said to be in a tail position if it is the last statement of a function... </li></ul></blockquote></p>
+</p>Language implementers want tail call support in the JVM. This is not as simple as it may seem... Various techniques have been proposed and used in the last decade or so for generic tail call optimization. But none of them have been found to be suitable for an efficient implementation on the JVM.
+<p><strong> Continuations</strong> Just think of [it] as yet another semantics of function call implementation, where instead of returning value to the calling function, the parent function tells the child function which function to pass the result to. No function call ever returns. The child function does this with an object named Continuation, which it gets from the parent. A continuation is an object which takes a snapshot of the current function's lexicals and control stack - when invoked, the complete state is restored from the calling chain...</p>
+<p>I think the biggest challenge of implementing continuations support in the JVM is to follow the principle of "pay for it only if you need it", since not many languages actually need them... Once again, the real challenge is stack management.</p>
+
+
+<p>Overcoming these technical challenges may be possible with sufficient resources. Indeed, under the hood, some JVM implementations are better prepared to handle some of these features than others are. For instance IBM's JVM seems to be able to handle recursive tail calls fairly well (see the IBM DeveloperWorks article, <a href="../_/http/www-128.ibm.com/developerworks/java/library/j-diag8.html">Improve the performance of your Java code </a>).</p>
+<p>To what extent do you believe the effort to make the JVM a general-purpose runtime is worth the investment? If so, what will that mean to non-JVM implementations of languages, such as Ruby? If both the JVM and Microsoft's CLR evolve in the coming years into truly high-performance, secure execution environments for commonly used languages, what will that dichotomy mean to developers?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=176597.html">30
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=176597&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D176597&amp;title=The+JVM+as+an+%28Un%29Common+Language+Runtime&amp;bodytext=Efforts+to+make+non-Java+languages+perform+well+on+the+JVM+accelerated+in+recent+years.+The+benefits+of+turning+the+JVM+into+a+highly-optimized%2C+general-purpose+execution+environment+are+many%2C+but+so+are+the+challenges.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D176597&amp;title=The+JVM+as+an+%28Un%29Common+Language+Runtime">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D176597&amp;title=The+JVM+as+an+%28Un%29Common+Language+Runtime">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

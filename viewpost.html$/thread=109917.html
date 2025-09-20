@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>A Week on a SunRay  A Travelog. Part I.</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=109917.html">Discuss</a> | 
+<a href="mailto:?subject=A Week on a SunRay  A Travelog. Part I.&amp;body= %0AArtima Weblogs %0AA Week on a SunRay  A Travelog. Part I. %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=109917">Email</a> | 
+<a href="../viewpostP.html$/thread=109917.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=99453.html" title="The Vanishing Middle">Previous</a> | 
+<a class="sl" href="thread=157483.html" title="What Virtualization Means to Developers">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">A Week on a SunRay  A Travelog. Part I.</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">May 16, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Wherein I recount my experience of using a thin client over a DSL.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+Director Morgan Spurlock got the idea for the movie <a href="../_/http/www.supersizeme.com/index.html"><em>SuperSize Me!</em></a> while sitting on a sofa after a Thanksgiving dinner, stuffed, unable to move. The idea seemed simple enough: Go on a McDonald's diet for 30 days straight   eat nothing but McDonald's food, and document each day what happens. He did just that, and while I'm no fan of the movie, you can see for yourself the effects. 
+<p>
+
+Starting this week, I will go on a reverse Spurlock diet: For a week, I will use a <a href="../_/http/en.wikipedia.org/wiki/Thin_client/index.html">thin client</a> to do my very technical work of producing software and other content, instead of using a PC or a laptop. While using thin clients over a high-bandwidth corporate network is not a novelty, I have only a plain DSL connection at my disposal. My desktop will reside on a remote server across the country, and I will be connected to that desktop via a DSL. Because some software I work on cannot be moved to that remote desktop, I will still use my laptop during the week. But for all other work, I will use the thin client.
+<p>
+
+My motivation for experiencing how thin clients work is to find out if thin clients can help solve what I perceive is a crisis on user desktops. For the past three years, I've been running a company that provides software and services to small businesses. Most of our customers cannot afford a dedicated IT manager to look after their desktops, which are almost exclusively Windows-based. As a result, most customers experience the following desktop lifecycle: 
+<p>
+<ol>
+<li><strong>Clean Slate.</strong> The customer purchases a new PC. When he receives it, he calls the local computer guy to set the PC up. He then calls us to help walk them through installing our software, which they use to run the business. <p></p></li>
+<li><strong>Gradual Decline.</strong> The way most computer guys set up a new PC is to provide the user access to the administrative account. The reason is simple: Leaving the admin account as the default allows the user to install any software without having to call the computer guy. Since most users don't understand, or care about, the difference between administrative and less privileged accounts, they don't understand the concept of switching between accounts. They also tend to forget account passwords, especially in environments with high employee turnover. <p></p></li>
+<li><strong>Crisis.</strong> Daily use of a network-connected computer with full administrative privileges leads to the crisis stage: Over time, viruses, spyware, and effects of the business owner's children playing on the computer take hold, the OS slows to crawl, eventually preventing critical business functions from being performed at crucial moments, such as making a sale or providing a quote. <p>
+
+In the moment of crisis, the only contact that business owner can rely on is the software vendor whose product they use to run the business. After all, that's the only piece of software that really needs to work, and in the crisis stage, that software also malfunctions. With luck, and after a lengthy and expensive remote crisis management session on the phone or on the Web, we can either restore the user's desktop to some stage of normalcy, or have to suggest to the user to just wipe clean his OS, and install and start over. The circle now comes full, with the PC returned to a more or less clean state. </p></li>
+</ol>
+
+That devil's circle has led me to believe that <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=46687.html">software is now a service business</a>, and that software vendors can provide greater value with service than with their software products, simply because desktop crisis management service is what users need the most. This presents an enormous challenge to ISVs delivering mission-critical software, and makes such software practically unavailable to small enterprises unable to afford huge consulting and support fees. But observing this cycle led me to believe that there must be a way to break out of this circle, and that crisis can be turned into an opportunity. 
+<p>
+
+I got a glimpse of that better way when I visited an acquaintance who is a Sun exec. He had neither a PC nor a laptop in his house, and instead was conducting his entire business via a thin client, a <a href="../_/http/www.sun.com/sunray/sunray1/index.xml">SunRay</a>, residing strategically on his kitchen counter. The most interesting aspect was not the SunRay itself, but the kind of performance he was able to obtain from it via a simple DSL line. 
+<p>
+
+I contacted the Sun folks in charge of the SunRays, and was promptly provided with the device to try out, along with an account on Sun's prototype desktop grid facility. The following is a brief diary of the first few days of my living thin. I will add to it in the coming days. 
+<p>
+<h2>
+Day 1.
+</h2>
+
+I received the SunRay via the local Sun office in Southern California. The thing comes in a single box, containing the SunRay itself, which is about the size of a largish book, a keyboard and a mouse. This version of the SunRay, the 1G, does not include a display, and can instead work with any PC monitor via a 15-pin SVGA connector. Since I have an old Sun monitor lying around, which is essentially a Sony with the Sun logo on it, I will just connect the SunRay to that monitor. The keyboard and mouse are USB-based.
+<p>
+
+The back of the SunRay allows four USB inputs, an Ethernet input, an SVGA video connector, inputs for audio devices and an S-video connector for digital video. Of course, there is a slot for a power cable as well. The front of the unit has a smart card reader, a microphone input, and a headphone output. The SunRay 1G is lighter than a 12 inch Apple PowerBook.
+<p>
+<h2>Day 2.</h2>
+
+I finally have time to set up the SunRay. The instructions in the box are minimal, but the Sun folks provided me with a few lines of instructions on how to connect to the Sun prototype grid facility. Apparently, they loaded network settings on the unit before shipping it to me, so this thing should just work right out of the box.
+<p>
+
+OK, so I connect the keyboard, mouse, and monitor, and plug an Ethernet cable to my Linksys DSL router and the SunRay. Then I turn on the monitor and plug the power cable into the device (the 1G doesn't have a power switch). 
+<p>
+The monitor immediately wakes up, and displays an hour-glass like image. I guess it's indicating that it's trying to connect to the network. On the top of this hour glass, I notice a DHCP-assigned IP address, which must have been handed to the SunRay by my router. The lower end of the hour glass displays an IP address that must be the address of the network the SunRay is trying to connect to.
+<p>
+
+About 15 seconds pass. Nothing's happening. I start to wonder if the SunRay can make the connection to the remote desktop server via the Linksys router. Since the router performs network address translation, and also acts as a firewall, can the SunRay navigate itself through that NAT layer? 
+<p>
+
+Another 5 seconds pass. Then I can finally see the hourglass on the screen change. After about another 5 seconds, the screen turns blank, and then immediately switches to a Solaris login screen. Whoa, so I'm connected to the Sun network.
+
+I enter the login name and password the Sun folks had assigned to me, and click on the login button. So far, the mouse and keyboard input feels as though I was typing on a local machine, whereas, in fact, the login screen is running on a remote server.<p>
+
+In a few seconds, I get a desktop that appears very much like the GNOME desktop I use every day on my laptop. It has some differences: the theme and some buttons and icons. So this is the Java Desktop System. So far not much Java, save for the neat Java logo desktop background. 
+<p>
+
+I click on the Launch button on the lower task bar, and the program options menu appears. That menu is exactly the same as the GNOME launch menu,  which, in turn, is very similar to the Windows Start menu. While I can now sense that the desktop is running across the network, the screen redraws are very fast.
+<p>
+
+I fire up a Web browser, which happens to be Mozilla 1.4 on this Sun desktop. I had used Mozilla on my laptop until I could get Firefox working, and Mozilla was always very sluggish compared to Firefox. Now, however, Mozilla seems to start up fast, taking me to the Sun home page as a default. 
+<p>
+
+So far, so good:  about six minutes from unpacking the device to the point of browsing the Web and being able to use the desktop. <p>
+
+I will post more comments in the coming days.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=109917.html">23
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=109917&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D109917&amp;title=A+Week+on+a+SunRay+%C2%96+A+Travelog.+Part+I.&amp;bodytext=Wherein+I+recount+my+experience+of+using+a+thin+client+over+a+DSL.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D109917&amp;title=A+Week+on+a+SunRay+%C2%96+A+Travelog.+Part+I.">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D109917&amp;title=A+Week+on+a+SunRay+%C2%96+A+Travelog.+Part+I.">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

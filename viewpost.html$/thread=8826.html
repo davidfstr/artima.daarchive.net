@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Stunting a Framework</title>
+<meta charset="utf-8"/>
+<meta content="Michael Feathers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=mfeathers.html">Michael Feathers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=8826.html">Discuss</a> | 
+<a href="mailto:?subject=Stunting a Framework&amp;body= %0AArtima Weblogs %0AStunting a Framework %0Aby Michael Feathers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=8826">Email</a> | 
+<a href="../viewpostP.html$/thread=8826.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+<a class="sl" href="thread=11070.html" title="Aren't C++ Programmers People Too?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Let's Reconsider That</span><br>
+<span class="ts">Stunting a Framework</span><br/>
+<span class="as">by Michael Feathers</span><br/>
+<span class="pd">July 31, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Ever download a framework and feel overwhelmed?  Maybe there is a way around that.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I ended up creating a little framework the other day.  I was working on a set of classes to solve a problem and then bang! All of a sudden I saw how I could extend them to solve a whole set of problems.  "Wow," I thought, "if I package these classes nicely and put them someplace conspicious I'll be famous.  People will download the framework and extend it. They'll sing my praises far and wide... and.. and.. I'll get real email again!"
+
+<p>I sat at my computer with a beatific grin.  Then, the hammer fell.  "Yes," I  thought, "I will be known as a great framework developer... a framework developer... let's  think about great frameworks... erm.. there aren't many are there?  In fact, even the good ones are a pain in the ass, aren't they?  There was that time when we downloaded framework X and it took quite a bit of time to learn how to use it, and that other time when we thought it would be useful if only it did that, but we spent the next week trying to force it and.."  
+
+<p>I'm sure many of you have been in the same situations.  Framework development is hard, framework extension is hard, and framework use is hard, yet we keep trying.  Why do we do it?  Mainly because we want to create leveragable work and leverage the work of others.  If we use someone's else framework, we may save some time.  Moreover, we've benefited from someone's "crystalized thought," thought in the form of working code.  The code shows a proven way of doing things and if it's well-designed it can accomodate our thoughts and we can roll them back to the community.
+
+<p>Sounds good, eh?  How does it go wrong?  
+
+<p>Many frameworks start out simple.  Someone has an idea, they code up a few classes and then tell their friends about it.  People download the code and say "hmmm... if only this method was factored this  way, I'd be able to subclass and do X."  Emails fly to the framework developer and invariably, the code becomes more complicated.  What started out as three or four classes becomes a dozen or two.  New users have to scramble over a couple dozen classes to see what makes them tick.  When you unfocus your eyes a bit, you can still see those simple classes, but only if you remember them from the first version.
+
+<p>The task for the framework developer is no easier.  He has to make sure the changes he makes don't impact the users.  By necessity, he'll be conservative; there will be directions that the code can go easily and directions it can never go because it will break too many clients.  What we're left with is a lot of frameworks which extend into a particular set of problems very well, but then drop off like a continental shelf when we wade away from that set.
+
+<p>The sad part about these framework problems is that we cause them by trying to make frameworks more useful.
+
+<p>"Can we get the framework to do this?  Yes, but we have to separate these concerns, break this class in two.. there it's done.  Uh-oh, it's a little harder to understand now, but it is useful, let's roll the change in."  
+
+<p>Compare that to...  
+
+<p>"Can we get the framework to do this?  No, we'd have to put in a template method here and generalize this... and now the method names are all wrong, but if we change them we break all clients so no, we're never going to let the framework do that."
+
+<p>It's hard to win.  Framework developers try to write classes that don't have to change when new features are added, and often that works, but each time that it doesn't, the framework gets a little more baroque and a little harder to understand.  Over time frameworks show their age, but maybe there is a way around that.
+
+<p>A few years ago, I ported JUnit to C++.  It was a port with high allegiance to the original design, it treated C++ as if it were Java and it used the full arsenal of C++ features: templates, exceptions, the "standard" library, etc.  I released it and the email started coming.  "We like your CppUnit code but we have a problem, we can not use exceptions in our environment."  Another: "CppUnit is great, but we are running in an embedded system and we can not use new and delete."  And another: "On our team, we can't use the standard library, we use string and collection classes from vendor X."
+
+<p>From that experience, I learned a couple of things.  I learned that the largest cross platform compatible subset of C++ is C.  I also learned that it was better in many cases to tell someone how to solve a problem in their local copy of the framework than it was to try to roll the solution into everyone's code.  Sure, as soon as they modified their local copy, it became "their" framework, but the problem was solved.  And, in fact maybe it was better that it was "their" framework.  It occurred to me that if I made  a promise that I would never again update the framework, users could really own the framework.  It's growth would be stunted,  but since less is more, it would remain highly flexible and above all, easy to understand.  Instead of sharing full sets of framework source, people can get together and share tips on refactoring and extending their copies of the original simple seed.  I've tried this out with a brutally stunted framework called CppUnitLite and it seems to be working fine.
+
+<p>Does all of this sound drastic?  Maybe it is, but I think that the idea is applicable more often than it would seem.  Take a second to think about all of the frameworks you've used.  How many would have been better off if they were stunted at, say, the second release?  If you still had the second release and you knew there wasn't going to be a third would you be happy growing that framework?  Would you feel better downloading that version and trying to understand it than you would the current release?  And, would you feel better knowing that the framework you get is a gift, something you can own, refactor and use without having your code stepped upon by later versions?
+
+<p>There are some frameworks that I always want the latest and greatest version of, and there are some that I just want the core of; I take the latter and grow them as I need to.  Right now, I don't know how I decide to take each tack, but I do know that there aren't many of these officially stunted frameworks around.  If I had to write down some criteria for them, I'd say that they should be small enough to explain in an hour and after that hour you should feel comfortable changing them.  When a framework is that small and understandable it is easier to adopt.  For teams that need leverage the most, a very short learning curve can make all of the difference in the world.
+
+<p>It's something to think about..  The next time you are tempted to write and distribute a framework, run a little experiment.  Imagine the smallest useful set of classes you can create.  Not a framework, just a small seed, a seedwork.  Design it so that it is easy to refactor.  Code it and then stop.  Can you explain it to someone in an hour?  Good.  Now, can you let it go?  Can you really let it go?
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=8826.html">15
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=8826&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michael Feathers adds a new entry to <a href="../index.html$/blogger=mfeathers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/mfeathers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D8826&amp;title=Stunting+a+Framework&amp;bodytext=Ever+download+a+framework+and+feel+overwhelmed%3F++Maybe+there+is+a+way+around+that.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D8826&amp;title=Stunting+a+Framework">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D8826&amp;title=Stunting+a+Framework">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/michaelfeathers.jpg"/></td><td>Michael has been active in the XP community for the past five years, balancing his time between working with, training, and coaching various teams around the world. Prior to joining Object Mentor, Michael designed a proprietary programming language and wrote a compiler for it, he also designed a large multi-platform class library and a framework for instrumentation control. When he isn't engaged with a team, he spends most of this time investigating ways of altering design over time in codebases.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Michael Feathers. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

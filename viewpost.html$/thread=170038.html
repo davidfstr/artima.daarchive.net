@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Web Frameworks Jam and Turbogears</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=170038.html">Discuss</a> | 
+<a href="mailto:?subject=The Web Frameworks Jam and Turbogears&amp;body= %0AArtima Weblogs %0AThe Web Frameworks Jam and Turbogears %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=170038">Email</a> | 
+<a href="../viewpostP.html$/thread=170038.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=168625.html" title="Testing Python CGIs">Previous</a> | 
+<a class="sl" href="thread=172953.html" title="Subduing CLASSPATH">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">The Web Frameworks Jam and Turbogears</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">July 27, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I think I'm really starting to get this "event" thing down. I can tell because, at the end of the "Web Frameworks Jam," half the people were saying "when are we going to do this again?"
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Admittedly it was a small group—eight plus me—but I had as much fun and learned as much as I think I possibly could have, so it didn't really matter. And the small group was actually so nice that I even thought of limiting the size in the future. The manageability alone was great: we could all go to lunch together, hikes were much easier to coordinate, and everyone fit easily into the house and kitchen during barbueques.
+
+<p>It's very probable that the next event, which I hope to hold before the end of the year, will be a TurboGears Jam, because a few of us learned enough about it to jumpstart everyone else in a group, and because it seems worthwhile to focus on one framework (plus this is the one that my team liked the most!).
+
+<h1>Blogs and Podcast</h1>
+<p>Here are some blogs and photos about the event:
+<ul>
+<li><a href="../_/http/www.srtsolutions.com/public/blog/60881/index.html">http://www.srtsolutions.com/public/blog/60881</a>
+<li><a href="../_/http/www.jroller.com/page/Sandymountster/$/anchor=yep_we_had_fun1/index.html">http://www.jroller.com/page/Sandymountster/?anchor=yep_we_had_fun1</a> (click on the photo to see lots of pictures)
+<li><a href="../_/http/www.jroller.com/page/Sandymountster/$/anchor=web_jam_rough_notes/index.html">http://www.jroller.com/page/Sandymountster/?anchor=web_jam_rough_notes</a>
+<li><a href="../_/http/arnuff.blogspot.com/index.html">http://arnuff.blogspot.com/</a>
+<li><a href="../_/http/www.yepthatsme.com/2006/07/18/web-frameworks-jam-day-1/index.html">http://www.yepthatsme.com/2006/07/18/web-frameworks-jam-day-1/</a>
+<li><a href="../_/http/www.yepthatsme.com/2006/07/19/web-frameworks-jam-day-2/index.html">http://www.yepthatsme.com/2006/07/19/web-frameworks-jam-day-2/</a>
+<li><a href="../_/http/www.yepthatsme.com/2006/07/20/web-frameworks-jam-day-3/index.html">http://www.yepthatsme.com/2006/07/20/web-frameworks-jam-day-3/</a>
+<li><a href="../_/http/www.yepthatsme.com/2006/07/21/web-frameworks-jam-wrap-up/index.html">http://www.yepthatsme.com/2006/07/21/web-frameworks-jam-wrap-up/</a>
+</li></li></li></li></li></li></li></li></ul>
+<p>You can hear <a href="../_/http/www.mindviewinc.com/mediacast/interviews/Index.html">a podcast that we recorded at the end of the workshop </a>. From this, you'll find out that we broke up into three groups. One worked with the Google Web Toolkit (with the help of Jim White, who had experience with it), one worked with Spring and Hibernate (although mostly Spring), and Barry Hawkins, Dianne Marsh and myself worked with <a href="../_/http/www.turbogears.org/index.html">TurboGears</a>.
+
+<h1>Installation</h1>
+<p><b>easy_install</b> rocks, and that's what TurboGears uses. Python finally has a system to rival Perl's CPAN, and it's about time. Philip Eby really put a lot of thought into <b>easy_install</b>, and it should be part of the standard Python library.
+
+<p>Something I'd like to see is all the optional libraries installed as part of the TurboGears <b>easy_install</b>, because those libraries are often used in the tutorials. Tutorials should be created with the attitude that any little setback is going to cause some percentage of people to give up, or postpone it and maybe not come back.
+
+<p>I've been learning a bit more about Python deployment. For example, I started using a GoDaddy account for downloads, and then I began programming on it; it supports Python 2.4. Naturally, GoDaddy controls the Python installation so you cannot just install the necessary TurboGears packages in the <b>site-packages</b> directory. However, the only thing you must actually do is put those files someplace and then provide the proper path information so that Python can import the packages. This appears to be feasible on GoDaddy. I could of course install TurboGears on my own server, but I have a fascination with trying to see how far a cheap service like GoDaddy can be pushed.
+
+<h1>What TurboGears Does</h1>
+<p>The only web programming I've done is with CGI (C++, Python and a little PHP), Java (Servlets, JSPs and JDBC, but only in an educational context and never "in anger," and EJBs just from a theoretical and generally puzzled perspective), a bit of PHP, and a fair amount of Zope. So I, like many at the workshop (and I suspect many people in the business), still don't have that much of a sense of web frameworks in general. I think one would need to work with more of these before the general sense of them would begin to dawn.
+
+<p>I did find, however, that TurboGears gave me a nice perspective on the problem it is intended to solve. I think this is the first time that a web framework's functionality has been so obvious (admittedly, I may have been struggling with the "web problem" long enough that it's time for an epiphany).
+
+<p>I think that the TurboGears philosophy of cherry-picking and assembling the "best of breed" tools is a good one. Of course, what constitutes "best of breed" is determined by Kevin Dangoor and his team, but from what I've seen so far I'm pretty happy to let him do that research and make those decisions.
+
+<p>The experience I often have with libraries and frameworks consists of the "point of disconnect." That is, things make sense for awhile and then at some point an idea is introduced that feels slightly wonky. That's usually the point where the designer's model got stretched too thin, or their domain knowledge was lacking.
+
+<p>So far, everything about TurboGears has fit nicely into my head in a very straightforward fashion, elegantly and what we often refer to as "pythonic." In particular, this is to me the clearest example of where the division into model-view-controller makes sense. The <b>tg-admin quickstart</b> command even produces files called <b>model.py</b> and <b>controllers.py</b>. In fact, the only thing I would call a hiccup in all this is the naming of the <b>@expose</b> decorator. It took us a fair amount of time to figure out what it meant, whereas if it had been named <b>@view</b> instead, it would have been much more obvious. (I'm guessing that <b>expose</b> came from CherryPy, but there's no reason that the TurboGears decorator couldn't be renamed).
+
+<p>You can start every project using <b>tg-admin quickstart</b>. This provides enough of a framework to actually run, so you can get "hello, world" for you application right away, and then begin adding to it. There's even support for unit testing, which Barry looked at and found to be adequate (we often relied on him for opinions, because he's built enterprise systems using other frameworks, notably Java).
+
+<h1>The Model, aka Database</h1>
+<p>The "model" support provided by TurboGears is about easy connection to the database. Of course, the actual model for an application usually comprises more than this, notably business logic. However, in TurboGears that part is considered to vary too significantly between projects and so you write that code yourself (my impression is that EJB was about trying to reuse business objects, and that didn't seem to work out so well).
+
+<p>Once you run <b>tg-admin quickstart</b>, you go into the <b>dev.cfg</b> file and tell it how to connect to your database; this is a single-line URI similar to what you do for JDBC. The tutorial suggests sqlite, but we found MySQL to be more straightforward—although you do need to create the database and establish permissions, this is what you normally have to do with a database anyway.
+
+<p>Although I do not have broad experience with object-relational mapping (ORM) techniques, and Alex Martelli has said that every one that he's seen makes him ill, the one used by TurboGears, called SQLObjects, seems to me to be quite elegant and reasonable. It performs the most common operations without requiring you to write SQL, but if you need to do something special it's easy to drop into SQL. This seems like a good compromise to me.
+
+<p>You create a database model component by writing a class containing static fields and inheriting from <b>SQLObject</b>. Here's an example for a comment collector:
+
+<pre><b>
+class Comment(SQLObject):
+    name = UnicodeCol()
+    email = UnicodeCol()
+    body = UnicodeCol()
+</b></pre>
+<p>When you run <b>tg-admin sql create</b>, you'll automatically create a table in your database called <b>comment</b>, containing 4 fields: the three you see above, plus an autoincrement <b>id</b> field to uniquely identify each object. You can access <b>id</b> programmatically, and you can create "alternate ID" fields which can also be used to look up objects.
+
+<p>When you create a new <b>Comment</b> object, SQLObject will create a new row in your database. When you assign to one of the fields, SQLObject will update that row (you can turn on batch mode for more efficiency). You can also do things like joins and foreign keys when you define the fields in an object.
+
+<p>SQLObject is not limited to creating its own databases. You can work with an existing database by setting a metadata tag in the class.
+
+<p>It appears that, by the time version 1.0 of TurboGears comes out, they will be using SQLAlchemy because it is significantly faster. However, you will still be able to continue using the syntax of SQLObject, which will be automatically adapted to SQLAlchemy.
+
+<h1>The Controller</h1>
+<p>The structure of the controllers defined in the <b>controllers.py</b> file that <b>tg-admin quickstart</b> generates for you comes from the CherryPy server that TurboGears has selected for the controller system.
+
+<p>For each page in the system, you create controller code as a method in a class, then you indicate to CherryPy (via TurboGears) that you want this method to be called whenever the page is visited. For example, here is the <b>controllers.py</b> file that <b>tg-admin quickstart</b> creates for you:
+
+<pre>
+import turbogears
+from turbogears import controllers
+
+class Root(controllers.Root):
+    @turbogears.expose("test.templates.welcome")
+    def index(self):
+        import time
+        return dict(now=time.ctime())
+</pre>
+<p>You can name your controller class anything you'd like, but it must inherit from <b>controllers.Root</b>. The <b>@expose</b> decorator (which, as I previously mentioned, I'd like to be <b>@view</b> instead) tells the method where it should hand off its data and control when it's finished; in this case it's the kid file <b>test/templates/welcome.kid</b>. The name of the method becomes the last part of the URL used to invoke that method.
+
+<p>If you are submitting a form to one of these methods, the form variables appear as named arguments. So in my comment-collector, if the form contains the fields <b>name</b>, <b>email</b> and <b>body</b>, the controller could look like this:
+
+<pre>
+import turbogears
+from turbogears import controllers
+
+class CommentCollector(controllers.Root):
+    @turbogears.expose("commentcollector.templates.store")
+    def store(self, name, email, body):
+        Comment(name=name, email=email, body=body)
+        return dict()
+</pre>
+<p>The <b>@expose</b> decorator indicates that "store" is a legal page to call, and that the resulting page will be displayed using <b>commentcollector/templates/store.kid</b>.
+
+<p>When you create an SQLObject class, it automatically makes a constructor for you that allows you to pass in the fields for your class. By creating a <b>Comment</b> object, I automatically insert a new row into the database.
+
+<p>When you return a value from the method, you return it as a dictionary (a Python <b>dict</b>, aka map or associative array). Ordinarily the results will be displayed via a Kid template, in which case the dictionary is transparently available inside that template. You can also redirect to another page. It's even possible to display the results as JSON (a kind of second-generation version of AJAX) by simply annotating with <b>@expose("json")</b>. MochiKit is also integrated into TurboGears.
+
+<p>You can create or import multiple classes in your <b>controllers.py</b> file, which allows you to partition functionality into classes that might be reusable.
+
+<h1>The View</h1>
+<p>You display pages using the <a href="../_/http/www.kid-templating.org/language.html">Kid templating language</a>. This is a simple syntax added on top of HTML, so learning to use it is not onerous. As mentioned earlier, the dictionary that you return from your controller method is automatically passed in and available inside the Kid template. So if you wanted to create a page displaying the comment, after writing a controller method that returns a dictionary with the appropriate data, you could insert that data like this:
+
+<pre>
+&lt;h3 py:content="name"&gt;This is replaced.&lt;/h3&gt;
+&lt;h3 py:content="email"&gt;This is replaced.&lt;/h3&gt;
+&lt;h3 py:content="body"&gt;This is replaced.&lt;/h3&gt;
+</pre>
+<p>Notice how the Kid syntax is relatively succinct, and makes use of the existing html. You can even view a Kid template directly with your browser, which is often quite helpful.
+
+<p>Kid has the usual set of constructs for doing things like looping to display a list, but these are very Python-like so they tend to be easy to read and remember. For example, a <b>for</b> loop:
+
+<pre>
+&lt;ul&gt;
+  &lt;li py:for="fruit in fruits"&gt;
+    I like ${fruit}s
+  &lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+<p>Notice how it uses the closing html tag to delimit the loop, and compare this with other systems; JSPs for example.
+
+<p>Kid doesn't limit you—you can embed python scripts within your Kid templates if you really want, although you then run the risk of mixing your MVC components together.
+
+<p>One thing I like a lot about Kid and the way TurboGears uses it is the "inheritance" model, so that you can establish the basic look and feel of all your pages in <b>master.kid</b> and then each new page inherits that look and feel (unless you tell it otherwise). This is almost always what you want to do on a site, and I think they've solved the problem nicely.
+
+<h1>The Tutorial</h1>
+<p>During the workshop, we initially had the ambition that we were going to jump in and start building something new right away, but then we got reasonable and decided to just work through the existing tutorial first (the Spring/Hibernate group also decided this). This was the "20-minute Wiki," which ended up taking us about 2 days to get through (admittedly interrupted by hikes and dinners and the like).
+
+<p>It took so long because we kept hitting snags, which we attributed primarily to the fact that TurboGears is pre-1.0 and moving quite quickly—there were three version changes during the workshop, which fixed a number of our issues (thus, the list below may indicate more errors than there actually are). We could certainly understand how it would be difficult to be maintaining the tutorial at the same time, but it made for a hard out-of-the-box experience. In fact, we all agreed that if we hadn't had the other people in our team to keep us going, we would have given up. Despite that, our general experience with TurboGears was that everything was very polished, so we expect that by the time version 1.0 comes out the tutorial should be polished as well.
+
+<p>Dianne created this list with the idea that, if you want to go through the tutorial before 1.0 comes out, it may help you get over some of the trouble spots that we ran into.
+
+<p>When you finish the "20-minute Wiki" tutorial, <a href="../_/http/exogen.case.edu/turbogears.html">here's another, more sophisticated tutorial by Brian Beck</a>.
+
+<ol>
+<li>Although the documentation for TurboGears suggests that you run the tutorials before reading the Getting Started guide, we think that it might actually be helpful to do the reading first, mainly because the tutorials aren’t rock solid just yet.
+
+<li>An offline install would be particularly useful in a situation like we were in, where we didn’t have internet connectivity.  Availability of the entire documentation tree would be convenient (essential?) as well.  This also helps when you have connectivity but not necessarily good response (or when the site is under heavy use).
+
+<li>If you don’t have docutils, install it (separate download).  It doesn’t come with the TurboGears easy install.
+
+<li>Tutorial refers to “six” readable lines (in page.kid).  Looks like:
+“5. Deals with Unicode properly (always a good habit, on line 5).” seems to have been omitted.  Another typo in same section “in other workds”.
+
+<li>While the tutorial implies that using sqlite is the easiest path to getting a working app, it’s probably easier to use mysql or postgres if you’re comfortable with those.  You will need to edit the dev.cfg file, but the skeletons are there.
+
+<li>If you want to use sqlite, download it.  SQLite3 is compatible with pysqlite2.  You will need both. Same problem if you’re going to use MySQL.  Grab the MySQLDB installer (we used 1.2.1).  Assuming a similar issue if you want to use postgres (?).
+
+<li>Changes to kid files do not seem to require restarting turbogears.  Changes to python files (model.py, etc.) may require restarting turbogears.  Getting Started guide claims that server restarts if it sees any changes to any files, but the tutorials instructs us to restart in certain situations, so it’s unclear when you need to restart and when you don’t.
+
+<li>While the tutorial doc seems to imply that the TurboGears tools will create databases for you (by naming the header “Creating a Database”), that’s only partly true (depends on your choice of databases).  tg-admin sql create will create databases and tables for sqlite or postgres (given a user with appropriate permissions).  The database must already exist for MySQL (and proper permissions must be set), and sql create will then create the appropriate tables.  The tutorial doesn’t give indications regarding these distinctions.
+
+<li>It appears that tg-admin sql create must be run from the directory where dev.cfg and prod.cfg live (otherwise, you will get an error message, politely asking you if you want to fix things, but the autofix will fail).
+
+<li>We had a problem with catwalk, when following the directions specified in the wiki20 tutorial.  The tg-admin toolbox version of catwalk will work fine if the page already exists, but catwalk generated an error (from CherryPy) rather than offering an option to “Add Page” when run from the toolbox.  Instead, we imported catwalk and instantiated it with our model (as directed in the turbotunes tutorial), we were able to add a page from catwalk.  Essentially, the wiki20 tutorial will not work as directed (which purposefully leads you down a path of not having a page in order to demonstrate this functionality of catwalk).  Instead, either add the info to the database directly or use the following for the controllers.py content:
+<pre>
+import logging
+import cherrypy
+import turbogears
+from turbogears import controllers, expose, redirect
+from wiki20 import json
+from wiki20.model import page
+from docutils.core import publish_parts
+from turbogears.toolbox.catwalk import CatWalk;
+import model
+
+log = logging.getLogger("wiki20.controllers")
+
+class Root(controllers.RootController):
+    catwalk = CatWalk(model)
+    @expose(template="wiki20.templates.page")
+    def index(self, pagename="FrontPage"):
+        p=page.byPagename(pagename)
+        content=publish_parts(p.data,writer_name="html")["html_body"]
+        return dict(page=p, data=content )
+</pre>
+<li>Some of the variable names in the tutorial (and in the quickstart-generated template) make for unnecessary confusion.  Examples follow.
+
+<br/>In the controllers.py file (as directed by the tutorial):
+<pre>
+class Root(controllers.RootController):
+    catwalk = CatWalk(model)
+    @expose(template="wiki20.templates.page")
+    def index(self, pagename="FrontPage"):
+        page=page.byPagename(pagename)
+        content=publish_parts(page.data, writer_name="html")["html_body"]
+        return dict(page=page, data=content )
+</pre>
+<li>Trying to do this tutorial using 0.8.9 hit the wall when we got to the CatWalk step (adding pages to database), so we decided to abandon 0.8.9 and upgrade to 0.9 for the one team member.
+
+<li>Trying to install SQLAlchemy (e.g., from Debian) is a bad thing to do.  TurboGears tries to take advantage of this and you will be unable to run the quickstart-generated code out of the box.
+
+<li>Method for save in controller doesn’t have enough arguments.  CherryPy gives an error:
+
+<pre>
+TypeError: save() got an unexpected keyword argument 'submit'
+</pre>
+Bug report review of turbogears revealed the magic fix:
+<pre>
+def save(self, pagename, data, **kwds) or
+def save(self, pagename, data, submit)
+</pre>
+<li>If you follow the instruction to change the HTTPRedirect to turbogears.url(“/%s” %pagename), you get the following error
+
+<pre>
+Page handler: &lt;bound method Root.save of &lt;wiki20.controllers.Root object at 0x015D9A50&gt;&gt;
+Traceback (most recent call last):
+  File "c:\python24\lib\site-packages\CherryPy-2.2.1-py2.4.egg\cherrypy\_cphttptools.py", line 105, in _run
+    self.main()
+  File "c:\python24\lib\site-packages\CherryPy-2.2.1-py2.4.egg\cherrypy\_cphttptools.py", line 254, in main
+    body = page_handler(*virtual_path, **self.params)
+  File "&lt;string&gt;", line 3, in save
+  File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\controllers.py", line 210, in expose
+    output = database.run_with_transaction(func._expose,func, accept, allow_json, allow_json_from_config,*args, **kw)
+  File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\database.py", line 216, in run_with_transaction
+    retval = func(*args, **kw)
+File "&lt;string&gt;", line 5, in _expose
+  File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\controllers.py", line 230, in &lt;lambda&gt;
+    func._expose.when(rule)(lambda _func, accept, allow_json, allow_json_from_config,*args,**kw: _execute_func(
+  File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\controllers.py", line 252, in _execute_func
+    assert isinstance(output, basestring) or isinstance(output, dict) \
+AssertionError: Method Root.save() returned unexpected output. Output should be of type basestring, dict or generator.
+</pre>
+
+Changing to:
+
+raise <b>turbogears.redirect(“/%s”%pagename)</b> works fine.
+
+<li>Inconsistency in presentation of source code in documentation is disconcerting.  Sometimes, code is shown directly (e.g., wikiwords section).  Most other times, only command line instructions are presented directly and code is shown using the “syntax highlighter” style.  (Also note: “View plain” is really cool but left for the reader to discover independently).
+
+<li>Using 0.9.a5 (but appears to be working on 0.9a7+), ran into problem with JSON section.  Adding @expose(“json”) yielded an error message:
+
+<pre>
+The server encountered an unexpected condition which prevented it from fulfilling the request.
+@expose("wiki20.templates.pagelist")
+@expose("json")
+def pagelist(self):
+  pages = [page.pagename for page in Page.select(orderBy=Page.q.pagename)]
+  return dict(pages=pages)
+Page handler: &lt;bound method Root.pagelist of &lt;wiki20.controllers.Root object at 0x015F3D90&gt;&gt;
+Traceback (most recent call last):
+File "c:\python24\lib\site-packages\CherryPy-2.2.1-py2.4.egg\cherrypy\_cphttptools.py", line 105, in _run
+self.main()
+File "c:\python24\lib\site-packages\CherryPy-2.2.1-py2.4.egg\cherrypy\_cphttptools.py", line 254, in main
+body = page_handler(*virtual_path, **self.params)
+File "&lt;string&gt;", line 3, in pagelist
+File "&lt;string&gt;", line 3, in pagelist
+File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\controllers.py", line 210, in expose
+output = database.run_with_transaction(func._expose,func, accept, allow_json, allow_json_from_config,*args, **kw)
+File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\database.py", line 216, in run_with_transaction
+retval = func(*args, **kw)
+File "&lt;string&gt;", line 5, in _expose
+File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\controllers.py", line 230, in &lt;lambda&gt;
+func._expose.when(rule)(lambda _func, accept, allow_json, allow_json_from_config,*args,**kw: _execute_func(
+File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\controllers.py", line 251, in _execute_func
+output = errorhandling.try_call(func, *args, **kw)
+File "c:\python24\lib\site-packages\TurboGears-0.9a5-py2.4.egg\turbogears\errorhandling.py", line 71, in try_call
+return func(self, *args, **kw)
+TypeError: pagelist() takes exactly 1 argument (2 given)
+</pre>
+
+Fix follows, but then get JSON format WHENEVER pagelist is viewed (even without tg_format=json parameter).  Tutorial pretty much broken from this point on.  Verified by running a version that Bruce had working (same result).
+
+<pre>
+@expose("wiki20.templates.pagelist")
+@expose("json")
+def pagelist(self, *args, **kwds):
+    pages = [page.pagename for page in Page.select(orderBy=Page.q.pagename)]
+    return dict(pages=pages)
+</pre>
+<li>For version 0.9a7, app.cfg has replaced
+<pre>
+tg.mochikit_all = True
+</pre>
+with
+<pre>
+tg.include_widgets = ['turbogears.mochikit']
+</pre>
+</li></li></li></li></li></li></li></li></li></li></li></li></li></li></li></li></li></li></ol>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=170038.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=170038&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D170038&amp;title=The+Web+Frameworks+Jam+and+Turbogears&amp;bodytext=I+think+I%27m+really+starting+to+get+this+%26quot%3Bevent%26quot%3B+thing+down.+I+can+tell+because%2C+at+the+end+of+the+%26quot%3BWeb+Frameworks+Jam%2C%26quot%3B+half+the+people+were+saying+%26quot%3Bwhen+are+we+going+to+do+this+again%3F%26quot%3B&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D170038&amp;title=The+Web+Frameworks+Jam+and+Turbogears">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D170038&amp;title=The+Web+Frameworks+Jam+and+Turbogears">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

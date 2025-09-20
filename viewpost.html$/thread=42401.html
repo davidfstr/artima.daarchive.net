@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>A Week at PyCon DC 2004</title>
+<meta charset="utf-8"/>
+<meta content="David Goodger" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#DDDDDD" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=goodger.html">David Goodger's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=42401.html">Discuss</a> | 
+<a href="mailto:?subject=A Week at PyCon DC 2004&amp;body= %0AArtima Weblogs %0AA Week at PyCon DC 2004 %0Aby David Goodger %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=42401">Email</a> | 
+<a href="../viewpostP.html$/thread=42401.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=42395.html" title="How I Became The Perverted Singularity">Previous</a> | 
+<a class="sl" href="thread=46346.html" title="Refactoring reminiscent of high school algebra">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pythonista &amp; Techno-Geek</span><br>
+<span class="ts">A Week at PyCon DC 2004</span><br/>
+<span class="as">by David Goodger</span><br/>
+<span class="pd">April 2, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A narrative account of my week at PyCon in Washington DC
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>This was my first time attending a Python conference.  Many thanks to
+the <a class="reference" href="../_/http/www.python.org/psf/index.html">Python Software Foundation</a>,
+Stephan Deibel of <a class="reference" href="../_/http/wingide.com/index.html">Wing IDE</a>, and all those
+who helped and contributed to get me there for the <a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a> sprint
+and for the conference itself.  It was a lot of fun, a lot was
+learned, and a lot was accomplished.</p>
+<p>I kept an account of my week at <a class="reference" href="../_/http/pycon.org/dc2004/index.html">PyCon DC 2004</a>.  Enjoy!</p>
+<div class="section" id="day-0-arrival-and-sightseeing-friday-march-19">
+<h1><a name="day-0-arrival-and-sightseeing-friday-march-19">Day 0 -- Arrival and Sightseeing -- Friday, March 19</a></h1>
+<p>6:30am -- Left home after saying goodbye to my wife &amp; kids.  I'll miss
+them; hope they miss me too!</p>
+<p>7am -- Arrived at Pierre Elliott Trudeau (formerly Dorval)
+International Airport.  Got my boarding pass from a kiosk with my
+credit card.  Neat.  Checked one bag, but the new security requires me
+to carry it through US customs &amp; immigration.  Then, because my
+destination was Reagan National Airport, a security guard pawed
+through my <em>checked</em> bag and sent it through X-ray.  Fine.</p>
+<p>But when I got to the gate, I had to undergo another search with a
+hand-held metal detector, including my shoes.  My carry-on, jacket,
+and wallet were searched too.</p>
+<p>I feel safe now.</p>
+<p>10:30am -- Arrived in DC after an uneventful flight.  Took the metro
+in to Dupont Circle, but I should've gone one further -- long walk.
+In the metro, I kept hearing the PA system saying "George Clinton".  I
+finally realized I was misunderstanding "doors closing" through a poor
+speaker system.</p>
+<p>Checked in at the <a class="reference" href="../_/http/www.washingtondchostel.com/index.html">Washington International Student Center</a> (WISC)
+by a Japanese guy named Tomo, with whom I had a nice conversation.
+WISC is a hostel, very no-frills.  Each room has 3 sets of triple bunk
+beds, everything needs a paint job, but the bathrooms are clean.
+Can't beat $22/night, breakfast included (toast, jelly, and cheap
+"citrus punch").</p>
+<p>12:30pm -- Made my bed, dropped off my stuff, and headed in to the
+<a class="reference" href="../_/http/smithsonian.org/visit/infocenter/dcmuseum.htm">Smithsonian museums</a>.  Tomo noted
+that pattern: whereas Americans usually wanted to see the White House
+first, Canadians tended toward the Smithsonian.  I did the geekiest
+two: <a class="reference" href="../_/http/www.nasm.si.edu/index.html">Air &amp; Space</a> and <a class="reference" href="../_/http/www.mnh.si.edu/index.html">Natural History</a>.  Apollo capsule, moon lander, Saturn V
+engines -- very cool.  Hope diamond, crystals and mineral formations
+-- amazingly beautiful.</p>
+<p>I consider this an "advance scout" mission for the day when my whole
+family visits.  That happened once before, when I went to France on
+business and had a free day in Paris.  Saw all the major sights --
+from the outside.  Didn't have time to wait in line to get in.</p>
+<p>Washington's <a class="reference" href="../_/http/www.nps.gov/nama/index.html">National Mall</a> is a lot
+like the Champs Elysee in Paris.  The <a class="reference" href="../_/http/www.nps.gov/wash/index.html">Washington Monument</a> was closed by the time I got there, but
+it's so huge that didn't really matter.</p>
+<p>I was a bit disappointed that the Reflecting Pool was empty.  I wanted
+to do the "Forrest?" "Jenny?" "Forrest!" "Jenny!" scene or at least
+imagine it, but no luck.</p>
+<p>The new <a class="reference" href="../_/http/www.wwiimemorial.com/index.html">World War II Memorial</a>,
+around the Rainbow Pool, looks quite impressive.  Almost ready to
+open.</p>
+<p>The <a class="reference" href="../_/http/www.nps.gov/linc/index.html">Lincoln Memorial</a> was most
+impressive.  I'd never read the entire Gettysburg Address, so it was
+moving to read it carved into the wall.</p>
+<p>Next, I visited the <a class="reference" href="../_/http/www.nps.gov/kowa/index.html">Korean War Veterans Memorial</a> -- very moving.  Especially reading
+these words carved into the wall: "Freedom Is Not Free".</p>
+<p>The <a class="reference" href="../_/http/www.nps.gov/vive/index.html">Vietnam Veterans Memorial</a> was
+particularly moving.  I know no one who fought in Vietnam or lost a
+relative or friend there, but still I felt tears welling up.  The
+names just go on and on.  What a waste of life, on both sides.  War
+has no winners, only losers, but the price must be paid from time to
+time.</p>
+<p>Back to WISC, dropped off the Smithsonian gifts for the wife &amp; kids.
+Then off to Best Buy to check out DVDs.  I found a few that were good
+deals, considering the exchange rate.  But only a few.  Most had the
+same price point in US dollars as in Canadian, favoring the Canadian
+consumer.</p>
+<p>10pm -- Back at WISC now.  Had no dinner, but don't feel hungry.  Had
+a Polish sausage between Smithsonian museums around 2:30.</p>
+<p>I'll be heading for bed soon.  I don't have an alarm clock or watch for
+the morning, but I should be able to wake up in time.</p>
+<p>I noticed that DC is a jaywalking town, much like Montreal.  Warms my
+heart.</p>
+</div>
+<div class="section" id="day-1-sprint-day-1-saturday-march-20">
+<h1><a name="day-1-sprint-day-1-saturday-march-20">Day 1 -- Sprint Day 1 -- Saturday, March 20</a></h1>
+<p>Woke up around 6:20 without an alarm.  Pretty good, considering that
+last night, somebody started a party nearby with loud, booming
+reggae/dance music.  Earplugs to the rescue.</p>
+<p>Showered, changed and ate -- hostel-provided toast &amp; jelly and fake
+orange juice.  Brushed my teeth and set off for <a class="reference" href="../_/http/www.gwu.edu/index.html">George Washington
+University</a>.</p>
+<p>The city is very quiet at 7:20am on a Saturday.  The walk took me
+about 35 minutes, over 3 kilometers (2 miles).  It's warmer today; I
+could open my jacket and didn't really need my gloves or hat.</p>
+<p>Arrived at the <a class="reference" href="../_/http/gwired.gwu.edu/cafritz/index.html">Cafritz Conference Center</a> just before 8am.  A few people
+were already there -- Michael McLay, Ted Leung, Brian Dorsey, and Bill
+Sconce.  I helped set up the tables, extension cords, and network
+cables.  People trickled in over the morning, becoming a good-size
+group.  I met the (former) PythonLabs crew: Barry Warsaw, Fred Drake,
+Guido van Rossum, Jeremy Hylton, and Tim Peters.</p>
+<p>The <a class="reference" href="../_/http/www.python.org/cgi-bin/moinmoin/DocutilsSprint/index.html">Docutils sprint</a> began with Oliver Rutherfurd and Matt Gilbert.
+I did a walk-through of the architecture &amp; the code, beginning with
+<a class="reference" href="../_/http/docutils.sf.net/spec/pep-0258.html#docutils-project-model">PEP 258's block diagram</a>.
+Soon more people arrived though, including Aahz, Fred Drake, Bill
+Sconce, Steve Holden (our most esteemed conference organizer), and Ian
+Bicking.  Oliver began working on his DocBook writer, Matt &amp; Fred on
+MoinMoin integration, Steve &amp; Bill on a DocPy/LaTeX writer, Aahz on a
+FrameMaker writer and generic stylesheet ideas, and Ian on the Python
+Source reader.  Andrew Kuchling joined us in the afternoon to write a
+directive for the ABC music language.  We transferred lots of
+knowledge and made some progress on the code.</p>
+<p>Around 1pm lunch discussions began.  Aahz forced the issue by standing
+up and saying something like, "Anybody who wants lunch stand up; let's
+go."  We ate at a Thai place on Pennsylvania Avenue.  Very nice.  Then
+back to the sprint.</p>
+<p>Although I own a laptop, I didn't bring it to the conference for
+several reasons.  My wife is working on a project and needs it; I
+didn't want to have to worry about breaking it or having it stolen;
+and I figured as sprint coach I ought not to be concentrating on my
+own code, but on the sprinters'.  That last reason turned out to be
+the most significant.  My lack of computer meant that I was an
+accessible consultant to all.  I'd recommend this strategy to future
+sprint coaches.</p>
+<p>Sprinters started taking their leave in the afternoon.  Ian and I were
+the last in our sprint room; we left at 6:30pm, asking the 15 or so
+people in the other room to have building management lock the doors.</p>
+<p>Ian and I took a walk through the city, up to Adams-Morgan, where I'm
+staying.  We had dinner at a Middle Eastern restaurant at the corner
+of 18th and Florida -- not bad at all, spicy &amp; cheap.  We walked
+through the Saturday evening crowds, but neither of us being clubbers,
+did not join in.  I left him at the Woodley Park-Zoo metro station,
+with its long, looooooong escalators.  I returned to WISC, taking the
+scening route, and found a good deal at the local Blockbuster store.</p>
+<p>Back at WISC now, writing this up.  Think I'll turn in early tonight.</p>
+</div>
+<div class="section" id="day-2-sprint-day-2-sunday-march-21">
+<h1><a name="day-2-sprint-day-2-sunday-march-21">Day 2 -- Sprint Day 2 -- Sunday, March 21</a></h1>
+<p>Woke around 7:20.  Loud music again last night, but earplugs did the
+trick.  A brisk, windy morning, an a 30 minute walk to PyCon.  On the
+way, I noticed a building being build at the corner of 21st and K (I
+think).  Affixed was a sign: "Hitt Contracting".  Amusing.</p>
+<p><a class="reference" href="../_/http/www.python.org/cgi-bin/moinmoin/DocutilsSprint/index.html">Docutils sprint</a>: Ed Loper has arrived this morning, to work on
+<a class="reference" href="../_/http/epydoc.sf.net/index.html">Epydoc</a> integration.  Tracy Ruggles worked
+with him.  Laura Creighton and Jacob Hallen joined us, but pressing
+business seems to have arisen.  Reggie Dugard worked on a Table of
+Contents bug, mostly as a learning exercise.  Matt Gilbert made good
+progress on MoinMoin integration, as did Aahz with his FrameMaker
+writer, Oliver Rutherfurd with his DocBook writer, and Steve Holden &amp;
+Bill Sconce with DocPy/LaTeX.</p>
+<p>For lunch, Matt, Tracy, Ed, Reggie, and I went to an Italian place
+across the street.  Was good, and filling; became my main meal of the
+day.</p>
+<p>I was the last one out, after asking the building manager to lock up
+our room.  Bought a watch at CVS (the pharmacy, not the code
+repository) on the way back to the hostel, for the alarm.</p>
+</div>
+<div class="section" id="sprint-day-3-monday-march-22">
+<h1><a name="sprint-day-3-monday-march-22">Sprint Day 3 -- Monday, March 22</a></h1>
+<p>The watch's alarm didn't wake me up, possibly because I was wearing
+it, and I was bundled up under the covers.  I woke up a few minutes
+later anyway.</p>
+<p>Was cold this morning, so I was glad for my sweater, scarf, hat &amp;
+gloves.  A lot more traffic on Monday morning than Saturday &amp; Sunday.</p>
+<p>Mike Orr joined the <a class="reference" href="../_/http/www.python.org/cgi-bin/moinmoin/DocutilsSprint/index.html">Docutils sprint</a> for the morning; he and Reggie
+began working on an API for document fragments, particularly HTML.  By
+evening, Reggie Dugard had made good progress, almost complete.  Aahz
+seems to be making steady strides with his FrameMaker writer, and Matt
+Gilbert with MoinMoin integration.  Ian Bicking was back with us after
+attending the Zope tutorial yesterday, but Oliver Rutherfurd is at
+work today.  Ed Loper and Bill Sconce also continued hacking on
+DocPy/LaTeX; Steve Holden is now busy with conference matters.</p>
+<p>For lunch, Reggie and I visited the conference building's food court,
+and impressive place with a dozen or so vendors, from Burger King and
+Taco Bell to Crepes and Chinese.  We settled on Chinese; I had sweet &amp;
+hot chicken on rice.  We got big helpings; again I wasn't hungry for
+dinner.  There were some kind of peppers in the food and I ate one by
+accident.  Hot!</p>
+</div>
+<div class="section" id="sprint-day-4-tuesday-march-23">
+<h1><a name="sprint-day-4-tuesday-march-23">Sprint Day 4 -- Tuesday, March 23</a></h1>
+<p>Met two fellow PyConeers at the hostel at breakfast: Tamer Fahmy of
+Austria, and Andrew Gaul of the USA.  We walked down to GWU together.
+When I introduced myself, I was asked my area of interest.  I answered
+"<a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a>," and Andrew said something like, "Oh, right!  You're
+famous!"  In a very small circle, perhaps.</p>
+<p>Today was the last day of the <a class="reference" href="../_/http/www.python.org/cgi-bin/moinmoin/DocutilsSprint/index.html">Docutils sprint</a>.  As on each of the
+previous days, I did an architecture &amp; code walk-through and then
+hacking continued.  In addition to hacking, we formed a human assembly
+line and stuffed tote bags.  Most of the sprinters present registered
+and received their totes and T-shirts.  As a PyCon volunteer, I
+received a second, black "Event Staff" shirt.  Good thing, too; I'd
+planned it that way.  Brought only 6 shirts for an 8-night stay.</p>
+<p>Lloyd Kvam joined the Docutils sprint today, and worked on <a class="reference" href="../_/http/docutils.sf.net/spec/doctree.html">The
+Docutils Document Tree</a>
+document.  (How many times can <em>you</em> say "doc" in a single sentence?)
+Reggie completed the fragment/publish_parts API.  Matt, Ed &amp; Bill,
+Aahz, and Ian all made progress.  It's been a fun, productive four
+days.</p>
+<p>Laura Creighton offered some advice.  She and Jacob Hallen hadn't been
+able to devote a lot of time to the sprint, but would have had there
+been a collection of smaller tasks (bug fixes, tests, docs, etc.)
+prepared beforehand.  Valid point; I'll have to take that into account
+if and when I do another sprint.</p>
+<p>Around 7pm, Laura, Jacob, Armin Rigo, and I headed out to Georgetown
+for dinner at <a class="reference" href="../_/http/www.epicurious.com/erg/dc/makoto.html">Makoto</a>, a tiny Japanese
+restaurant.  Laura's treat.  It turns out that back when she wrote me
+several times asking for <a class="reference" href="../_/http/docutils.sf.net/rst/index.html">reST</a> help, it was regarding the PyPy spec
+draft she was writing, and she felt she owed me a meal.  The meal was
+excellent, 8 or 10 courses (lost count): sashimi, sushi, yakimono,
+soup, on and on.</p>
+<p>We took a bus back, and I transferred up to Adams-Morgan.  Gotta get
+up early tomorrow -- manning the registration desk at 8am.</p>
+</div>
+<div class="section" id="conference-day-1-wednesday-march-24">
+<h1><a name="conference-day-1-wednesday-march-24">Conference Day 1 -- Wednesday, March 24</a></h1>
+<p>Woke up around 5am, tried to get another precious hour of sleep, but
+no luck.  Met another PyCon-goer, Nestor Nissen of Germany, when I was
+on my way out of the bathroom after brushing my teeth, and he was on
+his way in.  I was wearing my black staff PyCon shirt.</p>
+<p>Arrived at PyCon at 7:15am, ran around setting up schedules and
+helping out wherever I could.  I manned the registration desk from 8
+to 9; met a lot of people.  Bill Sconce had his stuffie python, Eric,
+on the registration table, so I made a name badge for him.  Was
+wearing my name badge with "<a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a>" plus a "<a class="reference" href="../_/http/python.net/~goodger/index.html">FOR HIRE</a>" badge, which got some response.
+Talked to a recruiter after Mitch Kapor's keynote address.</p>
+<p>Anthony Baxter's talk, <a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/6/index.html">"Scripting Language" My Arse: Using Python for
+Voice over IP</a>, was a
+lot of fun.  Attended <a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/52/index.html">Andrew Koenig's talk</a> &amp; Andrew Kuchling's
+<a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/12/index.html">Quixote tutorial</a>,
+both good.</p>
+<p>Lunch was fine, met Thomas Wouters, Neil Norwitz, Neil Schemenauer,
+and others.  Made a BOF session schedule board, then went to buy some
+socks at Gap.  Caught Jacob Hallen's PyPy talk; interesting work.</p>
+<p>Did a bit more sprinting, then held the <a class="reference" href="../_/http/www.python.org/cgi-bin/moinmoin/DocutilsBof/index.html">Docutils Birds-of-a-Feather
+session</a> at 8pm.  About 20 people showed up.  I described the
+results from the sprint, then opened the floor for discussion.  Got
+some good ideas too.</p>
+<p>Walked back to the hostel with Tamer Fahmy, talking about
+middle-eastern politics among other subjects.  He worked on his
+slide show for Thursday's session; Nester arrived and we critiqued.  My
+advice: fewer words, more talking, and show the pretty pictures as
+early as possible.  We seem to have convinced him.</p>
+<p>Met an Italian couple as I was getting ready for bed, who couldn't
+speak much English.  Tried French and Japanese, but their "little
+English" was all we had in common.  I bid them "buena notte".</p>
+</div>
+<div class="section" id="conference-day-2-thursday-march-25">
+<h1><a name="conference-day-2-thursday-march-25">Conference Day 2 -- Thursday, March 25</a></h1>
+<p>Woke at 6am, again an hour before my alarm was set to go off.  Must be
+eager.  Arrived at PyCon early again, and had breakfast there.
+PyCon's sticky buns &amp; muffins beat the hostel's toast &amp; jelly any day.</p>
+<p>The day began with Guido's keynote speech, which was very entertaining
+and light.  A phrase Guido used struck a chord: "active champion".
+The reason most (if not all) proposals/PEPs/projects fail is for lack
+of an active champion.  I was an active champion for <a class="reference" href="../_/http/docutils.sf.net/rst/index.html">reStructuredText</a>
+and <a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a>.</p>
+<p>Next up were some PyRex talks by Paul Prescod.  I wonder if his choice
+of "shrubbery" as example was deliberate.  I got enough out of the
+talk to know that PyRex is cool, and if I ever need to code C
+extensions it may be the way to go.  But I don't now, so my attention
+wandered.</p>
+<p>Met a couple of people from last night's BoF, who had ideas for <a class="reference" href="../_/http/docutils.sf.net/rst/index.html">reST</a>:
+a one-page reST cheat sheet, and YAML support, perhaps with flowing
+columns to save on vertical real estate.</p>
+<p>Was joined by Vic Kelson for lunch, who had questions about a
+database-driven documentation system with boilerplate and custom
+sections.  Feasible, for sure.  He suggested a possible line for a
+business: open source industrial control data acquisition systems.
+Evidently the industry standarc, SCADA, sucks -- can't extract data
+from it easily.</p>
+<p>After lunch, saw part of the new-style class tutorial, and the tail
+end of the <a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/29/index.html">Panda3D</a>
+talk.  They had a video of a virtual reality system that makes Happy
+Tree Friends seem tame.  Next was Tamer Fahmy's <a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/47/index.html">High-Level 3D
+Graphics</a> talk,
+which went well.</p>
+<p>I chaired the last session of the day, 3 talks: Ed Loper's <a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/37/index.html">Epydoc: an
+API documentation generation tool</a>, Jim Fulton's
+<a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/4/index.html">Literate unit testing: Unit Testing with Doctest</a>, and Phil Pfeiffer's
+<a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/8/index.html">Twelve Thousand Test Cases and Counting</a>.</p>
+<p>Immediately afterward was the PSF member meeting.  We had committee &amp;
+treasurer reports, then voted on new Sponsor &amp; Nominated members.
+Some discussions followed, about various aspects of communication.  We
+need better, more focused communication (not necessarily more volume,
+though).  Roundup's nosy lists seem like the might be the solution.</p>
+<p>15 of the PSF people went to a nearby Chinese restaurant for dinner.
+The conversation was lively and mostly non-technical, at least at my
+end of the table.  Back to the PyCon site for a late-night Py-dot-org
+BoF.  I volunteered myself and Brett Cannon to add encoding support to
+<a class="reference" href="../_/http/ht2html.sf.net/index.html">ht2html</a>.  The group came to a tentative
+consensus about a website redesign, or at least a new design for a new
+portion of the website.</p>
+<p>Back in Adams-Morgan, Thursday evening seems to be a lively night.  Or
+it might just be the exceptionally warm weather.  Hopefully no booming
+music tonight, but the earplugs will be on stand-by.</p>
+<p>As I finished writing the above in the hostel's kitchen, two young
+women walked in, speaking Japanese.  I shocked them by greeting them
+in fluid, if not fluent, Japanese.  Turns out they're exchange
+students living in Lawrence, Kansas, visiting New York City and DC
+during spring break.  We had a nice conversation, soon joined by Tamer
+and Nester.  I left the unattached young'uns and headed off to bed.</p>
+</div>
+<div class="section" id="conference-day-3-a-bit-more-dc-friday-march-26">
+<h1><a name="conference-day-3-a-bit-more-dc-friday-march-26">Conference Day 3 &amp; A Bit More DC -- Friday, March 26</a></h1>
+<p>Today's keynote address was by Bruce Eckel, of "Thinking in..." fame.
+Entertaining but a bit technical and monotonous.  Anna Ravenscroft's
+<a class="reference" href="../_/http/www.python.org/pycon/dc2004/papers/26/index.html">Distutils intro talk</a> was very good --
+ought to be repeated next time.</p>
+<p>After lunch, I discussed some <a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a> &amp; code metadata issues with
+Terence Way &amp; Brad Clement, then with Eric Jones.  The plenary session
+concluded the conference, and I went off for a bit of sight-seeing.</p>
+<p>At the beginning of the week, Saturday/Sunday, I was wearing a
+sweater, leather jacket, scarf, hat, and gloves.  By Thursday, the
+morning required a light jacket but the evenings were warm enough for
+short-sleeved shirts.  Spring has come to DC!</p>
+<p>Walked past the south lawn of the White House, where a large crowd of
+tourists were gathered taking pictures.  Yawn.  Stopped by the
+Smithsonian's Natural History museum again to see if I could find a
+relative of Eric the python, but no luck.  They had cobras and
+rattlesnakes, but no pythons.</p>
+<p>Walked down 14th street to the Tidal Basin, which was surrounded by
+cherry trees, beginning to bloom.  The <a class="reference" href="../_/http/www.nps.gov/thje/index.html">Jefferson Memorial</a> was very impressive, solemn, and
+peaceful.  Continuing on, the <a class="reference" href="../_/http/www.nps.gov/fdrm/index.html">FDR Memorial</a> was another worthwhile site to visit,
+although I went through it accidentally (it wasn't on my free tourist
+map) and the wrong way, reverse chronologically.  Its fountains
+reminded me of the "emergence" scene near the end of <a class="reference" href="../_/http/www.imdb.com/title/tt0074812/index.html">Logan's Run</a>, but the FDR Memorial was
+built in the '90s.  Perhaps the inspiration was the other way around?</p>
+<p>Heading back north, I passed by the conference site so I popped in to
+see if anyone was still there.  Spoke with Jeff Kowalczyk again, who
+was in the amphitheater taking advantage of the wired internet access.
+The Twisted people were still going strong.  Some people were out on
+the terrace enjoying the warm weather, including Mike Fletcher, Thomas
+Wouters, Anthony Baxter, Sean Reifschneider, and Sylvia Candelaria de
+Ram.  Their Thai food arrived, but I had other plans: dessert at
+TGIFriday's next door.  My wife and I had gone to TGIFriday's in
+Honolulu once and had a great time.  Excuse me, my brownie delight
+has arrived.</p>
+</div>
+<div class="section" id="heading-home-saturday-march-27">
+<h1><a name="heading-home-saturday-march-27">Heading Home -- Saturday, March 27</a></h1>
+<p>It was raining this morning.  Packed up and left the hostel at 9am,
+took a bus down to a metro station then on to Pentagon City.  I'm not
+sure, but I think the "Fashion Center" mall there may have been the
+mall in <a class="reference" href="../_/http/us.imdb.com/title/tt0181689/index.html">Minority Report</a>, and
+possibly also in <a class="reference" href="../_/http/www.imdb.com/title/tt0093640/index.html">No Way Out</a>.
+Bought a "PFC" -- portable folding cart -- for my bags because I was
+getting tired and sore carrying them around.  A couple more wee
+gifties for the kids.  Visited the <a class="reference" href="../_/http/www.bang-olufsen.com/index.html">Bang &amp; Olufsen</a> store, and fantasized.</p>
+<p>On the opposite side of the street -- reachable via a metro underpass
+-- was another mall, not so upscale.  Browsed around a Borders
+book/CD/DVD/coffee store, and a Best Buy.  Then it was time to get to
+the airport, 2 stops away.</p>
+<p>Got my boarding pass, and two last-minute gifts: a nice bookmark for
+my wife, and a black &amp; yellow "jungle carpet python" plushie, for my
+kids.  And for me, too, I guess -- I'll name it "Monty" and it'll be a
+cousin to Eric, the conference mascot brought by Bill Sconce.  A
+Cinnabon later, and it was time to get to the gate.  Spent my last 90
+US cents on some mints -- no currency to carry home.</p>
+<p>On takeoff I had a good view of the Pentagon, and I see the need for
+so much security.  The airport is literally a stone's throw away, and
+a last-minute course correction would be (and was) deadly.  I wonder
+if security is the reason why, on both arrival in and departure from
+DC, the plane wasn't brought all the way to the jetway.  Passengers
+had to go down a flight of stairs to the tarmac and back up.</p>
+<p>As I write this on the plane, I look back on the last week as an
+unmitigated success.  I met loads of people I'd only ever exchanged
+email with before, and plenty others new to me.  It's amazing the
+places my software has gotten to -- rumored to be in use at NASA, the
+NSA, the OSAF, and I'm sure at many other companies and organizations
+large and small.  I guess <a class="reference" href="../_/http/docutils.sf.net/index.html">Docutils</a> and <a class="reference" href="../_/http/docutils.sf.net/rst/index.html">reStructuredText</a> have hit a
+sweet spot.</p>
+<p>Warms my heart.</p>
+</div>
+<div class="section" id="shameless-plug">
+<h1><a name="shameless-plug">Shameless Plug</a></h1>
+<p>I'm looking for work, as a programmer, sys admin, consultant, or
+related position.  My resume can be found on my web site,
+<a class="reference" href="../_/http/starship.python.net/~goodger/index.html">http://starship.python.net/~goodger</a>.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=42401&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever David Goodger adds a new entry to <a href="../index.html$/blogger=goodger.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/goodger.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D42401&amp;title=A+Week+at+PyCon+DC+2004&amp;bodytext=A+narrative+account+of+my+week+at+PyCon+in+Washington+DC&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D42401&amp;title=A+Week+at+PyCon+DC+2004">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D42401&amp;title=A+Week+at+PyCon+DC+2004">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>David Goodger has been using Python since 1998, and began working on reStructuredText and Docutils in 2000.  A proud Canadian, he lived in
+Japan for 7 years, where a stint at a document processing company in
+Tokyo began his love/hate relationship with structured markup.  David
+is a Python Enhancement Proposal (PEP) Editor and a member of the
+Python Software Foundation.  He currently lives outside of Montreal,
+Quebec, with his Japanese wife and their two children.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 David Goodger. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

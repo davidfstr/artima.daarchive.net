@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Worse is worse</title>
+<meta charset="utf-8"/>
+<meta content="Jim Waldo" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=waldo.html">Jim Waldo's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=24807.html">Discuss</a> | 
+<a href="mailto:?subject=Worse is worse&amp;body= %0AArtima Weblogs %0AWorse is worse %0Aby Jim Waldo %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=24807">Email</a> | 
+<a href="../viewpostP.html$/thread=24807.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=10522.html" title="Knowing and Learning">Previous</a> | 
+<a class="sl" href="thread=36525.html" title="To type or not to type">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Objects, Networks, and Making Things Work</span><br>
+<span class="ts">Worse is worse</span><br/>
+<span class="as">by Jim Waldo</span><br/>
+<span class="pd">December 9, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The classic essay on "worse is better" is either misunderstood or wrong. And in citing it in our design arguments, we short change both our customers and our craft. I revisit this essay, and reflect...
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Recently, I was interviewed by a reporter who was doing a story on the
+    difference between east coast engineers and west coast engineers (yes,
+    that old chestnut is again being revisited). This in turn got me thinking
+    about Dick Gabriel's classic note "Worse is Better", which is often
+    credited with first articulating the distinction between the MIT (or east
+    coast; after all, what else is there on the east coast) approach to
+    engineering (do the right thing, no matter how complex it makes the code)
+    and the Berkeley (or west coast) approach to engineering (make the code
+    simple, even if it makes the user do more work).
+
+    <p>The notion that worse is better has become something of a truism in the
+    programming industry. The usual examples are the C language (worse than
+    lisp, but it dominated anyway), Unix (or more recently, Windows) as
+    opposed to Multics or VMS, and (in a completely different arena) VHS tape
+    over Beta. Each of the dominant technologies, it is pointed out, was worse
+    than the alternative, but the worse technology became the standard
+    anyway. The moral to the story, or the reason that people bring the
+    principle up in argument, is to convince whoever is on the other side of
+    the argument that we should set our sights on the quick and dirty, less
+    elegant solution to a problem, because "worse is better."
+
+    <p>Of course, this received wisdom is just so much crap. The arguments
+      simply don't hold up. But the damage that this principle has done to the
+      technology industry is real, and we should start pushing back before we
+      do any more harm than we already have done.
+
+    <p>First, the arguments. Gabriel's original writing (which can still be
+    found, like everything else, either through Google or by going <a href="../_/http/www.jwz.org/doc/worse-is-better.html">here</a>) makes an
+    interesting read, and a number of good points. Reading it again not only
+    reminds one of how well it is written, but debunks a lot of the usual
+    common knowledge about the article. For example, the piece never
+    contrasts the east coast and west coast engineering styles; the two groups
+    it talks about are the <i>MIT/Stanford</i> style (one group) and the <i>New
+    Jersey</i> style of design. Not nearly so interesting in these days as the
+    notion that the contrast in styles is between west coast and east coast.
+
+    <p>The rest of the paper is an excellent analysis for why Lisp lost out to
+      C as a programming language, even though Lisp was a superior
+      language. Or at least superior on the grounds that <i>Dick</i> found most
+      important. But this doesn't necessarily show that Lisp was in fact
+      superior to C; it can just as easily be taken to show that the metrics
+      that were cited in the article were not the ones that were taken to be
+      most important by those choosing a programming language. The fact that C
+      produced faster code, was easier to master, was easier to use in groups,
+      and ran well on less expensive hardware were not considerations that
+      Gabriel found important. But others did. On those metrics, the dominance
+      of C as a programming language was an example of better is better, not
+      worse is better.
+
+    <p>The old chestnut of beta and vhs is open to the same sort of alternate
+      interpretation. On the "worse is better" interpretation, the superior
+      quality beta was beaten out by the clearly inferior vhs tape format
+      because of some inexplicable perversity of human nature (or the
+      machinations of clever marketing people, or the hubris of Sony, who
+      owned the Beta brand). But the vhs tapes were capable of recording
+      longer programs on a single cassette, and could be played on cheaper
+      recorders, and had a number of different suppliers. Thus there were a
+      set of metrics on which vhs was the superior technology, and these
+      metrics seemed to be the ones that most in the market found to be
+      important. Vhs beat out beta not because worse is better, but better in
+      some dimensions (cost, time to record) beat out better in other
+      dimensions (picture quality).
+
+      <p>Even the case of Unix vs. Multics misses an important point. While
+      Multics may have been a better operating system, Unix had the twin
+      advantages of actually existing, and running on a wide variety of fairly
+      cheap hardware. Windows (and DOS) ran on even cheaper hardware, and
+      though it was easy to argue on any technical grounds that you wanted
+      that Unix was a better OS than DOS, the property of existence on really
+      cheap hardware turned out to the the metric of goodness that appealed to
+      the customer. The emergence of Linux as a real choice is beginning to
+      give us more evidence in this particular choice; perhaps a better OS
+      <bold>is</bold> something that people will choose when other things are
+      equal. But when they chose DOS over Unix, things weren't equal.
+
+      <p>In all of these cases, there is an alternate interpretation of the
+      choices that were made that lead us to the conclusion that worse is not
+      better. Instead, what we see is that better is a complicated notion, and
+      can depend on a variety of different metrics. It may be disappointing to
+      find out that what we geeks think of as better may not be what our
+      customers think is better. But finding this out shouldn't surprise us
+      too much.
+
+    <p>Of course, <i>worse is better</i> is a much catchier slogan than
+    <i>better depends on your goodness metric</i> or some other, equivalent
+    phrase that would actually reflect what was going on. And there is wisdom
+    and insight in the original article that can be used by designers, even
+    under the catchier (but less historically accurate) slogan.
+
+    <p>My problem with the slogan is that it has become a catch phrase for
+      those who either haven't read the original article, or have read it and
+      either have forgotten what it really talked about or never understood it
+      in the first place. As a catch phrase, it is often used to justify
+      shoddy design, or following the crowd rather than doing what is right,
+      or as short-hand for the real claim that our customers are too stupid to
+      either appreciate or deserve high quality products. Why spend the time
+      doing things right, this line of reasoning goes, when we all know that
+      <i>worse is better</i>. You are far better off giving the customer
+      something that you know is less than what you could produce, because
+      they (those simple customers) will think that it is better.
+
+    <p>The end result of this thinking is sloppy products that don't work, are
+      hard to use, or are unreliable (or all of the above). We try to convince
+      our customers that this is the way software has to be, and then turn
+      around and convince ourselves that they won't pay for anything
+      better. But we short-change our customers, and we cheapen our craft, when
+      we put up with this sort of thinking. When the original article was
+      produced, I don't think that this is what the author had in mind; even
+      if it was, it is time for us to reject the simple-minded interpretation
+      of the slogan, and start putting out software that really is better (on
+      the dimension of goodness that our customers have, not necessarily our
+      own).
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=24807.html">34
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=24807&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Jim Waldo adds a new entry to <a href="../index.html$/blogger=waldo.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/waldo.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D24807&amp;title=Worse+is+worse&amp;bodytext=The+classic+essay+on+%22worse+is+better%22+is+either+misunderstood+or+wrong.+And+in+citing+it+in+our+design+arguments%2C+we+short+change+both+our+customers+and+our+craft.+I+revisit+this+essay%2C+and+reflect_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D24807&amp;title=Worse+is+worse">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D24807&amp;title=Worse+is+worse">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/jimwaldo.jpg"/></td><td>Jim Waldo is a Distinguished Engineer with Sun Microsystems, where he is the lead architect for Jini, a distributed programming system based on Java. Prior to Jini, Jim worked in JavaSoft and Sun Microsystems Laboratories, where he did research in the areas of object-oriented programming and systems, distributed computing, and user environments. Before joining Sun, Jim spent eight years at Apollo Computer and Hewlett Packard working in the areas of distributed object systems, user interfaces, class libraries, text and internationalization. While at HP, he led the design and development of the first Object Request Broker, and was instrumental in getting that technology incorporated into the first OMG CORBA specification.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Jim Waldo. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

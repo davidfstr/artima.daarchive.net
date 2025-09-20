@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/15</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=249681.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/15&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/15 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=249681">Email</a> | 
+<a href="../viewpostP.html$/thread=249681.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=249198.html" title="The Adventures of a Pythonista in Schemeland/14">Previous</a> | 
+<a class="sl" href="thread=249685.html" title="The Adventures of a Pythonista in Schemeland/16">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/15</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">February 11, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In my Adventures I have referred many times to pattern matching, but only in the context of compile time pattern matching in macros. There is another form of pattern matching,
+which is quite common in Scheme and in other
+functional languages: run time pattern matching. This episode will shed some light on the technique.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="about-pattern-matching" name="about-pattern-matching">About pattern matching</a></h1>
+<p>It is impossible to overvalue the importance of pattern matching which
+is in my opinion one of the most important concepts in programming.
+Unfortunately, this technique is only available in very high level
+programming languages and therefore it is usually unknown to the
+average programmer.</p>
+<p>I saw pattern matching for the first time in '95,
+when using Mathematica for High Energy Physics symbolic
+computations, which is a very specific usage indeed.
+Nowadays, however, the trend toward higher
+and higher abstraction is influencing all programmming languages and I
+am pretty sure than soon or later pattern matching will enter in
+mainstream languages.</p>
+<p>For the moment, you can find it in functional languages and, in a poor
+man form, in certain scripting languages.  It should be noticed that
+common functional languages such as SML, OCaml, F#, Haskell (or even
+Scala) only have run time pattern matching, since they lack macros. In
+Scheme instead compile time pattern matching is somewhat preferred:
+you use it to manipulate compile-time lists which are actually blocks
+of code wrapped in macros.</p>
+<p>Runtime pattern matching is used to
+manipulate lists (or other data structures) which are only know at
+runtime: in particular, they could be user input. Compile time pattern
+matching can be used to implement a compiler; run time pattern matching
+to implement an interpreter.</p>
+<p>In this episode I will discuss only a poor man form of runtime
+pattern matching, list destructuring, i.e. the ability to
+match (nested) lists with a single predefined pattern. This ability is
+akin to what <tt class="docutils literal"><span class="pre">def-syntax</span></tt> can do at compile time. Full runtime pattern
+matching is able to manage a whole set of patterns, akin to what
+<tt class="docutils literal"><span class="pre">syntax-match</span></tt> can do at compile time.</p>
+<p>The poor form of pattern matching is called tuple
+unpacking in Python (note for lispers: you would call it destructuring bind).
+For instance, you can write:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; (a, (b, [c, d])) = (1, [2, iter((3, 4))])
+&gt;&gt;&gt; (a, b, c, d)
+(1, 2, 3, 4)
+</pre>
+<p>Tuple unpacking works at any level of nesting and for any kind of
+iterable, therefore it is pretty powerful. Moreover, tuple unpacking
+is even more powerful in Python 3.0, where it is possible to
+split an iterable into its head (<tt class="docutils literal"><span class="pre">car</span></tt>) and tail (<tt class="docutils literal"><span class="pre">cdr</span></tt>):</p>
+<pre class="literal-block">
+&gt;&gt;&gt; head, *tail=(i for i in (1,2,3))
+&gt;&gt;&gt; (head, tail)
+(1, [2, 3])
+</pre>
+<p>I have noticed in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=239699.html">episode #5</a>
+that the star syntax in Python is similar to the dot syntax
+in Scheme, when used in the signature of functions with a
+variable number of arguments (variadic functions);
+the syntactic extension in Python 3.0 makes the similarity
+stronger.</p>
+<p>The main difference between Python and Scheme is that Scheme
+pattern matching is not polymorphic, i.e. you cannot match
+with the same pattern a list and a vector or an equivalent
+iterable. You must use different patterns, or esplicitely convert
+the types.</p>
+<p>There are plenty of libraries
+for full runtime pattern matching: one of the most common is the
+<a class="reference" href="../_/http/citeseer.ist.psu.edu/rd/34737315%2C53980%2C1%2C0.25%2CDownload/http:/citeseer.ist.psu.edu/cache/papers/cs/4091/ftp:zSzzSzftp.cs.rice.eduzSzpubliczSzlanguageszSzwrightzSzmatch.pdf/wright95pattern.pdf">match</a> library by Andrew Wright, which is available practically
+for all Scheme implementations. In Chicken Scheme <a class="reference" href="../_/http/citeseer.ist.psu.edu/rd/34737315%2C53980%2C1%2C0.25%2CDownload/http:/citeseer.ist.psu.edu/cache/papers/cs/4091/ftp:zSzzSzftp.cs.rice.eduzSzpubliczSzlanguageszSzwrightzSzmatch.pdf/wright95pattern.pdf">match</a> is actually
+built-in in the core language:</p>
+<pre class="literal-block">
+$ csi
+CHICKEN
+Version 2.732 - macosx-unix-gnu-x86     [ manyargs dload ptables applyhook cross ]
+(c)2000-2007 Felix L. Winkelmann        compiled 2007-11-01 on michele-mac.local (Darwin)
+
+#;1&gt; (match-define (head . tail) '(1 2 3))
+#;2&gt; (list head tail)
+(1 (2 3))
+</pre>
+<p>Recently the implementation of match has been rejuvenated by Alex Shinn, who
+fixed a few bugs and reimplemented everything in terms of
+<tt class="docutils literal"><span class="pre">syntax-rules</span></tt> macros, whereas the original used <tt class="docutils literal"><span class="pre">define-macro</span></tt>:
+this modern
+implementation is also available as an R6RS library, thanks to
+Derick Eddington and you can download it for <a class="reference" href="../_/http/bazaar.launchpad.net/~derick-eddington/ikarus-libraries/xitomatl/annotate/121$/file_id=asmatch.sls-20080507230024-prlxlzdsg0x0ad3d-1">here</a>, if you want to
+use this matcher with Ikarus.</p>
+<p>Studying the documentation of <a class="reference" href="../_/http/citeseer.ist.psu.edu/rd/34737315%2C53980%2C1%2C0.25%2CDownload/http:/citeseer.ist.psu.edu/cache/papers/cs/4091/ftp:zSzzSzftp.cs.rice.eduzSzpubliczSzlanguageszSzwrightzSzmatch.pdf/wright95pattern.pdf">match</a> is certainly a good use of your
+time, and a recommended reading; on the other hand, writing your
+own matcher relying on Scheme macros is even more interesting.
+In the next paragraph
+I will implement a <tt class="docutils literal"><span class="pre">let+</span></tt> macro with the full power of
+tuple unpacking, and in future episodes I will implement a fully fledged
+list matcher.</p>
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/pattern-matching.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/pattern-matching.jpg">
+</img></div>
+<div class="section">
+<h1><a id="a-list-destructuring-binding-form-let" name="a-list-destructuring-binding-form-let">A list destructuring binding form (let+)</a></h1>
+<p>This paragraph will use a test-first approach, and will begin
+with a specification of how
+<tt class="docutils literal"><span class="pre">let+</span></tt> is intended to work by means of tests.
+I am using here the
+minimal testing framework I have introduced in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240833.html">episode #11</a>.
+Here are the tests:</p>
+<pre class="literal-block">
+(test "no args"
+ (let+ 1); no bindings; return 1
+ 1)
+
+(test "name value"
+ (let+ (x 1) x); locally bind the name x to the value 1 and return it
+ 1)
+
+(test "one arg"
+ (let+ ((x) '(1)) x); locally bind the name x to the value 1 and return it
+ 1)
+
+(test "two args"
+ (let+ ((x y) (list 1 2)) (list x y)); locally bind the names x and y
+ '(1 2))
+
+(test "pair"
+  (let+ ((x . y) '(1 2)) y)
+  '(2))
+
+(test "nested"
+  (let+ ((x (y z)) '(1 (2 3))) (list x y z)); bind x, y and z
+  '(1 2 3))
+</pre>
+<p>Here is an implementation satisfying those tests:</p>
+<pre class="literal-block">
+(def-syntax let+
+  (syntax-match ()
+    (sub (let+ expr)
+         #'expr)
+    (sub (let+ (() lst) expr)
+         #'(if (null? lst) expr
+               (apply error 'let+ "Too many elements" lst)))
+    (sub (let+ ((arg1 arg2 ... . rest) lst) expr)
+         #'(let ((ls lst))
+             (if (null? ls)
+                 (apply error 'let+ "Missing arguments" '(arg1 arg2 ...))
+                 (let+ (arg1 (car ls))
+                   (let+ ((arg2 ... . rest) (cdr ls)) expr)))))
+    (sub (let+ (name value) expr)
+         #'(let ((name value)) expr)
+         (identifier? #'name)
+         (syntax-violation 'let+ "Argument is not an identifier" #'name))
+    (sub (let+ (name value) (n v) ... expr)
+         #'(let+ (name value) (let+ (n v) ... expr)))
+    ))
+</pre>
+<p>It is not difficult to understand how the macro works by performing a few
+experiments <tt class="docutils literal"><span class="pre">syntax-expand</span></tt>; for instance, <tt class="docutils literal"><span class="pre">let+</span></tt> with a single argument
+expands as follows:</p>
+<pre class="literal-block">
+&gt; (syntax-expand (let+ ((x) '(1)) x))
+(let ((ls '(1)))
+  (if (null? ls)
+     (apply error 'let+ "Not enough elements" '(x))
+     (let+ (x (car ls)) (let+ (() (cdr ls)) x))))
+</pre>
+<p>whereas <tt class="docutils literal"><span class="pre">let+</span></tt> with a required argument and a variadic list of arguments
+expands as follows:</p>
+<pre class="literal-block">
+&gt; (syntax-expand (let+ ((x . rest) '(1)) (cons x rest)))
+(let ((ls '(1)))
+  (if (null? ls)
+      (apply error 'let+ "Not enough elements" '(x))
+      (let+ (x (car ls)) (let+ (rest (cdr ls)) (cons x rest)))))
+</pre>
+<p>Notice that in this case the template <tt class="docutils literal"><span class="pre">(arg2</span> <span class="pre">...</span> <span class="pre">.</span> <span class="pre">rest)</span></tt>
+has been replaced by <tt class="docutils literal"><span class="pre">rest</span></tt>, since there are no arguments. This is the
+magic of the dots!</p>
+<p>Finally, let us see what happens when we try to match a too short list:</p>
+<pre class="literal-block">
+&gt; (let+ ((x y) '(1)) x)
+Unhandled exception
+ Condition components:
+   1. &amp;error
+   2. &amp;who: let+
+   3. &amp;message: "Missing arguments"
+   4. &amp;irritants: (y)
+</pre>
+<p>or a too long list:</p>
+<pre class="literal-block">
+&gt; (let+ ((x y) '(1 2 3)) x)
+Unhandled exception
+ Condition components:
+   1. &amp;error
+   2. &amp;who: let+
+   3. &amp;message: "Too many elements"
+   4. &amp;irritants: (3)
+</pre>
+<p>In the first case there an  argument <tt class="docutils literal"><span class="pre">(y)</span></tt> in excess, not matched by any
+element; in the second case, there is an element <tt class="docutils literal"><span class="pre">(3)</span></tt> in excess,
+not matched by any argument. The implementation also checks (at compile time)
+that the passed arguments are valid identifiers:</p>
+<pre class="literal-block">
+&gt; (let+ ((x y 3) '(1 2 3)) x)
+Unhandled exception
+ Condition components:
+   1. &amp;who: let+
+   2. &amp;message: "Argument is not an identifier"
+   3. &amp;syntax:
+       form: 3
+       subform: #f
+   4. &amp;trace: #&lt;syntax 3&gt;
+</pre>
+<p>As I said, Scheme pattern matching is not polymorphic: you cannot
+exchange a vector for a list of viceversa:</p>
+<pre class="literal-block">
+&gt; (let+ ((x (y z)) (list 1 (vector 2 3))) (list x y z))
+Unhandled exception:
+ Condition components:
+   1. &amp;assertion
+   2. &amp;who: car
+   3. &amp;message: "argument does not have required pair structure"
+   4. &amp;irritants: (#(2 3))
+</pre>
+<p>The error message is clear, we also know that a <tt class="docutils literal"><span class="pre">car</span></tt> was involved,
+but unfortunately, it does not give
+much information about <em>where</em> exactly the error happened :-(
+I was serious at the end of <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=240836.html">episode #12</a>, when I said that
+debugging macros is no fun: the problem is that the errors
+happen in expanded code which is invisible to the programmer.</p>
+<p>In the next episode I will give a few examples of usage of <tt class="docutils literal"><span class="pre">let+</span></tt> which
+will make clear why it is so useful. See you next time!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=249681.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=249681&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D249681&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F15&amp;bodytext=In+my+Adventures+I+have+referred+many+times+to+pattern+matching%2C+but+only+in+the+context+of+compile+time+pattern+matching+in+macros.+There+is+another+form+of+pattern+matching%2C%0D%0Awhich+is+quite+common+in+Scheme+and+in+other%0D%0Afunctional+languages%3A+run+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D249681&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F15">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D249681&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F15">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

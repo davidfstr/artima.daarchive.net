@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Jini Community Meeting - part I</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=40382.html">Discuss</a> | 
+<a href="mailto:?subject=Jini Community Meeting - part I&amp;body= %0AArtima Weblogs %0AJini Community Meeting - part I %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=40382">Email</a> | 
+<a href="../viewpostP.html$/thread=40382.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=12199.html" title="The Myth of External Program Documentation">Previous</a> | 
+<a class="sl" href="thread=40383.html" title="Jini Community Meeting - Part II">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">Jini Community Meeting - part I</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">March 23, 2004</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+This is the first of a set of blogs 
+made from the Seventh Jini Community Meeting
+held in Cambridge, Massachusetts March 23-25, 2004.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h2>The Seventh Jini Community Meeting I</h2>
+<p>
+This is the first of a set of blogs 
+made from the Seventh Jini Community Meeting
+held in Cambridge, Massachusetts March 23-25, 2004.
+</p>
+<p>
+I've not blogged here in a while and for that I'm sorry.
+Please accept these next few blogs from this event as
+a kind of "warm up" for me. I've got some other essays
+on software engineering in the works which I hope to
+publish in the next couple of weeks. In the mean time,
+please enjoy these notes from the Jini Community meeting.
+</p>
+<blockquote>
+-- Scott
+</blockquote>
+<p>
+<b>caveat</b>: I should remind everybody that these are
+my observations and thoughts and not necessarily of those 
+of my employer, any other member of the Jini community, 
+or indeed anyone else on the planet. I'm a member of the
+Jini development team so these next few blogs will be
+"a little closer to home" than the essays I've done for
+Artima previously. Well, consider yourself warned! &lt;grin&gt;
+</p>
+<h3>Managing Growth</h3>
+<p>
+Ken Arnold, Chief Architect at Event Monitor, Inc., began 
+his talk by confessing that he'd begun working on his slides
+after midnight, just hours before he was to give his keynote.
+What font did he choose for his slides? It was a mock-handwritten
+font adding to the illusion it was a thrown-together presentation.
+That's Ken: outwardly rebellious, off-handed, gregarious, and
+a perfect choice for launching the 7th community meeting for
+users of Jini Network Technology.
+</p>
+<p>
+Ken's presentation was polished, as usual, leading me to believe
+his claims of procrastinating on the preparation of his talk were
+probably overstated. After walking through some of the early 
+history of the Jini project, Ken led the audience through the
+history, and intent, of the Jini license. License? Usually, such
+a topic would be a real <i>sleeper</i> as a keynote but the
+Jini project has been interesting in several ways and the 
+licensing aspects of this technology illuminates this nicely.
+</p>
+<p>
+Before going any further, it might be good to just mention what
+Jini Technology does. Here's my definition:
+</p>
+<blockquote>
+Jini is a distributed computing model for Java. With Jini,
+collections of computing resources can collaborate and 
+interact to produce highly-scalable, reliable, and flexible
+solutions that would be difficult or impossible to create
+any other way.
+</blockquote>
+<p>
+In short, Jini helps programmers create solutions with
+computers working together in dynamic ways. That's the
+technology half of this. Ken's other interest is the
+<i>people</i> half of this. How can we get <i>people</i>
+working together in dynamic ways? 
+</p>
+<p>
+That's the point and
+purpose of the JDP, the Jini Decision Process, and the
+SCCL, the  Sun(TM) Community Source License. Getting
+the community involved in the continued development
+of Jini is something Ken is passionate about. The SCCL's
+intention is to protect the rights of those who use 
+(and contribute) to the technology, and the JDP provides
+the rules of the game for those who wish to participate 
+in the planning for Jini's future.
+</p>
+<p>
+Guess what? There's no consensus that the license or
+the JDP are perfect. What a surprise! The Jini 
+community is filled with bright, energetic people
+with strong opinions. Then again, what (successful)
+project and team <i>doesn't</i> have such folks?!
+I'm reminded of a quote:
+</p>
+<blockquote>
+"In a room full of top software designers, if any
+two of them agree, that's a majority."
+<br/>
+-- Bill Curtis
+</blockquote>
+<p>
+In this regard, the Jini community is simply suffering
+from the same maladies that afflict all popular technologies:
+the problem space addressed by the technology is constantly
+changing, the platform the technology is deployed upon
+(Java, in this case) is changing, the scope of the technology
+is increasing as it is used to solve more-and-more diverse
+problems, and some of the decisions we've made in the past
+may not have been satisfactory and we need to fix some things.
+</p>
+<p>
+The fact that there are now
+passionate advocates agitating in the community is a 
+testament to the success (albeit a somewhat quiet success)
+of the technology itself. The question now is how do we 
+manage what we've created?
+</p>
+<blockquote>
+"Good management is more important than good technology."
+<br/>
+-- Alan Davis
+</blockquote>
+<p>
+I think I'd like to expand upon this. Perhaps it is possible
+to create great technology <i>at first</i> in the absence
+of management, but the growth of 
+that technology would be impossible without good management 
+orchestrating that growth. Engineers, by their very nature
+I guess, rebel at <i>any</i> management... and Ken Arnold
+exemplifies this notion at least as well as anyone I can
+think of! I believe its ironic that Ken, the ultimate 
+coding nerd and <i>anti-manager</i>, took up the cause to 
+create a <i>management structure</i> to manage a community
+of developers destined to take Jini forward!
+</p>
+<p>
+This is not to say that Ken was the entire engine behind the
+SCCL, JDP, or the Jini Community. Quite the contrary, while
+Ken's participation has been instrumental, there are many others
+who have dedicated years at this point to ensure that this
+model of community development works and that a sense of
+<i>fairness</i> pervades the system. Jim Hurley, who also led
+the organizing effort for this event, is another architect of
+the Jini Community and its license and there are many more
+folks I don't have time to name that should also be applauded.
+</p>
+<p>
+Jim's involvement
+has made him a "popular" guy. For example, Jim was accosted even
+before start of this conference on licensing issues. If you
+want to make Jim squirm, just walk up to him and say, "Do
+you have a minute to talk about licensing?" Really. He'll
+break out into a cold sweat. Let me know when you're going
+to do it. I want to watch.
+</p>
+<p>
+It's a sign a technology has come of age
+that one of the concerns people bring to an event like this
+is licensing and growth management. What a nice problem to 
+have! While we might grouse about all the things not currently
+permitted by the licensing system, the truth is that many 
+use the technology, for free, to create impressive solutions
+that I'm sure they've charged top-dollar for. Further, Sun's commitment
+to the technology is occasionally questioned but a quick 
+run-through of the numbers tells me that Sun Microsystems
+committed millions of dollars over several years which 
+yielded an important technology you can use in your custom
+solutions basically <i>for free</i>. Not bad.
+</p>
+<p>
+There might be changes in the licensing structure
+for this technology someday. Certainly, the openness of the
+process makes it possible for you to participate in the
+system to help bring such a thing to fruition. But I think
+we shouldn't lose sight of the fact that the technology
+and licensing structure, as it exists today, is a powerful
+asset that is available to you <i>now</i>. And, while the
+<i>manager</i> in me wants to know how we'll be growing 
+Jini in the future, the <i>nerd</i> in me wants to see what
+new cool things we can build right now with what we've got.
+</p>
+<p>
+Of course I've got an axe to grind on this issue.
+I'm a member of the Jini Technology team and have
+watched my colleagues put an enormous amount of work
+into this technology. Artists want their works viewed.
+Architects want their buildings built and 
+bustling with people. Software developers want their
+systems used and expanded. With passionate folks like
+Ken, and others, leading the way, I think we'll see
+just that. 
+</p>
+<p>
+If you've not checked into Jini Network Technology,
+now's a great time to do so. If you're already a 
+member of the Jini Community, I encourage you to 
+work with Ken and the many others involved in taking
+this technology to the next phase.
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h3>Resources</h3>
+<ul>
+<li>The <a href="../_/http/www.jini.org/index.html">jini.org</a> web site.
+  </li>
+<li><i>Facts and Fallacies of Software Engineering</i>, Robert L. Glass.
+  		This is the source I used for the Bill Curtis quote and is an
+  		excellent work. My review for Amazon is forthcoming.
+  </li>
+<li><i>201 Principles of Software Development</i>, Alan Davis.
+  		This book is, alas, now out of print... and I think that's
+  		a shame. 
+  </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=40382&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40382&amp;title=Jini+Community+Meeting+-+part+I&amp;bodytext=This+is+the+first+of+a+set+of+blogs+%0D%0Amade+from+the+Seventh+Jini+Community+Meeting%0D%0Aheld+in+Cambridge%2C+Massachusetts+March+23-25%2C+2004.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40382&amp;title=Jini+Community+Meeting+-+part+I">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D40382&amp;title=Jini+Community+Meeting+-+part+I">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2004 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Messaging is the Right Way to Build a Distributed System</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=120669.html">Discuss</a> | 
+<a href="mailto:?subject=Messaging is the Right Way to Build a Distributed System&amp;body= %0AArtima Weblogs %0AMessaging is the Right Way to Build a Distributed System %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=120669">Email</a> | 
+<a href="../viewpostP.html$/thread=120669.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=118828.html" title="Readable Method Calls in Java">Previous</a> | 
+<a class="sl" href="thread=145493.html" title="Multiple Contexts, Information Reuse, and Backpointers">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">Messaging is the Right Way to Build a Distributed System</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">July 26, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A message-based design is fundamentally the right way to think about building a distributed system, as opposed to code sharing, remote procedure calls, and the like. This article explains why.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I read an article last year that said the complexity of J2EE resulted from 
+  the basic architectural designs it's intended for--architectures that rely on 
+  distributed code, where you pass objects around the network and invoke methods 
+  on objects that reside on other systems. The article's premise was that the 
+  best way to build a distributed system is to use messaging--to use a protocol-based 
+  design, rather than an API-based design. If I ever find that article again, 
+  I'll post a pointer to it. It was a good one. It got me thinking...</p>
+<p>I knew J2EE was complex. For me, it was <em>too</em> complex. The simplifications 
+  and ease-of-use improvements coming up in the near future will hide a lot of 
+  that complexity so the developer doesn't have to deal with it (see <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117184#J2EEeaseOfUse.html">J2EE 
+  Ease of Use</a>)--but the complexity will still exist. So I've been wondering 
+  for a while now: What is it that makes a loosely-coupled, message-based design 
+  so much better?</p>
+<p>I recently spent some time with Bill Venners and Frank Sommers of Artima. At 
+  the time, they were discussing that very question. Something about the conversation 
+  made my thoughts gel, and things sort of clicked into place. This post shares 
+  those thoughts. </p>
+<p> To my mind, the factors that tend to make a message-based design clearly superior 
+  most of the time are:</p>
+<ul>
+<li><a href="#Transparency">Transparency</a></li>
+<li><a href="#Testability">Testability</a></li>
+<li><a href="#Immunity">Immunity &amp; Evolution</a></li>
+<li><a href="../Interoperability/index.html">Interoperability &amp; Evolution</a></li>
+<li><a href="#StatelessScalability">Stateless Scalability</a></li>
+</ul>
+<a name="Transparency"></a>
+<h2>Transparency <a class="purpleLink" href="#Transparency">#</a></h2>
+<p> When you're sending messages, it's easy to inspect them--so it's easy to see 
+  which messages that are being passed. That makes debugging a whole lot easier.</p>
+<a name="Testability"></a>
+<h2>Testability <a class="purpleLink" href="#Testability">#</a></h2>
+<p> To test a module, you send it a message. You can then inspect the message 
+  coming back to compare the results. You can do your unit testing properly, in 
+  other words, testing each module in isolation. In an object-sharing system, 
+  on the other hand, you have two choices. One choice is to wait until everything 
+  is running to start testing--which means you have a host of bugs waiting to 
+  be found, all of which are deep in the code and complex. That's horrible. </p>
+<p>The other choice is to build a unit testing framework that lets you plug in 
+  a real module, surrounding it with a framework and feeding it mock objects you 
+  can use to test with. Setting all that up can be nearly as much work as the 
+  application itself.</p>
+<a name="Immunity"></a>
+<h2>Immunity and Evolution <a class="purpleLink" href="#Immunity">#</a></h2>
+<p>You can add additional content to an XML message at will. The receiving code 
+  doesn't even need to know about it. So you can upgrade the sending end of the 
+  system without necessarily affecting the receiving end. When you're passing 
+  objects around on the other hand, that's frquently impossible to do--unless 
+  the "objects" are simply messages in disguise as, for example, a hash 
+  map that contains key/value pairs.</p>
+<p>You can even "immunize" the system against drastic change by providing 
+  a wrapper that directs messages in the old format to an older version of the 
+  module, and messages in a newer format to the new version of the module. That 
+  kind of implementation makes the system even <em>more</em> "loosely coupled", 
+  which lets you upgrade the system organically, one part of a time. That's an 
+  important aspect of a system design, whether you're a wholesaler with 120 clients 
+  scattered around the globe, or a corporate resource that's providing services 
+  to a dozen different departments. When you update your main system to provide 
+  new capabilities, you want let your clients to continue to access the old capabilities 
+  until they get around to upgrading. That gives your system the ability to <em>evolve</em> 
+  in a somewhat organic fashion.</p>
+<p>In a distributed-object system, on the other hand, you're pretty well forced 
+  to upgrade everyone on the same timetable. Then you throw a giant switch and 
+  hope the new system works as well as the old one did--and that people will like 
+  it. (With the message-based system, they could always go back to the old way 
+  of doing things, if they needed to. With the distributed-object implementation, 
+  they don't get that choice.)</p>
+<a name="Interoperability"></a>
+<h2>Interoperability and Evolution <a class="purpleLink" href="#Interoperability">#</a></h2>
+<p>If you're passing XML messages around--which are essentially a glorifed version 
+  of ASCII text--there is no requirement whatever the different parts of the system 
+  be implemented in the same language, on the same operating system, or even on 
+  the same platform. There is no need particular need to make sure that the systems 
+  are "compatible", beyond a minimal ability to communicate. That's 
+  interoperability. </p>
+<p>And if you decide you want to use a different language, operating system, or 
+  platform, you're free to do so. You can convert part of the system and stop 
+  there, or do the whole enchilada eventually--one module at a time. Once again, 
+  you're free to <em>evolve</em> the system in directions you choose.</p>
+<a name="StatelessScalability"></a>
+<h2>Stateless Scalability <a class="purpleLink" href="#StatelessScalability">#</a></h2>
+<p>Object-construction is relatively expensive. And object by it's very nature 
+  preserves state. So a distributed-object design will tend to use state-smart 
+  objects. But objects consume resources, and when you have a lot of state-smart 
+  objects, most of the time they're just sitting around waiting to be poked so 
+  they can take the next step, whatever that turns out to be. On top of that, 
+  you have the problem of distributed garbage collection. Garbage collection by 
+  itself is hard enough. Distributed garbage collection just has to be a nightmare.</p>
+<p>If you're passing messages, on the other hand--for instance, XML messages, 
+  the "state" information the receiving object needs amounts to a fistful 
+  of extra bytes. So the objects doing the work on the receiving end don't have 
+  to record any state information. That's statelessness. </p>
+<p>Although transmission time is marginally longer with such a design, the overall 
+  load on the system is drastically reduced. So the system tends to keep working 
+  when the transaction volume is immense. That's scalability.</p>
+<p><a name="Conclusion"></a> </p>
+<h2>Conclusion <a class="purpleLink" href="#Conclusion">#</a></h2>
+<p>For a distributed system, a protocol-based, message-based design is almost 
+  uniformly an improvement over a distributed-object design, for good reason: 
+  transparency, testability, immunity and evolution, as well as stateless scalability. 
+  The NetBeans collaboration APIs described in <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117079.html">JavaOne 
+  2005, Day 3: Share the News!</a> show how clean and simple a distributed system 
+  can be when it's message based.</p>
+<a name="Resources"></a>
+<h2>Resources <a class="purpleLink" href="#Resources">#</a></h2>
+<ul>
+<li><a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117184#J2EEeaseOfUse.html">J2EE 
+    Ease of Use</a><br/>
+    http://www.artima.com/weblogs/viewpost.jsp?thread=117184#J2EEeaseOfUse<br/>
+      </li>
+<li>NetBeans collaboration APIs: <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=117079.html">JavaOne 
+    2005, Day 3: Share the News!</a><br/>
+    http://www.artima.com/weblogs/viewpost.jsp?thread=117079 </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=120669.html">50
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=120669&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D120669&amp;title=Messaging+is+the+Right+Way+to+Build+a+Distributed+System&amp;bodytext=A+message-based+design+is+fundamentally+the+right+way+to+think+about+building+a+distributed+system%2C+as+opposed+to+code+sharing%2C+remote+procedure+calls%2C+and+the+like.+This+article+explains+why.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D120669&amp;title=Messaging+is+the+Right+Way+to+Build+a+Distributed+System">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D120669&amp;title=Messaging+is+the+Right+Way+to+Build+a+Distributed+System">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

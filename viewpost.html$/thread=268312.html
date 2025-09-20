@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Disintermediation</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=268312.html">Discuss</a> | 
+<a href="mailto:?subject=Disintermediation&amp;body= %0AArtima Weblogs %0ADisintermediation %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=268312">Email</a> | 
+<a href="../viewpostP.html$/thread=268312.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=267861.html" title="We No Longer Need Power">Previous</a> | 
+<a class="sl" href="thread=268433.html" title="First Steps in Flex: 6 Screencasts Available">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Disintermediation</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">September 15, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The internet takes a formerly-expensive cost (communication) and drives it to essentially zero. Any activity where communication is important is being disrupted. To find out how much, drive the result as far to the extreme as possible.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>In early days, it was predicted that you would design your own newspaper, choosing the kinds of stories that you were interested in reading. But of course no one predicted the newsreader; they always included the newspapers themselves in this picture -- newspapers would evolve but not go away, and you'd design your own newspaper <em>through</em> the existing newspaper company.</p>
+<p>But do we really need newspapers? What do they actually contribute (other than being a centralized place where governments can go to push and control if, for example, they want to go to war)? Or try this exercise: if we start with a green field and design a news system, what does it look like when the internet is already in place? We still need specialists, and we still need to send people to see things in person and talk to the participants directly -- or do we? Why not get the information from the people who are already there? The efficiency of the internet finds (A) the cheapest way to get the information and (B) the most emotional information (people connect primarily through emotion).</p>
+<p>In the end, people don't read newspapers. They read writers. The newspaper is the intermediate medium that was necessary in order to get the voice of the writers to the readers. The internet makes that medium way too expensive to support, because it's competing with "free" and people can read writers far more easily without it. Printed newspapers will go away, and the organizations themselves will also vanish, with the exception of those that provide some valuable service (such services may not yet have been imagined, but they will not be tied to the expensive process of printing and distributing newspapers).</p>
+<p>Now take advertising. When all information flowed through expensive channels (TV, radio, newspaper), the only way you could tell people about a product is through advertising. It was really "news about products." But now we don't trust paid news about products because we find out about products from our friends, whom we trust precisely because they're <em>not</em> getting paid. They tell us about these things because they care about us and think they might help improve <em>our</em> lives, rather than the company telling us because the company wants to improve <em>its</em> life.</p>
+<p>So we begin to find out what Seth Godin keeps harping about, that ads don't work. They only work in the case where they are information rather than old-style advertising, which is why Google is successful -- if you're looking for something already, it will occasionally connect you with someone who's selling that thing. Which is quite different from soap and soft drinks competing with each other in a limited, expensive medium.</p>
+<p>And consider first-generation internet companies, which have one foot in the old world and one in the new. These are like the first vision of computer-based learning, where people took flash cards and computerized them. Just like the old way, but on a computer. What we've been seeing is media companies and social networking which duplicate the magazine model: create something that people want to read, and monetize it. Even better, let the users create the readables, for free!</p>
+<p>This is where that model falls down, because you can't open that particular door partway. You can't say "we want users to write stuff for us, but we still want to control it." In fact, I suspect that if you even try to make money from it you'll fall into a trap because (A) you'll lose user respect and more importantly (B) at some point you won't be able to resist gaming the system.</p>
+<p>This <a class="reference" href="../_/http/www.fastcompany.com/magazine/131/on-the-internet-everyone-knows-youre-a-dog.html">Fast Company article</a> talks about consumer rating systems; what we see is companies trying to control, as if it were advertising, what people say about them. Amazon, for example, accidentally dropped over a thousand one-star reviews for the game <em>Spore</em>; the accidental site glitch accidentally discriminated against the low reviews. And companies are not the only ones guilty of gaming; the writers can't resist pushing things around as well.</p>
+<p>Viral marketing means, to companies and old-style marketing and advertising companies, "free advertising." But it only works that way when you have an exceptional product that people <em>want</em> to talk about. If you push out a mediocre product and try to advertise it virally, people might still talk about it, but if they do they will tell it like it is and their readers will quickly find out your product isn't worth buying. In the old days you had enough control -- even if it cost you a lot of money and required big companies to create and control the media -- to advertise the heck out of your product and convince people for a time that it was worth buying (because the dissenting voices couldn't be heard, because it was too expensive).</p>
+<p>The problem with review sites is that they are following the newspaper/magazine model, primarily because that puts them in a position to monetize (which produces the aforementioned temptations and pressures). I have nothing against monetization, but blindly doing it the old way is not going to produce a sustainable business model when anyone -- and it continues to get easier and cheaper -- can put up a competing site.</p>
+<p>Review sites reproduce a variation of the editor/writer approach, where the site decides (based on cost limitations for print/TV media, but ostensibly based on quality) what should go in and what should be cut. Thus, they are responsible for everything posted on their site, and they also have the concentrated power that, at some point, will tempt them to skew the results.</p>
+<p>To see the answer, push everything to the extreme. Remove the intermediate controlling force, which is the publisher. Make everyone their own publisher. Each writer is an island, not voicing information through the controlling influence of a publisher, but completely responsible for their own voice. What value is left? I could imagine a service that collates the results of lots of independent writers.</p>
+<p>This result also impacts blogs. I have always found that the quality of comments on blogs have been less than wonderful. Basically, if anyone can comment, you rapidly degrade the quality of conversation into the noise level. I have many readers who might contribute interesting conversation, and I know this because they have told me, in person, that they read what I write. These are thought-leader types who have fascinating things to say. But they never contribute. Why? Because the noise level is too high; the quality of the conversation does not entice them to join. There are too many comments that drive the discussion down to the lowest level.</p>
+<p>Blogging software doesn't help this situation. Typically the goal is to get lots of comments, to somehow get the blog rated higher so that the associated ads can produce more revenue. But this is short-term thinking.</p>
+<p>In <a class="reference" href="../_/http/www.amazon.com/gp/product/1591842336$/ie=UTF8&amp;tag=bruceeckel&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1591842336/index.html">Tribes</a>, Seth Godin makes a rather startling assertion, that a Tribe must "exclude outsiders." This doesn't seem like a way to grow a tribe, but he says that you should go for quality rather than size. I think this applies to weblogs as well; if I want to have a fascinating discussion, I need to attract people who will improve that discussion. Throwing it open to everyone degrades the conversation and drives away those who might really contribute value. Virtually any blog you go to has the same low-level noisy conversation in the comments, making the effort to read comments just too high.</p>
+<p>The solution? Each blogger becomes his or her own publishing operation, and the comments are subject to editing by the blogger. Just as newspapers have a particular tone and voice (controlled by the publisher and that publisher's interests), the blogger's tone and voice extends beyond what they write to the discussion in the comment stream.</p>
+<p>In order to create good conversations, I want the ability to be the editor for all the "articles" (a.k.a. comments) published in my "newspaper." This means I can delete comments that are off track or inappropriate. Or I might just decide that a particular commenter is too nasty and ban them forever.</p>
+<p>Yes, I advocate censorship for my blog comments. If you don't like that then you're free to change the channel. But I'll bet that, because I put in the extra effort to edit and guide the conversation, you'll want to read the comments and you'll be more inclined to contribute good comments yourself. And you won't waste your time being unpleasant or difficult because you know you'll get deleted and possibly thrown out.</p>
+<p>Perhaps this kind of software already exists and is hosted somewhere on a blogging site (not just the ability to delete comments, but also to remove commenters altogether). I'm ready to move if it is.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=268312.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=268312&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D268312&amp;title=Disintermediation&amp;bodytext=The+internet+takes+a+formerly-expensive+cost+%28communication%29+and+drives+it+to+essentially+zero.+Any+activity+where+communication+is+important+is+being+disrupted.+To+find+out+how+much%2C+drive+the+result+as+far+to+the+extreme+as+possible.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D268312&amp;title=Disintermediation">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D268312&amp;title=Disintermediation">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

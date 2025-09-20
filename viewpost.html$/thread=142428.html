@@ -1,0 +1,529 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Java API Design Guidelines</title>
+<meta charset="utf-8"/>
+<meta content="Eamonn McManus" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=dichotomy.html">Eamonn McManus' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=142428.html">Discuss</a> | 
+<a href="mailto:?subject=Java API Design Guidelines&amp;body= %0AArtima Weblogs %0AJava API Design Guidelines %0Aby Eamonn McManus %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=142428">Email</a> | 
+<a href="../viewpostP.html$/thread=142428.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=98061.html" title="Negatable Marker Annotations">Previous</a> | 
+<a class="sl" href="thread=164042.html" title="AccessibleObject revisited: a study in immutability">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Dr. Dichotomy's Development Diary</span><br>
+<span class="ts">Java API Design Guidelines</span><br/>
+<span class="as">by Eamonn McManus</span><br/>
+<span class="pd">December 28, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+There are tons of books and articles about how to design and write good Java code, but surprisingly little about the specific topic of API design.  Here's a summary of what I've learnt on the subject from various sources and my own experience.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I recently attended an excellent talk at <a href="../_/http/www.javapolis.com/confluence/display/JP05/Home/index.html">JavaPolis</a>, <a href="../_/http/www.elharo.com/index.html">Elliotte Rusty Harold's</a> <a href="../_/http/www.cafeconleche.org/slides/javapolis/xom/index.html"><em>XOM Design Principles</em></a>.  Although
+      the talk is nominally about XOM (an API for XML documentation manipulation), in fact more than half of it is about
+      API design principles in general.  This is a curiously neglected subject.  There are tons of books and articles
+      about how to design and write good Java code, but surprisingly little about the specific topic of API design.  Yet
+      with the proliferation of new Java APIs, whether through JSRs or through Open Source projects, this is an
+      increasingly important subject.</p>
+<p>I've been closely involved with the evolution of the <a href="../_/http/java.sun.com/jmx/index.html">JMX API</a> for over five
+      years and have learnt a great deal about what works and what doesn't during that time.  During the talk, I had the
+      odd experience of continually wanting to cheer as Elliotte made point after point that I hugely agreed with.</p>
+<p>I'm going to try to summarize here what I see as being the key points from this talk, from my own experience, and
+      from a couple of other sources:</p>
+<ul>
+<li>An excellent tutorial on <code>netbeans.org</code>, <a href="../_/http/openide.netbeans.org/tutorial/api-design.html"><em>How to Design a (module) API</em></a>.
+      <li>A related NetBeans BOF at JavaOne 2005 by <a href="../_/http/weblogs.java.net/blog/timboudreau/index.html">Tim Boudreau</a>
+	and <a href="../_/http/www.netbeans.org/community/articles/interviews/yarda_tulach.html">Jaroslav Tulach</a>,
+	entitled <a href="../_/http/treefs.netbeans.org/files/documents/39/676/apidesign.sxi">
+<em>How to write APIs that will stand the test of time</em></a>.
+      <li>Of course, Josh Bloch's 
+	<a href="../_/http/java.sun.com/docs/books/effective/index.html"><em>Effective Java</em></a> book.
+    </li></li></li></ul>
+<p>[<b>Update:</b> Although I was unaware of it when writing this blog entry,
+      the <a href="../_/http/lcsd05.cs.tamu.edu/slides/keynote.pdf">slides</a> referenced
+      by Josh Bloch in a comment here cover some of the same ground and add much of
+      interest.]</p>
+<h2>Design to evolve</h2>
+<p>If your API is worth anything, it will evolve over time.  You should plan for this from the outset.  A key part
+      of the planning is to decide what sort of compatibility you will guarantee between revisions.</p>
+<p>The best approach is to say that <b>once something is in the API it will stay there</b> and it will continue to
+      work. Tweaking the API incompatibly between revisions will result in user reactions ranging from annoyance to
+      murderous rage.  The problem is particularly severe if your API ends up being used by different modules that are
+      part of the same application.  If Module 1 uses Commons Banana 1.0 and Module 2 uses Commons Banana 2.0 then life
+      will be a whole lot easier if 2.0 is completely compatible with 1.0.  Otherwise your users risk wasting huge
+      amounts of time tweaking classpaths in a futile endeavour to make things work.  They might end up having to play
+      <a href="../_/http/weblogs.java.net/blog/emcmanus/archive/2005/07/dealing_with_mu.html">mind-destroying games with
+      class-loaders</a>, which is a clear signal that you have failed.</p>
+<p>For APIs that are part of <a href="../_/http/java.sun.com/j2se/index.html">Java SE</a>, we have an extreme form of
+      compatibility.  The aim is that <em>no code whatsoever</em> should break when you update from one version to the
+      next.  This means that <b>classes and methods are never removed</b>.  It also means that we try to avoid changes
+      that might break code that was depending on certain implementation details, even if the code shouldn't have been
+      doing that.</p>
+<p>The no-code-breakage rule applies to already-compiled code (<a href="../_/http/jscstage.sfbay.sun.com/docs/books/jls/third_edition/html/binaryComp.html"><em>binary
+    compatibility</em></a>).  In some
+      rare circumstances we might make changes that mean some existing code no longer compiles (<em>source
+      compatibility</em>).  For example, adding an overloaded method or constructor can sometimes produce ambiguity
+      errors from the compiler when a parameter is null.  We do try to find a way to avoid changes that break source
+      compatibility in this way, but sometimes the best approach does imply that some source code might stop compiling.
+      As an example, in Java SE 6 the <a href="../_/http/download.java.net/jdk6/doc/api/javax/management/StandardMBean.html#StandardMBean(T,%20java.lang.Class)">
+	constructors for <code>javax.management.StandardMBean</code></a> have been generified.  Some existing source
+      code might conceivably stop compiling because it does not respect the constraints that are expressed using
+      generics here, but that code is easily fixed by adding a cast, and the rare cases where that happens are
+      outweighed by cases where the constraints will catch programming errors at compile time.</p>
+<p>In general, <b>you can't know what users of your API will do with it</b>.  When contemplating a change that
+      <em>might</em> break existing code, you have to reason conservatively.  Only if you can honestly say that it is
+      next to impossible that a change will break code can you reasonably make it.  You should certainly rule out
+      completely a <em>signature change</em>, which basically means removing or renaming a visible method or class or
+      changing the parameters of a visible method.  (But you can remove a method if it overrides a method in a parent
+      class without changing the parent method's semantics.)</p>
+<p>Since the very earliest versions of your API are sure to have many mistakes in them, and you don't want to freeze
+      those mistakes for all time, it's a good idea to <b>bring out one or more 0.x versions</b> before the 1.0 version.
+      Users of these versions know that the API is unstable and won't curse you if it changes.  Once you've brought out
+      1.0 you're committing to compatibility.  For APIs that are developed through the <a href="../_/http/jcp.org/index.html">JCP</a>, these 0.x versions correspond to the phases before the final release (Early Draft
+      Review, Public Review, Proposed Final Draft).  If possible, it's a good idea to make an implementation of the API
+      available at the same time as these intermediate specifications.</p>
+<p>If at some stage you decide that there's really too much accumulated cruft from previous versions and you want to
+      start over, then <b>create a new API with different package names</b>.  Then code that uses the old version and
+      code that uses the new version can co-exist easily.</p>
+<h2>API design goals</h2>
+<p>What should the design goals of your API be?  Apart from compatibility, the following goals from Elliotte's
+      presentation seem like an excellent set:</p>
+<ul>
+<li>It must be <b>absolutely correct</b>.  In the case of XOM, this meant that the API could never produce
+	malformed XML documents no matter what the caller did.  For the JMX API, for example, it means that you can
+	never get the MBean Server into an inconsistent state by registering strange MBeans in it or using funny
+	ObjectNames or performing several operations concurrently.
+
+      <li>It must be <b>easy to use</b>.  This is hard to quantify.  A good way to get an idea is to write lots of
+	example code.  Are there groups of operations that you keep having to repeat?  Do you have to keep looking up
+	your own API because you forget what things are called?  Are there cases where the API doesn't do what you might
+	expect?
+
+      <li>It must be <b>easy to learn</b>.  This overlaps considerably with ease of use.  But there are some obvious
+	principles to make learning easier.  The smaller the API, the less there is to learn.  Documentation should
+	include examples.  Where appropriate, the API should look like familiar APIs.
+
+      <li>It must be <b>fast enough</b>.  Elliotte was careful to put this in the list <em>after</em> the above items.
+	Make sure the API is simple and correct.  <em>Then</em> think about performance.  You might be inclined to make
+	API changes because the original API could only be implemented in an inefficient way.  By all means change it to
+	allow a more efficient implementation, <em>provided</em> you don't compromise correctness or simplicity.  Don't
+	rely on your intuition to know what performs well. <em>Measure</em>.  Then tweak the API if you've determined
+	that it really matters.
+
+      <li>It must be <b>small enough</b>.  This covers the size of the compiled code and especially the amount of memory
+	it needs as it runs.  The same principles as for speed apply.  Make it simple and correct first; measure; and
+	only <em>then</em> think about tweaking the API.
+    </li></li></li></li></li></ul>
+<h2>Be minimalist</h2>
+<p>Because of the compatibility requirement, <b>it's much easier to put things in than to take them out</b>.  So
+      don't add anything to the API that you're not sure you need.</p>
+<p>There's an approach to API design which you see depressingly often.  Think of everything a user could possibly
+      want to do with the API and add a method for it.  Toss in protected methods so users can subclass to tweak every
+      aspect of your implementation.  Why is this bad?</p>
+<ul>
+<li><p><b>The more stuff there is in the API, the harder it is to learn</b>.  Which classes and methods are the
+	  important ones?  Which of the five different ways to do what I need is the best?</p>
+<p>The situation is exacerbated by the Javadoc tool, which dumps all the classes in a package, and all the
+	  methods in a class, in an undifferentiated lump.  We can expect that <a href="../_/http/jcp.org/en/jsr/detail$/id=260/index.html">JSR 260</a> will update the Javadoc tool to allow you to produce
+	  "views" of the API, and in that case fatter APIs will not be so overwhelming.</p>
+<li><p><b>The bigger the API, the more things can go wrong</b>.  The implementation isn't going to be perfect, but
+	  the same investment in coding and testing will yield better results for a smaller API.</p>
+<li><p>If your API has more methods than it needs, then it's <b>taking up more space than it needs</b>.</p>
+</li></li></li></ul>
+<p>The right approach is to <b>base the API on example code</b>.  Think of problems a user might want to solve with
+      the API.  Add just enough classes and methods to solve those problems.  <b>Code the solutions</b>.  Remove anything
+      from the API that your examples don't need.  This allows you to check that the API is useful.  As a happy
+      side-effect, it gives you some basic tests.  And you can (and should) share the examples with your users.</p>
+<h2>Interfaces are overvalued</h2>
+<p>There's a certain style of API design that's very popular in the Java world, where everything is expressed in
+      terms of Java interfaces (as opposed to classes).  Interfaces have their place, but it is basically never a good
+      idea for an entire API to be expressed in terms of them.  <b>A type should only be an interface if you have a good
+      reason for it to be.</b>  Here's why:</p>
+<ul>
+<li><p><b>Interfaces can be implemented by anybody</b>.  Suppose <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/String.html"><code>String</code></a> were an interface.
+	  Then you could never be sure that a <code>String</code> you got from somewhere obeyed the semantics you
+	  expect: it is immutable; its <code>hashCode()</code> is computed in a certain way; its length is never
+	  negative; and so on.  Code that used <code>String</code>, whether user code or code from the rest of the J2SE
+	  platform, would have to go to enormous lengths to ensure it was robust in the face of <code>String</code>
+	  implementations that were accidentally incorrect.  And to even further lengths to ensure that its security
+	  could not be compromised by deliberately evil <code>String</code> implementations.</p>
+<p>In practice, implementations of APIs that are defined entirely in terms of interfaces often end up cheating
+	  and casting objects to the non-public implementation class.  DOM typically does this for example.  So you
+	  can't give your own implementation of the <a href="../_/http/download.java.net/jdk6/doc/api/org/w3c/dom/DocumentType.html"><code>DocumentType</code></a>
+	  interface as a parameter to <a href="../_/http/download.java.net/jdk6/doc/api/org/w3c/dom/DOMImplementation.html#createDocument(java.lang.String,%20java.lang.String,%20org.w3c.dom.DocumentType)">
+<code>DOMImplementation.createDocument</code></a> and expect it to work.  Then what's the point in having
+          interfaces?</p>
+<li><p><b>Interfaces cannot have constructors or static methods</b>.  If you need an instance of an interface, you
+	either have to implement it yourself, or you have to ask some other object for it.  If <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/Integer.html"><code>Integer</code></a> were an interface,
+	then to get the <code>Integer</code> for a given <code>int</code> you could no longer use the obvious <code>new
+	Integer(n)</code> (or, less obvious but still documented inside <code>Integer</code>,
+	<code>Integer.valueOf(n)</code>).  You would have to use <code>IntegerFactory.newInteger(n)</code> or whatever.
+	This makes your API harder to understand and use.</p>
+<li><p><b>Interfaces cannot evolve</b>.  Suppose you add a new method to an interface in version 2 of your API.
+	  Then user code that implemented the interface in version 1 will no longer compile because it doesn't implement
+	  the new method.  You can still preserve binary compatibility by catching <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/AbstractMethodError.html"><code>AbstractMethodError</code></a>
+	  around calls to the new method but that is clunky.  If you use an abstract class instead of an interface you
+	  don't have this problem.  If you tell users not to implement the interface then you don't have this problem
+	  either, but then why is it an interface?</p>
+<li><p><b>Interfaces cannot be serialized</b>.  Java serialization has its problems, but you can't always get away
+	from it.  The JMX API relies heavily on serialization, for example.  For better or worse, the way serialization
+	works is that the name of the <em>actual implementation class</em> is serialized, and an instance of that exact
+	same class is reconstructed at deserialization.  If the implementation class is not a public class in your API,
+	then you won't interoperate with other implementations of your API, and it will be very hard for you to ensure
+	that you even interoperate between different versions of your own implementation.  If the implementation class
+	<em>is</em> a public class in your API, then do you really need the interface as well?</p>
+</li></li></li></li></ul>
+<p>Of course, there are sometimes good reasons for a type to be interface.  Here are some common ones:</p>
+<ul>
+<li><p><b>Callbacks</b>.  If the interface is intended to be implemented by user code, then it is often more
+	appropriate than an abstract class.  See <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/Runnable.html"><code>Runnable</code></a> for example.
+	This is mostly true of interfaces with just one method.  Once there start being several methods you often find
+	that an implementation class only needs to do something in one of them, and it's annoying to have to implement
+	all the others.  Furthermore if an interface has three methods today then you might want it to have four
+	tomorrow, which is not usually possible as we saw.  An abstract class can avoid these problems.</p>
+<li><p><b>Multiple inheritance</b>.  It is <em>occasionally</em> useful to be able to implement an interface deep
+	  in the inheritance hierarchy.  A good example is <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/Comparable.html"><code>Comparable</code></a>, where for
+	example <code>Integer</code> is <code>Comparable</code> but its parent class <code>Number</code> is not.
+	However, there aren't many other good examples of this in the core Java classes.  It is usually bad practice
+	to implement some random interface in a class whose primary purpose is something else.  Implementing the
+	interface in a private inner class is usually cleaner, and then of course it could just as well be an abstract
+	class.</p>
+<li><p><b>Dynamic proxies</b>.  The invaluable <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/reflect/Proxy.html"><code>java.lang.reflect.Proxy</code></a>
+	  class allows you to make an implementation of any interface at runtime, where calling any of the interface's
+	  methods results in a call to a single <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/reflect/InvocationHandler.html#invoke(java.lang.Object,%20java.lang.reflect.Method,%20java.lang.Object[])"><code>invoke</code></a>
+	  method.  There's no way to construct a dynamic proxy for an abstract class, so if you think it will be useful for
+	  users to make dynamic proxies that is one reason to favour an interface.  (<a href="../_/http/cglib.sourceforge.net/index.html">cglib</a> can sometimes be used to achieve the same effect for abstract
+	  classes, but with several limitations, plus the documentation is <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=61979.html">really poor</a>.)</p>
+</li></li></li></ul>
+<h2>Be careful with packages</h2>
+<p>The Java language has fairly limited ways of controlling the visibility of classes and methods.  In particular,
+      if a class or method is visible outside its package, then it is visible to all code in all packages.  This means
+      that if you define your API in several packages, you have to be careful to avoid being forced to make things public
+      just so that code in other packages in the API can access them.</p>
+<p>The simplest solution to avoid this is to <b>put your whole API in one package</b>.  For an API with fewer than
+      about 30 public classes this is usually the best approach.</p>
+<p>If your API is too big for a single package to be appropriate, then you should plan to have <b>private
+	implementation packages</b>.  That is, some packages in your implementation are excluded from the Javadoc output
+      and are not part of the public API, even though their contents are accessible.  If you look at the JDK, for
+      example, there are many <code>sun.*</code> and <code>com.sun.*</code> packages of this sort.  Users who rely on
+      the Javadoc output will not know of their existence.  Users who browse the source code can see them, and can
+      access the public classes and methods, but they are discouraged from doing so and warned that there is no
+      guarantee that these classes will remain unchanged across revisions.</p>
+<p>A good convention for private packages is to put <code>internal</code> in the name.  So the Banana API might have
+      public packages <code>com.example.banana</code> and <code>com.example.banana.peel</code> plus private packages
+      <code>com.example.banana.internal</code> and <code>com.example.banana.internal.peel</code>.</p>
+<p>Don't forget that the private packages are accessible.  There may be security implications if arbitrary code can
+      access these internals.  Various techniques exist to address these.  The NetBeans API tutorial <a href="../_/http/openide.netbeans.org/tutorial/api-design.html#design.less.friend">describes one</a>.  In the JMX API,
+      we use another.  There is a class <a href="../_/http/download.java.net/jdk6/doc/api/javax/management/JMX.html"><code>javax.management.JMX</code></a> which
+      contains only static methods and has no public constructor.  This means that user code can never have an instance
+      of this class.  So in the private <code>com.sun.jmx</code> packages, we sometimes add a parameter of type
+      <code>JMX</code> to sensitive public methods.  If a caller can supply a non-null instance of this class, it must
+      be coming from the <code>javax.management</code> package.</p>
+<h2>Other random tips</h2>
+<p>Here are some other random tips based on our experience with the JMX API and on the sources I mentioned.</p>
+<p><b>Immutable classes are good</b>.  If a class can be immutable, then it should be.  Rather than spelling out the
+      reasons, I'll refer you to Item 13 in <a href="../_/http/java.sun.com/docs/books/effective/index.html"><em>Effective
+      Java</em></a>.  You wouldn't think of designing an API without having this book, right?</p>
+<p><b>The only visible fields should be static and final</b>.  Again this one is pretty banal and I mention it only
+      because certain early APIs in the core platform violated it.  Not an example to follow.</p>
+<p><b>Avoid eccentricity</b>.  There are many well-established conventions for Java code, with regard to identifier
+      case, getters and setters, standard exception classes, and so on.  Even if you think these conventions could have
+      been better, don't replace them in your API.  By doing so you force users to throw away what they already know and
+      learn a new way of doing an old thing.</p>
+<p>For instance, don't follow the bad example of <a href="../_/http/download.java.net/jdk6/doc/api/java/nio/package-summary.html"><code>java.nio</code></a> and <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/ProcessBuilder.html"><code>java.lang.ProcessBuilder</code></a>
+      where the time-honoured <code>T getThing()</code> and <code>void setThing(T)</code> methods are replaced
+      by <code>T thing()</code> and <code>ThisClass thing(T)</code>.  Some people think this is neato-keen
+      and others that it is an abomination, but either way it's not a well-known idiom so don't force your users to learn it.</p>
+<p><b>Don't implement Cloneable</b>.  It is usually less useful than you might think to create a copy of an object.
+      If you do need this functionality, rather than having a <code>clone()</code> method it's generally a better idea
+      to define a "copy constructor" or static factory method.  So for example class <code>Banana</code> might have a
+      constructor or factory method like this:</p>
+<pre>
+      public Banana(Banana b) {      // copy constructor
+    	  this(b.colour, b.length);
+      }
+      // ...or...
+      public static Banana newInstance(Banana b) {
+    	  return new Banana(b.colour, b.length);
+      }
+    </pre>
+<p>The advantage of the constructor is that it can be called from a subclass's constructor.  The advantage of the
+      static method is that it can return an instance of a subclass or an already-existent instance.</p>
+<p>Item 10 of <em>Effective Java</em> covers <code>clone()</code> in excruciating detail.</p>
+<p><b>Exceptions should usually be unchecked</b>.  Item 41 of <em>Effective Java</em> gives an excellent
+      summary here.  Use a checked exception "if the exceptional condition cannot be prevented by proper use of the API
+      <em>and</em> the programmer using the API can take some useful action once confronted with the exception."  In
+      practice this usually means that a checked exception reflects a problem in interaction with the outside world,
+      such as the network, filesystem, or windowing system.  If the exception signals that parameters are incorrect or
+      than an object is in the wrong state for the operation you're trying to do, then an unchecked exception (subclass
+      of <a href="../_/http/download.java.net/jdk6/doc/api/java/lang/RuntimeException.html"><code>RuntimeException</code></a>) is
+      appropriate.</p>
+<p><b>Design for inheritance or don't allow it</b>.  Item 15 of <em>Effective Java</em> tells you all you might want
+      to know about this.  The summary is that every method should be final by default (perhaps by virtue of being in a
+      final class).  Only if you can clearly document what happens if you override the method should it be possible to
+      do so.  And you should only do that if you have coded useful examples that do override the method.</p>
+<h2>Summary</h2>
+<ul>
+<li>Design to evolve.
+      <li>Correctness, then simplicity, then efficiency.
+      <li>Interfaces are overvalued.
+      <li>Be careful with packages.
+      <li>Read <em>Effective Java</em>.
+    </li></li></li></li></li></ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=142428.html">34
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=142428&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eamonn McManus adds a new entry to <a href="../index.html$/blogger=dichotomy.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/dichotomy.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D142428&amp;title=Java+API+Design+Guidelines&amp;bodytext=There+are+tons+of+books+and+articles+about+how+to+design+and+write+good+Java+code%2C+but+surprisingly+little+about+the+specific+topic+of+API+design.++Here%27s+a+summary+of+what+I%27ve+learnt+on+the+subject+from+various+sources+and+my+own+experience.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D142428&amp;title=Java+API+Design+Guidelines">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D142428&amp;title=Java+API+Design+Guidelines">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/eamonnmcmanus.jpg"/></td><td>Eamonn McManus is the technical lead of the JMX team at Sun
+Microsystems.  As such he heads the technical work on JSR 3 (JMX API)
+and JSR 160 (JMX Remote API).  In a previous life, he worked at the
+Open Software Foundation's Research Institute on the Mach microkernel
+and countless other things, including a TCP/IP stack written in Java.
+In an even previouser life, he worked on modem firmware in Z80
+assembler.  He is Irish, but lives and works in France and in French.
+His first name is pronounced Aymun (more or less) and is correctly
+written with an acute accent on the first letter, which however he
+long ago despaired of getting intact through computer systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Eamonn McManus. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Is Apple's OS X The Best (or even A Good) Platform for Java Development?</title>
+<meta charset="utf-8"/>
+<meta content="Cay Horstmann" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cay.html">Cay Horstmann's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=13058.html">Discuss</a> | 
+<a href="mailto:?subject=Is Apple's OS X The Best (or even A Good) Platform for Java Development?&amp;body= %0AArtima Weblogs %0AIs Apple's OS X The Best (or even A Good) Platform for Java Development? %0Aby Cay Horstmann %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=13058">Email</a> | 
+<a href="../viewpostP.html$/thread=13058.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=4894.html" title="Irritating Interfaces and Iterators">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Coding Curmudgeon</span><br>
+<span class="ts">Is Apple's OS X The Best (or even A Good) Platform for Java Development?</span><br/>
+<span class="as">by Cay Horstmann</span><br/>
+<span class="pd">September 15, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Apple has touted the Mac OS X as The Best Platform For Java Development. In this article, I argue that Apple's marketing hype greatly distorts reality, and that Java developers should focus on Linux instead.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Apple positions OS X as the best platform for running and developing Java applications. Curious about the hype, and in the process of ditching my remaining Windows machine, I bought a Titanium laptop about 18 months ago. Apparently, I wasn't alone. The Titanium laptop is quite the status symbol among the coding cognoscenti. James Gosling, Tim Berners-Lee, Tim O'Reilly and <a href="../_/http/www.tbray.org/ongoing/When/200x/2003/05/07/MacYear/index.html">Tim Bray</a> all have one. </p>
+<p>Should you do the same? I don't think so, and here's why.</p>
+<ol><li>Apple touts a nifty feature of shared JVM memory, and indeed this is an excellent concept. As a result, Apple promises that the startup time for Java applications is greatly reduced after the first one has started. Maybe so. But even with that boost, <b>JVM startup time is miserable</b> compared to Windows and Linux.</li>
+<li>The port to the OS X <b>graphics system is flaky.</b>. For example, if you run my mini UML editor, <a href="../_/http/horstmann.com/violet/index.html">Violet</a> on a Mac, you will find that the initial dialog is blank. Ugh. This is a result of <code>JOptionPane.showInternalMessageDialog</code>, hardly an exotic feature. Switch to the Swing L&amp;F, and the problem goes away. But the icons are still messed up. This is version 1.4.1, not some early beta. Sigh. </li>
+<li>If the <b>mouse hurts your hand</b>, don't get a Mac. Apple claims "Mac OS X Jaguar gives a great computer experience to everyone. The system goes beyond the requirements of the U.S. federal governments Section 508 Accessibility statute to provide smooth, elegant features to those with difficulties using computers." To test that claim, walk up to your friendly Apple representative at the next trade show, casually grab the mouse, and ask for a demo of the development environment, with only the keyboard. Every time I try this, the poor person can't even launch the app. Windows and Linux have keyboard shortcuts to select <b>all</b> menu options quickly. The Mac doesn't. What pains me most is that the Mac folks don't even see the problem. They tell me that I can use any keyboard shortcut that the developer provides, such as FunkyKey+O for "File Open". How about "Tools Options". Oops--no predefined shortcut. I can't select Alt+T O, like in Windows or Linux. As it turns out, there is a key to get into the menu, and you can even redefine it. Can you then hit T to open the Tools menu? No way. You have to hit the cursor keys many, many, many times. That may be enough for the federal government, but it isn't enough for a mouse-weary coder.</li>
+<li>Do you <b>enjoy cute cursor keys</b>? Then a Titanium laptop is for you. The cursor keys and function keys are tiny. There is plenty of space for larger keys, but it is all taken up by that cool looking silver surface. Other laptop manufacturers seem to be able to put decent keyboards into their products, but then of course, theirs are a boring black or gray.</li>
+<li>The laptops are <b>shoddily manufactured</b> and don't withstand abuse well. The snazzy silver is actually paint, and it peels easily. The power adapter is flimsy--mine is on life support and my son managed to break two of them in short order. My IBM ThinkPad power adapter may not have won any fashion awards, but I've never had to worry about breaking the connector and being out another eighty bucks.</li>
+<li>What's most annoying, though, is the <b>Apple Attitude</b>: Any problems with your Mac are <b>Your Fault</b>. Any perceived shortcomings are <b>Your Bad Attitude that Needs Changing</b>.
+<ul><li>Flimsy power adapter? <b>You bent it</b>, so warranty won't cover it. (Apple Store staff person)</li><li>Tiny keys? If you must have larger keys, plug in an external keyboard! (Another Apple Store staff person)</li>
+<li>No keyboard shortcuts? Install <b>Emacs</b>! (An Apple trade show rep). I actually did that. OS X renders its window decorations so beautifully!</li>
+<li>Slow VM startup times compared to Linux? You must be wrong. (Another Apple trade show rep)</li>
+<li>Swing flakiness? Maybe the early betas, but now OS X is the best platform for the Mac.(Yet another Apple trade show rep)</li></ul>It looks as if Steve Jobs' <b>reality distortion field</b> is really working, at least inside Apple stores and show booths.</li></ol>
+<p>What do you get from the Mac that you can't get better on Linux? Java runs very nicely on Linux. It is fast and reliable. Just like with OS X, you can get a command shell, Eclipse and Emacs. And, most importantly, if you need to tweak something on Linux, there is a community of users that are generally helpful, instead of corporate drones telling you to change your attitude. There is just one thing that you give up: A piece of hardware that instantly tells everyone that you don't run Windows. Oh well...just get one of those <b>tacky Penguin stickers</b> at your next trade show and slap it on your laptop.  </p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=13058.html">28
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=13058&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Cay Horstmann adds a new entry to <a href="../index.html$/blogger=cay.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cay.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D13058&amp;title=Is+Apple%27s+OS+X+The+Best+%28or+even+A+Good%29+Platform+for+Java+Development%3F&amp;bodytext=Apple+has+touted+the+Mac+OS+X+as+The+Best+Platform+For+Java+Development.+In+this+article%2C+I+argue+that+Apple%27s+marketing+hype+greatly+distorts+reality%2C+and+that+Java+developers+should+focus+on+Linux+instead.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D13058&amp;title=Is+Apple%27s+OS+X+The+Best+%28or+even+A+Good%29+Platform+for+Java+Development%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D13058&amp;title=Is+Apple%27s+OS+X+The+Best+%28or+even+A+Good%29+Platform+for+Java+Development%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/cayHorstman.jpg"/></td><td>Cay Horstmann is a professor of computer science at San Jose State University. He is an experienced professional programmer and was VP of Technology and CTO at Preview Systems Inc. He wrote many successful professional and college books, including Core Java (with Gary Cornell), Big Java, Big C++ (with Tim Budd), and OO Design &amp; Patterns.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Cay Horstmann. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

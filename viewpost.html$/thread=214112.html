@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Python 3K or Python 2.9?</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=214112.html">Discuss</a> | 
+<a href="mailto:?subject=Python 3K or Python 2.9?&amp;body= %0AArtima Weblogs %0APython 3K or Python 2.9? %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=214112">Email</a> | 
+<a href="../viewpostP.html$/thread=214112.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=213216.html" title="Advertising: What are Your Success and Failure Stories?">Previous</a> | 
+<a class="sl" href="thread=214303.html" title="Parallel Python">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Python 3K or Python 2.9?</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">September 8, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+I'm glad to see the first beta of the so-called Python 3000. But for a version that's supposed to break all the rules to become better, I'm not seeing what I think is most important.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>As time passes I appreciate Ruby more and more; hats off to Ruby, it (via Rails) has brought dynamic languages into the mainstream. But I've spent far more time with Python so I'm still much more productive with it, and remain a huge fan of the language.</p>
+<p>Because I'm invested in Python, there are things I hoped to see when Guido first started talking about Python 3K and how it had permission to completely change the rules in order to create a better language. We did this once before in Python 2.2 or 2.3: introduced backwards-incompatible changes that would break old code. I remember there was a lot of trepidation and concern and scaffolding to try to gentle the transition.</p>
+<p>But it turned out to be a non-event. The people who didn't want to change stayed with the earlier version of the language, and those who moved forward saw the costs and the benefits, and opted for the benefits. Apparently Ruby is also planning code-breaking changes to the language, primarily to take out the Perl-isms (a move I heartily applaud, and one that makes Ruby that much more attractive). And the Java designers should certainly take notice, especially because the people they are so worried about offending with language incompatibilities are still using Java 1.1 with no plans to change; they aren't even paying attention to these discussions. In the meantime, Java continues to ossify, pursuing its endless quest to produce the perfect program through static type checking, by adding more and more. The good thing is that people are finally beginning to see that static type checking is useful in small amounts and intrusive in large amounts (although I suspect this realization won't reach the main group of Java designers for years to come). The bad thing is that, in the meantime, we get abominations like Java "generics"; via daily use people are finally beginning to see what I tried to explain years ago -- Java "generics" are far more painful than helpful, just like checked exceptions. But I digress.</p>
+<p>In this article I talk about the issues that I consider very important, and worth code-breaking language changes, that I don't see happening in Python 3K.</p>
+<div class="section">
+<h1><a id="concurrency" name="concurrency">Concurrency</a></h1>
+<p>I know that true concurrency support -- the ability to run pieces of a program on multiple processors -- is hard in a dynamic language. Although they both have threads, neither Python nor Ruby is able to actually allocate those threads to multiple processors. The threading is just for code organization and to handle blocking operations. Ruby and Python are prevented from using multiple cores because they both suffer from the global interpreter lock problem.</p>
+<p>But right now we are on the brink of a huge potential gain for dynamic languages, with the advent of multi-core systems. Here's the place where the performance impact of dynamic languages, so often used as an excuse to avoid them, could be erased. Multicores could be what brings dynamic languages into their heyday, and could relegate languages like Java and C++ as "what you use for writing small pieces of your application, only if you absolutely must."</p>
+<p>The solution can be creative, as long as (A) it's simple to use and (B) it's reasonably idiot-proof; I'm the first to admit that I'll probably never be able to create a correct threaded program in C++ or Java, despite years of study. It's just too hard.</p>
+<p>From a programming standpoint, <em>agents</em> are still the best thing that I've seen. The language provides support to help the programmer create agents, and for the agents to automatically handle their own concurrency and defend their memory. There's no shared memory outside the agent, every change happens via an input queue, and each message is executed to completion rather than trying to execute multiple messages together. See the <a class="reference" href="../_/http/www.scala-lang.org/index.html">Scala Language</a> for more details on agents.</p>
+<p>One solution I can imagine that might work is to take the BeOS operating system's approach, which is to make creating OS processes very easy. If there's no way to get rid of the GIL even in Python 3K (but there might be a way, given enough language changes), then perhaps it would be possible just to create a new Python image in another process, and make it easy to communicate with that process. Thus, creating an agent would create an OS process, and communicating with the agent would actually send messages through OS pipes.</p>
+<p>That's just one suggestion, but the problem needs to be solved or some other dynamic language will solve it, and we'll be forced to go to that language in order to use all the cores that are becoming available (Scala agents have already produced what seems to be the best solution around, especially because Scala has tried to solve the syntax-horror problems that plague traditional functional languages -- and yes, before you write, I've looked at Erlang, which is great at solving some problems but it isn't the future that Scala promises).</p>
+<p>I know it's hard. But I don't want to hear that it's impossible to fix the GIL. I don't care, I need to run programs that use multiple cores and I'd sure like to use Python to do it.</p>
+</div>
+<div class="section">
+<h1><a id="eggs-and-easyinstall-standardized" name="eggs-and-easyinstall-standardized">Eggs and Easyinstall Standardized</a></h1>
+<p>I'm hoping that this is just an issue of "waiting for maturity," but we need to make support for Python Eggs and Easyinstall part of the python distribution. Easy installation and update of library components should not require effort or be a distraction.</p>
+</div>
+<div class="section">
+<h1><a id="better-application-deployment-support" name="better-application-deployment-support">Better Application Deployment Support</a></h1>
+<p>This is connected to the previous point, but it's important on its own. We need a one-button solution to deploying applications, producing a package that gives consumers a one-button solution to installing them. Too many people have avoided Python apps the same way they avoid Java apps, because the installation process is confusing. And don't tell me "it's not hard!" Yeah, it's not hard for you, the computer geek, you love doing stuff like that (recompiling your Linux kernel seems like the most obvious thing in the world to you). But the average user gets flummoxed the first time the install process asks them a question, and forget it if it involves multiple steps and installations.</p>
+</div>
+<div class="section">
+<h1><a id="get-rid-of-self" name="get-rid-of-self">Get rid of <strong>self</strong></a></h1>
+<p>This is something I really hoped to see in Python 3K, but the beloved <strong>self</strong> seems to be hanging on.</p>
+<p><strong>self</strong> is inappropriate noise in a language that lays claim to clarity and simplicity. No other mainstream OO language requires it everywhere like Python does, and it's a hurdle for people who try to come to Python from those languages. Maybe it's a significant reason that Java programmers seem to be more comfortable with Ruby; Ruby takes care of it for you just like C++ and Java do.</p>
+</div>
+<div class="section">
+<h1><a id="transparent-connections-to-ui-languages" name="transparent-connections-to-ui-languages">Transparent Connections to UI Languages</a></h1>
+<p>Although it still gets use, I don't think the built-in Tcl/Tk would be anyone's choice as a standard Python UI library if we were deciding today. This is especially true when you look at systems like Flex and Silverlight (and presumably JavaFX, but I haven't yet seen that), which are designed to solve the UI problem <em>first</em>.</p>
+<p>Why not create the best of all possible worlds and leverage those systems -- optimized to create UIs -- on top of Python the same way that we've used Tcl/Tk in the past?</p>
+<p>Event support, described below, would probably make this a lot nicer, but I'd at least like to see a solution that allows me to transparently talk back and forth to the UI subsystem in my application.</p>
+</div>
+<div class="section">
+<h1><a id="library-support-smart-libraries" name="library-support-smart-libraries">Library Support ("Smart Libraries")</a></h1>
+<p>Reusing library components is still the most productive way to leverage any programming system, and Python has always made it far easier to use libraries than most other languages I've worked with -- certainly much easier that C++ or Java. I'm used to using a text editor because even naked, the language is vastly more productive than Java, but people have come to expect a much more interactive development experience. IDEs with context assistance may seem like icing on the cake, but they really do increase productivity and Python 3K is the place to support this.</p>
+<p>We've only scratched the surface of what's possible with an interactive software development system, and most of these are variations of a single idea: context help. But context help is just a slightly smarter version of online help -- it removes a step from the searching process, and will sometimes paste in rudimentary code fragments for you. Although that's been extremely useful, I think it's possible to create a far more revolutionary development environment, one that could even be said to practice "inversion of control."</p>
+<p>I think the libraries themselves need to get smarter and support greater interactivity. I want the component to tell me what it does, how to use it, and even to reach out and wire itself into my program (for example, by looking at the available variables and putting candidates into its argument list, with drop-down menus that allow you to select appropriate alternatives). In the best of all possible worlds I would never have to look up documentation for a library component again, because the component would insert itself properly into my program and answer any questions that I have by itself, without me looking anything up -- for example, if it was missing an argument, it could suggest the way to create the object that it needs for that argument.</p>
+<p>The information necessary to create a "smart library" is in the same vein as JavaDoc; a little language that allows you to expose information about your library component. But JavaDoc is really an early experiment, and I think we should standardize the way that you describe the information that your component exposes to a development environment, and even the way it does command-completion. This way you could hover your mouse over an identifier and do all kinds of things to it.</p>
+<p>I think it would even be possible to integrate tests into the library component, maybe deeper tests that could test the way that you've used the component. But even if the new approach just provided tighter coupling with unit tests (and ideally, a less noisy syntax for unit tests), that could be a great improvement.</p>
+<p>Optional static typing, similar to what Flex uses, seems to be in the works for Python 3K, although Guido has cleverly disguised it as "any information that you'd like to add, doesn't have to mean anything." This may solve a major part of the problem with Python as it does with Flex -- the FlexBuilder development environment gives you warnings (and doesn't provide extra information) when you don't provide the optional static typing, but programs compile just fine without it. With the extra type information, you get context assistance in the IDE.</p>
+</div>
+<div class="section">
+<h1><a id="component-support" name="component-support">Component Support</a></h1>
+<p>I've been using the word "component" rather loosely; true component support seems to require direct language support for properties and events. Although it's not formal, Python has a decent property mechanism, but event support is not a part of the language and is relegated to third party libraries like Twisted, which is interesting but hard to pin down (I spent a few weeks once working with what I thought was the main thrust of the Twisted library, only to discover that the creators had decided that was a dead end and were working on something else).</p>
+<p>As mentioned before, there is no really official UI library for Python, so there hasn't been pressure to support an eventing system that would make it easier. And I don't even know if that's a good idea -- with support for simple coupling to Flex, Silverlight and JavaFX we may forever remove the need for Python to have its own UI library.</p>
+<p>But in general, if each Python process does indeed need to be single threaded from a processor standpoint, then built-in eventing could at least help produce the organizational effect that you get from breaking a program up into individually running pieces.</p>
+</div>
+<div class="section">
+<h1><a id="support-for-dsl-creation" name="support-for-dsl-creation">Support for DSL Creation</a></h1>
+<p>Although <em>Domain-Specific Languages</em> (DSLs) have gotten a lot of press lately, creating little languages to solve specific problems has always been one of the more powerful weapons in a programmer's toolbox (the <em>Interpreter</em> design pattern is an example of this). This is another area where Ruby has a leg up, although in the grand scheme of things Ruby's DSL support is fairly limited.</p>
+<p>There's even a new language called <a class="reference" href="../_/http/convergepl.org/index.html">Converge</a>, inspired by Python and with Pythonic syntax, that is primarily designed to create DSLs. This could be used as inspiration for native DSL support in Python 3K.</p>
+</div>
+<div class="section">
+<h1><a id="what-else" name="what-else">What Else?</a></h1>
+<p>What features do you think have been left out of Python 3K? What problems will you still be unable to solve with it?</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=214112.html">62
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=214112&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D214112&amp;title=Python+3K+or+Python+2.9%3F&amp;bodytext=I%27m+glad+to+see+the+first+beta+of+the+so-called+Python+3000.+But+for+a+version+that%27s+supposed+to+break+all+the+rules+to+become+better%2C+I%27m+not+seeing+what+I+think+is+most+important.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D214112&amp;title=Python+3K+or+Python+2.9%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D214112&amp;title=Python+3K+or+Python+2.9%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

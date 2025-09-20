@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>On Dasher</title>
+<meta charset="utf-8"/>
+<meta content="Bill Venners" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#D3D3D3" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bv.html">Bill Venners' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=245965.html">Discuss</a> | 
+<a href="mailto:?subject=On Dasher&amp;body= %0AArtima Weblogs %0AOn Dasher %0Aby Bill Venners %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=245965">Email</a> | 
+<a href="../viewpostP.html$/thread=245965.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=245958.html" title="ScalaTest 0.9.4 Released">Previous</a> | 
+<a class="sl" href="thread=246279.html" title="ScalaTest Matchers Preview">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Angle Brackets and Curly Braces</span><br>
+<span class="ts">On Dasher</span><br/>
+<span class="as">by Bill Venners</span><br/>
+<span class="pd">December 26, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The latest version of ScalaTest includes a trait named SpecDasher, which when mixed into a Spec facilitates a more concise expression of specification-style tests. It is deprecated, however, and may be removed in a future release depending on user feedback. What's your opinion?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>
+The basic form of writing a <code>Spec</code> in ScalaTest looks a bit like it does in Ruby's <a href="../_/http/rspec.info/index.html">RSpec</a>. You name the subject (class or other entity) you are specifying and testing with "<code>describe</code>" and the actual behavior specifications and accompanying tests (called examples in BDD terminology) with "<code>it</code>." Here's a simple <code>Spec</code>:
+</p>
+<pre>
+<font color="#0000e6">import</font> org.scalatest.Spec
+<font color="#0000e6">import</font> scala.collection.mutable.Stack
+
+<font color="#0000e6">class</font> <font color="#66009a">StackSpec</font> <font color="#0000e6">extends</font> <font color="#66009a">Spec</font> {
+
+  describe(<font color="#cd7b00">"A Stack"</font>) {
+
+    it(<font color="#cd7b00">"should pop values in last-in-first-out order"</font>) {
+      <font color="#0000e6">val</font> stack = <font color="#0000e6">new</font> <font color="#66009a">Stack[Int]</font>
+      stack.push(<font color="#cd7b00">1</font>)
+      stack.push(<font color="#cd7b00">2</font>)
+      assert(stack.pop() === <font color="#cd7b00">2</font>)
+      assert(stack.pop() === <font color="#cd7b00">1</font>)
+    }
+
+    it(<font color="#cd7b00">"should throw NoSuchElementException if an empty stack is popped"</font>) {
+      <font color="#0000e6">val</font> emptyStack = <font color="#0000e6">new</font> <font color="#66009a">Stack[String]</font>
+      intercept[<font color="#66009a">NoSuchElementException</font>] {
+        emptyStack.pop()
+      }
+    }
+  }
+}
+</pre>
+<p>
+Executing a <code>Spec</code> will produce specification-style output. For example,
+running <code>StackSpec</code> from within the Scala interpreter, like this:
+</p>
+<pre>
+scala&gt; (new StackSpec).execute()
+</pre>
+<p>
+Will yield:
+</p>
+<pre>
+A Stack
+- should pop values in last-in-first-out order
+- should throw NoSuchElementException if an empty stack is popped
+</pre>
+<p>
+With <code>SpecDasher</code>, you can write the same specification a bit more concisely, like this:
+</p>
+<pre>
+<font color="#0000e6">import</font> org.scalatest.Spec
+<font color="#0000e6">import</font> org.scalatest.SpecDasher
+<font color="#0000e6">import</font> scala.collection.mutable.Stack
+
+<font color="#0000e6">class</font> <font color="#66009a">StackDashSpec</font> <font color="#0000e6">extends</font> <font color="#66009a">Spec</font> <font color="#0000e6">with</font> <font color="#66009a">SpecDasher</font> {
+
+  <font color="#cd7b00">"A Stack"</font> -- {
+
+    <font color="#cd7b00">"should pop values in last-in-first-out order"</font> - {
+      <font color="#0000e6">val</font> stack = <font color="#0000e6">new</font> <font color="#66009a">Stack[Int]</font>
+      stack.push(<font color="#cd7b00">1</font>)
+      stack.push(<font color="#cd7b00">2</font>)
+      assert(stack.pop() === <font color="#cd7b00">2</font>)
+      assert(stack.pop() === <font color="#cd7b00">1</font>)
+    }
+
+    <font color="#cd7b00">"should throw NoSuchElementException if an empty stack is popped"</font> - {
+      <font color="#0000e6">val</font> emptyStack = <font color="#0000e6">new</font> <font color="#66009a">Stack[String]</font>
+      intercept[<font color="#66009a">NoSuchElementException</font>] {
+        emptyStack.pop()
+      }
+    }
+  }
+}
+</pre>
+<p>
+Running <code>StackDashSpec</code> will produce the same specification-style output as the previous one:
+</p>
+<pre>
+scala&gt; (new StackDashSpec).execute()
+A Stack
+- should pop values in last-in-first-out order
+- should throw NoSuchElementException if an empty stack is popped
+</pre>
+<p>
+Trait <code>SpecDasher</code> enables this syntax by offering an implicit conversion from <code>String</code> to a class named Dasher, which has <code>-</code> and <code>--</code> methods. In ScalaTest 0.9.4, trait <code>Spec</code> already mixes in <code>SpecDasher</code>, because I showed this syntax in <a href="../_/http/www.artima.com/shop/programming_in_scala/index.html"><em>Programming in Scala</em></a> working just in a plain old <code>Spec</code>. ScalaTest 0.9.4 is the version that's illustrated in the book, and I wanted all the code in the book to work, but after the book went to the printer I began to have second thoughts about the dashes style. If I do end up leaving <code>SpecDasher</code> in the API, I will definitely change <code>Spec</code> so that it doesn't already mix in <code>SpecDasher</code>. This way users will have to explicitly invite in these implicit conversion by mixing in <code>SpecDasher</code> explicitly in their own <code>Spec</code>s.
+</p>
+<p>
+However, I am also considering simply dropping <code>SpecDasher</code> entirely, which is why it is deprecated. Although it does clear out just about all clutter around a <code>Spec</code>, leaving just the specification text and the test code, the difference between a <code>describe</code> clause (denoted by two dashes) and an <code>it</code> clause (denoted by one dash) may be less obvious in dashes style. Another advantage that I think explicit "<code>it</code>" clauses may have is that they may make it more likely people will start the spec text with a verb, usually either "should" or "must".
+</p>
+<p>
+Also, I didn't provide a way in dashes style to "ignore" a test or place a test into groups, because to do so would have added more syntax to learn for both readers and writers of the tests. If you want to do either of those activities, therefore, you'll need to switch back to the default style. Here's how you'd ignore the first test, and place it in the <code>SlowTests</code> group:
+
+<pre>
+ignore(<font color="#cd7b00">"should pop values in last-in-first-out order"</font>, SlowTests) {
+  <font color="#0000e6">val</font> stack = <font color="#0000e6">new</font> <font color="#66009a">Stack[Int]</font>
+  stack.push(<font color="#cd7b00">1</font>)
+  stack.push(<font color="#cd7b00">2</font>)
+  assert(stack.pop() === <font color="#cd7b00">2</font>)
+  assert(stack.pop() === <font color="#cd7b00">1</font>)
+}
+</pre>
+<p>
+Although it is kind of cool to include a class named after one of Santa's reindeer in an API, in general I subscribe to the philosophy that you're not done when you can't think of anything else to add. Rather, you're done when you can't think of anything else to take out. If I do remove <code>SpecDasher</code>, those that like it could still use it by grabbing the source code (which is very small) and mixing it in locally. But I'd like to hear what others think, because I also subscribe to the philosophy that usually you should try to give the people what they want. Please post your opinion in the <a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=245965.html">discussion forum for this blog post</a>.
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=245965.html">1
+
+comment</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=245965&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bill Venners adds a new entry to <a href="../index.html$/blogger=bv.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bv.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D245965&amp;title=On+Dasher&amp;bodytext=The+latest+version+of+ScalaTest+includes+a+trait+named+SpecDasher%2C+which+when+mixed+into+a+Spec+facilitates+a+more+concise+expression+of+specification-style+tests.+It+is+deprecated%2C+however%2C+and+may+be+removed+in+a+future+release+depending+on+user+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D245965&amp;title=On+Dasher">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D245965&amp;title=On+Dasher">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bv.jpg"/></td><td>Bill Venners is president of Artima, Inc., publisher of Artima Developer (www.artima.com). He is author of the book, <em>Inside the Java Virtual Machine</em>, a programmer-oriented survey of the Java platform's architecture and internals. His popular columns in JavaWorld magazine covered Java internals, object-oriented design, and Jini. Active in the Jini Community since its inception, Bill led the Jini Community's ServiceUI project, whose ServiceUI API became the de facto standard way to associate user interfaces to Jini services.  Bill is also the lead developer and designer of ScalaTest, an open source testing tool for Scala and Java developers, and coauthor with Martin Odersky and Lex Spoon of the book, <em>Programming in Scala</em>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Bill Venners. All rights reserved.</div>
+</p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

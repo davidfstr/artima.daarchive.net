@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Second Time Around</title>
+<meta charset="utf-8"/>
+<meta content="B. Scott Andersen" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bsandersen.html">B. Scott Andersen's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6820.html">Discuss</a> | 
+<a href="mailto:?subject=The Second Time Around&amp;body= %0AArtima Weblogs %0AThe Second Time Around %0Aby B. Scott Andersen %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=6820">Email</a> | 
+<a href="../viewpostP.html$/thread=6820.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=5446.html" title="The Search for Requirements">Previous</a> | 
+<a class="sl" href="thread=8671.html" title="The Future of UML">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Guerrilla Development</span><br>
+<span class="ts">The Second Time Around</span><br/>
+<span class="as">by B. Scott Andersen</span><br/>
+<span class="pd">July 6, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Small companies struggle to get their first product out the door. That's probably no surprise. But, the next hurdle may be even more difficult: getting the second product, the next generation product, out the door. The problems are not necessarily technical -- but they can be deadly for a young company nonetheless.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<blockquote>
+"If you don't create the replacement for
+ your current product, your competition
+ will do it for you."
+ <br/>
+ -- Accepted product wisdom
+</blockquote>
+<h1>The Second Time Around</h1>
+<p>
+Small companies struggle to get their first product
+out the door. That's probably no surprise. But, the
+next hurdle may be even more difficult: getting the
+second product, the next generation product, out the
+door. The problems are not necessarily technical --
+but they can be deadly for a young company nonetheless.
+</p>
+<p>
+I believe part of software engineering is the management
+of risk: risk assessment and risk abatement. There are
+risks associated with second generation projects in 
+start-ups and small companies that are not present in
+first projects. 
+These new risks are often a result of organizational changes
+made since the first product's development. In order to
+manage a risk, you must first understand it. It also helps
+to have a name for it.
+</p>
+<p>
+In the book <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0471197130/index.html">
+AntiPatterns: Refactoring Software, Architectures, and 
+Projects in Crisis</a> the authors discuss things done wrong 
+over and over. Providing a name for a pattern of idiocy can be
+useful. I'd like to borrow the term "antipattern" for this installment
+of my blog to highlight three particular kinds of idiocy associated
+with second generation project development and the risks that they bring.
+They are:
+</p>
+<ul>
+<li>Waiting too long to start,</li>
+<li>Ancestor worship, and</li>
+<li>Elitism and Jealousy</li>
+</ul>
+<p>
+There are probably many more but these three should provide
+a good starting point for discussions.
+</p>
+<h2>Waiting Too Long to Start</h2>
+<p>
+R&amp;D costs, especially in technology companies,
+can be a daunting, up-front expense. Once "out of that phase", 
+the company's management is measured on their ability to get
+the company to profitability. This means, of course, 
+increasing revenue and, most likely, reducing expenses.
+</p>
+<p>
+Technology products typically have a limited useful life
+in the marketplace. Their lifetime varies, depending on 
+what kind of technology we're discussing. A particular
+model of computer hardware may have a useful lifetime in
+the marketplace of 12 months. A particular version of
+software may have a lifetime of 18 months. A video game
+might have a useful lifetime of 4 to 6 months.
+Devices and software outside of the consumer channel
+last longer. It is this type of market, where the product churn is
+slower, where I believe most problems occur.
+</p>
+<p>
+In the early 1990's I worked for a small company that made
+restaurant management systems. They had a product that they
+had sold for years... many more years than its useful market
+life. They could see that the sales of their existing product
+were falling. Yet, for a very long time, they did nothing.
+Finally, they hired a fellow to lead a team create a new product to
+replace their old product. I was hired into the team
+later.
+</p>
+<p>
+The first problem encountered by the new product team was
+discussed in an earlier blog: no product management leadership.
+Everybody knew that the old product was no longer viable and
+that a new product was necessary if the company was to survive.
+Unfortunately, nobody could agree on what form this new product
+should take. What if you made a decision or expressed an opinion
+and it was wrong? Now that revenue was dropping precipitously
+on the old product, the new product <b>had</b> to be a success.
+Nobody wanted to be blamed for its failure.
+</p>
+<p>
+There was a concern that the new product wouldn't sell.
+Note how this is different from the typical mood around
+a first product of a start-up! The prevailing notion there
+is, "if we can just get it built, we'll get rich." There
+is rarely the fear that "nobody is going to buy this pig."
+</p>
+<p>
+There was also a sense of betrayal among the staff that had
+worked in product support for years. The original product had
+become quite familiar to them. It was a comfortable relationship.
+Now, there was going to be this new product, new problems, and new
+technology with which they were untrained. For a time, they would
+need to support <b>two</b> products: the old product and the
+new one. There was a sense of resentment that their world would
+be turned up-side-down. That sentiment was probably universal
+throughout the company.
+</p>
+<p>
+As money began getting tight, the pressure to
+ship the new product was intense. Finally, with the company 
+on the edge of bankruptcy, the product was shipped -- at least
+6 months before it was really ready. It was a disaster.
+</p>
+<p>
+Then things made a turn for the worse.
+The cadre from
+Marketing and Sales now descended into Engineering blaming
+the developers for the poor quality and unhappy customers.
+The software was buggy and unreliable. It was also unfinished
+(a point we made repeatedly and fell on deaf ears at the 
+time). Instead of 
+working with Engineering to develop a plan to get the software
+finished, however, the Marketing and Sales forces leaned on
+Engineering for more features. Presumably, these were the 
+features that the latest round of sales prospects mentioned.
+</p>
+<p>
+I'm sure you've heard this at some point: "If we don't have
+this feature, we can't make the sale." If Engineering refuses,
+Sales tells management they couldn't close the deal because
+of Engineering's recalcitrance. If Engineering tries to put
+in the feature and it doesn't work right (and how could it?),
+then Marketing and Sales tell management that they can't sell
+a product that is so buggy. 
+</p>
+<p>
+At some point, one of the Marketing bozos came to talk to 
+me directly. I was just an engineer at the time. (I would later
+run the department after my manager's departure.) Like each
+of the many days before, he had some feature he wanted built
+immediately. I pointed out that the checks printed by the
+restaurant system weren't always right and that the accounting 
+system for the restaurant itself didn't always balance.
+Didn't he want us to fix those things <b>first</b>?!
+</p>
+<p>
+"No", he replied. He wanted his features because it provided
+him political insulation. There was no entrepreneurial spirit
+here. So, I created a small sign that hung outside my cube.
+It was a modest protest, but it was the only thing I could manage.
+</p>
+<blockquote>
+ Buggy features made while you wait.
+ <br/>
+ Buggy features fixed in about 6 months.
+</blockquote>
+<p>
+Can an entrepreneurial company that converts to a revenue
+producing company return to its entrepreneurial roots? Or, is
+the management structure of an R&amp;D early start-up company and
+the management structure of a steady-state adolescent company
+so different that one cannot emulate the other -- even 
+temporarily? Is such a state-change inside a company irreversible?
+</p>
+<p>
+The story does have a happy ending. The company
+went bankrupt. But, in a package deal, the assets were
+sold to another group of investors. With all of the morons
+from Marketing and Sales gone, Engineering was able to 
+quietly finish the product, fix the bugs, and resolve all
+of the outstanding customer issues.
+</p>
+<p>
+As it turns out, all those features which were <i>critical
+to the next sale</i> actually weren't necessary at all.
+Most all of our sales prospects were happy with the product
+the way it was. Although they sometimes listed a couple of
+these features as <i>nice to have</i>, their absence didn't
+stop a single sale that I know of.
+</p>
+<p>
+Engineering had built the right product; they just hadn't
+had a chance to finish it. But, once left alone, completing
+the project (and making customers happy) was just a question
+of hard work and solid engineering practices. That, I believe,
+is the most unsurprising part of all of this.
+</p>
+<h2>Ancestor Worship</h2>
+<p>
+I worked for an equipment manufacturer that was in
+need of their next generation product. The founders
+of the company created the first product and
+it held a special place in their hearts. Unfortunately,
+their romantic memories of the project were not always
+accurate. 
+</p>
+<p>
+I was recruited by the company to run the software 
+department for the next generation machine project. 
+When I arrived, the effort to scope the project and
+produce a proposal for a <a href="../_/http/www.darpa.mil/index.html">DARPA</a>
+grant was in full swing. I spent my first few weeks
+talking with the engineers, gathering their input, and
+creating a master list of tasks that I captured on a set of
+white boards in a conference room adjacent to Engineering.
+I dubbed this place "the little nasty room" and the 
+engineers quickly agreed that it was a room that was
+not much fun to be in.
+</p>
+<p>
+Software scheduling is always a difficult activity. 
+It is far too easy to miss tasks, underestimate the
+difficulty of things, and, in general, be too optimistic.
+This project had some extra pressures associated with it.
+The first problem was obvious: this was our second attempt
+with <a href="../_/http/www.darpa.mil/index.html">DARPA</a> to get the
+project done. Our first attempt had been so horribly 
+underestimated that it had no chance of success.
+Certainly, there
+was a strong desired to "get it right" this time.
+</p>
+<p>
+The second problem was more subtle and yet more dangerous:
+nobody believed my estimates. They appeared to upper management,
+the ones who created the first machine, to be far, far too high.
+</p>
+<p>
+The problem was this: they didn't remember how long it took
+to create the first machine, nor did they remember how many
+people worked on it.
+</p>
+<p>
+Here's how I goofed up: I thought this was a technical problem.
+I thought that the problem could be solved with a simple memory
+jogging memo that reviewed the previous machine's construction
+and highlighted the task ahead for the new machine. I also threw
+in some other familiar data to help make my case.
+I came at the problem in a couple of ways:
+</p>
+<ul>
+<li><b>Accounting for the previous effort</b>
+<br/>
+      I created a spreadsheet with the names of the engineers
+      along the vertical axis and the quarters and years along
+      the top horizontal axis. I then filled in the matrix.
+      Johnny worked here 2 years, from here-to-here. Sally worked
+      on the project 3 years, from here-to-here, etc. When I'd 
+      finished, I tallied the amount of time spent by the
+      engineers (in total). It was something like 60-80 engineering-years.
+      This was a number close to my estimate for the new project.
+  </li>
+<br/>
+<li><b>Typing fecundity</b>
+<br/>
+      We had software for the current machine. I did some measurements.
+      If all we had to do was "type in the answer", and if the new
+      project was only as hard as the original problem, it would take
+      between 6 and 9 months of the proposed engineering team's time
+      just to type in the programs! Forget about design time, test time,
+      etc. It was going to take 6 to 9 months just to get the typing done!
+      Certainly, this should help set a lower bound on any discussions.
+  </li>
+<br/>
+<li><b>Data from another, similar project</b>
+<br/>
+      As it happens, the management team (who had created the first
+      generation product) had also overseen the development of another
+      machine at another company. A couple of the engineers that had 
+      worked on that machine years before also worked on my project now. 
+      So, I did a spreadsheet to tally up the effort for that machine.  Again,
+      the estimate compared nicely to mine.
+  </li>
+</ul>
+<p>
+I put the finishing touches on my report, had a few of the engineers
+review it, and finally gave it to my VP in hopes of winning a little
+respect and support. Guess what happened...
+</p>
+<p>
+... he buried it. He didn't show it to a soul. The bidding process
+for the contract continued and the project manager decided, unilaterally
+and at the last moment, that my submitted estimate was too high. In the
+end, my bid was cut in half. I was told to consider it a 'management challenge'.
+My VP (the one who buried my report) and the project manager (the one that
+cut my estimate in half) both left the company within a month 
+after submitting the bid to DARPA, leaving me
+with a fresh 
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0137483104/index.html">
+death march</a>.
+</p>
+<p>
+The bidding process was only one example of the effects
+of ancestor worship. Throughout the ensuing death march
+there was a prevailing attitude from the first generation
+team that the second generation project team wasn't up to
+the task. Some of this might be explained by the antipattern
+below (Elitism and Jealousy) but the bulk of this attitude
+came from the notion that the new team, the <i>rookies</i>, couldn't
+hold a candle to the original team.
+</p>
+<p>
+This project failed. In fact, the company failed as well. 
+It has been over twenty five years since 
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0201835959/index.html">
+The Mythical Man Month</a> was published providing Fred Brook's
+answer to the question "why does software cost so much?" and yet
+we are still dealing with management unwilling to live with the answer:
+it always cost this much, you've just forgotten.
+</p>
+<h2>Elitism and Jealousy</h2>
+<p>
+The last antipattern I'll discuss is <i>Elitism and Jealousy</i>.
+Creating this pattern is easy: split Engineering into two teams:
+one on the existing product and one on the new product. Or, just
+create an <i>advanced development</i> function and give new product
+development responsibilities to them. Finally, remove any Engineering
+management leadership, sit back, and wait. The fur will be flying in no time.
+</p>
+<p>
+I was working for a small company in the mid-1980's that needed
+a next generation of small data terminal products. The original
+products, used primarily as credit card processing equipment in
+gas stations, was expensive to produce and unable to compete 
+with some of the new offerings brought forth by our competitors.
+A fellow was hired as the Director of Advanced Development and 
+charged with building a team to create the next generation of
+products. I was hired into that team.
+</p>
+<p>
+The members of the original Engineering team were nonplussed
+by this sudden appearance of these upstarts. Why did they have
+to do all the "grunt work" supporting the old product while we
+got to "play" and create all the new, cool stuff? Hadn't they
+earned that chance?
+</p>
+<p>
+Our (the Advanced Development team's) assessment
+of their work wasn't always complimentary. One of the reasons
+why the original product line didn't age well is because the
+Engineering team had been short on theory and long on "hack and wack".
+Their designs were old. Even their new efforts had too many parts and
+were difficult to assemble. The pin counts and part counts were too 
+high and reliability suffered. They also didn't take advantage of
+some of the more interesting, and economical, technology to appear
+and, in the words of the company President, "they were putting a $20
+bill in every box they shipped." The old designs in the existing
+products had problems and we called them on it. The war was on.
+</p>
+<p>
+The Advanced Development group suggested moving to a new processor
+family to cut manufacturing costs, lower software development costs,
+reduce pin count, increase reliability, and reduce circuit board
+footprint size. The suggestion was dismissed out-of-hand by 
+Engineering. We made other suggestions and other offers to help
+with the existing product line but these, too, were rebuffed.
+I don't blame them. A few ill-timed and obnoxious comments by a
+few Advanced Development team members towards the existing
+Engineering team had started a feud that would last long after my
+departure from the company years later.
+</p>
+<p>
+The company's problems worsened. Sales now slumped badly from
+a crop of new competitors. Our costs continued to climb. Even the
+revenue we had was costing us money since we had <i>negative margins</i>
+on those products we could sell. Finally, convinced something had to
+be done, the President, several VPs (including the Engineering VP that
+had allowed the feud to develop and fester), my manager (the Director
+of Advanced Development), and a few others -- including me -- were
+summoned to a conference room for a "what are we going to do about this?"
+meeting.
+</p>
+<p>
+The first question the President had was a good one: "what are our
+competitors doing that they can build these things cheaper, faster,
+and better than us?" Bored, and a bit uncomfortable in this meeting,
+I had been absentmindedly playing with my Swiss Army knife and the
+collection of competitors products arrayed across the conference room
+table. Finally, while the discussion continued, I took one of the boxes
+and began disassembling it. When I had finished taking the thing apart,
+I dropped it on the table with a thud. That got everybody's attention.
+</p>
+<p>
+Inside this box was a design remarkably similar to the one the
+Advanced Development team had suggested. The Hitachi 64180 processor
+was there (the processor we had suggested) along with some of the
+other design changes we insisted would both reduce costs and increase
+reliability. Our competitors had done the same analysis the Advanced
+Development team had done and arrived at the same conclusions. The
+competitors had acted; we had not. As the quote at the top stated,
+"If you don't create the replacement for your current product, 
+your competition will do it for you." 
+</p>
+<p>
+Again, showing my grotesque naivete, I thought this might settle
+it. Obviously we had the right answer now. We should do the right
+engineering thing, right? Of course not. This was never a technical
+problem; this was a people problem.
+</p>
+<p>
+That company was eventually purchased by another company from
+out-of-state. The Advanced Development team quit one-by-one
+over the course of a few weeks soon thereafter. I was last to go.
+None of our designs, none of our products, ever saw the light of day.
+</p>
+<p>
+This wasn't a technical problem. None of the previous problems
+were technical problems. We can say that these were management
+failures or a failure of leadership but that doesn't explain
+<i>why</i> they happened or hint how these problems might have
+been handled differently.
+</p>
+<h2>Managing Risks</h2>
+<p>
+As I stated in the beginning, there are risks associated
+with second generation projects. I've listed a few of them
+above but I'm certain there are more of these "antipatterns"
+out there. What other risks do these "second time around" projects
+have? How would you handle them? I look forward to your ideas.
+</p>
+<img align="top" height="15" src="../_/https/www.artima.com/images/ik.gif" width="15"/>
+<h2>Resources</h2>
+<ul>
+<li><b>AntiPatterns: Refactoring Software, Architectures, and Projects 
+      in Crisis</b>. Read the description on
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+</li>
+<li><b>The Innovator's Dilemma</b>. Read the description on
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a>
+<a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0875845851/index.html">here</a>.
+  </li>
+<li><b>Death March: The Complete Software Developer's Guide to 
+      Surviving 'Mission Impossible' Projects</b> by Edward Yourdon.
+      Read the description on
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a> and read my 
+      review <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0137483104/index.html">
+      here</a>.
+  </li>
+<li><b>The Mythical Man-Month: Essays on Software Engineering, 
+      Anniversary Edition (2nd Edition)</b> by Frederick P. Brooks.
+      Read the description on 
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a> and read my
+      review <a href="../_/http/www.amazon.com/exec/obidos/tg/detail/-/0201835959/index.html">
+      here</a>.
+  </li>
+<li>See all of my
+      <a href="../_/http/www.amazon.com/index.html">amazon.com</a> reviews
+      <a href="../_/http/www.amazon.com/exec/obidos/tg/cm/member-reviews/-/A1VVCPL1NEHUCW/index.html">
+      here</a>.
+  </li>
+</ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6820.html">7
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=6820&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever B. Scott Andersen adds a new entry to <a href="../index.html$/blogger=bsandersen.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bsandersen.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6820&amp;title=The+Second+Time+Around&amp;bodytext=Small+companies+struggle+to+get+their+first+product+out+the+door.+That%27s+probably+no+surprise.+But%2C+the+next+hurdle+may+be+even+more+difficult%3A+getting+the+second+product%2C+the+next+generation+product%2C+out+the+door.+The+problems+are+not+necessarily+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6820&amp;title=The+Second+Time+Around">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6820&amp;title=The+Second+Time+Around">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18">Reddit
+  </img></a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bscottandersen.jpg"/></td><td>B. Scott Andersen has 20+ years of experience in software
+development splitting his time between individual contributor and management. He is now a Principal Software Engineer with Verocel, Inc., a company specializing in helping safety-critical system developers attain certification for their products. The opinions expressed here are his own and he takes full responsibility for them... unless, of course, they are worth money, at which point they belong to his employer.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 B. Scott Andersen. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></br></center>
+<br>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</br></br></hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

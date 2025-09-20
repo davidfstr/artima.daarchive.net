@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>An exercise in compromise in class interface refinement.</title>
+<meta charset="utf-8"/>
+<meta content="Matthew Wilson" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=bigboy.html">Matthew Wilson's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=207128.html">Discuss</a> | 
+<a href="mailto:?subject=An exercise in compromise in class interface refinement.&amp;body= %0AArtima Weblogs %0AAn exercise in compromise in class interface refinement. %0Aby Matthew Wilson %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=207128">Email</a> | 
+<a href="../viewpostP.html$/thread=207128.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=187032.html" title="Monolith: Facts, Failures, Fallacies, Falsehoods and Furphies">Previous</a> | 
+<a class="sl" href="thread=228433.html" title="To blog, or not to blog?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Prescriptions, Proscriptions, and Prognostications</span><br>
+<span class="ts">An exercise in compromise in class interface refinement.</span><br/>
+<span class="as">by Matthew Wilson</span><br/>
+<span class="pd">June 1, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Attempting to find a compromise between the constraints of a facade that wraps a system API, the limitations of a limited namespace naming scheme, and a user wanting more expressiveness, revealed an interesting compromise in design.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+A <a href="../_/http/www.digitalmars.com/webnews/newsgroups.html$/art_group=c%2B%2B.stlsoft&amp;article_id=1183.html">recent
+post</a> from an <a href="../_/http/stlsoft.org/index.html">STLSoft</a> user expressing dissatisfaction with the
+<a href="../_/http/stlsoft.org/doc-1.9/dir_5c6b9f7945feab6ff69550c8a133ba87.html">STLSoft Windows Registry Library</a>
+highlighted an interesting conundrum. The user wished to create a registry key in a single statement, something like:
+<pre>
+  winstl::reg_key  key(HKEY_CURRENT_USER, "SOFTWARE\\MyCompany\\MyApp");
+</pre>
+This uses the <code>winstl::reg_key</code> class, which is actually a typedef to a specialisation of
+<code>winstl::basic_reg_key</code>. (Like <code>std::basic_string</code>, <code>winstl::basic_reg_key</code>
+can support different character encodings. Thus, <code>winstl::reg_key</code> is a typedef of
+<code>winstl::basic_reg_key&lt;TCHAR&gt;</code>. See
+<a href="../_/http/www.stlsoft.org/doc-1.9/reg__key_8hpp-source.html#l00747">here</a> for more details.)
+<br><br/>
+The problem with the above statement, from the perspective of our user, is that it does not create a key. It only
+opens the key <code>SOFTWARE\MyCompany\MyApp</code> if it already exists. If it does exist, then an instance of
+<code>winstl::registry_exception</code> is thrown, carrying the result code (<code>ERROR_FILE_NOT_FOUND</code>)
+returned by the underlying Registry API call, <code>RegOpenKeyEx()</code>.
+<br/><br/>
+The corresponding constructor for <code>winstl::basic_reg_key</code> has three parameters, as follows:
+<pre>
+  // In namespace <b>winstl</b>
+  template &lt;. . .&gt;
+  class <b>basic_reg_key</b>
+  {
+    . . .
+  public: <b>// Construction</b>
+    basic_reg_key(HKEY keyParent, char_type const* subkeyName, REGSAM accessMask = KEY_ALL_ACCESS);
+    . . .
+  public: <b>// Sub-key operations</b>
+    basic_reg_key create_sub_key(char_type const* subKeyName, REGSAM accessMask = KEY_ALL_ACCESS);
+</pre>
+<code>REGSAM</code> is a Windows API typedef from <code>ACCESS_MASK</code>, itself a typedef from
+<code>DWORD</code>. <code>KEY_ALL_ACCESS</code> is defined as follows:
+
+<pre>
+  #define KEY_ALL_ACCESS ((STANDARD_RIGHTS_ALL | KEY_QUERY_VALUE | KEY_SET_VALUE | KEY_CREATE_SUB_KEY | KEY_ENUMERATE_SUB_KEYS | KEY_NOTIFY | KEY_CREATE_LINK) &amp; (~SYNCHRONIZE))
+</pre>
+
+In other words, it's a whole lot of flags covering the bit-width of a <code>DWORD</code>. The consequence
+of this is that the third constructor parameter, carrying all possible (now and future) values that
+may be passed to <code>RegOpenKeyEx()</code>, cannot also carry an additional flag to enable creation
+by constructor, as in:
+<pre>
+  winstl::reg_key  key(HKEY_CURRENT_USER, "SOFTWARE\\MyCompany\\MyApp", KEY_ALL_ACCESS | winstl::reg_key::createKey);
+</pre>
+The reason is simple. Whatever value we might select for a member constant/enumerator
+<code>winstl::reg_key::createKey</code> cannot be guaranteed not to clash with Windows API constants
+to be used with the Windows Registry API functions. (If you're interested, I talk about this issue
+at more length in Chapter 17 of my new book,
+<a href="../_/http/extendedstl.com/index.html"><i>Extended STL, volume 1: Collections and Iterators</i></a>, which is
+published in three weeks' time. Coincidentally.)
+<br/><br/>
+Given this restriction, we must look for an alternative. Our user (rightly) observed that the
+following single line form, which does have the desired semantics, is syntactically unappealing:
+<pre>
+  winstl::reg_key  key = <b>winstl::reg_key</b>(HKEY_CURRENT_USER, "SOFTWARE").<b>create_sub_key</b>("MyCompany\\MyApp");
+</pre>
+and instead suggested adding a function to support syntax of the form:
+<pre>
+  winstl::reg_key  key = <b>winstl::create_reg_key</b>(HKEY_CURRENT_USER, "SOFTWARE\\MyCompany\\MyApp");
+</pre>
+The problem here is that, for good or ill, the use of namespaces within the STLSoft libraries is
+restricted to a minimum. Specifically, elements from each of the sub-projects (COMSTL for COM components:
+namespace <code>comstl</code>; UNIXSTL for UNIX components: <code>unixstl</code>; WinSTL for Windows components:
+<code>winstl</code>; and so on) are defined within their single, top-level namespace. (If you're interested,
+this is an artefact of the early history of STLSoft, wherein compilers that did not (properly) support
+namespaces were supported by the libraries. If there is ever an STLSoft 2.x - we're currently at
+<a href="../_/http/stlsoft.org/downloads.html#stlsoft_1_9_1_for_xstlv1">1.9.1</a> -
+I might seek to address this and employ library-specific namespaces. But for now it is what it is.)
+<br/><br/>
+Hence, as shown above, a function inserted into the <code>winstl</code> namespace to create a key could
+not simply be named <code>create()</code>, or even <code>create_key()</code>, because that is not
+specific to the registry. So, it'd have to be <code>reg_create_key()</code> or, as the user suggested
+<code>create_reg_key()</code>. This option, with either name, does not appeal to me, as the function will
+be ligging around the <code>winstl</code> namespace with other free functions. But it's not really a
+free function, is it? It's actually a <a href="../_/http/www.ddj.com/dept/cpp/184401197/index.html">non-member function</a>
+that is part of the <code>winstl::basic_reg_key</code> interface.
+<br/><br/>
+The answer to this conundrum is to declare a static creator method, as in:
+<pre>
+  // In namespace <b>winstl</b>
+  template &lt;. . .&gt;
+  class <b>basic_reg_key</b>
+  {
+    . . .
+  public: <b>// Construction</b>
+    basic_reg_key(HKEY keyParent, char_type const* subkeyName, REGSAM accessMask = KEY_ALL_ACCESS);
+    <b>static basic_reg_key create_key(HKEY keyParent, char_type const* subkeyName, REGSAM accessMask = KEY_ALL_ACCESS);</b>
+    . . .
+  public: <b>// Sub-key operations</b>
+    basic_reg_key create_sub_key(char_type const* subKeyName, REGSAM accessMask = KEY_ALL_ACCESS);
+</pre>
+This affords the following, relatively expressive, syntax:
+<pre>
+  winstl::reg_key  key = <b>winstl::reg_key::create_key</b>(HKEY_CURRENT_USER, "SOFTWARE\\MyCompany\\MyApp");
+</pre>
+To be sure, it's not as expressive as the straight (opening, not creating) constructor call. But that's
+actually a good thing, because it is actually doing something different and significant: creating a
+key rather than opening it. Positively, it remains closely associated with the
+<a href="../_/http/stlsoft.org/doc-1.9/dir_5c6b9f7945feab6ff69550c8a133ba87.html">STLSoft Windows Registry Library</a>
+despite there not being a distinct namespace for it.
+<br/><br/>
+For your interest, the implementation of the method is very simple:
+<pre>
+  template &lt;. . .&gt;
+  basic_reg_key&lt;. . .&gt; basic_reg_key&lt;. . .&gt;::create_key(HKEY keyParent, char_type const* subkeyName, REGSAM accessMask)
+  {
+    return <b>basic_reg_key</b>(hkey, NULL, KEY_CREATE_SUB_KEY).<b>create_sub_key</b>(subKeyName, accessMask);
+  }
+</pre>
+The only noteworthy point is that the <code>accessMask</code> is used only for the call to
+<code>create_sub_key()</code>, whereas the constructor permission is <code>KEY_CREATE_SUB_KEY</code>.
+no more, no less.
+<br/><br/>
+The updated <code>basic_reg_key</code> class will be included in STLSoft 1.9.2, to be released in June.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=207128.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=207128&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Matthew Wilson adds a new entry to <a href="../index.html$/blogger=bigboy.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/bigboy.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D207128&amp;title=An+exercise+in+compromise+in+class+interface+refinement.&amp;bodytext=Attempting+to+find+a+compromise+between+the+constraints+of+a+facade+that+wraps+a+system+API%2C+the+limitations+of+a+limited+namespace+naming+scheme%2C+and+a+user+wanting+more+expressiveness%2C+revealed+an+interesting+compromise+in+design.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D207128&amp;title=An+exercise+in+compromise+in+class+interface+refinement.">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D207128&amp;title=An+exercise+in+compromise+in+class+interface+refinement.">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/matthewwilson.jpg"/></td><td>Matthew Wilson is a software development consultant and creator of
+ the
+ <a href="../_/http/www.fastformat.org/index.html">FastFormat</a>,
+ <a href="../_/http/pantheios.org/index.html">Pantheios</a>
+ and
+ <a href="../_/http/www.stlsoft.org/index.html">STLSoft</a>
+ libraries. He is
+ author of the books
+ <a href="../_/http/www.imperfectcplusplus.com/index.html"><i>Imperfect C++</i></a>
+ (Addison-Wesley, October 2004) and
+ <a href="../_/http/extendedstl.com/index.html"><i>Extended STL, volume 1</i></a>
+ (Addison-Wesley, 2007), and is currently working on his third,
+ <a href="../_/http/breakingupthemonolith.com/index.html"><i>Breaking Up The Monolith: Advanced C++ Design Without Compromise</i></a>.
+ He has published over 60 articles on C++ and other topics, and has served as columnist
+ and contributing editor for <a href="../_/http/www.cuj.com/index.html">C/C++ Users Journal</a>.
+ Matthew believes that code should be discoverable and largely self-documenting, and lives up
+ to that by being a hopeless documentor. He can be contacted via
+ <a href="../_/http/www.imperfectcplusplus.com/index.html">http://www.imperfectcplusplus.com/</a> or
+ <a href="mailto:stlsoft@gmail.com">stlsoft@gmail.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Matthew Wilson. All rights reserved.</div>
+</p></p></p></p></br></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br/>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

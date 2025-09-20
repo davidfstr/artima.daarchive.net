@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Creating Flex Components</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=212818.html">Discuss</a> | 
+<a href="mailto:?subject=Creating Flex Components&amp;body= %0AArtima Weblogs %0ACreating Flex Components %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=212818">Email</a> | 
+<a href="../viewpostP.html$/thread=212818.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=212621.html" title="Last Week's Flex-AIR Jam">Previous</a> | 
+<a class="sl" href="thread=213214.html" title="Singleton Considered Harmful?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Creating Flex Components</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">August 22, 2007</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+As Joe Nuxoll of JBuilder and JavaPosse fame will tell you (given the slightest provocation), one place where the Java designers completely dropped the ball is in Java's component model. This becomes especially clear when comparing it with a system like Flex which has full language support for components.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Not only does Flex have built-in support for properties and events, it includes a higher-level abstraction language (MXML) for laying out and configuring components, which greatly simplifies the development process. You can even create new components directly in MXML, although that's more commonly done using ActionScript. This article shows how to create components in Flex and how clean the resulting applications can be that use those components.</p>
+<p>You'll see that ActionScript is quite similar to Java in many ways, but I hope you'll also see that ActionScript includes time-saving features that don't appear in Java.</p>
+<p>Although you can write all your Flex code by hand and compile it using <strong>mxmlc</strong> (the free command-line compiler), it's much easier to use FlexBuilder which is built on top of Eclipse and has command completion, context help, built-in debugging and more. Some of the examples in this article use AIR, a beta feature that allows you to create desktop applications that access files and other aspects of your local machine (rather than being limited to the web sandbox). You can download a beta of FlexBuilder including AIR support <a class="reference" href="../_/http/labs.adobe.com/technologies/flex/index.html">here</a>. (These examples can also be built using the command-line compiler).</p>
+<div class="section">
+<h1><a id="mxml-components" name="mxml-components">MXML Components</a></h1>
+<p>The easiest way to create a component is using MXML. First, create a new application: from the FlexBuilder menu, choose File | New | Flex Project, and fill out the wizard. Then, from the FlexBuilder menu, choose File | New | MXML Component; this produces a little wizard that guides you through the process, including the choice of a base component to inherit from. I chose "Button" and called my new component "RedButton." The result is a file called <strong>RedButton.mxml</strong> (the name of the file determines the name of the component) containing the following:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Button xmlns:mx="http://www.adobe.com/2006/mxml"&gt;
+&lt;/mx:Button&gt;
+</pre>
+<p>This new component is based on <strong>Button</strong> and can be used in an application like this:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*"&gt;
+     &lt;local:RedButton label="Not so Red"/&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>All the original capabilities of a button (including the ability to set a <strong>label</strong>, used here) are preserved.</p>
+<p>We can set the background color of the button to make the name of the component honest, add a tooltip and a default <strong>click</strong> action:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Button xmlns:mx="http://www.adobe.com/2006/mxml"
+        fillColors="['red', 'blue']" toolTip="A Red Button" click="clicked()"&gt;
+        &lt;mx:Script&gt;
+                &lt;![CDATA[
+                        private function clicked():void {
+                                label = "Quite Red";
+                                setStyle("fillColors", ['red', 'red']);
+                        }
+                ]]&gt;
+        &lt;/mx:Script&gt;
+&lt;/mx:Button&gt;
+</pre>
+<p>The <strong>clicked()</strong> function is defined inside a <strong>Script</strong> tag, within a <strong>CDATA</strong> block (inserted automatically by FlexBuilder) because you're in XML. Note that the function definition includes a return type, <strong>void</strong> -- optional static typing is an Actionscript feature that allows FlexBuilder to do a better job of context help and command completion.</p>
+<p>You can continue to add more sophistication to components this way, but MXML components are best used for simple things. More complex MXML components can become tedious and you're better off creating them directly in ActionScript (the compiler turns MXML into ActionScript anyway).</p>
+</div>
+<div class="section">
+<h1><a id="actionscript-components" name="actionscript-components">ActionScript Components</a></h1>
+<p>FlexBuilder also has a wizard to help you create ActionScript components, found by selecting File | New | ActionScript Class. Because all classes must be in packages (like Java), you have the option of selecting a package name (if you don't, you get the default unnamed package). The wizard also allows you to select a superclass. In the following example I've told the wizard to automatically generate the framework for the constructor:</p>
+<pre class="literal-block">
+package SimpleComponents {
+      import mx.controls.Button;
+
+      public class ASRedButton extends Button {
+              public function ASRedButton() {
+                      super();
+              }
+      }
+}
+</pre>
+<p>The <strong>import</strong> statement was automatically created by FlexBuilder, and the file name is <strong>ASRedButton.as</strong>. Although the component is created in ActionScript, it is available as MXML:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*" xmlns:SimpleComponents="SimpleComponents.*"&gt;
+        &lt;SimpleComponents:ASRedButton label="Not so Red"/&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>When I began typing <strong>ASRedButton</strong> in FlexBuilder, it performed completion on the name, then added the XML namespace before the tag, and also included the <strong>xmlns</strong> attribute in the <strong>Application</strong> tag. Even if you ultimately plan to use the free command-line compiler, it's worth starting with the free download of FlexBuilder just to get initial help with details like this.</p>
+<p>With ActionScript it's easier to create more sophisticated components. We can give <strong>ASRedButton</strong> the same behavior as <strong>RedButton</strong>:</p>
+<pre class="literal-block">
+package SimpleComponents {
+        import mx.controls.Button;
+        import flash.events.MouseEvent;
+
+        public class ASRedButton extends Button {
+                public function ASRedButton() {
+                        super();
+                        label = "Reddish";
+                        setStyle("fillColors", ['red', 'blue']);
+                        toolTip="A Red Button";
+                }
+                override protected function clickHandler(event:MouseEvent):void {
+                        label = "Quite Red";
+                        setStyle("fillColors", ['red', 'red']);
+                }
+        }
+}
+</pre>
+<p>There are a number of ways to respond to events, but in an ActionScript component the easiest way is usually just to override a method. Note that the <strong>override</strong> keyword ensures that you don't accidentally create a new method (which would not produce the desired result).</p>
+<p>The <strong>import</strong> statements were automatically included by FlexBuilder.</p>
+</div>
+<div class="section">
+<h1><a id="properties" name="properties">Properties</a></h1>
+<p>You can create an attribute that is readable and writable inside MXML by simply creating a <strong>public</strong> field, but ActionScript also contains <strong>get</strong> and <strong>set</strong> keywords to indicate methods for reading and writing a property. Here's a <strong>Label</strong> subclass where you see both approaches:</p>
+<pre class="literal-block">
+package SimpleComponents {
+        import mx.controls.Label;
+        import flash.events.Event;
+
+        public class MyLabel extends Label {
+                public var labelStates:Array = ["Ontological", "Epistemological", "Ideological"];
+                private var state:uint = 0; // unsigned integer
+                public function set textValue(newValue:String):void {
+                        text = newValue;
+                }
+                public function get textValue():String {
+                        return text;
+                }
+                public function onClick(event:Event = null):void {
+                        text = labelStates[state++ % labelStates.length];
+                }
+        }
+}
+</pre>
+<p>Here you see the use of optional static typing on <strong>labelStates</strong>, which is an <strong>Array</strong>. There are a number of ways to create and populate an <strong>Array</strong>, the simplest being the use of square brackets. <strong>Array</strong>s are not typed; they simply hold <strong>Object</strong>s. However, you are not forced to downcast when pulling items out of an <strong>Array</strong> if the dynamic typing mechanism can handle the result.</p>
+<p><strong>labelStates</strong> is public, so it can be accessed by setting an MXML attribute. <strong>textValue</strong> has both a <strong>get</strong> and <strong>set</strong> method, making it a property and allowing you to execute code when that property is changed; here I've just assigned it to the <strong>text</strong> field for demonstration purposes.</p>
+<p>I've also added the <strong>onClick()</strong> method which cycles the <strong>text</strong> field through the elements in the <strong>labelStates</strong> array. <strong>onClick()</strong> also accepts an <strong>event</strong> argument, which defaults to <strong>null</strong> so that it's optional -- this allows it to be used as an event listener, as you'll see shortly. Here's an example that makes use of the component:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:SimpleComponents="SimpleComponents.*" &gt;
+        &lt;SimpleComponents:MyLabel fontSize="24" id="display" textValue="Hello, World!" click="display.onClick()" /&gt;
+        &lt;mx:Button click="if(display.labelStates.indexOf('Logical') == -1) display.labelStates.push('Logical')" /&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>Note that I still have access to properties like <strong>fontSize</strong> in <strong>MyLabel</strong>.</p>
+<p>The assignment to <strong>textValue</strong> results in "Hello, World!" appearing as the label text. In order for <strong>click</strong> to be assigned to <strong>onClick()</strong>, the <strong>MyLabel</strong> instance must have an object identifier, so is given an <strong>id</strong> of <strong>display</strong>.</p>
+<p>The code assigned to <strong>click</strong> in the <strong>Button</strong> shows that you aren't required to just reference a function; you can define the code inline (although this can rapidly become messy). Here we add 'Logical' to the list if it isn't already there.</p>
+</div>
+<div class="section">
+<h1><a id="events" name="events">Events</a></h1>
+<p>Everything in Flash is event-based, and as a programmer you can hook into either the framework-generated events or user-generated events. If you want to insert some code at a particular point in the life cycle of an application, you find the appropriate framework event, such as <strong>creationComplete</strong>, which happens after the application has been constructed (there are many other framework events which you can look up in the online help system).</p>
+<p>As a simple example, we can drive <strong>MyLabel</strong> using a timer:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:SimpleComponents="SimpleComponents.*"
+        creationComplete="init()"&gt;
+        &lt;SimpleComponents:MyLabel fontSize="24" id="display" textValue="Hello, World!" click="timer.stop()" /&gt;
+        &lt;mx:Script&gt;
+                &lt;![CDATA[
+                        private var timer:Timer = new Timer(1000);
+                        private function init():void {
+                                timer.addEventListener(TimerEvent.TIMER, display.onClick);
+                                timer.start();
+                        }
+                ]]&gt;
+        &lt;/mx:Script&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>This demonstrates three different events:</p>
+<ol class="arabic simple">
+<li>The framework generates the <strong>creationComplete</strong> event, which is tied to <strong>init()</strong>. This creates a <strong>Timer</strong> which generates...</li>
+<li><strong>TimerEvent.TIMER</strong> events, which are tied to the <strong>display.onClick</strong> method.</li>
+<li>The <strong>MyLabel</strong> instance is configured to call <strong>timer.stop()</strong> when the user clicks the label.</li>
+</ol>
+<p>In general, event handling is exactly this simple; note the succinctness of code when compared with Java event handling.</p>
+<p>Flex also provides <em>data binding</em>, which allows one component to respond to a change in the data of another component. This was seen as a common activity which would ordinarily require a lot of event-handling code, so the Flex designers decided to do the work for the programmer. Here's a counter that uses data binding:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"&gt;
+        &lt;mx:Label fontSize="24" text="{count}"/&gt;
+        &lt;mx:Script&gt;
+                &lt;![CDATA[
+                        private var timer:Timer = new Timer(1000);
+                        [Bindable]
+                        public var count:uint = 0;
+                        private function init():void {
+                                timer.addEventListener(TimerEvent.TIMER, function(event:Event):void {count++});
+                                timer.start();
+                        }
+                ]]&gt;
+        &lt;/mx:Script&gt;
+&lt;/mx:Application&gt;
+</pre>
+<p>In <strong>text="{count}"</strong>, the curly braces bind the <strong>text</strong> field to the <strong>count var</strong>, which has been modified with the <strong>[Bindable]</strong> annotation so that the compiler wires up all the necessary event generation and handling for you. Every time the timer fires, <strong>count</strong> changes and the <strong>text</strong> field in the <strong>Label</strong> changes in response.</p>
+<p>This example also shows the use of an inline function (a.k.a. a <em>lambda</em>) as the target of the event listener.</p>
+<p><em>An aside</em>: when you create inline code inside MXML like this, the compiler actually creates a class to hold the code, and an instance of that class. Although this is convenient for small blocks of code it can become confusing if you try to make that code too large or complex, in which case you should move it to a separate ActionScript file.</p>
+</div>
+<div class="section">
+<h1><a id="a-programmed-learning-component" name="a-programmed-learning-component">A Programmed Learning Component</a></h1>
+<p>I'll finish with a more sophisticated component that will also demonstrate the use of AIR to read local files from the disk. In addition, we'll explore more ActionScript syntax including regular expressions.</p>
+<p>This component was created to support the Flex Jams; in particular, for people who are using Flex for the first time and need step-by-step instructions. <em>Programmed Learning</em> is a fairly old practice; it focuses on learning through exercises and, instead of giving you the answer all at once, it guides you through by giving a series of hints and answers so that you get the sense of discovery and learning at every step.</p>
+<p>Flex includes the perfect component for programmed learning, the <strong>Accordion</strong>. This contains a set of sliding "windows" so that you can move each one up and expose more information as you go. Because I'm creating lots of exercises (and undoubtedly making lots of changes), it's far too much work to set them up as static MXML files; instead, I'll inherit a new component from <strong>Accordion</strong> and teach it to build itself by reading text files (which is where AIR comes in).</p>
+<p>First, I've created a little language that allows me to describe the exercise, hints, intermediate solutions and steps. Any line that begins with a '.' contains a command. Here's an example, <strong>Exercise1.txt</strong> in the directory <strong>1. Basics</strong>:</p>
+<pre class="literal-block">
+.ex
+Install Flexbuilder. Test it by creating "Hello world" in both AIR and Flex.
+.h1
+Go to http://labs.adobe.com/ to get the public beta of FlexBuilder 3 (This includes support for AIR).
+.h2
+Select File|New|Flex Project and follow the instructions to create a new Flex app. The second page allows you to specify either Flex or AIR.
+.h3
+Place a Text component in the application. Type a '&lt;' and begin typing "Text" and you'll see the context help pop up the possibilities. Choose and press Return to insert it, and close the tag with /&gt;.
+.s3
+&lt;mx:Text /&gt;
+.h4
+Now set the text property to "Hello, World!". With your cursor inside the tag, begin typing "text" and use command completion.
+.s4
+&lt;mx:Text text="Hello, World!" /&gt;
+.h5
+You may also want to choose the Design button that you'll see in the application area, then click and drag a Text component to add it to your application Panel.
+Use Flex Properties to add text "Hello World." If you use design mode, be sure to switch back to Source mode and look at the generated MXML for your program.
+.final
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" &gt;
+      &lt;mx:Text text="Hello, World!" /&gt;
+&lt;/mx:WindowedApplication&gt;
+</pre>
+<p>The <strong>.ex</strong> tag indicates the exercise description. Anything starting with <strong>.h</strong> is a hint followed by a hint number. A <strong>.s</strong> is an intermediate hint solution, which also has a number. The <strong>.final</strong> tag indicates the completed solution.</p>
+<p>Although I could certainly have written a Python program to translate this language into something (like XML) that would be easy for the Flex app to consume, the intermediate step would have reduced the interactivity of the solution. In the <strong>ExercisePresenter</strong> component, I use AIR to find and read the text file, and regular expressions to break it up into directives:</p>
+<pre class="literal-block">
+package ProgrammedLearning {
+    import mx.containers.Accordion;
+    import mx.containers.VBox;
+    import mx.controls.TextArea;
+    import mx.controls.Alert;
+    import flash.filesystem.File;
+    import flash.filesystem.FileStream;
+    import flash.filesystem.FileMode;
+    import flash.net.FileFilter;
+    import flash.events.Event;
+
+    public class ExercisePresenter extends Accordion {
+        public var dataDirectory:String;
+        public var chapter:String;
+        public var fileName:String;
+        private var file:File = File.documentsDirectory;
+        private var pathsResolved:Boolean = false;
+        // Called when properties are set:
+        protected override function commitProperties():void {
+            super.commitProperties();
+            // Prevent multiple calls:
+            if(!pathsResolved) {
+                pathsResolved = true;
+                resolvePaths([dataDirectory, chapter, fileName]);
+            }
+        }
+        private function resolvePaths(paths:Array):void {
+            for each(var path:String in paths) {
+                var successfullyResolved:File = file; // Store as far as we've gotten
+                file = file.resolve(path);
+                if(file.exists)
+                    continue;
+                else { // Files installed elsewhere
+                    var exFilter:FileFilter = new FileFilter("Exercise", "Exercise*.txt");
+                    file = successfullyResolved;
+                    file.browseForOpen("File Not Found; Select File to Open", [exFilter]);
+                    file.addEventListener(Event.SELECT, parseFile);
+                }
+                return; // Wait for user to choose new path
+            }
+            parseFile();
+        }
+        private function parseFile(event:Event=null): void {
+            var stream:FileStream = new FileStream();
+            stream.open(file, FileMode.READ);
+            var str:String = stream.readUTFBytes(stream.bytesAvailable);
+            stream.close();
+            var entries:Array = [];
+            // Each entry is delimited by a '.' at the start of a line:
+            for each(var s:String in str.split(new RegExp("\\n\\.", "s")))
+                if(s.length &gt; 0)
+                    entries.push(s);
+            for each(s in entries) {
+                // Split on first newline:
+                // (Could do this with a regular expression, too!)
+                var brk:uint = s.indexOf("\n");
+                var tag:String = s.substring(0, brk);
+                var contents:String = s.substr(brk);
+                // Strip leading newlines:
+                while(contents.charAt(0) == '\n')
+                    contents = contents.substr(1);
+                switch(tag.charAt(0)) {
+                    case 'e':
+                        addStep("Exercise", contents);
+                        break;
+                    case 'h':
+                        addStep("Hint " + tag.substr(1), contents);
+                        break;
+                    case 's':
+                        addStep("Hint solution " + tag.substr(1), contents);
+                        break
+                    case 'f':
+                        addStep("Completed solution", contents);
+                        break;
+                    default:
+                }
+            }
+        }
+        public function addStep(label:String, contents:String):void {
+            // Create a new "fold" in the Accordion:
+            var vbox:VBox = new VBox();
+            vbox.percentHeight = vbox.percentWidth = 100;
+            vbox.label = label;
+            var text:TextArea = new TextArea();
+            text.percentHeight = text.percentWidth = 100;
+            text.text = contents;
+            vbox.addChild(text);
+            addChild(vbox); // Add to self (Accordion object)
+        }
+    }
+}
+</pre>
+<p>The <strong>dataDirectory</strong>, <strong>chapter</strong>, and <strong>fileName</strong> fields tell the component where to find the example. Because these are public fields and we need to wait until they are set before trying to use them (otherwise they will contain incorrect data), we override the <strong>commitProperties()</strong> method which is automatically called by the framework.  <strong>commitProperties()</strong> is typically called more than once, so the standard practice is to use a flag to keep track of whether you have performed your task; in this case we only want to call <strong>resolvePaths()</strong> once.</p>
+<p><strong>resolvePaths()</strong> iterates through an array of sequential directories and verifies that each one is correct. If it gets all the way through the array, it calls <strong>parseFile()</strong> directly, but if it fails -- which means the path information is incorrect, possibly because the user hasn't installed the files in the expected location -- it allows the user to choose the directories and the file. <strong>browseForOpen()</strong> opens a file browser window in the native OS; note that the last successfully found directory is kept and used so the user doesn't have to start from scratch.</p>
+<p>Notice that calling <strong>browseForOpen()</strong> is almost like starting a separate thread (although Flex and Flash don't support programmer threads -- a good thing, since thread programming is virtually impossible to get right -- the new betas of the Flash VM use threads internally for speed and utilization of multiple cores). Once the user selects the new file, we still want to call <strong>parseFile()</strong>. This is accomplished by setting up an event listener, which effectively establishes a callback. You see this kind of programming -- passing control, then using an event listener as a callback -- quite a bit in Flex code, especially in network programming.</p>
+<p>The first few lines of <strong>parseFile()</strong> show the standard way to open and read a text file, which only works in an AIR application. Note that it looks slightly similar to Java code but is less verbose because the decorator pattern is not (mis)used as it is in Java.</p>
+<p>Once the file is read, a regular expression breaks it into "entries," each of which includes a dot command and the text that follows it (blank entries are discarded). Note that the regular expression uses similar syntax as Java does, in particular the double backslash when you actually want a single backslash. Discovering how to use ActionScript regular expressions took me a bit of time because the documentation and examples are lacking (or at least, I couldn't find them); you might have more luck using the regular expression section in the <em>Strings</em> chapter of <em>Thinking in Java</em>.</p>
+<p>Each entry is broken into its dot command and body text, then a <strong>switch</strong> statement adds  each step as a window in the <strong>Accordion</strong> component by calling <strong>addStep()</strong>.</p>
+<p>To test the component, we can create and configure it in MXML:</p>
+<pre class="literal-block">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ProgrammedLearning="ProgrammedLearning.*"&gt;
+        &lt;ProgrammedLearning:ExercisePresenter width="100%" height="100%"
+                dataDirectory="FlexJamProgrammedLearning" chapter="1. Basics" fileName="Exercise1.txt"/&gt;
+&lt;/mx:WindowedApplication&gt;
+</pre>
+<p>However, this isn't the whole solution. The enclosing application (which I will eventually write) will construct a main page consisting of all the exercises, each of which you can select to bring up the programmed learning accordion. To accomplish this, I must be able to manipulate the component at runtime -- which I can, through both my own design choices and the structure of Flex:</p>
+<pre class="literal-block">
+package ProgrammedLearning {
+    public class DynamicTest extends ExercisePresenter {
+        function DynamicTest() {
+            percentHeight = percentWidth = 100;
+            dataDirectory = "FlexJamProgrammedLearning";
+            chapter = "1. Basics";
+            fileName = "Exercise1.txt";
+        }
+    }
+}
+</pre>
+<p>One thing I'd really like to see in a future version of Flex is better string manipulation tools. A perfect model for this is the Python string library, which is tried and tested, and you even have the source code so creating an ActionScript string library is a matter of translation.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=212818.html">29
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=212818&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D212818&amp;title=Creating+Flex+Components&amp;bodytext=As+Joe+Nuxoll+of+JBuilder+and+JavaPosse+fame+will+tell+you+%28given+the+slightest+provocation%29%2C+one+place+where+the+Java+designers+completely+dropped+the+ball+is+in+Java%27s+component+model.+This+becomes+especially+clear+when+comparing+it+with+a+system+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D212818&amp;title=Creating+Flex+Components">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D212818&amp;title=Creating+Flex+Components">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2007 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

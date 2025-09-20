@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Ruby, PHP and a Conference</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=146091.html">Discuss</a> | 
+<a href="mailto:?subject=Ruby, PHP and a Conference&amp;body= %0AArtima Weblogs %0ARuby, PHP and a Conference %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=146091">Email</a> | 
+<a href="../viewpostP.html$/thread=146091.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=143460.html" title="Audio Interview">Previous</a> | 
+<a class="sl" href="thread=147322.html" title="Thinking in Java 4e">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Ruby, PHP and a Conference</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">January 26, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+My previous posting about Ruby generated a lot of noise and very little light -- that is, not much in the way of compelling reasons to learn the language. So I went to a couple of Seattle.rb Ruby users group meetings and spent time with 3 uber-geeks. Now I at least have the beginning of an understanding of what's interesting about this language.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>But first, a conference, and what I learned at the PHP meetup.
+
+<h1>Conference: Programming the New Web</h1>
+<p>I've participated in several OpenSpace events and have held a couple of private ones, and they are easily the most interesting, stimulating and educational ways for people to communicate in a conference setting that I've ever seen. If I could figure out a way to do it, I would spend a large portion of my time running OpenSpace events.
+
+<p>I'm going to be in Crested Butte, Colorado until the end of the ski season, and have decided to hold my first public conference during that time. I debated about the whole skiing issue ("what if it looks like a boondoggle to a manager that has to approve it?"), and finally decided that there's no way around it. If people come to the event, they will ski, so we'll open up the best time of the day to let that happen, and organize the conference around it. If you don't want to ski, it's free time.
+
+<p>You can learn more about the conference, register, and buy a T-shirt <a href="../_/http/mindview.net/Conferences/ProgrammingTheNewWeb/index.html">here</a>.
+
+<h1>PHP</h1>
+<p>The PHP meetup was helpful, but I seem to have generated more questions than answers, mostly because I haven't figured out the best way to use PHP.
+
+<p>I think PHP is what HTML should have been. That is, not just a markup language, but also something to program with on the server side. Things would have been much easier had this been the case from the beginning (of course, had we had a more-standardized and less-heinous language than Javascript on the client side that would have helped everything an awful lot, too).
+
+<p>I really like how straightforward PHP is. You create one file containing both your server-side programming and your HTML markup, drop it into any directory in your URL-space, and it works. At some point there are probably scaling problems that result from mixing logic and presentation, but up to a certain size and complexity it seems easier to manage than the alternatives, precisely because everything is in one place.
+
+<p>I have an account at GoDaddy, which supports PHP, and all I had to do was drop this file anywhere in the directory tree (not just in a cgi-bin or other special directory), and it worked:
+
+<blockquote><pre>
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;PHP Information&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;?php phpinfo(); ?&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre></blockquote>
+<p>Basically, all this does is display the information about the PHP installation by calling <b>phpinfo()</b>, but it gives you the idea of the syntax of PHP, which is familiar if you've used anything like ASP or JSP. You can see the output <a href="../_/http/www.pythoncriticalmass.com/info.html">here</a>.
+
+<p>This brought up my first question. When I signed up for GoDaddy roughly a year ago (basically just to support downloads), I talked to their tech support people who made it sound like they'd be updating to PHP5 any day now. But here it is a year later, and when I sent an email to them I got a reply indicating they had no immediate plans to do so.
+
+<p>This is disappointing because PHP5 is the Cadillac of PHPs, and the one that I think got IBM's endorsement. This version has all the object-oriented stuff in it: classes, interfaces, access control, pretty much everything you've seen in Java with a bit of C++ here and there. Basically, it allows you to build serious stuff without feeling like you've been thrown back into C by using PHP.
+
+<p>But GoDaddy's reluctance to upgrade bothers me. Is this typical; are the major web hosts reluctant to upgrade for some reason?
+
+<p>And does it matter that much, or will I mostly just be bashing data into and out of a database, so perhaps I don't need the fancy features anyway? (Or will I get into it and discover that I could really clean up some of the database-bashing by writing a few classes and saving a lot of work?). I don't know the answer to this; maybe a PHP expert can tell me.
+
+<p>I do know I'd like to do more of it, one way or another, because it's so direct. I've seen that a lot of sites use it and do reasonably complex things, and they seem to keep the complexity under control (ITConversations, for example). And there are tools so that you can easily run PHP locally while you build the site. The best one of these for Windows is apparently <a href="../_/http/www.apachefriends.org/en/xampp.html">XAMPP</a>, which also supports Linux, OSX and Solaris.
+
+<p>One thing I've noticed, though, is that I've gotten very attached to Zope's through-the-web interface. I even looked around to see if there was some way to run PHP code through Plone (the popular CMF built on top of Zope) and it would <a href="../_/http/plone.org/documentation/how-to/integrate-php-applications/index.html">seem that there is</a>, but I have no idea how well it works.
+
+<p>In the process of looking through the GoDaddy setup screens, I came across something that claimed it supported Python. I tried putting a python script, with the #!/usr/bin on the top, in the cgi-bin directory, set permissions, etc. but it wouldn't run. Has anyone tried this?
+
+<p>I also found something even stranger in the GoDaddy setup screens. There was an option to "enable" Java, which apparently took 24 hours. But no information on what you were actually enabling -- like whether it supported Servlets and JSPs or if you were just getting a standard Java installation (and if the latter how you were expected to use it). If anyone has used this feature, please add a note in the comments; thanks.
+
+<h1>Ruby</h1>
+<p>When I went to the PHP meetup, Ryan Davis happened to overhear and came over to join us. Later we got to talking about Ruby and I voiced my current complaints. He asked me a critical question about what bothered me:
+
+<p>"Is it aesthetics?"
+
+<p>At which point I realized that yes, I had gotten hung up on aesthetics and similar issues. For example, looking at all the "end" statements in Ruby is annoying; I find Python's indentation much more natural. I've noticed that the same people who can't cope with indentation to establish code blocks <i>still</i> indent their code to show code blocks, even if their language uses curly braces or the like. And yes, some of the things in Ruby that look like Perl have made me recoil. But Ryan was right, these were aesthetics, and worth getting over, at least temporarily, in order to see what's really interesting about Ruby.
+
+<p>Ryan described meetings of the Seattle.rb Ruby users group and so I ended up coming to a couple of them and getting some great one-on-one tutorial time with Ryan, Evan Webb and Eric Hodel, all of whom have done some very immersive work with the language. They all live and breathe this stuff, which is exactly what I needed to get some actual insights into Ruby.
+
+<p>My perception is that I've been getting very sketchy information up until now. Bruce Tate's "Beyond Java" book came closest to showing some of the especially interesting things about Ruby (continuations, for example), but most discussions just don't seem to have any of the real meat in them that I found by going to the user group meetings.
+
+<p>The first meeting I went to I focused on some of the bigger, fancier things like continuations and threading. But last night Eric Hodel (who considers himself lucky to have been able to go directly from college into a Ruby-only existence four years ago) went through Ryan's <a href="../_/http/www.zenspider.com/Languages/Ruby/QuickRef.html">Ruby Quick Reference</a> and basically gave me a walkthrough of the language.
+
+<p>The result: there are definitely some very cool things here. I don't know why Ruby fans don't talk about them, but they're here. Whether or not I end up using Ruby for anything, experimenting with some of these things will definitely change my perspective on OO. In the past, I've found that after learning Java I could go back and write C++ that I hadn't been able to think about before. Learning Python affected both my C++ and Java code. And some of these Ruby concepts will certainly improve what I can do with the other languages.
+
+<h2>case</h2>
+<p>In the category of basic language improvements, consider the <b>case</b> statement. Python doesn't have a <b>switch</b> or equivalent, the argument being that it's effectively a sequence of if-elses. Which is not too bad in Python; the language is such that you don't end up typing much more than you would with a builtin <b>switch</b>. But C, C++, Java, and C# (with the exception of <b>string</b> values) all insist on using integral values in their <b>case</b> statements. The reason has traditionally been "efficiency, and because C did it that way."
+
+<p>The problem with the efficiency argument is that if you want to match anything other than integral values -- and you often do -- then you must write a bunch of other code that doesn't use the <b>switch</b> statement, which will end up taking at least as much CPU time, and probably more, than if you could have any kind of <b>case</b> (yes, C# lets you have <b>string</b> cases and that helps, but it's not a general solution). And of course it ends up taking significantly more programmer time, which is the actual scarce resource, anymore.
+
+<p>In Ruby, the <b>case</b> statement can match with any object. It uses the "===" method in <b>Object</b> to perform the match, which can be overridden for your own classes. Since everything is really an object in Ruby, this includes any type of literal, regular expressions, and object types. Here's an example (comment syntax is like Python's):
+
+<blockquote><pre>
+# File: Case.rb
+def f(x)
+  case x
+    when "foo"
+      puts "#{x.class} foo"
+    when /\d+.*/
+      puts "mixed: #{x}" 
+    when String
+      puts "string #{x}"
+    when 1000..1500
+      puts "between 1000 and 1500: #{x}"
+    when Fixnum
+      puts "Fixnum #{x}"
+    when Object
+      puts "object #{x} #{x.class}"
+  end
+end
+
+f("foo")
+f("123abc")
+f("bar")
+f(1066)
+f(1)
+f(1.1)
+</pre></blockquote>
+<p>The output for the above program is:
+
+<blockquote><pre>
+$ Ruby Case.rb
+String foo
+mixed: 123abc
+string bar
+between 1000 and 1500: 1066
+Fixnum 1
+object 1.1 Float
+</pre></blockquote>
+<p>You can see that the syntax is kind of backwards; <b>case</b> is the equivalent of <b>switch</b> in other languages, and the branches are delimited by <b>when</b>.
+
+<p>Regular expressions are similar to Perl's in that they can be delimited by '/' (but you can also create more conventional regular expression objects as you do in Python). One way to insert a variable in a string is to use the '#{}' as you see above.
+
+<p><b>String</b>, <b>Fixnum</b> and <b>Object</b> all represent class objects. Class types are inherited from <b>Object</b> and thus also have '===' defined, so they can be used in a <b>when</b> comparison.
+
+<h2>Implied self</h2>
+<p>One thing I've never quite bought into in Python is the explicit self. This is supposed to be because "explicit is better than implicit," but if that's true then why is it explicit in the method definition:
+
+<blockquote><pre>
+class PythonClass:
+  def method(self): 
+    self.x = 1 # Create a field x if it doesn't exist
+</pre></blockquote>
+<p>but implicit in the method call?:
+
+<blockquote><pre>
+pc = PythonClass()
+pc.method()
+</pre></blockquote>
+<p>Ruby follows C++, Java, C#, and most other languages in making 'self' or 'this' implicit everywhere. It appears only if you need it. Since you always have <b>self</b> in a method, this makes more sense to me (albeit it ranks as a small nit).
+
+<p>Here are some examples of classes in Ruby:
+
+<blockquote><pre>
+class MyClass
+  def method1(arg1) # Like C++ &amp; Java, self is implicit
+    puts arg1
+    self.f() # ... but still available
+  end
+  def f()
+    puts "in f()"
+  end
+  def method2(arg1, arg2)
+    puts "#{arg1}, #{arg2}"
+  end
+  # Constructor:
+  def initialize(arg)
+    puts "In constructor with arg #{arg}"
+    @field = arg
+  end
+end
+
+obj = MyClass.new("yo!")
+obj.method1("hi")
+obj.method2("hi", "howdy")
+p obj.class
+
+
+# Inheritance:
+class MyClass2 &lt; MyClass
+end
+
+# Constructor with arguments automatically passed through:
+obj = MyClass2.new("yow!")
+
+class MyClass3 &lt; MyClass2
+  def initialize(arg)
+    super # Passes argument list through to base constructor
+    super(arg) # Explicit argument passing
+  end
+end
+
+obj = MyClass3.new("bing!")
+p obj.class.ancestors # Simple reflection
+</pre></blockquote>
+<p>Here's the output:
+
+<blockquote><pre>
+In constructor with arg yo!
+hi
+in f()
+hi, howdy
+MyClass
+In constructor with arg yow!
+In constructor with arg bing!
+In constructor with arg bing!
+[MyClass3, MyClass2, MyClass, Object, Kernel]
+</pre></blockquote>
+<p>Class names <i>must</i> start with a capital letter.
+
+<p><b>def</b> starts a block (without you having to say <b>begin</b>). <b>initialize()</b> is how you create a constructor, and <b>super</b> can be used to explicitly call the base-class constructor. Inheritance is indicated with <b>&lt;</b>.
+
+<p>The '@' sign is used in place of Python's <b>self.</b> to indicate a field. Although it does make me think of Perl, the brevity is nice.
+
+<p>At the end, note the use of simple reflection, which just calls intuitively-named methods. The <b>p</b> evaluates and prints the result; it's generally used for debugging.
+
+<h2>Reflection</h2>
+<p>As seen above, this is quite intuitive. For an object, for example, you can say:
+
+<blockquote><pre>
+p obj.class
+p obj.methods
+</pre></blockquote>
+<p>For a class, you can find the class methods by saying:
+
+<blockquote><pre>
+p MyClass3.methods
+</pre></blockquote>
+<p>There's lots of other stuff like this, which you can discover by poking around.
+
+<h2>Open classes</h2>
+<p>Here's something quite different. You can modify an existing class. Put another way, classes are not "closed," and anyone's class can be extended.
+
+<blockquote><pre>
+class Array
+  def dump
+    for x in self
+      puts x
+    end
+  end
+end
+
+a = [1,2,3,4,5]
+a.dump
+</pre></blockquote>
+<p><b>Array</b> is a built-in class for the object created for square-bracketed lists. But in the code above it looks like I'm defining my own class called <b>Array</b>. But I'm able to call <b>dump</b> when I create a built-in <b>Array</b> using square brackets. The output is:
+
+<blockquote><pre>
+1
+2
+3
+4
+5
+</pre></blockquote>
+<p>Thus, you can easily add to any class. This eliminates the need for a significant number of tools created for other OO languages that modify existing classes: multimethods, AOP (to some degree, anyway), and even the visitor pattern.
+
+<h2>Class Variables and Class Methods</h2>
+<p>Class variables in Ruby are not too different from the way they work in Python, but they are special denoted in Ruby with a leading '@@' symbol.
+
+<p>Not a huge issue, but Python went through some gyrations to produce class methods, ending with the <b>@classmethod</b> decorator. In Ruby it doesn't require any particular meta-text; it's consistent with everything else:
+
+<blockquote><pre>
+class ClassVariablesAndMethods
+  @@classVariable = "initialized"
+  def ClassVariablesAndMethods.classMethod()
+    p @@classVariable
+  end
+end
+
+x = ClassVariablesAndMethods.new
+x.class.classMethod()
+
+ClassVariablesAndMethods.classMethod()
+</pre></blockquote>
+<p>Note that you can't call a class method directly through an instance; you must call <b>class</b> first.
+
+<h2>Prototyping and singleton classes</h2>
+<p>You can take a single instance and add methods to it:
+
+<blockquote><pre>
+class X
+  def f()
+    puts "f()!"
+  end
+end
+
+x = X.new
+x.f()
+
+def x.g()
+  puts "g()!"
+end
+
+x.g()
+
+y = X.new
+y.f()
+# y.g() # Undefined method
+</pre></blockquote>
+<p>The method <b>g()</b> is only added to <b>x</b>, which you can see because <b>y</b>, created after <b>g()</b> is defined, doesn't have a <b>g()</b> anyway.
+
+<p>You can do something like prototyping with Python, but I don't think it's as obvious.
+
+<p>A singleton class is a slightly more formal way of accomplishing the above:
+
+<blockquote><pre>
+class X
+  def f()
+    puts "f()!"
+  end
+end
+
+x = X.new
+
+class &lt;&lt; x
+  def g()
+    puts "g()!"
+  end
+end
+
+x.g()
+</pre></blockquote>
+<h2>Modules and mixins</h2>
+<p>One thing that has been requested, largely by the folks who create Zope, is interfaces in Python. Since Python is a dynamic language and interfaces tend to be more of a compile-time thing, I've almost seen the value sometimes, but it's never pushed me over the edge on the feature.
+
+<p>Modules look like they might be the dynamic language's answer to interfaces. Syntactically, a module is a class with the keyword <b>module</b> instead of the keyword <b>class</b>. So, unlike a Java interface, you can have code in a module (and, unlike Python, there's no <b>pass</b> equivalent in Ruby, so you're basically <i>forced</i> to provide code for all method bodies). Like a Java interface, you can't instantiate a module, you can only use it as a "mixin," to paste in both interface and functionality into another class. So a module distributes a common interface and default behavior across class boundaries. Later, if you change a method definition in that module, it will change in all classes that include that module.
+
+<p>Here's an example:
+
+<blockquote><pre>
+module CommonStuff
+  def f()
+    puts "f()"
+  end
+  def g()
+    puts "g()"
+  end
+end
+
+class Mixed
+  include CommonStuff
+  def h()
+    puts "h()"
+  end
+end
+
+def takesCommon(arg)
+  if not CommonStuff === arg
+    raise "You have to pass in a CommonStuff!"
+  end
+  arg.f()
+  arg.g()
+end
+
+m = Mixed.new
+m.h()
+takesCommon(m)
+
+begin
+  CommonStuff.new
+rescue Exception =&gt; e
+  puts e
+end
+
+begin
+  takesCommon([])
+rescue Exception =&gt; e
+  puts e
+end
+</pre></blockquote>
+<p>As you can see, a module is written exactly the same way as you write a class, but the way it is used is constrained. If you try to create a new object, it tells you that there is no <b>new</b> for <b>CommonStuff</b>. This attempt uses exception handling (the <b>rescue</b> clause) to prevent the program from aborting; you can also see an <b>Array</b> object passed to <b>takesCommon()</b> at the end. The output is:
+
+<blockquote><pre>
+$ Ruby Modules.rb
+h()
+f()
+g()
+undefined method `new' for CommonStuff:Module
+You have to pass in a CommonStuff!
+</pre></blockquote>
+<h2>Exception handling: retry</h2>
+<p>As you can see in the example above, basic exception handling is fairly consistent with other languages with the exception of the structure. Any begin-end block can include an exception handler, which uses the keyword <b>rescue</b> instead of Python's except or Java/C++'s <c>catch. If you want to do something with the exception object, you extract it into a local variable using <b>==&gt;</b>. To throw an exception, you use the <b>raise</b> kewyord just like Python. There's the equivalent of a "finally" mechanism using the <b>ensure</b> keyword.
+
+<p>Unfortunately there doesn't seem to be an <b>assert</b> as there is in Python and Java. Effectively this is syntactic sugar, but I still like it.
+
+<p>Instead, in the syntactic sugar department, there's <b>retry</b>, which appears at first to be an attempt to resurrect the idea of <i>resumptive exception handling</i>. This means that the exception handler gets a chance to catch the exception and then continue at the point of failure. Resumption was tried for systems in the 60's, but failed, most likely because of the resulting high coupling between the various points an exception could be thrown and the points where it was caught.
+
+<p>If you use the <b>retry</b> keyword, on the other hand, the point of execution goes back to the <i>beginning</i> of the block that threw the exception, so it's basically the same as if you set up a while-not-succeeded loop. Here's an example:
+
+<blockquote><pre>
+count = 0
+begin
+  puts "at beginning"
+  if count == 0
+    count = count + 1
+    raise "First time through"
+  else
+    puts "second time through"
+  end
+rescue Exception
+  puts "In handler"
+  retry
+end
+</pre></blockquote>
+<p>Here's the output:
+
+<blockquote><pre>
+$ Ruby Retry.rb
+at beginning
+In handler
+at beginning
+second time through
+</pre></blockquote>
+<p>You can see that <b>retry</b> sends the point of execution all the way to the beginning of the block.
+
+<h2>Comment Documentation</h2>
+<p>Ruby also has a standardized comment-documentation system and a utility called <b>rdoc</b> to build help from the source code. It seems likely that this was inspired by Java's, as a number of other systems appear to have been. But there are some situations where it's very nice if rules are blessed by the language so that people are less likely to get stuck arguing about them (another reason I like Python's indenting -- all source code looks the same, so I don't have to use brain cycles sorting it out). Although the resulting Java documentation isn't always the best you could hope for, I consider standardized comment-documentation one of the number of contributions that Java has made to programming world.
+
+<h2>Conclusion</h2>
+<p>This is just a few of the features I found interesting. Note that I haven't even touched on blocks (although the uber-geeks gave me plenty of coaching on these, I haven't internalized them yet) or continuations, threads and processes. All these look quite interesting as well, but require more time and space than I have right now.
+
+<p>Am I going to drop Python for Ruby because of the very interesting way that Ruby does things, and because of some of the additional features it has? No -- I have a great deal invested in Python and am very productive in that language. Also, there are places where Ruby still has a kind of early feel to it -- the libraries are not nearly as filled-out as Python's, Ruby can seem slow at times, and the error checking can be primitive (for example, I left off an <b>end</b> statement on a method in the middle of a file, and all it would say is "syntax error" for the last line of a file -- in a larger file that could be a very hard bug to find).
+
+<p>However, for starters, I'll now be looking more closely at Python to see how it handles some of the less obvious issues, especially classes and reflection. I've also got a foothold in Ruby so I will be learning more about it (and going to more user group meetings if I get the chance). And for me, most importantly, I've got some new ways to think about object-oriented problem solving, which I have always found to come in handy.
+
+<h2>Good resources:</h2>
+<ul>
+<li><a href="../_/http/www.rubycentral.com/book/index.html">http://www.rubycentral.com/book</a> The "Pickaxe" book; this is for an earlier version of Ruby and there aren't any diagrams, but it's still reasonably useful.
+<li><a href="../_/http/www.zenspider.com/index.html">www.zenspider.com</a> In particular the Ruby Quick Reference; there are missing elements but it's quite helpful.
+<li><a href="../_/http/onestepback.org/index.html">onestepback.org</a> Contains numerous tutorials and articles to help you learn Ruby.
+</li></li></li></ul>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=146091.html">43
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=146091&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D146091&amp;title=Ruby%2C+PHP+and+a+Conference&amp;bodytext=My+previous+posting+about+Ruby+generated+a+lot+of+noise+and+very+little+light+--+that+is%2C+not+much+in+the+way+of+compelling+reasons+to+learn+the+language.+So+I+went+to+a+couple+of+Seattle.rb+Ruby+users+group+meetings+and+spent+time+with+3+uber-geeks.+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D146091&amp;title=Ruby%2C+PHP+and+a+Conference">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D146091&amp;title=Ruby%2C+PHP+and+a+Conference">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></c></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

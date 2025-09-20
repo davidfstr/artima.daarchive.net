@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Wither Those Tiers</title>
+<meta charset="utf-8"/>
+<meta content="Frank Sommers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=fsommers.html">Frank Sommers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=159087.html">Discuss</a> | 
+<a href="mailto:?subject=Wither Those Tiers&amp;body= %0AArtima Weblogs %0AWither Those Tiers %0Aby Frank Sommers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=159087">Email</a> | 
+<a href="../viewpostP.html$/thread=159087.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=158598.html" title="Java Applets + Ajax = ?">Previous</a> | 
+<a class="sl" href="thread=161826.html" title="Are Long Work Hours Hazardous to Your Project?">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Frank Thoughts</span><br>
+<span class="ts">Wither Those Tiers</span><br/>
+<span class="as">by Frank Sommers</span><br/>
+<span class="pd">May 11, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The last decade witnessed the rise of the three-tier enterprise architecture. The experience learned and the need to process increasing amounts of data increasingly fast, are now leading some to rethink the wisdom of three-tier design. One alternative solution moves business logic and data management into a data grid.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>The three-tier model, in which the presentation, the business logic, and the persistent data store each defines a unique application tier, became the dominant enterprise architecture design in the 1990s. While separation of tiers along those lines is enshrined in enterprise frameworks, such as J2EE, some now question the wisdom of architecting a new breed of applications along the three-tier model.
+</p>
+<p>What originated as an extension to the two-tier client-server design seemed to fit the needs of Web applications well: An HTML-based user interface accessed from a Web browser, and its definition generated in a presentation tier; data stored and retrieved from a shared database management system; and business logic placed between data and presentation in a business logic tier. Darleen Sadoski of GTE and Santiago Comella-Dorda of Carnegie Mellon's Software Engineering Institute <a href="../_/http/www.sei.cmu.edu/str/descriptions/threetier_body.html">summarize</a> the utility of the three-tier architecture:</p>
+<blockquote>
+<p>The three tier architecture is used when an effective distributed client/server design is needed that provides (when compared to the two tier) increased performance, flexibility, maintainability, reusability, and scalability, while hiding the complexity of distributed processing from the user. </p>
+</blockquote>
+<p>While a large and vocal opposition to the three-tier model always existed, maintainability and reusability were obvious benefits of the three-architecture, as each tier depends only on the one tier beneath it: Changes in the database affect only the business logic tier, and evolution of business logic impacts the presentation layer only. </p>
+<p>Scaling a three-tier architecture is not an obvious task, however. To paraphrase, <a href="../_/http/en.wikipedia.org/wiki/Amdahl's_law/index.html">Amdahls's Law</a>, a system scales only to the degree its weakest link scales. As more clients access the presentation tier, if those presentation requests must also access the business logic tier, the business logic tier must also scale along with the presentation tier. And if the business logic relies on data stored in the database, then the database must scale up in tandem with the presentation and business logic tiers.</p>
+<h2>Scaling the tiers</h2>
+<p>There have been three principal solutions to scaling a three-tier system: vertical, horizontal, and caching. Vertically scaling the system involves increasing the capacity of components corresponding to each tier so each can handle higher workloads. Scaling in this manner involves scaling both the hardware and the software corresponding to each layer. For instance, scaling the database layer might require server hardware with symmetric multiprocessing capabilities (SMP), or even a cluster of commodity servers. Taking advantage of SMPs or clusters, in turn, will require software designed to operate in such environments. </p>
+<p>Scaling horizontally involves distributing the load of each layer among multiple logical operational units. For instance, the database tier can be scaled by <a href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=158489.html">partitioning</a> that tier into multiple databases, and then coordinating work between them through distributed transactions or some other coordination mechanism. The presentation tier can scale horizontally by routing incoming user requests to a server in a pool of server nodes dedicated to presentation logic. Still, the effects of horizontal scaling will be limited by the scalability of the underlying tier. If the presentation tier needs to access business logic, presentation can be processed only as fast as the business logic layer allows. A database layer might similarly become a bottleneck if business logic processing requires access to the database.</p>
+<p>Caching aims to facilitate more independent scaling for each layer by managing the relationship between layers with a view to scalability. For instance, cache middleware between the presentation and business logic layers can more intelligently transfer data from the business to the presentation tier by, say, prefetching results, or performing some processing without the need to access the business tier (such as providing summary results, for instance). And armed with knowledge of the database tier's load characteristics, caching can arrange database reads and writes at times that maximize database throughput. </p>
+<p>Each of these scalability techniques is recursive: Vertical scaling can be achieved by virtualization of horizontally scaled resources—such as presenting a single-system image of a cluster— and horizontal scaling is often indistinguishable from vertical scaling from the layer above—a cluster of database servers or a partitioned database may appear to the business tier above as a single database. Caching itself can be scaled vertically—allocating a bigger in-memory cache, for instance—or horizontally with a distributed cache. Finally, employing several caching layers can make caching itself a recursive technique.</p>
+<p>Chiefly because scaling each tier in the three-tier architecture requires specialized software and hardware, the conceptual three tiers often take on physical manifestations in the server room. Database servers often sit on dedicated shelves, and the presentation and business logic servers are similarly easy to point out. Physical separation of tiers simplifies system and network administration. Ironically, such physical separation also leads to scalability problems.</p>
+<h2>From database to data grid</h2>
+<p>I recently caught up with Nati Shalom, founder and CTO of <a href="../_/http/www.gigaspaces.com/index.html">GigaSpaces</a>, whom I have known for a long time from the Jini community. Shalom’s company designed a product based on JavaSpaces, and is popular with Wall Street firms and telecoms operators that routinely process large amounts of data. "Today, if you look at the three-tier approach, it's both a logical and a physical architecture," noted Shalom. "That results in a lot of static elements in the application, and that is where bottlenecks are created."</p>
+<p>Shalom pointed out two application patterns that are becoming increasingly important, yet are ill-suited to the classic three-tier division. The <em>analytical</em> model takes as its input a large amount of data—server logs, usage pattern logs, trading data, medical measurement records—and aims to derive some new information from the analysis of that data. While in the past such processing was the domain of only the largest organizations—chiefly because of high storage and processing costs—the analytical use-case is becoming increasingly a requirement for all sorts of applications. For instance, given a user's previous history of visiting pages on a Web site, analytical processing of that data can determine what ads that user is most likely to click on, thus supporting a click-through advertising model, currently one of the more successful business models on the Web. </p>
+<p>While the analytic model is read-mostly, Shalom's other emerging application model requires both reads and writes of data. In that application model, which can be called a <em>data-flow</em> model, a continuous stream of data arrives at one end of the system, and the application must perform some processing on that incoming data stream, saving the data along with the processing results at the other end. Such applications include financial trading and real-time or monitoring applications. However, this category fits many dynamic Web applications where <a href="../_/http/www.artima.com/forums/flat.html$/forum=270&amp;thread=154479.html">monitoring the system's health and performance</a> are critical application requirements, or where a large part of the output is based on processing the input (as, for instance, in portal applications). </p>
+<p>Both of these application types must deal with large amounts of data, and they must perform often compute-intensive processing on that data fast. To allow such systems to scale, it is advantageous to place the computation as close to the data as possible. Placing business logic in a separate tier from the database layer, especially if that tier corresponds to physical separation, prevents such systems from scaling. 
+</p>
+<p> Instead, these applications require breaking down the barriers between the various architecture tiers. GigaSpace’ Shalom notes that "one solution [to moving computation close to the data] has been to delegate [much of the processing] to just one tier—often the database. But that just pushes the bottleneck into the database. Instead of burdening some of your resources with too much processing, it's much better to use all your resources intelligently, and route transactions to where those transactions can be performed most efficiently. [With intelligent transaction routing,] rather than having a centralized database, what you then have is a data grid."</p>
+<h2>Transaction routing with JavaSpaces</h2>
+<p>One way to perform such transaction routing is via the <a href="../_/http/www.artima.com/intv/sway.html">JavaSpaces</a> model. JavaSpaces, part of the <a href="../_/http/www.jini.org/index.html">Jini Starter Kit</a>, is a Java-centric implementation of the <a href="../_/http/en.wikipedia.org/wiki/Linda_%28coordination_language%29/index.html">tuple spaces</a> paradigm popular in high-performance computing applications. JavaSpaces in the context of these application domains can be imagined as a cache that coordinates work between master servers—those submitting computing tasks to a tuple space—and workers that take small chunks of tasks, perform computations on those tasks, and place the results back in the tuple space.</p>
+<p>The result is an architecture that provides a data grid with a JavaSpace-based interface that allows reading and writing data to and fro the data grid. Clients of this grid can belong to a presentation layer, such as Web servers allowing one to submit jobs and present the results, or even other data grids that coordinate work in support of a common operation. Such data grid elements can even be federated into a larger grid.</p>
+<p>Data grid clients access the grid only through proxy objects. JavaSpace proxies are Java objects that can incorporate logic to route requests for data access or data input to the appropriate node, although such dynamic transaction routing is not part of JavaSpaces. Taking advantage of Jini's <a href="../_/http/www.javaworld.com/javaworld/jw-01-2001/jw-0105-jiniology.html">dynamic code mobility</a> feature, such application logic does not occupy its own architecture tier, but is instead downloaded to JavaSpace clients at runtime.</p>
+<p>While the space-based paradigm has proven to scale both the analytic and data-flow models, it requires a unique programming model that developers may not be familiar with. In addition, JavaSpace nodes must be installed and configured correctly. Several commercial JavaSpaces implementations help solve these challenges. The GigaSpaces implementation, for instance, provides data grid access via the JMS and JDBC interfaces as well, in addition to implementing the <code>JavaSpaces</code> interface. </p>
+<p>In addition to commercial solutions, several open-source tools now ease working with JavaSpaces. The open-source <a href="../_/http/rio.jini.org/index.html">RIO</a> project, for instance, helps better utilize available computing resources in a JavaSpace-based data grid. RIO helps match the capabilities of a computing resource, such as a server, with the requirements of a computing task. For instance, if a job requires, say, a fast processor, or certain amounts of main memory, the job's submitter can describe that requirement to the RIO system. Each RIO node, in turn, advertises its capabilities, and the RIO middleware matches jobs with the appropriate node.</p>
+<p>Dennis Reedy, who developed RIO while a member of Sun's Jini team, and is now GigaSpaces' VP of Advanced Technologies, notes that such resource matching must occur in a dynamic fashion, keeping system administration of a RIO cluster to a minimum. "You had to log into [RIO nodes] before, and had to manually configure them. The bigger cluster our customers had to deal with, the more work this turned out to be.” Not surprising, Reedy worked to automate that deployment in the GigaSpaces offering. “Under the covers, the system measures each node's capabilities, and attaches behavior to the nodes based on those measurements," says Reedy. "This allows us to provision more cache nodes as needed. We can scale the system up dynamically, but also scale it down," if computing resources are left unused.</p>
+<h2>Tierless architecture</h2>
+<p>If a data grid with a JavaSpace interface were to divide enterprise architecture into clients and servers, it could be considered a throwback to the client-server days, from which the three-tier design was an evolutionary step. However, code mobility, as well as the dynamic balancing act performed by an intelligent space implementation, renders clients and servers interchangeable. For instance, a node may perform computations in response to a client's request, acting as a server, but the same node may become a client to another node's space service. Jini's dynamic code mobility ensures that the application logic is distributed at runtime according to the space topology of the moment. </p>
+<p>Taken to its limit, the space-based design with code mobility can lead to a withering of boundaries between application tiers. While a developer may still consider architecture tiers when constructing an application, those divisions would have few manifestations in how the application executes, let alone in physical deployment. Instead, the space-based model helps virtualize those computing resources. As John Clingan <a href="../_/http/blogs.sun.com/roller/page/jclingan$/entry=dynamic_infrastructure/index.html">remarked</a>, </p>
+<blockquote>
+<p>The move to virtualization is enabling a more dynamic infrastructure, and I wonder how long it will take customers to move from "these applications run on these ... servers" to "our applications run somewhere on this grid".</p>
+</blockquote>
+<p>While the three-tier model will always have its uses, separating application logic from data management will prove increasingly hard in the presence of large amounts of data and the need to rapidly process that data given finite computing resources. In addition, the trend toward rich-client applications that allow the distribution of presentation logic, and also some application logic, away from the data center, and to users’ desktop systems, indicates a path to a relatively flat, quasi-tierless, data grid-style enterprise architecture, combined with some form of mobile code—whether in the form of downloadable Java classes or JavaScript libraries—pushing presentation logic out to clients. </p>
+<p>How do you think the three-tier model will evolve? And where do you see the role of data grids in an enterprise architecture? 
+</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=159087.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=159087&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Frank Sommers adds a new entry to <a href="../index.html$/blogger=fsommers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/fsommers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D159087&amp;title=Wither+Those+Tiers&amp;bodytext=The+last+decade+witnessed+the+rise+of+the+three-tier+enterprise+architecture.+The+experience+learned+and+the+need+to+process+increasing+amounts+of+data+increasingly+fast%2C+are+now+leading+some+to+rethink+the+wisdom+of+three-tier+design.+One+alternative+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D159087&amp;title=Wither+Those+Tiers">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D159087&amp;title=Wither+Those+Tiers">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/frank.jpg"/></td><td>Frank Sommers is a Senior Editor with Artima Developer. Prior to joining Artima, Frank wrote the Jiniology and Web services columns for JavaWorld. Frank also serves as chief editor of the Web zine <em>ClusterComputing.org</em>, the IEEE Technical Committee on Scalable Computing's newsletter. Prior to that, he edited the Newsletter of the IEEE Task Force on Cluster Computing. Frank is also founder and president of Autospaces, a company dedicated to bringing service-oriented computing to the automotive software market.
+
+<p>
+Prior to Autospaces, Frank was vice president of technology and chief software architect at a Los Angeles system integration firm. In that capacity, he designed and developed that company's two main products: A financial underwriting system, and an insurance claims management expert system. Before assuming that position, he was a research fellow at the Center for Multiethnic and Transnational Studies at the University of Southern California, where he participated in a geographic information systems (GIS) project mapping the ethnic populations of the world and the diverse demography of southern California. Frank's interests include parallel and distributed computing, data management, programming languages, cluster and grid computing, and the theoretic foundations of computation. He is a member of the ACM and IEEE, and the American Musicological Society.</p></td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Frank Sommers. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

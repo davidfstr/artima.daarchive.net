@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>After Java and C# - what is next?</title>
+<meta charset="utf-8"/>
+<meta content="Klaus Kreft and Angelika Langer" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=langer.html">Angelika Langer's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6543.html">Discuss</a> | 
+<a href="mailto:?subject=After Java and C# - what is next?&amp;body= %0AArtima Weblogs %0AAfter Java and C# - what is next? %0Aby Klaus Kreft and Angelika Langer %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=6543">Email</a> | 
+<a href="../viewpostP.html$/thread=6543.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+Previous | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">In Between the Curly Braces</span><br>
+<span class="ts">After Java and C# - what is next?</span><br/>
+<span class="as">by Klaus Kreft and Angelika Langer</span><br/>
+<span class="pd">July 3, 2003</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Java and C# are almost identical programming languages.  Boring repetition that lacks innovation.  Where is the revolutionary programming language that will stop the redundancy?
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+The industry is spinning in circles inventing one "curly brace" language after another - C++, Java, C#, ...  The popular object-oriented programming languages of today fatally remind us of the heyday of procedural languages: in the 60ies, a cluster of very similar languages (Fortran, PL/I, COBOL, Algol) dominated the IT business, until the advent of C changed the world. Finally, a language invented by programmers for programmers!  C was a revolution; Java and C# are just evolution. Where is the C language of our times?
+<p>
+Hardly anybody will claim that Java or C# are revolutionary programming languages that changed the way we write programs. Especially the new kid on the block - C# - is so extremely redundant that one wonders why both Java and C# are in existence.  Do we really need yet another curly brace language? Why would anybody want to explore a "novel" language that offers the old set of language features?  Yes, there are some minor differences between C# and Java: C# does not have an equivalent to Java's nonstatic inner classes; Java does not treat events and delegates as first-class members of a type; C# has user-defined value types. Fine!  But the list of commonalities is significantly longer than the list of differences. C# borrowed a lot from Java - and vice versa. Now that C# supports boxing and unboxing, we'll have a very similar feature in Java. Have we desperately been waiting for autoboxing in Java?  Certainly not.  Perhaps, we've been eagerly awaiting Java generics, which - surprise, surprise - look pretty much like generics in C#. Alas, if at least they were the same!  But no, every language designer can't resist and must do a little different in order to demonstrate that his language feature is more convenient, more effecient, more powerful, ... well, just better ... than the corresponding one in the "other" language.
+<p>
+Is the existence of redundant languages any good? Does it help programmers in any way? Do we profit from having a choice between Java and C#?  In contrast to the respective language designers <i>we</i> do not believe that one language is superior to the other. The fact that Java and C# are so similar is tiring and the fact that they are different makes it even worse.  
+<p>
+Why is it that such redundant languages are invented and promoted?  Is it because Java and C# are corporate languages?  Okay, both respective comporations will instantly deny that their languages are proprietary.  After all C# is an ECMA standard and Java is enhanced through its community process.  Yet, without Sun and Microsoft neither language would exist.
+<p>
+Corporate languages  are often developed under the pressure of competition, at the risk of throwing out a new feature although it's still immature. Corporate languages carry around a lot of baggage because they must be backward, forward, or otherwise compatible to some piece of legacy code. Deficiencies once introduced can never be taken back.  Think of the miserable Cloneable interface in Java that does not allow you to call a clone() method; it's the standing joke in every Java class and the example for a highly debatable interface. Or take the inconsistency between comparison and equality: we can support several sorting orders via comparators, but we can only have one notion of equality via equals().  Why? This is painfully inconsistent, causes quite a bit of headache at times and will never be repaired, because it is so for "historical reasons".  Such a tribute to its legacy is typical for corporate languages; they grow and grow and become more and more unwieldy.  Is C# any different?  Slightly, but not fundamentally.
+<p>  
+
+In essence, Java and C# feel like PL/I and consorts: PL/I was an attempt to combine the best features of Fortran, COBOL and ALGOL and was developed by George Radin of IBM in 1964. Java was an attempt to combine the best features of C++ and Smalltalk and was developed by James Gosling of Sun Microsystems in 1995. C# is an attempt to combine the best features of C++, Visual Basic and Java and was developed by Anders Hejlsberg of Microsoft in 2000.  Will the next language be an attempt to combine ... ?
+<p>
+
+In the early '70ies the dominance of  PL/I and its look-alikes ended with the advent of C. The C programming language was everything but a deliberately invented  corporate language based on combinations of existing ideas.  Quite the converse. C was a by-product of the Unix development and was created on a tiny machine as a tool to improve a meager programming environment. Seemingly it covered the essential needs of many programmers at that time without trying to supply too much. It was successful to an extent far surpassing any expectations and  changed the way programs were written.
+<p>
+
+Will there be a revolutionary language like C again - invented by programmers rather than corporations?  A language that will be fun and exciting to use - free of baggage, convenient, consistent, comprehesible? What would it look like? Do we need such an innovation, or are we happy anyway and cannot even think of a language better than Java or C#?
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=6543.html">48
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=6543&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Klaus Kreft and Angelika Langer add a new entry to <a href="../index.html$/blogger=langer.html">their weblog</a>, subscribe to their <a href="../feeds/bloggers/langer.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6543&amp;title=After+Java+and+C%23+-+what+is+next%3F&amp;bodytext=Java+and+C%23+are+almost+identical+programming+languages.++Boring+repetition+that+lacks+innovation.++Where+is+the+revolutionary+programming+language+that+will+stop+the+redundancy%3F&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6543&amp;title=After+Java+and+C%23+-+what+is+next%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D6543&amp;title=After+Java+and+C%23+-+what+is+next%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Bloggers</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/klauskreft.jpg"/></td><td>Klaus Kreft has been developing software solutions for almost 20 years in domains ranging from embedded systems programming for the telecommunications industry to web-based business applications in the banking and insurance sector.  He served as a systems architect on several successful large-scale projects.  His passion is building solutions in time that work reliably and meet the customer's needs.  He currently works as a Senior Consultant at Siemens Business Services in Germany.</td></tr></table><p><table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/angelikalanger.jpg"/></td><td>Angelika Langer works as an independent freelance trainer, mentor, and consultant with a course curriculum of her own and conducts seminars in Europe and Northern America. Her current work is backed by more than a decade of experience as a software engineer working for German and US companies, among them sevaral years in telecommunications and later in compiler construction at Siemens and 1.5 year in library development at Rogue Wave Software. Compiler construction got her involved into the standardization of C++ and in 1993 she joined the standards committee. When Java appeared in 1995 she immediately pounced on the new language.  Since then she is truly bilingual, using both languages in parallel, and inevitably mixing up the syntax at times, naturally looking forward to adding a third curly brace language to the skill set, just to increase the confusion. In 1997 she decided that 13 years of sitting in front of a computer day in and day out were enough (at least for her taste) and she shifted her focus to training, coaching, and mentoring.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2003 Klaus Kreft and Angelika Langer. All rights reserved.</div>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

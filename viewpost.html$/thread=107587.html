@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Working Around Non-Virtual Destructors</title>
+<meta charset="utf-8"/>
+<meta content="Christopher Diggins" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cdiggins.html">Christopher Diggins' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=107587.html">Discuss</a> | 
+<a href="mailto:?subject=Working Around Non-Virtual Destructors&amp;body= %0AArtima Weblogs %0AWorking Around Non-Virtual Destructors %0Aby Christopher Diggins %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=107587">Email</a> | 
+<a href="../viewpostP.html$/thread=107587.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=107360.html" title="Testing Invariants in C++">Previous</a> | 
+<a class="sl" href="thread=109459.html" title="boost::any meet ootl::any_ptr">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Heron-Centric: Ruminations of a Language Designer</span><br>
+<span class="ts">Working Around Non-Virtual Destructors</span><br/>
+<span class="as">by Christopher Diggins</span><br/>
+<span class="pd">May 2, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+It is commonly recommended in C++ to publicly inherit from classes which have virtual destructors, to avoid possible memory leaks. Here I present a pointer class which allows us
+to polymorphically use a base class without requiring a virtual destructor.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+When inheriting from a class which we intend to use polymorphically in C++, it is required
+that this class has a virtual destructor. Without this, we run into a problem where the
+derived constructor will not get called.
+[See <a href="../_/http/www.gotw.ca/publications/mill18.htm">http://www.gotw.ca/publications/mill18.htm</a>]
+<p>
+For example consider the following code:
+
+<pre>
+#include &lt;iostream&gt;
+using namespace std;
+
+class MyBaseClass {
+public:
+  MyBaseClass() {
+  }
+  ~MyBaseClass() {
+  }
+};
+
+class MyDerivedClass : public MyBaseClass {
+public:
+  MyDerivedClass() : MyBaseClass() {
+    m = new int;
+  }
+  ~MyDerivedClass() {
+    cout &lt;&lt; "deleting m" &lt;&lt; endl;
+    delete m;
+  }
+private:
+  int* m;
+};
+
+int main(int argc, char* argv[])
+{
+  MyBaseClass* p = new MyDerivedClass;
+  delete p; // ~MyDerivedClass never called, and m is never deleted :-(
+  system("PAUSE");
+  return 0;
+}
+</pre>
+
+This is a rather nasty and hard to detect problem. The most commonly prescribed solution is to
+simply declare <tt>~MyBaseClass()</tt> virtual. This however introduces a virtual dispatch table into
+MyBaseClass, which may not be desirable, as it potentially increases the size of the object, and it hurts performance.
+An alternative solution (which may be completely novel, I don't know) is to use the following specialized pointer class:
+
+<pre>
+  template&lt;typename target_type&gt;
+  class base_class_ptr {
+   public:
+      // forward declarations
+      template &lt;class T&gt;
+      struct functions;
+      template &lt;class T&gt;
+      base_class_ptr(T* x)
+        : m_a(x), m_t(&amp;functions&lt;T&gt;::table)
+      {}
+      target_type* operator-&gt;() {
+        return static_cast&lt;target_type*&gt;(m_a);
+      }
+      void Delete() {
+        m_t-&gt;Delete(m_a);
+        m_a = NULL;
+      }
+      // Function table type
+      struct table {
+        void (*Delete)(void*);
+      };
+      // For a given referenced type T, generates functions for the
+      // function table and a static instance of the table.
+      template&lt;class T&gt;
+      struct functions
+      {
+        static typename base_class_ptr&lt;target_type&gt;::table table;
+        static void Delete(void* p) {
+            delete static_cast&lt;T*&gt;(p);
+        }
+     };
+   private:
+      void* m_a;
+      table* m_t;
+  };
+
+  template&lt;typename target_T&gt;
+  template&lt;class T&gt;
+  typename base_class_ptr&lt;target_T&gt;::table
+  base_class_ptr&lt;target_T&gt;::functions&lt;T&gt;::table = {
+      &amp;base_class_ptr&lt;target_T&gt;::template functions&lt;T&gt;::Delete
+  };
+</pre>
+
+The example before can now be rewritten as:
+
+<pre>
+int main(int argc, char* argv[])
+{
+  base_class_ptr&lt;MyBaseClass&gt;* p(new MyDerivedClass)
+  p.Delete(); // ~MyDerivedClass now called, and m is deleted :-)
+  system("PAUSE");
+  return 0;
+}
+</pre>
+
+Even though the code is complicated what is happening is simply that <tt>base_class_ptr</tt>
+carries around a pointer to the appropriate Delete function which gets generated by the compiler.
+In effect the trade-off is that instead of increasing the size of the object, we increase the size
+of the pointer.
+<p>
+At this point, I am unaware of any other class which accomplishes the same thing. If anyone
+has any similar prior work they can point me to it would be greatly appreciated.
+
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=107587.html">11
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=107587&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Christopher Diggins adds a new entry to <a href="../index.html$/blogger=cdiggins.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cdiggins.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D107587&amp;title=Working+Around+Non-Virtual+Destructors&amp;bodytext=It+is+commonly+recommended+in+C%2B%2B+to+publicly+inherit+from+classes+which+have+virtual+destructors%2C+to+avoid+possible+memory+leaks.+Here+I+present+a+pointer+class+which+allows+us%0D%0Ato+polymorphically+use+a+base+class+without+requiring+a+virtual+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D107587&amp;title=Working+Around+Non-Virtual+Destructors">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D107587&amp;title=Working+Around+Non-Virtual+Destructors">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/christopherdiggins.jpg"/></td><td>Christopher Diggins is a software developer and freelance writer. Christopher loves programming, but is eternally frustrated by the shortcomings of modern programming languages. As would any reasonable person in his shoes, he decided to quit his day job to write his own ( <a href="../_/http/www.heron-language.com/index.html">www.heron-language.com</a> ). Christopher is the co-author of the <a href="../_/http/www.cpp-cookbook.com/index.html">C++ Cookbook</a> from O'Reilly. Christopher can be reached through his home page at  <a href="../_/http/www.cdiggins.com/index.html">www.cdiggins.com</a>.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Christopher Diggins. All rights reserved.</div>
+</p></p></p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

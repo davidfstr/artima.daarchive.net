@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Crippled By DRM &amp; An 800-Pound Gorilla</title>
+<meta charset="utf-8"/>
+<meta content="David Goodger" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#DDDDDD" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=goodger.html">David Goodger's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=181253.html">Discuss</a> | 
+<a href="mailto:?subject=Crippled By DRM &amp; An 800-Pound Gorilla&amp;body= %0AArtima Weblogs %0ACrippled By DRM &amp; An 800-Pound Gorilla %0Aby David Goodger %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=181253">Email</a> | 
+<a href="../viewpostP.html$/thread=181253.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=177911.html" title="Mickey’s Infinite Copyright">Previous</a> | 
+<a class="sl" href="thread=182095.html" title="PyCon 2007: Call for Topics and Session Idea Feedback">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pythonista &amp; Techno-Geek</span><br>
+<span class="ts">Crippled By DRM &amp; An 800-Pound Gorilla</span><br/>
+<span class="as">by David Goodger</span><br/>
+<span class="pd">October 20, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+How a new digital audio player required the application of techno-geek skills to obtain full as-advertised functionality.  A notorious monopoly seems to be the culprit. Gee thanks, Bill!
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I bought myself a new toy a couple of days ago, a Samsung YP-F2 digital audio
+player.  I chose this one because it's tiny, it has a screen, and, most
+importantly, because it supports Ogg Vorbis files... or at least it's supposed to.</p>
+<p>It is a small, "pendant" form factor player, with necklace-style headphones
+(they go behind the neck).  The headphone cord is just long enough for
+the player to rest in a shirt pocket.  I don't like iPods with their
+long cables flopping around.</p>
+<p>It has a small screen which displays vital information, like the track
+title and battery level.  I have no interest in watching videos on a
+small screen, so I didn't want to waste money on a color screen.  But I do
+want to know what track I'm listening to, and I want to be able to navigate,
+so players like the iPod Shuffle aren't for me.</p>
+<p>It supports Ogg Vorbis files, my preferred audio encoding... Or does it?</p>
+<p>Why Ogg Vorbis?
+Two years back I had the pleasure of meeting some of the people
+behind Ogg Vorbis and Xiph.org, through an unrelated consulting
+sysadmin job ("geek summer camp").
+I read up on Xiph and Ogg Vorbis (see <a class="reference" href="../_/http/xiph.org/about/index.html">About Xiph</a>
+and <a class="reference" href="../_/http/www.vorbis.com/faq/index.html">the Vorbis FAQ</a>),
+and decided to apply the principles of
+free software and freedom in general to this aspect of my life.
+Ogg Vorbis is free-as-in-freedom and unemcumbered by software patents.  The
+fact that Ogg Vorbis (commonly just called "Ogg") is a <strong>better</strong> encoding
+was icing on the cake (Ogg Vorbis files sound better than MP3 files of
+the same size).  When I ripped my CD collection that Christmas, I
+converted them to Ogg Vorbis for daily use and FLAC for backup.</p>
+<p>Samsung's and the local retailer's websites showed the YP-F2 as
+supporting Ogg Vorbis.  But when I read the instructions in the box,
+there was no mention of "Ogg".  Instead, Windows XP and Windows Media
+Player 10 were listed as absolute requirements.  When I plugged the
+player into my Mac laptop's USB port, it wasn't even recognized.  I
+use Windows at work but my personal machines run either Mac OS X or
+Ubuntu GNU/Linux, and there's no way I'm going to run Windows for this
+(or anything else).  I was angry at Samsung for the false advertising,
+and I thought I would have to return the player and get my money back.</p>
+<p>But a little research goes a long way.</p>
+<p>According to <a class="reference" href="../_/http/wiki.xiph.org/index.php/Talk:PortablePlayers#Yepp_YP-U2/index.html">a comment on Xiph's wiki</a>,
+"Microsoft has made it a criteria for 'Janus/MPP' [s/b MTP?]
+compliance that portable players sold in the USA must NOT support Ogg
+playback" ("Janus" is the codename for "Windows Media DRM for Portable
+Devices"; "DRM" is an acronym for "Digital Restrictions
+Management").  So this is another example of Microsoft throwing their
+weight around, forcing Samsung to cripple their players in the North
+American market, and the consumer suffers for it.</p>
+<p>Disgusting.</p>
+<p>Luckily, the same wiki page provided most of the solution to the
+problem: replace the device's firmware with an uncrippled version.
+After some trial &amp; error, I came up with the full solution
+(which does require Windows, but only once):</p>
+<ol class="arabic">
+<li><p class="first">From a browser go to www.samsung.com.</p>
+</li>
+<li><p class="first">From the "Select Country / Region" popup list choose Australia.</p>
+<p>(I originally chose the UK, but that version of the
+firmware disabled the FM radio functionality of the player.  UK and
+European owners of this player may want to try the Australian
+firmware; you might get extra functionality out of it!)</p>
+</li>
+<li><p class="first">Click on "Support", then enter the model number "YP-F2" in the form
+and hit the "Go" button.  Choose the specific model if necessary.</p>
+</li>
+<li><p class="first">In the new page click "Firmware".</p>
+</li>
+<li><p class="first">Click the link for the firmware upgrade file (I got "YP-F2X YP-F2
+Firmware upgrade (ver.1.451)").</p>
+</li>
+<li><p class="first">Unpack the .zip file, and run the setup.exe to install the updater
+software.</p>
+</li>
+<li><p class="first">Follow the instructions (in Help/recovery.html) for how to flash
+the firmware.  (Note: updating the firmware required a reformat of
+the player's storage.  Be sure to back up your files from the
+player first.)</p>
+</li>
+</ol>
+<p>Now my player shows up as an ordinary flash drive when connected via
+USB.  I can just copy .ogg files onto it, and they play just fine.
+So now I have the digital audio player I wanted in the first place.</p>
+<p>Being a techno-geek, I was able to persevere and finally figure out
+how to uncripple my player.  But what chance do normal mortals have?</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=181253.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=181253&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever David Goodger adds a new entry to <a href="../index.html$/blogger=goodger.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/goodger.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D181253&amp;title=Crippled+By+DRM+%26%2338%3B+An+800-Pound+Gorilla&amp;bodytext=How+a+new+digital+audio+player+required+the+application+of+techno-geek+skills+to+obtain+full+as-advertised+functionality.++A+notorious+monopoly+seems+to+be+the+culprit.+Gee+thanks%2C+Bill%21&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D181253&amp;title=Crippled+By+DRM+%26%2338%3B+An+800-Pound+Gorilla">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D181253&amp;title=Crippled+By+DRM+%26%2338%3B+An+800-Pound+Gorilla">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td>David Goodger has been using Python since 1998, and began working on reStructuredText and Docutils in 2000.  A proud Canadian, he lived in
+Japan for 7 years, where a stint at a document processing company in
+Tokyo began his love/hate relationship with structured markup.  David
+is a Python Enhancement Proposal (PEP) Editor and a member of the
+Python Software Foundation.  He currently lives outside of Montreal,
+Quebec, with his Japanese wife and their two children.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 David Goodger. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

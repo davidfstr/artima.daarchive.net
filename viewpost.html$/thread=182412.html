@@ -1,0 +1,867 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Clear, Consistent, and Concise Syntax (C3S) for Java</title>
+<meta charset="utf-8"/>
+<meta content="Howard Lovatt" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=hlovatt.html">Howard Lovatt's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=182412.html">Discuss</a> | 
+<a href="mailto:?subject=Clear, Consistent, and Concise Syntax (C3S) for Java&amp;body= %0AArtima Weblogs %0AClear, Consistent, and Concise Syntax (C3S) for Java %0Aby Howard Lovatt %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=182412">Email</a> | 
+<a href="../viewpostP.html$/thread=182412.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=180638.html" title="Inner Classes or Closures">Previous</a> | 
+<a class="sl" href="thread=202004.html" title="Comparing Inner Class/Closure Proposals">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Pattern Centric Blog</span><br>
+<span class="ts">Clear, Consistent, and Concise Syntax (C3S) for Java</span><br/>
+<span class="as">by Howard Lovatt</span><br/>
+<span class="pd">October 27, 2006</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Many people think that inner classes in Java could be better; this Blog presents a new syntax that emphasizes Clarity, Consistency, and Conciseness (in that order!). An example usage is: withLock lock, method { out.println "Hello" };
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 align="CENTER">Clear, Consistent, and Concise Syntax (C<sup>3</sup>S) for Java</h1>
+<p>Many people think that inner classes in Java could be better and many proposals
+  have been put forward. However none of these proposals, including this author's,
+  have really gained broad support. This Blog presents an alternative, building
+  on and hopefully unifying past proposals, that emphasizes Clarity, Consistency,
+and Conciseness (in that order!). An example usage is: <b>withLock</b> lock, <font color="#0000ff">method</font>{out.<b>println</b> <font color="#ff0000">"Hello"</font>};</p>
+<p>Like normal writing a program code should express intent clearly; you should
+  not be left wondering what a line does and the compiler should not have to
+  make assumptions that may or may not agree with the programmers assumptions.
+  The language should be consistent; it should not have many similar concepts
+  or syntaxes with usage overlap (a few general features are better than many
+  specific features even if for some use cases the specific features are better
+  than the general features). The syntax should be concise, since verbosity can
+  obscure intent (<em>not</em> to save keystrokes). In the ideal world you would meet
+  all three Cs (Clear, Consistent, and Concise), however the Cs are at times
+  contradictory and a compromise has to be made. It is therefore important to
+  prioritise the Cs and for a language like Java that aspires to ubiquity the
+  priority order should be: Clear, Consistent, and Concise. Much of the Consistent
+  constraint will be consistency with existing Java features and the existing
+  Java syntax style, e.g. non-abbreviated keywords rather than symbols. The consistency
+  constraint also precludes lifting syntax directly from other languages unless
+  that syntax is similar in style to existing Java syntax. From the priority
+  given it is obvious that I am not equating minimum typing with simplicity,
+  however I am advocating conciseness because I think that in places the current
+  verbosity obscures intent.</p>
+<p>Previous proposals are summarized in a previous <a href="../_/http/www.artima.com/forums/flat.html$/forum=106&amp;thread=180638.html">blog</a>;
+  telling  comment on that blog about these proposals include: “... all
+  of the syntax you've shown me is more painful than just doing without” (Todd
+  Blanchard), “The
+  heavy reliance on the correct use use of differently shaped brackets, colon
+  and semi-colons is steadily reducing Java's scope from being a language for
+  use by general programmers to a notation decipherable only by geeks” (Vincent
+  O'Sullivan), and “All of the proposals are a bit painful syntactically” (Martin
+  Odersky). These comments strike at the crux of the problem, the proposals are
+  not Clear or Consistent. Also Neal Gafter pointed out in an email that there
+  are more use cases than iterating over collections and therefore the examples
+  given in the previous blog were not the complete story. The new proposal is
+  in the Appendix 1, along with justifications, and three examples are given
+  below: time, withLock, and each. It is hoped that this proposal unifies other
+  proposals by adopting features from other proposals and by suggesting a staged
+  introduction of features (see Appendix) and that the use cases are considered
+  realistic.</p>
+<h1>Examples</h1>
+<h2>Java time</h2>
+<p>Method time times a series of methods and reports their timings, and as is
+  the case for all the examples I will present the current Java code first to
+  provide a basis of comparison. Formatting of the example is close to what I
+  use in practice; this choice of formatting although realistic is less concise
+  than often shown in blogs and other example forums where an unrealistically
+  short format is used to save space and also confer (sometimes inadvertently)
+  simplicity. In my preferred style I declare variables final (except for ones
+  that do change!); which is common (or mandatory) in functional languages, but
+  unusual in Java. As an aside – take a look at your own code, I bet nearly
+  all variables should be final so that it is clear to humans and machines that
+  the variable is a pure declaration. This use of final in the example below
+  is <i>not</i> because variables are passed to inner classes; though in some
+  of the other examples it is necessary to use final.</p>
+<pre>Use:
+    <font color="#0000ff">final</font> Method0&lt; <i>R</i>, RuntimeException &gt; method1 = <font color="#0000ff">new</font> Method0&lt; <i>R</i>, RuntimeException &gt;() { 
+      <font color="#0000ff">public void</font> <b>call</b>() { ... }
+      <font color="#0000ff">public</font> String <b>toString</b>() { <font color="#0000ff">return</font> <font color="#ff0000">"Method1"</font>; }
+    } );
+    <font color="#0000ff">final</font> Method0&lt; <i>R</i>, RuntimeException &gt; method2 = <font color="#0000ff">new</font> Method0&lt; <i>R</i>, RuntimeException &gt;() { 
+      <font color="#0000ff">public void</font> <b>call</b>() { ... }
+      <font color="#0000ff">public</font> String <b>toString</b>() { <font color="#0000ff">return</font> <font color="#ff0000">"Method2"</font>; }
+    } );
+    <b>time</b>( method1, method2 );
+
+Given:
+  <font color="#0000ff">public interface</font> Method0&lt; R, Ts <font color="#0000ff">extends</font> Throwable &gt; { R <b>call</b>() <font color="#0000ff">throws</font> Ts; }
+  ...
+    <font color="#0000ff">public static </font>&lt; R, Ts <font color="#0000ff">extends</font> Throwable &gt; <font color="#0000ff">void</font> <b>time</b>( <font color="#0000ff">final</font> Method0&lt; R, Ts &gt;... methods ) <font color="#0000ff">throws</font> Ts {
+      <font color="#0000ff">for</font> ( <font color="#0000ff">final</font> Method0&lt; R, Ts &gt; m : methods ) {
+        <font color="#0000ff">final long</font> start = <b>currentTimeMillis</b>();
+        <font color="#0000ff">final</font> R result = m.<b>call</b>();
+        <font color="#0000ff">final long</font> end = <b>currentTimeMillis</b>();
+        out.<b>println</b>( m + <font color="#ff0000">" returned "</font> + result + <font color="#ff0000">" and took "</font> + (end - start) + " ms." );
+      }
+    }</pre>
+<h2>C<sup>3</sup>S time</h2>
+<p>The same example above in the new syntax is given below, the most striking
+  features are the use of type inference and the new method declaration using
+  the keyword method. The method declaration using a keyword is similar syntax
+  to other languages, e.g. Javascript, however method is chosen instead of function
+  because it emphasizes dynamic dispatch instead of a static binding.</p>
+<pre>Use:
+    <font color="#0000ff">final</font> method1 = Method0.<b><font color="#0000ff">new</font></b> { 
+      <font color="#0000ff">method</font> <b>call</b> { ... }
+      <font color="#0000ff">method</font> <b>toString</b> { <font color="#ff0000">"Method1"</font> }
+    };
+    <font color="#0000ff">final</font> method2 = Method0.<b><font color="#0000ff">new</font></b> { 
+      <font color="#0000ff">method</font> <b>call</b> { ... }
+      <font color="#0000ff">method</font> <b>toString</b> { <font color="#ff0000">"Method2"</font> }
+    };
+    <b>time</b> method1, method2;
+
+Or shorter:
+    <b>time</b> <b><font color="#0000ff">new</font></b> { 
+      <font color="#0000ff">method</font> <b>call</b> { ... }
+      <font color="#0000ff">method</font> <b>toString</b> { <font color="#ff0000">"Method1"</font> }
+    }, <b><font color="#0000ff">new</font></b> { 
+      <font color="#0000ff">method</font> <b>call</b> { ... }
+      <font color="#0000ff">method</font> <b>toString</b> { <font color="#ff0000">"Method2"</font> }
+    };
+
+Or shorter still:
+    <b>time</b> <b><font color="#0000ff">enum</font></b> { 
+      Method1 { <font color="#0000ff">method</font> { ... } },
+      Method2 { <font color="#0000ff">method</font> { ... } }
+    }.<b>values</b>;
+
+Given:
+  <font color="#0000ff">public interface</font>&lt; R, Throwable... Ts &gt; Method0 { <font color="#0000ff">method</font> R <b>call</b> <font color="#0000ff">throws</font> Ts }
+  ...
+    <font color="#0000ff">public static method</font>&lt; R, Throwable... Ts &gt; <font color="#0000ff">void</font> <b>time</b>( <font color="#0000ff">final</font> Method0&lt; R, Ts &gt;... methods ) <font color="#0000ff">throws</font> Ts {
+      <font color="#0000ff">for</font> ( <font color="#0000ff">final</font> m : methods )<font color="#0000ff"> </font>{
+        <font color="#0000ff">final </font>start = <b>currentTimeMillis</b>;
+        <font color="#0000ff">final </font>result = m.<b>call</b>;
+        <font color="#0000ff">final </font>end = <b>currentTimeMillis</b>;
+        out.<b>println</b> m + <font color="#ff0000">" returned "</font> + result + <font color="#ff0000">" and took "</font> + (end - start) + " ms."
+      }
+    }</pre>
+<p>The new syntax is explained fully in Appendix 1. The most interesting aspects,
+not all of which are demonstrated above, are:</p>
+<ul>
+<li>
+<p>Keyword final infers a variables type (there is an equivalent keyword,
+      declare, for non-final variables).</p>
+<li>
+<p>Keyword return as the last statement of a method may be omitted, even
+      if it returns a value. If the method is of type Void (object not primitive)
+      then the method always returns null, even if an explicit return or return
+      value aren't given.</p>
+<li>
+<p>Keyword new follows the type and it uses a dot to closely associate it
+      with the type in a manor similar to a static call. Keyword new can also
+      be used for constructor declaration within a class and for creating instances
+      of classes for method arguments. When used for constructor declarations
+      constructor name, modifiers, argument types, and simple argument copy to
+      fields are inferred by new. When used to create an instance for a class
+      the type of the class to be created is inferred.</p>
+<li>
+<p>Keyword method identifies the block as a method block with the given arguments
+      and body and also indicates object creation. The syntax mimics the established
+      syntax for other blocks, e.g. if as in <i>keyword brackets braces</i>,
+      and it uses a dot to closely associate it with the object type in a manor
+      similar to a static call. Keyword method can also be used for method declaration
+      within a class and for creating instances of classes for method arguments.
+      When used within a class method name, method modifiers, and argument types
+      are inferred by method. When used to create an instance for a method argument,
+      method also infers the type of the class to be created.</p>
+<li>
+<p>Keywords enum, interface, and class can be used to declare anonymous types,
+      as opposed to anonymous instances of anonymous types that new and method
+      create. Static methods can be called on these anonymous types, as they
+      can on anything of type Class. The notation <i>Base</i>.class
+      { ... } declares an anonymous class type that extends Base, similarly enum
+      and interface. If anonymous types are used in a method call the type to
+      extend is inferred, like new and method.</p>
+<li>
+<p>Generic type declarations are unified to appear in the same position in
+      a declaration, generalized to any declaration including variables, their
+      syntax for common cases changed to shorter variable like declarations,
+      and varargs for Throwables and derivatives are allowed.</p>
+<li>
+<p>The number of brackets and semicolons are reduced.</p>
+</li></li></li></li></li></li></li></ul>
+<h2>Java withLock</h2>
+<p>Method withLock allows the use of the new concurrent locks conveniently. Medium
+  formatting is adopted in this example.</p>
+<pre>Use:
+    <b>withLock</b>(lock, <font color="#0000ff">new</font> Block0() {
+      <font color="#0000ff">public</font> Void call() { out.<b>println</b>( <font color="#ff0000">"Hello"</font> ); } 
+    });
+
+Given:
+  <font color="#0000ff">public interface</font> Block0<ts <font="" color="#0000ff">extends Throwable&gt; <font color="#0000ff">extends</font> Method0<void, ts=""> {}
+  ...
+    <font color="#0000ff">public static</font> <ts <font="" color="#0000ff">extends Throwable&gt; <font color="#0000ff">void</font> <b>withLock</b>(Lock lock, Block0<ts> block) <font color="#0000ff">throws</font> Ts {
+      <font color="#0000ff">try</font> {
+        lock.<b>lock</b>();
+        block.<b>call</b>();
+      }
+      <font color="#0000ff">finally</font> { lock.<b>unlock</b> }
+    }</ts></ts></void,></ts></pre>
+<h2>C<sup>3</sup>S withLock</h2>
+<pre>Use:
+    <b>withLock</b> lock, <font color="#0000ff">method </font>{ out.<b>println</b> <font color="#ff0000">"Hello" </font>};
+
+Given:
+  <font color="#0000ff">public interface</font><throwable... ts=""> Block0 <font color="#0000ff">extends</font> Method0<b>&lt;</b>Void, Ts&gt; {}
+  ...
+    <font color="#0000ff">public static method</font><throwable... ts=""> <font color="#0000ff">void</font> <b>withLock</b>(Lock lock, Block0<ts> block) <font color="#0000ff">throws</font> Ts {
+      <font color="#0000ff">try</font> {
+        lock.<b>lock</b>;
+        block.<b>call</b>
+      }
+      <font color="#0000ff">finally </font>{ lock.<b>unlock </b>}
+    }</ts></throwable...></throwable...></pre>
+<h2>Java each</h2>
+<p>Method each steps through each item in a collection. The example assumes that
+  collections are given new members functions (i.e. each) and given vararg constructors.
+  (However, modifying the collections library is really a separate issue to C<sup>3</sup>S.)
+  The example uses short names and is shown with minimum white space and it inlines
+  definitions. I don't consider this extra short formatting realistic; but it
+  is used in other blogs, some people prefer it, and a proposal must look OK
+  in many different formatting styles.</p>
+<pre>Use:
+    <font color="#0000ff">final</font> ArrayList<integer> list=<font color="#0000ff">new</font> ArrayList(<font color="#ff0000">1</font>,<font color="#ff0000">2</font>,<font color="#ff0000">3</font>);
+    <font color="#0000ff">final</font> Tuple1<integer> sum=<font color="#0000ff">new</font> Tuple1<integer>(<font color="#ff0000">0</font>);
+    list.<strong>each(</strong><font color="#0000ff">new</font> Block1<integer,runtimeexception>(){
+      <font color="#0000ff">public void</font> <b>call</b>(x){sum.e1+=x;}
+    });
+
+Given:
+  <font color="#0000ff">public class</font> Tuple1<e1>{
+    <font color="#0000ff">public</font> E1 e1;
+<b>Tuple1</b>(E1 e1){<font color="#0000ff">this</font>.e1=e1;}
+  }
+  ...
+  <font color="#0000ff">public interface</font> Block1<a1,ts <font="" color="#0000ff">extends Throwable&gt;<font color="#0000ff">extends</font> Method1<void,a1,ts>{}
+  ...
+    <font color="#0000ff">public </font><ts <font="" color="#0000ff">extends Throwable&gt; <font color="#0000ff">void</font> <b>each</b>(Block1<e,ts> b)<font color="#0000ff">throws</font> Ts{
+      <font color="#0000ff">for</font>(E e:es){b.<b>call</b>(e)}
+    }</e,ts></ts></void,a1,ts></a1,ts></e1></integer,runtimeexception></integer></integer></integer></pre>
+<h2> C<sup>3</sup>S each</h2>
+<pre>Use:
+    <font color="#0000ff">final</font> list=ArrayList.<b><font color="#0000ff">new</font></b>(<font color="#ff0000">1</font>,<font color="#ff0000">2</font>,<font color="#ff0000">3</font>);
+    <font color="#0000ff">declare</font> sum=<font color="#ff0000">0</font>;
+    list.<strong>each</strong> <font color="#0000ff">method</font>(x){sum+=x};
+
+Given:
+  ...
+    <font color="#0000ff">public method</font><throwable...ts> <font color="#0000ff">void</font> <b>each</b>(Method1<void,e,ts>.<font color="#0000ff">interface</font>{} b)<font color="#0000ff">throws</font> Ts{
+      <font color="#0000ff">for</font>(<font color="#0000ff">final</font> e:es){b.<b>call</b>(e)}
+    }</void,e,ts></throwable...ts></pre>
+<h1>Summary</h1>
+<p>Whilst the syntax proposed is not the shortest possible; I think it is the
+  best proposal to date because it balances: Clarity, Consistency, and Conciseness
+  and because it unifies previous proposals. The syntax synergy of the proposal
+  is demonstrated in the table below (syntax in table slightly simplified to
+  keep table short).</p>
+<table border="1">
+<caption>
+   Table 1: Syntax Synergy in C<sup>3</sup>S 
+  </caption>
+<thead>
+<tr>
+<td> <p>Example</p></td>
+<td>
+<p>Keywords</p></td>
+<td> <p>Comment</p></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td> <pre>Modifiers<sub>opt</sub> <font color="#0000ff">Keyword</font>&lt; ... &gt;<sub>opt</sub> Type<sub>opt</sub> <b>Name<sub>opt</sub></b> Extras<sub>opt</sub> ( ... )<sub>opt</sub> { ... ; ... }</pre> </td>
+<td>
+<p> </p></td>
+<td> <p>Standard Template </p></td>
+</tr>
+<tr>
+<td> <pre>         <sub>   </sub><font color="#0000ff"> if</font>            <sub>       </sub>                      ( ... )<sub>   </sub> { ... ; ... }</pre> </td>
+<td width="26%">
+<p>if, for, while</p></td>
+<td width="26%"> <p>Loops and Branches </p></td>
+</tr>
+<tr>
+<td> <pre>Modifiers<sub>opt</sub> <font color="#0000ff">class</font>&lt; ... &gt;<sub>opt</sub>          <b>Name<sub>opt</sub></b> Extras<sub>opt</sub>     <sub>    </sub>    { ... ; ... }</pre> </td>
+<td>
+<p>class, interface, enum</p></td>
+<td> <p>Type Declarations </p></td>
+</tr>
+<tr>
+<td>
+<pre>Modifiers<sub>opt</sub> <font color="#0000ff">method</font>&lt; ... &gt;<sub>opt</sub>  Type<sub>opt</sub> <b>Name<sub>opt</sub></b> Extras<sub>opt</sub> ( ... )<sub>opt</sub> { ... ; ... }</pre>
+</td>
+<td>
+<p>method, new</p></td>
+<td>
+<p>Method and Constructor Declarations Inside Type Declarations </p></td>
+</tr>
+<tr>
+<td>
+<pre>Modifiers<sub>opt</sub> <font color="#0000ff">final</font>&lt; ... &gt;<sub>opt</sub>   Type<sub>opt</sub> <b>Name<sub>   </sub></b>       <sub>   </sub>        <sub>   </sub>   ... , ... ;</pre>
+</td>
+<td>
+<p>final, declare </p></td>
+<td>
+<p>Fields,  Locals, and Arguments</p></td>
+</tr>
+<tr>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>
+<pre>     Type.<sub>opt</sub><font color="#0000ff">Keyword</font>&lt; ... &gt;<sub>opt</sub> Type<sub>opt</sub> <b>Name<sub>opt</sub></b> Extras<sub>opt</sub> ( ... )<sub>opt</sub> { ... ; ... }</pre>
+</td>
+<td>
+<p> </p></td>
+<td>
+<p>Qualified Template </p></td>
+</tr>
+<tr>
+<td>
+<pre>     Type.<sub>opt</sub><font color="#0000ff">interface</font>       <sub>   </sub>            <sub>    </sub>  <b><sub>   </sub></b>              { ... ; ... }</pre>
+</td>
+<td>
+<p>class, interface, enum </p></td>
+<td>
+<p>Anonymous Type Declaration </p></td>
+</tr>
+<tr>
+<td>
+<pre>     Type.<sub>opt</sub><font color="#0000ff">method</font>&lt; ... &gt;<sub>opt</sub>  Type<sub>opt</sub> <b>Name<sub>opt</sub></b> Extras<sub>opt</sub> ( ... )<sub>opt</sub> { ... ; ... }</pre> </td>
+<td>new, method</td>
+<td>
+<p>Anonymous Instance as Method Arguments or Variable Assignment</p></td>
+</tr>
+</tbody>
+</table>
+<p>What do other people think – is this syntax an improvement on the other
+  proposals? Does this proposal unify the other proposals?</p>
+<h1>Appendix 1 – C<sup>3</sup>S Rules</h1>
+<h2>Stage 1</h2>
+<p>The concept is to implement stage 1 rules and then see if stage 2 suggestions
+  are still considered necessary.</p>
+<p><strong>Rule 0: </strong>For a method call allow brackets, (), to be omitted
+  if there are no arguments and for the last call in a chain of <em>Top Level</em> calls
+  (method, constructor, or modified new, see Rules 2 and 3 below); provided that
+  the call isn't ambiguous with respect to a field. <em>Top Level</em> means
+  the call isn't an argument to another call. Note braces start a new statement
+  with a new top level. The last call means that for the top level calls only:
+  it is either the only call (and that call isn't qualified) or it is the call
+  following the last dot. The last call rule means it must follow the last dot,
+  even if that dot is a qualifier dot rather than a call dot; so that an integer
+  argument is distinct from a real argument (see last example Rule 3). This rule
+  is more concise. E.g.:</p>
+<pre>     size = list.<strong>size</strong>;
+     list.<strong>set</strong> <font color="#ff0000">0</font>, <font color="#ff0000">'A'</font>;
+     list.<strong>add</strong>( <font color="#ff0000">'A'</font> ).<strong>add</strong> <font color="#ff0000">'B'</font>;
+     list.<strong>add</strong> string.<strong>charAt</strong>( <font color="#ff0000">0</font> );</pre>
+<p> <strong>Rule 1: </strong>Allow final and a new keyword, declare, to infer
+  the type of a declaration based on the initial value. If no initial value is
+  given or the value is given as null then the type must be specified as normal
+  (also the declare keyword may be used like final is currently used). Function
+  arguments are as is, except that declare may prefix the declaration to emphasize
+  that the parameter isn't final. To specify primitives the type must explicitly
+  be given, see first example below. Generic arguments follow the keyword and
+  are useful for recursive or repeated types. This rule improves clarity by using
+  a keyword, consistency by <i>always</i> using
+  a keyword and allowing generic parameters, and conciseness of by allowing type
+  inference. E.g. (also see rules 2 and 3 for new new notation):</p>
+<pre>     <font color="#0000ff">declare</font> sum = <font color="#ff0000">0</font>; <font color="#666666">// Integer, for int use: int sum = 0 or declare int sum = 0</font>
+     <font color="#0000FF">final</font>&lt; X &gt; Tuple2&lt; X, X &gt; duplicate;<font color="#666666"> // Not the same as Tuple&lt; ?, ? &gt;!</font>
+     <font color="#0000ff">declare</font> strings = ArrayList&lt; String &gt;.<b><font color="#0000ff">new</font></b>.<strong>add</strong> <font color="#ff0000">"A"</font>;
+     <font color="#0000ff">final</font><font color="#666666"> strings = ArrayList&lt; String &gt;.<b><font color="#0000ff">new</font></b>;</font></pre>
+<p> <strong>Rule 2: </strong>Allow new to be used as a qualifier with a . (dot)
+  like a static method call (but generic arguments retain their normal position
+  after the type) instead of as a prefix operator. This rule improves readability
+  and hence clarity since it tightly associated with the type, is more consistent
+  with the rest of Java, and (importantly) enables Rule 3. E.g.:</p>
+<pre>     <font color="#0000ff">declare</font> strings = ArrayList&lt; String &gt;.<b><font color="#0000ff">new</font></b>( <font color="#FF0000">"a"</font>, <font color="#FF0000">"b"</font>, <font color="#FF0000">"c"</font> ); <font color="#666666">// Assuming ArrayList had a vararg constructor!</font>
+     <font color="#0000ff">declare</font> numbers = (T[])Number.<b><font color="#0000ff">new</font></b>[ <font color="#ff0000">1</font> ]; <font color="#666666">// where T extends Number</font></pre>
+<p> <strong>Rule 3: </strong>Allow new to infer generic type from constructor
+  argument and use &lt;&gt; to mean a raw type. This rule considerably shortens
+  generic declarations and also instances of anonymous inner classes. E.g.:</p>
+<pre>     <font color="#0000ff">declare</font> strings = ArrayList&lt;&gt;.<b><font color="#0000ff">new</font></b>; <font color="#666666">// Explicit raw type</font>
+     <font color="#0000ff">final</font> strings = ArrayList&lt; String &gt;.<b><font color="#0000ff">new</font></b>; <font color="#666666">// Explicit generic type</font>
+     <font color="#0000ff">final</font> strings = ArrayList.<b><font color="#0000ff">new</font></b>( <font color="#FF0000">"a"</font>, <font color="#FF0000">"b"</font>, <font color="#FF0000">"c"</font> ); <font color="#666666">// Inferred generic type, assuming vararg constructor</font></pre>
+<p> <strong>Rule 4: </strong>Allow new to declare constructors in classes and
+  to infer argument types from fields of the same name if no argument types are
+  given (like final and declare do for variables – see Rule 1). If argument
+  names are given without qualification and body is given as default then 
+  infer a simple Assignment of arguments to fields. This inferring
+  of Assignment is similar default functionality to ML, Scala, and Fortress,
+  but is more flexible since multiple constructors with different access and
+  annotation modifiers are possible. Inside an instance method the notation this.new(
+  ... )<sub>opt</sub> may be used. This use of new improves clarity since new
+  is a keyword, improves consistency since it emphasizes the similarity between
+  constructors and static methods and is consistent with the new use of .new
+  after a type name (Rule 2), and is more concise. E.g. (also see Rule 5 for
+  omitting trailing ; and Rule 15 for position of generic arguments):</p>
+<pre>     <font color="#0000ff">class</font>&lt; E1 &gt; T1 {
+       <font color="#0000ff">declare</font> E1 i;
+       <font color="#0000ff"><strong>new</strong></font>( <font color="#0000ff">final</font> E1 i ) { <font color="#0000ff">this</font>.i = i }
+     }
+
+     <font color="#0000ff">class</font>&lt; E1 &gt; T1 {
+       <font color="#0000ff">declare</font> E1 i;
+       <font color="#0000ff"><strong>new</strong></font>( <font color="#0000ff">final</font> i ) { <font color="#0000ff">this</font>.i = i } <font color="#666666">// Infer argument type from field</font>
+     }
+
+     <font color="#0000ff">class</font>&lt; E1 &gt; T1 {
+       <font color="#0000ff">declare</font> E1 i;
+       <font color="#0000ff"><strong>new</strong></font>( i ) { <font color="#0000FF">default</font> } <font color="#666666">// Infer argument type from field and infer copy of argument into field</font>
+     }</pre>
+<p> <strong>Rule 5: </strong>If an expression ends in } then there is no need
+  for ; before the brace (like , in array initializers and also note , at end
+  of argument lists is an error). IE treat ; as a statement separator rather
+  than a statement terminator. This rule helps the readability of instances of
+  anonymous classes and encourages braces to always be used even if a single
+  statement is possible. E.g.:</p>
+<pre style="margin-bottom: 0.5cm;">     <font color="#0000ff">if</font> ( end ) { <font color="#0000ff">break</font> }</pre>
+<p> <strong>Rule 6: </strong>Introduce a new keyword, method, for declaring methods
+  which is syntactically placed just before any generic parameters (i.e. Immediately
+  after annotations and modifiers). If the method overrides a method then optionally
+  infer  @Override,
+  other modifiers, return type, method argument types, and throws clause. If
+  there is only one method to override then the method name can be inferred.
+  If the method has no arguments the brackets may be omitted. This new keyword
+  is clearer because it is a keyword, is more consistent because other declarations
+  have keywords, and is more concise because it allows inference. E.g. (also
+  see Rule 9 for new generic type syntax and Rule 12 for omitting keyword return):</p>
+<pre>     <font color="#0000ff">public static method</font>&lt; K, V &gt; Map&lt; K, V &gt; <strong>unmodifiableMap</strong>( Map&lt; K ?, V ? &gt; map ) ...
+     <font color="#0000ff">method</font> <strong>toString</strong> { <font color="#ff0000">"Hello"</font> }</pre>
+<p> <strong>Rule 7: </strong>Keyword, method, can also be used <i>with</i> a
+  type followed by a dot notation to be a shorthand for creating an anonymous
+  instance of an anonymous inner class. This new syntax is clearer because its
+  intent is not obscured by verbosity, is more consistent because its syntax
+  is like other blocks (e.g. if), and is more concise because of inference. E.g.:</p>
+<pre>     <font color="#0000ff">final</font> action = AbstractAction.<b><font color="#0000ff">method</font></b> ( <font color="#0000ff">final</font> notUsed ) {
+       controller.<b>updateAllViews</b> updateModel
+     };</pre>
+<p> <strong>Rule 8: </strong>Keyword, method, can also be used to create anonymous
+  instances of anonymous inner classes <i>without</i> a type and a dot notation
+  if the type can be inferred from a methods arguments. This new syntax is clearer
+  because its intent is not obscured by verbosity, is more consistent because
+  its syntax is like other blocks (e.g. if), and is more concise because of inference.
+  E.g.:</p>
+<pre>     <font color="#0000ff">final</font> button = JButton.<b><font color="#0000ff">new</font></b> <font color="#0000ff">method</font> ( <font color="#0000ff">final</font> notUsed ) {
+       controller.<b>updateAllViews</b> updateModel
+     };</pre>
+<p> <strong>Rule 9: </strong>Allow extends type generic arguments to be shortened
+  to &lt; <em>Type name</em> &gt; (i.e. like normal variable declarations), e.g.:</p>
+<pre>     <font color="#0000ff">public static method</font>&lt; K, V &gt; Map&lt; K, V &gt; <strong>unmodifiableMap</strong>( Map&lt; K ?, V ? &gt; map ) ...
+     <font color="#0000ff">public class</font> Enum&lt; Enum&lt; E &gt; E &gt; ...
+ 
+   Which are equivalent to
+     <font color="#0000ff">public static </font>&lt; K, V &gt; Map&lt; K, V &gt; <strong>unmodifiableMap</strong>( Map&lt; ? <font color="#0000ff">extends</font> K, ? <font color="#0000ff">extends</font> K &gt; map ) ...
+     <font color="#0000ff">public class</font> Enum&lt; E <font color="#0000ff">extends</font> Enum&lt; E &gt; &gt; ...</pre>
+<p> <strong>Rule 10: </strong>A throws clause can be empty, which means the method
+  doesn't throw anything (equivalent to an absent throws clause). This is useful
+  in conjunction with generics, see Rule 11 below. E.g.:</p>
+<pre style="margin-bottom: 0.5cm;">     <font color="#0000FF">method</font> Void <strong>call</strong>() <font color="#0000ff">throws</font>;</pre>
+<p> <strong>Rule 11: </strong>Generics are extended to allow varargs (only for
+  use with Throwables and derivatives). An empty generics varargs list is allowed
+  and it is equivalent to an absent throws clause (note Rule 10 above). E.g.: </p>
+<pre>     <font color="#0000FF">method</font>&lt; R, Throwable... Ts &gt; R <strong>call</strong>() <font color="#0000ff">throws</font> Ts;</pre>
+<p> <strong>Rule 12: </strong>Keyword return may be omitted for last line of
+  a method and the returned value is the value of the last expression, e.g.:</p>
+<pre style="margin-bottom: 0.5cm;">     <font color="#0000ff">method</font> <strong>toString</strong> { <font color="#ff0000">"Hello"</font> };</pre>
+<p> <strong>Rule 13: </strong>If a method returns a Void, then make the end of
+  a method without a return and a return without an argument synonymous with
+  return null. E.g. the following are identical.</p>
+<pre>   Given:
+     <font color="#0000ff">interface</font>&lt; Throwable... Ts &gt; Block0 <font color="#0000ff">extends</font> Method0&lt; Void, Throwable... Ts &gt; {}
+   
+  Then:
+     <font color="#0000ff">final</font> block = Block0.<b><font color="#0000ff">method </font></b>{};
+     <font color="#0000ff">final</font> block = Block0.<b><font color="#0000ff">method </font></b>{ <font color="#0000ff">return </font>};
+     <font color="#0000ff">final</font> block = Block0.<b><font color="#0000ff">method </font></b>{ <font color="#0000ff">return null</font> };
+     <font color="#0000ff">final</font> block = Block0.<b><font color="#0000ff">new</font></b> {
+       <font color="#0000ff">method</font> { <font color="#0000ff">return null</font> }
+     };
+     <font color="#0000ff">final</font> block = Block0.<b><font color="#0000ff">new</font></b> {
+       @Override <font color="#0000ff">method</font> <b>call</b> { <font color="#0000ff">return null</font> }
+     };
+     <font color="#0000ff">final</font> block = Block0.<b><font color="#0000ff">new</font></b> {
+       <font color="#0000ff">method</font> <b>call</b> { <font color="#0000ff">return null</font> }
+     };
+     <font color="#0000ff">final</font> Block0&lt; RuntimeException &gt; block = <font color="#0000ff">new</font> Block0&lt; RuntimeException &gt;() {
+       Void <strong>call</strong>() { <font color="#0000ff">return null</font>; }
+     };
+
+  Are all the same.</pre>
+<p><strong>Rule 14: </strong>Non-final locals that are referenced by an inner
+    class are automatically wrapped in a final-tuple instance, like C# 3.0 does.
+    Note: special treatment, name mangled temporary required, of non-final arguments
+    is needed (not shown in example below). E.g.:</p>
+<pre>   Given:
+     <font color="#0000ff">public class</font>&lt; E1 &gt; Tuple1 {
+       <font color="#0000ff">public</font> E1 e1;
+       <font color="#0000ff">public</font> <font color="#0000FF">new</font>( e1 ) { <font color="#0000FF">default</font> }
+     }
+     <font color="#0000ff">public class</font>&lt; E1, E2 &gt; Tuple2 <font color="#0000ff">extends</font> Tuple1&lt; E1 &gt; ...
+     <font color="#0000ff">public interface</font>&lt; R, A1, Throwable... Ts &gt; Method1 { R <strong>call</strong>( A1 a1 ) <font color="#0000ff">throws</font> Ts }
+     <font color="#0000ff">public interface</font>&lt; A1, Throwable... Ts &gt; Predicate1 <font color="#0000ff">extends</font> Method1&lt; Boolean, A1, Ts &gt; {}
+     ...
+     <font color="#0000ff">  public static</font> <font color="#0000FF">method</font>&lt; T, Throwable... Ts &gt; List&lt; T &gt; <strong>select</strong>( <font color="#0000ff">final</font> Iterable&lt; T &gt; c, <font color="#0000ff">final</font> Predicate1&lt; T ?, Ts &gt; f ) <font color="#0000ff">throws</font> Ts ...
+   
+  Then:
+     <font color="#0000FF">final</font> beginning = <font color="#ff0000">"Fred"</font>;
+     <font color="#0000FF">final</font> names = <font color="#0000ff">ArrayList.<strong>new</strong></font><strong> </strong><font color="#ff0000">"Frederick"</font>;
+     <font color="#0000FF">final</font> filtered = names.<strong>select</strong> <font color="#0000ff">method</font> ( name ) { name.<strong>startsWith</strong> beginning };
+   
+  Which is equivalent to the following verbose version:
+     <font color="#0000ff">final</font> Tuple1&lt; String &gt; beginning = new Tuple1&lt; String &gt;( <font color="#ff0000">"Fred"</font> );
+     ArrayList&lt; String &gt; names = (<font color="#0000ff">new</font> ArrayList&lt; String &gt;( <font color="#ff0000">"Frederick" </font>));
+     ArrayList&lt; String &gt; filtered = names.<strong>select</strong>( <font color="#0000ff">new</font> Predicate1&lt; String &gt;() {
+       public Boolean <strong>call</strong>( <font color="#0000ff">final</font> String name ) {
+         <font color="#0000ff">return</font> name.<strong>startsWith</strong>( beginning.e1 );
+       }
+     } );</pre>
+<p><strong>Rule 15: </strong> Allow generic parameters to follow keyword for
+  class and
+  interface,
+  i.e. like method and like
+  Type[] for arrays. This improves consistency since in some circumstances it
+  cannot follow the name, e.g. method declarations. E.g.:</p>
+<pre> <font color="#0000ff">    public class</font>&lt; E1 &gt; Tuple1 {
+       <font color="#0000ff">public</font> E1 e1;
+       <font color="#0000ff">public</font> <font color="#0000FF">new</font>( e1 ) { <font color="#0000FF">default</font> }
+     }</pre>
+<p><strong>Rule 16: </strong> Allow anonymous type declarations, TypeToExtend.<sub>opt</sub>class
+  { ... }, for
+  class, interface, and enum. This is intentionally similar syntax to anonymous
+  instances of anonymous classes, i.e.: similar syntax to Type.<sub>opt</sub>new
+  ( ... )<sub>opt</sub> { ...
+  } and Type.<sub>opt</sub>method ( ... )<sub>opt</sub>  { ... }. If used as
+  an initializer for a variable the type is inferred. as Class&lt; $1 &gt;. If used
+  as a method argument the type to extend may be inferred. This is a useful generalization
+  of the notion of creating anonymous instances of anonymous classes to the creation
+  of anonymous types. E.g. (also see Rule 17):</p>
+<pre>    <font color="#0000ff"><font color="#0000ff">public method</font></font>&lt; Throwable... Ts &gt; <font color="#0000ff"><font color="#0000ff">void</font> <b>each</b></font>( <font color="#0000FF">final</font> Method1&lt; Void, E, Ts &gt;.<font color="#0000ff"><font color="#0000ff">interface</font></font>{} b )<font color="#0000ff"><font color="#0000ff">throws</font></font> Ts {<font color="#0000ff">
+      <font color="#0000ff">for</font></font> ( <font color="#0000ff"><font color="#0000ff">final</font></font> e : es ) { b.<b>call</b>( e ) }
+    }<font color="#0000ff">
+
+    final</font> singleton = Method0.<b><font color="#0000ff">enum</font></b> { <font color="#666666">// Singleton is of type Class&lt; $1 &gt; where $1 implements Method0 and is an Enum</font>
+      Method1 { <font color="#0000ff">method</font> { ... } },
+      Method2 { <font color="#0000ff">method</font> { ... } }
+    };
+    <strong>time</strong> singleton.<b>values</b>;
+
+<font color="#0000ff">    </font><strong>time</strong><font color="#0000ff"> <b>enum</b></font> { <font color="#666666">// I</font><font color="#666666">nfer Method0</font>
+      Method1 { <font color="#0000ff">method</font> { ... } },
+      Method2 { <font color="#0000ff">method</font> { ... } }
+    }.<b>values</b>;
+</pre>
+<p><strong>Rule 17: </strong> Allow static methods to be called on variables
+of type Class&lt; T &gt; using the normal dot notation. This is consistent with the
+  concept that static members are what other languages call class members, e.g.
+smalltalk. E.g. (also see Rule 16):</p>
+<pre>    <font color="#0000ff">final</font> singleton = Method0.<b><font color="#0000ff">enum</font></b> { <font color="#666666">// Singleton is of type Class&lt; $1 &gt; where $1 implements Method0 and is an Enum</font>
+      Method1 { <font color="#0000ff">method</font> { ... } },
+      Method2 { <font color="#0000ff">method</font> { ... } }
+    };
+    <strong>time</strong> singleton.<b>values</b>;</pre>
+<p><strong>Rule 18: </strong> Allow variable declarations . E.g.:</p>
+<pre>    <font color="#0000ff">final</font> singleton = Method0.<b><font color="#0000ff">enum</font></b> { <font color="#666666">// Singleton is of type Class&lt; $1 &gt; where $1 implements Method0 and is an Enum</font>
+      Method1 { <font color="#0000ff">method</font> { ... } },
+      Method2 { <font color="#0000ff">method</font> { ... } }
+    };
+    <strong>time</strong> singleton.<b>values</b>;</pre>
+<h2>Stage 2</h2>
+<p>Having implemented stage 1 and gained some experience a second stage could
+  be added with the following suggestions (these are very much <i>suggestions</i> and
+  this section should be treated as a list of open issues). I have stuck with
+  syntax related suggestions that are essentially sugar and no new semantics
+  or modifications to JVM. </p>
+<p><b>Suggestion A:</b> Add support for statements break, continue, and exit
+  multiple enclosing blocks using break, continue, or return. The syntax for
+  break and continue for an enclosing loop would be unchanged. For exiting an
+  enclosing method the syntax could be <i>MethodName</i>.return
+  value;. This could be implemented using pre-made checked exceptions, thus allowing
+  compile time checking of multiple block exits. Syntax could be unified by allowing
+  <em>Name</em>.break and <em>Name</em>.continue and named blocks, e.g. if <em>Name</em> (
+  ... ) { ... }. </p>
+<p>
+<b>Suggestion B:</b> Add support for long strings with embedded variables using
+  a new keyword, string, e.g.:</p>
+<pre>    <font color="#0000FF">string</font> { <font color="#666666">// Trailing white space and single new line on { line not part of string</font>
+<font color="#FF0000">Embed variables including optional formatting, e.g.: </font>%2.1f{ real }
+    } <font color="#666666">// Leading white space and single new line on } line not part of the string</font></pre>
+<p><b>Suggestion C:</b> Add support for union of types using &amp; like generics
+  (particularly for catch blocks).</p>
+<p><b>Suggestion D:</b> Allow final and declare to be used for the variable declaration
+  in a  catch block  and allow type inference  as the
+  union of all declared or inferred (checked or not) exceptions. </p>
+<p><b>Suggestion E:</b> Add support for properties by inferring bodies
+  and declarations for: method getName { default }and method setName { default
+  }; i.e. like new { default }.</p>
+<p><b>Suggestion F:</b> Universally allow () in C<sup>3</sup>S
+    to be omitted, e.g. if condition { ... ; ... } and method Type name ...,
+  ... { ... ; ... }.</p>
+<p><b>Suggestion G:</b> Unify variable (field, local, and
+  argument) declarations around the standard syntax, e.g. final Type { name1;
+  name2 }.</p>
+<p><b>Suggestion H:</b> Make new line act as a semicolon
+  and allow ,, +, -, =, etc. as last non-white space or non-comment on a line
+  to mean continued on next line. </p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=182412.html">23
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=182412&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Howard Lovatt adds a new entry to <a href="../index.html$/blogger=hlovatt.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/hlovatt.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D182412&amp;title=Clear%2C+Consistent%2C+and+Concise+Syntax+%28C3S%29+for+Java&amp;bodytext=Many+people+think+that+inner+classes+in+Java+could+be+better%3B+this+Blog+presents+a+new+syntax+that+emphasizes+Clarity%2C+Consistency%2C+and+Conciseness+%28in+that+order%21%29.+An+example+usage+is%3A+withLock+lock%2C+method+%7B+out.println+%26quot%3BHello%26quot%3B+%7D%3B&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D182412&amp;title=Clear%2C+Consistent%2C+and+Concise+Syntax+%28C3S%29+for+Java">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D182412&amp;title=Clear%2C+Consistent%2C+and+Concise+Syntax+%28C3S%29+for+Java">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/howardlovatt.jpg"/></td><td>Dr. Howard Lovatt is a senior scientist with CSIRO, an Australian government owned research organization, and is the creator of the <a href="../_/https/pec.dev.java.net/nonav/frontpage.html">Pattern Enforcing Compiler</a> (PEC) for Java. PEC is an extended Java compiler that allows Software Design Patterns to be declared and hence checked by the compiler. PEC forms the basis of Howard's 2nd PhD, his first concerned the design of Switched Reluctance Motors.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2006 Howard Lovatt. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

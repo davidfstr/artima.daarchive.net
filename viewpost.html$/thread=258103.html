@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/24</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=258103.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/24&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/24 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=258103">Email</a> | 
+<a href="../viewpostP.html$/thread=258103.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=257998.html" title="The Adventures of a Pythonista in Schemeland/23">Previous</a> | 
+<a class="sl" href="thread=259100.html" title="My first Lisp conference">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/24</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">May 21, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In the last episode we saw that PLT Scheme performs much more instantiation and visiting of modules than other implementations. The reason for such behaviour is that PLT Scheme aims to avoid cross-phase side effects. In this episode I explain what cross-phase side effects are and why they are evil.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<h1 class="title">Mutating variables across modules</h1>
+<p>There are situations where it is handy to mutate a global variable or
+a data structure across modules, for instance to keep a counter or a
+registry of objects. However, direct mutation of exported variables
+is forbidden by the R6RS standard. Consider for instance a module
+exporting a variable <tt class="docutils literal"><span class="pre">x</span></tt> and a function <tt class="docutils literal"><span class="pre">incr-x</span></tt> with side
+effects affecting that variable:</p>
+<pre class="literal-block">
+#!r6rs
+(library (experimental mod1)
+  (export x incr-x)
+  (import (rnrs))
+
+  (define x 0)
+  (define (incr-x)
+    (set! x (+ 1 x))
+    x)
+)
+</pre>
+<p>This kind of side effect is ruled out by the R6RS
+specification (section 7.2): <em>exported variables must be
+immutable</em>. This is the reason why Ikarus, Ypsilon and Larceny reject
+the code with errors like <tt class="docutils literal"><span class="pre">attempt</span> <span class="pre">to</span> <span class="pre">export</span> <span class="pre">mutated</span> <span class="pre">variable</span></tt> or
+<tt class="docutils literal"><span class="pre">attempt</span> <span class="pre">to</span> <span class="pre">modify</span> <span class="pre">immutable</span> <span class="pre">variable</span></tt>.  The current SVN version PLT
+Scheme also raises an error, but the official version
+(4.1.5 at the time of this writing) is buggy (I submitted the bug report).</p>
+<div class="section">
+<h1><a id="mutating-internal-variables" name="mutating-internal-variables">Mutating internal variables</a></h1>
+<p>Consider now a module exporting a function with side effects affecting a
+non-exported variable:</p>
+<pre class="literal-block">
+#!r6rs
+(library (experimental mod2)
+  (export get-x incr-x)
+  (import (rnrs))
+
+  (define x 0)
+
+  (define (get-x)
+    x)
+
+  (define (incr-x)
+    (set! x (+ 1 x))
+    x)
+
+  (display "Instantiated mod2\n")
+)
+</pre>
+<p>This is a valid library which compiles correctly. The accessor function <tt class="docutils literal"><span class="pre">get-x</span></tt>
+gives access to the internal variable <tt class="docutils literal"><span class="pre">x</span></tt>. We may import it
+at the REPL and we may experiment with it:</p>
+<pre class="literal-block">
+$ ikarus
+&gt; (import (experimental mod2)); this does not instantiate mod2 immediately
+&gt; (get-x); now mod2 must be instantiated
+Instantiated mod2
+0
+&gt; (incr-x)
+1
+&gt; (incr-x)
+2
+&gt; (get-x)
+2
+</pre>
+<p>Everything works as one would expect.  However, things are trickier
+when phase separation enters in the game.</p>
+</div>
+<div class="section">
+<h1><a id="mutating-variables-across-phases" name="mutating-variables-across-phases">Mutating variables across phases</a></h1>
+<p>A Scheme implementation exhibits a <em>cross-phase side effect</em> if
+mutating a variable at expand time affects the value of the same
+variable at run-time. All R6RS implementations - except PLT Scheme
+which uses different instances for different phases - may have
+cross-phase side effects. On the other hand, in all R6RS
+implementations cross-phase side effects can be avoided by using
+separated compilation.</p>
+<p>In order to give a concrete example, consider the following script:</p>
+<pre class="literal-block">
+$ cat use-mod2.ss
+</pre>
+<pre class="literal-block">
+(import (rnrs) (sweet-macros) (for (experimental mod2) expand run))
+
+(def-syntax m
+  (lambda (x)
+    (display "At expand-time x=")
+    (display (incr-x))
+    (newline)
+    "m-expanded"))
+
+(m)
+
+(begin
+  (display "At run-time x=")
+  (display (incr-x))
+  (newline))
+</pre>
+<p>Here we formally import the module <tt class="docutils literal"><span class="pre">mod2</span></tt> twice, both at run-time
+and at expand time.  In PLT Scheme (which is the only implementation
+with explicit phasing <em>and</em> multiple instantiation) there are two
+fully separated instances of the module, and running the script
+returns the following:</p>
+<pre class="literal-block">
+$ plt-r6rs use-mod2.ss
+Instantiated mod2
+At expand-time x=1
+Instantiated mod2
+At run-time x=1
+</pre>
+<p>The fact that <tt class="docutils literal"><span class="pre">x</span></tt> was incremented at compile-time has no effect
+at run-time, since the run-time variable <tt class="docutils literal"><span class="pre">x</span></tt> belongs to a completely
+different instance of the module. In systems with single instantiation
+instead, there is only a <em>single instance of the module for all phases</em>,
+so that incrementing <tt class="docutils literal"><span class="pre">x</span></tt> at expand-time has effect at run-time:</p>
+<pre class="literal-block">
+$ ikarus --r6rs-script use-mod2.ss
+Instantiated mod2
+At expand-time x=1
+At run-time x=2
+</pre>
+<p>You would get the same with Ypsilon and Larceny (Larceny has explicit
+phasing but single instantiation and if you import a module in more
+than one phase the variables are shared amongst the phases, so that
+cross-phase side effects may happen).</p>
+<p>The phase crossing effect only happens because the script is executed
+immediately after compilation <em>in the same process</em>. Having
+compile-time effects affecting run-time values is <em>evil</em>, since it
+breaks separate compilation. If we turn the script into a library and
+we compile it separately, it is clear than the run-time value of <tt class="docutils literal"><span class="pre">x</span></tt>
+cannot be affected by the compile-time value of <tt class="docutils literal"><span class="pre">x</span></tt>
+(maybe the code was compiled 10 years ago!).</p>
+</div>
+<div class="section">
+<h1><a id="cross-phase-side-effects-and-separate-compilation" name="cross-phase-side-effects-and-separate-compilation">Cross-phase side effects and separate compilation</a></h1>
+<p>Let me explain in detail how separate compilation works in Ikarus,
+Ypsilon and PLT Scheme. Suppose we turn the previous script into a library:</p>
+<pre class="literal-block">
+$ cat mod3.ss
+</pre>
+<pre class="literal-block">
+#!r6rs
+(library (experimental mod3)
+(export run)
+(import (rnrs) (sweet-macros) (for (experimental mod2) expand run))
+
+(def-syntax m
+  (lambda (x)
+    (display "At expand-time x=")
+    (display (incr-x))
+    (newline)
+    "m-expanded"))
+
+(define (run) ;; this is executed at runtime
+  (display "At run-time x=")
+  (display (incr-x))
+  (newline))
+
+(m) ;; this is executed at expand time
+)
+</pre>
+<p>and let us invoke this library though a script <tt class="docutils literal"><span class="pre">use-mod3.ss</span></tt>:</p>
+<pre class="literal-block">
+#!r6rs
+(import (rnrs) (experimental mod3))
+(run)
+</pre>
+<p>If we use PLT Scheme, the value of <tt class="docutils literal"><span class="pre">x</span></tt> is the same as before:</p>
+<pre class="literal-block">
+$ plt-r6rs use-mod3.ss
+Instantiated mod2
+At expand-time x=1
+Instantiated mod2
+Instantiated mod2
+At run-time x=1
+</pre>
+<p>This is expected: turning a script into a library did not make
+anything magic happens (actually mod2 is being instantiated once more
+during the compilation of mod3, but that should not be surprising).
+On the other hand, things are very
+different if we run the same code under different implementations.</p>
+<p>For instance in Ypsilon the first time the script is run it prints three lines:</p>
+<pre class="literal-block">
+$ ypsilon --r6rs use-mod3.ss
+Instantiated mod2
+At expand-time x=1
+At expand-time x=2
+At run-time x=3
+</pre>
+<p>However, if we run the script again it prints just two lines:</p>
+<pre class="literal-block">
+$ ypsilon --r6rs use-mod3.ss
+Instantiated mod2
+At run-time x=1
+</pre>
+<p>The reason is that the first time Ypsilon compiles the libraries,
+using the same module instance, so that there is a single <tt class="docutils literal"><span class="pre">x</span></tt>
+variable which is incremented twice at expand time and once at
+run-time. The second time there is nothing to recompile, so only the
+run-time <tt class="docutils literal"><span class="pre">x</span></tt> variable is incremented, and there is no reference to
+the compile time instance.</p>
+<p>The situation for Ikarus is slightly different. If we use the
+<tt class="docutils literal"><span class="pre">--r6rs-script</span></tt> flag we get the same output as before, when
+<tt class="docutils literal"><span class="pre">mod3</span></tt> was just a script:</p>
+<pre class="literal-block">
+$ ikarus --r6rs-script use-mod3.ss
+Instantiated mod2
+At expand-time x=1
+At run-time x=2
+</pre>
+<p>However, this only happens because Ikarus is compiling all the libraries
+at the same time (whole compilation). If we use separate compilation we get:</p>
+<pre class="literal-block">
+$ ikarus --compile-dependencies use-mod3.ss
+Instantiated mod2
+At expand-time x=1
+Serializing "/home/micheles/gcode/scheme/experimental/mod3.sls.ikarus-fasl" ...
+Serializing "/home/micheles/gcode/scheme/experimental/mod2.sls.ikarus-fasl" ...
+</pre>
+<p>As you see, the message <tt class="docutils literal"><span class="pre">At</span> <span class="pre">expand-time</span> <span class="pre">x=1</span></tt> is printed when
+<tt class="docutils literal"><span class="pre">mod2</span></tt> is compiled. If we run the script <tt class="docutils literal"><span class="pre">use-mod3.ss</span></tt> now, we
+get just the run-time message:</p>
+<pre class="literal-block">
+$ ikarus --r6rs-script use-mod3.ss
+Instantiated mod2
+At run-time x=1
+</pre>
+<p>In Ikarus, Ypsilon and Larceny, the same invocation of this script
+returns different results for the variable <tt class="docutils literal"><span class="pre">x</span></tt>, depending if the
+libraries have been precompiled or not. This is ugly and error
+prone. The multiple instantiation mechanism of PLT Scheme has been
+designed to avoid this problem: in PLT one consistently gets always
+the same result, which is the result one would get with separation
+compilation.</p>
+<p>I must notice that you could get the same behavior in non-PLT
+implementations by spawning two separate processes, one after the
+other: the first to compile the script and its libraries, and the
+second to execute it. That would make sure that incrementing <tt class="docutils literal"><span class="pre">x</span></tt> in
+the compilation phase would not influence the value of <tt class="docutils literal"><span class="pre">x</span></tt> at run-time.</p>
+</div>
+<div class="section">
+<h1><a id="conclusion" name="conclusion">Conclusion</a></h1>
+<p>This is the last episode of part IV. You should have an idea of how
+the R6RS module system works, and you should be able to grasp the reasons
+behind the different implementation choices.</p>
+<p>In particular, it should
+be clear that side effects are tricky, that you cannot rely on the
+compilation/visiting/instantiation procedure being the same in
+different implementations, that phase separation means different
+things in different Scheme systems.</p>
+<p>Still, I have left out many relevant things. In order to say everything
+there is to say about the subject, I should have at least doubled the
+number of episodes.</p>
+<p>I did not want to get lost in excessive detail.
+Instead, I have decided to continue my series with another block of
+episodes about macros, and to fill the remaining gaps about the
+module systems in future Adventures.</p>
+<p>So, as always, stay tuned and keep reading!</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=258103&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D258103&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F24&amp;bodytext=In+the+last+episode+we+saw+that+PLT+Scheme+performs+much+more+instantiation+and+visiting+of+modules+than+other+implementations.+The+reason+for+such+behaviour+is+that+PLT+Scheme+aims+to+avoid+cross-phase+side+effects.+In+this+episode+I+explain+what+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D258103&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F24">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D258103&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F24">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Adventures of a Pythonista in Schemeland/13</title>
+<meta charset="utf-8"/>
+<meta content="Michele Simionato" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=micheles.html">Michele Simionato's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=248953.html">Discuss</a> | 
+<a href="mailto:?subject=The Adventures of a Pythonista in Schemeland/13&amp;body= %0AArtima Weblogs %0AThe Adventures of a Pythonista in Schemeland/13 %0Aby Michele Simionato %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=248953">Email</a> | 
+<a href="../viewpostP.html$/thread=248953.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=247186.html" title="Resuscitating a Seven Year Old Laptop">Previous</a> | 
+<a class="sl" href="thread=249198.html" title="The Adventures of a Pythonista in Schemeland/14">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">The Explorer</span><br>
+<span class="ts">The Adventures of a Pythonista in Schemeland/13</span><br/>
+<span class="as">by Michele Simionato</span><br/>
+<span class="pd">February 3, 2009</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+The first installment of my long-awaited third cycle of a Pythonista's adventures with Scheme is devoted to Scheme's functional aspects.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<div class="section">
+<h1><a id="a-minimal-introduction-to-functional-programming" name="a-minimal-introduction-to-functional-programming">A minimal introduction to functional programming</a></h1>
+<p>I assume you already know what <em>pure functional language</em> means: a
+language is purely functional if variables cannot be re-assigned,
+data structures cannot be modified, and side effects are excluded.</p>
+<p>Of course, it is impossible to program with a pure functional
+language, since input and output are based on side effects and
+you cannot have a sensible program without input and output.
+However, a practical functional language can still be as pure as
+possible if it is able to confine the non-functional aspects to input and
+output only, in a controlled way.</p>
+<p>The purest functional language
+out there is probably Haskell; on a lower level of purity we find
+the languages of the ML family (SML, OCAML, F#, ...); on a lower
+level there is Scheme. Python and Common Lisp are at the same level,
+both below Scheme.</p>
+<p>I would not consider Python and Common Lisp as
+truly functional languages: they are just imperative languages with
+some support for functional programming (I mean constructs such as <tt class="docutils literal"><span class="pre">map</span></tt>,
+<tt class="docutils literal"><span class="pre">filter</span></tt>, <tt class="docutils literal"><span class="pre">reduce</span></tt>, list comprehension, generators, et cetera).
+However, there is a large gap between an
+imperative language with some support for functional programming and a
+true functional language.</p>
+<p>True functional languages have strong support for recursion
+(tail call optimization), for higher order functions and for pattern matching;
+moreover, true functional languages are based on immutable data
+structures.  Scheme is somewhat less functional than SML and Haskell,
+since Scheme lists are mutable, <a class="reference" href="../_/http/en.wikipedia.org/wiki/Currying/index.html">currying</a> is not supported by the base
+syntax of the language, (it can be implemented via macros, of course)
+and generally speaking one uses higher order functions less.</p>
+<p>While not pure, Scheme can be quite functional if
+you avoid rebinding and you restrict yourself to functional data
+structures, and it allows many typical idioms of functional programming
+which have no counterpart in imperative programming. We already saw a common
+trick in <a class="reference" href="../_/http/www.artima.com/weblogs/viewpost.html$/thread=239699.html">episode #5</a>, i.e. the accumulator trick, which is a
+way to avoid mutation in loops by using recursion. In this episode and
+the next ones we will show many others.</p>
+<div class="figure">
+<img alt="../_/http/www.phyast.pitt.edu/~micheles/scheme/diamond.jpg" src="../_/http/www.phyast.pitt.edu/~micheles/scheme/diamond.jpg">
+<p class="caption">The purity of functional languages</p>
+</img></div>
+</div>
+<div class="section">
+<h1><a id="functional-data-structures-pairs-and-lists" name="functional-data-structures-pairs-and-lists">Functional data structures: pairs and lists</a></h1>
+<p>Historically, the basic data types of Lisp languages (pairs and
+lists) have always been mutable. In all Lisp dialects (including
+Scheme) it has always been possible to modify the <tt class="docutils literal"><span class="pre">car</span></tt> and the
+<tt class="docutils literal"><span class="pre">cdr</span></tt> of a pair freely. The situation changed with the
+R6RS report: nowadays the imperative procedures <tt class="docutils literal"><span class="pre">set-car!</span></tt> and
+<tt class="docutils literal"><span class="pre">set-cdr!</span></tt> have been removed from the rnrs environment.</p>
+<p>Actually, it is still possible to mutate pairs, but only by
+extending the rnrs environment, i.e. by importing the
+<tt class="docutils literal"><span class="pre">(rnrs</span> <span class="pre">mutable-pairs)</span></tt> extension, which is part of the standard library
+but not of the core language. This is a clear indication of the fact
+that the functional paradigm is somewhat a recommended paradigm in Scheme,
+even if it is not enforced (in strongly functional languages, such as SML
+and Haskell, lists are immutable and there is no other option).</p>
+<p>I should notice that the requirement of importing <tt class="docutils literal"><span class="pre">(rnrs</span>
+<span class="pre">mutable-pairs)</span></tt> is only valid for scripts and libraries: the behavior
+of the REPL is unspecified in the R6RS document (actually the R6RS
+forbids a REPL but every R6RS implementation provides a REPL with some
+different semantics) and implementations are free to import or not to
+import <tt class="docutils literal"><span class="pre">mutable-pairs</span></tt> in the REPL. The REPL of Ikarus imports
+<tt class="docutils literal"><span class="pre">mutable-pairs</span></tt> by default, so you have at your disposal
+<tt class="docutils literal"><span class="pre">set-car!</span></tt> and <tt class="docutils literal"><span class="pre">set-cdr!</span></tt>, but this is an implementation specific
+choice; other implementations can behave differently from Ikarus at
+the REPL, and in general they do.</p>
+<p>Excluding code typed at the REPL, in principle the compiler could use
+immutability optimizations for library code not importing the <tt class="docutils literal"><span class="pre">(rnrs</span>
+<span class="pre">mutable-pairs)</span></tt> extension.  In practice, a Scheme compiler cannot
+perform the optimizations based on the assumption of truly immutable
+pairs, because the current standard says that <tt class="docutils literal"><span class="pre">cons</span></tt> must allocate a
+new pair and cannot re-use a previously created one
+(i.e. <tt class="docutils literal"><span class="pre">(eq?</span> <span class="pre">(cons</span> <span class="pre">x</span> <span class="pre">y)</span> <span class="pre">(cons</span> <span class="pre">x</span> <span class="pre">y))</span></tt> is always false for any value of
+<tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt>: even if the two conses have the same value, they
+correspond to different objects).</p>
+<p>If pairs were really immutable, a compiler could use the same object
+for equivalent pairs, i.e.  <tt class="docutils literal"><span class="pre">'(x</span> <span class="pre">.</span> <span class="pre">y)</span></tt> could be the same as <tt class="docutils literal"><span class="pre">(cons</span>
+<span class="pre">x</span> <span class="pre">y)</span></tt> and a compiler could cache that value: with the current
+standard that cannot never happen.  The point is well explained in a
+recent thread in comp.lang.scheme (<a class="reference" href="../_/http/groups.google.com/group/comp.lang.scheme/browse_frm/thread/7eccba9fb4eebb44/69241209d0d053bb$/hl=en&amp;lnk=gst&amp;q=immutable+pairs#69241209d0d053bb/index.html">Really immutable pairs</a>).</p>
+<p>Really immutable pairs (and thus lists) have lots of advantages: I would
+welcome them in the standard, but I am not sure if that will happen,
+since there is a potential compatibility breaking problem. I can only
+hope for the best. Immutability has advantages from the point of view
+of efficiency and makes the life of language implementors easier, but
+those are not really important point for an application programmer.</p>
+<p>The important point for the mere mortals is that programs based on
+immutable data structures becomes easier
+to understand and to debug. For instance, consider a routine taking
+a list in input and suppose that the content of the list is not
+what you would expect. If the list is mutable you potentially have to
+wonder about your whole code base, since everything could have mutated
+the list before reaching the routine you are interested in.
+If the list if immutable, you are sure that the bug must be
+in the procedure which created the list, and in no
+other place.</p>
+<p>Moreover, functional structures avoid whole classes of bugs (I am sure
+every Pythonista has found some issue with lists being mutable,
+especially when used as default arguments) especially in the hairy
+situations of multithreaded code.  In my <em>Adventures</em> I will never
+rely on the ability to mutate pairs, and I will use pairs as
+functional data structures.</p>
+</div>
+<div class="section">
+<h1><a id="functional-update" name="functional-update">Functional update</a></h1>
+<p>There is apparently an issue with immutable data structures:
+in many imperative programs one needs to
+modify the data: but how can you update an immutable object?</p>
+<p>The answer is actually pretty simple: you don't. Since you cannot mutate an
+immutable object, the only option is to create a brand new object with
+a different content from the original one. This mechanism is called
+<em>functional update</em>: for instance, it is easy to define two functional
+procedures <tt class="docutils literal"><span class="pre">set-car</span></tt> and <tt class="docutils literal"><span class="pre">set-cdr</span></tt> performing the job of
+<tt class="docutils literal"><span class="pre">set-car!</span></tt> and <tt class="docutils literal"><span class="pre">set-cdr!</span></tt> but without mutation:</p>
+<pre class="literal-block">
+(define (set-car pair value)
+  (cons value (cdr pair)))
+
+&gt; (set-car (cons 1 2) 3)
+(3 . 2)
+
+(define (set-cdr pair value)
+  (cons (car pair) value))
+
+&gt; (set-cdr (cons 1 2) 3)
+(1 . 3)
+</pre>
+<p>What if you want to (functionally) update the <em>n</em>-th value of a list?
+The trick is to use recursion:</p>
+<pre class="literal-block">
+(define (list-set n lst value)
+  (if (zero? n)
+     (set-car lst value)
+     (cons (car lst) (list-set (- n 1) (cdr lst) value))))
+
+&gt; (list-set 2 '(a b c d) 'X)
+(a b X d)
+</pre>
+<p>Notice that <tt class="docutils literal"><span class="pre">list-set</span></tt> is nicer than its imperative counterpart:</p>
+<pre class="literal-block">
+(define (list-set! n lst value)
+  (set-car! (list-tail lst n) value) lst)
+
+&gt; (define ls '(a b c d))
+&gt; (list-set! 2 ls 'X)
+&gt; ls
+(a b X d)
+</pre>
+<p>Notice the use of the R6RS procedure <tt class="docutils literal"><span class="pre">(list-tail</span> <span class="pre">lst</span> <span class="pre">n)</span></tt> which
+returns the tail of <tt class="docutils literal"><span class="pre">lst</span></tt> starting from the n-th element.
+The indexing starts from zero, as usual (for
+instance <tt class="docutils literal"><span class="pre">(list-tail</span> <span class="pre">'(a</span> <span class="pre">b</span> <span class="pre">c</span> <span class="pre">d)</span> <span class="pre">2)</span></tt> is the list <tt class="docutils literal"><span class="pre">(c</span> <span class="pre">d)</span></tt>).
+The important bit to understand how <tt class="docutils literal"><span class="pre">list-set!</span></tt> works
+is that <tt class="docutils literal"><span class="pre">list-tail</span></tt> returns the tail, and <em>not a copy</em>
+of it: by mutating the tail you are actually mutating the original
+list. This is clearly quite risky.</p>
+<p>The R6RS standard does not provide primitives for functional update
+out of the box (
+<tt class="docutils literal"><span class="pre">list-set!</span></tt> is not in the standard since it is of very little
+utility: if you want to be able to modify the n-th element of a
+sequence, you are much better off by using a vector and not a list).
+However, it does provide primitives to remove elements for a list
+functionally:</p>
+<pre class="literal-block">
+&gt; (remp even? '(3 1 4 1 5 9 2 6 5)); complementary of filter
+  (3 1 1 5 9 5)
+
+&gt; (remove 1 '(3 1 4 1 5 9 2 6 5))
+(3 4 5 9 2 6 5)
+
+&gt; (remv 1 '(3 1 4 1 5 9 2 6 5))
+(3 4 5 9 2 6 5)
+
+&gt; (remq 'foo '(bar foo baz))
+(bar baz)
+</pre>
+<p>(you can find other <a class="reference" href="../_/http/www.r6rs.org/final/html/r6rs-lib/r6rs-lib-Z-H-4.html#node_chap_3">list utilities</a> in R6RS standard library).</p>
+<p>One would expect functional update to be much slower than imperative
+update, because of the need of creating potentially long lists to
+modify just a single element.  However, this is not necessarily
+true. It all depends on how smart your compiler is. A smart compiler
+can internally use mutation
+(at the machine level), so in principle it could be as fast as
+imperative code. The advantage is that mutation is managed by the
+compiler, not by the programmer, who can think purely in terms of
+immutable data structures.</p>
+<p>It is true that compilers for functional languages are still slower
+than C compilers in average, but they are not so bad. In most
+situations the slowdown is acceptable and in particular situations
+compilers for functional languages can be faster than a C compiler.
+Moreover, they allow for memory optimizations. For instance, you can
+memoize an immutable list, whereas you cannot memoize a mutable
+one.</p>
+<p>Since I come from a Python background I do not care much about
+performance and optimizations, but I care a lot about maintainability
+of programs and bug reduction, as well as about conceptual cleanness.
+Moreover, this series has also some pedagogical intention, therefore
+I will prefer functional solutions over imperative ones here, in order
+to show new ways of doing old things.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Be the first to
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=248953&amp;reply=true.html">post a comment</a> about
+this weblog entry.
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michele Simionato adds a new entry to <a href="../index.html$/blogger=micheles.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/micheles.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D248953&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F13&amp;bodytext=The+first+installment+of+my+long-awaited+third+cycle+of+a+Pythonista%27s+adventures+with+Scheme+is+devoted+to+Scheme%27s+functional+aspects.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D248953&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F13">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16"/>del.icio.us
+  </a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D248953&amp;title=The+Adventures+of+a+Pythonista+in+Schemeland%2F13">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/micheleSimionato.jpg"/></td><td>Michele Simionato started his career as a Theoretical Physicist, working in Italy, France and the U.S. He turned to programming in 2003; since then he has been working professionally as a Python developer and now he lives in Milan, Italy. Michele is well known in the Python community for his posts in the newsgroup(s), his articles and his Open Source libraries and recipes. His interests include object oriented programming, functional programming, and in general programming metodologies that enable us to manage the complexity of modern software developement.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2009 Michele Simionato. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

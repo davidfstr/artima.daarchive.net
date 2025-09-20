@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Programming in the Mid-Future</title>
+<meta charset="utf-8"/>
+<meta content="Bruce Eckel" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=beckel.html">Bruce Eckel's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=284730.html">Discuss</a> | 
+<a href="mailto:?subject=Programming in the Mid-Future&amp;body= %0AArtima Weblogs %0AProgramming in the Mid-Future %0Aby Bruce Eckel %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=284730">Email</a> | 
+<a href="../viewpostP.html$/thread=284730.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=283925.html" title="A Golf Ball to the Forehead">Previous</a> | 
+<a class="sl" href="thread=286531.html" title="Notes From the Java Posse Roundup 2010">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Computing Thoughts</span><br>
+<span class="ts">Programming in the Mid-Future</span><br/>
+<span class="as">by Bruce Eckel</span><br/>
+<span class="pd">March 10, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In 25 years or so, we'll look at the current morass as only a small step above assembly-language programming. Here's what I think programming will be like then.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>Further in the future than what I'm describing here, our IDEs might just hack into our brainstems to produce a <em>Matrix</em>-like world within which we manipulate programming ideas. There are a number of breakthroughs required for that to happen, and breakthroughs are difficult to predict, and their fallout is even more difficult to know.</p>
+<p>Here's how far forward I can see now. Most of these points really just address problems that we have now, so I'm not being particularly clairvoyant. But for some reason humans seem to accept their problems and limitations. Perhaps it's just because of the effort necessary to change, and the fact that the toys we have now are still somewhat new so we're transfixed by how shiny they are, not noticing the problems they don't solve and, worse, how they limit us. I encountered this at the beginning of my career, programming hardware with assembly language while yearning to move to so-called "higher level languages" like C. There was a lot of suspicion and resistance, and that may be the throttle, the limiting factor, when trying to move the technology of programming forward, rather than the technology itself. (You could also argue that the suspicion and resistance is learned, from too many companies trying to make a quick buck by promising magic).</p>
+<div class="section">
+<h1><a id="extremely-dynamic" name="extremely-dynamic">Extremely dynamic</a></h1>
+<p>There is a significant and growing class of programming problems that static languages can't solve. Programming is going to become more and more dynamic. This doesn't mean that code analysis tools are not valuable; far from it. But we will discover (are discovering) that dynamic analysis is more powerful than static analysis, so things will continue to move in that direction.</p>
+</div>
+<div class="section">
+<h1><a id="stupidly-parallel-objects" name="stupidly-parallel-objects">Stupidly parallel objects</a></h1>
+<p>Objects will manage their own processes; right now we call these "active objects" but in the future this idea will be incorporated into the basic idea of an object (you can't really say that an object models reality unless it has its own process).</p>
+<p>Even if Moore's law gets a reboot from new technology, we've started down the path of multiple cores and farms of machines, and that won't stop. There are lots of problems that, as much as a faster single processor might be helpful, a bunch of fast processors will be better. And I would also argue that tons of processors is a better model of the world.</p>
+<p>The problem is that currently, parallelism is virtually impossible to get right (I won't re-argue this here, I've done it elsewhere). While it's theoretically possible that a handful of experts exist that can deal with some level of concurrent complexity, there is always a limit to what those people can manage. And they are rare, and parallelism is becoming common.</p>
+<p>What I mean by "stupidly parallel" is that a brand-new student programmer can create objects that run in parallel without bugs, while knowing little or nothing about parallel programming. It will just be part of the atmosphere of programming that parallelism happens and you don't have to tie your brain in knots to get it right.</p>
+</div>
+<div class="section">
+<h1><a id="persistent-diskless-environment" name="persistent-diskless-environment">Persistent diskless environment</a></h1>
+<p>Eventually the idea that we have to "store something to disk" will go away; the difference between memory and disk will be seen as an arbitrary artifact of the past. You'll just have data, and the data will be accessible for as long as you need it. It will live on your machine and in the cloud, as necessary, and you won't have to think about whether it's being garbage collected or swapped.</p>
+<p>You'll just make objects and use them, and the objects will contain data as necessary.</p>
+</div>
+<div class="section">
+<h1><a id="transparency-between-local-and-cloud" name="transparency-between-local-and-cloud">Transparency between local and cloud</a></h1>
+<p>This is really just a continuation of the previous point. Programmers won't have to think about storage, period. Right now there's a lot of time spent on issues that should be automated, and this is one of them.</p>
+</div>
+<div class="section">
+<h1><a id="swarm-testing" name="swarm-testing">Swarm testing</a></h1>
+<p>Tests are a form of program analysis. We know that test coverage produces better programs, but we're still on the leading edge of how to create tests. JUnit has traditionally required too much boilerplate and rote work, and that has slowed the test creation process (I like Python's Nose, which uses reflection to minimize coding).</p>
+<p>Eventually we'll be able to create tools that recognize patterns in the code you write, and automatically apply tests to those patterns. The only tests you'll have to write are the ones that aren't in the database, and when you write them they'll go into the database so no one has to write them again.</p>
+<p>The reason I call it "swarm" is that I imagine it like a swarm of bees. You create an object (which I think will still be the basic granularity of component in the future; it will be much more than today's objects but we'll still think in terms of objects), and the tests will swarm over that object looking for places to apply themselves (the same way that chemicals look for the appropriate receptors in your brain). You'll only need to add tests for the empty spaces. Testing will become faster, more thorough, and far more automated.</p>
+</div>
+<div class="section">
+<h1><a id="security-via-suspicious-systems" name="security-via-suspicious-systems">Security via suspicious systems</a></h1>
+<p>I initially wrote about this idea in a science fiction story. A robot receives ideas visually, by signals passing through the eyes (no physical contact). The ideas -- new code, basically -- pass into a kind of limbo where they are analyzed for suspicious content. I think not only swarm testing would come into play, but logical testing, checking whether an object does what it says it will do. Only after it is thoroughly tested will it be incorporated into the program.</p>
+<p>Note that this not only helps in system integration for your own code, but allows much greater use of off-the-shelf components as well.</p>
+</div>
+<div class="section">
+<h1><a id="effortless-data-stores" name="effortless-data-stores">Effortless data stores</a></h1>
+<p>Data stores, too, will just become another kind of object, integrated into the objects where they are used. In confluence with the aforementioned transparent storage, data stores are just objects where you can store data and later ask for it. You won't have to re-code every time you need a new one, just slap it in without a lot of effort. In addition, you won't have to think ahead of time about scaling issues for your data store. There will be no rewrite when going from a small data store to a large one. Data stores will become a non-issue.</p>
+</div>
+<div class="section">
+<h1><a id="query-based-data" name="query-based-data">Query-based data</a></h1>
+<p>The point of data storage is that sometime later we want to query it. But we get lost in the details of how it should be structured rather than keeping this fundamental idea in mind.</p>
+<p>Progress has been made in this area. The transition from hierarchical data to SQL was a big step. Programming systems like LINQ and SQLAlchemy have provided better abstractions to separate the programmer from the underlying structure of the data. You're able to make a query that the engine dynamically optimizes. Who knows, in the future querying your database efficiently might end up being as easy as doing a Google search.</p>
+</div>
+<div class="section">
+<h1><a id="reusability-on-a-vast-scale" name="reusability-on-a-vast-scale">Reusability on a vast scale</a></h1>
+<p>The future object incorporates the concept of "component" and will be the basic unit of code. It manages its own processes and comes with its own swarm of tests. The interface between components and other components (thus, components and systems) becomes universal. Adding a new component to a system becomes as easy as adding ingredients to a recipe. Component discovery will have its own search engine.</p>
+<p>I actually hope it will be even better than this.</p>
+</div>
+<div class="section">
+<h1><a id="effortless-system-integration" name="effortless-system-integration">Effortless System Integration</a></h1>
+<p>I think you'll be able to throw components into a soup, and they'll wire themselves together, negotiating or asking for advice when two components have overlapping functionality. The result will just be a larger object/component, that you'll either use in a bigger system or as a standalone application. Naturally, swarm testing applies at all levels.</p>
+</div>
+<div class="section">
+<h1><a id="reusable-uis" name="reusable-uis">Reusable UIs</a></h1>
+<p>UIs are stored and categorized in a way that it makes it easy to search for them. UIs capture and display data, so the intermediate connection to the main program is a data store, which that program queries and updates. This is basically a more sophisticated form of MVC, but without miring you in all the redundant low-level boilerplate every time you create a UI -- there's no reason we should have to repeat ourselves constantly this way, and no reason that programmers shouldn't benefit from great UIs without having to be UI experts.</p>
+<p>Most of the time you'll be able to select UIs from a list and paste them into your system. If you need to make a new one, or modify an existing one, the result becomes a new entry in the UI store.</p>
+</div>
+<div class="section">
+<h1><a id="effortlessly-scalable" name="effortlessly-scalable">Effortlessly Scalable</a></h1>
+<p>This follows from the other features that I've described above, but it's worth emphasizing. When you write a program, it will work in the small and in the large without modification. We currently spend way too much effort on scaling issues, which should be transparent, and eventually it will be.</p>
+</div>
+<div class="section">
+<h1><a id="built-in-evolvability" name="built-in-evolvability">Built-in Evolvability</a></h1>
+<p>The collection of features described above solves problems of program complexity, especially those that appear when a program gets large and sophisticated. Programming in the future will eliminate the concept of scale, so that adding features to an existing program will be unaffected by how big or complex that program is.</p>
+</div>
+<div class="section">
+<h1><a id="big-talk" name="big-talk">Big Talk</a></h1>
+<p>Yes, big ideas. We can't necessarily think about how to solve these problems yet. But just imagine what programming would be like in such a world.</p>
+<p>What other features do you imagine we'll see in the future? (<em>I plan to hold a session on this topic at next week's Java Posse Roundup</em>).</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=284730.html">88
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=284730&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Bruce Eckel adds a new entry to <a href="../index.html$/blogger=beckel.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/beckel.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D284730&amp;title=Programming+in+the+Mid-Future&amp;bodytext=In+25+years+or+so%2C+we%27ll+look+at+the+current+morass+as+only+a+small+step+above+assembly-language+programming.+Here%27s+what+I+think+programming+will+be+like+then.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D284730&amp;title=Programming+in+the+Mid-Future">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D284730&amp;title=Programming+in+the+Mid-Future">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/bruceeckel.jpg"/></td><td>Bruce Eckel (<a href="../_/http/www.bruceeckel.com/index.html">www.BruceEckel.com</a>) provides development assistance in Python with user interfaces in Flex. He is the author of Thinking in Java (Prentice-Hall, 1998, 2nd Edition, 2000, 3rd Edition, 2003, 4th Edition, 2005), the Hands-On Java Seminar CD ROM (available on the Web site), Thinking in C++ (PH 1995; 2nd edition 2000, Volume 2 with Chuck Allison, 2003), C++ Inside &amp; Out (Osborne/McGraw-Hill 1993), among others. He's given hundreds of presentations throughout the world, published over 150 articles in numerous magazines, was a founding member of the ANSI/ISO C++ committee and speaks regularly at conferences.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Bruce Eckel. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Parsing with Tree Constructors</title>
+<meta charset="utf-8"/>
+<meta content="Michael Feathers" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=mfeathers.html">Michael Feathers' Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=130664.html">Discuss</a> | 
+<a href="mailto:?subject=Parsing with Tree Constructors&amp;body= %0AArtima Weblogs %0AParsing with Tree Constructors %0Aby Michael Feathers %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=130664">Email</a> | 
+<a href="../viewpostP.html$/thread=130664.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=130567.html" title="Honest Code">Previous</a> | 
+<a class="sl" href="thread=137207.html" title="Test Driven Development?!">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Let's Reconsider That</span><br>
+<span class="ts">Parsing with Tree Constructors</span><br/>
+<span class="as">by Michael Feathers</span><br/>
+<span class="pd">October 7, 2005</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+A pattern for the recursive creation of composite objects.
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>If you haven't browsed the code in Ward Cunningham's FIT framework, you really should.  It's extremely elegant well-thought-out code, and it's the quintessential example of an <i>open framework</i>, a framework designed to allow extension everywhere.</p>
+<p>One of the patterns Ward uses is one I've never seen named or discussed.  Right now, I'm calling it the <i>Tree Constructor Pattern</i>.  If you think of a better name or you've seen it written up elsewhere, please let me know.</p>
+<p>Here's how it works in Ward's code.</p>
+<p>FIT has two primary classes: Fixture, and Parse.  Fixture iterates through a representation of an HTML document and runs tests defined within the document.  Parse is the representation that Fixture iterates.</p>
+<p>Parse is an interesting class.  You create a Parse by giving it a string like this:</p>
+<pre>Parse parse = new Parse(someHMTLString);</pre>
+<p>The constructor recursively constructs a tree structure of Parse objects that represents the text in the document.  The Parse that you construct ends up being the root of a tree that represents the document.  You can get from one parse to another by following its more and parts fields, like this:</p>
+<pre>parse.more.more.parts.text();</pre>
+<p>When you use <i>tree constructor</i>, you can pack a powerful punch in a single class. You end up with:</p>
+<li>A single class which represents both a tree and its leaves.
+<li>A mechanism for automatically creating the subobjects of a parent.
+
+<p>In Ward's Parse class, the entire tree is populated on construction, but population can be done on demand.  Here's an example from an interpreter I was writing in C# a while ago.  I have a class called Token.  We can construct a Token from a string containing a program fragment:</p>
+<pre>Token firstToken = new Token("1 to: 4\n    ");</pre>
+<p>Now that we have the firstToken, we can ask for subsequent ones:</p>
+<pre>Assert.AreEqual("1", firstToken.Text);
+Assert.AreEqual("to:", firstToken.Next.Text);
+Assert.AreEqual("4", firstToken.Next.Next.Text);</pre>
+<p>Here's how the Token class does its work:</p>
+<pre>
+public class Token
+{
+	private string		sourceText = "";
+	private string		text = "";
+	private TokenType	type = TokenType.GrotUnknown;
+	private int		indentationPosition = 0;
+
+	public Token(string sourceText) 
+		: this (sourceText, 0)
+	{
+	}
+
+	public Token(string sourceText, int indentationPosition)
+	{
+		this.indentationPosition = indentationPosition;
+		this.sourceText = sourceText;
+
+		SkipWhitespace();
+		bool dummyResultBecauseCSharpCantHandleBooleanExpressionsCalculatedSolelyForTheirSideEffects
+			= ParseNumericLiteral() 
+			|| ParseIdentifier() 
+			|| ParseDeclarator() 
+			|| ParseNewLine()
+			...
+			|| ParseAssignmentOperator();
+	}
+
+        ...
+
+	public Token Next 
+	{
+		get { 
+			return new Token(
+				sourceText.Substring(text.Length), indentationPosition); 
+		}
+        }
+
+	public string Text 
+	{
+		get { return text; }
+	}
+
+	public TokenType Type 
+	{
+		get { return type; }
+	}
+}
+</pre>
+<p>The act of accessing the Next property creates the next token and returns it.  This is inefficient if you have to do it more than once, but it's easy enough to change Next so that it caches.</p>
+<p><i>Tree Constructor</i> classes have some upsides and some downsides.  One upside is simplicity.  <i>Tree Constructor</i> is simple for users because they only have to create a single object.  All of the child objects are created automatically.  It is also rather simple to implement.</p>
+<p>Using the same class for both a tree and its nodes does make some things easier.  For instance, converting a tree to some other form can often be handled simply by adding a method to the class.</p>
+<pre>string programRepresentation = token.AsString();</pre>
+<p>The nice thing is that it works at any level.  You can take any token, no matter how far down it is in the tree and send it AsString to get a representation from that level of the tree downward.</p>
+<p><i>Tree Constructor</i> is a nice pattern, but there are a couple of downsides.  <i>Tree Constructor</i> works only when a parent object can know everything that it needs to construct its children.  If you have to pass in other objects as helpers, you might want to consider creating a factory class that manages the construction externally.</p>
+<p>Another downside is co-mingled responsibility.  <i>Tree Constructor</i> classes typically group together several responsibilities: creation of self, creation of subobjects, access of subobjects, and any operations that apply to the current object.  Is this a problem?  It can be if those responsibilities vary independently, but in cases where they don't, <i>Tree Constructor</i> is fine.</p>
+<p>The last downside is naming.  It can be hard to come up with a class name that is works for both the part and the whole.  Ward chose the name <i>Parse</i> for his class, and it is a rather neat word.  <i>Parse</i> can be used as both a noun and a verb so code like this:</p>
+<pre>Parse parse = new Parse(someHMTLString);</pre>
+<p>can be understood as "construct a parse of this string" or "parse this string."</p>
+<p>Despite the slight advantage of the noun/verb ambiguity, <i>Parse</i> does seem to make more sense when applied to the whole (saying "here is a parse of the file") rather than a part (saying "here is a parse of an identifier" when what you have is just an identifier).</p>
+<p>In the example above, I used the name <i>Token</i> for my <i>Tree Constructor</i> class and it does feel a little weird to create a token using a string that contains a program fragment or an entire program. However, after construction, <i>Token</i> is a very accurate name.  Each Token really does represent a token.  Once you construct the first one, all of the others are there and ready to be used.</p>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=130664.html">4
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=130664&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Michael Feathers adds a new entry to <a href="../index.html$/blogger=mfeathers.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/mfeathers.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D130664&amp;title=Parsing+with+Tree+Constructors&amp;bodytext=A+pattern+for+the+recursive+creation+of+composite+objects.&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D130664&amp;title=Parsing+with+Tree+Constructors">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D130664&amp;title=Parsing+with+Tree+Constructors">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/michaelfeathers.jpg"/></td><td>Michael has been active in the XP community for the past five years, balancing his time between working with, training, and coaching various teams around the world. Prior to joining Object Mentor, Michael designed a proprietary programming language and wrote a compiler for it, he also designed a large multi-platform class library and a framework for instrumentation control. When he isn't engaged with a team, he spends most of this time investigating ways of altering design over time in codebases.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2005 Michael Feathers. All rights reserved.</div>
+</p></p></p></p></li></li></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

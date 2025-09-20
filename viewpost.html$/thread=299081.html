@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>Have Generics Killed Java?</title>
+<meta charset="utf-8"/>
+<meta content="Eric Armstrong" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=cooltools.html">Eric Armstrong's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=299081.html">Discuss</a> | 
+<a href="mailto:?subject=Have Generics Killed Java?&amp;body= %0AArtima Weblogs %0AHave Generics Killed Java? %0Aby Eric Armstrong %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=299081">Email</a> | 
+<a href="../viewpostP.html$/thread=299081.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=294984.html" title="Reviewable, Runnable Specifications Ensure Software Quality">Previous</a> | 
+<a class="sl" href="thread=306334.html" title="JavaOne 2010: Article Roundup">Next</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Cool Tools and Other Stuff</span><br>
+<span class="ts">Have Generics Killed Java?</span><br/>
+<span class="as">by Eric Armstrong</span><br/>
+<span class="pd">July 22, 2010</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+In which I argue that (a) Generics have done egregious harm to both the elegance and readability of the Java language and,
+(b) they prove by example that static type checking is a linguistic dead-end. Are you persuaded? Do you agree? Read on...
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>I confess. I'm a Ruby hacker, at heart. Ruby's Perl-isms can't go away
+fast enough to suit me, but what's left after removing them is a thing of utter beauty and precision. Not to mention power.</p>
+<p>But long before I became enamored of Ruby, I was a Java hacker.
+I've recently come back to Java, and was rather surprised by the strength
+of my reaction--mostly as a result of generics.</p>
+<p>I admit to being mildly annoyed by all the semicolons, braces, and parentheses
+that the compiler forces me to supply. It makes me feel like a slave, working
+for a not-very-bright master. I mean, the compiler <em>could</em> be smart enough to
+know what's missing. It just isn't. It prefers to give me an error, instead.</p>
+<p>And of course, I miss Ruby's functional coding style, closures, and the flexibility
+provided by duck typing, open classes, and dynamic hooks--things that give the
+language it's expressiveness and power.</p>
+<p>But what's really killing me is generics.</p>
+<div class="section">
+<h1><a id="generics-considered-harmful" name="generics-considered-harmful">Generics Considered Harmful</a></h1>
+<p>Don't get me wrong. I continue to admire Generics as a tour-de-force of
+implementation genius. Getting them to work in a backwards-compatible way
+was nothing less than brilliant.</p>
+<p>At the same time, I decry their very existence. They are the ultimate
+condemnation of static type checking--because their very addition
+has virtually destroyed both the readability and elegance of the language.</p>
+<p>To make my case, let's start with a quasi-mathematical definition of
+"elegance". In my view, elegance is a function of power and simplicity.
+Power is measured by how much you can do. Simplicity is the inverse of
+the number of characters it takes to achieve the result. So more power
+with fewer characters equals "elegance", in my book.</p>
+<p>Of course, by that measure APL is a very elegant language! And it is.
+But it's famously unreadable. Somewhere, there is a quote from a very
+smart guy who spent 4 days figuring out what a 4 line program did--
+a program that he himself had written a few months earlier. That has to
+set some kind of standard for unreadability.</p>
+<p>So "elegance" has to be tempered with the equally important notion of "readability".
+Readability is also a function of the number of characters on the page, but
+it has a bell curve: Too few characters, and the code is <em>indecipherable</em>.
+But with too many characters, the code is effectively obfuscated. It becomes
+impossible to see the forest for the trees. At that point, the code is <em>obscure</em>.</p>
+<p>Between "indecipherable" and "obscure", lies the domain of "readable".
+That realm is the sweet spot. It's one that Java has been pretty darn good
+about occupying.</p>
+<p>Until generics.</p>
+<p>With the advent of generics, elegance has obviously been impaired (more characters,
+same power). At the same time, I claim that generics have pushed the language into
+the realm of obscurity.</p>
+<p>That is an entirely subjective assessment, I admit. People have different levels of
+tolerance for that kind of thing. I mean, there will always be folks who prefer</p>
+<blockquote>
+SALES MINUS COSTS DIVIDED BY YEAR</blockquote>
+<dl class="docutils">
+<dt>to</dt>
+<dd>(sales - costs) / years</dd>
+</dl>
+<p>To each their own. But there is no doubt that with the advent of generics,
+Java code is less readable (and therefore more obscure) than it once was.</p>
+<p>The result is a two-fold loss--a loss of both elegance and readability--that to
+my mind is nothing short of a travesty. It represents the virtual destruction of
+a good language at the hands of something that undoubtedly seemed like a good idea
+at the time.</p>
+<p>When I look at code I've written using generics, and mentally strip out the
+generic portions, I can't say that the code is any better or worse than it
+was before. Generics just don't seem to be adding any real value.</p>
+<p>Of course, generics create greater "type safety" at compile time. And that,
+I think, is the ultimate condemnation of static type checking: They show how
+much work you really have to do to get it. And what is your return for that
+investment? Not much, really. You get a small percentage increase in the
+number of real errors found at compile-time.</p>
+<p>But to get that marginal increase, you spend more time adding required
+syntax, watching the compiler find silly omissions and typos, and making changes
+solely to satisfy the compiler. In return, you get code that is less readable.</p>
+<p>If all that work produced code that was truly bulletproof, it could easily be
+worth the investment of effort. But it doesn't. You still have to do an enormous
+amount of testing to get any real quality. And by the time you've done all that
+testing, static type checking winds up being superfluous.</p>
+<p>Sure, in some super-critical applications like the Mars mission or a stock
+exchange, the tradeoff may be acceptable. Even a tiny improvement in quality
+is worth a significant investment, because the cost of a defect is so high.
+But for day to day programming, the tradeoff just isn't worth it, in my book.</p>
+</div>
+<div class="section">
+<h1><a id="an-example-is-worth-1-000-words" name="an-example-is-worth-1-000-words">An Example is Worth 1,000 Words</a></h1>
+<p>Enough with theory. Let's look at an example.</p>
+<p>I'm a big fan of the "foreach" concept. A phrase like this one clearly
+communicates the code's intent:</p>
+<pre class="literal-block">
+foreach item in List {
+  ...
+}
+</pre>
+<p>In Ruby, the equivalent mechanism is even cooler, once you get used it:</p>
+<pre class="literal-block">
+List.each { |item|
+  ...
+}
+</pre>
+<p>It's cooler, because "each" is a method that can be applied to any
+collection.</p>
+<blockquote>
+<p>Sidebar: Going Crazy with Functional Expressions
+Since every block is an expression, and every expression
+returns a value, if you want to go nuts, you could even apply
+a dot-operator to the block:</p>
+<pre class="literal-block">
+List.each { |i| ... }.doSomething()
+</pre>
+<p>Crazy, huh? You wouldn't do that often, but there are times...</p>
+</blockquote>
+<p>Want to iterate over a Map, processing each key/value pair
+in turn? Here's the syntax:</p>
+<pre class="literal-block">
+Map.each { |key, value|
+  ...
+}
+</pre>
+<p>And now here's the equivalent expression in Java, with generics:</p>
+<pre class="literal-block">
+for(Map.Entry&lt;K, V&gt; e : map.entrySet()) {
+  ...
+}
+</pre>
+<p>Sorry, but that's an expression that only a mother could love.
+Without generics, it's not too bad. With generics and the
+other syntactic elements to required to make it legal, the
+statement verges on unreadable.</p>
+<p>In general, the trick to reading such loops is to translate the litte
+colon to "in" and, once you see the colon, to mentally convert the "for"
+in the expression to "for each". So with a simple, "unsafe" loop, when you see
+this:</p>
+<pre class="literal-block">
+for (item : List) {
+}
+</pre>
+<p>You read:</p>
+<pre class="literal-block">
+for (each) item (in) List ...
+</pre>
+<p>That's not bad. But lets look at the Map example again. This time,
+adding the statements needed to get values to work on.</p>
+<p>For comparison, in Ruby we would write:</p>
+<pre class="literal-block">
+map = getInfo();
+map.each { |key, value|
+  ...
+}
+</pre>
+<p>But in generified Java, we need this:</p>
+<pre class="literal-block">
+map = getInfo();
+for(Map.Entry&lt;K, V&gt; e : map.entrySet()) {
+    String key = e.getKey();
+    Object item = e.getValue();
+    ...
+}
+</pre>
+<p>With the generic declarations added in, plus the need to invoke a
+method on the map, and all of the parentheses and angle brackets
+that are required, the colon is hard to see. It is effectively lost
+amid the noise. You have to peer at the expression carefully to
+discern its intent--especially when you come across it in the context
+of a larger program.</p>
+<p>In fact, it was after copying that very expression from the web that
+I became disenchanted with generified Java. For me, Java's
+huge advantage from day one has always been it's readability. (The
+Web interface library didn't hurt, either. But this is about the language.)</p>
+<p>With Java, there was only one way to do anything. There were no #ifdefs
+or home-grown macros, so no matter whose code you read, you always knew
+exactly what it was doing. So it easy to read. In consequence it was
+(relatively) easy to learn.</p>
+<p>Ruby is more like Perl, in that regard. There are so many ways to do
+things that, to read anyone else's code fluently, you first have to
+master the particular set of idioms they employed.</p>
+<p>So score one for Java in the realm of readability. Until generics.
+A subtle syntax element like ":" can't stand up against the deadly
+incursion of ubiquitous type-declaration syntax. To even begin to
+compete, it would have to employ COBOL-like syntax--in all caps, at that:</p>
+<pre class="literal-block">
+for(Map.Entry&lt;K, V&gt; e IN map.entrySet()) {
+   ...
+}
+</pre>
+<p>That, at least, would be a little closer to readable. But of course
+it would be even less elegant.</p>
+</div>
+<div class="section">
+<h1><a id="but-wait-there-s-more" name="but-wait-there-s-more">But wait, there's more</a></h1>
+<p>Things get even a little worse if we want to process the map in
+an ordered way, and we assume that the original map isn't necessarily
+ordered.</p>
+<p>Here's the Ruby expression:</p>
+<pre class="literal-block">
+map = getInfo();
+map.sort.each { |key, value|
+  ...
+}
+</pre>
+<p>Pretty cool, huh? You merely invoke an intermediate sort() method
+to get the result you want. It's even more readable because parentheses
+on method invocations are only required when they are absolutely
+necessary.</p>
+<p>Here is the equivalent operation in generified Java:</p>
+<pre class="literal-block">
+Map&lt;String,Object&gt; map = getInfo();
+Map&lt;String,Object&gt; sortedMap = new TreeMap&lt;String,Object&gt;(map);
+for(Map.Entry&lt;K, V&gt; e : sortedMap.entrySet()) {
+    String key = e.getKey();
+Object value = e.getValue();
+...
+}
+</pre>
+<p>Readable? I think not. It takes more than a quick glance to tell
+what that code is doing.</p>
+</div>
+<div class="section">
+<h1><a id="anticipating-the-counter-arguments" name="anticipating-the-counter-arguments">Anticipating the Counter Arguments</a></h1>
+<p>Generics force the programmer to do at something the computer is
+entirely capable of doing at run time (type verification). And if
+we have learned anything at all about computers, it's to let them
+do what they're good at!</p>
+<p>When you add generics to the requirements for parentheses and semicolons
+(other things the compiler could easily supply), the scales tip quickly
+away from readability and elegance.</p>
+<p>Of course, runtime type checking makes your code more "unsafe", so you
+have to do more testing. But when you're not spending all of your time
+adding syntactic "sugar" to make the compiler swallow your code,
+you have a lot more time to make sure your code is doing the right thing.</p>
+<blockquote>
+Note:
+That's right. I just called generics "syntactic sugar". In this case,
+the sugar makes the code more palatable to the compiler, not the coder.
+You have to pour it on, but you don't get to enjoy it.</blockquote>
+<p>Equally horrendous, to some, is the fact that runtime type checking slows
+things down. But computers are getting faster, the number of programs that
+needs to be written is exploding, and the number of programmers available
+to write them is shrinking in comparison.</p>
+<p>Given that state of affairs, it's hard to see the point of sacrificing
+readability and elegance, all in the same breath.</p>
+</div>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=299081.html">62
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=299081&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Eric Armstrong adds a new entry to <a href="../index.html$/blogger=cooltools.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/cooltools.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D299081&amp;title=Have+Generics+Killed+Java%3F&amp;bodytext=In+which+I+argue+that+%28a%29+Generics+have+done+egregious+harm+to+both+the+elegance+and+readability+of+the+Java+language+and%2C%0D%0A%28b%29+they+prove+by+example+that+static+type+checking+is+a+linguistic+dead-end.+Are+you+persuaded%3F+Do+you+agree%3F+Read+on_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D299081&amp;title=Have+Generics+Killed+Java%3F">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D299081&amp;title=Have+Generics+Killed+Java%3F">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/ericarmstrong.jpg"/></td><td>Eric Armstrong has been programming and writing professionally since
+before there were personal computers. His production experience includes artificial intelligence (AI) programs, system libraries, real-time
+programs, and business applications in a variety of languages. He works as a writer and software consultant in
+the San Francisco Bay Area. He wrote The JBuilder2 Bible and authored the Java/XML programming tutorial available at http://java.sun.com. Eric is also involved in efforts to design knowledge-based collaboration systems.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2010 Eric Armstrong. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>

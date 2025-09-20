@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+
+<html>
+<head><meta content="noindex,nofollow" name="robots"/>
+<title>The Weblog Skeptic</title>
+<meta charset="utf-8"/>
+<meta content="Mark Johnson" name="author">
+<link href="../_/https/www.artima.com/artima.css" rel="stylesheet" type="text/css"/>
+<link href="../_/https/www.artima.com/favicon.ico" rel="shortcut icon"/>
+</meta></head>
+<body><table cellspacing="0" width="100%">
+<tr>
+<td align="left" valign="bottom">
+<a href="../_/https/www.artima.com/index.html"><img alt="The Artima Developer Community" border="0" height="43" src="../_/https/www.artima.com/images/a7.gif" width="550"/></a>
+</td>
+</tr></table>
+<table bgcolor="#333333" width="100%">
+<tr>
+<td align="center">
+<div class="ml">
+<a class="hl" href="../_/https/www.artima.com/articles/index.html">Articles</a> |
+<a class="hl" href="../_/https/www.artima.com/news/index.html">News</a> |
+<a class="hl" href="../index.html">Weblogs</a> |
+<a class="hl" href="../_/https/www.artima.com/shop/catalog/index.html">Books</a> |
+<a class="hl" href="../_/https/www.artima.com/forums/index.html">Forums</a>
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#CCCCCC" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<a href="../index.html">Artima Weblogs</a> | 
+
+<a href="../index.html$/blogger=mj.html">Mark Johnson's Weblog</a> | 
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=239885.html">Discuss</a> | 
+<a href="mailto:?subject=The Weblog Skeptic&amp;body= %0AArtima Weblogs %0AThe Weblog Skeptic %0Aby Mark Johnson %0A%0Ahttps://www.artima.com/weblogs/viewpost.jsp?thread=239885">Email</a> | 
+<a href="../viewpostP.html$/thread=239885.html">Print</a> | 
+<a href="../bloggers.html">Bloggers</a> | 
+<a class="sl" href="thread=35019.html" title="Software Documentation Is Like Weather and Pornography">Previous</a> | 
+Next
+</div>
+</td>
+</tr>
+</table>
+<table bgcolor="#EEEEEE" width="100%">
+<tr>
+<td align="center">
+<div class="sc">
+<span style="color: #555555;">Sponsored Link</span> <span style="color: #888888;">•</span>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+   document.write ("&amp;what=zone:9&amp;target=_top");   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a799ecf6.html" target="_top"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:9&amp;n=a0587811.html"/></a></noscript>
+</div>
+</td>
+</tr>
+</table>
+<br/>
+<div class="vegies">
+<div class="tc">
+<span class="sts">Biotechnology and Bioinformatics Open Source Software</span><br>
+<span class="ts">The Weblog Skeptic</span><br/>
+<span class="as">by Mark Johnson</span><br/>
+<span class="pd">October 6, 2008</span><br/>
+</br></div>
+<blockquote>
+<b>Summary</b><br/>
+Usage logs can provide useful inputs to user interface and web site designs. But all too often, naive interpretations of log data produce poor (or, at least, unsupported) design decisions. Here are a few of my concerns about the question, "What do the logs say?"
+
+</blockquote>
+<hr align="left" width="90%"/>
+<table align="right">
+<tr>
+<td>
+<div class="adnotice">
+Advertisement
+</div>
+<center>
+<script language="JavaScript" src="../_/https/www.artima.com/zcr/adx.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+if (!document.phpAds_used) document.phpAds_used = ',';
+phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+document.write ("../_/https/www.artima.com/zcr/adjs.html$/n=.html" + phpAds_random);
+document.write ("&amp;what=zone:2");
+document.write ("&amp;exclude=" + document.phpAds_used);
+if (document.referrer)
+document.write ("&amp;referer=" + escape(document.referrer));
+document.write ("'><" + "/script>");
+//-->
+</script><noscript><a href="../_/https/www.artima.com/zcr/adclick.html$/n=a74ab060.html" target="_blank"><img alt="" border="0" src="../_/https/www.artima.com/zcr/adview.html$/what=zone:2&amp;n=a74ab060.html"/></a></noscript>
+</center>
+</td>
+</tr>
+</table>
+<p>
+<p>When updating or redesigning user interfaces, beware when people ask "how much is this used?" in design discussions.</p>
+<p>Much of the time, the question has an insidious underlying assumption: that current usage of a page, feature, or element is a measure of its usefulness to the user.</p>
+<p>I've noticed that when people in design discussions ask how often a page element or feature is used, the question almost always means one of the following:</p>
+<ol class="arabic simple">
+<li>They're looking to defend some preconceived notion. You will notice that they always have an answer if the numbers don't swing their way.</li>
+</ol>
+<ul>
+<li><p class="first">"It isn't used, so it isn't useful."</p>
+<blockquote>
+<dl class="docutils">
+<dt>Or maybe:</dt>
+<dd><ul class="first last simple">
+<li>there's a design problem hiding a killer feature.</li>
+<li>the people who need it aren't getting to this page.</li>
+<li>it's so poorly implemented that nobody can figure out how to use it, even though it's exactly what they need.</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+</li>
+<li><p class="first">"It would be useful, but people can't find/don't see it."</p>
+<blockquote>
+<dl class="docutils">
+<dt>Or maybe:</dt>
+<dd><ul class="first last simple">
+<li>it's a niche feature.</li>
+<li>it's useless.</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+</li>
+<li><p class="first">"It's the most used, so it's crucial/the most useful/whatever."</p>
+<blockquote>
+<dl class="docutils">
+<dt>Or maybe:</dt>
+<dd><ul class="first last simple">
+<li>users click on it because don't see what else they can do.</li>
+<li>"most used" means "20% of the time", and so biasing a design toward that feature inconveniences the other 80% of users.</li>
+<li>what they're clicking on is misleading, and doesn't offer what most users expect.</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li>They want to use the number to make a decision, regardless of whether the metric means anything. Using logs in this way lets designers punt on the hard questions.</li>
+</ol>
+<ul>
+<li><p class="first">"We should make this feature prominent because the logs say that's the most useful feature on the page!"</p>
+<blockquote>
+<p>No, the logs say it's the most <em>heavily-used</em> feature on the page. Not the most <em>useful</em>. Don't confuse the two.</p>
+<dl class="docutils">
+<dt>And maybe:</dt>
+<dd><ul class="first last simple">
+<li>only 3% of the people that use this page ever do anything with it, because the design is broken somehow.</li>
+<li>the real useful content is hidden or poorly presented.</li>
+<li>the metric doesn't really measure usefulness, so it's as valid as a coin toss.</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+</li>
+<li><p class="first">"Only 3% of users click on that: it's useless!"</p>
+<blockquote>
+<dl class="docutils">
+<dt>Or maybe:</dt>
+<dd><ul class="first last simple">
+<li>those 3% are crucial users.</li>
+<li>nothing on the page gets more than 3%, so it's as good or better than anything else (though your page may have too much on it).</li>
+</ul>
+</dd>
+</dl>
+</blockquote>
+</li>
+</ul>
+<p>It seems to me that most useful information you can get from usage logs is contextual. Like usage of one thing <strong>relative</strong> to something else (though usage does not equal usefulness: you may simply be measuring design artifacts.) Or <strong>changes</strong> in user behavior after <strong>changes</strong> in interface (though the  potential to mislead yourself there is even more pronounced.) Case in point: a design change that exposes the links in a hidden menu. It's hard to construe a persistent 500% increase in the usage of exposed links relative to hidden links as anything but improvement. That is, until you notice a 40% decrease in overall page usage, because the links obscure something crucial, like a submit button.</p>
+<p>My point is that log data are only one input to the design process, and they are data, not information. Interpretations of log data may be information, if your thinking is careful and you're looking diligently for confounding factors, as good scientists do.</p>
+<dl class="docutils">
+<dt>Here are my questions:</dt>
+<dd><ul class="first last simple">
+<li>How do you truly use activity logs to make informed user interface design decisions?</li>
+<li>Do you have a favorite resource for user activity interpretation?</li>
+<li>Or, conversely, what are your favorite weblog misconceptions and canards?</li>
+</ul>
+</dd>
+</dl>
+<h1>Talk Back!</h1>
+<p>
+Have an opinion?
+
+
+Readers have already posted
+
+<a href="../_/https/www.artima.com/forums/flat.html$/forum=106&amp;thread=239885.html">2
+
+comments</a>
+about this weblog entry. Why not
+
+<a href="../_/https/www.artima.com/forums/post.html$/forum=106&amp;thread=239885&amp;reply=true.html">add yours</a>?
+
+
+<h1>RSS Feed</h1>
+<p>
+If you'd like to be notified whenever Mark Johnson adds a new entry to <a href="../index.html$/blogger=mj.html">his weblog</a>, subscribe to his <a href="../feeds/bloggers/mj.rss">RSS feed</a>.
+
+<center>
+<div class="sociallinks">
+<a href="../_/http/digg.com/submit$/phase=2&amp;url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D239885&amp;title=The+Weblog+Skeptic&amp;bodytext=Usage+logs+can+provide+useful+inputs+to+user+interface+and+web+site+designs.+But+all+too+often%2C+naive+interpretations+of+log+data+produce+poor+%28or%2C+at+least%2C+unsupported%29+design+decisions.+Here+are+a+few+of+my+concerns+about+the+question%2C+%26quot%3BWhat+_&amp;topic=programming">
+<img alt="Digg" border="0" height="14" hspace="8" src="../_/https/www.artima.com/images/digg.gif" width="16">Digg
+  </img></a>
+  |
+  <a href="../_/http/del.icio.us/post$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D239885&amp;title=The+Weblog+Skeptic">
+<img alt="del.icio.us" border="0" height="16" hspace="8" src="../_/https/www.artima.com/images/delicious.gif" vspace="1" width="16">del.icio.us
+  </img></a>
+  |
+  <a href="../_/http/programming.reddit.com/submit$/url=http%3A%2F%2Fwww.artima.com%2Fweblogs%2Fviewpost.jsp%3Fthread%3D239885&amp;title=The+Weblog+Skeptic">
+<img alt="Reddit" border="0" height="18" hspace="8" src="../_/https/www.artima.com/images/reddit.gif" width="18"/>Reddit
+  </a>
+</div>
+</center>
+<h1>About the Blogger</h1>
+<p>
+<table><tr valign="bottom"><td><img align="right" src="../_/https/www.artima.com/images/mj.jpg"/></td><td>Mark Johnson is a software developer, trainer, writer, and speaker living in Silver Spring, MD. He works at the National Center for Biotechnology
+Information, writing documentation and tools for open-source bioinformatics software. He is also president of Elucify Technical Communications (<a href="../_/http/www.elucify.com/index.html">www.elucify.com</a>). He has published dozens of articles on Java component technology, enterprise software development, and XML, and is co-author of the book "Designing Enterprise Applications for the J2EE Platform, Second Edition" (Addison-Wesley 2002). He is currently the author of the monthly Enterprise Java Tech Tips newsletter for Sun Microsystems. Mark has been interviewed on CNN, ITworld.com, and JavaWorld.com, and is a member of the National Association of Science Writers.</td></tr></table><p>
+<div class="sp">This weblog entry is Copyright © 2008 Mark Johnson. All rights reserved.</div>
+</p></p></p></p></p></div>
+
+<hr width="100%">
+<table align="center" width="50%">
+<tr>
+<td>
+<div class="horizontaltextadbox">
+<div class="adheadline">Sponsored Links</div>
+<div id="sponsoredlinks">
+</div>
+</div>
+</td>
+</tr>
+</table>
+<hr width="100%"/>
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3911176865765226";
+google_alternate_color = "ffffff";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al";
+google_ad_channel = "";
+google_color_border = "ffffff";
+google_color_bg = "FFFFFF";
+google_color_link = "003090";
+google_color_text = "000000";
+google_color_url = "666666";
+//--></script>
+<script src="../_/https/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>
+<br>
+<br/>
+<!-- SiteSearch Google -->
+<form action="../_/https/www.google.com/custom/index.html" method="get">
+<table bgcolor="#ffffff" border="0">
+<tr><td align="left" height="32" nowrap="nowrap" valign="top">
+<a href="../_/https/www.google.com/index.html">
+<img alt="Google" border="0" src="../_/https/www.google.com/logos/Logo_25wht.gif"/></a>
+</td>
+<td nowrap="nowrap">
+<input name="domains" type="hidden" value="Artima.com"/>
+<input maxlength="255" name="q" size="31" type="text" value=""/>
+<input name="sa" type="submit" value="Search"/>
+</td></tr>
+<tr>
+<td> </td>
+<td nowrap="nowrap">
+<font color="#000000" size="-1">
+<input name="sitesearch" type="radio" value=""/> Web
+<input checked="checked" name="sitesearch" type="radio" value="Artima.com"/>Artima.com
+</font>  
+<input name="client" type="hidden" value="pub-3911176865765226"/>
+<input name="forid" type="hidden" value="1"/>
+<input name="ie" type="hidden" value="ISO-8859-1"/>
+<input name="oe" type="hidden" value="ISO-8859-1"/>
+<input name="cof" type="hidden" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:150;L:https://www.artima.com/images/artima150.gif;S:https://www.artima.com;FORID:1;"/>
+<input name="hl" type="hidden" value="en"/>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
+</br></center>
+<br/>
+<div class="sp">
+<div style="text-align: center;">
+<a href="../_/https/www.artima.com/copyright.html">Copyright</a> © 1996-2019 Artima, Inc. All Rights Reserved. - <a href="../_/https/www.artima.com/privacy.html">Privacy Policy</a> - <a href="../_/https/www.artima.com/termsofuse.html">Terms of Use</a>
+</div>
+</div>
+<br/>
+<script language="JavaScript" type="text/javascript">
+<!--
+function initBannerVarForZone(zone) {
+        initBannerVarForZoneWithScript(zone, 'adjs_modified');
+}
+
+function initBannerVarForZoneWithScript(zone, phpScript) {
+
+        if (!document.phpAds_used) document.phpAds_used = ',';
+        phpAds_random = new String (Math.random());
+        phpAds_random = phpAds_random.substring(2,11);
+
+        var nextScriptSrc = '../_/https/www.artima.com/zcr/index.html' + phpScript + '.php?n=' +
+                phpAds_random  +
+                '&amp;what=zone:' + zone + '&amp;target=_top&amp;block=1&amp;blockcampaign=1' +
+                '&amp;exclude=' + document.phpAds_used;
+
+        document.write("<script language='JavaScript' type='text/javascript' src='");
+        document.write(nextScriptSrc);
+        document.write("'><\/script>");
+
+}
+
+function replaceDiv(divID) {
+        document.getElementById(divID).innerHTML = phpadsbanner;
+}
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZone(3);
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('leftskyscraper');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+initBannerVarForZoneWithScript(4, 'textman');
+-->
+</script>
+<script language="JavaScript" type="text/javascript">
+<!--
+replaceDiv('sponsoredlinks');
+-->
+</script>
+</hr><a href="https://dafoster.net/projects/crystal-web-archiver/" id="cr-footer-banner" style="border-top: 2px #B40010 solid;background: #FFFAE1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-variant: initial;font-weight: initial;text-transform: none;font-size: 14px;color: #6c757d;line-height: 2.0;cursor: pointer;display: flex;align-items: center;justify-content: center;gap: 4px;clear: both;" target="_blank"><img height="24" onerror="this.style['display'] = 'none';" src="../_/crystal/resources/appicon.png" width="24"/><span>This page was archived with Crystal</span><script>window.addEventListener('load', function() { const $1 = document.querySelector('#cr-footer-banner'); if (!$1) { return; } if (window !== window.top) { let $2 = false; if (window.name) { const $3 = window.parent.document.getElementsByName(window.name); if ($3.length === 1) { const $4 = $3[0]; if ($4.tagName === 'FRAME' && $4.parentElement.tagName === 'FRAMESET') { let $5 = $4; while (true) { if ($5.parentElement.tagName !== 'FRAMESET') { $2 = true; break; } if ($5.parentElement.attributes['rows'] !== undefined) { const $6 = $5.parentElement.children; if ($5 === $6[$6.length - 1]) { $5 = $5.parentElement; continue; } else { break; } } else if ($5.parentElement.attributes['cols'] !== undefined) { const $7 = Array.from($5.parentElement.children); const $8 = $7.indexOf($5); if ($8 === -1) { break; } const $9 = $5.parentElement.attributes['cols'].value.split(','); const $10 = $9.map((s) => parseInt(s.trim())); if ($9[$8].trim() === '*' || $10[$8] === Math.max.apply(null, $10)) { $5 = $5.parentElement; continue; } else { break; } } else { break; } } } } } if (!$2) { $1.style['display'] = 'none'; } } const $11 = $1.getBoundingClientRect(); const $12 = ($11.y < window.innerHeight - $11.height); if ($12) { $1.style['position'] = 'fixed'; $1.style['bottom'] = '0'; $1.style['left'] = '0'; $1.style['right'] = '0'; $1.style['z-index'] = '9999'; } const $13 = ( document.body.getBoundingClientRect().height < $11.height * 2 ); if ($13) { $1.style['display'] = 'none'; }
+});</script></a></body>
+</html>
